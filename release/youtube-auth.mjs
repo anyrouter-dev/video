@@ -139,15 +139,49 @@ async function exchange(code) {
       return finish(1);
     }
 
-    // Prove the token actually works before telling anyone to paste it.
-    const probe = await fetch('https://www.googleapis.com/upload/youtube/v3/videos', {
-      method: 'POST',
-      headers: { authorization: `Bearer ${j.access_token}` },
-    });
-    const ok = probe.status === 401 || (probe.status === 400 && /required/i.test(await probe.text()));
-    if (probe.status === 403 || probe.status === 401) {
-      console.error(`\n  Token rejected by YouTube (${probe.status}) — the scope did not stick.`);
-      return finish(1);
+    // Probe the scope WITHOUT uploading anything.
+    //
+    // A resumable-init is the one call that proves everything we care about —
+    // API enabled, youtube.upload granted, channel writable — while never
+    // transferring a byte, because a session is only opened, not used.
+    //
+    // A previous version probed a bare POST and treated 403 as fatal, throwing
+    // away a perfectly good refresh token. A 403 from YouTube is ambiguous: the
+    // usual cause is `accessNotConfigured` (the API was never enabled on the
+    // project), which has nothing to do with the OAuth grant. So the token is
+    // ALWAYS printed, and the probe is reported as advice.
+    const probe = await fetch(
+      'https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status',
+      {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${j.access_token}`,
+          'content-type': 'application/json',
+          'x-upload-content-length': '1',
+          'x-upload-content-type': 'video/mp4',
+        },
+        body: JSON.stringify({ snippet: { title: 'probe' }, status: { privacyStatus: 'private' } }),
+      },
+    );
+    const probeBody = await probe.text().catch(() => '');
+    let verdict;
+    if (probe.status === 200 || probe.status === 201) {
+      verdict = 'Verified: the API is enabled and youtube.upload is granted. Uploads will work.';
+    } else if (/accessNotConfigured|SERVICE_DISABLED/i.test(probeBody)) {
+      verdict =
+        'The OAuth grant is fine, but the YouTube Data API v3 is NOT enabled on this project.\n' +
+        '  → console.cloud.google.com → pick this project → APIs & Services → Library\n' +
+        '  → "YouTube Data API v3" → Enable. Then re-run this (a new token is not needed —\n' +
+        '  → re-run and the same flow will mint a fresh one; the stored token will then work).';
+    } else if (probe.status === 401) {
+      verdict = 'The access token was rejected. Re-run this command to mint a fresh one.';
+    } else if (probe.status === 403) {
+      verdict =
+        `YouTube returned 403. The full reason is below — the usual causes are the API not\n` +
+        `  being enabled, or the app still being in "Testing" mode with your channel not\n` +
+        `  listed as a test user.`;
+    } else {
+      verdict = `Probe returned ${probe.status}. The token was still issued; uploads may work.`;
     }
 
     console.log(`
@@ -167,8 +201,12 @@ async function exchange(code) {
   gh variable set YT_PRIVACY unlisted
   gh variable set YT_TITLE_TEMPLATE "AnyRouter — {id}"
 
-  ${ok ? 'The token verified against the YouTube API.' : 'The token was issued; verify on first upload.'}
+  ── Verification ──────────────────────────────────────────────────────
+
+  ${verdict}
+
   Revoke later: https://myaccount.google.com/permissions
+${probe.status >= 400 ? `\n  YouTube said:\n  ${probeBody.slice(0, 600).replace(/\n\s*/g, '\n  ')}\n` : ''}
 `);
     finish(0);
   } catch (e) {
