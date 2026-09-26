@@ -211,6 +211,12 @@ jobs:
     outputs:
       rendered: ${{ steps.r.outputs.rendered }}
       release_id: ${{ steps.r.outputs.release_id }}
+    # `permissions` is a JOB key in Actions, not a step key — putting it on the
+    # commit step made the whole workflow fail to parse (HTTP 422) and GitHub
+    # never registered the file. This job commits releases/ and pushes, so the
+    # whole job needs write; there is no way to narrow it to a single step.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -305,8 +311,6 @@ jobs:
 
       - name: Commit the versioned source and the ledger
         if: steps.r.outputs.rendered == 'true' && github.ref == 'refs/heads/main'
-        permissions:
-          contents: write
         run: |
           set -euo pipefail
           git config user.name  'github-actions[bot]'
