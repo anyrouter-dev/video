@@ -6,9 +6,12 @@
 # committed — it is the reference the next diff is taken against.
 /release/release.json
 
-# rendered output
+# rendered output. The mp4s are NOT tracked — they are ~8 MB each and they live
+# on the GitHub Release, which is the durable public copy. The covers ARE tracked:
+# a changelog is read as a grid of images, so a release with no image does not read.
 /renders/
 /out/
+/.cover-tmp/
 /agent-log.json
 fetch.log
 

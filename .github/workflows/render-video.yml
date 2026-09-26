@@ -137,17 +137,20 @@ jobs:
           set -euo pipefail
           echo "new models: $NEW_COUNT"
           echo "ids: $MODEL_IDS"
+          # The prompt lives in ci/prompts/plan-release.md, not inline here, so it
+          # is reviewable and versioned as a prompt instead of as a YAML string.
+          # ci/AGENT.md stays the contract of what the agent may decide.
           # `--auto` because the agent is only permitted to write one file, and
           # a prompt that hangs waiting on a TTY would stall the whole job.
           timeout 600 opencode run \
             --auto \
             --format json \
-            "$(cat ci/AGENT.md)
+            "$(cat ci/prompts/plan-release.md
 
-          Additional context for this run:
+          ## This run
+
           - models that shipped this cycle: ${MODEL_IDS:-none}
           - count: ${NEW_COUNT:-0}
-          - your job is ONLY to write release/plan.json, following ci/AGENT.md exactly.
           - release/release.json is already on disk. Read it. Do not run npm run render.
           - if the release warrants nothing, still write the file with limit 0." \
             > agent-log.json || {

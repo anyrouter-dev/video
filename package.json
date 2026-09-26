@@ -7,6 +7,7 @@
     "dev": "hyperframes preview",
     "check": "hyperframes check",
     "render": "hyperframes render",
+    "cover": "node release/cover.mjs",
     "inspect": "hyperframes inspect",
     "snapshot": "hyperframes snapshot",
     "beats": "hyperframes beats",

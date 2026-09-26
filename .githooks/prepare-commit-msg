@@ -1,0 +1,21 @@
+#!/bin/sh
+# Adds the duyetbot co-author to every commit, matching the convention used
+# across the AnyRouter repos (`Co-authored-by: duyetbot <bot@duyet.net>`).
+#
+# Installed via core.hooksPath, so it is versioned with the repo and applies to
+# every clone rather than living in one developer's .git/hooks.
+#
+# Skips itself when:
+#   - the message is a merge commit
+#   - a Co-authored-by trailer is already present (manual, or a rebase replay)
+#   - the commit was made with --no-verify
+# Bypass entirely:  SKIP_DUYETBOT_TRAILER=1 git commit ...
+
+case "$2" in
+  merge|commit) exit 0 ;;   # $2 is the source: "message", "template", "merge", "commit"
+esac
+
+grep -qi '^Co-authored-by:' "$1" && exit 0
+grep -qi '^Co-Authored-By:' "$1" && exit 0
+
+printf '\nCo-authored-by: duyetbot <bot@duyet.net>\n' >>"$1"
