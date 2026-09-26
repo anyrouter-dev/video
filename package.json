@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "yt:auth": "node release/youtube-auth.mjs",
     "dev": "hyperframes preview",
     "check": "hyperframes check",
     "render": "hyperframes render",

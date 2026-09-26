@@ -144,13 +144,32 @@ are always the same thing.
   In CI it is the built-in `GITHUB_TOKEN`, already granted.
 - **YouTube** — optional, and it skips loudly rather than failing the run. It
   needs three secrets: `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`,
-  `YOUTUBE_REFRESH_TOKEN`. Obtain them once from a Google Cloud project with the
-  *YouTube Data API v3* enabled, a Desktop-app OAuth client, and one consent
-  flow. Optional vars: `YT_PRIVACY` (default `unlisted`), `YT_TITLE_TEMPLATE`
-  (`{id}` is substituted).
+  `YOUTUBE_REFRESH_TOKEN`. Optional vars: `YT_PRIVACY` (default `unlisted`),
+  `YT_TITLE_TEMPLATE` (`{id}` is substituted).
 
 The GitHub Release is the durable record. YouTube is a convenience mirror — the
 film is never lost when it is not configured.
+
+### One-time YouTube setup
+
+A refresh token can only be minted by a human clicking a consent screen, so
+`npm run yt:auth` walks you through it and prints the three `gh secret set`
+commands at the end. It opens the browser, catches the loopback redirect, and
+verifies the token against the API before telling you to paste anything.
+
+```bash
+# 1. Google Cloud → a project with "YouTube Data API v3" enabled
+# 2. OAuth consent screen → External → add your own Gmail as a test user
+# 3. Credentials → OAuth client ID → Application type: DESKTOP APP
+YOUTUBE_CLIENT_ID=… YOUTUBE_CLIENT_SECRET=… npm run yt:auth
+#    → prints the refresh token and the exact `gh secret set` lines
+```
+
+Desktop-app is the client type that matters: Google accepts any loopback
+`http://127.0.0.1:<port>` as a redirect, so nothing has to be registered by URL.
+The requested scope is `youtube.upload` and nothing else — no read access to your
+channel, no analytics, no ability to delete anything. Revoke at
+<https://myaccount.google.com/permissions>.
 
 ## Accuracy
 
