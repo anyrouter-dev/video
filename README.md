@@ -161,7 +161,8 @@ verifies the token against the API before telling you to paste anything.
 # 1. Google Cloud → a project with "YouTube Data API v3" enabled
 # 2. OAuth consent screen → External → add your own Gmail as a test user
 # 3. Credentials → OAuth client ID → Application type: DESKTOP APP
-YOUTUBE_CLIENT_ID=… YOUTUBE_CLIENT_SECRET=… npm run yt:auth
+cp .env.example .env.local      # fill in YOUTUBE_CLIENT_ID + YOUTUBE_CLIENT_SECRET
+npm run yt:auth
 #    → prints the refresh token and the exact `gh secret set` lines
 ```
 
@@ -170,6 +171,11 @@ Desktop-app is the client type that matters: Google accepts any loopback
 The requested scope is `youtube.upload` and nothing else — no read access to your
 channel, no analytics, no ability to delete anything. Revoke at
 <https://myaccount.google.com/permissions>.
+
+`.env.local` holds the credentials locally and is gitignored; `.env.example` is
+the committed template. `publish` and `yt:auth` load it via
+`--env-file-if-exists`, so a fresh clone with no `.env.local` still runs and
+simply skips YouTube. CI uses repository **secrets**, never an env file.
 
 ## Accuracy
 
