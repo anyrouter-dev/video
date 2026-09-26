@@ -1,0 +1,1351 @@
+{
+  "acceptedAt": "2026-09-26T12:45:45.723Z",
+  "ids": [
+    "agents-a1/agents-a1-free",
+    "agnes-ai/agnes-2.5-flash",
+    "agnes-ai/agnes-2.5-pro-alpha",
+    "agnes-ai/agnes-2.5-pro",
+    "agnes-ai/agnes-3.0-flash",
+    "anthropic/claude-fable-5.1",
+    "anthropic/claude-fable-5",
+    "anthropic/claude-opus-4.1",
+    "anthropic/claude-opus-4.5",
+    "anthropic/claude-opus-4.6",
+    "anthropic/claude-opus-4.7",
+    "anthropic/claude-opus-4.8",
+    "anthropic/claude-opus-4",
+    "anthropic/claude-opus-5-5",
+    "anthropic/claude-opus-5-fast",
+    "anthropic/claude-opus-5",
+    "anthropic/claude-sonnet-4.5",
+    "anthropic/claude-sonnet-4.6",
+    "anthropic/claude-sonnet-4",
+    "anthropic/claude-sonnet-5",
+    "apple/foundation-model",
+    "bytedance-seed/doubao-seed-2-1-pro-260628",
+    "bytedance-seed/seed-2-1-turbo",
+    "bytedance-seed/seed-2.0-code",
+    "cohere/command-a-plus",
+    "cohere/command-a",
+    "cohere/north-mini-code",
+    "deepseek/deepseek-r1",
+    "deepseek/deepseek-v3.1",
+    "deepseek/deepseek-v3",
+    "deepseek/deepseek-v4-flash",
+    "deepseek/deepseek-v4-pro",
+    "deepseek/deepseek-v4.1-flash",
+    "dots-studio/dots-3-note-preview",
+    "fastino/gliner2.5-multi-v1",
+    "google/gemini-2.5-flash-lite",
+    "google/gemini-2.5-pro",
+    "google/gemini-3-flash",
+    "google/gemini-3.1-flash-lite",
+    "google/gemini-3.1-pro",
+    "google/gemini-3.5-flash-lite",
+    "google/gemini-3.5-flash",
+    "google/gemini-3.6-flash",
+    "google/gemini-3.7-flash",
+    "google/gemini-3.8-flash",
+    "google/gemma-4-26b-a4b-it",
+    "google/gemma-4-31b",
+    "ibm-granite/granite-4.0-h-micro",
+    "inception/mercury-2.5",
+    "inclusionai/ling-2.6-1t",
+    "inclusionai/ling-2.6-flash",
+    "inclusionai/ling-3.0-flash-fin",
+    "inclusionai/ling-3.0-flash-sante",
+    "inclusionai/ling-3.0-flash-vl",
+    "inclusionai/ling-3.0-flash",
+    "inclusionai/ling-3.0-tiny",
+    "inclusionai/ring-2.6-1t",
+    "intern/intern-s2-free",
+    "jaredpalmer/kev-4b",
+    "liquid/lfm-2.5-2.6b",
+    "meituan/longcat-2.0",
+    "meituan/longcat-2.5-preview",
+    "meta/llama-3.1-70b-instruct",
+    "meta/llama-3.1-8b-instruct",
+    "meta/llama-3.3-70b-instruct",
+    "meta/llama-4-scout-17b-16e-instruct",
+    "meta/muse-glimmer-30b",
+    "meta/muse-spark-1.1",
+    "meta/muse-spark-1.2",
+    "meta/muse-spark-1.3",
+    "microsoft/mai-thinking-1",
+    "minimax/m2.5",
+    "minimax/m2.7",
+    "minimax/m2",
+    "minimax/m3",
+    "mistralai/mistral-medium-3.5-128b",
+    "mistralai/mistral-small-3.1-24b-instruct",
+    "moonshotai/kimi-k2.5",
+    "moonshotai/kimi-k2.6",
+    "moonshotai/kimi-k2.7-code",
+    "moonshotai/kimi-k3",
+    "nex-agi/nex-n2.5-mini",
+    "nex-agi/nex-n2.5-pro",
+    "nousresearch/hermes-3-llama-3.1-405b",
+    "nvidia/nemotron-3-120b-a12b",
+    "nvidia/nemotron-3-embed-1b",
+    "nvidia/nemotron-3-nano-30b-a3b",
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+    "nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-content-safety",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-parse-2.0",
+    "nvidia/riva-translate-4b-instruct-v2",
+    "openai/codex-mini-latest",
+    "openai/gpt-4.1-mini",
+    "openai/gpt-4.1-nano",
+    "openai/gpt-4.1",
+    "openai/gpt-4o-mini",
+    "openai/gpt-4o",
+    "openai/gpt-5-chat-latest",
+    "openai/gpt-5-codex",
+    "openai/gpt-5-mini",
+    "openai/gpt-5-nano",
+    "openai/gpt-5.1-codex-max",
+    "openai/gpt-5.1-codex-mini",
+    "openai/gpt-5.1-codex",
+    "openai/gpt-5.1",
+    "openai/gpt-5.2-codex",
+    "openai/gpt-5.2",
+    "openai/gpt-5.3-codex-spark",
+    "openai/gpt-5.3-codex",
+    "openai/gpt-5.4-mini",
+    "openai/gpt-5.4-nano",
+    "openai/gpt-5.4-pro",
+    "openai/gpt-5.4",
+    "openai/gpt-5.5-pro",
+    "openai/gpt-5.5",
+    "openai/gpt-5.6-luna",
+    "openai/gpt-5.6-sol",
+    "openai/gpt-5.6-terra",
+    "openai/gpt-5",
+    "openai/gpt-6-astra",
+    "openai/gpt-6-luna",
+    "openai/gpt-6-sol",
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "openai/o1-mini",
+    "openai/o1",
+    "openai/o4-mini",
+    "openrouter/free",
+    "openrouter/fusion",
+    "poolside/laguna-s-2.1",
+    "poolside/laguna-xs-2.1",
+    "qwen/qwen2.5-72b-instruct",
+    "qwen/qwen2.5-coder-32b-instruct",
+    "qwen/qwen3-14b",
+    "qwen/qwen3-235b-a22b",
+    "qwen/qwen3-8b",
+    "qwen/qwen3-embedding-8b",
+    "qwen/qwen3.5-27b",
+    "qwen/qwen3.5-397b-a17b",
+    "qwen/qwen3.5-9b",
+    "qwen/qwen3.5-plus",
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.7-flash",
+    "qwen/qwen3.7-max",
+    "qwen/qwen3.7-plus",
+    "qwen/qwen3.8-2.4t-a95b",
+    "qwen/qwen3.8-27b",
+    "qwen/qwen3.8-flash",
+    "qwen/qwen3.8-max",
+    "qwen/qwen3.8-omni-flash",
+    "sakana/fugu-ultra",
+    "sakana/fugu",
+    "sakana/sakana-namazu",
+    "sao10k/l3.1-euryale-70b",
+    "stealth/space-bunny-alpha",
+    "stepfun-ai/step-3.5-flash",
+    "stepfun-ai/step-3.7-flash",
+    "tencent/hy4-preview",
+    "thinkingmachines/inkling-small",
+    "thinkingmachines/inkling",
+    "typesafe/jev",
+    "upstage/solar-pro4",
+    "venice/google-gemma-4-26b-a4b-it",
+    "venice/hermes-3-llama-3.1-405b",
+    "venice/minimax-m27",
+    "venice/nvidia-nemotron-3-ultra-550b-a55b",
+    "venice/openai-gpt-54-mini",
+    "venice/venice-uncensored-role-play",
+    "x-ai/grok-4.1-fast-reasoning",
+    "x-ai/grok-4.20-multi-agent",
+    "x-ai/grok-4.20-non-reasoning",
+    "x-ai/grok-4.20-reasoning",
+    "x-ai/grok-4.3",
+    "x-ai/grok-4.6",
+    "x-ai/grok-4.7",
+    "x-ai/grok-build-0.1",
+    "xiaomi/mimo-v2.5-pro",
+    "xiaomi/mimo-v2.5",
+    "z-ai/glm-4.5",
+    "z-ai/glm-4.6",
+    "z-ai/glm-4.6v",
+    "z-ai/glm-4.7-flash",
+    "z-ai/glm-4.7",
+    "z-ai/glm-5.1",
+    "z-ai/glm-5.2",
+    "z-ai/glm-5.3-flash",
+    "z-ai/glm-5.3-flashx",
+    "z-ai/glm-5.3",
+    "z-ai/glm-5"
+  ],
+  "models": [
+    {
+      "id": "agents-a1/agents-a1-free",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "agnes-ai/agnes-2.5-flash",
+      "inPrice": 0.03,
+      "outPrice": 0.15,
+      "context": 512000
+    },
+    {
+      "id": "agnes-ai/agnes-2.5-pro-alpha",
+      "inPrice": 0.45,
+      "outPrice": 0.9,
+      "context": 1000000
+    },
+    {
+      "id": "agnes-ai/agnes-2.5-pro",
+      "inPrice": 0.45,
+      "outPrice": 0.9,
+      "context": 1000000
+    },
+    {
+      "id": "agnes-ai/agnes-3.0-flash",
+      "inPrice": 0.03,
+      "outPrice": 0.15,
+      "context": 512000
+    },
+    {
+      "id": "anthropic/claude-fable-5.1",
+      "inPrice": 10,
+      "outPrice": 50,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-fable-5",
+      "inPrice": 10,
+      "outPrice": 50,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4.1",
+      "inPrice": 15,
+      "outPrice": 75,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4.5",
+      "inPrice": 5,
+      "outPrice": 25,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4.6",
+      "inPrice": 5,
+      "outPrice": 25,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4.7",
+      "inPrice": 5,
+      "outPrice": 25,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4.8",
+      "inPrice": 5,
+      "outPrice": 25,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-4",
+      "inPrice": 15,
+      "outPrice": 75,
+      "context": 200000
+    },
+    {
+      "id": "anthropic/claude-opus-5-5",
+      "inPrice": 4,
+      "outPrice": 20,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-5-fast",
+      "inPrice": 10,
+      "outPrice": 50,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-opus-5",
+      "inPrice": 5,
+      "outPrice": 25,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.5",
+      "inPrice": 3,
+      "outPrice": 15,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.6",
+      "inPrice": 3,
+      "outPrice": 15,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-sonnet-4",
+      "inPrice": 3,
+      "outPrice": 15,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-sonnet-5",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
+      "id": "apple/foundation-model",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 4096
+    },
+    {
+      "id": "bytedance-seed/doubao-seed-2-1-pro-260628",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "bytedance-seed/seed-2-1-turbo",
+      "inPrice": 0.5,
+      "outPrice": 2.5,
+      "context": 262144
+    },
+    {
+      "id": "bytedance-seed/seed-2.0-code",
+      "inPrice": 0.5,
+      "outPrice": 3,
+      "context": 262144
+    },
+    {
+      "id": "cohere/command-a-plus",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "cohere/command-a",
+      "inPrice": 2.5,
+      "outPrice": 10,
+      "context": 262144
+    },
+    {
+      "id": "cohere/north-mini-code",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "deepseek/deepseek-r1",
+      "inPrice": 0.7,
+      "outPrice": 2.5,
+      "context": 64000
+    },
+    {
+      "id": "deepseek/deepseek-v3.1",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "deepseek/deepseek-v3",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 128000
+    },
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "inPrice": 0.042448,
+      "outPrice": 0.084896,
+      "context": 1048576
+    },
+    {
+      "id": "deepseek/deepseek-v4-pro",
+      "inPrice": 0.55,
+      "outPrice": 2.19,
+      "context": 1048576
+    },
+    {
+      "id": "deepseek/deepseek-v4.1-flash",
+      "inPrice": 0.155,
+      "outPrice": 0.62,
+      "context": 1048576
+    },
+    {
+      "id": "dots-studio/dots-3-note-preview",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 512000
+    },
+    {
+      "id": "fastino/gliner2.5-multi-v1",
+      "inPrice": 0.042,
+      "outPrice": 0,
+      "context": 32000
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite",
+      "inPrice": 0.1,
+      "outPrice": 0.4,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemini-2.5-pro",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemini-3-flash",
+      "inPrice": 0.5,
+      "outPrice": 3,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-3.1-flash-lite",
+      "inPrice": 0.25,
+      "outPrice": 1.5,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemini-3.1-pro",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemini-3.5-flash-lite",
+      "inPrice": 0.3,
+      "outPrice": 2.5,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-3.5-flash",
+      "inPrice": 1.5,
+      "outPrice": 9,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemini-3.6-flash",
+      "inPrice": 0.75,
+      "outPrice": 3.75,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-3.7-flash",
+      "inPrice": 0.375,
+      "outPrice": 1.875,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-3.8-flash",
+      "inPrice": 0.375,
+      "outPrice": 1.875,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemma-4-26b-a4b-it",
+      "inPrice": 0.1,
+      "outPrice": 0.3,
+      "context": 262144
+    },
+    {
+      "id": "google/gemma-4-31b",
+      "inPrice": 0.15,
+      "outPrice": 0.45,
+      "context": 262144
+    },
+    {
+      "id": "ibm-granite/granite-4.0-h-micro",
+      "inPrice": 0.017,
+      "outPrice": 0.112,
+      "context": 128000
+    },
+    {
+      "id": "inception/mercury-2.5",
+      "inPrice": 0.04,
+      "outPrice": 0.15,
+      "context": 260000
+    },
+    {
+      "id": "inclusionai/ling-2.6-1t",
+      "inPrice": 0.075,
+      "outPrice": 0.625,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-2.6-flash",
+      "inPrice": 0.01,
+      "outPrice": 0.03,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-3.0-flash-fin",
+      "inPrice": 0.06,
+      "outPrice": 0.18,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-3.0-flash-sante",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-3.0-flash-vl",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-3.0-flash",
+      "inPrice": 0.021,
+      "outPrice": 0.063,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ling-3.0-tiny",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "inclusionai/ring-2.6-1t",
+      "inPrice": 0.075,
+      "outPrice": 0.625,
+      "context": 262144
+    },
+    {
+      "id": "intern/intern-s2-free",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "jaredpalmer/kev-4b",
+      "inPrice": 0.042,
+      "outPrice": 0,
+      "context": 8192
+    },
+    {
+      "id": "liquid/lfm-2.5-2.6b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 128000
+    },
+    {
+      "id": "meituan/longcat-2.0",
+      "inPrice": 0.3,
+      "outPrice": 1.2,
+      "context": 1048576
+    },
+    {
+      "id": "meituan/longcat-2.5-preview",
+      "inPrice": 0.75,
+      "outPrice": 2.95,
+      "context": 1048576
+    },
+    {
+      "id": "meta/llama-3.1-70b-instruct",
+      "inPrice": 0.4,
+      "outPrice": 0.4,
+      "context": 131072
+    },
+    {
+      "id": "meta/llama-3.1-8b-instruct",
+      "inPrice": 0.05,
+      "outPrice": 0.08,
+      "context": 131072
+    },
+    {
+      "id": "meta/llama-3.3-70b-instruct",
+      "inPrice": 0.1,
+      "outPrice": 0.32,
+      "context": 131072
+    },
+    {
+      "id": "meta/llama-4-scout-17b-16e-instruct",
+      "inPrice": 0.1,
+      "outPrice": 0.3,
+      "context": 524288
+    },
+    {
+      "id": "meta/muse-glimmer-30b",
+      "inPrice": 0.35,
+      "outPrice": 1.5,
+      "context": 131072
+    },
+    {
+      "id": "meta/muse-spark-1.1",
+      "inPrice": 1.25,
+      "outPrice": 4.25,
+      "context": 1048576
+    },
+    {
+      "id": "meta/muse-spark-1.2",
+      "inPrice": 1.25,
+      "outPrice": 4.25,
+      "context": 1048576
+    },
+    {
+      "id": "meta/muse-spark-1.3",
+      "inPrice": 1.375,
+      "outPrice": 4.675,
+      "context": 1048576
+    },
+    {
+      "id": "microsoft/mai-thinking-1",
+      "inPrice": 2,
+      "outPrice": 8,
+      "context": 256000
+    },
+    {
+      "id": "minimax/m2.5",
+      "inPrice": 0.22,
+      "outPrice": 0.9,
+      "context": 204800
+    },
+    {
+      "id": "minimax/m2.7",
+      "inPrice": 0.3,
+      "outPrice": 1.2,
+      "context": 204800
+    },
+    {
+      "id": "minimax/m2",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 204800
+    },
+    {
+      "id": "minimax/m3",
+      "inPrice": 0.3,
+      "outPrice": 1.2,
+      "context": 1048576
+    },
+    {
+      "id": "mistralai/mistral-medium-3.5-128b",
+      "inPrice": 1.5,
+      "outPrice": 7.5,
+      "context": 131072
+    },
+    {
+      "id": "mistralai/mistral-small-3.1-24b-instruct",
+      "inPrice": 0.1,
+      "outPrice": 0.3,
+      "context": 131072
+    },
+    {
+      "id": "moonshotai/kimi-k2.5",
+      "inPrice": 0.57,
+      "outPrice": 2.85,
+      "context": 256000
+    },
+    {
+      "id": "moonshotai/kimi-k2.6",
+      "inPrice": 0.95,
+      "outPrice": 4,
+      "context": 262144
+    },
+    {
+      "id": "moonshotai/kimi-k2.7-code",
+      "inPrice": 0.71,
+      "outPrice": 3.5,
+      "context": 262144
+    },
+    {
+      "id": "moonshotai/kimi-k3",
+      "inPrice": 3,
+      "outPrice": 15,
+      "context": 1048576
+    },
+    {
+      "id": "nex-agi/nex-n2.5-mini",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "nex-agi/nex-n2.5-pro",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
+      "id": "nousresearch/hermes-3-llama-3.1-405b",
+      "inPrice": 1,
+      "outPrice": 1,
+      "context": 131072
+    },
+    {
+      "id": "nvidia/nemotron-3-120b-a12b",
+      "inPrice": 0.5,
+      "outPrice": 1.5,
+      "context": 131072
+    },
+    {
+      "id": "nvidia/nemotron-3-embed-1b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b",
+      "inPrice": 0.05,
+      "outPrice": 0.2,
+      "context": 256000
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "inPrice": 0.0245,
+      "outPrice": 0.0978,
+      "context": 256000
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "inPrice": 0.085,
+      "outPrice": 0.4,
+      "context": 262144
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "inPrice": 0.5,
+      "outPrice": 2.5,
+      "context": 1000000
+    },
+    {
+      "id": "nvidia/nemotron-3.5-content-safety",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 128000
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "inPrice": 0.08,
+      "outPrice": 0.2,
+      "context": 1000000
+    },
+    {
+      "id": "nvidia/nemotron-parse-2.0",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 8192
+    },
+    {
+      "id": "nvidia/riva-translate-4b-instruct-v2",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 4096
+    },
+    {
+      "id": "openai/codex-mini-latest",
+      "inPrice": 1.5,
+      "outPrice": 6,
+      "context": 200000
+    },
+    {
+      "id": "openai/gpt-4.1-mini",
+      "inPrice": 0.4,
+      "outPrice": 1.6,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-4.1-nano",
+      "inPrice": 0.1,
+      "outPrice": 0.4,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-4.1",
+      "inPrice": 2,
+      "outPrice": 8,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-4o-mini",
+      "inPrice": 0.15,
+      "outPrice": 0.6,
+      "context": 128000
+    },
+    {
+      "id": "openai/gpt-4o",
+      "inPrice": 2.5,
+      "outPrice": 10,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-5-chat-latest",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 128000
+    },
+    {
+      "id": "openai/gpt-5-codex",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5-mini",
+      "inPrice": 0.25,
+      "outPrice": 2,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5-nano",
+      "inPrice": 0.05,
+      "outPrice": 0.4,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.1-codex-max",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.1-codex-mini",
+      "inPrice": 0.25,
+      "outPrice": 2,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.1-codex",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.1",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
+      "id": "openai/gpt-5.2-codex",
+      "inPrice": 1.75,
+      "outPrice": 14,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.2",
+      "inPrice": 1.75,
+      "outPrice": 14,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.3-codex-spark",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 200000
+    },
+    {
+      "id": "openai/gpt-5.3-codex",
+      "inPrice": 1.75,
+      "outPrice": 14,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.4-mini",
+      "inPrice": 0.75,
+      "outPrice": 4.5,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.4-nano",
+      "inPrice": 0.2,
+      "outPrice": 1.25,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-5.4-pro",
+      "inPrice": 30,
+      "outPrice": 180,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-5.4",
+      "inPrice": 2.5,
+      "outPrice": 15,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-5.5-pro",
+      "inPrice": 2.5,
+      "outPrice": 15,
+      "context": 922000
+    },
+    {
+      "id": "openai/gpt-5.5",
+      "inPrice": 2.5,
+      "outPrice": 15,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-5.6-luna",
+      "inPrice": 0.2,
+      "outPrice": 1.2,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-5.6-sol",
+      "inPrice": 2.5,
+      "outPrice": 15,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-5.6-terra",
+      "inPrice": 2,
+      "outPrice": 12,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-5",
+      "inPrice": 1.25,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "inPrice": 10,
+      "outPrice": 50,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "inPrice": 0.1,
+      "outPrice": 0.5,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-6-sol",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "inPrice": 0.143,
+      "outPrice": 0.605,
+      "context": 131072
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "inPrice": 0.03,
+      "outPrice": 0.14,
+      "context": 131072
+    },
+    {
+      "id": "openai/o1-mini",
+      "inPrice": 1.1,
+      "outPrice": 4.4,
+      "context": 128000
+    },
+    {
+      "id": "openai/o1",
+      "inPrice": 15,
+      "outPrice": 60,
+      "context": 200000
+    },
+    {
+      "id": "openai/o4-mini",
+      "inPrice": 1.1,
+      "outPrice": 4.4,
+      "context": 200000
+    },
+    {
+      "id": "openrouter/free",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 200000
+    },
+    {
+      "id": "openrouter/fusion",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 128000
+    },
+    {
+      "id": "poolside/laguna-s-2.1",
+      "inPrice": 0.1,
+      "outPrice": 0.2,
+      "context": 1048576
+    },
+    {
+      "id": "poolside/laguna-xs-2.1",
+      "inPrice": 0.1,
+      "outPrice": 0.2,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen2.5-72b-instruct",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 128000
+    },
+    {
+      "id": "qwen/qwen2.5-coder-32b-instruct",
+      "inPrice": 0.66,
+      "outPrice": 1,
+      "context": 131072
+    },
+    {
+      "id": "qwen/qwen3-14b",
+      "inPrice": 0.12,
+      "outPrice": 0.24,
+      "context": 128000
+    },
+    {
+      "id": "qwen/qwen3-235b-a22b",
+      "inPrice": 0.0875,
+      "outPrice": 0.35,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen3-8b",
+      "inPrice": 0.117,
+      "outPrice": 0.455,
+      "context": 128000
+    },
+    {
+      "id": "qwen/qwen3-embedding-8b",
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
+      "id": "qwen/qwen3.5-27b",
+      "inPrice": 0.195,
+      "outPrice": 1.56,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen3.5-397b-a17b",
+      "inPrice": 0.39,
+      "outPrice": 2.34,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen3.5-9b",
+      "inPrice": 0.1,
+      "outPrice": 0.15,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen3.5-plus",
+      "inPrice": 0.4,
+      "outPrice": 1.6,
+      "context": 256000
+    },
+    {
+      "id": "qwen/qwen3.6-plus",
+      "inPrice": 0.4,
+      "outPrice": 1.6,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.7-flash",
+      "inPrice": 0.03,
+      "outPrice": 0.13,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.7-max",
+      "inPrice": 2.5,
+      "outPrice": 7.5,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.7-plus",
+      "inPrice": 0.32,
+      "outPrice": 1.28,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.8-2.4t-a95b",
+      "inPrice": 2,
+      "outPrice": 6,
+      "context": 1010000
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "inPrice": 0.24,
+      "outPrice": 2.2,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.8-flash",
+      "inPrice": 0.1126,
+      "outPrice": 0.38,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.8-max",
+      "inPrice": 1.69,
+      "outPrice": 5.07,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.8-omni-flash",
+      "inPrice": 0.1126,
+      "outPrice": 0.38,
+      "context": 1000000
+    },
+    {
+      "id": "sakana/fugu-ultra",
+      "inPrice": 5,
+      "outPrice": 30,
+      "context": 272000
+    },
+    {
+      "id": "sakana/fugu",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 272000
+    },
+    {
+      "id": "sakana/sakana-namazu",
+      "inPrice": 0.95,
+      "outPrice": 4,
+      "context": 262144
+    },
+    {
+      "id": "sao10k/l3.1-euryale-70b",
+      "inPrice": 0.85,
+      "outPrice": 0.85,
+      "context": 131072
+    },
+    {
+      "id": "stealth/space-bunny-alpha",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 1000000
+    },
+    {
+      "id": "stepfun-ai/step-3.5-flash",
+      "inPrice": 0.1,
+      "outPrice": 0.3,
+      "context": 1000000
+    },
+    {
+      "id": "stepfun-ai/step-3.7-flash",
+      "inPrice": 0.2,
+      "outPrice": 1.15,
+      "context": 256000
+    },
+    {
+      "id": "tencent/hy4-preview",
+      "inPrice": 0.845,
+      "outPrice": 2.535,
+      "context": 1048576
+    },
+    {
+      "id": "thinkingmachines/inkling-small",
+      "inPrice": 0.45,
+      "outPrice": 1.2,
+      "context": 1048576
+    },
+    {
+      "id": "thinkingmachines/inkling",
+      "inPrice": 0.95,
+      "outPrice": 4.05,
+      "context": 1048576
+    },
+    {
+      "id": "typesafe/jev",
+      "inPrice": 0.042,
+      "outPrice": 0,
+      "context": 64000
+    },
+    {
+      "id": "upstage/solar-pro4",
+      "inPrice": 0.03,
+      "outPrice": 0.12,
+      "context": 524288
+    },
+    {
+      "id": "venice/google-gemma-4-26b-a4b-it",
+      "inPrice": 0.163,
+      "outPrice": 0.5,
+      "context": 256000
+    },
+    {
+      "id": "venice/hermes-3-llama-3.1-405b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "venice/minimax-m27",
+      "inPrice": 0.375,
+      "outPrice": 1.5,
+      "context": 198000
+    },
+    {
+      "id": "venice/nvidia-nemotron-3-ultra-550b-a55b",
+      "inPrice": 0.625,
+      "outPrice": 3.13,
+      "context": 1000000
+    },
+    {
+      "id": "venice/openai-gpt-54-mini",
+      "inPrice": 0.938,
+      "outPrice": 5.63,
+      "context": 400000
+    },
+    {
+      "id": "venice/venice-uncensored-role-play",
+      "inPrice": 0.5,
+      "outPrice": 2,
+      "context": 128000
+    },
+    {
+      "id": "x-ai/grok-4.1-fast-reasoning",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "x-ai/grok-4.20-multi-agent",
+      "inPrice": 1.3125,
+      "outPrice": 2.625,
+      "context": 2000000
+    },
+    {
+      "id": "x-ai/grok-4.20-non-reasoning",
+      "inPrice": 1.3125,
+      "outPrice": 2.625,
+      "context": 1000000
+    },
+    {
+      "id": "x-ai/grok-4.20-reasoning",
+      "inPrice": 1.3125,
+      "outPrice": 2.625,
+      "context": 1000000
+    },
+    {
+      "id": "x-ai/grok-4.3",
+      "inPrice": 1.25,
+      "outPrice": 2.5,
+      "context": 1000000
+    },
+    {
+      "id": "x-ai/grok-4.6",
+      "inPrice": 2,
+      "outPrice": 6,
+      "context": 500000
+    },
+    {
+      "id": "x-ai/grok-4.7",
+      "inPrice": 1.6,
+      "outPrice": 4.8,
+      "context": 500000
+    },
+    {
+      "id": "x-ai/grok-build-0.1",
+      "inPrice": 1,
+      "outPrice": 2,
+      "context": 256000
+    },
+    {
+      "id": "xiaomi/mimo-v2.5-pro",
+      "inPrice": 0.435,
+      "outPrice": 0.87,
+      "context": 1050000
+    },
+    {
+      "id": "xiaomi/mimo-v2.5",
+      "inPrice": 0.14,
+      "outPrice": 0.28,
+      "context": 1050000
+    },
+    {
+      "id": "z-ai/glm-4.5",
+      "inPrice": 0.6,
+      "outPrice": 2.2,
+      "context": 128000
+    },
+    {
+      "id": "z-ai/glm-4.6",
+      "inPrice": 0.14,
+      "outPrice": 0.28,
+      "context": 200000
+    },
+    {
+      "id": "z-ai/glm-4.6v",
+      "inPrice": 0.3,
+      "outPrice": 0.9,
+      "context": 200000
+    },
+    {
+      "id": "z-ai/glm-4.7-flash",
+      "inPrice": 0.06,
+      "outPrice": 0.4,
+      "context": 200000
+    },
+    {
+      "id": "z-ai/glm-4.7",
+      "inPrice": 0.14,
+      "outPrice": 0.28,
+      "context": 131072
+    },
+    {
+      "id": "z-ai/glm-5.1",
+      "inPrice": 0.966,
+      "outPrice": 3.036,
+      "context": 202752
+    },
+    {
+      "id": "z-ai/glm-5.2",
+      "inPrice": 0.476,
+      "outPrice": 1.496,
+      "context": 1000000
+    },
+    {
+      "id": "z-ai/glm-5.3-flash",
+      "inPrice": 0.15,
+      "outPrice": 0.5,
+      "context": 1048576
+    },
+    {
+      "id": "z-ai/glm-5.3-flashx",
+      "inPrice": 0.37,
+      "outPrice": 1.25,
+      "context": 1000000
+    },
+    {
+      "id": "z-ai/glm-5.3",
+      "inPrice": 0.06,
+      "outPrice": 0.22,
+      "context": 1000000
+    },
+    {
+      "id": "z-ai/glm-5",
+      "inPrice": 0.6,
+      "outPrice": 1.92,
+      "context": 200000
+    }
+  ]
+}

@@ -1,0 +1,433 @@
+name: render-video
+
+on:
+  # manual, with optional overrides
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Force a layout — 1 = hero, 2-4 = cards, 5+ = list (blank = auto)'
+        required: false
+        default: ''
+      seconds:
+        description: 'Force the film length in seconds (blank = 20)'
+        required: false
+        default: ''
+  # the AnyRouter repo dispatches this after a model ships
+  repository_dispatch:
+    types: [model-added]
+  # catch new models even if nothing here changed
+  schedule:
+    - cron: '17 7 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'release/**'
+      - 'ci/**'
+      - 'assets/**'
+      - '.github/workflows/render-video.yml'
+
+concurrency:
+  group: render-video-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────
+  # 1. Facts. Deterministic, no LLM, no secrets. The artifact depends on this
+  #    job alone — if the agent is down, the film still renders.
+  # ─────────────────────────────────────────────────────────────────────────
+  facts:
+    name: fetch live catalog
+    runs-on: ubuntu-latest
+    outputs:
+      new_count: ${{ steps.f.outputs.new_count }}
+      model_ids: ${{ steps.f.outputs.model_ids }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Fetch the catalog and report what shipped
+        id: f
+        run: |
+          set -euo pipefail
+          # First run on a fresh checkout: there is no baseline yet, so seed it
+          # from today's catalog instead of claiming 192 models are new.
+          if [ ! -s release/baseline.json ]; then
+            echo "::notice::no baseline — seeding from the current catalog"
+            node release/fetch.mjs --all --first=8 | tee fetch.log
+            node release/fetch.mjs --accept >/dev/null
+          fi
+          node release/fetch.mjs | tee fetch.log
+          N=$(node -e "const r=require('./release/release.json');console.log((r.incoming||[]).length)")
+          IDS=$(node -e "const r=require('./release/release.json');console.log((r.incoming||[]).map(m=>m.id).join(' '))")
+          echo "new_count=$N" >> "$GITHUB_OUTPUT"
+          echo "model_ids=$IDS" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Catalog diff"
+            echo '```'
+            cat fetch.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Persist the diff for the downstream jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-data
+          path: |
+            release/release.json
+            release/baseline.json
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 2. Judgment. OpenCode picks the story and writes release/plan.json.
+  #    Optional by design: `continue-on-error` and a secrets guard mean a
+  #    missing key, a rate limit, or an agent outage cannot fail the build.
+  # ─────────────────────────────────────────────────────────────────────────
+  plan:
+    name: agent picks the story
+    needs: facts
+    runs-on: ubuntu-latest
+    # The film must render even with no key, no quota, or a flaky model.
+    continue-on-error: true
+    outputs:
+      limit: ${{ steps.plan.outputs.limit }}
+      seconds: ${{ steps.plan.outputs.seconds }}
+      headline: ${{ steps.plan.outputs.headline }}
+      planned: ${{ steps.plan.outputs.planned }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Download the catalog diff
+        uses: actions/download-artifact@v4
+        with:
+          name: release-data
+          path: release
+
+      - name: Install OpenCode
+        if: ${{ env.OPENCODE_API_KEY != '' }}
+        run: |
+          set -euo pipefail
+          curl -fsSL https://opencode.ai/install | bash
+          echo "$HOME/.opencode/bin" >> "$GITHUB_PATH"
+          opencode --version
+
+      - name: Let the agent write the plan
+        id: plan
+        if: ${{ env.OPENCODE_API_KEY != '' }}
+        env:
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          NEW_COUNT: ${{ needs.facts.outputs.new_count }}
+          MODEL_IDS: ${{ needs.facts.outputs.model_ids }}
+        run: |
+          set -euo pipefail
+          echo "new models: $NEW_COUNT"
+          echo "ids: $MODEL_IDS"
+          # `--auto` because the agent is only permitted to write one file, and
+          # a prompt that hangs waiting on a TTY would stall the whole job.
+          timeout 600 opencode run \
+            --auto \
+            --format json \
+            "$(cat ci/AGENT.md)
+
+          Additional context for this run:
+          - models that shipped this cycle: ${MODEL_IDS:-none}
+          - count: ${NEW_COUNT:-0}
+          - your job is ONLY to write release/plan.json, following ci/AGENT.md exactly.
+          - release/release.json is already on disk. Read it. Do not run npm run render.
+          - if the release warrants nothing, still write the file with limit 0." \
+            > agent-log.json || {
+              echo "::warning::opencode did not complete cleanly — continuing with the default plan"
+            }
+
+          if [ -s release/plan.json ]; then
+            node -e "
+              const p=require('./release/plan.json');
+              const f=(x)=>String(x??'').replace(/[\r\n]+/g,' ').slice(0,200);
+              require('fs').appendFileSync(process.env.GITHUB_OUTPUT,
+                'planned=true\nlimit='+(Number.isFinite(+p.limit)?+p.limit:0)+
+                '\nseconds='+(Number.isFinite(+p.seconds)?+p.seconds:20)+
+                '\nheadline='+f(p.headline)+'\n');
+              console.log('plan accepted:', JSON.stringify(p).slice(0,300));
+            "
+            {
+              echo "### Agent plan"
+              echo '```json'
+              cat release/plan.json
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "no plan.json — the render will use its defaults"
+            echo "planned=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: No key configured
+        if: ${{ env.OPENCODE_API_KEY == '' }}
+        run: |
+          echo "::notice::OPENCODE_API_KEY is not set — skipping the agent and rendering the default film"
+          echo "planned=false" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the plan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan
+          path: |
+            release/plan.json
+            agent-log.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 3. Render — deterministic AND idempotent.
+  #    `release/run.mjs` fingerprints what changed; if this exact release is
+  #    already in releases/index.json it exits without rendering. That is what
+  #    lets this run nightly without burning a render every night.
+  #    `check` is a hard gate inside the driver — a film that fails it is
+  #    neither uploaded nor recorded.
+  # ─────────────────────────────────────────────────────────────────────────
+  render:
+    name: render
+    needs: [facts, plan]
+    if: always() && needs.facts.result == 'success'
+    runs-on: ubuntu-latest
+    # Step outputs are private to their own job, so the two facts `publish` needs
+    # are re-exported here as job outputs. Without these, `needs.render.outputs`
+    # is empty in publish and its `if` is always false.
+    outputs:
+      rendered: ${{ steps.r.outputs.rendered }}
+      release_id: ${{ steps.r.outputs.release_id }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install ffmpeg
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Download the catalog diff
+        uses: actions/download-artifact@v4
+        with:
+          name: release-data
+          path: release
+
+      - name: Download the plan
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: plan
+          path: release
+
+      - name: Decide, and render only if this release is new
+        id: r
+        env:
+          FORCE_LIMIT: ${{ inputs.limit }}
+          FORCE_SECONDS: ${{ inputs.seconds }}
+        run: |
+          set -euo pipefail
+          ARGS=""
+          [ -n "$FORCE_SECONDS" ] && ARGS="$ARGS --seconds=$FORCE_SECONDS"
+          [ -n "$FORCE_LIMIT" ] && ARGS="$ARGS --limit=$FORCE_LIMIT"
+          # --force only for a manual re-render, never for the schedule.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$FORCE_LIMIT$FORCE_SECONDS" ]; then
+            ARGS="$ARGS --force"
+          fi
+          echo "node release/run.mjs $ARGS"
+          set +e
+          node release/run.mjs $ARGS 2>&1 | tee run.log
+          echo "exit=$?" >> run.log
+          set -e
+          if grep -qE '^DONE  ' run.log; then
+            echo "rendered=true" >> "$GITHUB_OUTPUT"
+            # `tr -d '/'` here would delete the slashes rather than trim them and
+            # yield `releases001-…`, so strip the affixes with sed instead.
+            grep -oE 'releases/[^ /]+/' run.log | head -1 \
+              | sed -e 's|^releases/||' -e 's|/$||' -e 's/^/release_id=/' \
+              >> "$GITHUB_OUTPUT"
+            cat "$GITHUB_OUTPUT" >> "$GITHUB_STEP_SUMMARY"
+          elif grep -q 'nothing to render\|already rendered\|declined this release' run.log; then
+            echo "rendered=false" >> "$GITHUB_OUTPUT"
+            echo "release_id=" >> "$GITHUB_OUTPUT"
+            cat "$GITHUB_OUTPUT" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::error::the release driver did not report a render or a clean skip"
+            cat run.log
+            exit 1
+          fi
+
+      - name: Collect the artifact
+        if: steps.r.outputs.rendered == 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          cp "$(ls -t renders/*.mp4 | head -1)" out/model-drop.mp4
+          ffprobe -v error -show_entries format=duration \
+            -show_entries stream=nb_frames,codec_name,pix_fmt \
+            -of default=nw=1 out/model-drop.mp4 | tee out/probe.txt
+          D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 out/model-drop.mp4)
+          case "$D" in
+            20.0*|20.00*|19.9*|20.1*|14.0*|12.0*|19.99*|14.99*|12.99*) echo "duration ok: $D" ;;
+            *) echo "::error::unexpected duration $D"; exit 1 ;;
+          esac
+          ffmpeg -v error -ss 6 -i out/model-drop.mp4 -frames:v 1 -q:v 2 -y out/poster.jpg
+          cp release/release.json out/release.json
+          node release/ledger.mjs list | tee out/ledger.txt
+
+      - name: Upload the film
+        if: steps.r.outputs.rendered == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-drop-video
+          path: out/
+          retention-days: 30
+
+      - name: Commit the versioned source and the ledger
+        if: steps.r.outputs.rendered == 'true' && github.ref == 'refs/heads/main'
+        permissions:
+          contents: write
+        run: |
+          set -euo pipefail
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # releases/<id>/ is the artefact of record: it freezes the generated
+          # source so this exact film can be rebuilt later, not just the newest.
+          git add releases/
+          if git diff --cached --quiet; then echo 'nothing new to commit'; exit 0; fi
+          ID="${{ steps.r.outputs.release_id }}"
+          git commit -m "feat(video): ${ID:-model drop} — versioned source + ledger"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Model drop video"
+            if [ "${{ steps.r.outputs.rendered }}" = "true" ]; then
+              echo "Rendered \`${{ steps.r.outputs.release_id }}\` → \`out/model-drop.mp4\`"
+            else
+              echo "**No render.** This release was already recorded, or the agent declined it."
+            fi
+            echo
+            echo '<details><summary>run log</summary>'
+            echo
+            echo '```'
+            cat run.log 2>/dev/null || true
+            echo '```'
+            echo '</details>'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the composition source
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: composition
+          path: |
+            index.html
+            compositions/
+            assets/providers/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 4. Publish. GitHub Release always when configured; YouTube only with the
+  #    three OAuth secrets, and it skips loudly rather than failing the run.
+  # ─────────────────────────────────────────────────────────────────────────
+  publish:
+    name: publish
+    needs: [facts, render]
+    if: >-
+      always() && needs.render.result == 'success' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'schedule' || github.event_name == 'repository_dispatch')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+
+      - name: Download the film
+        if: needs.render.outputs.rendered == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: model-drop-video
+          path: renders
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YT_PRIVACY: ${{ vars.YT_PRIVACY }}
+          YT_TITLE_TEMPLATE: ${{ vars.YT_TITLE_TEMPLATE }}
+        run: |
+          set -euo pipefail
+          node release/publish.mjs | tee publish.log
+          {
+            echo "### Publish"
+            echo '```'
+            cat publish.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 5. Accept the baseline only after a successful run, so a failed render
+  #    cannot silently swallow the next release's diff.
+  # ─────────────────────────────────────────────────────────────────────────
+  accept:
+    name: accept baseline
+    needs: [facts, render, publish]
+    if: always() && needs.facts.result == 'success' && needs.render.result == 'success' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Promote the current catalog to the baseline
+        run: |
+          set -euo pipefail
+          node release/fetch.mjs --accept
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add release/baseline.json
+          if git diff --cached --quiet; then
+            echo 'baseline already current'
+            exit 0
+          fi
+          git commit -m 'chore(video): accept catalog baseline'
+          git push

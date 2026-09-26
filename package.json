@@ -1,0 +1,25 @@
+{
+  "name": "anyrouter-model-drop-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "hyperframes preview",
+    "check": "hyperframes check",
+    "render": "hyperframes render",
+    "inspect": "hyperframes inspect",
+    "snapshot": "hyperframes snapshot",
+    "beats": "hyperframes beats",
+    "publish": "node release/publish.mjs",
+    "video": "node release/run.mjs",
+    "fetch": "node release/fetch.mjs",
+    "accept": "node release/fetch.mjs --accept",
+    "gen": "node release/generate.mjs",
+    "doctor": "hyperframes doctor",
+    "release": "node release/run.mjs",
+    "ledger": "node release/ledger.mjs list"
+  },
+  "description": "Renders short launch films for models added to the AnyRouter catalog.",
+  "devDependencies": {
+    "hyperframes": "^0.8.78"
+  }
+}
