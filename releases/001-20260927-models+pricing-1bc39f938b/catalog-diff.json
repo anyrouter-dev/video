@@ -1,0 +1,177 @@
+{
+  "generatedAt": "2026-09-27T13:04:16.094Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "notable": 6,
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 206,
+    "listed": 197,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 42,
+    "providerBackends": 42,
+    "free": 30
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "xiaomi/mimo-v2.6-flash",
+      "name": "MiMo V2.6 Flash",
+      "provider": "Xiaomi",
+      "logo": "xiaomi-color.svg",
+      "context": 1050000,
+      "inPrice": 0.155,
+      "outPrice": 0.31,
+      "free": false,
+      "created": 1790035200,
+      "category": "text",
+      "excerpt": "MiMo V2.6 Flash is Xiaomi's full-modality reasoning model for high-frequency invocations and large-scale professional workloads."
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "name": "MiMo V2.6 Pro",
+      "provider": "Xiaomi",
+      "logo": "xiaomi-color.svg",
+      "context": 1050000,
+      "inPrice": 0.48,
+      "outPrice": 0.96,
+      "free": false,
+      "created": 1790035200,
+      "category": "text",
+      "excerpt": "MiMo V2.6 Pro is Xiaomi's trillion-parameter, natively omni-modal flagship reasoning model for complex projects, long-horizon agentic tasks, coding, research, and professional knowledge work."
+    },
+    {
+      "id": "mistralai/mistral-small-3.2-24b-instruct",
+      "name": "Mistral Small 3.2 24B Instruct",
+      "provider": "Mistral AI",
+      "logo": null,
+      "context": 131072,
+      "inPrice": 0.1,
+      "outPrice": 0.31,
+      "free": false,
+      "created": 1750291200,
+      "category": "text",
+      "excerpt": "Mistral Small 3.2 is a 24B instruction model with a 131k context window, improved instruction following and function calling over Mistral Small 3.1, and the same Apache 2.0 license."
+    },
+    {
+      "id": "baai/bge-multilingual-gemma2",
+      "name": "BGE Multilingual Gemma 2",
+      "provider": "baai",
+      "logo": null,
+      "context": 8192,
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "free": false,
+      "created": 1721865600,
+      "category": "embedding",
+      "excerpt": "BAAI's bge-multilingual-gemma2 is a compact multilingual text embedding model built on Gemma 2, trained across 100+ languages with an 8,192-token input window."
+    },
+    {
+      "id": "baai/bge-m3",
+      "name": "BGE-M3",
+      "provider": "baai",
+      "logo": null,
+      "context": 8192,
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "free": false,
+      "created": 1706313600,
+      "category": "embedding",
+      "excerpt": "BAAI's BGE-M3 is a multilingual text embedding model that handles dense, sparse, and multi-vector retrieval in one model, across 100+ languages and an 8,192-token input window."
+    }
+  ],
+  "changed": [
+    {
+      "id": "openai/gpt-oss-120b",
+      "from": "0.143/0.605@131072",
+      "to": "0.09/0.47@131072",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [],
+  "incoming": [
+    {
+      "id": "xiaomi/mimo-v2.6-flash",
+      "name": "MiMo V2.6 Flash",
+      "provider": "Xiaomi",
+      "logo": "xiaomi-color.svg",
+      "context": 1050000,
+      "inPrice": 0.155,
+      "outPrice": 0.31,
+      "free": false,
+      "created": 1790035200,
+      "category": "text",
+      "excerpt": "MiMo V2.6 Flash is Xiaomi's full-modality reasoning model for high-frequency invocations and large-scale professional workloads."
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "name": "MiMo V2.6 Pro",
+      "provider": "Xiaomi",
+      "logo": "xiaomi-color.svg",
+      "context": 1050000,
+      "inPrice": 0.48,
+      "outPrice": 0.96,
+      "free": false,
+      "created": 1790035200,
+      "category": "text",
+      "excerpt": "MiMo V2.6 Pro is Xiaomi's trillion-parameter, natively omni-modal flagship reasoning model for complex projects, long-horizon agentic tasks, coding, research, and professional knowledge work."
+    },
+    {
+      "id": "mistralai/mistral-small-3.2-24b-instruct",
+      "name": "Mistral Small 3.2 24B Instruct",
+      "provider": "Mistral AI",
+      "logo": null,
+      "context": 131072,
+      "inPrice": 0.1,
+      "outPrice": 0.31,
+      "free": false,
+      "created": 1750291200,
+      "category": "text",
+      "excerpt": "Mistral Small 3.2 is a 24B instruction model with a 131k context window, improved instruction following and function calling over Mistral Small 3.1, and the same Apache 2.0 license."
+    },
+    {
+      "id": "baai/bge-multilingual-gemma2",
+      "name": "BGE Multilingual Gemma 2",
+      "provider": "baai",
+      "logo": null,
+      "context": 8192,
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "free": false,
+      "created": 1721865600,
+      "category": "embedding",
+      "excerpt": "BAAI's bge-multilingual-gemma2 is a compact multilingual text embedding model built on Gemma 2, trained across 100+ languages with an 8,192-token input window."
+    },
+    {
+      "id": "baai/bge-m3",
+      "name": "BGE-M3",
+      "provider": "baai",
+      "logo": null,
+      "context": 8192,
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "free": false,
+      "created": 1706313600,
+      "category": "embedding",
+      "excerpt": "BAAI's BGE-M3 is a multilingual text embedding model that handles dense, sparse, and multi-vector retrieval in one model, across 100+ languages and an 8,192-token input window."
+    }
+  ],
+  "spotlight": {
+    "id": "xiaomi/mimo-v2.6-flash",
+    "name": "MiMo V2.6 Flash",
+    "provider": "Xiaomi",
+    "logo": "xiaomi-color.svg",
+    "context": 1050000,
+    "inPrice": 0.155,
+    "outPrice": 0.31,
+    "free": false,
+    "created": 1790035200,
+    "category": "text",
+    "excerpt": "MiMo V2.6 Flash is Xiaomi's full-modality reasoning model for high-frequency invocations and large-scale professional workloads."
+  }
+}
