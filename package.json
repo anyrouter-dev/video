@@ -15,6 +15,8 @@
     "accept": "node lib/cli.mjs accept",
     "ledger": "node lib/cli.mjs ledger",
     "publish": "node --env-file-if-exists=.env.local lib/cli.mjs publish",
+    "plan": "node lib/cli.mjs plan",
+    "regen": "node --env-file-if-exists=.env.local lib/cli.mjs regen",
     "yt:auth": "node --env-file-if-exists=.env.local lib/youtube-auth.mjs",
     "test": "node --test",
     "doctor": "hyperframes doctor"
