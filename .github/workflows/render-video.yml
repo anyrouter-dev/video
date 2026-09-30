@@ -181,14 +181,14 @@ jobs:
       # ── 5. record — one commit, even when a kind above failed, so whatever
       #    did ship is never rendered twice.
       - name: Commit the ledger and the baselines
-        if: always() && steps.decide.outputs.kinds != '' && env.SHIP == 'true'
+        if: always() && env.SHIP == 'true'
         run: |
           set -euo pipefail
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add releases videos/*/baseline.json
           if git diff --cached --quiet; then echo 'nothing to record'; exit 0; fi
-          git commit -m "chore(video): record ${{ steps.decide.outputs.kinds }}"
+          git commit -m "chore(video): record ${{ steps.decide.outputs.kinds || 'baseline' }}"
           # Someone may have pushed while this rendered. Rebase and retry rather
           # than fail — a rejected push here is what kept this workflow red.
           for i in 1 2 3; do

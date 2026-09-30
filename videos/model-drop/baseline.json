@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-09-26T13:21:10.476Z",
+  "acceptedAt": "2026-09-30T15:36:57.640Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -20,8 +20,11 @@
     "anthropic/claude-sonnet-4.5",
     "anthropic/claude-sonnet-4.6",
     "anthropic/claude-sonnet-4",
+    "anthropic/claude-sonnet-5-5",
     "anthropic/claude-sonnet-5",
     "apple/foundation-model",
+    "baai/bge-m3",
+    "baai/bge-multilingual-gemma2",
     "bytedance-seed/doubao-seed-2-1-pro-260628",
     "bytedance-seed/seed-2-1-turbo",
     "bytedance-seed/seed-2.0-code",
@@ -46,20 +49,19 @@
     "google/gemini-3.6-flash",
     "google/gemini-3.7-flash",
     "google/gemini-3.8-flash",
+    "google/gemini-embedding-2",
     "google/gemma-4-26b-a4b-it",
     "google/gemma-4-31b",
     "ibm-granite/granite-4.0-h-micro",
     "inception/mercury-2.5",
-    "inclusionai/ling-2.6-1t",
-    "inclusionai/ling-2.6-flash",
     "inclusionai/ling-3.0-flash-fin",
     "inclusionai/ling-3.0-flash-sante",
     "inclusionai/ling-3.0-flash-vl",
     "inclusionai/ling-3.0-flash",
     "inclusionai/ling-3.0-tiny",
-    "inclusionai/ring-2.6-1t",
     "intern/intern-s2-free",
     "jaredpalmer/kev-4b",
+    "liquid/d1",
     "liquid/lfm-2.5-2.6b",
     "meituan/longcat-2.0",
     "meituan/longcat-2.5-preview",
@@ -78,6 +80,7 @@
     "minimax/m3",
     "mistralai/mistral-medium-3.5-128b",
     "mistralai/mistral-small-3.1-24b-instruct",
+    "mistralai/mistral-small-3.2-24b-instruct",
     "moonshotai/kimi-k2.5",
     "moonshotai/kimi-k2.6",
     "moonshotai/kimi-k2.7-code",
@@ -126,6 +129,7 @@
     "openai/gpt-6-astra",
     "openai/gpt-6-luna",
     "openai/gpt-6-sol",
+    "openai/gpt-6.1-sol",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
     "openai/o1-mini",
@@ -140,6 +144,7 @@
     "qwen/qwen3-14b",
     "qwen/qwen3-235b-a22b",
     "qwen/qwen3-8b",
+    "qwen/qwen3-embedding-4b",
     "qwen/qwen3-embedding-8b",
     "qwen/qwen3.5-27b",
     "qwen/qwen3.5-397b-a17b",
@@ -154,6 +159,8 @@
     "qwen/qwen3.8-flash",
     "qwen/qwen3.8-max",
     "qwen/qwen3.8-omni-flash",
+    "respan/span-01-lite",
+    "sakana/fugu-max",
     "sakana/fugu-ultra",
     "sakana/fugu",
     "sakana/sakana-namazu",
@@ -161,10 +168,14 @@
     "stealth/space-bunny-alpha",
     "stepfun-ai/step-3.5-flash",
     "stepfun-ai/step-3.7-flash",
+    "stepfun-ai/step-5-preview",
+    "tencent/hy-mt2-30b-a3b",
     "tencent/hy4-preview",
     "thinkingmachines/inkling-small",
     "thinkingmachines/inkling",
     "typesafe/jev",
+    "upstage/solar-decide",
+    "upstage/solar-mini4",
     "upstage/solar-pro4",
     "venice/google-gemma-4-26b-a4b-it",
     "venice/hermes-3-llama-3.1-405b",
@@ -180,8 +191,12 @@
     "x-ai/grok-4.6",
     "x-ai/grok-4.7",
     "x-ai/grok-build-0.1",
+    "xiaomi/mimo-v2-flash",
+    "xiaomi/mimo-v2-pro",
     "xiaomi/mimo-v2.5-pro",
     "xiaomi/mimo-v2.5",
+    "xiaomi/mimo-v2.6-flash",
+    "xiaomi/mimo-v2.6-pro",
     "z-ai/glm-4.5",
     "z-ai/glm-4.6",
     "z-ai/glm-4.6v",
@@ -191,8 +206,27 @@
     "z-ai/glm-5.2",
     "z-ai/glm-5.3-flash",
     "z-ai/glm-5.3-flashx",
+    "z-ai/glm-5.3-prime",
     "z-ai/glm-5.3",
-    "z-ai/glm-5"
+    "z-ai/glm-5",
+    "google/gemini-flash-latest",
+    "google/gemini-flash-lite-latest",
+    "google/gemini-pro-latest",
+    "google/gemma-latest",
+    "deepseek/deepseek-latest",
+    "deepseek/deepseek-flash-latest",
+    "anthropic/claude-opus-latest",
+    "anthropic/claude-sonnet-latest",
+    "openai/gpt-latest",
+    "openai/gpt-mini-latest",
+    "openai/gpt-nano-latest",
+    "qwen/qwen-max-latest",
+    "qwen/qwen-plus-latest",
+    "qwen/qwen-flash-latest",
+    "z-ai/glm-latest",
+    "z-ai/glm-flash-latest",
+    "moonshotai/kimi-latest",
+    "x-ai/grok-latest"
   ],
   "models": [
     {
@@ -310,6 +344,12 @@
       "context": 1000000
     },
     {
+      "id": "anthropic/claude-sonnet-5-5",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
       "id": "anthropic/claude-sonnet-5",
       "inPrice": 2,
       "outPrice": 10,
@@ -320,6 +360,18 @@
       "inPrice": 0,
       "outPrice": 0,
       "context": 4096
+    },
+    {
+      "id": "baai/bge-m3",
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "context": 8192
+    },
+    {
+      "id": "baai/bge-multilingual-gemma2",
+      "inPrice": 0.01,
+      "outPrice": 0,
+      "context": 8192
     },
     {
       "id": "bytedance-seed/doubao-seed-2-1-pro-260628",
@@ -466,6 +518,12 @@
       "context": 1048576
     },
     {
+      "id": "google/gemini-embedding-2",
+      "inPrice": 0.2,
+      "outPrice": 0,
+      "context": 8192
+    },
+    {
       "id": "google/gemma-4-26b-a4b-it",
       "inPrice": 0.1,
       "outPrice": 0.3,
@@ -488,18 +546,6 @@
       "inPrice": 0.04,
       "outPrice": 0.15,
       "context": 260000
-    },
-    {
-      "id": "inclusionai/ling-2.6-1t",
-      "inPrice": 0.075,
-      "outPrice": 0.625,
-      "context": 262144
-    },
-    {
-      "id": "inclusionai/ling-2.6-flash",
-      "inPrice": 0.01,
-      "outPrice": 0.03,
-      "context": 262144
     },
     {
       "id": "inclusionai/ling-3.0-flash-fin",
@@ -532,12 +578,6 @@
       "context": 262144
     },
     {
-      "id": "inclusionai/ring-2.6-1t",
-      "inPrice": 0.075,
-      "outPrice": 0.625,
-      "context": 262144
-    },
-    {
       "id": "intern/intern-s2-free",
       "inPrice": 0,
       "outPrice": 0,
@@ -548,6 +588,12 @@
       "inPrice": 0.042,
       "outPrice": 0,
       "context": 8192
+    },
+    {
+      "id": "liquid/d1",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 32000
     },
     {
       "id": "liquid/lfm-2.5-2.6b",
@@ -637,7 +683,7 @@
       "id": "minimax/m2",
       "inPrice": 0,
       "outPrice": 0,
-      "context": 204800
+      "context": 200000
     },
     {
       "id": "minimax/m3",
@@ -655,6 +701,12 @@
       "id": "mistralai/mistral-small-3.1-24b-instruct",
       "inPrice": 0.1,
       "outPrice": 0.3,
+      "context": 131072
+    },
+    {
+      "id": "mistralai/mistral-small-3.2-24b-instruct",
+      "inPrice": 0.1,
+      "outPrice": 0.31,
       "context": 131072
     },
     {
@@ -715,7 +767,7 @@
       "id": "nvidia/nemotron-3-nano-30b-a3b",
       "inPrice": 0.05,
       "outPrice": 0.2,
-      "context": 256000
+      "context": 1048576
     },
     {
       "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
@@ -946,9 +998,15 @@
       "context": 1050000
     },
     {
+      "id": "openai/gpt-6.1-sol",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1050000
+    },
+    {
       "id": "openai/gpt-oss-120b",
-      "inPrice": 0.143,
-      "outPrice": 0.605,
+      "inPrice": 0.09,
+      "outPrice": 0.47,
       "context": 131072
     },
     {
@@ -1030,6 +1088,12 @@
       "context": 128000
     },
     {
+      "id": "qwen/qwen3-embedding-4b",
+      "inPrice": 0.02,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
       "id": "qwen/qwen3-embedding-8b",
       "inPrice": 0.01,
       "outPrice": 0,
@@ -1055,8 +1119,8 @@
     },
     {
       "id": "qwen/qwen3.5-plus",
-      "inPrice": 0.4,
-      "outPrice": 1.6,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 256000
     },
     {
@@ -1114,6 +1178,18 @@
       "context": 1000000
     },
     {
+      "id": "respan/span-01-lite",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": null
+    },
+    {
+      "id": "sakana/fugu-max",
+      "inPrice": 2,
+      "outPrice": 6,
+      "context": 1000000
+    },
+    {
       "id": "sakana/fugu-ultra",
       "inPrice": 5,
       "outPrice": 30,
@@ -1156,6 +1232,18 @@
       "context": 256000
     },
     {
+      "id": "stepfun-ai/step-5-preview",
+      "inPrice": 1.08,
+      "outPrice": 3.0888,
+      "context": 1000000
+    },
+    {
+      "id": "tencent/hy-mt2-30b-a3b",
+      "inPrice": 0.074,
+      "outPrice": 0.295,
+      "context": 8192
+    },
+    {
       "id": "tencent/hy4-preview",
       "inPrice": 0.845,
       "outPrice": 2.535,
@@ -1178,6 +1266,18 @@
       "inPrice": 0.042,
       "outPrice": 0,
       "context": 64000
+    },
+    {
+      "id": "upstage/solar-decide",
+      "inPrice": 0.05,
+      "outPrice": 0,
+      "context": 524288
+    },
+    {
+      "id": "upstage/solar-mini4",
+      "inPrice": 0.05,
+      "outPrice": 0.2,
+      "context": 524288
     },
     {
       "id": "upstage/solar-pro4",
@@ -1270,6 +1370,18 @@
       "context": 256000
     },
     {
+      "id": "xiaomi/mimo-v2-flash",
+      "inPrice": 0.1918,
+      "outPrice": 0.5754,
+      "context": 1048576
+    },
+    {
+      "id": "xiaomi/mimo-v2-pro",
+      "inPrice": 1.1,
+      "outPrice": 3.3,
+      "context": 1000000
+    },
+    {
       "id": "xiaomi/mimo-v2.5-pro",
       "inPrice": 0.435,
       "outPrice": 0.87,
@@ -1279,6 +1391,18 @@
       "id": "xiaomi/mimo-v2.5",
       "inPrice": 0.14,
       "outPrice": 0.28,
+      "context": 1050000
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-flash",
+      "inPrice": 0.155,
+      "outPrice": 0.31,
+      "context": 1050000
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "inPrice": 0.48,
+      "outPrice": 0.96,
       "context": 1050000
     },
     {
@@ -1336,6 +1460,12 @@
       "context": 1000000
     },
     {
+      "id": "z-ai/glm-5.3-prime",
+      "inPrice": 2.8,
+      "outPrice": 8.8,
+      "context": 1000000
+    },
+    {
       "id": "z-ai/glm-5.3",
       "inPrice": 0.06,
       "outPrice": 0.22,
@@ -1345,7 +1475,115 @@
       "id": "z-ai/glm-5",
       "inPrice": 0.6,
       "outPrice": 1.92,
-      "context": 200000
+      "context": 204800
+    },
+    {
+      "id": "google/gemini-flash-latest",
+      "inPrice": 0.375,
+      "outPrice": 1.875,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-flash-lite-latest",
+      "inPrice": 0.3,
+      "outPrice": 2.5,
+      "context": 1048576
+    },
+    {
+      "id": "google/gemini-pro-latest",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 1000000
+    },
+    {
+      "id": "google/gemma-latest",
+      "inPrice": 0.15,
+      "outPrice": 0.45,
+      "context": 262144
+    },
+    {
+      "id": "deepseek/deepseek-latest",
+      "inPrice": 0.55,
+      "outPrice": 2.19,
+      "context": 1048576
+    },
+    {
+      "id": "deepseek/deepseek-flash-latest",
+      "inPrice": 0.155,
+      "outPrice": 0.62,
+      "context": 1048576
+    },
+    {
+      "id": "anthropic/claude-opus-latest",
+      "inPrice": 4,
+      "outPrice": 20,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-sonnet-latest",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1000000
+    },
+    {
+      "id": "openai/gpt-latest",
+      "inPrice": 2.5,
+      "outPrice": 15,
+      "context": 1048576
+    },
+    {
+      "id": "openai/gpt-mini-latest",
+      "inPrice": 0.75,
+      "outPrice": 4.5,
+      "context": 400000
+    },
+    {
+      "id": "openai/gpt-nano-latest",
+      "inPrice": 0.2,
+      "outPrice": 1.25,
+      "context": 400000
+    },
+    {
+      "id": "qwen/qwen-max-latest",
+      "inPrice": 1.69,
+      "outPrice": 5.07,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen-plus-latest",
+      "inPrice": 0.32,
+      "outPrice": 1.28,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen-flash-latest",
+      "inPrice": 0.1126,
+      "outPrice": 0.38,
+      "context": 1000000
+    },
+    {
+      "id": "z-ai/glm-latest",
+      "inPrice": 0.06,
+      "outPrice": 0.22,
+      "context": 1000000
+    },
+    {
+      "id": "z-ai/glm-flash-latest",
+      "inPrice": 0.15,
+      "outPrice": 0.5,
+      "context": 1048576
+    },
+    {
+      "id": "moonshotai/kimi-latest",
+      "inPrice": 3,
+      "outPrice": 15,
+      "context": 1048576
+    },
+    {
+      "id": "x-ai/grok-latest",
+      "inPrice": 1.6,
+      "outPrice": 4.8,
+      "context": 500000
     }
   ]
 }
