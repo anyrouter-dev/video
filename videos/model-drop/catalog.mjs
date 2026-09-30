@@ -7,13 +7,10 @@
  *
  * The functions here are pure — kind.mjs does the network and the disk.
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import { SHARED } from '../../lib/paths.mjs';
+import { markFor } from '../../lib/marks.mjs';
 
 export const API = 'https://anyrouter.dev/api/v1/models?all=1';
 export const POOL_API = 'https://anyrouter.dev/api/v1/pool/analytics';
-export const LOGO_DIR = path.join(SHARED, 'assets/providers');   // vendored, no external repo needed
 
 // anyrouter.dev/models renders the literal string "192+ AI models across 17+
 // providers". NOT derived from the API on purpose: distinct model-id prefixes
@@ -24,18 +21,6 @@ export const PROVIDER_CLAIM = 17;
 
 const num = v => (typeof v === 'number' ? v : parseFloat(v));
 
-/** Map a provider/upstream id to a vendored mark. */
-export function findLogo(id) {
-  if (!id) return null;
-  const base = String(id).toLowerCase().replace(/[^a-z0-9.-]/g, '-');
-  for (const cand of [base, base.replace(/-color$/, ''), base.replace(/-coding$/, '')]) {
-    for (const suf of ['-color.svg', '.svg']) {
-      if (fs.existsSync(path.join(LOGO_DIR, cand + suf))) return cand + suf;
-    }
-  }
-  return null;
-}
-
 export function normalize(m) {
   const provider = m.provider || m.owned_by || (m.top_provider && m.top_provider.id) || m.id.split('/')[0];
   const pin = m.pricing || {};
@@ -45,7 +30,7 @@ export function normalize(m) {
     id: m.id,
     name: m.display_name || m.name || m.id.split('/').pop(),
     provider: String(provider),
-    logo: findLogo(provider) || findLogo(m.id.split('/')[0]),
+    logo: markFor(provider) || markFor(m.id),
     context: m.context_length || null,
     inPrice,
     outPrice,
