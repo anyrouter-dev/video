@@ -1,26 +1,24 @@
 {
-  "name": "anyrouter-model-drop-video",
+  "name": "anyrouter-video",
   "private": true,
   "type": "module",
+  "description": "Renders AnyRouter films: the intro, model drops, product releases and changelog entries.",
   "scripts": {
-    "yt:auth": "node --env-file-if-exists=.env.local release/youtube-auth.mjs",
-    "dev": "hyperframes preview",
-    "check": "hyperframes check",
-    "render": "hyperframes render",
-    "cover": "node release/cover.mjs",
-    "inspect": "hyperframes inspect",
-    "snapshot": "hyperframes snapshot",
-    "beats": "hyperframes beats",
-    "publish": "node --env-file-if-exists=.env.local release/publish.mjs",
-    "video": "node release/run.mjs",
-    "fetch": "node release/fetch.mjs",
-    "accept": "node release/fetch.mjs --accept",
-    "gen": "node release/generate.mjs",
-    "doctor": "hyperframes doctor",
-    "release": "node release/run.mjs",
-    "ledger": "node release/ledger.mjs list"
+    "video": "node lib/cli.mjs run",
+    "kinds": "node lib/cli.mjs kinds",
+    "pending": "node lib/cli.mjs pending",
+    "collect": "node lib/cli.mjs collect",
+    "gen": "node lib/cli.mjs gen",
+    "check": "node lib/cli.mjs check",
+    "render": "node lib/cli.mjs render",
+    "dev": "node lib/cli.mjs dev",
+    "accept": "node lib/cli.mjs accept",
+    "ledger": "node lib/cli.mjs ledger",
+    "publish": "node --env-file-if-exists=.env.local lib/cli.mjs publish",
+    "yt:auth": "node --env-file-if-exists=.env.local lib/youtube-auth.mjs",
+    "test": "node --test",
+    "doctor": "hyperframes doctor"
   },
-  "description": "Renders short launch films for models added to the AnyRouter catalog.",
   "devDependencies": {
     "hyperframes": "^0.8.78"
   }

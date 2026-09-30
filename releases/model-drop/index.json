@@ -1,0 +1,48 @@
+{
+  "releases": [
+    {
+      "id": "001-20260927-models+pricing-1bc39f938b",
+      "hash": "1bc39f938b",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": null,
+      "createdAt": "2026-09-27T13:05:32.406Z",
+      "seconds": 20,
+      "renderedAt": "2026-09-27T13:05:32.406Z",
+      "artifact": "renders/video_2026-09-27_13-04-44.mp4"
+    },
+    {
+      "id": "002-20260928-models+pricing-b1c367a861",
+      "hash": "b1c367a861",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": null,
+      "createdAt": "2026-09-28T15:32:29.670Z",
+      "seconds": 20,
+      "renderedAt": "2026-09-28T15:32:29.672Z",
+      "artifact": "renders/video_2026-09-28_15-31-24.mp4"
+    },
+    {
+      "id": "003-20260929-models+pricing-388c7ba751",
+      "hash": "388c7ba751",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": null,
+      "createdAt": "2026-09-29T14:07:35.442Z",
+      "seconds": 20,
+      "renderedAt": "2026-09-29T14:07:35.444Z",
+      "artifact": "renders/video_2026-09-29_14-06-28.mp4"
+    },
+    {
+      "id": "004-20260930-models+pricing-24f646933f",
+      "hash": "24f646933f",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": null,
+      "createdAt": "2026-09-30T13:47:52.390Z",
+      "seconds": 20,
+      "renderedAt": "2026-09-30T13:47:52.391Z",
+      "artifact": "renders/video_2026-09-30_13-46-41.mp4"
+    }
+  ]
+}
