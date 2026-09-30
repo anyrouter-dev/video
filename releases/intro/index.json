@@ -1,0 +1,21 @@
+{
+  "releases": [
+    {
+      "id": "001-20260930-v3-22d9cb1e63",
+      "hash": "22d9cb1e63",
+      "kind": "intro",
+      "label": "v3",
+      "title": "AnyRouter in 60 seconds — one key, every model",
+      "seconds": 60,
+      "renderedAt": "2026-09-30T15:40:09.819Z",
+      "commit": "e008e94",
+      "artifact": "renders/intro-001-20260930-v3-22d9cb1e63.mp4",
+      "cover": "renders/intro-001-20260930-v3-22d9cb1e63.png",
+      "source": null,
+      "createdAt": "2026-09-30T15:40:09.822Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/intro-001-20260930-v3-22d9cb1e63"
+      }
+    }
+  ]
+}
