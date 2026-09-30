@@ -1,0 +1,29 @@
+{
+  "notable": true,
+  "label": "v4",
+  "parts": [
+    "assets/providers/anthropic-color.svg:e42b82a664983246788796f6600bd405664915bd5cf4199f1e1ee69cad5b4815",
+    "assets/providers/cohere-color.svg:8d0eb20035c2cf8e4ecb0c2fdda06cf0b34c31b95e2183702383fdd795277c7f",
+    "assets/providers/deepseek-color.svg:969557225378828fd7e2cd67ec71380751597bb9520fab33c8f9f24eeebff099",
+    "assets/providers/dots-studio.svg:e01a939f9861c8577a3cab255d3ce8582f902074be14fdb2af433be8cc129ad8",
+    "assets/providers/google-color.svg:051d26c1e69c2e4c300728603a67779c8acfa35731d5b5e8bec13a432e232c4b",
+    "assets/providers/groq-color.svg:1bf8bf66d494866197d91885b99a3ec834aea75ed9405137eaced90db0c9bd4a",
+    "assets/providers/inclusionai.svg:f9e5623fabfd1a6eb72b3e934d1edecdb10dfaa5a5f5c4dcee12e1719e3a79d9",
+    "assets/providers/meta-color.svg:1b1c16953f2128c54b22d6fb0334ccc2a1c002dbfedd48dec7df6a43fe88b234",
+    "assets/providers/minimax-color.svg:45bd1141a67ae1b11ba8f70b018b72e5aeb57d019894da4e6e05b1d7c85430eb",
+    "assets/providers/mistral-color.svg:c48a22424cca3d77be8142847403f1d74f94d9f0f82b9035f9dd6b5a097b28cb",
+    "assets/providers/moonshotai-color.svg:ba80080466c2e71e0033702beb806e13634ec9fe179a43c56c1f86b5bd95a3d8",
+    "assets/providers/nvidia-color.svg:eb52fa2648ccd9d6e30ab373b51fac520768b3e1ac472ed9a96919873bbf79d0",
+    "assets/providers/openai.svg:868c732a8642828d0130d0ef18a5dfd54c242aecd3a3513ef69d2eb4af43d5d7",
+    "assets/providers/qwen-color.svg:953df5df14339a28f167a9c0dcce4fb859de220faa25dc0df36c249ba8d0cddb",
+    "assets/providers/stealth.svg:9191bd6485c35d1a37f3caa76c21cacec0d98618555423f45be5c56b6ac0ba09",
+    "assets/providers/xai.svg:2a64700775976838eac6b3cb38cd7db1054c5b01b3b8f73687a2a67281b8c15e",
+    "assets/providers/z-ai.svg:f50322d14f16d662036624494e98b78d24308d59157a0b7bbc12d8a78a2d54ac",
+    "audio/score.wav:147009dc2ccebd443dfb8734453274c7115ca9b5817e3f11b771af47277e58d7",
+    "fonts/inter.woff2:3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+    "fonts/mono.woff2:18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e",
+    "index.html:ac7acf64f66ab5798d79e10a2e61153b5b59087b441c5919dc13224a51d527e3"
+  ],
+  "version": 4,
+  "seconds": 60
+}

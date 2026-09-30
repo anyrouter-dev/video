@@ -1,0 +1,20 @@
+{
+  "seconds": 20,
+  "limit": 4,
+  "picks": [
+    "z-ai/glm-5.3-prime",
+    "sakana/fugu-max",
+    "google/gemini-embedding-2",
+    "upstage/solar-mini4"
+  ],
+  "lines": {
+    "z-ai/glm-5.3-prime": "The top reasoning tier of Z.ai's GLM 5.3 line, above the Flash and FlashX cuts.",
+    "sakana/fugu-max": "Sakana AI's largest Fugu tier. Takes text, images and files, returns text.",
+    "google/gemini-embedding-2": "Text, images, video, audio and PDFs in one 3,072-dimension vector space.",
+    "upstage/solar-mini4": "Upstage's small, fast tier in the Solar 4 generation. Text only."
+  },
+  "headline": "GLM 5.3 Prime and Fugu Max join with 1M windows, plus Gemini Embedding 2",
+  "kicker": "New in the catalog",
+  "share": "GLM 5.3 Prime and Sakana's Fugu Max are now on AnyRouter, both with 1M-token context. Also new: Google's multimodal Gemini Embedding 2 and Upstage's Solar Mini 4 with a 524K window.",
+  "rationale": "Seven models were new on 2026-09-28 (the other five in this record were already filmed in 001). Two are flagship tiers from known labs with 1M windows, so they lead; Google's first multimodal embedding model is the third story; Solar Mini 4 shows the cheap end with a long window. Span-01 Lite (a free classifier), Hy-MT2 (8K translation) and Qwen3 Embedding 4B are smaller cuts and would crowd four cards."
+}

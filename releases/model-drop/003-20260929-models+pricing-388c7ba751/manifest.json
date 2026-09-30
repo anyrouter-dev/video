@@ -3,9 +3,12 @@
   "hash": "388c7ba751",
   "kind": "model-drop",
   "label": "models+pricing",
-  "title": "14 new models: claude-sonnet-5-5, span-01-lite, solar-mini4 +11 more",
+  "title": "Claude Sonnet 5.5 and Step 5 Preview join AnyRouter, both with a 1M window",
   "createdAt": "2026-09-29T14:07:35.442Z",
-  "seconds": 20,
-  "renderedAt": "2026-09-29T14:07:35.444Z",
-  "artifact": "renders/video_2026-09-29_14-06-28.mp4"
+  "seconds": 16,
+  "renderedAt": "2026-09-30T18:26:04.919Z",
+  "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
+  "commit": "a44a251",
+  "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png",
+  "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz"
 }

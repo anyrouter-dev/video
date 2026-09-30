@@ -3,9 +3,12 @@
   "hash": "1bc39f938b",
   "kind": "model-drop",
   "label": "models+pricing",
-  "title": "5 new models: mimo-v2.6-flash, mimo-v2.6-pro, mistral-small-3.2-24b-instruct +2 more",
+  "title": "MiMo V2.6 Pro and Flash join AnyRouter with a 1.1M-token window",
   "createdAt": "2026-09-27T13:05:32.406Z",
-  "seconds": 20,
-  "renderedAt": "2026-09-27T13:05:32.406Z",
-  "artifact": "renders/video_2026-09-27_13-04-44.mp4"
+  "seconds": 18,
+  "renderedAt": "2026-09-30T18:25:26.690Z",
+  "artifact": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.mp4",
+  "commit": "a44a251",
+  "cover": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.png",
+  "source": "renders/model-drop-001-20260927-models+pricing-1bc39f938b-source.tar.gz"
 }

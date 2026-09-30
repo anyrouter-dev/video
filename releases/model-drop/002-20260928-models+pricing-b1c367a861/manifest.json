@@ -3,9 +3,12 @@
   "hash": "b1c367a861",
   "kind": "model-drop",
   "label": "models+pricing",
-  "title": "12 new models: span-01-lite, solar-mini4, glm-5.3-prime +9 more",
+  "title": "GLM 5.3 Prime and Fugu Max join with 1M windows, plus Gemini Embedding 2",
   "createdAt": "2026-09-28T15:32:29.670Z",
   "seconds": 20,
-  "renderedAt": "2026-09-28T15:32:29.672Z",
-  "artifact": "renders/video_2026-09-28_15-31-24.mp4"
+  "renderedAt": "2026-09-30T18:25:28.346Z",
+  "artifact": "renders/model-drop-002-20260928-models+pricing-b1c367a861.mp4",
+  "commit": "a44a251",
+  "cover": "renders/model-drop-002-20260928-models+pricing-b1c367a861.png",
+  "source": "renders/model-drop-002-20260928-models+pricing-b1c367a861-source.tar.gz"
 }

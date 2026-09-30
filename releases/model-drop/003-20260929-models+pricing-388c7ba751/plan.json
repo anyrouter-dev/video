@@ -1,0 +1,16 @@
+{
+  "seconds": 16,
+  "limit": 2,
+  "picks": [
+    "anthropic/claude-sonnet-5-5",
+    "stepfun-ai/step-5-preview"
+  ],
+  "lines": {
+    "anthropic/claude-sonnet-5-5": "Anthropic's successor to Claude Sonnet 5, the speed-and-quality middle of its lineup.",
+    "stepfun-ai/step-5-preview": "StepFun's next flagship base model, built for programming and professional work. A preview."
+  },
+  "headline": "Claude Sonnet 5.5 and Step 5 Preview join AnyRouter, both with a 1M window",
+  "kicker": "Two new models",
+  "share": "Claude Sonnet 5.5 and StepFun's Step 5 Preview are on AnyRouter. Both take 1M tokens of context: Sonnet 5.5 at $2/$10 per million, Step 5 Preview at $1.08/$3.09.",
+  "rationale": "The baseline did not advance after 001 and 002, so 12 of the 14 'added' models in this record were already filmed. Only Claude Sonnet 5.5 and Step 5 Preview are new on 2026-09-29. Two cards, not a hero: both are genuinely new, and a hero on Sonnet alone would silently drop Step 5. Sonnet leads as the known lab's flagship."
+}

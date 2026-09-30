@@ -1,0 +1,18 @@
+{
+  "seconds": 18,
+  "limit": 3,
+  "picks": [
+    "xiaomi/mimo-v2.6-pro",
+    "xiaomi/mimo-v2.6-flash",
+    "mistralai/mistral-small-3.2-24b-instruct"
+  ],
+  "lines": {
+    "xiaomi/mimo-v2.6-pro": "Xiaomi's omni-modal flagship reasoning model, for long-horizon agents, coding and research.",
+    "xiaomi/mimo-v2.6-flash": "Same 1.1M window as Pro, priced for high-frequency calls and large batch workloads.",
+    "mistralai/mistral-small-3.2-24b-instruct": "Apache 2.0, with better instruction following and function calling than Small 3.1."
+  },
+  "headline": "MiMo V2.6 Pro and Flash join AnyRouter with a 1.1M-token window",
+  "kicker": "Xiaomi MiMo V2.6",
+  "share": "Xiaomi's MiMo V2.6 Pro and Flash are on AnyRouter, both with a 1.1M-token context window. Pro is $0.48 in and $0.96 out; Flash is $0.15 in and $0.31 out. Mistral Small 3.2 24B and two BGE embedding models were added in the same drop.",
+  "rationale": "The MiMo V2.6 pair is the only new release in this drop and the only 1M-class context. Pro leads as Xiaomi's flagship, Flash follows as its cheaper sibling. Mistral Small 3.2 is a known open-weight model worth its own card. The two BGE embedding models are useful but not the story; the film counts them as +2 and the share copy names them."
+}

@@ -1,0 +1,20 @@
+{
+  "seconds": 34,
+  "limit": 4,
+  "picks": [
+    "2026-09-30-latest-aliases",
+    "2026-09-30",
+    "2026-09-30-solar-decide",
+    "2026-09-30-liquid-d1"
+  ],
+  "lines": {
+    "2026-09-30-latest-aliases": "Call a family by a -latest id, like google/gemini-flash-latest. The newest live model answers; you pay for that one.",
+    "2026-09-30": "OpenAI's GPT-6.1 Sol, BYOK through OpenAI: 1.05M context, 128K output, image input, $2 / $10 per million tokens.",
+    "2026-09-30-solar-decide": "Upstage's decision model returns structured answers, not chat text. 524,288-token context, $0.05 per million input.",
+    "2026-09-30-liquid-d1": "Liquid AI's first decision model: send state and typed questions, get calibrated probabilities, zero generated tokens."
+  },
+  "headline": "Latest aliases, GPT-6.1 Sol, and two decision models",
+  "kicker": "Changelog 2026-09-30",
+  "share": "AnyRouter changelog, 2026-09-30: -latest ids like anthropic/claude-sonnet-latest call the newest live model in a family. GPT-6.1 Sol joins BYOK through OpenAI. Solar Decide and Liquid d1 join the Decisions family. inclusionai/ling-2.6-1t is retired; the Ling-3.0 family replaces it.",
+  "rationale": "The -latest aliases change how any request can name a model, so they lead. GPT-6.1 Sol is the largest model added. Solar Decide and Liquid d1 are a new kind of endpoint: typed questions in, structured answers out. The retirement is shown in the day's log and named with its replacement in the share copy, not given a spotlight, so it never reads as a launch."
+}

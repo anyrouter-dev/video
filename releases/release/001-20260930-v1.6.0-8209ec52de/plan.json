@@ -1,0 +1,24 @@
+{
+  "seconds": 40,
+  "limit": 6,
+  "picks": [
+    "h1",
+    "h3",
+    "h5",
+    "h2",
+    "h4",
+    "h6"
+  ],
+  "lines": {
+    "h1": "Send google/gemini-flash-latest and the newest live model in that family answers.",
+    "h3": "Replace a BYOK key in place. It keeps its id, label and routing settings.",
+    "h5": "A client hanging up no longer cools the route or sidelines your BYOK key.",
+    "h2": "New in the catalog: GPT-6.1 Sol, Step 5 Preview, and DeepSeek V4.1 Flash on DeepInfra.",
+    "h4": "read:analytics lets a management key read /analytics/* and nothing else.",
+    "h6": "SLM Matrix, a new mini-app, ranks small models by task."
+  },
+  "headline": "Ask for a model family, get its newest live model",
+  "kicker": "AnyRouter 1.6",
+  "share": "AnyRouter 1.6: send a -latest id such as google/gemini-flash-latest and the newest live model in that family answers. Also in 1.6: BYOK keys replaced in place, a read-only read:analytics scope, GPT-6.1 Sol and Step 5 Preview.",
+  "rationale": "-latest aliases change what you put in the model field, so they lead. BYOK replacement and the client-disconnect fix change day-to-day operation; new models and the analytics scope follow; the SLM Matrix closes. The site redesign is left out: nothing a developer calls. Six highlights need 40s to read; the at-a-glance checklist would only repeat all six and still did not fit at 52s, so it is left out."
+}
