@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import kind, { fmtCtx, fmtPrice, layoutOf, listCapacity, dropPct, dropFacts, chooseModels, markOf, makersOf } from './kind.mjs';
+import kind, { fmtCtx, fmtPrice, layoutOf, listCapacity, dropPct, dropFacts, chooseModels, markOf, makersOf, isAlias, followsOf } from './kind.mjs';
 import { buildRelease, diffCatalog, fingerprintParts, PROVIDER_CLAIM } from './catalog.mjs';
-import { OPEN, END, BEAT } from '../../lib/film.mjs';
+import { OPEN, END, BEAT, chars } from '../../lib/film.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const json = f => JSON.parse(fs.readFileSync(path.join(HERE, 'fixtures', f), 'utf8'));
@@ -140,7 +140,7 @@ test('a hero film is about its one model, and counts the rest of the drop honest
   const film = kind.film(rel, { flags: { limit: '1' } });
   const m = rel.added[0];
   assert.ok(film.scenes.at(-1).body.includes(`${m.name} is live`), 'the end card names the model, not the drop');
-  assert.ok(film.scenes.map(s => s.body).join('').includes('+6 more in this drop'));
+  assert.ok(film.scenes.map(s => s.body).join('').includes('+6 more models in this drop'));
   // A drop of exactly one has nothing more to count.
   const solo = kind.film({ ...rel, added: [m] }, {});
   assert.ok(!solo.scenes.map(s => s.body).join('').includes('more in this drop'));
@@ -185,7 +185,7 @@ test('a list film shows no more models than can be read, and says how many it le
   const rows = content(film).map(rowsOf).reduce((a, b) => a + b, 0);
   const shown = rows + 1;                                    // + the lead's spotlight
   assert.equal(shown, listCapacity(20));
-  assert.ok(content(film).some(s => s.body.includes(`+${60 - shown} more in this drop`)));
+  assert.ok(content(film).some(s => s.body.includes(`+${60 - shown} more models in this drop`)));
   // The end card still states the true count, not the number that fit.
   assert.ok(film.scenes.at(-1).body.includes('60 new models'));
   // A longer film shows more.
@@ -235,7 +235,7 @@ test('the drop in numbers derives each fact from the data and labels it exactly'
   const facts = Object.fromEntries(dropFacts(rel.added).map(f => [f.key, f]));
   const maxCtx = Math.max(...rel.added.map(m => m.context || 0));
   assert.equal(facts.context.value, fmtCtx(maxCtx));
-  assert.equal(facts.context.label, 'largest context in this drop');
+  assert.equal(facts.context.label, 'largest context · new models');
   assert.equal(facts.price, undefined, 'the drop in numbers quotes no price');
   assert.equal(facts.orgs.value, String(new Set(rel.added.map(m => m.id.split('/')[0])).size));
   assert.equal(facts.free, undefined, 'no "free" fact when nothing in the drop is free');
@@ -304,6 +304,78 @@ test('a many-maker drop gets a wall of its makers, counted from the data', () =>
   for (const f of marks.slice(0, 12)) assert.ok(end.includes(f), `end card has ${f}`);
   // A one-maker drop has no wall to show.
   assert.ok(!content(kind.film(dropOf(rel, 9), {})).some(s => s.id.endsWith('-makers')));
+});
+
+// ── aliases: a -latest name is not a new model ─────────────────────────────
+
+/** A drop shaped like the real 2026-09-30 one: 5 models and 18 -latest aliases. */
+const aliasDrop = () => {
+  const rel = release();
+  const models = rel.added.slice(0, 5);
+  const aliases = Array.from({ length: 18 }, (_, i) => ({
+    ...rel.added[i % rel.added.length], id: `org${i % 6}/fam${i}-latest`, name: `fam${i} (latest)`,
+    excerpt: `Alias for the newest live fam${i} model; currently org${i % 6}/fam${i}-v2.`, free: false,
+  }));
+  return { ...rel, added: [...aliases.slice(0, 9), ...models, ...aliases.slice(9)] };
+};
+
+test('an alias is recognised from the catalog\'s own words, and by its -latest id', () => {
+  assert.ok(isAlias({ id: 'anthropic/claude-sonnet-latest', excerpt: 'Alias for the newest live claude-sonnet model; currently anthropic/claude-sonnet-5-5.' }));
+  assert.ok(isAlias({ id: 'x/y-latest', excerpt: null }));
+  assert.ok(isAlias({ id: 'x/y', excerpt: 'Alias for the newest live y model; currently x/y-2.' }));
+  assert.ok(!isAlias({ id: 'openai/gpt-6.1-sol', excerpt: 'OpenAI\'s GPT-6.1 Sol delivers…' }));
+  assert.equal(followsOf({ excerpt: 'Alias for the newest live gemini-pro model; currently google/gemini-3.1-pro.' }), 'google/gemini-3.1-pro');
+});
+
+test('a drop of 5 models and 18 aliases says "5 new models", never "23"', () => {
+  const rel = aliasDrop();
+  for (const flags of [{}, { seconds: '40' }, { seconds: '60' }]) {
+    const film = kind.film(rel, { flags });
+    // Visible text only: the brand mark's SVG path data is full of digits.
+    const all = film.scenes.map(s => s.body).join('').replace(/<svg[\s\S]*?<\/svg>/g, '');
+    assert.doesNotMatch(all, /\b23\b/, `${JSON.stringify(flags)}: nothing counts 23`);
+    assert.ok(film.scenes[0].body.includes(chars('5 new models · 18 -latest aliases')), 'the opening counts them apart');
+    assert.ok(film.scenes.at(-1).body.includes('5 new models on one key'));
+    const [lead] = content(film);
+    assert.ok(!isAlias({ id: lead.body.match(/class="idcode">(.*?)<\/div>/)[1].replace(/<[^>]+>/g, '') }), 'the default lead is a model');
+    assert.ok(lead.body.includes('OF 05'), 'the lead is one of 5 models');
+    const sum = content(film).find(s => s.id.endsWith('-numbers'));
+    if (sum) {
+      assert.ok(sum.body.includes('<div class="num big hl">5</div>') && sum.body.includes('+ 18 -latest aliases'));
+      assert.ok(sum.inner.includes('count(".big", 5,'));
+    }
+    const wall = content(film).find(s => s.id.endsWith('-makers'));
+    if (wall) {
+      assert.ok(wall.body.includes('5 new models · 18 -latest aliases'));
+      const withModels = new Set(rel.added.filter(m => !isAlias(m)).map(m => m.id.split('/')[0])).size;
+      assert.ok(wall.body.includes(`with new models`) && wall.body.includes(`· ${withModels} with new models`));
+    }
+  }
+  assert.match(kind.headline(rel), /^5 new models: .*, plus 18 -latest aliases$/);
+  // The facts are about models only: the aliases' windows and categories are not counted.
+  for (const f of dropFacts(rel.added)) assert.match(f.label, /new models$/);
+  assert.equal(dropFacts(rel.added).find(f => f.key === 'context').value,
+    fmtCtx(Math.max(...rel.added.filter(m => !isAlias(m)).map(m => m.context || 0))));
+});
+
+test('alias rows carry an ALIAS tag, their own A-numbers and what they follow', () => {
+  const rel = aliasDrop();
+  const film = kind.film(rel, { flags: { seconds: '60' } });
+  const ledger = content(film).filter(s => s.id.includes('ledger')).map(s => s.body).join('');
+  assert.equal((ledger.match(/>ALIAS</g) || []).length, 18);
+  assert.ok(ledger.includes('<span class="rk">A01</span>') && ledger.includes('<span class="rk">A18</span>'));
+  assert.ok(!ledger.includes('<span class="rk">06</span>'), 'model ranks stop at the models');
+  assert.ok(ledger.includes('follows org0/fam0-v2'));
+  // A plan's line still wins, and the mark is still there.
+  const planned = kind.film(rel, { flags: { seconds: '60' }, plan: { lines: { 'org0/fam0-latest': 'A plain true line' } } });
+  assert.ok(content(planned).some(s => s.body.includes('>A plain true line<')));
+  // Leftovers are counted by kind.
+  const short = content(kind.film(rel, {})).map(s => s.body).join('');
+  assert.match(short, /\+\d+ more -latest aliases in this drop/);
+  // The plan sees which ids are aliases.
+  const items = kind.items(rel);
+  assert.equal(items.filter(i => /ALIAS/.test(i.label)).length, 18);
+  assert.match(items.find(i => i.id === 'org0/fam0-latest').label, /ALIAS → org0\/fam0-v2 \(not a new model\)/);
 });
 
 test('the plan sees every model in the drop as a pickable item', () => {

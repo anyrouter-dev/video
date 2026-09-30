@@ -46,6 +46,29 @@ export const fmtCtx = n => {
 export const fmtPrice = v => (!v ? '$0' : v < 0.1 ? `$${+v.toFixed(3)}` : `$${v.toFixed(2)}`);
 const day = m => (m.created ? new Date(m.created * 1000).toISOString().slice(0, 10) : null);
 
+// ── aliases: a name that follows the newest model of a family is not a new model ──
+// The catalog has no alias field; its description is the most explicit signal
+// ("Alias for the newest live claude-sonnet model; currently anthropic/claude-sonnet-5-5."),
+// and the id's model part ending in -latest is the fallback.
+export const isAlias = m => /^alias for\b/i.test(m.excerpt ?? '') || /-latest$/.test(String(m.id).split('/').pop());
+/** The model an alias points at today, as the catalog names it, or null. */
+export const followsOf = m => /\bcurrently ([\w./:-]+?)\.?$/i.exec(m.excerpt ?? '')?.[1] ?? null;
+/** How many of a list are models and how many are aliases. */
+export const tally = list => { const aliases = list.filter(isAlias).length; return { models: list.length - aliases, aliases }; };
+const aliasWord = (list, n) => `${list.filter(isAlias).every(m => /-latest$/.test(m.id)) ? '-latest ' : ''}alias${n === 1 ? '' : 'es'}`;
+/** "5 new models · 18 -latest aliases" — either part left out when it is zero. */
+export const countLine = list => {
+  const { models, aliases } = tally(list);
+  return [models && `${models} new model${models === 1 ? '' : 's'}`, aliases && `${aliases} ${aliasWord(list, aliases)}`]
+    .filter(Boolean).join(' · ');
+};
+/** What the film left out, counted by kind: "+2 more models · +10 more aliases in this drop", or null. */
+const moreLine = hidden => {
+  const { models, aliases } = tally(hidden);
+  const parts = [models && `+${models} more model${models === 1 ? '' : 's'}`, aliases && `+${aliases} more ${aliasWord(hidden, aliases)}`];
+  return hidden.length ? `${parts.filter(Boolean).join(' · ')} in this drop` : null;
+};
+
 // ── timing (seconds) ────────────────────────────────────────────────────────
 const PAGE_HOLD = 2.0;     // a ledger page holds this long after its last row lands
 const ROW_AT = 0.5;        // the first row lands after the header
@@ -74,6 +97,7 @@ const tile = (m, cls = '') => `<div class="tile box ${cls}"><div class="face">${
 const freePill = '<span class="pill free">$0 · FREE</span>';
 // Multi-model films carry no prices at all: a $0 model is marked as a status, not a figure.
 const freeTag = '<span class="pill free">FREE</span>';
+const aliasTag = '<span class="pill alias">ALIAS</span>';
 
 /** The size class a model name gets, by its length. */
 const nameSize = (name, steps, fallback) => fit(name, steps, fallback);
@@ -88,6 +112,7 @@ const ledeOf = (m, plan, max, { prices = true } = {}) => {
   const ok = t => prices || !DOLLARS.test(t);
   const line = plan.lines?.[m.id];
   if (line && ok(line)) return line;
+  if (isAlias(m)) return followsOf(m) ? `alias · follows ${followsOf(m)}` : null;
   if (m.excerpt && !ok(m.excerpt)) return null;
   // The excerpt is left out of the facts it is checked against, or it would vouch for itself.
   return m.excerpt && !copyProblem(m.excerpt, factNumbers({ ...m, excerpt: null }), max) ? m.excerpt : null;
@@ -215,7 +240,8 @@ const CSS = `
   .lr .fig{font-family:'ArMono',monospace;font-size:34px;font-weight:800;letter-spacing:-.03em;text-align:right}
   .lr .note{font-size:26px;font-weight:500;line-height:1.3;color:var(--ink2);text-wrap:pretty}
   .lr .note.org{font-family:'ArMono',monospace;font-size:24px;font-weight:700;letter-spacing:.06em;color:var(--ink)}
-  .lr .st{text-align:right}
+  .lr .st{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .pill.alias{border-style:dashed;color:var(--ink2)}
   .lr .st .pill{height:40px;font-size:18px;padding:0 14px}
   .lr .label{text-align:right}
   .ledger .tail{display:flex;justify-content:space-between;align-items:center;margin-top:24px;border-top:2px solid var(--rule);padding-top:22px}
@@ -227,7 +253,7 @@ const CSS = `
   .wall .maker .mark,.wall .maker .mono-mark{width:var(--mk);height:var(--mk)}
   .wall .maker .mono-mark{font-size:calc(var(--mk) * .42)}
   .wall .maker .who{display:block;font-size:26px;font-weight:750;letter-spacing:-.02em;line-height:1.15;margin-top:16px;white-space:nowrap}
-  .wall .maker .label{margin-top:6px}
+  .wall .maker .label{margin-top:6px;font-size:16px;letter-spacing:.1em}
   .wall .maker.rest .face{justify-content:center;height:100%}
 
   /* the drop in numbers */
@@ -350,35 +376,36 @@ function card(m, { rank, of, side, id, start, dur, chapter, kicker, more, ctx, r
  * prices: a row is what identifies the model — mark, name, id, who makes it
  * (or the plan's line for it), its context window, and FREE as a status.
  */
-function ledgerPage(rows, { id, start, dur, first, total, page, pages, more, chapter, lines = {} }) {
+function ledgerPage(rows, { id, start, dur, rank, heading, page, pages, more, chapter, lines = {} }) {
+  const note = m => (lines[m.id] && !DOLLARS.test(lines[m.id]) ? `<div class="note">${esc(lines[m.id])}</div>`
+    : isAlias(m) && followsOf(m) ? `<div class="note">follows ${esc(followsOf(m))}</div>`
+    : `<div class="note org">${esc(m.provider)}</div>`);
   const row = (m, i) => {
     const t = ROW_AT + i * ROW_EVERY;
-    return { t, html: `<div class="lr r${i}"><div class="rl"></div>
-      <span class="rk">${pad(first + i)}</span>${tile(m)}
+    return { t, html: `<div class="lr r${i}${isAlias(m) ? ' al' : ''}"><div class="rl"></div>
+      <span class="rk">${rank(m)}</span>${tile(m)}
       <div class="nmc"><div class="nm${m.name.length > 22 ? ' s' : ''}">${esc(m.name)}</div><div class="id">${esc(m.id)}</div></div>
-      ${lines[m.id] && !DOLLARS.test(lines[m.id]) ? `<div class="note">${esc(lines[m.id])}</div>` : `<div class="note org">${esc(m.provider)}</div>`}
+      ${note(m)}
       <div class="fig">${fmtCtx(m.context)}</div>
-      <div class="st">${m.free ? freeTag : ''}</div></div>` };
+      <div class="st">${isAlias(m) ? aliasTag : ''}${m.free ? freeTag : ''}</div></div>` };
   };
   const printed = rows.map(row);
-  const last = first + rows.length - 1;
   return {
     id, start, dur, chapter, cls: 'ledger',
     cam: { from: { scale: 1.02, rotateX: 1 }, to: { scale: 1, rotateX: -0.6 } },
     body: `<div class="head"><div>
-        <div class="kicker"><i>${pad(first)}–${pad(last)}</i>of ${total} in this drop</div>
+        <div class="kicker"><i>${pad(page)}/${pad(pages)}</i>${esc(heading)}</div>
         <div class="h4">${words('The ledger')}</div></div>
-        <div class="label">page ${page} / ${pages}</div></div>
+        </div>
       <div class="lt">
         <div class="lr hd"><span></span><span></span><span class="label" style="text-align:left">model · id</span>
-          <span class="label" style="text-align:left">${Object.keys(lines).length ? 'provider · note' : 'provider'}</span><span class="label">context</span><span></span></div>
+          <span class="label" style="text-align:left">${Object.keys(lines).length || rows.some(isAlias) ? 'provider · note' : 'provider'}</span><span class="label">context</span><span></span></div>
         ${printed.map(p => p.html).join('')}
       </div>
       ${more ? `<div class="tail"><span class="more dotted">${esc(more)}</span><span class="label">anyrouter.dev/models</span></div>` : ''}`,
     inner: `
       slide(".head .kicker", 0.05, { x: -40 });
       rise(".head .h4", 0.1);
-      type(".head > .label", 0.2);
       type(".lr.hd .label", 0.3, 0.04);
       ${printed.map((p, i) => `grow(".r${i} .rl", ${r3(p.t - 0.1)}, 0, 0.2);
       tl.fromTo(Q(".r${i} > :not(.rl)"), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.2, ease: "steps(6)", stagger: 0.02 }, ${r3(p.t - 0.05)});`).join('\n      ')}
@@ -392,33 +419,37 @@ function ledgerPage(rows, { id, start, dur, first, total, page, pages, more, cha
  * Facts derived from the whole drop, deterministically, each labelled with
  * exactly what it is. Nothing here ranks quality: no "best", no "fastest".
  */
-export function dropFacts(added, { wall = false } = {}) {
+export function dropFacts(all, { wall = false } = {}) {
   const facts = [];
+  // Aliases are not new models: every fact is about the models (aliases only if there is nothing else).
+  const models = all.filter(m => !isAlias(m));
+  const added = models.length ? models : all;
+  const of = models.length ? 'new models' : 'aliases';
   const tie = (list, pick) => {
     const top = list.filter(m => pick(m) === pick(list[0]));
     return top.length > 1 ? `${list[0].name} +${top.length - 1} tied` : list[0].name;
   };
   const free = added.filter(m => m.free);
   if (free.length) {
-    facts.push({ key: 'free', label: 'free in this drop', value: String(free.length),
+    facts.push({ key: 'free', label: `free · ${of}`, value: String(free.length),
       what: free.length === 1 ? free[0].name : `${free[0].name} +${free.length - 1} more` });
   }
   const ctxs = added.filter(m => m.context).sort((a, b) => b.context - a.context);
   if (ctxs.length) {
-    facts.push({ key: 'context', label: 'largest context in this drop', value: fmtCtx(ctxs[0].context), what: tie(ctxs, m => m.context) });
+    facts.push({ key: 'context', label: `largest context · ${of}`, value: fmtCtx(ctxs[0].context), what: tie(ctxs, m => m.context) });
   }
   // No prices here: a many-model film is about which models, not what they cost.
   const cats = Object.entries(added.reduce((o, m) => (m.category ? { ...o, [m.category]: (o[m.category] ?? 0) + 1 } : o), {}))
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   if (cats.length > 1) {
-    facts.push({ key: 'categories', label: 'categories in this drop', value: String(cats.length),
+    facts.push({ key: 'categories', label: `categories · ${of}`, value: String(cats.length),
       what: cats.map(([c, n]) => `${n} ${c}`).join(' · ') });
   }
   // Model makers: the part of the id before the "/". Not the site's provider
   // claim (PROVIDER_CLAIM) — a different number, so a different label.
   const orgs = [...new Set(added.map(m => m.id.split('/')[0]))];
   if (orgs.length > 1 && !wall) {
-    facts.push({ key: 'orgs', label: 'model makers in this drop', value: String(orgs.length),
+    facts.push({ key: 'orgs', label: `makers · ${of}`, value: String(orgs.length),
       what: orgs.slice(0, 3).join(', ') + (orgs.length > 3 ? ` +${orgs.length - 3}` : '') });
   }
   return facts;
@@ -433,10 +464,12 @@ export function makersOf(added) {
   const by = new Map();
   for (const m of added) {
     const org = m.id.split('/')[0];
-    if (!by.has(org)) by.set(org, { org, name: m.provider, file: markFor(org) || markOf(m), count: 0 });
-    by.get(org).count += 1;
+    if (!by.has(org)) by.set(org, { org, name: m.provider, file: markFor(org) || markOf(m), count: 0, models: 0, aliases: 0 });
+    const k = by.get(org);
+    k.count += 1;
+    k[isAlias(m) ? 'aliases' : 'models'] += 1;
   }
-  return [...by.values()].sort((a, b) => b.count - a.count);
+  return [...by.values()].sort((a, b) => b.models - a.models || b.aliases - a.aliases);
 }
 
 const WALL_MAX = 18;
@@ -451,14 +484,16 @@ function wallScene(added, { id, start, dur, chapter }) {
     id, start, dur, chapter, cls: 'wall',
     cam: { from: { scale: 1.03 }, to: { scale: 1 } },
     body: `<div class="head"><div>
-        <div class="kicker"><i>${pad(makers.length)}</i>model makers in this drop</div>
+        <div class="kicker"><i>${pad(makers.length)}</i>${makers.some(k => !k.models)
+          ? `makers in this drop · ${makers.filter(k => k.models).length} with new models` : 'model makers in this drop'}</div>
         <div class="h4">${words('Who shipped')}</div></div>
-        <div class="label">${added.length} models</div></div>
+        <div class="label">${esc(countLine(added))}</div></div>
       <div class="grid" style="grid-template-columns:repeat(${cols},1fr);--mk:${mk}px">
         ${shown.map(k => `<div class="box maker"><div class="face">
           ${k.file ? markFile(k.file) : monogram(k.name)}
           <span class="who"${k.name.length > 13 ? ' style="font-size:20px"' : ''}>${esc(k.name)}</span>
-          <span class="label">${k.count === 1 ? '1 model' : `${k.count} models`}</span></div></div>`).join('')}
+          <span class="label">${esc([k.models && `${k.models} model${k.models === 1 ? '' : 's'}`,
+            k.aliases && `${k.aliases} alias${k.aliases === 1 ? '' : 'es'}`].filter(Boolean).join(' · '))}</span></div></div>`).join('')}
         ${rest ? `<div class="box maker rest"><div class="face"><span class="more dotted">+${rest} more</span></div></div>` : ''}
       </div>`,
     inner: `
@@ -474,20 +509,26 @@ function wallScene(added, { id, start, dur, chapter }) {
 
 function summaryScene(added, { id, start, dur, chapter, wall }) {
   const facts = dropFacts(added, { wall });
+  const { models, aliases } = tally(added);
+  // The numeral counts models; aliases are said beside it, never added to it.
+  const n = models || aliases;
+  const noun = models ? (models === 1 ? 'new model' : 'new models') : aliasWord(added, aliases);
   return {
     id, start, dur, chapter, cls: '',
     body: `<div class="sum">
       <div><div class="kicker"><i>Σ</i>the drop in numbers</div>
-        <div class="num big hl">${added.length}</div>
-        <div class="h3">${words(added.length === 1 ? 'new model' : 'new models')}</div></div>
+        <div class="num big hl">${n}</div>
+        <div class="h3">${words(noun)}</div>
+        ${models && aliases ? `<div class="more dotted" style="margin-top:26px">+ ${aliases} ${esc(aliasWord(added, aliases))}</div>` : ''}</div>
       <div class="facts">${facts.map(f => `<div class="box fact${f.key === 'free' ? ' tone' : ''}"><div class="face">
         <div class="num">${esc(f.value)}</div>
         <div><div class="label">${esc(f.label)}</div><div class="what">${esc(f.what)}</div></div></div></div>`).join('')}
       </div></div>`,
     inner: `
       slide(".kicker", 0.05, { x: -40 });
-      count(".big", ${added.length}, 0.1, 0.7);
+      count(".big", ${n}, 0.1, 0.7);
       rise(".sum .h3", 0.5);
+      slide(".sum .more", 0.7, { x: -30 });
       stamp(".fact", 0.8, 0.2);`,
     cues: [{ at: 0.1, kind: 'rise', dur: 0.7 }, { at: 0.8, kind: 'hit' },
       ...facts.slice(1).map((_, i) => ({ at: r3(1.0 + i * 0.2), kind: 'tick' }))],
@@ -501,7 +542,9 @@ export function chooseModels(rel, plan = {}, flags = {}) {
   const pool = rel.added.length ? rel.added : rel.spotlight ? [rel.spotlight] : [];
   const byId = new Map(pool.map(m => [m.id, m]));
   const picked = (plan.picks ?? []).map(id => byId.get(id)).filter(Boolean);
-  const order = [...picked, ...pool.filter(m => !picked.includes(m))];
+  // Unpicked: the drop's models first, then its aliases, each in the diff's order.
+  const rest = pool.filter(m => !picked.includes(m));
+  const order = [...picked, ...rest.filter(m => !isAlias(m)), ...rest.filter(isAlias)];
   // An explicit limit wins; otherwise the picks ARE the selection; otherwise everything.
   const limit = parseInt(flags.limit ?? plan.limit ?? 0, 10);
   const count = limit > 0 ? limit : picked.length || order.length;
@@ -587,10 +630,10 @@ export default {
     const pool = rel.added.length ? rel.added : rel.spotlight ? [rel.spotlight] : [];
     return pool.map(m => ({
       id: m.id,
-      label: `${m.name} · ${m.provider} · ${fmtPrice(m.inPrice)}/${fmtPrice(m.outPrice)} · ${fmtCtx(m.context)}`,
+      label: `${m.name} · ${m.provider}${isAlias(m) ? ` · ALIAS${followsOf(m) ? ` → ${followsOf(m)}` : ''} (not a new model)` : ''} · ${fmtPrice(m.inPrice)}/${fmtPrice(m.outPrice)} · ${fmtCtx(m.context)}`,
       // Quotable in a plan's copy. No date: its digits would vouch for any "30" or "2026" in a line.
       // Films of five or more show no prices, and drop any line that quotes one.
-      detail: [m.category, m.free && 'free', dropOf(rel, m.id)].filter(Boolean).join(' · '),
+      detail: [isAlias(m) && 'alias', m.category, m.free && 'free', dropOf(rel, m.id)].filter(Boolean).join(' · '),
     }));
   },
 
@@ -600,14 +643,16 @@ export default {
     if (!chosen.length) throw new Error('no models to film');
     const layout = layoutOf(chosen.length);
     const content = r3(duration - OPEN - END);
-    const drop = rel.added.length;
+    const everyone = rel.added.length ? rel.added : chosen;
+    const hidden = shownList => everyone.filter(m => !shownList.includes(m));
     const t = rel.totals;
 
     // A spotlight that is a price move, not a new model, says so.
     const moved = !rel.added.length && rel.changed.find(c => c.id === chosen[0].id);
     const ctx = {
       rel, plan,
-      what: moved ? { 'price-cut': 'price cut', 'price-rise': 'price update', context: 'context update' }[moved.kind] : 'new model',
+      what: moved ? { 'price-cut': 'price cut', 'price-rise': 'price update', context: 'context update' }[moved.kind]
+        : isAlias(chosen[0]) ? 'new alias' : 'new model',
       change: moved && (() => {
         const [a, b] = moved.from.split('@')[0].split('/').map(Number);
         return `${fmtPrice(a)} in · ${fmtPrice(b)} out`;
@@ -618,7 +663,7 @@ export default {
     if (layout === 'hero') {
       const m = chosen[0];
       shown = [m];
-      if (drop > 1) ctx.more = `+${drop - 1} more in this drop`;
+      ctx.more = moreLine(hidden([m]));
       if (content < NAME_MIN + 3.0) {
         content_ = [heroSpec(m, ctx, OPEN, content, { solo: true })];
       } else {
@@ -635,28 +680,33 @@ export default {
           rank: i + 1, of: shown.length, side: i % 2 ? 'b' : 'a',
           id: `s${pad(i + 1)}-${i ? 'model' : 'lead'}`, start: r3(at), dur: lens[i],
           chapter: `${pad(i + 1)} / ${pad(shown.length)} · ${m.name}`,
-          kicker: `${m.provider}${day(m) ? ` · ${day(m)}` : ''}`,
-          more: i === k - 1 && drop > k ? `+${drop - k} more in this drop` : null, ctx,
+          kicker: `${isAlias(m) ? 'alias · ' : ''}${m.provider}${day(m) ? ` · ${day(m)}` : ''}`,
+          more: i === k - 1 ? moreLine(hidden(shown)) : null, ctx,
         });
         at += lens[i];
         return s;
       });
     } else {
-      const everyone = rel.added.length ? rel.added : chosen;
       const tm = listTiming(content, chosen.length, makersOf(everyone).length);
       const lead = tm.spot ? chosen[0] : null;
       const rows = chosen.slice(tm.spot ? 1 : 0, (tm.spot ? 1 : 0) + tm.rows);
       shown = [...(lead ? [lead] : []), ...rows];
-      const more = drop > shown.length ? `+${drop - shown.length} more in this drop` : null;
+      const more = moreLine(hidden(shown));
+      // Models and aliases are numbered apart, so a rank never counts an alias as a model.
+      const rankOf = new Map();
+      let nm = 0, na = 0;
+      for (const m of chosen) rankOf.set(m, isAlias(m) ? `A${pad(++na)}` : pad(++nm));
       const nScenes = (tm.spot ? 1 : 0) + (tm.wall ? 1 : 0) + tm.pages + (tm.sum ? 1 : 0);
       let at = OPEN, n = 0;
       const next = (dur) => { const s = r3(at); at += dur; n += 1; return s; };
       const chap = label => `${pad(n + 1)} / ${pad(nScenes)} · ${label}`;
       if (lead) {
-        const newest = !plan.picks?.length && lead.created && pool.every(m => (m.created || 0) <= lead.created);
+        const newest = !plan.picks?.length && !isAlias(lead) && lead.created
+          && pool.filter(m => !isAlias(m)).every(m => (m.created || 0) <= lead.created);
+        const kin = tally(everyone);
         content_.push(card(lead, {
-          rank: 1, of: drop || 1, side: 'a', id: 's01-lead', chapter: chap(lead.name),
-          kicker: `${newest ? 'newest in this drop' : 'lead'} · ${lead.provider}`,
+          rank: 1, of: (isAlias(lead) ? kin.aliases : kin.models) || 1, side: 'a', id: 's01-lead', chapter: chap(lead.name),
+          kicker: `${newest ? 'newest in this drop' : isAlias(lead) ? 'alias' : 'lead'} · ${lead.provider}`,
           start: next(tm.spotDur), dur: tm.spotDur, more: null, ctx, rise: true, prices: false,
         }));
       }
@@ -668,10 +718,9 @@ export default {
       const pageLens = slots(tm.pagesDur, tm.pages);
       for (let p = 0; p < tm.pages; p++) {
         const slice = rows.slice(p * tm.perPage, (p + 1) * tm.perPage);
-        const first = (lead ? 2 : 1) + p * tm.perPage;
         content_.push(ledgerPage(slice, {
           id: `s${pad(n + 1)}-ledger-${p + 1}`, chapter: chap(`the ledger ${p + 1}/${tm.pages}`),
-          first, total: drop || chosen.length, page: p + 1, pages: tm.pages,
+          rank: m => rankOf.get(m), heading: countLine(everyone), page: p + 1, pages: tm.pages,
           more: p === tm.pages - 1 ? more : null, lines: plan.lines ?? {},
           start: next(pageLens[p]), dur: pageLens[p],
         }));
@@ -684,16 +733,19 @@ export default {
     }
 
     const date = String(rel.generatedAt ?? '').slice(0, 10);
-    const count = drop || chosen.length;
+    const kinds = tally(everyone);
+    const count = kinds.models || kinds.aliases;
     // A hero film is about one model, so its bookends are too, even when the drop was bigger.
     const one = layout === 'hero';
     const lead = chosen[0];
     const open = openScene({
       kicker: plan.kicker ?? (one ? ctx.what : 'model drop'),
-      meta: [date, one ? lead.id : `${count} new models`].filter(Boolean).join(' · '),
+      meta: [date, one ? lead.id : countLine(everyone)].filter(Boolean).join(' · '),
     });
     const bigText = plan.headline
-      ?? (one ? (moved ? `${lead.name}: ${ctx.what}` : `${lead.name} is live`) : `${count} new models on one key`);
+      ?? (one ? (moved ? `${lead.name}: ${ctx.what}` : isAlias(lead) ? `${lead.name}: a new alias` : `${lead.name} is live`)
+        : kinds.models ? `${kinds.models} new model${kinds.models === 1 ? '' : 's'} on one key`
+        : `${kinds.aliases} new ${aliasWord(everyone, kinds.aliases)} on one key`);
     const end = endScene(duration, {
       kicker: plan.kicker ?? (one ? `${ctx.what} · ${lead.provider}` : `model drop${date ? ` · ${date}` : ''}`),
       big: `<span class="${fit(bigText, [[28, 'e-l'], [56, 'e-m']], 'e-s')}">${esc(bigText)}</span>`,
@@ -713,7 +765,7 @@ export default {
   .e-l{font-size:88px}.e-m{font-size:68px}.e-s{font-size:54px;letter-spacing:-.035em}`,
       scenes: [open, ...content_, end],
       // Marks need no listing: writeFilm copies every assets/providers/*.svg a scene references.
-      summary: `${layout}  (${shown.length} of ${count} model${count === 1 ? '' : 's'} shown)`,
+      summary: `${layout}  (${shown.length} of ${everyone.length} shown: ${countLine(everyone)})`,
     };
   },
 
@@ -722,13 +774,18 @@ export default {
   headline(rel, plan = {}) {
     if (plan.headline) return plan.headline;
     const short = id => id.split('/').pop();
-    const { added, changed, removed } = rel;
+    const { changed, removed } = rel;
+    // Models lead; aliases are counted after them, never as models.
+    const added = rel.added.filter(m => !isAlias(m));
+    const aliases = rel.added.filter(isAlias);
+    const plus = aliases.length ? `, plus ${aliases.length} ${aliasWord(aliases, aliases.length)}` : '';
     if (added.length === 1) {
-      return added[0].free ? `${added[0].id} is now free on AnyRouter` : `${added[0].id} is live on AnyRouter`;
+      return (added[0].free ? `${added[0].id} is now free on AnyRouter` : `${added[0].id} is live on AnyRouter`) + plus;
     }
     if (added.length > 1) {
-      return `${added.length} new models: ${added.slice(0, 3).map(m => short(m.id)).join(', ')}${added.length > 3 ? ` +${added.length - 3} more` : ''}`;
+      return `${added.length} new models: ${added.slice(0, 3).map(m => short(m.id)).join(', ')}${added.length > 3 ? ` +${added.length - 3} more` : ''}${plus}`;
     }
+    if (aliases.length) return `${aliases.length} new ${aliasWord(aliases, aliases.length)} on AnyRouter`;
     const cut = changed.find(c => c.kind === 'price-cut');
     if (cut) {
       const p = dropPct(cut.from, cut.to);
@@ -743,7 +800,8 @@ export default {
   notes(rel, plan = {}) {
     return [
       plan.share,
-      `**New:** ${rel.added.map(m => `\`${m.id}\`${m.free ? ' (free)' : ''}`).join(', ') || '—'}`,
+      `**New models:** ${rel.added.filter(m => !isAlias(m)).map(m => `\`${m.id}\`${m.free ? ' (free)' : ''}`).join(', ') || '—'}`,
+      rel.added.some(isAlias) && `**New aliases:** ${rel.added.filter(isAlias).map(m => `\`${m.id}\`${followsOf(m) ? ` → \`${followsOf(m)}\`` : ''}`).join(', ')}`,
       rel.changed.length && `**Pricing:** ${rel.changed.map(c => `\`${c.id}\` ${c.from} → ${c.to}`).join(', ')}`,
       rel.removed.length && `**Retired:** ${rel.removed.map(id => `\`${id}\``).join(', ')}`,
       plan.rationale && `_Why this story: ${plan.rationale}_`,
