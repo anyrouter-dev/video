@@ -1,0 +1,225 @@
+{
+ "data": [
+  {
+   "id": "anyrouter/auto",
+   "name": "AnyRouter Auto",
+   "display_name": "AnyRouter Auto",
+   "provider": "anyrouter",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "created": 1780876800,
+   "description": "Top usage + top stable platform models mixing free-tier and credit-billed routes, with health-aware fallback. Tools are optional — pass `tools` when you need them. Billed at each hop's rate ($0 on free hops).",
+   "context_length": 1000000,
+   "pricing": {
+    "prompt": "0.6",
+    "completion": "3.6",
+    "input_per_1m": 0.6,
+    "output_per_1m": 3.6
+   }
+  },
+  {
+   "id": "anthropic/claude-opus-5-5",
+   "name": "Claude Opus 5.5",
+   "display_name": "Claude Opus 5.5",
+   "provider": "Anthropic",
+   "owned_by": "anthropic",
+   "category": "text",
+   "created": 1790035200,
+   "description": "Anthropic's Claude Opus 5.5 is the successor to Claude Opus 5 for long-running agentic coding and knowledge work. It delivers Fable 5.1-level performance at 40% lower cost ($4 / $20 per million input / output tokens), with adaptive thinking always on, 1M-token context, vision input, and tool use. Built for multi-step changes in large codebases, code review and bug finding, financial and scientific analysis, and reading dense charts and diagrams.",
+   "context_length": 1000000,
+   "pricing": {
+    "prompt": "4",
+    "completion": "20",
+    "input_per_1m": 4,
+    "output_per_1m": 20
+   }
+  },
+  {
+   "id": "anthropic/claude-sonnet-5-5",
+   "name": "Claude Sonnet 5.5",
+   "display_name": "Claude Sonnet 5.5",
+   "provider": "Anthropic",
+   "owned_by": "anthropic",
+   "category": "text",
+   "created": 1790553600,
+   "description": "Anthropic's Claude Sonnet 5.5 is the successor to Claude Sonnet 5 — the best combination of speed and intelligence in the lineup. It is the direct upgrade for well-scoped everyday work (building features, fixing bugs, drafting and review) at the same $2 / $10 per million input / output rates, with adaptive thinking on by default at `high` effort, 1M-token context, 128K max output, vision input, and tool use. Faster than Opus 5.5, cheaper, same window.",
+   "context_length": 1000000,
+   "pricing": {
+    "prompt": "2",
+    "completion": "10",
+    "input_per_1m": 2,
+    "output_per_1m": 10
+   }
+  },
+  {
+   "id": "baai/bge-m3",
+   "name": "BGE-M3",
+   "display_name": "BGE-M3",
+   "provider": "baai",
+   "owned_by": "baai",
+   "category": "embedding",
+   "created": 1706313600,
+   "description": "BAAI's BGE-M3 is a multilingual text embedding model that handles dense, sparse, and multi-vector retrieval in one model, across 100+ languages and an 8,192-token input window. It returns a 1,024-dimension dense vector.",
+   "context_length": 8192,
+   "pricing": {
+    "prompt": "0.01",
+    "completion": "0",
+    "input_per_1m": 0.01,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "google/gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "display_name": "Gemini 3.8 Flash",
+   "provider": "Google",
+   "owned_by": "google",
+   "category": "text",
+   "created": 1788307200,
+   "description": "Google's Gemini 3.8 Flash is a multimodal model for fast agentic workflows, coding, and complex multi-step reasoning, with a 1,048,576-token context window.",
+   "context_length": 1048576,
+   "pricing": {
+    "prompt": "0.375",
+    "completion": "1.875",
+    "input_per_1m": 0.375,
+    "output_per_1m": 1.875
+   }
+  },
+  {
+   "id": "minimax/m2",
+   "name": "MiniMax M2",
+   "display_name": "MiniMax M2",
+   "provider": "minimax",
+   "owned_by": "minimax",
+   "category": "text",
+   "created": 1756684800,
+   "description": "MiniMax M2 is a large language model for complex software engineering, agentic tool use, and office productivity workflows. Supports complex agent harnesses, dynamic tool search, Agent Teams, and high-fidelity coding and document-editing tasks.",
+   "context_length": 200000,
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "openai/gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "display_name": "GPT-6.1 Sol",
+   "provider": "OpenAI",
+   "owned_by": "openai",
+   "category": "multimodal",
+   "created": 1790726400,
+   "description": "OpenAI's GPT-6.1 Sol delivers near-Astra performance for complex coding and agentic work at a lower cost, with configurable reasoning, tool use, image input, and a 1.05M-token context window.",
+   "context_length": 1050000,
+   "pricing": {
+    "prompt": "2",
+    "completion": "10",
+    "input_per_1m": 2,
+    "output_per_1m": 10
+   }
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "name": "GPT-OSS-120b",
+   "display_name": "GPT-OSS-120b",
+   "provider": "OpenAI",
+   "owned_by": "openai",
+   "category": "text",
+   "created": 1783468800,
+   "description": "OpenAI gpt-oss-120b open-weight MoE via SiliconFlow free tier — reasoning and tool-use support.",
+   "context_length": 131072,
+   "pricing": {
+    "prompt": "0.09",
+    "completion": "0.47",
+    "input_per_1m": 0.09,
+    "output_per_1m": 0.47
+   }
+  },
+  {
+   "id": "qwen/qwen3.5-plus",
+   "name": "Qwen3.5 Plus",
+   "display_name": "Qwen3.5 Plus",
+   "provider": "Qwen",
+   "owned_by": "qwen",
+   "category": "text",
+   "created": 1773273600,
+   "description": "Qwen3.5 Plus is Alibaba's mid-tier \"plus\" model from the Qwen3.5 generation, with a 256K context window and strong reasoning, coding, and tool use.",
+   "context_length": 256000,
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "sakana/fugu-max",
+   "name": "Fugu Max",
+   "display_name": "Fugu Max",
+   "provider": "sakana",
+   "owned_by": "sakana",
+   "category": "text",
+   "created": 1789084800,
+   "description": "Fugu Max is the largest tier of Sakana AI's Fugu line — a 1M-token-context model that takes text, images, and files and returns text. It joins sakana/fugu and sakana/fugu-ultra as a distinct tier, and is not a v2 of fugu-ultra (that one is folded into the existing row as an alias, not a new listing).",
+   "context_length": 1000000,
+   "pricing": {
+    "prompt": "2",
+    "completion": "6",
+    "input_per_1m": 2,
+    "output_per_1m": 6
+   }
+  },
+  {
+   "id": "upstage/solar-decide",
+   "name": "Solar Decide",
+   "display_name": "Solar Decide",
+   "provider": "upstage",
+   "owned_by": "upstage",
+   "category": "text",
+   "created": 1790553600,
+   "description": "Upstage Solar Decide is a decision model served as a System One endpoint on Solar Mini 4: send application state and typed questions (noul / choice / score) and get structured answers back — not generated chat text. It has a 524,288-token context window. Call POST /api/v1/decisions (POST /api/v1/systemone is the same handler).",
+   "context_length": 524288,
+   "pricing": {
+    "prompt": "0.05",
+    "completion": "0",
+    "input_per_1m": 0.05,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "xiaomi/mimo-v2.6-flash",
+   "name": "MiMo V2.6 Flash",
+   "display_name": "MiMo V2.6 Flash",
+   "provider": "Xiaomi",
+   "owned_by": "xiaomi",
+   "category": "text",
+   "created": 1790035200,
+   "description": "MiMo V2.6 Flash is Xiaomi's full-modality reasoning model for high-frequency invocations and large-scale professional workloads. It keeps the 1M-token context window and up to 128K output tokens of MiMo V2.6 Pro at roughly a third of the input price, making it the best-balanced pick when reasoning quality matters more than peak capability.",
+   "context_length": 1050000,
+   "pricing": {
+    "prompt": "0.155",
+    "completion": "0.31",
+    "input_per_1m": 0.155,
+    "output_per_1m": 0.31
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-prime",
+   "name": "GLM 5.3 Prime",
+   "display_name": "GLM 5.3 Prime",
+   "provider": "Zhipu AI",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "created": 1790121600,
+   "description": "GLM 5.3 Prime is the top reasoning tier of Z.ai's GLM 5.3 line, above the Flash and FlashX cuts, with a 1M-token context window. It sits alongside z-ai/glm-5.3 and z-ai/glm-5.3-flash as a separately priced official variant rather than a packaging of them, so it keeps its own listing row.",
+   "context_length": 1000000,
+   "pricing": {
+    "prompt": "2.8",
+    "completion": "8.8",
+    "input_per_1m": 2.8,
+    "output_per_1m": 8.8
+   }
+  }
+ ]
+}

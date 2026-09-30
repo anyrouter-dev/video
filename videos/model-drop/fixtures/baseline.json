@@ -1,0 +1,49 @@
+{
+ "acceptedAt": "2026-09-26T00:00:00.000Z",
+ "ids": [
+  "anthropic/claude-opus-5-5",
+  "google/gemini-3.8-flash",
+  "minimax/m2",
+  "openai/gpt-oss-120b",
+  "qwen/qwen3.5-plus",
+  "inclusionai/ling-2.6-1t"
+ ],
+ "models": [
+  {
+   "id": "anthropic/claude-opus-5-5",
+   "inPrice": 4,
+   "outPrice": 20,
+   "context": 1000000
+  },
+  {
+   "id": "google/gemini-3.8-flash",
+   "inPrice": 0.375,
+   "outPrice": 1.875,
+   "context": 1048576
+  },
+  {
+   "id": "minimax/m2",
+   "inPrice": 0,
+   "outPrice": 0,
+   "context": 204800
+  },
+  {
+   "id": "openai/gpt-oss-120b",
+   "inPrice": 0.143,
+   "outPrice": 0.605,
+   "context": 131072
+  },
+  {
+   "id": "qwen/qwen3.5-plus",
+   "inPrice": 0.4,
+   "outPrice": 1.6,
+   "context": 256000
+  },
+  {
+   "id": "inclusionai/ling-2.6-1t",
+   "inPrice": 0.5,
+   "outPrice": 2,
+   "context": 131072
+  }
+ ]
+}

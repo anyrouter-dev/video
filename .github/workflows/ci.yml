@@ -1,0 +1,76 @@
+name: ci
+
+# The gate for code changes. Rendering is not done here — see render-video.yml.
+#   test   the unit tests. Node builtins only, so no install: seconds.
+#   check  builds every generated kind from its committed fixture and runs the
+#          HyperFrames checker on it (lint, layout, motion, contrast), so a
+#          change to a generator cannot break the nightly render unnoticed.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - 'lib/**'
+      - 'videos/**'
+      - 'shared/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/ci.yml'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test
+
+  check:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - kind: model-drop
+            args: --from=videos/model-drop/fixtures/catalog.json --baseline=videos/model-drop/fixtures/baseline.json
+          - kind: release
+            args: --from=videos/release/fixtures/rss.xml
+          - kind: changelog
+            args: --from=videos/changelog/fixtures/llms.txt
+          - kind: intro
+            args: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Cache node_modules and the render browser
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/hyperframes
+          key: render-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --no-fund
+      - run: npx hyperframes browser ensure
+      - name: Build from the fixture
+        run: |
+          node lib/cli.mjs collect ${{ matrix.kind }} ${{ matrix.args }}
+          node lib/cli.mjs gen ${{ matrix.kind }}
+      - name: Check
+        run: node lib/cli.mjs check ${{ matrix.kind }}

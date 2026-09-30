@@ -12,6 +12,7 @@
  *   --seconds=N   film length (default 20)
  *   --all         ignore the baseline      --first=N   newest N on a first run
  *   --from=FILE   build from a saved catalog response instead of the live API
+ *   --baseline=FILE   diff against this baseline instead of the committed one
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,7 +24,10 @@ const MIN_PAGE_SECONDS = 2.2;   // below this a page of six rows cannot be read
 
 const readJson = f => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
 
-const logo = m => (m.logo ? `<img class="lg" src="assets/providers/${m.logo}" alt="">` : `<span class="lgdot"></span>`);
+// A mark with no -color variant is drawn in black, which vanishes on the dark card.
+const logo = m => (m.logo
+  ? `<img class="lg${m.logo.endsWith('-color.svg') ? '' : ' ink'}" src="assets/providers/${m.logo}" alt="">`
+  : `<span class="lgdot"></span>`);
 const price = m => (m.free ? '$0' : `$${m.inPrice.toFixed(2)}`);
 // Below 1M, "0.0M" throws away the number entirely (a 32k window read as 0.0M).
 export const fmtCtx = n => {
@@ -39,6 +43,7 @@ const CSS = `
     box-shadow:0 60px 150px rgba(0,0,0,.72);transform-style:preserve-3d}
   .lrow{display:flex;align-items:center;gap:18px;margin-bottom:24px}
   .lg{width:68px;height:68px;object-fit:contain}
+  .lg.ink{filter:brightness(0) invert(1)}
   .lgdot{width:68px;height:68px;border-radius:50%;background:linear-gradient(140deg,var(--primary),var(--gold))}
   .prov{font-size:20px;letter-spacing:.30em;text-transform:uppercase;color:var(--primary);font-weight:600}
   .rank{margin-left:auto;font-size:62px;font-weight:700;letter-spacing:-.05em;color:rgba(255,255,255,.38)}
@@ -77,7 +82,7 @@ const CSS = `
 export const layoutOf = n => (n === 1 ? 'hero' : n <= 4 ? 'cards' : 'list');
 
 const heroScene = (m, rel, duration) => ({
-  id: 's01-hero', start: IGNITE, dur: duration - IGNITE,
+  id: 's01-hero', start: IGNITE, dur: +(duration - IGNITE - CTA).toFixed(3),
   body: `<div class="card">
     <div class="lrow">${logo(m)}<span class="prov">${esc(m.provider)}</span></div>
     <h1 class="name">${esc(m.name)}</h1>
@@ -159,7 +164,8 @@ export default {
       raw = await r.json();
       try { pool = await (await fetch(POOL_API)).json(); } catch { /* optional */ }
     }
-    const { release, listed } = buildRelease(raw, pool, readJson(path.join(dir, 'baseline.json')), {
+    const baseline = readJson(flags.baseline ? path.resolve(flags.baseline) : path.join(dir, 'baseline.json'));
+    const { release, listed } = buildRelease(raw, pool, baseline, {
       all: !!flags.all, first: parseInt(flags.first ?? '5', 10),
     });
     // The catalog this diff was taken from becomes the next baseline — saved now
