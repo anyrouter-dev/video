@@ -1,0 +1,17 @@
+{
+  "id": "001-20260930-2026-09-30-7fb8483027",
+  "hash": "7fb8483027",
+  "kind": "changelog",
+  "label": "2026-09-30",
+  "title": "5 changelog updates: GPT-6.1 Sol, Latest aliases: name a model family, always get a live model +3 more",
+  "seconds": 30,
+  "renderedAt": "2026-09-30T15:20:45.052Z",
+  "commit": "fa5b681",
+  "artifact": "renders/changelog-001-20260930-2026-09-30-7fb8483027.mp4",
+  "cover": "renders/changelog-001-20260930-2026-09-30-7fb8483027.png",
+  "source": "renders/changelog-001-20260930-2026-09-30-7fb8483027-source.tar.gz",
+  "createdAt": "2026-09-30T15:20:45.055Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-001-20260930-2026-09-30-7fb8483027"
+  }
+}

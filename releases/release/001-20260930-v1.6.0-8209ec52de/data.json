@@ -1,0 +1,44 @@
+{
+  "notable": true,
+  "label": "v1.6.0",
+  "parts": [
+    "release:1.6.0"
+  ],
+  "version": "1.6.0",
+  "headline": "AnyRouter 1.6: name a model family, always get a live model",
+  "link": "https://anyrouter.dev/changelog/1.6.0",
+  "date": "2026-09-30",
+  "summary": "Send a -latest id and AnyRouter calls the newest available model in that family. This release also adds new models, in-place BYOK key replacement, a read-only analytics scope for management keys, and a redesigned site.",
+  "highlights": [
+    {
+      "theme": "Models",
+      "line": "-latest aliases such as google/gemini-flash-latest resolve to the newest live model in a family. They are listed in /api/v1/models and have their own model pages.",
+      "href": "https://blog.anyrouter.dev/releases/2026-09-30-latest-aliases"
+    },
+    {
+      "theme": "Models",
+      "line": "New in the catalog: GPT-6.1 Sol and Step 5 Preview, plus a DeepInfra route for DeepSeek V4.1 Flash.",
+      "href": "https://blog.anyrouter.dev/releases"
+    },
+    {
+      "theme": "BYOK",
+      "line": "Replace a BYOK key in place and keep its id, label and routing settings. anyr byok rotate antigravity re-uploads a refreshed token for you.",
+      "href": "https://anyrouter.dev/docs/features/byok-providers/antigravity"
+    },
+    {
+      "theme": "API and keys",
+      "line": "A new read-only read:analytics scope lets a management key read /analytics/* and nothing else.",
+      "href": "https://anyrouter.dev/docs/api-reference/management-keys"
+    },
+    {
+      "theme": "Routing",
+      "line": "A client hanging up no longer cools a route or sidelines your BYOK key, and routes that support reasoning are preferred.",
+      "href": "https://anyrouter.dev/docs/features/routing"
+    },
+    {
+      "theme": "Apps and site",
+      "line": "The new SLM Matrix mini-app ranks small models by task. The landing, pricing, models and apps pages share a new print-style design.",
+      "href": "https://anyrouter.dev/apps/slm-matrix"
+    }
+  ]
+}

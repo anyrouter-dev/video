@@ -1,0 +1,55 @@
+{
+  "notable": true,
+  "label": "2026-09-30",
+  "parts": [
+    "2026-09-30",
+    "2026-09-30-latest-aliases",
+    "2026-09-30-liquid-d1",
+    "2026-09-30-solar-decide",
+    "2026-09-30-disabled"
+  ],
+  "date": "2026-09-30",
+  "entries": [
+    {
+      "slug": "2026-09-30",
+      "date": "2026-09-30",
+      "title": "GPT-6.1 Sol",
+      "summary": "OpenAI's GPT-6.1 Sol joins the catalog BYOK-only through OpenAI — 1.05M-token context, 128K max output, image input, and adjustable reasoning at $2 / $10 per million input / output tokens.",
+      "link": "https://anyrouter.dev/blog/releases/2026-09-30",
+      "type": "added"
+    },
+    {
+      "slug": "2026-09-30-latest-aliases",
+      "date": "2026-09-30",
+      "title": "Latest aliases: name a model family, always get a live model",
+      "summary": "Send google/gemini-flash-latest, anthropic/claude-sonnet-latest and 17 other -latest ids. AnyRouter calls the newest model in that family that is available right now, skips retired ones, and bills the model that answered.",
+      "link": "https://anyrouter.dev/blog/releases/2026-09-30-latest-aliases",
+      "type": "added"
+    },
+    {
+      "slug": "2026-09-30-liquid-d1",
+      "date": "2026-09-30",
+      "title": "Liquid d1",
+      "summary": "Liquid AI's first decision model joins the Decisions family: send state and typed questions, get calibrated probabilities back with zero generated tokens. Free on Liquid's API with your own Liquid key.",
+      "link": "https://anyrouter.dev/blog/releases/2026-09-30-liquid-d1",
+      "type": "added"
+    },
+    {
+      "slug": "2026-09-30-solar-decide",
+      "date": "2026-09-30",
+      "title": "Solar Decide",
+      "summary": "Upstage's Solar Decide joins the Decisions family: send state and typed questions, get structured answers instead of chat text, with a 524,288-token context window at $0.05 per million input tokens.",
+      "link": "https://anyrouter.dev/blog/releases/2026-09-30-solar-decide",
+      "type": "added"
+    },
+    {
+      "slug": "2026-09-30-disabled",
+      "date": "2026-09-30",
+      "title": "3 models disabled",
+      "summary": "The only upstream no longer publishes inclusionai/ling-2.6-1t (live /models 2026-09-30); the Ling-3.0 family replaces it. (#3687) Plus 2 more.",
+      "link": "https://anyrouter.dev/blog/releases/2026-09-30-disabled",
+      "type": "disabled"
+    }
+  ],
+  "total": 5
+}

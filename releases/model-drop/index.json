@@ -38,11 +38,17 @@
       "hash": "24f646933f",
       "kind": "model-drop",
       "label": "models+pricing",
-      "title": null,
+      "title": "37 new models: gpt-6.1-sol, d1, claude-sonnet-5-5 +34 more",
       "createdAt": "2026-09-30T13:47:52.390Z",
       "seconds": 20,
-      "renderedAt": "2026-09-30T13:47:52.391Z",
-      "artifact": "renders/video_2026-09-30_13-46-41.mp4"
+      "renderedAt": "2026-09-30T15:22:09.052Z",
+      "artifact": "renders/model-drop-004-20260930-models+pricing-24f646933f.mp4",
+      "commit": "fa5b681",
+      "cover": "renders/model-drop-004-20260930-models+pricing-24f646933f.png",
+      "source": "renders/model-drop-004-20260930-models+pricing-24f646933f-source.tar.gz",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-004-20260930-models%2Bpricing-24f646933f"
+      }
     }
   ]
 }
