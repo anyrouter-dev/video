@@ -5,7 +5,3 @@ snapshots/
 verify/
 design-options/
 .DS_Store
-
-# Older scores: reproducible from audio/make_score_v1.py and audio/make_score_30s.py.
-audio/score_v1.wav
-audio/score_30s.wav

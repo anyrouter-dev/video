@@ -5,31 +5,35 @@
     <meta name="viewport" content="width=1920, height=1080" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
-      @font-face { font-family: "GeistV"; src: url("fonts/geist.woff2") format("woff2-variations"); font-weight: 100 900; font-display: block; }
-      @font-face { font-family: "JetV"; src: url("fonts/mono.woff2") format("woff2-variations"); font-weight: 100 800; font-display: block; }
+      @font-face { font-family: "ArInter"; src: url("fonts/inter.woff2") format("woff2-variations"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "ArMono"; src: url("fonts/mono.woff2") format("woff2-variations"); font-weight: 100 800; font-display: block; }
 
-      /* Direction: 1-bit print. Cool paper, ink rules, ordered-dither texture, one signal orange. */
+      /* Direction: anyrouter.dev's print look, the same tokens lib/film.mjs uses for every generated film.
+         Warm paper, ink rules, ordered-dither texture, ONE signal tone (org). --tone-lt is that tone lifted
+         for text on an ink face only; --free is the site's dither-green, used for "it worked". */
       :root {
-        --paper: #f1f2f4;
+        --paper: #f7f4ec;
         --face: #ffffff;
-        --ink: #0b0c0e;
-        --ink2: #454a55;
-        --rule: #0b0c0e;
-        --org: #f38020;
+        --ink: #0a0a0a;
+        --ink2: #545454;
+        --rule: #0a0a0a;
+        --org: #c2560f;
         --org-ink: #a84600;
-        --red: #c8261a;
-        --green: #0c7a52;
+        --tone-lt: #f0a066;
+        --free: #33692b;
+        --free-lt: #9ccf8f;
+        --mute: #a3a3a3;
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
       #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink);
-        font-family: "GeistV", sans-serif; font-weight: 500; -webkit-font-smoothing: antialiased; }
+        font-family: "ArInter", Inter, system-ui, sans-serif; font-weight: 500; -webkit-font-smoothing: antialiased; }
       .clip { position: absolute; inset: 0; }
       .abs { position: absolute; }
       .full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
       canvas.dither { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; image-rendering: pixelated; }
 
-      .kicker { position: absolute; left: 140px; top: 150px; font-family: "JetV", monospace; font-size: 22px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--org-ink); }
+      .kicker { position: absolute; left: 140px; top: 150px; font-family: "ArMono", monospace; font-size: 22px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--org-ink); }
       .kicker i { font-style: normal; color: var(--ink); margin-right: 14px; }
       .head { position: absolute; left: 140px; top: 190px; width: 1640px; font-size: 80px; font-weight: 800; letter-spacing: -0.05em; line-height: 90px; }
       .head .o { color: var(--org-ink); }
@@ -39,29 +43,29 @@
 
       /* boxes with a dithered hard shadow */
       .box { position: absolute; isolation: isolate; }
-      .box::before { content: ""; position: absolute; left: 12px; top: 12px; right: -12px; bottom: -12px; z-index: -1;
+      .box { --sh: 1; }
+      .box::before { content: ""; position: absolute; inset: 0; z-index: -1; transform: translate(calc(var(--sh) * 14px), calc(var(--sh) * 14px));
         background-image: radial-gradient(circle, var(--ink) 1.15px, transparent 1.45px); background-size: 5px 5px; }
-      .face { position: relative; width: 100%; height: 100%; background: var(--face); border: 2px solid var(--rule); border-radius: 4px; }
-      .dfill { background-color: rgba(243, 128, 32, 0.16); background-image: radial-gradient(circle, var(--org) 1.3px, transparent 1.6px); background-size: 5px 5px; border-right: 3px solid var(--org); }
-      .dfill-ink { background-color: rgba(11, 12, 14, 0.06); background-image: radial-gradient(circle, var(--ink) 1.2px, transparent 1.5px); background-size: 5px 5px; border-right: 3px solid var(--ink); }
-      .dfill-grey { background-image: radial-gradient(circle, #9aa0aa 1.1px, transparent 1.4px); background-size: 4px 4px; }
+      .face { position: relative; width: 100%; height: 100%; background: var(--face); border: 2px solid var(--rule); border-radius: 6px; }
+      .dfill { background-color: rgba(194, 86, 15, 0.10); background-image: radial-gradient(circle, var(--org) 1.3px, transparent 1.6px); background-size: 5px 5px; border-right: 3px solid var(--org); }
+      .dfill-ink { background-color: rgba(10, 10, 10, 0.05); background-image: radial-gradient(circle, var(--ink) 1.2px, transparent 1.5px); background-size: 5px 5px; border-right: 3px solid var(--ink); }
+      .dfill-grey { background-image: radial-gradient(circle, #8a8a8a 1.1px, transparent 1.4px); background-size: 4px 4px; }
       .tile { position: absolute; left: 0; top: 0; width: 96px; height: 96px; }
       .tile .face { display: flex; align-items: center; justify-content: center; }
       .tile img { width: 54px; height: 54px; display: block; }
-      .pill { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px; border: 2px solid var(--rule); border-radius: 999px; background: var(--face);
-        font-family: "JetV", monospace; font-size: 20px; font-weight: 700; }
       .dot { width: 10px; height: 10px; border-radius: 50%; display: block; }
 
-      /* HUD / frame chrome */
       #hud { z-index: 60; }
-      #hud .crop { position: absolute; width: 26px; height: 26px; border-color: var(--ink); border-style: solid; border-width: 0; }
-      #hud-brand { left: 64px; top: 48px; display: flex; align-items: center; gap: 6.6px; }
-      #hud-brand svg { width: 38px; height: 38px; display: block; }
-      #hud-brand span { font-size: 26.6px; font-weight: 800; letter-spacing: -0.045em; }
-      #hud-tc { right: 64px; top: 52px; display: flex; gap: 22px; align-items: center; font-family: "JetV", monospace; font-size: 19px; font-weight: 700; color: var(--ink); }
+      /* the frame chrome: the same look as lib/film.mjs fx layer */
+      #hud .crop { position: absolute; width: 28px; height: 28px; border-color: var(--ink); border-style: solid; border-width: 0; }
+      #hud-brand, #hud-tc, #hud-ch { background: var(--paper); padding: 4px 10px; margin: -4px -10px; }
+      #hud-brand { left: 64px; top: 48px; display: flex; align-items: center; gap: 10px; }
+      #hud-brand svg { width: 36px; height: 36px; display: block; }
+      #hud-brand span { font-size: 26px; font-weight: 800; letter-spacing: -0.045em; }
+      #hud-tc { right: 64px; top: 54px; display: flex; gap: 22px; align-items: center; font-family: "ArMono", monospace; font-size: 19px; font-weight: 700; color: var(--ink); }
       #hud-tc b { color: var(--org-ink); }
-      #hud-ch { left: 64px; bottom: 44px; font-family: "JetV", monospace; font-size: 19px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink); }
-      #hud-bars { right: 64px; bottom: 46px; display: flex; gap: 6px; }
+      #hud-ch { left: 64px; bottom: 46px; font-family: "ArMono", monospace; font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+      #hud-bars { right: 64px; bottom: 48px; display: flex; gap: 6px; }
       #hud-bars div { width: 16px; height: 16px; border: 2px solid var(--ink); }
 
       /* S1 */
@@ -69,7 +73,8 @@
       #s1-inner { display: flex; align-items: center; gap: 36px; }
       #s1-mark { width: 200px; height: 200px; display: block; }
       #s1-word { font-size: 140px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
-      #s1-tag { left: 0; width: 1920px; top: 700px; text-align: center; font-family: "JetV", monospace; font-size: 24px; font-weight: 700; letter-spacing: 0.2em; color: var(--org-ink); }
+      #s1-rule { left: 700px; top: 676px; width: 520px; height: 2px; background: var(--ink); transform-origin: 0 50%; }
+      #s1-tag { left: 0; width: 1920px; top: 700px; text-align: center; font-family: "ArMono", monospace; font-size: 24px; font-weight: 700; letter-spacing: 0.2em; color: var(--org-ink); }
 
       /* S2 */
       #s2-head { left: 140px; top: 250px; font-size: 150px; font-weight: 800; letter-spacing: -0.058em; line-height: 172px; }
@@ -83,27 +88,34 @@
       /* S3 */
       #s3-stage { left: 860px; top: 250px; width: 980px; height: 700px; perspective: 1400px; }
       #s3-plane { position: absolute; left: 0; top: 0; width: 980px; height: 700px; transform-style: preserve-3d; }
-      .kchip { position: absolute; width: 300px; height: 84px; }
-      .kchip .face { display: flex; align-items: center; gap: 14px; padding: 0 18px; font-family: "JetV", monospace; font-size: 22px; font-weight: 600; }
+      .kchip { position: absolute; width: 316px; height: 84px; }
+      .kchip .face { display: flex; align-items: center; gap: 14px; padding: 0 18px; font-family: "ArMono", monospace; font-size: 20px; font-weight: 600; white-space: nowrap; }
       .kchip img { width: 36px; height: 36px; display: block; }
       .kchip .sdk { color: var(--ink2); }
-      #s3-key { left: 980px; top: 470px; width: 760px; height: 200px; }
-      #s3-key .face { display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 0 36px; }
-      #s3-key .row { display: flex; align-items: center; gap: 22px; font-family: "JetV", monospace; font-size: 40px; font-weight: 700; }
-      #s3-key .row div { width: 64px; height: 64px; background: var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-      #s3-key .row svg { width: 40px; height: 40px; display: block; }
-      #s3-key .cap { font-family: "JetV", monospace; font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: var(--org-ink); }
+      #s3-key { left: 140px; top: 440px; width: 940px; height: 260px; }
+      #s3-key .face { display: flex; flex-direction: column; justify-content: center; gap: 30px; padding: 0 44px; }
+      #s3-key .row { display: flex; align-items: center; gap: 26px; font-family: "ArMono", monospace; font-size: 54px; font-weight: 700; letter-spacing: -0.02em; }
+      #s3-key .row div { width: 88px; height: 88px; background: var(--ink); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+      #s3-key .row svg { width: 54px; height: 54px; display: block; }
+      #s3-key .cap { display: flex; gap: 14px; }
+      #s3-was { left: 1210px; top: 452px; font-family: "ArMono", monospace; font-size: 34px; font-weight: 700; color: var(--ink2); white-space: nowrap; }
+      #s3-was i { position: absolute; left: -8px; right: -8px; top: 50%; height: 6px; margin-top: -3px; background: var(--org); transform-origin: 0 50%; }
+      #s3-now { left: 1204px; top: 520px; font-size: 128px; font-weight: 800; letter-spacing: -0.058em; line-height: 1; white-space: nowrap; }
+      #s3-now .o { color: var(--org-ink); }
+      #s3-sdk { left: 1210px; top: 668px; font-family: "ArMono", monospace; font-size: 24px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink2); }
+      .pill { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border: 2px solid var(--rule); border-radius: 999px; background: var(--face); font-family: "ArMono", monospace; font-size: 21px; font-weight: 700; letter-spacing: 0.04em; }
+      .pill.hot { background: var(--ink); color: var(--paper); }
 
       /* S4 code */
       #s4-card { left: 120px; top: 260px; width: 840px; height: 566px; }
-      #s4-card .face { background: var(--ink); color: #e6e8eb; font-family: "JetV", monospace; overflow: hidden; }
-      #s4-card .top { height: 54px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 2px solid #23262c; }
-      #s4-card .top i { width: 14px; height: 14px; border-radius: 50%; display: block; border: 2px solid #6b717c; }
-      #s4-card .top span { margin-left: 12px; font-size: 18px; color: #9aa1ab; }
+      #s4-card .face { background: var(--ink); color: #f7f4ec; font-family: "ArMono", monospace; overflow: hidden; }
+      #s4-card .top { height: 54px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 2px solid #262626; }
+      #s4-card .top i { width: 14px; height: 14px; border-radius: 50%; display: block; border: 2px solid #6b6b6b; }
+      #s4-card .top span { margin-left: 12px; font-size: 18px; color: #a3a3a3; }
       #s4-card pre { font-family: inherit; font-size: 23px; line-height: 38px; padding: 20px 0; }
       #s4-card pre div { padding: 0 28px; white-space: pre; height: 38px; }
-      #s4-card pre .hl { background: #1a1d22; box-shadow: inset 5px 0 0 var(--org); }
-      .k { color: #ff8f7a; } .s { color: #a8d1ff; } .p { color: #ffb36b; }
+      #s4-card pre .hl { background: #1c1c1c; box-shadow: inset 5px 0 0 var(--org); }
+      .k { color: var(--mute); } .s { color: #ffffff; } .p { color: var(--tone-lt); }
       #s4-model { position: relative; display: inline-block; vertical-align: top; height: 38px; overflow: hidden; }
       #s4-model > span { display: block; height: 38px; }
       #s4-cap { left: 124px; top: 876px; font-size: 42px; font-weight: 800; letter-spacing: -0.035em; }
@@ -120,19 +132,19 @@
       #s5-num sup { font-size: 140px; color: var(--org-ink); vertical-align: top; position: relative; top: 20px; }
       #s5-sub { left: 142px; top: 610px; font-size: 56px; font-weight: 800; letter-spacing: -0.045em; line-height: 62px; }
       #s5-sub .o { color: var(--org-ink); }
-      #s5-note { left: 144px; top: 770px; width: 560px; font-family: "JetV", monospace; font-size: 21px; font-weight: 600; line-height: 1.5; color: var(--ink2); }
+      #s5-note { left: 144px; top: 770px; width: 560px; font-family: "ArMono", monospace; font-size: 21px; font-weight: 600; line-height: 1.5; color: var(--ink2); }
       #s5-chart { left: 820px; top: 250px; width: 980px; height: 640px; }
       #s5-chart .face { padding: 30px 36px; }
-      .ctitle { font-family: "JetV", monospace; font-size: 19px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink); text-transform: uppercase; }
+      .ctitle { font-family: "ArMono", monospace; font-size: 19px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink); text-transform: uppercase; }
       .ctitle span { color: var(--ink2); }
-      .srow { display: grid; grid-template-columns: 50px 290px 1fr 150px; align-items: center; height: 100px; border-bottom: 2px dashed #c9ccd2; }
+      .srow { display: grid; grid-template-columns: 50px 290px 1fr 150px; align-items: center; height: 100px; border-bottom: 2px dashed #cfcac0; }
       .srow:last-child { border-bottom: 0; }
       .srow img { width: 36px; height: 36px; display: block; }
       .srow .nm { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
-      .srow .nm small { display: block; font-family: "JetV", monospace; font-size: 16px; font-weight: 600; color: var(--ink2); letter-spacing: 0; }
+      .srow .nm small { display: block; font-family: "ArMono", monospace; font-size: 16px; font-weight: 600; color: var(--ink2); letter-spacing: 0; }
       .srow .trk { height: 34px; position: relative; }
       .srow .bar { position: absolute; left: 0; top: 0; height: 34px; width: 100%; transform-origin: left center; }
-      .srow .val { text-align: right; font-family: "JetV", monospace; font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+      .srow .val { text-align: right; font-family: "ArMono", monospace; font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
 
       /* Pool chapter */
       #p1-key { left: 140px; top: 420px; width: 640px; height: 250px; }
@@ -140,70 +152,70 @@
       .krow { display: flex; align-items: center; gap: 20px; }
       .krow img { width: 60px; height: 60px; display: block; }
       .krow b { font-size: 38px; font-weight: 800; letter-spacing: -0.03em; display: block; }
-      .krow small { font-family: "JetV", monospace; font-size: 20px; font-weight: 600; color: var(--ink2); }
-      .kval { font-family: "JetV", monospace; font-size: 30px; font-weight: 700; }
-      #p1-stamp { left: 330px; top: 600px; width: 470px; height: 98px; border: 6px solid var(--red); color: var(--red);
-        display: flex; align-items: center; justify-content: center; font-family: "JetV", monospace; font-size: 38px; font-weight: 800; letter-spacing: 0.06em;
-        background: rgba(241, 242, 244, 0.94); }
-      #p1-log { left: 880px; top: 340px; width: 900px; height: 470px; }
-      #p1-log .face { background: var(--ink); color: #e6e8eb; font-family: "JetV", monospace; padding: 26px 30px; font-size: 25px; line-height: 1; display: flex; flex-direction: column; gap: 26px; }
+      .krow small { font-family: "ArMono", monospace; font-size: 20px; font-weight: 600; color: var(--ink2); }
+      .kval { font-family: "ArMono", monospace; font-size: 30px; font-weight: 700; }
+      #p1-stamp { left: 330px; top: 600px; width: 470px; height: 98px; border: 6px solid var(--org); color: var(--org);
+        display: flex; align-items: center; justify-content: center; font-family: "ArMono", monospace; font-size: 38px; font-weight: 800; letter-spacing: 0.06em;
+        background: rgba(247, 244, 236, 0.94); }
+      #p1-log { left: 880px; top: 400px; width: 900px; height: 440px; }
+      #p1-log .face { background: var(--ink); color: #f7f4ec; font-family: "ArMono", monospace; padding: 26px 30px; font-size: 25px; line-height: 1; display: flex; flex-direction: column; gap: 26px; }
       #p1-log .ln { display: flex; gap: 18px; white-space: nowrap; }
-      #p1-log .ln span:first-child { color: #9aa1ab; }
-      #p1-log .ok { color: #5fe0a8; } #p1-log .bad { color: #ff8a7d; }
+      #p1-log .ln span:first-child { color: #a3a3a3; }
+      #p1-log .ok { color: var(--free-lt); } #p1-log .bad { color: var(--tone-lt); }
 
-      #p2-row { left: 200px; top: 440px; width: 1520px; height: 170px; }
+      #p2-row { left: 200px; top: 470px; width: 1520px; height: 170px; }
       #p2-row .face { display: grid; grid-template-columns: 110px 1fr 270px 340px; align-items: center; padding: 0 34px; gap: 10px; }
       #p2-row .lg { width: 92px; height: 92px; border: 2px solid var(--rule); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
       #p2-row .lg img { width: 56px; height: 56px; display: block; }
       #p2-row b { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; display: block; }
-      #p2-row small { font-family: "JetV", monospace; font-size: 22px; font-weight: 600; color: var(--ink2); }
-      .ver { color: var(--green); border-color: var(--green); }
+      #p2-row small { font-family: "ArMono", monospace; font-size: 22px; font-weight: 600; color: var(--ink2); }
+      .ver { color: var(--free); border-color: var(--free); }
       .tog { display: flex; align-items: center; gap: 18px; justify-content: flex-end; font-size: 28px; font-weight: 700; }
-      .sw { width: 104px; height: 56px; border: 3px solid var(--ink); border-radius: 999px; position: relative; background: #d8dbe0; }
+      .sw { width: 104px; height: 56px; border: 3px solid var(--ink); border-radius: 999px; position: relative; background: #e4dfd3; }
       .sw i { position: absolute; left: 5px; top: 5px; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); display: block; }
-      #p2-toast { left: 200px; top: 680px; width: 720px; height: 74px; }
+      #p2-toast { left: 200px; top: 712px; width: 720px; height: 74px; }
       #p2-toast .face { background: var(--ink); color: #fff; display: flex; align-items: center; gap: 14px; padding: 0 28px; font-size: 28px; font-weight: 700; white-space: nowrap; }
-      #p2-toast .face b { color: #ffb36b; }
-      #p2-fine { left: 204px; top: 800px; font-family: "JetV", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); letter-spacing: 0.04em; }
+      #p2-toast .face b { color: var(--tone-lt); }
+      #p2-fine { left: 204px; top: 836px; font-family: "ArMono", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); letter-spacing: 0.04em; }
       .cursor { position: absolute; left: 0; top: 0; width: 46px; height: 46px; z-index: 20; }
       .cursor svg { width: 46px; height: 46px; display: block; }
 
       #p3-app { left: 140px; top: 500px; width: 330px; height: 124px; }
       #p3-app .face { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 24px; }
       #p3-app b { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
-      #p3-app small { font-family: "JetV", monospace; font-size: 17px; font-weight: 600; color: var(--ink2); }
-      #p3-plabel { left: 710px; top: 736px; width: 300px; text-align: center; font-family: "JetV", monospace; font-size: 22px; font-weight: 800; letter-spacing: 0.14em; }
+      #p3-app small { font-family: "ArMono", monospace; font-size: 17px; font-weight: 600; color: var(--ink2); }
+      #p3-plabel { left: 710px; top: 736px; width: 300px; text-align: center; font-family: "ArMono", monospace; font-size: 22px; font-weight: 800; letter-spacing: 0.14em; }
       .pkey { position: absolute; width: 420px; height: 96px; }
       .pkey .face { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; padding: 0 20px; }
       .pkey img { width: 44px; height: 44px; display: block; }
       .pkey b { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; }
-      .pkey .st { font-family: "JetV", monospace; font-size: 20px; font-weight: 800; padding: 6px 10px; border: 2px solid currentColor; border-radius: 4px; }
-      #p3-note { left: 140px; top: 880px; width: 1640px; font-family: "JetV", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); }
+      .pkey .st { font-family: "ArMono", monospace; font-size: 20px; font-weight: 800; padding: 6px 10px; border: 2px solid currentColor; border-radius: 4px; }
+      #p3-note { left: 140px; top: 880px; width: 1640px; font-family: "ArMono", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); }
       .rdot { position: absolute; left: 0; top: 0; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--org); border: 3px solid var(--ink); }
 
       #p4-stats { left: 140px; top: 330px; display: flex; flex-direction: column; gap: 22px; }
       .bstat { display: flex; align-items: baseline; gap: 18px; }
-      .bstat b { font-size: 92px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; min-width: 250px; }
-      .bstat span { font-family: "JetV", monospace; font-size: 24px; font-weight: 700; color: var(--ink2); letter-spacing: 0.04em; }
-      .fmodel { position: absolute; width: 230px; height: 84px; }
-      .fmodel .face { display: flex; align-items: center; gap: 14px; padding: 0 18px; font-family: "JetV", monospace; font-size: 23px; font-weight: 700; }
+      .bstat b { font-size: 92px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; min-width: 230px; }
+      .bstat span { font-family: "ArMono", monospace; font-size: 24px; font-weight: 700; color: var(--ink2); letter-spacing: 0.04em; }
+      .fmodel { position: absolute; height: 84px; white-space: nowrap; }
+      .fmodel .face { display: flex; align-items: center; gap: 14px; padding: 0 18px; font-family: "ArMono", monospace; font-size: 23px; font-weight: 700; }
       .fmodel img { width: 40px; height: 40px; display: block; }
-      .fmodel .fr { position: absolute; right: -2px; top: -30px; font-family: "JetV", monospace; font-size: 16px; font-weight: 800; color: var(--green); }
+      .fmodel .fr { position: absolute; right: -2px; top: -30px; font-family: "ArMono", monospace; font-size: 16px; font-weight: 800; color: var(--free); }
 
       #p5-badge { left: 140px; top: 470px; width: 820px; height: 190px; }
       #p5-badge .face { background: var(--ink); color: #fff; padding: 24px 36px; display: flex; flex-direction: column; gap: 8px; }
       #p5-badge b { font-size: 46px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
-      #p5-badge b em { font-style: normal; color: #ffb36b; }
-      #p5-badge small { font-family: "JetV", monospace; font-size: 21px; font-weight: 600; color: #c4c8cf; }
+      #p5-badge b em { font-style: normal; color: var(--tone-lt); }
+      #p5-badge small { font-family: "ArMono", monospace; font-size: 21px; font-weight: 600; color: #c9c4b8; }
       #p5-table { left: 1040px; top: 330px; width: 740px; height: 520px; }
       #p5-table .face { padding: 28px 34px; }
-      .erow { display: grid; grid-template-columns: 170px 1fr 170px; align-items: center; height: 96px; border-bottom: 2px dashed #c9ccd2; font-family: "JetV", monospace; }
+      .erow { display: grid; grid-template-columns: 170px 1fr 170px; align-items: center; height: 96px; border-bottom: 2px dashed #cfcac0; font-family: "ArMono", monospace; }
       .erow:last-child { border-bottom: 0; }
       .erow .a { font-size: 24px; font-weight: 700; color: var(--ink2); }
       .erow .t { height: 30px; position: relative; margin-right: 18px; }
       .erow .t div { position: absolute; left: 0; top: 0; height: 30px; transform-origin: left center; }
-      .erow .v { text-align: right; font-size: 30px; font-weight: 800; color: var(--green); }
-      #p5-fine { left: 144px; top: 720px; width: 820px; font-family: "JetV", monospace; font-size: 21px; font-weight: 600; line-height: 1.5; color: var(--ink2); }
+      .erow .v { text-align: right; font-size: 30px; font-weight: 800; color: var(--free); }
+      #p5-fine { left: 144px; top: 720px; width: 820px; font-family: "ArMono", monospace; font-size: 21px; font-weight: 600; line-height: 1.5; color: var(--ink2); }
 
       /* DATA */
       #d-chart { left: 140px; top: 330px; width: 1160px; height: 600px; }
@@ -212,20 +224,20 @@
       #d-bars .col { flex: 1; height: 100%; display: flex; flex-direction: column-reverse; transform-origin: bottom center; }
       #d-bars .col div { width: 100%; }
       #d-grid { position: absolute; left: 90px; right: 34px; top: 100px; height: 380px; }
-      #d-grid div { position: absolute; left: 0; right: 0; border-top: 2px dashed #d3d6db; }
-      #d-grid span { position: absolute; left: -80px; top: -10px; font-family: "JetV", monospace; font-size: 16px; font-weight: 700; color: var(--ink2); }
-      #d-x { position: absolute; left: 90px; right: 34px; top: 494px; height: 24px; font-family: "JetV", monospace; font-size: 17px; font-weight: 700; color: var(--ink2); }
+      #d-grid div { position: absolute; left: 0; right: 0; border-top: 2px dashed #d9d4c8; }
+      #d-grid span { position: absolute; left: -80px; top: -10px; font-family: "ArMono", monospace; font-size: 16px; font-weight: 700; color: var(--ink2); }
+      #d-x { position: absolute; left: 90px; right: 34px; top: 494px; height: 24px; font-family: "ArMono", monospace; font-size: 17px; font-weight: 700; color: var(--ink2); }
       #d-x span { position: absolute; top: 0; margin-left: -30px; width: 60px; text-align: center; }
-      #d-leg { position: absolute; left: 34px; bottom: 26px; display: flex; gap: 28px; font-family: "JetV", monospace; font-size: 18px; font-weight: 700; }
+      #d-leg { position: absolute; left: 34px; bottom: 26px; display: flex; gap: 28px; font-family: "ArMono", monospace; font-size: 18px; font-weight: 700; }
       #d-leg span { display: flex; align-items: center; gap: 10px; }
       #d-leg i { width: 22px; height: 16px; display: block; }
       #d-side { left: 1360px; top: 330px; width: 420px; height: 600px; }
       .sbox { position: absolute; left: 0; width: 420px; }
       .sbox .face { padding: 22px 26px; }
       .sbox b { display: block; font-size: 56px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
-      .sbox span { font-family: "JetV", monospace; font-size: 18px; font-weight: 700; color: var(--ink2); }
-      .share { display: grid; grid-template-columns: 1fr 90px; gap: 6px 10px; margin-top: 14px; font-family: "JetV", monospace; font-size: 18px; font-weight: 700; align-items: center; }
-      .share .t { grid-column: 1 / 3; height: 16px; position: relative; background: #e3e5e9; }
+      .sbox span { font-family: "ArMono", monospace; font-size: 18px; font-weight: 700; color: var(--ink2); }
+      .share { display: grid; grid-template-columns: 1fr 90px; gap: 6px 10px; margin-top: 14px; font-family: "ArMono", monospace; font-size: 18px; font-weight: 700; align-items: center; }
+      .share .t { grid-column: 1 / 3; height: 16px; position: relative; background: #ebe6da; }
       .share .t div { position: absolute; left: 0; top: 0; height: 16px; transform-origin: left center; }
       .share em { font-style: normal; text-align: right; }
 
@@ -233,14 +245,14 @@
       #pr-stage { left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; }
       .plan { position: absolute; top: 330px; width: 460px; height: 560px; }
       .plan .face { padding: 30px 32px; display: flex; flex-direction: column; gap: 14px; }
-      .plan .nm { font-family: "JetV", monospace; font-size: 22px; font-weight: 800; letter-spacing: 0.14em; display: flex; justify-content: space-between; }
+      .plan .nm { font-family: "ArMono", monospace; font-size: 22px; font-weight: 800; letter-spacing: 0.14em; display: flex; justify-content: space-between; }
       .plan .nm span { color: var(--org-ink); }
       .plan .pr { font-size: 92px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; position: relative; height: 92px; }
       .plan .pr small { font-size: 30px; letter-spacing: -0.02em; color: var(--ink2); }
-      .plan .or { font-family: "JetV", monospace; font-size: 19px; font-weight: 700; color: var(--org-ink); }
+      .plan .or { font-family: "ArMono", monospace; font-size: 19px; font-weight: 700; color: var(--org-ink); }
       .plan ul { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 6px; font-size: 22px; font-weight: 600; }
       .plan li { display: flex; gap: 10px; }
-      .plan li::before { content: "+"; font-family: "JetV", monospace; font-weight: 800; color: var(--org-ink); }
+      .plan li::before { content: "+"; font-family: "ArMono", monospace; font-weight: 800; color: var(--org-ink); }
       .plan .btns { margin-top: auto; display: flex; gap: 12px; }
       .btn { height: 60px; padding: 0 22px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ink); border-radius: 4px; font-size: 22px; font-weight: 800; }
       .btn.ink { background: var(--ink); color: #fff; }
@@ -248,14 +260,14 @@
       #pr-orbit { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-style: preserve-3d; }
       #pr-two { position: absolute; left: 0; top: 0; }
       #pr-zero { position: absolute; left: 0; top: 0; color: var(--org-ink); }
-      #pr-strike { position: absolute; left: -6px; top: 44px; width: 110px; height: 8px; background: var(--red); transform-origin: left center; }
+      #pr-strike { position: absolute; left: -6px; top: 44px; width: 110px; height: 8px; background: var(--org); transform-origin: left center; }
 
       /* DROP */
-      #dr-lab { left: 0; width: 1920px; top: 250px; text-align: center; font-family: "JetV", monospace; font-size: 28px; font-weight: 800; letter-spacing: 0.14em; }
+      #dr-lab { left: 0; width: 1920px; top: 250px; text-align: center; font-family: "ArMono", monospace; font-size: 28px; font-weight: 800; letter-spacing: 0.14em; }
       #dr-num { left: 0; width: 1920px; top: 320px; text-align: center; font-size: 260px; font-weight: 800; letter-spacing: -0.065em; line-height: 1; font-variant-numeric: tabular-nums; }
       #dr-tag { left: 0; width: 1920px; top: 610px; text-align: center; font-size: 86px; font-weight: 800; letter-spacing: -0.05em; }
       #dr-foot { left: 0; width: 1920px; top: 800px; text-align: center; }
-      #dr-foot span { display: inline-block; padding: 14px 26px; background: var(--ink); color: #fff; border-radius: 4px; font-family: "JetV", monospace; font-size: 23px; font-weight: 700; }
+      #dr-foot span { display: inline-block; padding: 14px 26px; background: var(--ink); color: #fff; border-radius: 4px; font-family: "ArMono", monospace; font-size: 23px; font-weight: 700; }
 
       /* END */
       #e-lock { left: 0; width: 1920px; top: 250px; display: flex; justify-content: center; align-items: center; gap: 34px; }
@@ -267,9 +279,9 @@
       #e-cta .btn { height: 80px; padding: 0 38px; font-size: 32px; gap: 14px; }
       #e-cta .btn.org { background: var(--org); border-color: var(--ink); color: var(--ink); }
       #e-cmd { left: 0; width: 1920px; top: 740px; display: flex; justify-content: center; }
-      #e-cmd div { height: 66px; padding: 0 28px; background: var(--ink); color: #e6e8eb; border-radius: 4px; display: flex; align-items: center; gap: 14px; font-family: "JetV", monospace; font-size: 25px; font-weight: 600; }
+      #e-cmd div { height: 66px; padding: 0 28px; background: var(--ink); color: #f7f4ec; border-radius: 4px; display: flex; align-items: center; gap: 14px; font-family: "ArMono", monospace; font-size: 25px; font-weight: 600; }
       #e-cmd b { color: var(--org); }
-      #e-fine { left: 0; width: 1920px; top: 850px; text-align: center; font-family: "JetV", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); letter-spacing: 0.06em; }
+      #e-fine { left: 0; width: 1920px; top: 850px; text-align: center; font-family: "ArMono", monospace; font-size: 22px; font-weight: 700; color: var(--ink2); letter-spacing: 0.06em; }
     </style>
   </head>
   <body>
@@ -286,10 +298,11 @@
       <div id="s1" class="clip" data-start="0" data-duration="4" data-track-index="1">
         <div id="s1-lock" class="full">
           <div id="s1-inner">
-            <svg id="s1-mark" viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0b0c0e"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
+            <svg id="s1-mark" viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0a0a"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
             <div id="s1-word" class="mask"><span data-split>AnyRouter</span></div>
           </div>
         </div>
+        <div id="s1-rule" class="abs"></div>
         <div id="s1-tag" class="abs"><span data-split>ONE GATEWAY · EVERY MODEL</span></div>
       </div>
 
@@ -316,8 +329,11 @@
           <div id="s3-stage" class="abs"><div id="s3-plane"></div></div>
           <div id="s3-key" class="box"><div class="face">
             <div class="row"><div><svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#ffffff"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg></div>sk-ar-v1-••••••••••••</div>
-            <div class="cap">One key · one bill · 200+ models</div>
+            <div class="cap"><span class="pill hot">ONE KEY</span><span class="pill">ONE BILL</span><span class="pill">200+ MODELS</span></div>
           </div></div>
+          <div id="s3-was" class="abs">8 keys · 4 SDKs<i></i></div>
+          <div id="s3-now" class="abs"><div class="mask"><span>1 key<span class="o">.</span></span></div></div>
+          <div id="s3-sdk" class="abs">+ THE OPENAI SDK YOU ALREADY USE</div>
         </div>
       </div>
 
@@ -327,7 +343,7 @@
           <svg id="s4-svg" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
           <div id="s4-card" class="box"><div class="face">
             <div class="top"><i></i><i></i><i></i><span>app.py</span></div>
-            <pre><div><span class="k">from</span> openai <span class="k">import</span> OpenAI</div><div> </div><div>client = OpenAI(</div><div class="hl">    <span class="p">base_url</span>=<span class="s">"https://anyrouter.dev/api/v1"</span>,</div><div>    <span class="p">api_key</span>=os.environ[<span class="s">"ANYROUTER_API_KEY"</span>],</div><div>)</div><div> </div><div>resp = client.chat.completions.create(</div><div>    <span class="p">model</span>=<span id="s4-model" class="s"><span>"anthropic/claude-sonnet-4.6"<span style="color:#e6e8eb">,</span></span><span>"openai/gpt-5.2"<span style="color:#e6e8eb">,</span></span><span>"google/gemini-3.5-flash"<span style="color:#e6e8eb">,</span></span><span>"deepseek/deepseek-v4-flash"<span style="color:#e6e8eb">,</span></span></span></div><div>    <span class="p">messages</span>=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Hi"</span>}],</div><div>)</div></pre>
+            <pre><div><span class="k">from</span> openai <span class="k">import</span> OpenAI</div><div> </div><div>client = OpenAI(</div><div class="hl">    <span class="p">base_url</span>=<span class="s">"https://anyrouter.dev/api/v1"</span>,</div><div>    <span class="p">api_key</span>=os.environ[<span class="s">"ANYROUTER_API_KEY"</span>],</div><div>)</div><div> </div><div>resp = client.chat.completions.create(</div><div>    <span class="p">model</span>=<span id="s4-model" class="s"><span>"anthropic/claude-sonnet-4.6"<span style="color:#f7f4ec">,</span></span><span>"openai/gpt-5.2"<span style="color:#f7f4ec">,</span></span><span>"google/gemini-3.5-flash"<span style="color:#f7f4ec">,</span></span><span>"deepseek/deepseek-v4-flash"<span style="color:#f7f4ec">,</span></span></span></div><div>    <span class="p">messages</span>=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Hi"</span>}],</div><div>)</div></pre>
           </div></div>
           <div id="s4-provs" class="full"></div>
           <div id="hub2" class="box"><div class="face"><svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#ffffff"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg></div></div>
@@ -379,12 +395,12 @@
           <div id="p2-row" class="box"><div class="face">
             <div class="lg"><img src="assets/providers/nvidia-color.svg" alt="" /></div>
             <div><b>NVIDIA NIM</b><small>nvapi-••••••••7f2c · Dashboard → BYOK</small></div>
-            <div><span class="pill ver"><i class="dot" style="background:#0c7a52"></i>Key verified</span></div>
+            <div><span class="pill ver"><i class="dot" style="background:#33692b"></i>Key verified</span></div>
             <div class="tog">Donate to pool<div class="sw" id="p2-sw"><i id="p2-knob"></i></div></div>
           </div></div>
           <div id="p2-toast" class="box"><div class="face">Joined the shared pool · <b>earns 5–8% back</b></div></div>
           <div id="p2-fine" class="abs">OPT-IN PER KEY · EXPLICIT CONSENT · OPT OUT ANYTIME</div>
-          <div class="cursor" id="p2-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0b0c0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div class="cursor" id="p2-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0a0a0a" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
 
@@ -441,7 +457,7 @@
             <div id="d-grid"></div>
             <div id="d-bars"></div>
             <div id="d-x"></div>
-            <div id="d-leg"><span><i class="dfill"></i>Laguna S 2.1</span><span><i class="dfill-ink"></i>anyrouter/auto</span><span><i class="dfill-grey" style="border-right:3px solid #9aa0aa"></i>other models</span></div>
+            <div id="d-leg"><span><i class="dfill"></i>Laguna S 2.1</span><span><i class="dfill-ink"></i>anyrouter/auto</span><span><i class="dfill-grey" style="border-right:3px solid #8a8a8a"></i>other models</span></div>
           </div></div>
           <div id="d-side" class="abs">
             <div class="sbox box" style="top:0;height:150px"><div class="face"><b id="d-req">0</b><span>REQUESTS · 30 DAYS</span></div></div>
@@ -479,7 +495,7 @@
               <div class="btns"><div class="btn ink">Upgrade to Pro+</div></div>
             </div></div>
           </div></div>
-          <div class="cursor" id="pr-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0b0c0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div class="cursor" id="pr-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0a0a0a" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
 
@@ -497,7 +513,7 @@
       <div id="en" class="clip" data-start="56.5" data-duration="3.5" data-track-index="1">
         <div id="en-cam" class="full">
           <div id="e-lock" class="abs">
-            <svg id="e-mark" viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0b0c0e"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
+            <svg id="e-mark" viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0a0a"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
             <div id="e-word" class="mask"><span data-split>AnyRouter</span></div>
           </div>
           <div id="e-h" class="abs">Build your next AI app on <span>one key.</span></div>
@@ -507,23 +523,23 @@
           </div>
           <div id="e-cmd" class="abs"><div><b>$</b>curl -fsSL https://anyrouter.dev/setup.sh | bash</div></div>
           <div id="e-fine" class="abs">ANYROUTER.DEV · 200+ MODELS · BYOK AT ZERO MARKUP · FREE TO START</div>
-          <div class="cursor" id="e-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0b0c0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div class="cursor" id="e-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0a0a0a" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
 
       <div id="fxl" class="clip" data-start="0" data-duration="60" data-track-index="7"><canvas id="dfx" class="dither" width="480" height="270"></canvas></div>
 
       <div id="hud" class="clip" data-start="0" data-duration="60" data-track-index="8">
-        <div class="crop" style="left:32px;top:32px;border-left-width:3px;border-top-width:3px"></div>
-        <div class="crop" style="right:32px;top:32px;border-right-width:3px;border-top-width:3px"></div>
-        <div class="crop" style="left:32px;bottom:32px;border-left-width:3px;border-bottom-width:3px"></div>
-        <div class="crop" style="right:32px;bottom:32px;border-right-width:3px;border-bottom-width:3px"></div>
+        <div class="crop" style="left:36px;top:24px;border-left-width:2px;border-top-width:2px"></div>
+        <div class="crop" style="right:36px;top:24px;border-right-width:2px;border-top-width:2px"></div>
+        <div class="crop" style="left:36px;bottom:24px;border-left-width:2px;border-bottom-width:2px"></div>
+        <div class="crop" style="right:36px;bottom:24px;border-right-width:2px;border-bottom-width:2px"></div>
         <div id="hud-brand" class="abs">
-          <svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0b0c0e"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
+          <svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0a0a"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
           <span>AnyRouter</span>
         </div>
-        <div id="hud-tc" class="abs"><span>ANYROUTER.DEV</span><b id="hud-time">00:00:00:00</b></div>
-        <div id="hud-ch" class="abs">INTRO</div>
+        <div id="hud-tc" class="abs"><b>INTRO</b><span id="hud-time">00:00:00:00</span></div>
+        <div id="hud-ch" class="abs">OPEN</div>
         <div id="hud-bars" class="abs"></div>
       </div>
     </div>
@@ -543,10 +559,10 @@
 
         // measure the S1 lockup → HUD brand (match cut) before anything moves
         const ir = $("#s1-inner").getBoundingClientRect(), mr = $("#s1-mark").getBoundingClientRect();
-        const FLY = { s: 38 / mr.width };
+        const FLY = { s: 36 / mr.width };
         const C0 = { x: ir.left + ir.width / 2, y: ir.top + ir.height / 2 }, M0 = { x: mr.left + mr.width / 2, y: mr.top + mr.height / 2 };
-        FLY.x = 64 + 19 - C0.x - FLY.s * (M0.x - C0.x);
-        FLY.y = 48 + 19 - C0.y - FLY.s * (M0.y - C0.y);
+        FLY.x = 64 + 18 - C0.x - FLY.s * (M0.x - C0.x);
+        FLY.y = 48 + 18 - C0.y - FLY.s * (M0.y - C0.y);
         const MARK_SHIFT = (ir.right - mr.right) / 2;
 
         // zoom-through targets, measured untransformed (clip forced visible for the read)
@@ -594,7 +610,7 @@
 
         const bctx = $("#dbg").getContext("2d"), fctx = $("#dfx").getContext("2d");
         const bimg = bctx.createImageData(CW, CH), fimg = fctx.createImageData(CW, CH);
-        const INK = [11, 12, 14], ORG = [243, 128, 32], PAPER = [241, 242, 244];
+        const INK = [10, 10, 10], ORG = [194, 86, 15];
 
         function sphereAt(t) {
           if (t < 32 || t > 40.4) return null;
@@ -603,30 +619,41 @@
           const p = eo(seg(t, 36.0, 36.8)), q = eio(seg(t, 40.0, 40.35));
           return { x: 215 + (292 - 215) * p, y: 140 + (148 - 140) * p, r: (338 + (58 - 338) * p) * (1 - q) };
         }
-        // 36 has no cut: the pool sphere itself covers the frame
-        const CUTS = [[4, PAPER, "h"], [8, INK, "r"], [12, INK, "r"], [18, PAPER, "h"], [24, INK, "r"], [28, PAPER, "v"], [32, ORG, "r"], [40, PAPER, "h"], [44, INK, "v"], [50, PAPER, "h"], [54, ORG, "r"], [56.5, PAPER, "r"]];
-        const CHS = [[0, "INTRO"], [4, "01 · ONE GATEWAY"], [8, "02 · ONE KEY"], [12, "03 · ONE LINE"], [18, "04 · 200+ MODELS"], [24, "05 · FREE POOL 1/5"], [28, "05 · FREE POOL 2/5"], [32, "05 · FREE POOL 3/5"], [36, "05 · FREE POOL 4/5"], [40, "05 · FREE POOL 5/5"], [44, "06 · LIVE DATA"], [50, "07 · PRICING"], [54, "08 · FREE TOKENS"], [56.5, "ANYROUTER.DEV"]];
-        const HB = []; for (let k = 0; k < 15; k++) HB.push(div("", "", $("#hud-bars")));
+        // A cut is a dither wipe, alternating ink and signal like lib/film.mjs. 36 has no wipe: the pool
+        // sphere itself covers the frame. The zoom-throughs (8, 12, 32, 54) arrive out of ink or tone already.
+        const CUTS = [[4, INK, "h"], [8, INK, "r"], [12, INK, "r"], [18, ORG, "h"], [24, INK, "v"], [28, ORG, "v"], [32, ORG, "r"], [40, INK, "h"], [44, ORG, "v"], [50, INK, "h"], [54, ORG, "r"], [56.5, INK, "r"]];
+        const CHS = [[0, "OPEN"], [4, "01 · ONE GATEWAY"], [8, "02 · ONE KEY"], [12, "03 · ONE LINE"], [18, "04 · 200+ MODELS"], [24, "05 · FREE POOL 1/5"], [28, "05 · FREE POOL 2/5"], [32, "05 · FREE POOL 3/5"], [36, "05 · FREE POOL 4/5"], [40, "05 · FREE POOL 5/5"], [44, "06 · LIVE DATA"], [50, "07 · PRICING"], [54, "08 · FREE TOKENS"], [56.5, "ANYROUTER.DEV"]];
+        const HB = CHS.map(() => div("", "", $("#hud-bars")));
+        const CUT_AT = CUTS.map(([c]) => c).concat(36);
 
         function render(t) {
           const B = bimg.data; B.fill(0);
-          const pulse = Math.exp(-((t % 2) * 5)) * 0.25;
-          const amp = t < 2.4 ? seg(t, 1.2, 2.4) * 0.9 : (t > 54 && t < 56.5 ? 0 : 0.9);
+          // the beat: a small swell every half second, as in the engine's backdrop
+          const pulse = Math.exp(-((t % 0.5) * 9)) * 0.10;
+          const amp = t < 2.4 ? seg(t, 1.2, 2.4) : (t > 54 && t < 56.5 ? 0 : 1);
           const intro = t < 2.3;
           const logoOn = seg(t, 0.1, 1.5), logoOff = seg(t, 1.75, 2.1), noise = 1 - seg(t, 0.0, 1.3);
           const sp = sphereAt(t), spin = t * 1.7;
           const drop = seg(t, 53.98, 54.25) * (1 - seg(t, 56.3, 56.52));
-          const ringP = seg(t, 58.0, 58.9), ringR = 20 + ringP * 260, ringA = 1 - ringP;
           for (let y = 0; y < CH; y++) {
             const ny = y / CH;
             for (let x = 0; x < CW; x++) {
               const i = y * CW + x, th = THR[i], o = i * 4, nx = x / CW;
               let col = null, a = 0;
-              const edge = Math.max(Math.abs(nx - 0.5) * 2, Math.abs(ny - 0.5) * 2);
-              const e = Math.pow(clamp((edge - 0.42) / 0.58), 1.4);
-              if (e > 0) {
-                const flow = 0.5 + 0.5 * Math.sin(x * 0.045 + y * 0.03 + t * 0.9 + 2 * Math.sin(y * 0.021 - t * 0.5 + x * 0.008));
-                if (e * (0.3 + 0.7 * flow) * amp + e * pulse > th) { col = INK; a = 46; }
+              // the centre stays clean paper (that is where the words are); ink breathes at the edges
+              const q = ((nx - 0.5) / 0.47) ** 2 + ((ny - 0.5) / 0.42) ** 2;
+              if (q >= 1 && amp > 0) {
+                const e = clamp((q - 1) / 1.6) * amp;
+                const flow = 0.5 + 0.5 * Math.sin(x * 0.045 + y * 0.03 + t * 0.8 + 2 * Math.sin(y * 0.021 - t * 0.45 + x * 0.008));
+                const band = Math.max(0, Math.sin((x * 0.7 + y * 1.3) * 0.018 - t * 0.9)) ** 8;
+                if (e * (0.25 + 0.6 * flow) + e * pulse > th) { col = INK; a = 38; }
+                if (band * e * 0.9 > th) { col = ORG; a = 150; }
+                for (const c of CUT_AT) {
+                  const p = (t - c) / 0.8;
+                  if (p < 0 || p > 1) continue;
+                  const d = Math.hypot(x - CW / 2, (y - CH / 2) * 1.25), r = 60 + p * 300;
+                  if ((1 - Math.abs(d - r) / (10 + 16 * p)) * (1 - p) * 1.3 > th) { col = ORG; a = 255; }
+                }
               }
               if (intro) {
                 if (LMASK[o + 3] > 128 && logoOn * 1.15 * (1 - logoOff) > th) { col = INK; a = 255; }
@@ -648,17 +675,13 @@
                 const f = drop * (0.34 + 0.28 * (0.5 + 0.5 * Math.sin(x * 0.05 - t * 3 + Math.sin(y * 0.04 + t) * 2)) + 0.22 * (1 - ny));
                 if (f > th) { col = ORG; a = 255; }
               }
-              if (ringA > 0 && t >= 58) {
-                const dd = Math.hypot(x - 240, (y - 135) * 1.1), band = 1 - Math.abs(dd - ringR) / 14;
-                if (band * ringA > th) { col = ORG; a = 255; }
-              }
               if (col) { B[o] = col[0]; B[o + 1] = col[1]; B[o + 2] = col[2]; B[o + 3] = a; }
             }
           }
           bctx.putImageData(bimg, 0, 0);
 
           const F = fimg.data; F.fill(0);
-          const W = 0.24;
+          const W = 0.22;
           for (const [c, colr, mode] of CUTS) {
             const dt = t - c; if (Math.abs(dt) >= W) continue;
             const cov = 1.3 * (1 - Math.abs(dt) / W);
@@ -673,9 +696,9 @@
 
           const fr = Math.floor((t % 1) * 30), s = Math.floor(t);
           $("#hud-time").textContent = `00:${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}:${String(fr).padStart(2, "0")}`;
-          let chn = "INTRO"; for (const [a, n] of CHS) if (t >= a) chn = n;
-          $("#hud-ch").textContent = chn;
-          HB.forEach((b, k) => { b.style.background = t >= k * 4 + 4 ? "#0b0c0e" : t >= k * 4 ? "#f38020" : "transparent"; });
+          let k = 0; for (let i = 0; i < CHS.length; i++) if (t >= CHS[i][0]) k = i;
+          $("#hud-ch").textContent = CHS[k][1];
+          HB.forEach((b, i) => { b.style.background = i < k ? "#0a0a0a" : i === k ? "#c2560f" : "transparent"; });
         }
 
         // ───────────────────────── BUILD DOM ─────────────────────────
@@ -689,42 +712,45 @@
         const PROV = ["anthropic-color", "openai", "google-color", "z-ai", "moonshotai-color", "deepseek-color"];
         const PX = 1720, PY = [206, 334, 462, 590, 718, 846];
         const s4svg = $("#s4-svg");
-        mk("path", { d: "M960 560 L1260 560", stroke: "#0b0c0e", "stroke-width": "3", "stroke-dasharray": "8 10", fill: "none" }, s4svg);
-        const reqDot = mk("circle", { cx: 960, cy: 560, r: 11, fill: "#f38020", stroke: "#0b0c0e", "stroke-width": "3" }, s4svg);
+        mk("path", { d: "M960 560 L1260 560", stroke: "#0a0a0a", "stroke-width": "3", "stroke-dasharray": "8 10", fill: "none" }, s4svg);
+        const reqDot = mk("circle", { cx: 960, cy: 560, r: 11, fill: "#c2560f", stroke: "#0a0a0a", "stroke-width": "3" }, s4svg);
         const routes = PROV.map((p, i) => {
           const y = PY[i] + 46, d = `M1380 560 C1520 560 1560 ${y} ${PX} ${y}`;
-          mk("path", { d, stroke: "#0b0c0e", "stroke-opacity": ".3", "stroke-width": "2.5", fill: "none", "stroke-dasharray": "5 8" }, s4svg);
-          const hot = mk("path", { d, stroke: "#f38020", "stroke-width": "6", fill: "none" }, s4svg);
+          mk("path", { d, stroke: "#0a0a0a", "stroke-opacity": ".3", "stroke-width": "2.5", fill: "none", "stroke-dasharray": "5 8" }, s4svg);
+          const hot = mk("path", { d, stroke: "#c2560f", "stroke-width": "6", fill: "none" }, s4svg);
           const L = hot.getTotalLength(); hot.style.strokeDasharray = L; hot.style.strokeDashoffset = L; hot.dataset.len = L;
           const tt = div("ptile box s4t", `<div class="face"><img src="${P}${p}.svg" alt=""></div><div class="ring"></div>`, $("#s4-provs"));
           tt.style.left = PX + "px"; tt.style.top = PY[i] + "px"; return hot;
         });
-        const SPEED = [["dots-studio", "Dots3-Note Preview", "dots-studio", 1113.6], ["google-color", "Gemini 2.5 Flash-Lite", "Google", 1079.4], ["stealth", "Space Bunny Alpha", "stealth", 207.5], ["inclusionai", "Ling-3.0-flash", "inclusionAI", 198.7], ["qwen-color", "Qwen3.8-27B", "Qwen", 169.8]];
+        // GET /api/v1/analytics/leaderboards-speed, 2026-10-01 (data/analytics_leaderboards-speed.json): top 5, median output tok/s, 30 days
+        const SPEED = [["google-color", "Gemini 2.5 Flash-Lite", "Google", 1079.4], ["dots-studio", "Dots3-Note Preview", "dots-studio", 1022.3], ["stealth", "Space Bunny Alpha", "stealth", 202.8], ["inclusionai", "Ling-3.0-flash", "inclusionAI", 198.7], ["stealth", "Union Alpha", "stealth", 134.4]];
         const speedRows = SPEED.map(([lg, nm, pv]) => div("srow", `<img src="${P}${lg}.svg" alt=""><div class="nm">${nm}<small>${pv}</small></div><div class="trk"><div class="bar dfill"></div></div><div class="val">0</div>`, $("#s5-rows")));
-        const PK = [["nvidia-color", "NIM key", "429", "#c8261a"], ["groq-color", "Groq key", "200 OK", "#0c7a52"], ["google-color", "Gemini key", "", ""], ["z-ai", "Z.AI key", "", ""]];
+        const PK = [["nvidia-color", "NIM key", "429", "#c2560f"], ["groq-color", "Groq key", "200 OK", "#33692b"], ["google-color", "Gemini key", "", ""], ["z-ai", "Z.AI key", "", ""]];
         const PKY = [300, 430, 560, 690];
-        const pkEls = PK.map(([l, n, st, c], i) => { const k = div("pkey box", `<div class="face"><img src="${P}${l}.svg" alt=""><b>${n}</b><span class="st" style="color:${c || "#0b0c0e"};${st ? "" : "border:0"}">${st}</span></div>`, $("#p3-keys")); k.style.left = "1360px"; k.style.top = PKY[i] + "px"; return k; });
+        const pkEls = PK.map(([l, n, st, c], i) => { const k = div("pkey box", `<div class="face"><img src="${P}${l}.svg" alt=""><b>${n}</b><span class="st" style="color:${c || "#0a0a0a"};${st ? "" : "border:0"}">${st}</span></div>`, $("#p3-keys")); k.style.left = "1360px"; k.style.top = PKY[i] + "px"; return k; });
         const p3svg = $("#p3-svg");
-        const pIn = mk("path", { d: "M470 562 L708 560", stroke: "#0b0c0e", "stroke-width": "3", "stroke-dasharray": "8 9", fill: "none" }, p3svg);
-        const pOut = PKY.map((y) => mk("path", { d: `M1012 560 C1180 560 1200 ${y + 48} 1360 ${y + 48}`, stroke: "#0b0c0e", "stroke-width": "3", "stroke-dasharray": "8 9", fill: "none" }, p3svg));
-        const FM = [["deepseek-color", "deepseek/*"], ["qwen-color", "qwen/*"], ["z-ai", "z-ai/*"], ["meta-color", "meta/*"], ["google-color", "gemini/*"]];
+        const pIn = mk("path", { d: "M470 562 L708 560", stroke: "#0a0a0a", "stroke-width": "3", "stroke-dasharray": "8 9", fill: "none" }, p3svg);
+        const pOut = PKY.map((y) => mk("path", { d: `M1012 560 C1180 560 1200 ${y + 48} 1360 ${y + 48}`, stroke: "#0a0a0a", "stroke-width": "3", "stroke-dasharray": "8 9", fill: "none" }, p3svg));
+        // real $0 models in GET /api/v1/models?all=1 (prompt and completion both 0), 2026-10-01
+        const FM = [["deepseek-color", "deepseek-v3.1"], ["qwen-color", "qwen3.5-plus"], ["minimax-color", "minimax/m2"], ["cohere-color", "command-a-plus"], ["xai", "grok-4.1-fast"]];
         const FMP = [[880, 300], [1480, 300], [1530, 560], [1480, 820], [880, 820]];
         const fmEls = FM.map(([l, n], i) => { const f = div("fmodel box", `<div class="face"><img src="${P}${l}.svg" alt="">${n}</div><div class="fr">$0 · FREE</div>`, $("#p4-models")); f.style.left = FMP[i][0] + "px"; f.style.top = FMP[i][1] + "px"; return f; });
         const EARN = [["$100/mo", 8, "+$5–$8"], ["$250/mo", 20, "+$13–$20"], ["$500/mo", 40, "+$25–$40"], ["$1,000/mo", 80, "+$50–$80"]];
         const earnRows = EARN.map(([a, w, v]) => div("erow", `<div class="a">${a}</div><div class="t"><div class="dfill" style="width:${(w / 80) * 100}%"></div></div><div class="v">${v}</div>`, $("#p5-rows")));
-        const DAYS = [["08-31",0,0.2,67.2],["09-01",0,0,33.1],["09-02",0,0,44.5],["09-03",0,0,44],["09-04",0,9.4,40.7],["09-05",0,31,6.3],["09-06",196.3,83.1,2.1],["09-07",277.8,20,129.6],["09-08",58.9,0,24.1],["09-09",3.8,0,1.9],["09-10",0.4,0,7.2],["09-11",0.4,0,0.5],["09-12",16.1,0,9.1],["09-13",18.2,4.9,1.3],["09-14",108.7,3.7,9.8],["09-15",0.4,0,0.5],["09-16",5.6,0.5,145.1],["09-17",0.4,0,67.9],["09-18",7,0.1,0.5],["09-19",1.1,100.6,0.8],["09-20",22,12.1,0.5],["09-21",12.3,40.4,0.6],["09-22",57.7,0,5.6],["09-23",69.1,134.9,5.5],["09-24",0.9,86.1,6.2],["09-25",14.1,33.8,53],["09-26",0.2,20,41.1],["09-27",0.5,74.7,3.4],["09-28",2.2,28.9,7.5],["09-29",3.2,0.3,8.7]];
+        // GET /api/v1/analytics/network, 2026-10-01 (data/analytics_network.json): trend.30d minus model_trend, millions of tokens
+        const DAYS = [["09-01",0,0,33.1],["09-02",0,0,44.5],["09-03",0,0,44],["09-04",0,9.4,40.7],["09-05",0,31,6.3],["09-06",196.3,83.1,2.1],["09-07",277.8,20,129.6],["09-08",58.9,0,24.1],["09-09",3.8,0,1.9],["09-10",0.4,0,7.2],["09-11",0.4,0,0.5],["09-12",16.1,0,9.1],["09-13",18.2,4.9,1.3],["09-14",108.7,3.7,9.8],["09-15",0.4,0,0.5],["09-16",5.6,0.5,145.1],["09-17",0.4,0,67.9],["09-18",7,0.1,0.5],["09-19",1.1,100.6,0.8],["09-20",22,12.1,0.5],["09-21",12.3,40.4,0.6],["09-22",57.7,0,5.6],["09-23",69.1,134.9,5.5],["09-24",0.9,86.1,6.2],["09-25",14.1,33.8,53],["09-26",0.2,20,41.1],["09-27",0.5,74.7,3.4],["09-28",2.2,28.9,7.5],["09-29",3.3,0.3,10],["09-30",1.1,1.5,5.2]];
         const YMAX = 450, BH = 380;
         [0, 150, 300, 450].forEach((v) => div("", `<span>${v}M</span>`, $("#d-grid"), `top:${BH - (v / YMAX) * BH}px`));
         const cols = DAYS.map(([, a, b, c]) => {
           const col = div("col", "", $("#d-bars"));
-          div("dfill", "", col, `height:${(a / YMAX) * 100}%;border-right:0;border-top:${a > 2 ? 3 : 0}px solid #f38020`);
-          div("dfill-ink", "", col, `height:${(b / YMAX) * 100}%;border-right:0;border-top:${b > 2 ? 3 : 0}px solid #0b0c0e`);
-          div("dfill-grey", "", col, `height:${(c / YMAX) * 100}%;border-top:${c > 2 ? 3 : 0}px solid #9aa0aa`);
+          div("dfill", "", col, `height:${(a / YMAX) * 100}%;border-right:0;border-top:${a > 2 ? 3 : 0}px solid #c2560f`);
+          div("dfill-ink", "", col, `height:${(b / YMAX) * 100}%;border-right:0;border-top:${b > 2 ? 3 : 0}px solid #0a0a0a`);
+          div("dfill-grey", "", col, `height:${(c / YMAX) * 100}%;border-top:${c > 2 ? 3 : 0}px solid #8a8a8a`);
           return col;
         });
-        [[0, "Aug 31"], [8, "Sep 8"], [16, "Sep 16"], [24, "Sep 24"], [29, "Sep 29"]].forEach(([i, l]) => $("#d-x").insertAdjacentHTML("beforeend", `<span style="left:${((i + 0.5) / 30) * 100}%">${l}</span>`));
-        [["Laguna S 2.1", 37.1, "dfill"], ["anyrouter/auto", 29.0, "dfill-ink"], ["stealth/union-alpha", 9.0, "dfill-grey"]].forEach(([n, v, c]) => {
-          $("#d-share").insertAdjacentHTML("beforeend", `<span>${n}</span><em>${v.toFixed(1)}%</em><div class="t"><div class="${c}" style="width:${(v / 37.1) * 100}%"></div></div>`);
+        [[0, "Sep 1"], [7, "Sep 8"], [14, "Sep 15"], [21, "Sep 22"], [29, "Sep 30"]].forEach(([i, l]) => $("#d-x").insertAdjacentHTML("beforeend", `<span style="left:${((i + 0.5) / 30) * 100}%">${l}</span>`));
+        [["Laguna S 2.1", 37.6, "dfill"], ["anyrouter/auto", 29.3, "dfill-ink"], ["stealth/union-alpha", 9.0, "dfill-grey"]].forEach(([n, v, c]) => {
+          $("#d-share").insertAdjacentHTML("beforeend", `<span>${n}</span><em>${v.toFixed(1)}%</em><div class="t"><div class="${c}" style="width:${(v / 37.6) * 100}%"></div></div>`);
         });
 
         // ───────────────────────── TIMELINE ─────────────────────────
@@ -750,7 +776,8 @@
         tl.to("#s1-mark", { x: 0, duration: 0.35, ease: "expo.inOut" }, 2.05);
         tl.fromTo("#s1-word .ch", { yPercent: 140 }, { yPercent: 0, duration: 0.5, stagger: 0.03, ease: "expo.out" }, 2.2);
         tl.fromTo("#s1-tag .ch", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.014 }, 2.1);
-        tl.to("#s1-tag", { opacity: 0, duration: 0.15 }, 3.35);
+        tl.fromTo("#s1-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 1.95);
+        tl.to("#s1-tag, #s1-rule", { opacity: 0, duration: 0.15 }, 3.35);
         tl.fromTo("#s1-lock", { scale: 1, rotateX: 0, transformPerspective: 1400 }, { scale: 1.06, rotateX: 7, duration: 1.2, ease: "sine.inOut" }, 2.2);
         tl.to("#s1-lock", { scale: 1, rotateX: 0, duration: 0.5, ease: "power4.inOut" }, 3.45);
         tl.fromTo("#s1-inner", { x: 0, y: 0, scale: 1 }, { x: FLY.x, y: FLY.y, scale: FLY.s, duration: 0.5, ease: "power4.inOut" }, 3.45);
@@ -789,14 +816,20 @@
         tl.to("#s3-plane", { rotateX: 12, rotateY: 14, rotateZ: -2, duration: 0.75, ease: "sine.inOut" }, 9.1);
         chipEls.forEach((el, i) => {
           tl.fromTo(el, { z: -700, y: 220, opacity: 0, rotateX: -45 }, { z: 0, y: 0, opacity: 1, rotateX: 0, duration: 0.6, ease: "expo.out" }, 8.2 + i * 0.05);
-          const cx = 490 - ((i % 3) * 330 + 150), cy = 350 - (Math.floor(i / 3) * 112 + 152);
-          tl.to(el, { x: cx, y: cy, z: 260, scale: 0.3, opacity: 0, rotateZ: i % 2 ? 40 : -40, duration: 0.3, ease: "power3.in" }, 9.7 + (i % 4) * 0.03);
+          // every key is sucked into the one key card on the left
+          const cx = -270 - ((i % 3) * 330 + 150), cy = 330 - (Math.floor(i / 3) * 112 + 152);
+          tl.to(el, { x: cx, y: cy, z: 260, scale: 0.3, opacity: 0, rotateZ: i % 2 ? 40 : -40, duration: 0.32, ease: "power3.in" }, 9.2 + (i % 4) * 0.03);
         });
-        tl.fromTo("#s3-key", { scale: 0.2, opacity: 0, rotateX: 70, transformPerspective: 1200 }, { scale: 1, opacity: 1, rotateX: 0, duration: 0.6, ease: "back.out(1.8)" }, 9.95);
-        heads("#s3-h2", 9.95);
-        drift("#s3-cam", 10.3, 1.1, F(KT.x, KT.y, 1.05));
-        tl.to("#s3-key .row svg", { opacity: 0, duration: 0.12 }, 11.42);
-        tl.to("#s3-cam", { ...F(KT.x, KT.y, 34), duration: 0.55, ease: "expo.in" }, 11.45);
+        tl.fromTo("#s3-key", { scale: 0.2, opacity: 0, rotateX: 70, transformPerspective: 1200, "--sh": 0 }, { scale: 1, opacity: 1, rotateX: 0, "--sh": 1, duration: 0.6, ease: "back.out(1.8)" }, 9.45);
+        heads("#s3-h2", 9.45);
+        tl.fromTo("#s3-key .pill", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.25, ease: "back.out(2.2)" }, 10.0);
+        tl.fromTo("#s3-was", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, 9.5);
+        tl.fromTo("#s3-was i", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "steps(8)" }, 9.85);
+        heads("#s3-now .mask > span", 10.0);
+        tl.fromTo("#s3-sdk", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.3);
+        drift("#s3-cam", 10.2, 1.25, F(KT.x, KT.y, 1.05));
+        tl.to("#s3-key .row svg", { opacity: 0, duration: 0.12 }, 11.47);
+        tl.to("#s3-cam", { ...F(KT.x, KT.y, 34), duration: 0.5, ease: "expo.in" }, 11.5);
 
         // S4 12–18 · pull back out of the ink → it was the code card; zoom deep on base_url; routes light per beat
         tl.fromTo("#s4-cam", { ...F(800, 287, 7), rotateY: 22, rotateX: 8, transformPerspective: 1800 }, { scale: 1, x: 0, y: 0, rotateY: 10, rotateX: 4, duration: 0.8, ease: "expo.out" }, 12.0);
@@ -833,7 +866,7 @@
         tl.fromTo("#s5-chart", { x: 300, rotateY: -38, opacity: 0, transformPerspective: 1600 }, { x: 0, rotateY: -12, opacity: 1, duration: 0.8, ease: "expo.out" }, 18.2);
         speedRows.forEach((row, i) => {
           const v = SPEED[i][3];
-          tl.fromTo(row.querySelector(".bar"), { scaleX: 0 }, { scaleX: v / 1113.6, duration: 1.0, ease: "power4.out" }, 18.6 + i * 0.12);
+          tl.fromTo(row.querySelector(".bar"), { scaleX: 0 }, { scaleX: v / SPEED[0][3], duration: 1.0, ease: "power4.out" }, 18.6 + i * 0.12);
           count(row.querySelector(".val"), v, 18.6 + i * 0.12, 1.0, (x) => x.toFixed(1));
         });
         drift("#s5-chart", 19.8, 3.6, { rotateY: 6, rotateX: -3 });
@@ -849,7 +882,7 @@
         tl.fromTo("#p1-log", { x: 220, opacity: 0, rotateY: -38, transformPerspective: 1400 }, { x: 0, opacity: 1, rotateY: -10, duration: 0.7, ease: "expo.out" }, 24.35);
         [24.8, 25.15, 25.5, 25.85, 26.2, 26.5].forEach((t, i) => tl.fromTo("#p1-l" + i, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.14 }, t));
         tl.to("#p1-key", { x: 14, duration: 0.05, yoyo: true, repeat: 5, ease: "none" }, 25.85);
-        tl.to("#p1-key .face", { borderColor: "#c8261a", duration: 0.05 }, 25.85);
+        tl.to("#p1-key .face", { borderColor: "#c2560f", duration: 0.05 }, 25.85);
         tl.fromTo("#p1-stamp", { scale: 2.4, opacity: 0, rotate: -18 }, { scale: 1, opacity: 1, rotate: -7, duration: 0.3, ease: "back.out(2.5)" }, 26.2);
         drift("#p1-key", 25.9, 1.8, { rotateY: 4 });
         drift("#p1-log", 25.9, 1.8, { rotateY: -4 });
@@ -864,8 +897,8 @@
         tl.fromTo("#p2-cursor", { x: 1760, y: 1000 }, { x: 1590, y: 520, duration: 0.7, ease: "power3.inOut" }, 28.9);
         tl.to("#p2-cursor", { scale: 0.8, duration: 0.06, yoyo: true, repeat: 1 }, 29.62);
         tl.fromTo("#p2-knob", { x: 0 }, { x: 48, duration: 0.22, ease: "back.out(2)" }, 29.65);
-        tl.fromTo("#p2-sw", { backgroundColor: "#d8dbe0" }, { backgroundColor: "#f38020", duration: 0.12 }, 29.65);
-        tl.to("#p2-row .face", { borderColor: "#f38020", duration: 0.1 }, 29.65);
+        tl.fromTo("#p2-sw", { backgroundColor: "#e4dfd3" }, { backgroundColor: "#c2560f", duration: 0.12 }, 29.65);
+        tl.to("#p2-row .face", { borderColor: "#c2560f", duration: 0.1 }, 29.65);
         tl.fromTo("#p2-toast", { y: 40, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 29.85);
         tl.fromTo("#p2-fine", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 30.3);
         tl.to("#p2-cursor", { x: 1740, y: 760, opacity: 0, duration: 0.5, ease: "power2.in" }, 30.3);
@@ -892,12 +925,12 @@
         tl.fromTo(r1, { p: 0 }, { p: 1, duration: 0.35, ease: "power2.inOut", immediateRender: false, onUpdate: () => along(pOut[0], r1.p) }, 33.25);
         const st0 = pkEls[0].querySelector(".st"), st1 = pkEls[1].querySelector(".st");
         tl.fromTo(st0, { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(3)" }, 33.62);
-        tl.to(pkEls[0].querySelector(".face"), { borderColor: "#c8261a", duration: 0.05 }, 33.62);
+        tl.to(pkEls[0].querySelector(".face"), { borderColor: "#c2560f", duration: 0.05 }, 33.62);
         tl.to(pkEls[0], { x: 10, duration: 0.04, yoyo: true, repeat: 3 }, 33.62);
         tl.fromTo(r2, { p: 1 }, { p: 0, duration: 0.2, ease: "power2.in", immediateRender: false, onUpdate: () => along(pOut[0], r2.p) }, 33.66);
         tl.fromTo(r3, { p: 0 }, { p: 1, duration: 0.22, ease: "power2.out", immediateRender: false, onUpdate: () => along(pOut[1], r3.p) }, 33.9);
         tl.fromTo(st1, { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(3)" }, 34.15);
-        tl.to(pkEls[1].querySelector(".face"), { borderColor: "#0c7a52", duration: 0.05 }, 34.15);
+        tl.to(pkEls[1].querySelector(".face"), { borderColor: "#33692b", duration: 0.05 }, 34.15);
         tl.to(rd, { opacity: 0, duration: 0.12 }, 34.4);
         drift("#p3-cam", 32.9, 2.4, { rotateX: 6, scale: 1.03 });
         tl.to("#p3-cam", { ...F(POOL.x, POOL.y, 5.5), rotateX: 0, duration: 0.65, ease: "expo.in" }, 35.35);
@@ -938,12 +971,12 @@
         camIn("#dt-cam", 44.0, { scale: 1.3, rotateX: 18, y: 60 });
         kick("#dt", 44.1);
         heads("#dt .head .mask > span", 44.1);
-        count($("#dt-count"), 2.36, 44.2, 1.2, (v) => v.toFixed(2) + "B");
+        count($("#dt-count"), 2.34, 44.2, 1.2, (v) => v.toFixed(2) + "B");
         tl.fromTo("#d-chart", { opacity: 0, y: 80, rotateX: 34, transformPerspective: 1600, transformOrigin: "50% 100%" }, { opacity: 1, y: 0, rotateX: 10, duration: 0.9, ease: "expo.out" }, 44.1);
         cols.forEach((c, i) => tl.fromTo(c, { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power3.out" }, 44.45 + i * 0.03));
         $$("#d-side .sbox").forEach((el, i) => tl.fromTo(el, { x: 140, opacity: 0, rotateY: -30, transformPerspective: 1200 }, { x: 0, opacity: 1, rotateY: 0, duration: 0.6, ease: "expo.out" }, 44.6 + i * 0.18));
-        count($("#d-req"), 54951, 44.7, 1.2, (v) => Math.round(v).toLocaleString("en-US"));
-        count($("#d-cache"), 83, 44.9, 1.0, (v) => Math.round(v) + "%");
+        count($("#d-req"), 55371, 44.7, 1.2, (v) => Math.round(v).toLocaleString("en-US"));
+        count($("#d-cache"), 84, 44.9, 1.0, (v) => Math.round(v) + "%");
         $$("#d-share .t div").forEach((el, i) => tl.fromTo(el, { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, 45.3 + i * 0.15));
         drift("#d-chart", 45.4, 4.2, { rotateX: 3, rotateY: 5 });
         drift("#d-side", 45.4, 4.2, { x: -18 });
@@ -960,7 +993,7 @@
         tl.fromTo("#pr-orbit", { rotateY: 16, rotateX: 6 }, { rotateY: 0, rotateX: 0, duration: 1.4, ease: "power2.inOut" }, 50.2);
         tl.fromTo("#pr-cursor", { x: 1100, y: 1100 }, { x: 610, y: 845, duration: 0.7, ease: "power3.inOut" }, 50.95);
         tl.to("#pr-cursor", { scale: 0.8, duration: 0.06, yoyo: true, repeat: 1 }, 51.67);
-        tl.to("#pr-don", { backgroundColor: "#f38020", color: "#0b0c0e", borderColor: "#0b0c0e", duration: 0.08 }, 51.7);
+        tl.to("#pr-don", { backgroundColor: "#c2560f", color: "#0a0a0a", borderColor: "#0a0a0a", duration: 0.08 }, 51.7);
         tl.fromTo("#pr-strike", { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.15, ease: "power2.out" }, 51.75);
         tl.to("#pr-strike", { opacity: 0, duration: 0.1 }, 51.92);
         tl.to("#pr-two", { opacity: 0, y: -60, duration: 0.14, ease: "power2.in" }, 51.92);
@@ -973,11 +1006,11 @@
         // DROP 54–56.5 · millions of tokens
         tl.fromTo("#dr-num", { rotateX: 75, scale: 1.5, opacity: 0, transformPerspective: 1200 }, { rotateX: 0, scale: 1, opacity: 1, duration: 0.6, ease: "expo.out" }, 54.0);
         tl.fromTo("#dr-lab", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4 }, 54.05);
-        count($("#dr-count"), 16000000, 54.1, 1.0, (v) => (Math.round(v / 1000) * 1000).toLocaleString("en-US"));
-        heads("#dr-tag .mask > span", 54.5);
+        count($("#dr-count"), 16000000, 54.1, 0.8, (v) => (Math.round(v / 1000) * 1000).toLocaleString("en-US"));
+        heads("#dr-tag .mask > span", 54.3);
         tl.fromTo("#dr-foot", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 54.85);
         tl.fromTo("#dr-cam", { scale: 1, rotateX: 8, transformPerspective: 1600 }, { scale: 1.08, rotateX: 0, duration: 2.2, ease: "none" }, 54.0);
-        tl.to("#dr-cam", { scale: 1.3, duration: 0.3, ease: "expo.in" }, 56.2);
+        tl.to("#dr-cam", { scale: 1.3, duration: 0.2, ease: "expo.in" }, 56.3);
 
         // END 56.5–60
         camIn("#en-cam", 56.5, { scale: 1.35, rotateX: -14 });
