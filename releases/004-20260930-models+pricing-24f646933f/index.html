@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>AnyRouter — model drop</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#0A0A0A;perspective:2200px}
+  #root{position:relative;width:1920px;height:1080px;overflow:hidden;
+    transform-style:preserve-3d;will-change:transform}
+  .clip{position:absolute;inset:0}
+  .field{position:absolute;inset:-10%;background:
+    radial-gradient(58% 48% at 20% 16%,rgba(232,125,69,.15),transparent 62%),
+    radial-gradient(52% 44% at 84% 80%,rgba(86,64,210,.17),transparent 64%),#0A0A0A}
+  .mesh{position:absolute;inset:0;opacity:.26;background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:80px 80px;
+    -webkit-mask-image:radial-gradient(68% 58% at 50% 50%,#000 18%,transparent 78%)}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-width="1920" data-height="1080"
+     data-duration="20" data-fps="30">
+  <div class="field" data-layout-allow-overflow></div>
+  <div class="mesh"></div>
+  <div id="clip-s00-ignite" class="clip" data-composition-id="s00-ignite" data-composition-src="compositions/s00-ignite.html"
+       data-start="0" data-duration="1.88"></div>
+  <div id="clip-s01-openai-gpt-6-1-sol" class="clip" data-composition-id="s01-openai-gpt-6-1-sol" data-composition-src="compositions/s01-openai-gpt-6-1-sol.html"
+       data-start="1.88" data-duration="0.43"></div>
+  <div id="clip-s02-liquid-d1" class="clip" data-composition-id="s02-liquid-d1" data-composition-src="compositions/s02-liquid-d1.html"
+       data-start="2.31" data-duration="0.43"></div>
+  <div id="clip-s03-anthropic-claude-sonnet-5-5" class="clip" data-composition-id="s03-anthropic-claude-sonnet-5-5" data-composition-src="compositions/s03-anthropic-claude-sonnet-5-5.html"
+       data-start="2.74" data-duration="0.43"></div>
+  <div id="clip-s04-upstage-solar-decide" class="clip" data-composition-id="s04-upstage-solar-decide" data-composition-src="compositions/s04-upstage-solar-decide.html"
+       data-start="3.17" data-duration="0.43"></div>
+  <div id="clip-s05-anthropic-claude-sonnet-latest" class="clip" data-composition-id="s05-anthropic-claude-sonnet-latest" data-composition-src="compositions/s05-anthropic-claude-sonnet-latest.html"
+       data-start="3.6" data-duration="0.43"></div>
+  <div id="clip-s06-respan-span-01-lite" class="clip" data-composition-id="s06-respan-span-01-lite" data-composition-src="compositions/s06-respan-span-01-lite.html"
+       data-start="4.03" data-duration="0.43"></div>
+  <div id="clip-s07-upstage-solar-mini4" class="clip" data-composition-id="s07-upstage-solar-mini4" data-composition-src="compositions/s07-upstage-solar-mini4.html"
+       data-start="4.46" data-duration="0.43"></div>
+  <div id="clip-s08-z-ai-glm-5-3-prime" class="clip" data-composition-id="s08-z-ai-glm-5-3-prime" data-composition-src="compositions/s08-z-ai-glm-5-3-prime.html"
+       data-start="4.89" data-duration="0.43"></div>
+  <div id="clip-s09-xiaomi-mimo-v2-6-flash" class="clip" data-composition-id="s09-xiaomi-mimo-v2-6-flash" data-composition-src="compositions/s09-xiaomi-mimo-v2-6-flash.html"
+       data-start="5.32" data-duration="0.43"></div>
+  <div id="clip-s10-xiaomi-mimo-v2-6-pro" class="clip" data-composition-id="s10-xiaomi-mimo-v2-6-pro" data-composition-src="compositions/s10-xiaomi-mimo-v2-6-pro.html"
+       data-start="5.75" data-duration="0.43"></div>
+  <div id="clip-s11-anthropic-claude-opus-latest" class="clip" data-composition-id="s11-anthropic-claude-opus-latest" data-composition-src="compositions/s11-anthropic-claude-opus-latest.html"
+       data-start="6.18" data-duration="0.43"></div>
+  <div id="clip-s12-stepfun-ai-step-5-preview" class="clip" data-composition-id="s12-stepfun-ai-step-5-preview" data-composition-src="compositions/s12-stepfun-ai-step-5-preview.html"
+       data-start="6.61" data-duration="0.43"></div>
+  <div id="clip-s13-x-ai-grok-latest" class="clip" data-composition-id="s13-x-ai-grok-latest" data-composition-src="compositions/s13-x-ai-grok-latest.html"
+       data-start="7.04" data-duration="0.43"></div>
+  <div id="clip-s14-sakana-fugu-max" class="clip" data-composition-id="s14-sakana-fugu-max" data-composition-src="compositions/s14-sakana-fugu-max.html"
+       data-start="7.47" data-duration="0.43"></div>
+  <div id="clip-s15-deepseek-deepseek-flash-latest" class="clip" data-composition-id="s15-deepseek-deepseek-flash-latest" data-composition-src="compositions/s15-deepseek-deepseek-flash-latest.html"
+       data-start="7.9" data-duration="0.43"></div>
+  <div id="clip-s16-google-gemini-flash-latest" class="clip" data-composition-id="s16-google-gemini-flash-latest" data-composition-src="compositions/s16-google-gemini-flash-latest.html"
+       data-start="8.33" data-duration="0.43"></div>
+  <div id="clip-s17-qwen-qwen-flash-latest" class="clip" data-composition-id="s17-qwen-qwen-flash-latest" data-composition-src="compositions/s17-qwen-qwen-flash-latest.html"
+       data-start="8.76" data-duration="0.43"></div>
+  <div id="clip-s18-z-ai-glm-flash-latest" class="clip" data-composition-id="s18-z-ai-glm-flash-latest" data-composition-src="compositions/s18-z-ai-glm-flash-latest.html"
+       data-start="9.19" data-duration="0.43"></div>
+  <div id="clip-s19-tencent-hy-mt2-30b-a3b" class="clip" data-composition-id="s19-tencent-hy-mt2-30b-a3b" data-composition-src="compositions/s19-tencent-hy-mt2-30b-a3b.html"
+       data-start="9.62" data-duration="0.43"></div>
+  <div id="clip-s20-z-ai-glm-latest" class="clip" data-composition-id="s20-z-ai-glm-latest" data-composition-src="compositions/s20-z-ai-glm-latest.html"
+       data-start="10.05" data-duration="0.43"></div>
+  <div id="clip-s21-qwen-qwen-max-latest" class="clip" data-composition-id="s21-qwen-qwen-max-latest" data-composition-src="compositions/s21-qwen-qwen-max-latest.html"
+       data-start="10.48" data-duration="0.43"></div>
+  <div id="clip-s22-moonshotai-kimi-latest" class="clip" data-composition-id="s22-moonshotai-kimi-latest" data-composition-src="compositions/s22-moonshotai-kimi-latest.html"
+       data-start="10.91" data-duration="0.43"></div>
+  <div id="clip-s23-google-gemini-flash-lite-latest" class="clip" data-composition-id="s23-google-gemini-flash-lite-latest" data-composition-src="compositions/s23-google-gemini-flash-lite-latest.html"
+       data-start="11.34" data-duration="0.43"></div>
+  <div id="clip-s24-qwen-qwen-plus-latest" class="clip" data-composition-id="s24-qwen-qwen-plus-latest" data-composition-src="compositions/s24-qwen-qwen-plus-latest.html"
+       data-start="11.77" data-duration="0.43"></div>
+  <div id="clip-s25-google-gemma-latest" class="clip" data-composition-id="s25-google-gemma-latest" data-composition-src="compositions/s25-google-gemma-latest.html"
+       data-start="12.2" data-duration="0.43"></div>
+  <div id="clip-s26-openai-gpt-latest" class="clip" data-composition-id="s26-openai-gpt-latest" data-composition-src="compositions/s26-openai-gpt-latest.html"
+       data-start="12.63" data-duration="0.43"></div>
+  <div id="clip-s27-deepseek-deepseek-latest" class="clip" data-composition-id="s27-deepseek-deepseek-latest" data-composition-src="compositions/s27-deepseek-deepseek-latest.html"
+       data-start="13.06" data-duration="0.43"></div>
+  <div id="clip-s28-google-gemini-embedding-2" class="clip" data-composition-id="s28-google-gemini-embedding-2" data-composition-src="compositions/s28-google-gemini-embedding-2.html"
+       data-start="13.49" data-duration="0.43"></div>
+  <div id="clip-s29-xiaomi-mimo-v2-pro" class="clip" data-composition-id="s29-xiaomi-mimo-v2-pro" data-composition-src="compositions/s29-xiaomi-mimo-v2-pro.html"
+       data-start="13.92" data-duration="0.43"></div>
+  <div id="clip-s30-openai-gpt-mini-latest" class="clip" data-composition-id="s30-openai-gpt-mini-latest" data-composition-src="compositions/s30-openai-gpt-mini-latest.html"
+       data-start="14.35" data-duration="0.43"></div>
+  <div id="clip-s31-openai-gpt-nano-latest" class="clip" data-composition-id="s31-openai-gpt-nano-latest" data-composition-src="compositions/s31-openai-gpt-nano-latest.html"
+       data-start="14.78" data-duration="0.43"></div>
+  <div id="clip-s32-google-gemini-pro-latest" class="clip" data-composition-id="s32-google-gemini-pro-latest" data-composition-src="compositions/s32-google-gemini-pro-latest.html"
+       data-start="15.21" data-duration="0.43"></div>
+  <div id="clip-s33-xiaomi-mimo-v2-flash" class="clip" data-composition-id="s33-xiaomi-mimo-v2-flash" data-composition-src="compositions/s33-xiaomi-mimo-v2-flash.html"
+       data-start="15.64" data-duration="0.43"></div>
+  <div id="clip-s34-qwen-qwen3-embedding-4b" class="clip" data-composition-id="s34-qwen-qwen3-embedding-4b" data-composition-src="compositions/s34-qwen-qwen3-embedding-4b.html"
+       data-start="16.07" data-duration="0.43"></div>
+  <div id="clip-s35-mistralai-mistral-small-3-2-24b-instruct" class="clip" data-composition-id="s35-mistralai-mistral-small-3-2-24b-instruct" data-composition-src="compositions/s35-mistralai-mistral-small-3-2-24b-instruct.html"
+       data-start="16.5" data-duration="0.43"></div>
+  <div id="clip-s36-baai-bge-multilingual-gemma2" class="clip" data-composition-id="s36-baai-bge-multilingual-gemma2" data-composition-src="compositions/s36-baai-bge-multilingual-gemma2.html"
+       data-start="16.93" data-duration="0.43"></div>
+  <div id="clip-s37-baai-bge-m3" class="clip" data-composition-id="s37-baai-bge-m3" data-composition-src="compositions/s37-baai-bge-m3.html"
+       data-start="17.36" data-duration="0.43"></div>
+  <div id="clip-s99-cta" class="clip" data-composition-id="s99-cta" data-composition-src="compositions/s99-cta.html"
+       data-start="17.8" data-duration="2.2"></div>
+  <audio id="music" data-start="0" data-duration="20" data-track-index="9"
+         src="audio/score.wav" data-volume="1"></audio>
+</div>
+<script>
+  // The camera lives on #root: a continuous slow push plus a punch on every
+  // scene, and a slow 3D orbit so the frame is never fully static.
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#root", { scale: 1.17, rotateY: -6.5, rotateX: 2.2 }, 0);
+  tl.to("#root", { scale: 1.05, duration: 11.00, ease: "sine.inOut", overwrite: false }, 0);
+  tl.to("#root", { rotateY: 3.4, rotateX: -1.6, duration: 10.00, ease: "sine.inOut", overwrite: false }, 0);
+  tl.to("#root", { rotateY: -3.4, rotateX: 1.6, duration: 10.00, ease: "sine.inOut", overwrite: false }, 10.00);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},0);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},1.88);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},2.31);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},2.74);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},3.17);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},3.6);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},4.03);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},4.46);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},4.89);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},5.32);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},5.75);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},6.18);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},6.61);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},7.04);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},7.47);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},7.9);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},8.33);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},8.76);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},9.19);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},9.62);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},10.05);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},10.48);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},10.91);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},11.34);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},11.77);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},12.2);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},12.63);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},13.06);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},13.49);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},13.92);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},14.35);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},14.78);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},15.21);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},15.64);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},16.07);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},16.5);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},16.93);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},17.36);
+  tl.fromTo("#root",{scale:1.052},{scale:1,duration:.5,ease:"expo.out",overwrite:"auto"},17.8);
+  window.__timelines["main"] = tl;
+</script>
+</body></html>
