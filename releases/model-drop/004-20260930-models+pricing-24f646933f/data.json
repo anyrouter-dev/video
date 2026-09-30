@@ -42,7 +42,7 @@
       "free": true,
       "created": 1790640000,
       "category": "text",
-      "excerpt": "Liquid d1 is Liquid AI's first decision model: send application state and typed questions (noul / choice / score) and get calibrated probabilities back in a single call with zero generated tokens \u2014 not chat text."
+      "excerpt": "Liquid d1 is Liquid AI's first decision model: send application state and typed questions (noul / choice / score) and get calibrated probabilities back in a single call with zero generated tokens — not chat text."
     },
     {
       "id": "upstage/solar-decide",
@@ -55,7 +55,7 @@
       "free": false,
       "created": 1790553600,
       "category": "text",
-      "excerpt": "Upstage Solar Decide is a decision model served as a System One endpoint on Solar Mini 4: send application state and typed questions (noul / choice / score) and get structured answers back \u2014 not generated chat text."
+      "excerpt": "Upstage Solar Decide is a decision model served as a System One endpoint on Solar Mini 4: send application state and typed questions (noul / choice / score) and get structured answers back — not generated chat text."
     },
     {
       "id": "anthropic/claude-sonnet-latest",

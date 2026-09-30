@@ -29,7 +29,10 @@
       "artifact": "renders/intro-002-20260930-v4-19e6ae2034.mp4",
       "cover": "renders/intro-002-20260930-v4-19e6ae2034.png",
       "source": null,
-      "createdAt": "2026-09-30T18:22:50.155Z"
+      "createdAt": "2026-09-30T18:22:50.155Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/intro-002-20260930-v4-19e6ae2034"
+      }
     }
   ]
 }

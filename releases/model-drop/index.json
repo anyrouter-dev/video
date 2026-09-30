@@ -12,7 +12,10 @@
       "artifact": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.mp4",
       "commit": "a44a251",
       "cover": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.png",
-      "source": "renders/model-drop-001-20260927-models+pricing-1bc39f938b-source.tar.gz"
+      "source": "renders/model-drop-001-20260927-models+pricing-1bc39f938b-source.tar.gz",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-001-20260927-models%2Bpricing-1bc39f938b"
+      }
     },
     {
       "id": "002-20260928-models+pricing-b1c367a861",
@@ -26,7 +29,10 @@
       "artifact": "renders/model-drop-002-20260928-models+pricing-b1c367a861.mp4",
       "commit": "a44a251",
       "cover": "renders/model-drop-002-20260928-models+pricing-b1c367a861.png",
-      "source": "renders/model-drop-002-20260928-models+pricing-b1c367a861-source.tar.gz"
+      "source": "renders/model-drop-002-20260928-models+pricing-b1c367a861-source.tar.gz",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-002-20260928-models%2Bpricing-b1c367a861"
+      }
     },
     {
       "id": "003-20260929-models+pricing-388c7ba751",
@@ -40,19 +46,22 @@
       "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
       "commit": "a44a251",
       "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png",
-      "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz"
+      "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-003-20260929-models%2Bpricing-388c7ba751"
+      }
     },
     {
       "id": "004-20260930-models+pricing-24f646933f",
       "hash": "24f646933f",
       "kind": "model-drop",
       "label": "models+pricing",
-      "title": "37 new models: gpt-6.1-sol, d1, claude-sonnet-5-5 +34 more",
+      "title": "GPT-6.1 Sol, MiMo V2 Pro and Flash, two decision models, and -latest aliases",
       "createdAt": "2026-09-30T13:47:52.390Z",
-      "seconds": 20,
-      "renderedAt": "2026-09-30T15:22:09.052Z",
+      "seconds": 40,
+      "renderedAt": "2026-09-30T18:32:22.733Z",
       "artifact": "renders/model-drop-004-20260930-models+pricing-24f646933f.mp4",
-      "commit": "fa5b681",
+      "commit": "7017714",
       "cover": "renders/model-drop-004-20260930-models+pricing-24f646933f.png",
       "source": "renders/model-drop-004-20260930-models+pricing-24f646933f-source.tar.gz",
       "published": {

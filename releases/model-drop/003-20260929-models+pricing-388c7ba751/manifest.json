@@ -10,5 +10,8 @@
   "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
   "commit": "a44a251",
   "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png",
-  "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz"
+  "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-003-20260929-models%2Bpricing-388c7ba751"
+  }
 }
