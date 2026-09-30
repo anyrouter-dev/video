@@ -64,7 +64,8 @@ jobs:
           path: |
             node_modules
             ~/.cache/hyperframes
-          key: render-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+            ~/.cache/ffmpeg
+          key: render-v2-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --no-audit --no-fund
       - run: npx hyperframes browser ensure
