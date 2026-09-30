@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AnyRouter Changelog</title>
+    <link>https://anyrouter.dev/changelog</link>
+    <description>What shipped in each AnyRouter release: new models, routing, keys, CLI and site changes.</description>
+    <language>en-us</language>
+    <atom:link href="https://anyrouter.dev/changelog/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>AnyRouter 1.6: name a model family, always get a live model</title>
+      <link>https://anyrouter.dev/changelog/1.6.0</link>
+      <guid isPermaLink="true">https://anyrouter.dev/changelog/1.6.0</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 GMT</pubDate>
+      <description>&lt;p&gt;Send a -latest id and AnyRouter calls the newest available model in that family. This release also adds new models, in-place BYOK key replacement, a read-only analytics scope for management keys, and a redesigned site.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Models:&lt;/strong&gt; &lt;a href=&quot;https://blog.anyrouter.dev/releases/2026-09-30-latest-aliases&quot;&gt;-latest aliases such as google/gemini-flash-latest resolve to the newest live model in a family. They are listed in /api/v1/models and have their own model pages.&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Models:&lt;/strong&gt; &lt;a href=&quot;https://blog.anyrouter.dev/releases&quot;&gt;New in the catalog: GPT-6.1 Sol and Step 5 Preview, plus a DeepInfra route for DeepSeek V4.1 Flash.&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;BYOK:&lt;/strong&gt; &lt;a href=&quot;https://anyrouter.dev/docs/features/byok-providers/antigravity&quot;&gt;Replace a BYOK key in place and keep its id, label and routing settings. anyr byok rotate antigravity re-uploads a refreshed token for you.&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;API and keys:&lt;/strong&gt; &lt;a href=&quot;https://anyrouter.dev/docs/api-reference/management-keys&quot;&gt;A new read-only read:analytics scope lets a management key read /analytics/* and nothing else.&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Routing:&lt;/strong&gt; &lt;a href=&quot;https://anyrouter.dev/docs/features/routing&quot;&gt;A client hanging up no longer cools a route or sidelines your BYOK key, and routes that support reasoning are preferred.&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Apps and site:&lt;/strong&gt; &lt;a href=&quot;https://anyrouter.dev/apps/slm-matrix&quot;&gt;The new SLM Matrix mini-app ranks small models by task. The landing, pricing, models and apps pages share a new print-style design.&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
