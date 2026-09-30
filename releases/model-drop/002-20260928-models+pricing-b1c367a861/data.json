@@ -29,7 +29,7 @@
       "free": true,
       "created": 1790380800,
       "category": "text",
-      "excerpt": "Span-01 Lite is a behavior-scoring classifier from Respan — the free, lighter tier of Span-01, a 4B model trained with RLAIF on classification reasoning rather than fixed taxonomies."
+      "excerpt": "Span-01 Lite is a behavior-scoring classifier from Respan \u2014 the free, lighter tier of Span-01, a 4B model trained with RLAIF on classification reasoning rather than fixed taxonomies."
     },
     {
       "id": "upstage/solar-mini4",
@@ -58,32 +58,6 @@
       "excerpt": "GLM 5.3 Prime is the top reasoning tier of Z.ai's GLM 5.3 line, above the Flash and FlashX cuts, with a 1M-token context window."
     },
     {
-      "id": "xiaomi/mimo-v2.6-flash",
-      "name": "MiMo V2.6 Flash",
-      "provider": "Xiaomi",
-      "logo": "xiaomi-color.svg",
-      "context": 1050000,
-      "inPrice": 0.155,
-      "outPrice": 0.31,
-      "free": false,
-      "created": 1790035200,
-      "category": "text",
-      "excerpt": "MiMo V2.6 Flash is Xiaomi's full-modality reasoning model for high-frequency invocations and large-scale professional workloads."
-    },
-    {
-      "id": "xiaomi/mimo-v2.6-pro",
-      "name": "MiMo V2.6 Pro",
-      "provider": "Xiaomi",
-      "logo": "xiaomi-color.svg",
-      "context": 1050000,
-      "inPrice": 0.48,
-      "outPrice": 0.96,
-      "free": false,
-      "created": 1790035200,
-      "category": "text",
-      "excerpt": "MiMo V2.6 Pro is Xiaomi's trillion-parameter, natively omni-modal flagship reasoning model for complex projects, long-horizon agentic tasks, coding, research, and professional knowledge work."
-    },
-    {
       "id": "sakana/fugu-max",
       "name": "Fugu Max",
       "provider": "sakana",
@@ -94,7 +68,7 @@
       "free": false,
       "created": 1789084800,
       "category": "text",
-      "excerpt": "Fugu Max is the largest tier of Sakana AI's Fugu line — a 1M-token-context model that takes text, images, and files and returns text."
+      "excerpt": "Fugu Max is the largest tier of Sakana AI's Fugu line \u2014 a 1M-token-context model that takes text, images, and files and returns text."
     },
     {
       "id": "tencent/hy-mt2-30b-a3b",
@@ -107,7 +81,7 @@
       "free": false,
       "created": 1787184000,
       "category": "text",
-      "excerpt": "Hy-MT2 30B A3B is Tencent's translation model — a 30B-parameter MoE with 3B active parameters, tuned for machine translation with a short 8,192-token window."
+      "excerpt": "Hy-MT2 30B A3B is Tencent's translation model \u2014 a 30B-parameter MoE with 3B active parameters, tuned for machine translation with a short 8,192-token window."
     },
     {
       "id": "google/gemini-embedding-2",
@@ -134,45 +108,6 @@
       "created": 1761609600,
       "category": "embedding",
       "excerpt": "Qwen3 Embedding 4B is the 4B size in the Qwen3 embedding and reranking family, between the 0.6B and 8B cuts."
-    },
-    {
-      "id": "mistralai/mistral-small-3.2-24b-instruct",
-      "name": "Mistral Small 3.2 24B Instruct",
-      "provider": "Mistral AI",
-      "logo": null,
-      "context": 131072,
-      "inPrice": 0.1,
-      "outPrice": 0.31,
-      "free": false,
-      "created": 1750291200,
-      "category": "text",
-      "excerpt": "Mistral Small 3.2 is a 24B instruction model with a 131k context window, improved instruction following and function calling over Mistral Small 3.1, and the same Apache 2.0 license."
-    },
-    {
-      "id": "baai/bge-multilingual-gemma2",
-      "name": "BGE Multilingual Gemma 2",
-      "provider": "baai",
-      "logo": null,
-      "context": 8192,
-      "inPrice": 0.01,
-      "outPrice": 0,
-      "free": false,
-      "created": 1721865600,
-      "category": "embedding",
-      "excerpt": "BAAI's bge-multilingual-gemma2 is a compact multilingual text embedding model built on Gemma 2, trained across 100+ languages with an 8,192-token input window."
-    },
-    {
-      "id": "baai/bge-m3",
-      "name": "BGE-M3",
-      "provider": "baai",
-      "logo": null,
-      "context": 8192,
-      "inPrice": 0.01,
-      "outPrice": 0,
-      "free": false,
-      "created": 1706313600,
-      "category": "embedding",
-      "excerpt": "BAAI's BGE-M3 is a multilingual text embedding model that handles dense, sparse, and multi-vector retrieval in one model, across 100+ languages and an 8,192-token input window."
     }
   ],
   "changed": [
@@ -195,7 +130,7 @@
     "free": true,
     "created": 1790380800,
     "category": "text",
-    "excerpt": "Span-01 Lite is a behavior-scoring classifier from Respan — the free, lighter tier of Span-01, a 4B model trained with RLAIF on classification reasoning rather than fixed taxonomies."
+    "excerpt": "Span-01 Lite is a behavior-scoring classifier from Respan \u2014 the free, lighter tier of Span-01, a 4B model trained with RLAIF on classification reasoning rather than fixed taxonomies."
   },
   "notable": true,
   "label": "models+pricing",
@@ -213,5 +148,12 @@
     "+xiaomi/mimo-v2.6-pro@0.48/0.96@1050000",
     "+z-ai/glm-5.3-prime@2.8/8.8@1000000",
     "~openai/gpt-oss-120b 0.143/0.605@131072->0.09/0.47@131072"
+  ],
+  "carried": [
+    "xiaomi/mimo-v2.6-flash",
+    "xiaomi/mimo-v2.6-pro",
+    "mistralai/mistral-small-3.2-24b-instruct",
+    "baai/bge-multilingual-gemma2",
+    "baai/bge-m3"
   ]
 }
