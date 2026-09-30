@@ -2,12 +2,12 @@ name: render-video
 
 # One job. It asks each kind "is there anything unreleased?" using nothing but
 # Node, and stops there on a quiet night — no npm ci, no Chrome, no ffmpeg.
-# When there is something, it renders, publishes the film to a GitHub Release,
-# and records the ledger and the baseline in ONE commit.
+# When there is something, an agent may pick the story, then it renders,
+# publishes to a GitHub Release, and records the ledger and baselines in ONE
+# commit. Two jobs pushing to main from one checkout is a race; keep it one job.
 #
-# It used to be five jobs. Two of them pushed to main from the same checkout, so
-# the second push was always rejected: the run went red, the baseline never
-# moved, and the same 38 models were re-rendered every night.
+# `regen` re-renders releases that are already out, from their frozen facts, and
+# replaces the assets of their GitHub Releases in place.
 
 on:
   workflow_dispatch:
@@ -29,6 +29,10 @@ on:
         description: 'Film length in seconds (blank = the kind default)'
         required: false
         default: ''
+      regen:
+        description: 'Re-render released films of this kind instead: a release id, or "all" (needs a kind)'
+        required: false
+        default: ''
   # the AnyRouter repo dispatches this after a model or a release ships
   repository_dispatch:
     types: [model-added, release-published]
@@ -48,12 +52,14 @@ jobs:
   film:
     name: film
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # A regen of every release of a kind is several renders back to back.
+    timeout-minutes: 45
     # Creates the GitHub Release and commits the ledger.
     permissions:
       contents: write
     env:
       KIND: ${{ inputs.kind || 'auto' }}
+      REGEN: ${{ inputs.regen }}
       # Releases and ledger commits only ever come from main. A run on a branch
       # renders and uploads a workflow artifact, nothing else.
       SHIP: ${{ github.ref == 'refs/heads/main' }}
@@ -71,7 +77,11 @@ jobs:
         id: decide
         run: |
           set -euo pipefail
-          if [ "$KIND" = "auto" ]; then
+          if [ -n "$REGEN" ]; then
+            [ "$KIND" != "auto" ] || { echo '::error::regen needs a kind'; exit 1; }
+            node lib/cli.mjs ledger "$KIND" | tee decide.log
+            echo "kinds=$KIND" >> "$GITHUB_OUTPUT"
+          elif [ "$KIND" = "auto" ]; then
             node lib/cli.mjs pending | tee decide.log
           elif [ "${{ inputs.force }}" = "true" ]; then
             node lib/cli.mjs collect "$KIND" | tee decide.log
@@ -79,12 +89,7 @@ jobs:
           else
             node lib/cli.mjs pending "$KIND" | tee decide.log
           fi
-          {
-            echo '### What is unreleased'
-            echo '```'
-            cat decide.log
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          { echo '### What is unreleased'; echo '```'; cat decide.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 
       # ── 2. tools — only when there is something to render ────────────────
       - name: Cache node_modules and the render browser
@@ -102,8 +107,7 @@ jobs:
         if: steps.decide.outputs.kinds != '' && steps.cache.outputs.cache-hit != 'true'
         run: npm ci --no-audit --no-fund
 
-      # A static ffmpeg kept in the cache. `apt-get install ffmpeg` took anywhere
-      # from 40 seconds to a hung 10 minutes on the hosted runners.
+      # A static ffmpeg kept in the cache: apt-get was slow and sometimes hung.
       - name: ffmpeg and the render browser
         if: steps.decide.outputs.kinds != ''
         timeout-minutes: 5
@@ -119,23 +123,38 @@ jobs:
           npx hyperframes browser ensure
 
       # ── 3. judgment — optional. A missing key, a rate limit or an agent
-      #    outage cannot fail the build: the film renders with its defaults.
-      - name: Let the agent pick the story (model-drop)
-        if: contains(steps.decide.outputs.kinds, 'model-drop') && env.HAS_AGENT == 'true'
+      #    outage cannot fail the build: the film renders with its defaults, and
+      #    the CLI drops any part of a plan that breaks ci/AGENT.md.
+      #    Bump the key suffix to pick up a newer opencode.
+      - name: Cache opencode
+        if: steps.decide.outputs.kinds != '' && env.REGEN == '' && env.HAS_AGENT == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.opencode
+          key: opencode-${{ runner.os }}-v1
+
+      - name: Let the agent pick the story
+        if: steps.decide.outputs.kinds != '' && env.REGEN == '' && env.HAS_AGENT == 'true'
         continue-on-error: true
+        timeout-minutes: 15
         env:
+          KINDS: ${{ steps.decide.outputs.kinds }}
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
         run: |
-          set -euo pipefail
-          curl -fsSL https://opencode.ai/install | bash
+          set -uo pipefail
+          [ -x ~/.opencode/bin/opencode ] || curl -fsSL https://opencode.ai/install | bash
           export PATH="$HOME/.opencode/bin:$PATH"
-          # The prompt is a file, so it is reviewable and versioned as a prompt.
-          # `--auto` because a prompt waiting on a TTY would stall the job.
-          timeout 600 opencode run --auto --format json "$(cat ci/prompts/plan-release.md)" > agent-log.json \
-            || echo "::warning::opencode did not complete cleanly — rendering the default film"
-          if [ -s .build/model-drop/plan.json ]; then
-            { echo '### Agent plan'; echo '```json'; cat .build/model-drop/plan.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
-          fi
+          for K in $KINDS; do
+            PROMPT="ci/prompts/plan-$K.md"
+            [ -f "$PROMPT" ] || continue
+            # The prompt, then the brief: the facts path, the item ids it may
+            # pick, the schema. `--auto` because a prompt waiting on a TTY stalls the job.
+            timeout 240 opencode run --auto --format json "$(cat "$PROMPT"; echo; node lib/cli.mjs plan "$K")" > "agent-$K.json" \
+              || echo "::warning::opencode did not finish $K — rendering the default film"
+            if [ -s ".build/$K/plan.json" ]; then
+              { echo "### Agent plan — $K"; echo '```json'; cat ".build/$K/plan.json"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
 
       # ── 4. render → publish → accept, one kind at a time ─────────────────
       - name: Render and release
@@ -153,28 +172,27 @@ jobs:
           YT_TITLE_TEMPLATE: ${{ vars.YT_TITLE_TEMPLATE }}
         run: |
           set -uo pipefail
-          # --reuse: film exactly the facts the decide step (and the agent) saw.
-          ARGS="--reuse"
-          [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
+          ARGS=""
           [ -n "$LIMIT" ] && ARGS="$ARGS --limit=$LIMIT"
           [ -n "$SECONDS_" ] && ARGS="$ARGS --seconds=$SECONDS_"
-          [ "$SHIP" = "true" ] && ARGS="$ARGS --publish --accept"
+          if [ -n "$REGEN" ]; then
+            [ "$REGEN" = "all" ] && ARGS="$ARGS --all" || ARGS="$REGEN $ARGS"
+            [ "$SHIP" = "true" ] && ARGS="$ARGS --publish"
+            CMD=regen
+          else
+            # --reuse: film exactly the facts the decide step (and the agent) saw.
+            ARGS="$ARGS --reuse"
+            [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
+            [ "$SHIP" = "true" ] && ARGS="$ARGS --publish --accept"
+            CMD=run
+          fi
           FAILED=""
           for K in $KINDS; do
             echo "::group::$K"
             # One kind failing must not stop the others from shipping.
-            if node lib/cli.mjs run "$K" $ARGS 2>&1 | tee "run-$K.log"; then
-              STATE=ok
-            else
-              STATE=FAILED; FAILED="$FAILED $K"
-            fi
+            if node lib/cli.mjs $CMD "$K" $ARGS 2>&1 | tee "run-$K.log"; then STATE=ok; else STATE=FAILED; FAILED="$FAILED $K"; fi
             echo "::endgroup::"
-            {
-              echo "### $K — $STATE"
-              echo '```'
-              tail -40 "run-$K.log"
-              echo '```'
-            } >> "$GITHUB_STEP_SUMMARY"
+            { echo "### $CMD $K — $STATE"; echo '```'; tail -40 "run-$K.log"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           done
           if [ -n "$FAILED" ]; then echo "::error::failed:$FAILED"; exit 1; fi
 
@@ -188,24 +206,23 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add releases videos/*/baseline.json
           if git diff --cached --quiet; then echo 'nothing to record'; exit 0; fi
-          git commit -m "chore(video): record ${{ steps.decide.outputs.kinds || 'baseline' }}"
-          # Someone may have pushed while this rendered. Rebase and retry rather
-          # than fail — a rejected push here is what kept this workflow red.
+          git commit -m "chore(video): ${REGEN:+regen }record ${{ steps.decide.outputs.kinds || 'baseline' }}"
+          # Someone may have pushed while this rendered: rebase and retry.
           for i in 1 2 3; do
             if git pull --rebase -q origin main && git push -q origin HEAD:main; then exit 0; fi
             sleep $((i * 5))
           done
           echo '::error::could not push the ledger'; exit 1
 
+      # The GitHub Release is the store. This copy is for branch runs, which do
+      # not publish, and for debugging a run that failed.
       - name: Keep the renders
-        if: always() && steps.decide.outputs.kinds != ''
+        if: always() && steps.decide.outputs.kinds != '' && (env.SHIP != 'true' || failure())
         uses: actions/upload-artifact@v4
         with:
           name: renders
           path: |
             renders/
-            agent-log.json
+            agent-*.json
           if-no-files-found: ignore
-          # The GitHub Release is the store. This copy is only for debugging a
-          # run, and for branch runs that do not publish.
           retention-days: 7

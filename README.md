@@ -67,11 +67,43 @@ After a render the driver records the **inputs** of the film under
 agent wrote one) and `manifest.json` (the ledger row, with the commit it was
 built at). The generator is deterministic, so those rebuild the film.
 
+That is also how an old film picks up a new look. `regen` re-renders a release
+that is already out from its record — same id, same tag — and with `--publish`
+replaces the assets of its GitHub Release in place:
+
+```bash
+npm run regen -- model-drop --all --dry-run        # build every release, render nothing
+npm run regen -- release 001-20260930-v1.6.0-8209ec52de --publish
+npm run regen -- changelog <id> --plan=my-plan.json  # re-plan it, then re-render
+```
+
+A regen never uploads to YouTube: a video there cannot be replaced, only
+duplicated.
+
+## Plans
+
+A plan is the one place judgment enters a film: which items are the story, in
+what order, and a few words of copy. Every kind takes the same shape:
+
+```json
+{ "seconds": 20, "limit": 3, "picks": ["<item id>"], "lines": { "<item id>": "short line" },
+  "headline": "one true line", "kicker": "2-4 words", "share": "1-3 sentences", "rationale": "why" }
+```
+
+`npm run plan -- <kind>` prints the brief: where the facts are, the item ids a
+plan may pick, and the schema. The CLI checks every plan against the facts
+before the film is built (`lib/plan.mjs`): an unknown id, a number the facts do
+not contain, a superlative, an exclamation mark — each is dropped with a
+warning, and the film falls back to the kind's default for that part. A bad
+plan never fails a build. `"limit": 0` declines a release. The contract is
+`ci/AGENT.md`.
+
 ## Where the videos are stored
 
 On **GitHub Releases**. Each film is a release tagged `<kind>-<id>` with three
-assets: `<kind>.mp4`, `cover.png` and `source.tar.gz` (the generated
-composition). Nothing rendered is committed to git.
+assets named after what the film is about — `anyrouter-release-v1.6.0.mp4`,
+`anyrouter-model-drop-2026-09-30.mp4` — with the same stem for the cover
+(`.png`) and the generated composition (`-source.tar.gz`). Nothing rendered is committed to git.
 
 ```bash
 GH_TOKEN=$(gh auth token) GITHUB_REPOSITORY=anyrouter-dev/video npm run publish -- intro
@@ -110,7 +142,9 @@ gitignored; CI uses repository secrets.
 | `npm run gen -- <kind>` | facts → HyperFrames project |
 | `npm run check -- <kind>` | the gate |
 | `npm run dev -- <kind>` | browser preview while adjusting |
-| `npm run publish -- <kind> [id]` | GitHub Release (+ YouTube) |
+| `npm run publish -- <kind> [id]` | GitHub Release (+ YouTube); `--replace` swaps the assets of one that exists |
+| `npm run plan -- <kind> [id]` | the brief for a plan: facts, item ids, schema |
+| `npm run regen -- <kind> <id>\|--all` | re-render released films from their records; `--publish`, `--plan=FILE`, `--dry-run` |
 | `npm run accept -- model-drop` | promote the collected catalog to the baseline |
 | `npm run ledger` | every recorded release |
 | `npm test` | unit tests |
@@ -151,15 +185,19 @@ repo, and by hand (pick a kind, optionally force). One job:
 1. **decide** — asks each kind what is unreleased. Node only: no install, no
    browser. On a quiet night the run ends here, in seconds.
 2. **tools** — `node_modules` and the render browser come from a cache.
-3. **plan** — optional. OpenCode reads the model-drop facts and writes
-   `.build/model-drop/plan.json`: which model leads, the claim, or `limit: 0` to
-   decline. Skipped without `OPENCODE_API_KEY`, and it can never fail the build.
+3. **plan** — optional. For each pending kind with a prompt in `ci/prompts/`,
+   OpenCode reads the facts and the brief and writes `.build/<kind>/plan.json`:
+   which items lead, the copy, or `limit: 0` to decline. Skipped without
+   `OPENCODE_API_KEY`, and it can never fail the build.
 4. **render → publish → accept**, one kind at a time. One kind failing does not
    stop the others.
 5. **record** — one commit with the ledger and the baseline.
 
 Releases and commits only happen on `main`. A run on a branch renders and keeps
 the mp4 as a workflow artifact.
+
+By hand, the `regen` input (a release id, or `all`, with a kind) re-renders
+released films instead and replaces their Release assets.
 
 **`ci.yml`** — on pull requests and pushes that touch the code: the unit tests,
 then the HyperFrames checker on each kind built from its committed fixture.
@@ -173,7 +211,7 @@ then the HyperFrames checker on each kind built from its committed fixture.
   number. See `PROVIDER_CLAIM` in `videos/model-drop/catalog.mjs`.
 - Context formats in K below 1M, so a 32k window does not read as `0.0M`.
 - `plan.json` is a **story** document. It may not carry numbers that are not
-  already in the facts — see `ci/AGENT.md`.
+  already in the facts — `lib/plan.mjs` drops any that do. See `ci/AGENT.md`.
 
 ## Layout
 

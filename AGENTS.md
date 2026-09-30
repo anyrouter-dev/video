@@ -30,10 +30,13 @@ lib/               the engine — no kind knows about another
   cli.mjs          the only entry point
   kinds.mjs        the kind contract (read its header before adding a kind)
   film.mjs         scenes → HyperFrames project; the shared look; the overlap guard
+  sound.mjs        the score and sound effects, synthesized per film (Node only)
+  marks.mjs        provider name / model id / sentence → the provider's logo
+  plan.mjs         the plan contract and its honesty gate
   ledger.mjs       what has been released, per kind
   hyperframes.mjs  check / render / cover
   publish.mjs      GitHub Release + YouTube
-shared/            fonts, scores, brand marks, provider marks
+shared/            fonts, brand marks, provider marks
 videos/<kind>/     kind.mjs, its inputs, fixtures/, kind.test.mjs
 .build/<kind>/     scratch — never committed
 renders/           output — never committed, it ships on the GitHub Release
@@ -70,6 +73,10 @@ npm run gen -- <kind> --limit=1        # facts → HyperFrames project (flags go
 npm run check -- <kind>                # the gate — must pass before a render is worth anything
 npm run dev -- <kind>                  # browser preview while adjusting
 npm run publish -- <kind> [id]         # GitHub Release (+ YouTube when configured)
+npm run plan -- <kind> [id]            # the brief for a plan: facts path, item ids, schema
+npm run regen -- <kind> <id>|--all     # re-render released films from their frozen facts
+npm run regen -- <kind> <id> --publish # …and replace the assets of their GitHub Release
+npm run regen -- <kind> <id> --plan=FILE --dry-run   # freeze a new plan; build, render nothing
 npm run accept -- model-drop           # promote the collected catalog to the baseline
 npm run ledger                         # what has been released
 npm test                               # unit tests — Node builtins only, no install needed
@@ -84,11 +91,22 @@ response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 
 | N | Layout | Shape |
 |---|--------|-------|
-| 1 | `hero` | one card, full frame, deep push, long hold |
-| 2–4 | `cards` | that many cards, back-to-back, equal slots |
-| ≥5 | `list` | ranked rows, six to a page, capped at what can be read |
+| 1 | `hero` | the name huge with its mark, then a spec sheet with prices |
+| 2–4 | `cards` | one editorial card each, sides alternate, prices shown |
+| ≥5 | `list` | spotlight → "who shipped" wall of marks → ranked ledger → the drop in numbers. **No prices** |
 
 Force it with `--limit=N` when the count picks the wrong story.
+
+## The look
+
+anyrouter.dev's print style: paper `#F7F4EC`, ink `#0A0A0A`, one signal tone per
+kind (model-drop orange, release indigo, changelog teal), and texture made only of
+dots — ordered (Bayer) dither and halftone. `lib/film.mjs` gives every generated
+film the dithered brand-mark opening, the breathing dither backdrop, a dither wipe
+on every cut, the frame chrome and the closing card; kinds compose scenes from its
+classes and helpers (read its header). No gradients, glows, blur or emoji. Every
+logo comes from `lib/marks.mjs`; a provider with no vendored mark gets a monogram,
+never a borrowed logo.
 
 ## Rules every generated film obeys
 
@@ -96,17 +114,20 @@ Each of these was an `npm run check` failure first. `lib/film.mjs` enforces
 them for every kind — do not work around it.
 
 1. **Never tween `autoAlpha` / `opacity` / `visibility` on an element carrying
-   `data-start`.** The framework owns clip visibility — scenes animate `#content`.
-2. **The root composition is built only from sub-compositions.** Scenes are
-   `data-composition-src` hosts on the root, never nested elements.
+   `data-start`.** The framework owns clip visibility — scenes animate their children.
+2. **The root composition is built only from sub-compositions**: the backdrop,
+   one host per scene, the wipe layer. Sub-compositions carry their style and
+   script inside `<template>` — the runtime drops everything outside it.
 3. **Asset paths are project-root-relative** (`fonts/…`, `assets/providers/…`),
-   never `../`. `writeFilm` copies fonts, the score and any marks into the project.
+   never `../`. `writeFilm` copies fonts and every mark a scene references into
+   the project, and writes the film's own `audio/mix.wav`.
 4. **Every font family needs an `@font-face`.**
 5. **No scene may outlive the next one.** `clampScenes` clamps each duration to
    `next.start` and prints a `clamped` line. It exists because the same bug
    shipped twice. A kind should never need it — its test asserts exact back-to-back.
 6. **Contrast is enforced** (3:1 non-text, 4.5:1 text).
-7. **A film is never longer than its score.** `score.wav` is 20s, `score-30s.wav` 30s.
+7. **Selectors are scoped to their scene** (`Q()` and the helpers). Scene ids
+   repeat across sub-compositions, so a bare `#id` hits the wrong scene.
 
 ## Accuracy
 
@@ -126,7 +147,23 @@ them for every kind — do not work around it.
   twice — that is what lets the workflow run every night.
 - The mp4, the cover and the generated source are **GitHub Release assets**, not
   git objects. Git holds only the ledger row and the inputs.
-- `render-video.yml` is one job: decide (Node only) → render → publish → one
-  commit. On a quiet night it stops after the decide step.
-- `ci.yml` runs `npm test` and `check` on each kind's fixture for every change
-  to `lib/`, `videos/` or `shared/`.
+- A **plan** (`.build/<kind>/plan.json`) is the only judgment in a film: which
+  items, in what order, and a little copy. One schema for every kind;
+  `lib/plan.mjs` drops anything that breaks the contract in `ci/AGENT.md` (an
+  unknown id, a number not in the facts, hype) and warns — it never fails a
+  build. The cleaned plan is what gets frozen.
+- **`regen`** re-renders a release that is out from `releases/<kind>/<id>/`
+  (`data.json` + `plan.json`), keeping its id, hash, tag and `createdAt`, and
+  with `--publish` replaces its Release assets and refreshes title and notes.
+  It never uploads to YouTube — a video there cannot be replaced, only
+  duplicated. It builds in `.build/<kind>/regen-<id>/`, so regens run side by
+  side. This is how every past film picks up a new look.
+- The score is generated at the film's length by `lib/sound.mjs`; there is no
+  fixed-length score to outlast.
+- `render-video.yml` is one job: decide (Node only) → plan (optional agent, one
+  prompt per kind in `ci/prompts/`) → render → publish → one commit. On a quiet
+  night it stops after the decide step. Its `regen` input re-renders released
+  films of one kind (an id, or `all`).
+- `ci.yml` runs `npm test` (including: every recorded release can be rebuilt
+  from its record) and `check` on each kind's fixture for every change to
+  `lib/`, `videos/`, `shared/` or `releases/`.

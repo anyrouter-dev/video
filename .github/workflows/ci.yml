@@ -1,7 +1,8 @@
 name: ci
 
 # The gate for code changes. Rendering is not done here — see render-video.yml.
-#   test   the unit tests. Node builtins only, so no install: seconds.
+#   test   the unit tests, including that every recorded release can still be
+#          rebuilt from its record. Node builtins only, so no install: seconds.
 #   check  builds every generated kind from its committed fixture and runs the
 #          HyperFrames checker on it (lint, layout, motion, contrast), so a
 #          change to a generator cannot break the nightly render unnoticed.
@@ -14,6 +15,7 @@ on:
       - 'lib/**'
       - 'videos/**'
       - 'shared/**'
+      - 'releases/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/ci.yml'

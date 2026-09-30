@@ -1,84 +1,94 @@
 # CI agent instructions
 
-OpenCode is given this file. The deterministic pipeline has already run
-`videos/model-drop/catalog.mjs`, so the new models are known — the job here is judgment,
-not mechanics.
+The contract for whoever writes a film's plan — an LLM in CI or a human at a
+terminal. The deterministic pipeline has already collected the facts; the job
+here is judgment, not mechanics. The per-kind prompts in `ci/prompts/` point
+here.
 
-## What you are doing
+## What a plan is
 
-A model drop just landed on AnyRouter. `.build/model-drop/data.json` holds the live
-catalog and the list of what shipped since the last accepted baseline. You decide
-**what the film is about** and write `.build/model-drop/plan.json`. A deterministic
-pipeline then renders it.
+Every kind (`model-drop`, `release`, `changelog`) takes the same plan. You
+choose **which facts are the story, in what order, and the few words around
+them**. You never choose the pixels: layout, type, colour, timing, camera and
+sound are fixed by the kind's `film()` and `lib/film.mjs`.
 
-## What you must not do
-
-- **Do not render.** `npm run render` is not yours to run. The pipeline renders
-  after you, and a render that depends on a model is not reproducible.
-- **Do not edit anything under `.build/model-drop/film/`.** They are
-  generated from `videos/model-drop/kind.mjs` and are wiped on the next `npm run gen -- model-drop`.
-  If the film needs to look different, change `videos/model-drop/kind.mjs` — or better, set a
-  flag in your plan.
-- **Do not hand-write a model, a price, a context window, or a count.** If it is
-  not in `.build/model-drop/data.json`, it does not go on screen. The one number that is
-  deliberately not from the API is `totals.providers`, and it is already
-  computed for you.
-- **Do not change `videos/model-drop/catalog.mjs` logic or the baseline** except via
-  `npm run accept -- model-drop`.
-
-## What you decide
-
-Read `.build/model-drop/data.json`. You are choosing a *story*, and you may disagree
-with the default pick.
-
-1. **Which models are the story.** `added` is everything new, ordered by
-   `created`. That is a fact list, not a narrative. If six models shipped but
-   three are noise, use `plan.limit` to feature the ones that matter and say why
-   in `plan.rationale`.
-
-2. **The layout.** `plan.limit` also picks the layout (1 → hero, 2–4 → cards,
-   ≥5 → list). If a single model genuinely is the story, set `limit: 1` for the
-   hero treatment even when several shipped.
-
-3. **The claim.** `plan.headline` is the one line on the end card. It must be
-   true of the *catalog*, not of one model — the end card sits next to the
-   catalog totals. If a model is new but has an unremarkable price or window, do
-   not claim otherwise.
-
-4. **The share copy.** `plan.share` is 1–3 sentences for posting. Same rule:
-   verifiable only.
-
-5. **Length.** `plan.seconds`, 8–30. A single hero model does not need 20 seconds.
-
-## Honesty gate
-
-Before you write the file, check your own claims against `.build/model-drop/data.json`:
-
-- Any price, context window, or count you mention must exist in that file.
-- Do not imply a model is free unless `free: true` on that exact entry.
-- Do not imply a model is "the fastest" / "best" / "newest ever" — the API has
-  no such field, so you would be inventing it.
-- If the best honest claim is boring, write the boring claim.
-
-A film that overclaims is worse than no film.
-
-## Output
-
-Write exactly this file, nothing else:
+`node lib/cli.mjs plan <kind>` prints your brief: where the facts are, the item
+ids you may pick (each with a one-line description), and this schema.
 
 ```json
 {
-  "limit": 1,
-  "seconds": 14,
-  "headline": "one true line about the catalog",
-  "share": "1-3 verifiable sentences",
-  "rationale": "why this story and these models — one or two sentences"
+  "seconds": 20,
+  "limit": 3,
+  "picks": ["<item id>", "..."],
+  "lines": { "<item id>": "short line" },
+  "headline": "one true line",
+  "kicker": "2-4 words",
+  "share": "1-3 sentences",
+  "rationale": "why this story"
 }
 ```
 
-`limit`, `seconds` and `headline` are the only keys the pipeline reads. `share`
-and `rationale` are kept for the humans and the commit message.
+| Key | What it does | Rule |
+|-----|--------------|------|
+| `picks` | the items the film is about, lead first | ids from the brief only |
+| `limit` | how many items to show; with model-drop it also picks the layout (1 hero, 2–4 cards, ≥5 list) | whole number ≥ 0 |
+| `lines` | a short line shown with an item | ≤ 120 chars, ids from the brief only |
+| `headline` | the one line the film and its Release lead with | ≤ 90 chars |
+| `kicker` | the small label over the closing card | ≤ 32 chars |
+| `share` | copy for a social post and the Release notes | ≤ 400 chars |
+| `seconds` | film length | 8–60 |
+| `rationale` | why this story; goes in the Release notes | — |
 
-If the release genuinely warrants nothing — no new models, or nothing worth
-filming — still write the file, set `"limit": 0`, and explain in `rationale`.
-That is a valid, useful outcome and the pipeline will skip the render.
+Every key is optional. Leave one out and the kind's default is used — the
+defaults are good; only override what you can improve.
+
+**`"limit": 0` declines the release.** Still write the file, say why in
+`rationale`. The pipeline records the decision and renders nothing. A single
+delisted model is not a drop; two models at the same price is not news.
+
+## Honesty gate — enforced
+
+The CLI checks every plan before it reaches the film (`lib/plan.mjs`). It does
+not fail the build; it **drops** whatever breaks a rule and warns in the log,
+so a bad plan quietly becomes the default film. The rules:
+
+- **Every number in your copy must be in the facts.** Prices, context windows,
+  counts, versions, dates. `128K` may stand for 128000 or 131072 (the way the
+  film prints it), `$0.16` for 0.155, `5 new models` for a list of five. A number
+  you worked out yourself — a percentage, a sum, a "2x" — is not in the facts
+  and is dropped.
+- **No superlatives the API cannot back**: best, fastest, smartest,
+  revolutionary, game-changing, blazing, unleash, supercharge, cutting-edge,
+  next-gen, and the like. The API has no such field.
+- **No exclamation marks, no emoji.**
+- **Unknown keys and unknown ids are dropped.** Do not invent a model, a
+  highlight or an entry.
+
+Beyond what a machine can check:
+
+- Do not imply a model is free unless `free: true` on that exact entry.
+- Do not promise availability ("now live") for something that was not added. A
+  price change is not a launch; a disabled entry is a retirement.
+- If the best honest claim is boring, write the boring claim. A film that
+  overclaims is worse than no film.
+
+## What you must not do
+
+- **Do not render**, and do not run `gen`, `check`, `run` or `regen`. The
+  pipeline renders after you; a render that depends on a model is not
+  reproducible.
+- **Do not edit anything under `.build/<kind>/film/`** or any `kind.mjs`.
+- **Do not change a baseline** (`videos/model-drop/baseline.json`) except via
+  `npm run accept -- model-drop`.
+- **Do not fetch anything.** The facts on disk are the facts.
+
+## Output
+
+Write exactly one file, `.build/<kind>/plan.json`, and nothing else. It is
+frozen next to the facts in `releases/<kind>/<id>/plan.json` once the film
+renders — after the CLI has removed anything that broke a rule, so the record
+is the plan the film was actually cut from.
+
+A human re-planning a release that is already out prints its brief with
+`node lib/cli.mjs plan <kind> <id>` (it shows the current plan too), writes the
+new plan to any file, and runs `node lib/cli.mjs regen <kind> <id> --plan=FILE`.
