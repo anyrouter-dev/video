@@ -1,0 +1,401 @@
+<title>AnyRouter Hero Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" />
+<style>
+  /* Layout: a review sheet — each option is a full hero mockup in a browser frame, followed by what it keeps and costs. */
+  :root {
+    --bg: #e9ebee; --sheet: #f6f7f8; --fg: #0b0c0e; --muted: #4a505b; --line: #cfd3d9; --accent: #b54c00; --tag: #fff;
+    /* mockup tokens (the hero itself stays light, like the reel) */
+    --paper: #f1f2f4; --face: #ffffff; --ink: #0b0c0e; --ink2: #454a55; --org: #f38020; --org-ink: #a84600; --green: #0c7a52; --red: #c8261a;
+    --display: "Geist", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #101215; --sheet: #16191d; --fg: #eceef1; --muted: #a3a9b3; --line: #2b3037; --accent: #ff9a4d; --tag: #1d2126; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #101215; --sheet: #16191d; --fg: #eceef1; --muted: #a3a9b3; --line: #2b3037; --accent: #ff9a4d; --tag: #1d2126; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--display); font-size: 16px; line-height: 1.5; }
+  .page { max-width: 1320px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 80px; display: grid; gap: 56px; }
+  .intro h1 { font-size: clamp(32px, 5vw, 52px); letter-spacing: -0.045em; line-height: 1.05; margin: 6px 0 10px; text-wrap: balance; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .intro p { color: var(--muted); max-width: 68ch; margin: 0; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .jump a { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--fg); text-decoration: none; border: 1px solid var(--line); background: var(--tag); padding: 7px 12px; border-radius: 6px; }
+  .jump a:hover, .jump a:focus-visible { border-color: var(--accent); outline: none; }
+  .opt { display: grid; gap: 16px; scroll-margin-top: 16px; }
+  .opt-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+  .opt-head h2 { margin: 0; font-size: 28px; letter-spacing: -0.035em; }
+  .opt-head span { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); }
+  .opt-head p { flex-basis: 100%; margin: 0; color: var(--muted); max-width: 80ch; }
+  .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .notes div { border: 1px solid var(--line); background: var(--sheet); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+  .notes h3 { margin: 0 0 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .notes p { margin: 0; font-size: 14.5px; }
+
+  /* browser frame */
+  .frame { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); box-shadow: 0 30px 60px rgba(0,0,0,.12); }
+  .chrome { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 14px; background: #e4e6ea; border-bottom: 1px solid #cfd3d9; }
+  .chrome i { width: 11px; height: 11px; border-radius: 50%; background: #c3c7ce; display: block; }
+  .chrome span { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: #4a505b; background: #f3f4f6; padding: 3px 12px; border-radius: 5px; }
+
+  /* ── shared hero primitives (light, print look) ───────────────────── */
+  .hero { position: relative; color: var(--ink); background: var(--paper); overflow: hidden; font-family: var(--display); }
+  .nav { position: relative; z-index: 3; display: flex; align-items: center; gap: 22px; padding: 16px 28px; border-bottom: 2px solid var(--ink); font-size: 14px; font-weight: 600; flex-wrap: wrap; }
+  .nav .brand { display: flex; align-items: center; gap: 7px; font-size: 18px; font-weight: 800; letter-spacing: -0.04em; }
+  .nav .brand svg { width: 22px; height: 22px; display: block; }
+  .nav .links { display: flex; gap: 18px; color: var(--ink2); }
+  .nav .sp { flex: 1; }
+  .nav .in { background: var(--ink); color: #fff; padding: 7px 14px; border-radius: 4px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 12px; font-family: var(--mono); font-size: 12px; font-weight: 700; background: var(--face); }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; background: #d4a106; display: block; }
+  .h1 { font-weight: 800; letter-spacing: -0.058em; line-height: .98; margin: 16px 0 0; text-wrap: balance; }
+  .rot { color: var(--org-ink); display: inline-block; position: relative; }
+  .promise { color: var(--ink2); font-size: 17px; line-height: 1.55; margin: 16px 0 0; max-width: 52ch; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px; border: 2px solid var(--ink); border-radius: 4px; font-weight: 800; font-size: 15px; background: var(--face); color: var(--ink); text-decoration: none; }
+  .btn.pri { background: var(--org); }
+  .fine { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink2); margin-top: 14px; }
+  .fine b { color: var(--org-ink); }
+  .box { position: relative; isolation: isolate; }
+  .box::before { content: ""; position: absolute; inset: 9px -9px -9px 9px; z-index: -1; background-image: radial-gradient(circle, var(--ink) 1px, transparent 1.3px); background-size: 4px 4px; }
+  .face { position: relative; background: var(--face); border: 2px solid var(--ink); border-radius: 4px; }
+  .code .face { background: var(--ink); color: #e6e8eb; font-family: var(--mono); font-size: 13px; overflow: hidden; }
+  .code .bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid #262a30; }
+  .code .bar i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid #6b717c; display: block; }
+  .code .tabs { display: flex; gap: 4px; padding: 7px 10px; border-bottom: 1px solid #262a30; font-size: 11.5px; color: #9aa1ab; flex-wrap: wrap; }
+  .code .tabs span { padding: 3px 8px; border-radius: 4px; }
+  .code .tabs .on { background: #1d2025; color: #fff; }
+  .code .tabs .ag { margin-left: auto; color: #ffb36b; }
+  .code pre { margin: 0; padding: 12px 0; font-family: inherit; line-height: 1.75; overflow-x: auto; }
+  .code pre div { padding: 0 14px; white-space: pre; }
+  .code .hl { background: #191c21; box-shadow: inset 3px 0 0 var(--org); }
+  .k { color: #ff8f7a; } .s { color: #a8d1ff; } .p { color: #ffb36b; }
+  .pool .face { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; padding: 14px 18px; }
+  .pool .lab { font-family: var(--mono); font-size: 11px; font-weight: 800; letter-spacing: .12em; color: var(--org-ink); }
+  .pool .txt { font-weight: 600; font-size: 14.5px; max-width: 34ch; }
+  .stats { display: flex; gap: 16px; font-family: var(--mono); font-size: 12.5px; color: var(--ink2); flex-wrap: wrap; }
+  .stats b { color: var(--ink); font-size: 16px; font-family: var(--display); font-weight: 800; }
+  .rel .face { padding: 12px 16px; font-size: 13px; }
+  .rel .lab { font-family: var(--mono); font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--org-ink); }
+  .rel b { display: block; font-size: 16px; margin-top: 4px; }
+  .with { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--mono); font-size: 11.5px; font-weight: 700; color: var(--ink2); }
+  .with span { border: 1.5px solid var(--ink); border-radius: 4px; padding: 3px 8px; background: var(--face); color: var(--ink); }
+  canvas.dither { image-rendering: pixelated; display: block; }
+  .tc { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--ink); }
+  .tc b { color: var(--org-ink); }
+
+  /* ── A · reel monitor ───────────────────────────────────────────── */
+  .A .body { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 36px; padding: 44px 36px 30px; align-items: center; }
+  .A .h1 { font-size: clamp(38px, 5vw, 64px); }
+  .A .monitor .face { padding: 0; overflow: hidden; }
+  .A .monitor .mbar { display: flex; justify-content: space-between; padding: 7px 10px; border-bottom: 2px solid var(--ink); }
+  .A video { display: block; width: 100%; aspect-ratio: 16/9; background: var(--paper); max-width: 100%; }
+  .A .row { position: relative; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; padding: 0 36px 36px; }
+  .A .bgfield { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; pointer-events: none; }
+
+  /* ── B · pool sphere ────────────────────────────────────────────── */
+  .B .body { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; padding: 44px 36px 36px; min-height: 560px; }
+  .B .h1 { font-size: clamp(40px, 5.4vw, 70px); }
+  .B .stage { position: relative; min-height: 420px; }
+  .B .sphere { position: absolute; left: 50%; top: 44%; width: min(340px, 80%); aspect-ratio: 1; transform: translate(-50%, -50%); }
+  .B .sphere canvas { width: 100%; height: 100%; }
+  .B .orbit { position: absolute; inset: 0; }
+  .B .kc { position: absolute; display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; background: var(--face); border: 2px solid var(--ink); border-radius: 4px; padding: 6px 10px; white-space: nowrap; box-shadow: 4px 4px 0 var(--ink); }
+  .B .kc i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: block; }
+  .B .plabel { position: absolute; left: 50%; top: 0; transform: translateX(-50%); font-family: var(--mono); font-size: 12px; font-weight: 800; letter-spacing: .16em; white-space: nowrap; }
+  .B .code { position: absolute; left: 4%; right: 4%; bottom: 0; }
+  .B .bgfield { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .B .strip { position: relative; padding: 0 36px 36px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; }
+
+  /* ── C · big print ──────────────────────────────────────────────── */
+  .C .body { position: relative; padding: 36px 36px 0; }
+  .C .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .C .h1 { font-size: clamp(52px, 10.5vw, 150px); letter-spacing: -0.07em; line-height: .9; margin-top: 22px; }
+  .C .band { position: relative; margin: 26px -36px 0; height: 120px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); overflow: hidden; }
+  .C .band canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .C .band .ticker { position: absolute; left: 0; top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: var(--mono); font-size: 14px; font-weight: 700; background: var(--paper); padding: 6px 10px; border-right: 2px solid var(--ink); }
+  .C .lower { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; padding: 28px 0 36px; align-items: start; }
+  .C .side { display: grid; gap: 18px; }
+
+  /* ── D · router stage ───────────────────────────────────────────── */
+  .D .body { position: relative; padding: 44px 36px 36px; text-align: center; }
+  .D .h1 { font-size: clamp(40px, 6vw, 82px); max-width: 16ch; margin-inline: auto; }
+  .D .promise { margin-inline: auto; }
+  .D .ctas { justify-content: center; }
+  .D .stagegrid { position: relative; display: grid; grid-template-columns: minmax(0, 1.4fr) 90px minmax(0, 1fr); gap: 0; align-items: center; margin-top: 34px; text-align: left; }
+  .D .hub { width: 64px; height: 64px; background: var(--ink); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin: 0 auto; position: relative; z-index: 2; }
+  .D .hub svg { width: 38px; height: 38px; display: block; }
+  .D .provs { display: grid; gap: 10px; position: relative; z-index: 2; }
+  .D .pv { display: flex; align-items: center; gap: 10px; background: var(--face); border: 2px solid var(--ink); border-radius: 4px; padding: 8px 12px; font-family: var(--mono); font-size: 12.5px; font-weight: 700; transition: box-shadow .2s, background .2s; }
+  .D .pv.on { background: #fff1e4; box-shadow: 4px 4px 0 var(--org); }
+  .D .pv i { width: 9px; height: 9px; border-radius: 50%; background: #c3c7ce; display: block; }
+  .D .pv.on i { background: var(--org); }
+  .D .wires { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+  .D .bgfield { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .D .strip { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px; margin-top: 30px; text-align: left; }
+
+  @media (max-width: 900px) {
+    .A .body, .A .row, .B .body, .B .strip, .C .lower, .D .strip { grid-template-columns: 1fr; }
+    .B .stage { min-height: 520px; }
+    .D .stagegrid { grid-template-columns: 1fr; gap: 16px; }
+    .D .hub { display: none; }
+    .D .wires { display: none; }
+    .nav .links { display: none; }
+    .A .body, .B .body, .C .body, .D .body { padding-inline: 18px; }
+    .A .row, .B .strip { padding-inline: 18px; }
+    .C .band { margin-inline: -18px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .A video { display: none; } }
+</style>
+
+<div class="page">
+  <header class="intro">
+    <div class="eyebrow">anyrouter.dev · landing hero</div>
+    <h1>Four hero directions, built from the reel.</h1>
+    <p>Each option is a working mockup in the reel's 1-bit print style: a live dither field, ink rules, one orange. Every option keeps all seven parts of today's hero: the status chip, the rotating headline, the promise, both CTAs, the Human / AI agent code card, the pool strip and the release card. Pick one, or mix parts.</p>
+    <nav class="jump" aria-label="Options"><a href="#A">A · Reel monitor</a><a href="#B">B · Pool sphere</a><a href="#C">C · Big print</a><a href="#D">D · Router stage</a></nav>
+  </header>
+
+  <!-- A -->
+  <section class="opt" id="A">
+    <div class="opt-head"><h2>A · Reel monitor</h2><span>video-led · closest to today's split</span>
+      <p>Copy stays left. The reel plays muted on a framed monitor on the right, with timecode chrome. The code card drops into the row below with the pool strip.</p></div>
+    <div class="frame"><div class="chrome"><i></i><i></i><i></i><span>anyrouter.dev</span></div>
+      <div class="hero A">
+        <canvas class="dither bgfield" data-field="edge" width="240" height="140"></canvas>
+        <div class="nav" data-nav></div>
+        <div class="body">
+          <div>
+            <span class="chip"><i></i>Some routes degraded · just now</span>
+            <p class="h1">Unify every <span class="rot" data-rot>model</span> one gateway.</p>
+            <p class="promise">One OpenAI-compatible API, CLI and MCP gateway in front of every provider, and every other router. Free models, $4 credit every month on Go, and your own keys at no markup.</p>
+            <div class="ctas"><a class="btn pri" href="https://anyrouter.dev">Start free →</a><a class="btn" href="https://anyrouter.dev/docs">Read docs</a></div>
+            <p class="fine">Free to start: <b>$4 credit every month on Go</b>, no card if you donate a key.</p>
+            <div class="with">USE IT WITH <span>OpenAI</span><span>xAI</span><span>Anthropic</span>+ 200+ models</div>
+          </div>
+          <div class="monitor box"><div class="face">
+            <div class="mbar"><span class="tc">ANYROUTER.DEV · INTRO REEL</span><span class="tc"><b data-tc>00:00:00:00</b></span></div>
+            <video src="reel.mp4" poster="poster.jpg" muted autoplay loop playsinline preload="metadata"></video>
+          </div></div>
+        </div>
+        <div class="row">
+          <div class="code box" data-code></div>
+          <div class="side-stack" style="display:grid;gap:18px"><div class="pool box" data-pool></div><div class="rel box" data-rel></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Why pick it</h3><p>The reel carries the whole story in 30 seconds: one key, the free pool and the charts. Visitors get the pitch without reading.</p></div>
+      <div><h3>Cost</h3><p>A 14 MB video on the landing page. It needs a poster frame, lazy loading and a static fallback for reduced motion (included here).</p></div>
+      <div><h3>Moves</h3><p>The code card moves below the fold on phones. The H1 stays text, so SEO and the agent view are unchanged.</p></div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="opt" id="B">
+    <div class="opt-head"><h2>B · Pool sphere</h2><span>brand-led · makes the free pool the hero</span>
+      <p>A live dither sphere is the shared pool. Donated keys orbit it and it keeps spinning. The code card sits in front of the sphere, so the eye goes pool → code → CTA.</p></div>
+    <div class="frame"><div class="chrome"><i></i><i></i><i></i><span>anyrouter.dev</span></div>
+      <div class="hero B">
+        <canvas class="dither bgfield" data-field="edge" width="240" height="160"></canvas>
+        <div class="nav" data-nav></div>
+        <div class="body">
+          <div>
+            <span class="chip"><i></i>Some routes degraded · just now</span>
+            <p class="h1">Unify every <span class="rot" data-rot>model</span> one gateway.</p>
+            <p class="promise">One OpenAI-compatible API, CLI and MCP gateway in front of every provider. Donate a key you're not using, and ride the shared pool for free.</p>
+            <div class="ctas"><a class="btn pri" href="https://anyrouter.dev">Start free →</a><a class="btn" href="https://anyrouter.dev/donate">Donate a key</a><a class="btn" href="https://anyrouter.dev/docs">Read docs</a></div>
+            <p class="fine">One working key makes <b>Go free</b>. Donors earn 5–8% back as credits.</p>
+            <div class="with">USE IT WITH <span>OpenAI</span><span>xAI</span><span>Anthropic</span>+ 200+ models</div>
+          </div>
+          <div class="stage">
+            <div class="sphere"><canvas class="dither" data-sphere width="120" height="120"></canvas></div>
+            <div class="orbit" data-orbit></div>
+            <div class="plabel">SHARED POOL · 92 KEYS</div>
+            <div class="code box" data-code data-short></div>
+          </div>
+        </div>
+        <div class="strip"><div class="pool box" data-pool></div><div class="rel box" data-rel></div></div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Why pick it</h3><p>It's the most distinctive option. No other router leads with a crowdsourced pool, and the sphere becomes a brand mark you can reuse in OG images, the dashboard and the reel.</p></div>
+      <div><h3>Cost</h3><p>A small canvas animation, about 1–2 ms a frame at this size. The keys in orbit should be real provider names from the pool API.</p></div>
+      <div><h3>Moves</h3><p>Adds a third CTA, "Donate a key". The pool strip stays, but its message now also lives in the visual.</p></div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="opt" id="C">
+    <div class="opt-head"><h2>C · Big print</h2><span>type-led · editorial, fastest to load</span>
+      <p>The headline runs the full width at poster size. A dither band with a live request ticker splits the page, and below it the code card, pool strip and release card sit side by side.</p></div>
+    <div class="frame"><div class="chrome"><i></i><i></i><i></i><span>anyrouter.dev</span></div>
+      <div class="hero C">
+        <div class="nav" data-nav></div>
+        <div class="body">
+          <div class="top"><span class="chip"><i></i>Some routes degraded · just now</span><span class="tc">200+ MODELS · 1 KEY · <b data-tc>00:00:00:00</b></span></div>
+          <p class="h1">Unify every <span class="rot" data-rot>model</span> one gateway.</p>
+          <div class="band"><canvas class="dither" data-field="band" width="320" height="40"></canvas><div class="ticker" data-ticker>POST /chat/completions → anthropic/claude-sonnet-4.6 · 200 OK</div></div>
+          <div class="lower">
+            <div>
+              <p class="promise" style="margin-top:0">One OpenAI-compatible API, CLI and MCP gateway in front of every provider, and every other router. Free models, $4 credit every month on Go, and your own keys at no markup.</p>
+              <div class="ctas"><a class="btn pri" href="https://anyrouter.dev">Start free →</a><a class="btn" href="https://anyrouter.dev/docs">Read docs</a></div>
+              <p class="fine">Free to start: <b>$4 credit every month on Go</b>, no card if you donate a key.</p>
+              <div class="with">USE IT WITH <span>OpenAI</span><span>xAI</span><span>Anthropic</span>+ 200+ models</div>
+              <div class="side" style="margin-top:22px"><div class="pool box" data-pool></div><div class="rel box" data-rel></div></div>
+            </div>
+            <div class="code box" data-code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Why pick it</h3><p>The fastest option with the strongest type. There is no heavy media, and the headline alone reads as a brand at poster size.</p></div>
+      <div><h3>Cost</h3><p>The rotating word at 150px makes the headline reflow. It needs a fixed-width slot, or the word should rotate on its own line.</p></div>
+      <div><h3>Moves</h3><p>The code card sits lower on desktop. The ticker is decorative unless it's wired to real traffic, and live data would need an endpoint.</p></div>
+    </div>
+  </section>
+
+  <!-- D -->
+  <section class="opt" id="D">
+    <div class="opt-head"><h2>D · Router stage</h2><span>product-led · shows how it works</span>
+      <p>A centered headline over a live routing diagram. The code card swaps its model id, the wire lights through the AnyRouter hub, and the matching provider lights up.</p></div>
+    <div class="frame"><div class="chrome"><i></i><i></i><i></i><span>anyrouter.dev</span></div>
+      <div class="hero D">
+        <canvas class="dither bgfield" data-field="edge" width="240" height="160"></canvas>
+        <div class="nav" data-nav></div>
+        <div class="body">
+          <span class="chip"><i></i>Some routes degraded · just now</span>
+          <p class="h1">Unify every <span class="rot" data-rot>model</span> one gateway.</p>
+          <p class="promise">Keep your SDK. Change the base_url. One OpenAI-compatible API, CLI and MCP gateway in front of every provider.</p>
+          <div class="ctas"><a class="btn pri" href="https://anyrouter.dev">Start free →</a><a class="btn" href="https://anyrouter.dev/docs">Read docs</a></div>
+          <div class="stagegrid" data-stage>
+            <svg class="wires" data-wires aria-hidden="true"></svg>
+            <div class="code box" data-code data-route></div>
+            <div class="hub"><svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#fff"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg></div>
+            <div class="provs" data-provs></div>
+          </div>
+          <div class="strip"><div class="pool box" data-pool></div><div class="rel box" data-rel></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div><h3>Why pick it</h3><p>It explains the product in one glance: one line changes, and every provider is reachable. It's the best option for developers who skim.</p></div>
+      <div><h3>Cost</h3><p>The most layout work: the wires have to track real element positions at every breakpoint. On phones the wires hide and providers stack.</p></div>
+      <div><h3>Moves</h3><p>The centered layout drops the side-by-side split. The rotating headline and the model swap need to stay in sync so they don't compete.</p></div>
+    </div>
+  </section>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="ar-p1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
+  <path id="ar-p2" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
+</defs></svg>
+
+<script>
+(function () {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const MARK = '<svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0b0c0e"><use href="#ar-p1"/><use href="#ar-p2"/></g></svg>';
+  const WORDS = ["model", "LLM API", "coding agent", "MCP server", "SDK", "subscription"];
+  const MODELS = [["anthropic/claude-sonnet-4.6", "anthropic"], ["openai/gpt-5.2", "openai"], ["google/gemini-3.5-flash", "google"], ["z-ai/glm-5.2", "z-ai"], ["moonshotai/kimi-k3", "moonshotai"], ["deepseek/deepseek-v4-flash", "deepseek"]];
+
+  // shared parts, filled into every option
+  document.querySelectorAll("[data-nav]").forEach((n) => {
+    n.innerHTML = `<span class="brand">${MARK}AnyRouter</span><span class="links"><span>Models</span><span>Features</span><span>Playground</span><span>Data</span><span>Pricing</span><span>Docs</span></span><span class="sp"></span><span>Dashboard</span><span class="in">Sign in</span>`;
+  });
+  document.querySelectorAll("[data-pool]").forEach((p) => {
+    p.innerHTML = `<div class="face"><div><div class="lab">CROWDSOURCED FREE TOKENS</div><div class="txt">We pool everyone's free &amp; trial keys into one shared pool. Donate a key, grow the pool, ride free.</div></div><div class="stats"><span><b>92</b> keys pooled</span><span><b>42</b> donors</span><span><b>3.1K</b> requests</span></div></div>`;
+  });
+  document.querySelectorAll("[data-rel]").forEach((r) => {
+    r.innerHTML = `<div class="face"><div class="lab">LATEST RELEASE · SEP 29</div><b>Step 5 Preview</b><span style="font-family:var(--mono);font-size:12px;color:var(--ink2)">v1.7.0 · All releases →</span></div>`;
+  });
+  document.querySelectorAll("[data-code]").forEach((c) => {
+    const short = c.hasAttribute("data-short");
+    c.innerHTML = `<div class="face"><div class="bar"><i></i><i></i><i></i><span style="margin-left:8px;color:#9aa1ab;font-size:11.5px">anyrouter ~ openai (python)</span></div>
+      <div class="tabs"><span class="on">OpenAI (Python)</span><span>OpenAI (TS)</span><span>AI SDK</span><span>cURL</span><span>CLI</span><span class="ag">Human · AI agent</span></div>
+      <pre>${short ? "" : '<div><span class="k">from</span> openai <span class="k">import</span> OpenAI</div><div> </div>'}<div>client = OpenAI(</div><div class="hl">    <span class="p">base_url</span>=<span class="s">"https://anyrouter.dev/api/v1"</span>,</div><div>    <span class="p">api_key</span>=os.environ[<span class="s">"ANYROUTER_API_KEY"</span>],</div><div>)</div>${short ? "" : '<div> </div>'}<div>client.chat.completions.create(<span class="p">model</span>=<span class="s" data-model>"${MODELS[0][0]}"</span>, ...)</div></pre></div>`;
+  });
+
+  // provider list + wires for D
+  const provs = document.querySelector("[data-provs]");
+  if (provs) provs.innerHTML = MODELS.map(([, p], i) => `<div class="pv${i === 0 ? " on" : ""}" data-pv="${i}"><i></i>${p}</div>`).join("");
+  const stage = document.querySelector("[data-stage]"), wires = document.querySelector("[data-wires]");
+  function drawWires(active) {
+    if (!stage || !wires || getComputedStyle(wires).display === "none") return;
+    const sr = stage.getBoundingClientRect(), hub = stage.querySelector(".hub").getBoundingClientRect(), code = stage.querySelector("[data-route]").getBoundingClientRect();
+    const hx = hub.left - sr.left, hy = hub.top - sr.top + hub.height / 2;
+    let d = `<path d="M${code.right - sr.left} ${hy} L${hx} ${hy}" stroke="#0b0c0e" stroke-width="2" stroke-dasharray="5 6" fill="none"/>`;
+    stage.querySelectorAll(".pv").forEach((pv, i) => {
+      const r = pv.getBoundingClientRect(), y = r.top - sr.top + r.height / 2, x2 = r.left - sr.left, x1 = hub.right - sr.left;
+      const on = i === active;
+      d += `<path d="M${x1} ${hy} C${x1 + 40} ${hy} ${x2 - 40} ${y} ${x2} ${y}" stroke="${on ? "#f38020" : "#0b0c0e"}" stroke-opacity="${on ? 1 : 0.28}" stroke-width="${on ? 4 : 2}" ${on ? "" : 'stroke-dasharray="4 6"'} fill="none"/>`;
+    });
+    wires.setAttribute("viewBox", `0 0 ${sr.width} ${sr.height}`);
+    wires.innerHTML = d;
+  }
+  drawWires(0);
+  window.addEventListener("resize", () => drawWires(mIdx));
+
+  // orbit chips for B (real pool providers, excluding one we don't name)
+  const orbit = document.querySelector("[data-orbit]");
+  const ORB = ["nvidia · 20 keys", "z-ai-coding · 5", "mistral · 3", "poolside · 3", "z-ai · 3", "cohere · 2", "baseten · 2", "openai · 2"];
+  const orbEls = orbit ? ORB.map((t) => { const d = document.createElement("div"); d.className = "kc"; d.innerHTML = `<i></i>${t}`; orbit.appendChild(d); return d; }) : [];
+
+  // rotating word + model swap
+  let wIdx = 0, mIdx = 0;
+  function tick() {
+    wIdx = (wIdx + 1) % WORDS.length; mIdx = (mIdx + 1) % MODELS.length;
+    document.querySelectorAll("[data-rot]").forEach((r) => (r.textContent = WORDS[wIdx]));
+    document.querySelectorAll("[data-model]").forEach((m) => (m.textContent = `"${MODELS[mIdx][0]}"`));
+    document.querySelectorAll("[data-pv]").forEach((p) => p.classList.toggle("on", +p.dataset.pv === mIdx));
+    const tk = document.querySelector("[data-ticker]"); if (tk) tk.textContent = `POST /chat/completions → ${MODELS[mIdx][0]} · 200 OK`;
+    drawWires(mIdx);
+  }
+  if (!reduce) setInterval(tick, 2000);
+
+  // dither fields
+  const B = (() => { let m = [[0]]; for (let n = 1; n < 8; n *= 2) { const r = []; for (let y = 0; y < n * 2; y++) { r.push([]); for (let x = 0; x < n * 2; x++) { const q = (y < n ? 0 : 2) + (x < n ? 0 : 1); r[y][x] = 4 * m[y % n][x % n] + [0, 2, 3, 1][q]; } } m = r; } return (x, y) => (m[y & 7][x & 7] + 0.5) / 64; })();
+  const fields = [...document.querySelectorAll("canvas[data-field]")].map((c) => ({ c, ctx: c.getContext("2d"), img: c.getContext("2d").createImageData(c.width, c.height), mode: c.dataset.field }));
+  const sph = [...document.querySelectorAll("canvas[data-sphere]")].map((c) => ({ c, ctx: c.getContext("2d"), img: c.getContext("2d").createImageData(c.width, c.height) }));
+  function paint(t) {
+    for (const f of fields) {
+      const { c, img } = f, W = c.width, H = c.height, D = img.data; D.fill(0);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const nx = x / W, ny = y / H;
+        let v;
+        if (f.mode === "band") v = 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(x * 0.07 - t * 1.6 + Math.sin(y * 0.3 + t) * 1.5));
+        else { const e = Math.pow(Math.max(0, (Math.max(Math.abs(nx - 0.5), Math.abs(ny - 0.5)) * 2 - 0.45) / 0.55), 1.4); v = e * (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(x * 0.09 + y * 0.06 + t * 0.9 + 2 * Math.sin(y * 0.04 - t * 0.5)))); }
+        if (v > B(x, y)) { const o = (y * W + x) * 4; if (f.mode === "band") { D[o] = 243; D[o + 1] = 128; D[o + 2] = 32; D[o + 3] = 255; } else { D[o] = 11; D[o + 1] = 12; D[o + 2] = 14; D[o + 3] = 50; } }
+      }
+      f.ctx.putImageData(img, 0, 0);
+    }
+    for (const s of sph) {
+      const { c, img } = s, W = c.width, D = img.data, R = W * 0.36, cx = W / 2, cy = W / 2; D.fill(0);
+      for (let y = 0; y < W; y++) for (let x = 0; x < W; x++) {
+        const dx = (x - cx) / R, dy = (y - cy) / R, d2 = dx * dx + dy * dy, o = (y * W + x) * 4, th = B(x, y);
+        if (d2 < 1) {
+          const nz = Math.sqrt(1 - d2), lit = Math.max(0, -0.45 * dx - 0.55 * dy + 0.7 * nz);
+          const lon = Math.atan2(dx, nz) + t * 0.9, I = 0.12 + 0.88 * lit * (0.62 + 0.38 * Math.max(0.5 + 0.5 * Math.cos(lon * 6), 0.5 + 0.5 * Math.cos(dy * 9)));
+          if (I > th) { D[o] = 243; D[o + 1] = 128; D[o + 2] = 32; D[o + 3] = 255; } else if (I * 0.5 > th) { D[o] = 11; D[o + 1] = 12; D[o + 2] = 14; D[o + 3] = 255; }
+        } else if (d2 < 1.9 && (1.9 - d2) / 0.9 * 0.4 > th) { D[o] = 243; D[o + 1] = 128; D[o + 2] = 32; D[o + 3] = 140; }
+      }
+      s.ctx.putImageData(img, 0, 0);
+    }
+    // orbit
+    if (orbit) {
+      const r = orbit.getBoundingClientRect(), cx = r.width / 2, cy = r.height * 0.44, RX = Math.min(r.width * 0.44, 260), RY = RX * 0.42;
+      orbEls.forEach((el, i) => {
+        const a = (i / orbEls.length) * Math.PI * 2 + t * 0.35, z = Math.sin(a);
+        el.style.left = cx + Math.cos(a) * RX - el.offsetWidth / 2 + "px"; el.style.top = cy + z * RY - el.offsetHeight / 2 + "px";
+        el.style.opacity = 0.45 + 0.55 * (z + 1) / 2; el.style.zIndex = z > 0 ? 3 : 0; el.style.transform = `scale(${0.85 + 0.15 * (z + 1) / 2})`;
+      });
+    }
+    const s = Math.floor(t % 30), fr = Math.floor((t % 1) * 30);
+    document.querySelectorAll("[data-tc]").forEach((e) => (e.textContent = `00:00:${String(s).padStart(2, "0")}:${String(fr).padStart(2, "0")}`));
+  }
+  const vid = document.querySelector(".A video");
+  let last = 0;
+  function loop(ts) { if (ts - last > 50) { last = ts; paint(vid && !vid.paused ? vid.currentTime : ts / 1000); } requestAnimationFrame(loop); }
+  paint(0.8);
+  if (!reduce) requestAnimationFrame(loop);
+})();
+</script>

@@ -8,11 +8,11 @@ description: The prompt that makes the CI agent choose the story for a model dro
 
 You are planning ONE short launch film for AnyRouter (https://anyrouter.dev).
 
-Your entire output is a single file: `release/plan.json`. Nothing else.
+Your entire output is a single file: `.build/model-drop/plan.json`. Nothing else.
 
 ## Read first
 
-`release/release.json` is already on disk. It is the diff of the live catalog
+`.build/model-drop/data.json` is already on disk. It is the diff of the live catalog
 against the last accepted baseline. Read it. Do not fetch anything. Do not run
 `npm run render`, `npm run gen`, or any other script — another job does the
 rendering and you are not permitted to touch it.
@@ -20,7 +20,7 @@ rendering and you are not permitted to touch it.
 ## What you are deciding
 
 You are choosing the **story**, not the pixels. Layout, type, colour, timing and
-the camera are all fixed in `release/generate.mjs` and are not yours to change.
+the camera are all fixed in `videos/model-drop/kind.mjs` and are not yours to change.
 
 1. `limit` — 0, 1, or 2. `0` declines the release entirely (still write the
    file). `1` forces the hero layout. Leave it out to let the count decide.
@@ -31,7 +31,7 @@ the camera are all fixed in `release/generate.mjs` and are not yours to change.
 
 ## Hard rules
 
-- **Never state a number that is not already in `release/release.json`.** Not the
+- **Never state a number that is not already in `.build/model-drop/data.json`.** Not the
   model count, not a price, not a context window, not a percentage. If the
   release warrants a claim the diff does not support, write a claim that does
   not need one. The film is checked against the API downstream; a number you

@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "InterV"; src: url("fonts/inter.woff2") format("woff2-variations"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "JetV"; src: url("fonts/mono.woff2") format("woff2-variations"); font-weight: 100 800; font-display: block; }
+      @font-face { font-family: "SerifI"; src: url("fonts/serif-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: block; }
+
+      :root {
+        --bg: #f6f7f9;
+        --card: #ffffff;
+        --ink: #0a0c10;
+        --muted: #4d5462;
+        --line: #e2e5ea;
+        --accent: #f38020;
+        --primary: #b8500c;
+        --blue: #2f64d8;
+        --blue-bg: #eaf1ff;
+        --teal: #0b8a78;
+        --teal-bg: #f0f8f6;
+        --orange-bg: #fff6ef;
+        --term: #0a0a0a;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+      #root {
+        position: relative; width: 100%; height: 100%; overflow: hidden;
+        background: var(--bg); color: var(--ink);
+        font-family: "InterV", sans-serif; font-weight: 500;
+        -webkit-font-smoothing: antialiased;
+      }
+      .clip { position: absolute; inset: 0; }
+      .abs { position: absolute; }
+      .mono { font-family: "JetV", monospace; }
+      .serif { font-family: "SerifI", serif; font-style: italic; font-weight: 400; }
+      .label {
+        font-family: "JetV", monospace; font-size: 22px; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary);
+      }
+      .label b { color: var(--muted); font-weight: 600; margin-right: 14px; }
+      .mask { overflow: hidden; display: block; padding-bottom: 0.24em; margin-bottom: -0.24em; }
+      .mask > span { display: block; }
+      .ch { display: inline-block; }
+
+      /* ── background ─────────────────────────────────────────── */
+      #bg .grid {
+        position: absolute; left: -200px; top: -200px; width: 2320px; height: 1480px;
+        background-image: radial-gradient(circle, rgba(10, 12, 16, 0.13) 1.3px, transparent 1.6px);
+        background-size: 30px 30px;
+      }
+      #bg .glow { position: absolute; border-radius: 50%; filter: blur(90px); }
+      #bg .g1 { width: 900px; height: 900px; left: 1100px; top: -300px; background: rgba(243, 128, 32, 0.16); }
+      #bg .g2 { width: 800px; height: 800px; left: -300px; top: 500px; background: rgba(243, 128, 32, 0.10); }
+      #bg .vig { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(246, 247, 249, 0.9) 100%); }
+
+      /* ── HUD ────────────────────────────────────────────────── */
+      #hud .brand { left: 64px; top: 46px; display: flex; align-items: center; gap: 7.4px; }
+      #hud .brand svg { width: 42px; height: 42px; display: block; }
+      #hud .brand span { font-size: 28.22px; font-weight: 700; letter-spacing: -0.035em; }
+      #hud .url {
+        right: 64px; top: 48px; height: 42px; padding: 0 18px; border-radius: 999px;
+        display: flex; align-items: center; gap: 10px;
+        background: var(--card); border: 1px solid var(--line);
+        font-family: "JetV", monospace; font-size: 20px; font-weight: 600; color: var(--ink);
+      }
+      #hud .url i { width: 9px; height: 9px; border-radius: 50%; background: #16a34a; display: block; }
+      #hud .bar { left: 64px; right: 64px; bottom: 40px; height: 3px; background: rgba(10, 12, 16, 0.08); border-radius: 3px; }
+      #hud .bar div { width: 100%; height: 100%; background: var(--accent); border-radius: 3px; transform-origin: left center; }
+
+      /* ── S1 lockup ──────────────────────────────────────────── */
+      #s1-lock { left: 0; top: 0; width: 1920px; height: 1080px; display: flex; align-items: center; justify-content: center; }
+      #s1-inner { display: flex; align-items: center; gap: 44px; }
+      #s1-mark { width: 250px; height: 250px; display: block; }
+      #s1-word { font-size: 168px; font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
+      #s1-tag { left: 0; width: 1920px; top: 720px; text-align: center; }
+      #s1-ring { left: 960px; top: 540px; width: 0; height: 0; }
+      #s1-ring div { position: absolute; left: -12px; top: -12px; width: 24px; height: 24px; border-radius: 50%; border: 3px solid var(--accent); }
+
+      /* ── S2 hero ────────────────────────────────────────────── */
+      #s2-head { left: 140px; top: 236px; font-size: 150px; font-weight: 700; letter-spacing: -0.055em; line-height: 176px; }
+      #s2-rot { position: relative; height: 176px; overflow: hidden; color: var(--primary); padding-bottom: 0; }
+      #hud { z-index: 50; }
+      #s2-rot span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+      #s2-sub { left: 146px; top: 800px; width: 860px; font-size: 32px; line-height: 1.4; color: var(--muted); font-weight: 450; }
+      .tile {
+        position: absolute; width: 88px; height: 88px; border-radius: 22px; background: var(--card);
+        border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(10, 12, 16, 0.08), 0 2px 6px rgba(10, 12, 16, 0.05);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .tile img { width: 50px; height: 50px; display: block; }
+      #hub {
+        position: absolute; left: 1420px; top: 480px; width: 120px; height: 120px; border-radius: 32px;
+        background: var(--ink); display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 20px 50px rgba(243, 128, 32, 0.35), 0 0 0 10px rgba(243, 128, 32, 0.12);
+      }
+      #hub svg { width: 70px; height: 70px; display: block; }
+
+      /* ── S3 code card ───────────────────────────────────────── */
+      #s3-card {
+        left: 120px; top: 250px; width: 830px; height: 572px; border-radius: 22px; background: var(--term);
+        box-shadow: 0 40px 90px rgba(10, 12, 16, 0.22), 0 6px 18px rgba(10, 12, 16, 0.12); overflow: hidden;
+        font-family: "JetV", monospace; color: #e1e4e8;
+      }
+      #s3-card .top { height: 54px; display: flex; align-items: center; gap: 10px; padding: 0 22px; border-bottom: 1px solid #1f2227; }
+      #s3-card .top i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+      #s3-card .top span { margin-left: 14px; font-size: 18px; color: #8b929c; }
+      #s3-card .tabs { height: 56px; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-bottom: 1px solid #1f2227; font-size: 19px; color: #8b929c; }
+      #s3-card .tabs span { padding: 7px 14px; border-radius: 8px; }
+      #s3-card .tabs .on { background: #1c1f24; color: #f0f2f5; }
+      #s3-card pre { font-family: inherit; font-size: 22px; line-height: 36px; padding: 18px 0; }
+      #s3-card pre div { padding: 0 28px; white-space: pre; height: 36px; }
+      #s3-card pre .hl { background: #16191e; box-shadow: inset 4px 0 0 #2dd4bf; }
+      .k { color: #f97583; } .s { color: #9ecbff; } .p { color: #ffab70; }
+      #s3-model { position: relative; display: inline-block; vertical-align: top; height: 36px; overflow: hidden; }
+      #s3-model > span { display: block; height: 36px; }
+      #s3-cap { left: 124px; top: 862px; font-size: 40px; font-weight: 650; letter-spacing: -0.03em; }
+      #s3-cap em { font-style: normal; color: var(--primary); }
+      .ptile { position: absolute; width: 84px; height: 84px; border-radius: 22px; background: var(--card); border: 1px solid var(--line);
+        box-shadow: 0 8px 24px rgba(10, 12, 16, 0.08); display: flex; align-items: center; justify-content: center; }
+      .ptile img { width: 46px; height: 46px; display: block; }
+      .ptile .ring { position: absolute; inset: -7px; border-radius: 28px; border: 3px solid var(--accent); opacity: 0; }
+      .pname { position: absolute; font-family: "JetV", monospace; font-size: 20px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+      /* ── S4 catalog ─────────────────────────────────────────── */
+      #s4-stage { left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1900px; perspective-origin: 70% 40%; }
+      #s4-plane { position: absolute; left: 700px; top: 40px; width: 1700px; height: 1100px; transform-style: preserve-3d; }
+      .mcard { position: absolute; width: 520px; height: 220px; border-radius: 18px; overflow: hidden; background: #fff;
+        border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(10, 12, 16, 0.12); }
+      .mcard img { width: 520px; height: 220px; display: block; object-fit: cover; object-position: left top; }
+      #s4-scrim { left: 0; top: 0; width: 1100px; height: 1080px; background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 58%, rgba(246, 247, 249, 0) 100%); }
+      #s4-num { left: 132px; top: 250px; font-size: 280px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; font-variant-numeric: tabular-nums; }
+      #s4-num sup { font-size: 150px; color: var(--primary); vertical-align: top; position: relative; top: 26px; margin-left: 6px; }
+      #s4-sub { left: 142px; top: 560px; font-size: 52px; font-weight: 650; letter-spacing: -0.035em; line-height: 1.15; }
+      #s4-sub .serif { color: var(--primary); font-size: 62px; }
+      #s4-eps { left: 142px; top: 720px; display: flex; flex-wrap: wrap; gap: 12px; width: 800px; }
+      .chip { height: 50px; padding: 0 18px; border-radius: 999px; background: var(--card); border: 1px solid var(--line);
+        display: flex; align-items: center; gap: 10px; font-family: "JetV", monospace; font-size: 21px; font-weight: 600; color: var(--ink);
+        box-shadow: 0 4px 12px rgba(10, 12, 16, 0.05); }
+      .chip b { color: var(--primary); font-weight: 700; font-size: 17px; }
+
+      /* ── S5 pool ────────────────────────────────────────────── */
+      #s5-head { left: 140px; top: 250px; width: 620px; font-size: 76px; font-weight: 700; letter-spacing: -0.05em; line-height: 88px; }
+      #s5-head .serif { color: var(--primary); font-size: 96px; letter-spacing: -0.02em; }
+      #s5-world { left: 0; top: 0; width: 1920px; height: 1080px; }
+      .grp { position: absolute; border-radius: 22px; border: 2px dashed; }
+      .grp .gl { position: absolute; top: -15px; left: 22px; padding: 0 10px; background: var(--bg);
+        font-family: "JetV", monospace; font-size: 19px; font-weight: 700; letter-spacing: 0.1em; line-height: 26px; }
+      .member { position: absolute; width: 196px; height: 66px; border-radius: 14px; background: var(--blue-bg); border: 2px solid rgba(47, 100, 216, 0.55);
+        display: flex; align-items: center; gap: 14px; padding-left: 20px; font-family: "JetV", monospace; font-size: 22px; font-weight: 600; color: #1d3f94; }
+      .member.you { border: 3px solid var(--blue); font-weight: 800; }
+      .member svg { width: 26px; height: 26px; display: block; }
+      .key { position: absolute; width: 170px; height: 92px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+        font-family: "JetV", monospace; font-size: 20px; font-weight: 600; color: var(--ink); }
+      .key img { width: 46px; height: 46px; display: block; }
+      #pool { position: absolute; left: 1318px; top: 520px; width: 196px; height: 76px; border-radius: 16px; background: #ffede0;
+        border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; gap: 12px;
+        font-family: "JetV", monospace; font-size: 22px; font-weight: 700; color: var(--ink); }
+      #pool svg { width: 28px; height: 28px; display: block; }
+      #pool-burst { position: absolute; left: 1416px; top: 558px; width: 0; height: 0; }
+      #pool-burst div { position: absolute; left: -110px; top: -110px; width: 220px; height: 220px; border-radius: 50%; border: 3px solid var(--accent); }
+      .fm { position: absolute; width: 190px; height: 96px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+        font-family: "JetV", monospace; font-size: 21px; font-weight: 600; color: var(--ink); }
+      .fm img { width: 44px; height: 44px; display: block; }
+      #s5-stats { left: 144px; top: 640px; display: flex; flex-direction: column; gap: 18px; }
+      .stat { display: flex; align-items: center; gap: 16px; font-size: 34px; color: var(--muted); font-weight: 450; }
+      .stat b { color: var(--ink); font-weight: 750; font-variant-numeric: tabular-nums; min-width: 64px; }
+      .stat svg { width: 30px; height: 30px; display: block; }
+
+      /* ── S6 pricing ─────────────────────────────────────────── */
+      #s6-copy { left: 140px; top: 250px; width: 760px; }
+      #s6-h { font-size: 74px; font-weight: 700; letter-spacing: -0.05em; line-height: 84px; }
+      #s6-h .serif { color: var(--primary); font-size: 92px; letter-spacing: -0.02em; }
+      #s6-lines { margin-top: 44px; display: flex; flex-direction: column; gap: 18px; }
+      .line { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 500; color: var(--ink); }
+      .line i { width: 34px; height: 34px; border-radius: 50%; background: #e7f6ec; display: flex; align-items: center; justify-content: center; }
+      .line i svg { width: 20px; height: 20px; display: block; }
+      .line span { color: var(--muted); }
+      .pcard { position: absolute; width: 400px; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid var(--line);
+        box-shadow: 0 40px 90px rgba(10, 12, 16, 0.16), 0 4px 12px rgba(10, 12, 16, 0.06); }
+      .pcard img { width: 400px; display: block; }
+      #s6-go { left: 1000px; top: 130px; }
+      #s6-pro { left: 1440px; top: 180px; }
+      #s6-press { position: absolute; left: 1210px; top: 893px; width: 164px; height: 54px; border-radius: 999px; border: 4px solid var(--accent); }
+      #s6-toast { left: 1070px; top: 60px; height: 58px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: #fff;
+        display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 650; box-shadow: 0 20px 40px rgba(10, 12, 16, 0.25); }
+      #s6-toast b { color: #ffb070; }
+      .cursor { position: absolute; width: 44px; height: 44px; }
+      .cursor svg { width: 44px; height: 44px; display: block; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25)); }
+
+      /* ── S7 millions ────────────────────────────────────────── */
+      #s7-field { position: absolute; left: 1286px; top: 919px; width: 0; height: 0; }
+      #s7-field div { position: absolute; left: -2600px; top: -2600px; width: 5200px; height: 5200px; border-radius: 50%; background: var(--accent); }
+      #s7-streams { left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      .stream { position: absolute; left: 0; white-space: nowrap; font-family: "JetV", monospace; font-size: 30px; font-weight: 600; color: rgba(10, 12, 16, 0.13); }
+      #s7-lab { left: 0; width: 1920px; top: 250px; text-align: center; color: var(--ink); }
+      #s7-lab span { font-family: "JetV", monospace; font-size: 26px; font-weight: 700; letter-spacing: 0.14em; }
+      #s7-num { left: 0; width: 1920px; top: 320px; text-align: center; font-size: 250px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); }
+      #s7-tag { left: 0; width: 1920px; top: 610px; text-align: center; font-size: 80px; font-weight: 700; letter-spacing: -0.045em; color: var(--ink); }
+      #s7-tag .serif { font-size: 100px; letter-spacing: -0.02em; }
+      #s7-foot { left: 0; width: 1920px; top: 800px; text-align: center; }
+      #s7-foot span { display: inline-block; padding: 14px 26px; border-radius: 999px; background: rgba(10, 12, 16, 0.9); color: #fff;
+        font-family: "JetV", monospace; font-size: 22px; font-weight: 600; }
+
+      /* ── S8 end card ────────────────────────────────────────── */
+      #s8-field { position: absolute; left: 960px; top: 540px; width: 0; height: 0; }
+      #s8-field div { position: absolute; left: -1300px; top: -1300px; width: 2600px; height: 2600px; border-radius: 50%; background: var(--bg); }
+      #s8-lock { left: 0; width: 1920px; top: 230px; display: flex; justify-content: center; align-items: center; gap: 36px; }
+      #s8-lock svg { width: 170px; height: 170px; display: block; }
+      #s8-word { font-size: 150px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+      #s8-h { left: 0; width: 1920px; top: 470px; text-align: center; font-size: 50px; font-weight: 600; letter-spacing: -0.035em; color: var(--muted); }
+      #s8-h .serif { color: var(--primary); font-size: 62px; letter-spacing: -0.01em; }
+      #s8-cta { left: 0; width: 1920px; top: 590px; display: flex; justify-content: center; gap: 18px; }
+      .btn { height: 76px; padding: 0 36px; border-radius: 999px; display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 600; }
+      .btn.pri { background: var(--primary); color: #fff; box-shadow: 0 16px 34px rgba(184, 80, 12, 0.3); }
+      .btn.sec { background: #eceef2; color: var(--ink); }
+      .btn svg { width: 30px; height: 30px; display: block; }
+      #s8-cmd { left: 0; width: 1920px; top: 730px; display: flex; justify-content: center; }
+      #s8-cmd div { height: 64px; padding: 0 28px; border-radius: 14px; background: var(--term); color: #e1e4e8; display: flex; align-items: center; gap: 14px;
+        font-family: "JetV", monospace; font-size: 24px; font-weight: 500; }
+      #s8-cmd .d { color: #2dd4bf; }
+      #s8-fine { left: 0; width: 1920px; top: 850px; text-align: center; font-family: "JetV", monospace; font-size: 22px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+      #s8-orbit { left: 0; top: 0; width: 1920px; height: 1080px; }
+      #s8-orbit .tile { width: 72px; height: 72px; border-radius: 18px; }
+      #s8-orbit .tile img { width: 40px; height: 40px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="18" data-width="1920" data-height="1080">
+      <svg width="0" height="0" style="position:absolute"><defs><path id="ar-p1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path id="ar-p2" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></defs></svg>
+      <audio id="score" src="audio/score.wav" data-start="0" data-duration="18" data-track-index="9" data-volume="1"></audio>
+
+      <!-- persistent background -->
+      <div id="bg" class="clip" data-start="0" data-duration="18" data-track-index="0">
+        <div class="grid" id="bg-grid"></div>
+        <div class="glow g1" id="bg-g1"></div>
+        <div class="glow g2" id="bg-g2"></div>
+        <div class="vig"></div>
+      </div>
+
+      <!-- S1 · logo assemble -->
+      <div id="s1" class="clip" data-start="0" data-duration="2.1" data-track-index="1">
+        <div id="s1-ring" class="abs"><div></div></div>
+        <div id="s1-lock" class="abs">
+          <div id="s1-inner">
+            <svg id="s1-mark" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter mark">
+              <g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0c10">
+                <path id="s1-p1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
+                <path id="s1-p2" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
+              </g>
+            </svg>
+            <div id="s1-word" class="mask"><span data-split>AnyRouter</span></div>
+          </div>
+        </div>
+        <div id="s1-tag" class="abs label"><span data-split>One gateway for every model</span></div>
+      </div>
+
+      <!-- HUD (lockup lands here) -->
+      <div id="hud" class="clip" data-start="1.9" data-duration="16.1" data-track-index="8">
+        <div class="abs brand" id="hud-brand">
+          <svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0c10"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
+          <span>AnyRouter</span>
+        </div>
+        <div class="abs url" id="hud-url"><i></i>anyrouter.dev</div>
+        <div class="abs bar" id="hud-barwrap"><div id="hud-bar"></div></div>
+      </div>
+
+      <!-- S2 · hero kinetic type + constellation -->
+      <div id="s2" class="clip" data-start="1.95" data-duration="2.2" data-track-index="2">
+        <div id="s2-head" class="abs">
+          <div class="mask"><span id="s2-l1">Unify every</span></div>
+          <div id="s2-rot">
+            <span id="s2-w0">model</span><span id="s2-w1">LLM API</span><span id="s2-w2">coding agent</span><span id="s2-w3">MCP server</span><span id="s2-w4">model</span>
+          </div>
+          <div class="mask"><span id="s2-l3">one gateway.</span></div>
+        </div>
+        <div id="s2-sub" class="abs">One OpenAI-compatible API, CLI and MCP gateway in front of every provider.</div>
+        <div id="s2-orbit" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
+      </div>
+
+      <!-- hub persists across S2 → S3 (match cut) -->
+      <div id="hubclip" class="clip" data-start="3.6" data-duration="2.5" data-track-index="3">
+        <div id="hub"><svg viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#ffffff"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg></div>
+      </div>
+
+      <!-- S3 · how it works -->
+      <div id="s3" class="clip" data-start="3.9" data-duration="2.2" data-track-index="2">
+        <div id="s3-lab" class="abs label" style="left:124px;top:170px"><b>01</b>One endpoint. Every model.</div>
+        <svg id="s3-svg" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+        <div id="s3-card" class="abs">
+          <div class="top"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>anyrouter ~ openai (python)</span></div>
+          <div class="tabs"><span class="on">OpenAI (Python)</span><span>OpenAI (TS)</span><span>AI SDK</span><span>cURL</span><span>CLI</span></div>
+          <pre><div><span class="k">import</span> os</div><div><span class="k">from</span> openai <span class="k">import</span> OpenAI</div><div> </div><div>client = OpenAI(</div><div class="hl" id="s3-hl">    <span class="p">base_url</span>=<span class="s">"https://anyrouter.dev/api/v1"</span>,</div><div>    <span class="p">api_key</span>=os.environ[<span class="s">"ANYROUTER_API_KEY"</span>],</div><div>)</div><div> </div><div>resp = client.chat.completions.create(</div><div>    <span class="p">model</span>=<span id="s3-model" class="s"><span>"anthropic/claude-sonnet-4.6"<span style="color:#e1e4e8">,</span></span><span>"openai/gpt-5.2"<span style="color:#e1e4e8">,</span></span><span>"google/gemini-3.5-flash"<span style="color:#e1e4e8">,</span></span><span>"deepseek/deepseek-v4-flash"<span style="color:#e1e4e8">,</span></span></span></div><div>    <span class="p">messages</span>=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Hi"</span>}],</div><div>)</div></pre>
+        </div>
+        <div id="s3-provs" class="abs" style="left:0;top:0;width:1920px;height:1080px"></div>
+        <div id="s3-cap" class="abs">Keep your SDK. <em>Change one line.</em></div>
+      </div>
+
+      <!-- S4 · catalog -->
+      <div id="s4" class="clip" data-start="5.9" data-duration="2.2" data-track-index="2">
+        <div id="s4-stage" class="abs"><div id="s4-plane"></div></div>
+        <div id="s4-scrim" class="abs"></div>
+        <div id="s4-lab" class="abs label" style="left:144px;top:170px"><b>02</b>The catalog</div>
+        <div id="s4-num" class="abs"><span id="s4-count">0</span><sup id="s4-plus">+</sup></div>
+        <div id="s4-sub" class="abs"><div class="mask"><span>models behind</span></div><div class="mask"><span class="serif">one key.</span></div></div>
+        <div id="s4-eps" class="abs">
+          <div class="chip"><b>POST</b>/chat/completions</div><div class="chip"><b>POST</b>/messages</div>
+          <div class="chip"><b>POST</b>/responses</div><div class="chip"><b>POST</b>/embeddings</div>
+        </div>
+      </div>
+
+      <!-- S5 · donated keys → shared pool → free models -->
+      <div id="s5" class="clip" data-start="7.9" data-duration="4.2" data-track-index="2">
+        <div id="s5-lab" class="abs label" style="left:144px;top:170px"><b>03</b>Crowdsourced free tokens</div>
+        <div id="s5-head" class="abs">
+          <div class="mask"><span id="s5-h1">Donate a key.</span></div>
+          <div class="mask"><span id="s5-h2">Grow the pool.</span></div>
+          <div class="mask"><span id="s5-h3" class="serif">Ride free.</span></div>
+        </div>
+        <div id="s5-stats" class="abs">
+          <div class="stat" id="s5-st0"><svg viewBox="0 0 24 24" fill="none" stroke="#b8500c" stroke-width="2" stroke-linecap="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3m-3 3 3 3m-6-3 3 3"/></svg><b data-to="92">0</b>keys pooled</div>
+          <div class="stat" id="s5-st1"><svg viewBox="0 0 24 24" fill="none" stroke="#b8500c" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 3.5a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></svg><b data-to="42">0</b>donors</div>
+          <div class="stat" id="s5-st2"><svg viewBox="0 0 24 24" fill="none" stroke="#b8500c" stroke-width="2" stroke-linecap="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b data-to="21">0</b>providers</div>
+        </div>
+        <div id="s5-world" class="abs">
+          <svg id="s5-svg" class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+          <div class="grp" id="g-mem" style="left:772px;top:392px;width:236px;height:318px;border-color:rgba(47,100,216,.45);background:rgba(234,241,255,.5)"><span class="gl" style="color:#2f64d8">Members</span></div>
+          <div class="grp" id="g-key" style="left:1066px;top:262px;width:206px;height:578px;border-color:rgba(11,138,120,.45);background:rgba(240,248,246,.7)"><span class="gl" style="color:#0b8a78">Donated keys</span></div>
+          <div class="grp" id="g-pool" style="left:1298px;top:490px;width:236px;height:136px;border-color:rgba(243,128,32,.45);background:rgba(255,246,239,.6)"><span class="gl" style="color:#b8500c">Shared pool</span></div>
+          <div class="grp" id="g-fm" style="left:1588px;top:222px;width:236px;height:658px;border-color:rgba(243,128,32,.45);background:rgba(255,246,239,.7)"><span class="gl" style="color:#b8500c">Free models</span></div>
+          <div id="s5-nodes"></div>
+          <div id="pool-burst"><div></div></div>
+          <div id="pool"><svg viewBox="0 0 24 24" fill="none" stroke="#b8500c" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Shared pool</div>
+          <div id="s5-dots"></div>
+        </div>
+      </div>
+
+      <!-- S6 · pricing -->
+      <div id="s6" class="clip" data-start="11.9" data-duration="2.25" data-track-index="2">
+        <div id="s6-lab" class="abs label" style="left:144px;top:170px"><b>04</b>Start for $0</div>
+        <div id="s6-copy" class="abs">
+          <div id="s6-h"><div class="mask"><span>The cheapest way</span></div><div class="mask"><span>to ship your next</span></div><div class="mask"><span class="serif">AI app.</span></div></div>
+          <div id="s6-lines">
+            <div class="line"><i><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round"><path d="m5 12 5 5 9-10"/></svg></i>Go plan <span>— $2/mo, or donate 1 key</span></div>
+            <div class="line"><i><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round"><path d="m5 12 5 5 9-10"/></svg></i>Your own keys <span>— zero markup</span></div>
+          </div>
+        </div>
+        <div class="pcard" id="s6-pro"><img src="assets/shots/c-pro.png" alt="Pro plan card" /></div>
+        <div class="pcard" id="s6-go"><img src="assets/shots/c-go.png" alt="Go plan card" /></div>
+        <div id="s6-press"></div>
+        <div id="s6-toast" class="abs"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffb070" stroke-width="2.4" stroke-linecap="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>Go unlocked · <b>$0 / mo</b></div>
+        <div class="cursor" id="s6-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0a0c10" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- S7 · millions of tokens -->
+      <div id="s7" class="clip" data-start="13.85" data-duration="2.3" data-track-index="4">
+        <div id="s7-field"><div></div></div>
+        <div id="s7-streams" class="abs"></div>
+        <div id="s7-lab" class="abs"><span>GO PLAN · $4 IN CREDITS EVERY MONTH</span></div>
+        <div id="s7-num" class="abs">~<span id="s7-count">0</span></div>
+        <div id="s7-tag" class="abs"><div class="mask"><span>Millions of tokens. <span class="serif">Zero dollars.</span></span></div></div>
+        <div id="s7-foot" class="abs"><span>donate 1 key → Go free → ~16M tokens/mo on fast models</span></div>
+      </div>
+
+      <!-- S8 · end card -->
+      <div id="s8" class="clip" data-start="15.9" data-duration="2.1" data-track-index="5">
+        <div id="s8-field"><div></div></div>
+        <div id="s8-orbit" class="abs"></div>
+        <div id="s8-lock" class="abs">
+          <svg id="s8-mark" viewBox="203.66 206.57 801.34 801.34"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0a0c10"><use href="#ar-p1" /><use href="#ar-p2" /></g></svg>
+          <div id="s8-word" class="mask"><span data-split>AnyRouter</span></div>
+        </div>
+        <div id="s8-h" class="abs">Build your next AI app on <span class="serif">one key.</span></div>
+        <div id="s8-cta" class="abs">
+          <div class="btn pri" id="s8-pri">Start free <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></div>
+          <div class="btn sec" id="s8-sec"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0c10" stroke-width="2" stroke-linecap="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>Read docs</div>
+        </div>
+        <div id="s8-cmd" class="abs"><div><span class="d">$</span>curl -fsSL https://anyrouter.dev/setup.sh | bash</div></div>
+        <div id="s8-fine" class="abs">anyrouter.dev · 200+ models · BYOK at zero markup · free to start</div>
+        <div class="cursor" id="s8-cursor"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 13l-7 1.2 4 7.6-3 1.5-4-7.7L4 20.5z" fill="#0a0c10" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <script>
+      document.fonts.ready.then(function () {
+        const $ = (s) => document.querySelector(s);
+        const $$ = (s) => Array.from(document.querySelectorAll(s));
+        const NS = "http://www.w3.org/2000/svg";
+
+
+        // measure the S1 lockup so it lands exactly on the HUD brand (match cut)
+        const ir = $("#s1-inner").getBoundingClientRect(), mr = $("#s1-mark").getBoundingClientRect();
+        const FLY = { s: 42 / mr.width };
+        const MARK_SHIFT = (ir.right - mr.right) / 2;
+        const C = { x: ir.left + ir.width / 2, y: ir.top + ir.height / 2 }, M = { x: mr.left + mr.width / 2, y: mr.top + mr.height / 2 };
+        FLY.x = 64 + 21 - C.x - FLY.s * (M.x - C.x);
+        FLY.y = 46 + 21 - C.y - FLY.s * (M.y - C.y);
+
+        // split text into chars
+        $$("[data-split]").forEach((el) => {
+          el.innerHTML = el.textContent.split("").map((c) => `<span class="ch">${c === " " ? "&nbsp;" : c}</span>`).join("");
+        });
+
+        // seeded PRNG for deterministic placement
+        let seed = 7;
+        const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+
+        const P = "assets/providers/";
+        const LOGOS = ["anthropic-color", "openai", "google-color", "deepseek-color", "mistral-color", "meta-color", "qwen-color",
+          "z-ai", "moonshotai-color", "xai", "nvidia-color", "cohere-color", "groq-color", "huggingface-color", "fireworks-color", "minimax-color"];
+
+        // S2 orbit tiles
+        const OC = { x: 1480, y: 540 }, OR = 280;
+        const orbit = $("#s2-orbit");
+        LOGOS.forEach((l, i) => {
+          const d = document.createElement("div");
+          d.className = "tile s2t";
+          d.style.left = OC.x - 44 + "px"; d.style.top = OC.y - 44 + "px";
+          d.innerHTML = `<img src="${P}${l}.svg" alt="">`;
+          orbit.appendChild(d);
+        });
+
+        // S3 providers + routes
+        const PROV = [["anthropic-color", "anthropic"], ["openai", "openai"], ["google-color", "google"], ["z-ai", "z-ai"], ["moonshotai-color", "moonshotai"], ["deepseek-color", "deepseek"]];
+        const PX = 1748, PY = [196, 326, 456, 586, 716, 846];
+        const s3svg = $("#s3-svg"), s3p = $("#s3-provs");
+        const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+        // request line: code card → hub
+        const reqLine = mk("path", { d: "M950 540 L1420 540", stroke: "#0a0c10", "stroke-opacity": ".22", "stroke-width": "3", "stroke-dasharray": "8 10", fill: "none" }, s3svg);
+        const reqDot = mk("circle", { cx: 950, cy: 540, r: 9, fill: "#f38020" }, s3svg);
+        const routes = PROV.map((p, i) => {
+          const y = PY[i] + 42;
+          const d = `M1540 540 C1640 540 1650 ${y} ${PX} ${y}`;
+          mk("path", { d, stroke: "#0a0c10", "stroke-opacity": ".14", "stroke-width": "2.5", fill: "none", "stroke-dasharray": "6 8", class: "s3base" }, s3svg);
+          const hot = mk("path", { d, stroke: "#f38020", "stroke-width": "4", fill: "none", "stroke-linecap": "round", class: "s3hot" }, s3svg);
+          const t = document.createElement("div");
+          t.className = "ptile s3t"; t.style.left = PX + "px"; t.style.top = PY[i] + "px";
+          t.innerHTML = `<img src="${P}${p[0]}.svg" alt=""><div class="ring"></div>`;
+          s3p.appendChild(t);
+          return hot;
+        });
+        routes.forEach((r) => { const L = r.getTotalLength(); r.style.strokeDasharray = L; r.style.strokeDashoffset = L; r.dataset.len = L; });
+
+        // S4 model cards on a tilted plane
+        const CARDS = ["r1-2", "r1-0", "r2-0", "r1-3", "r2-2", "r1-1", "r2-3", "r2-1", "r1-2", "r2-0", "r1-0", "r2-2"];
+        const plane = $("#s4-plane");
+        CARDS.forEach((c, i) => {
+          const col = i % 3, row = Math.floor(i / 3);
+          const d = document.createElement("div");
+          d.className = "mcard s4c";
+          d.style.left = col * 548 + (row % 2) * 120 + "px"; d.style.top = row * 248 + "px";
+          d.innerHTML = `<img src="assets/shots/c-card-${c}.png" alt="">`;
+          plane.appendChild(d);
+        });
+
+        // S5 diagram nodes + links
+        const personSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#2f64d8" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';
+        const MEM = [["You", 426, true], ["User X", 526], ["User Y", 626]];
+        const KEYS = [["google-color", "Gemini key", 290], ["groq-color", "Groq key", 420], ["z-ai", "Z.AI key", 550], ["nvidia-color", "NIM key", 680]];
+        const FMS = [["deepseek-color", "deepseek/*", 250], ["qwen-color", "qwen/*", 372], ["z-ai", "z-ai/*", 494], ["meta-color", "meta/*", 616], ["google-color", "gemini/*", 738]];
+        const nodes = $("#s5-nodes"), s5svg = $("#s5-svg");
+        MEM.forEach((m, i) => {
+          const d = document.createElement("div");
+          d.className = "member s5m" + (m[2] ? " you" : "");
+          d.id = "s5-m" + i; d.style.left = "792px"; d.style.top = m[1] + "px";
+          d.innerHTML = personSvg + m[0];
+          nodes.appendChild(d);
+        });
+        KEYS.forEach((k, i) => {
+          const d = document.createElement("div");
+          d.className = "key s5k"; d.id = "s5-k" + i; d.style.left = "1084px"; d.style.top = k[2] + "px";
+          d.innerHTML = `<img src="${P}${k[0]}.svg" alt=""><span>${k[1]}</span>`;
+          nodes.appendChild(d);
+        });
+        FMS.forEach((f, i) => {
+          const d = document.createElement("div");
+          d.className = "fm s5f"; d.id = "s5-f" + i; d.style.left = "1611px"; d.style.top = f[2] + "px";
+          d.innerHTML = `<img src="${P}${f[0]}.svg" alt=""><span>${f[1]}</span>`;
+          nodes.appendChild(d);
+        });
+        const curve = (x1, y1, x2, y2) => `M${x1} ${y1} C${x1 + 70} ${y1} ${x2 - 70} ${y2} ${x2} ${y2}`;
+        const link = (d, cls) => {
+          const p = mk("path", { d, stroke: "#c2560f", "stroke-width": "2.6", "stroke-dasharray": "7 8", fill: "none", "stroke-opacity": ".75", class: cls }, s5svg);
+          const L = p.getTotalLength();
+          // reveal mask via a solid overlay path drawn on
+          return p;
+        };
+        const memY = MEM.map((m) => m[1] + 33), keyY = KEYS.map((k) => k[2] + 23), fmY = FMS.map((f) => f[2] + 22);
+        const MK = [[0, 0], [0, 1], [1, 2], [2, 3]];
+        const L_MK = MK.map(([m, k]) => link(curve(988, memY[m], 1112, keyY[k]), "s5l"));
+        const L_KP = keyY.map((y) => link(curve(1230, y, 1318, 558), "s5l"));
+        const L_PF = fmY.map((y) => link(curve(1514, 558, 1640, y), "s5l"));
+        const allLinks = [...L_MK, ...L_KP, ...L_PF];
+        const addEnds = (p) => {
+          const L = p.getTotalLength(), a = p.getPointAtLength(0), b = p.getPointAtLength(L);
+          const c1 = mk("circle", { cx: a.x, cy: a.y, r: 5, fill: "#c2560f" }, s5svg);
+          const c2 = mk("circle", { cx: b.x, cy: b.y, r: 5, fill: "#c2560f" }, s5svg);
+          p._ends = [c1, c2];
+        };
+        allLinks.forEach(addEnds);
+        // token dots that ride pool → free-model links
+        const dotsWrap = $("#s5-dots");
+        const TOK = [];
+        L_PF.forEach((p, i) => {
+          for (let j = 0; j < 2; j++) {
+            const c = document.createElement("div");
+            c.className = "abs";
+            c.style.cssText = "left:0;top:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#f38020;box-shadow:0 0 0 5px rgba(243,128,32,.22)";
+            dotsWrap.appendChild(c);
+            TOK.push({ el: c, path: p, len: p.getTotalLength(), off: j * 0.5 + i * 0.13 });
+          }
+        });
+        const keyDots = L_KP.map((p) => {
+          const c = document.createElement("div");
+          c.className = "abs";
+          c.style.cssText = "left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#0b8a78;box-shadow:0 0 0 5px rgba(11,138,120,.18)";
+          dotsWrap.appendChild(c);
+          return { el: c, path: p, len: p.getTotalLength() };
+        });
+
+        // S7 token streams
+        const WORDS = ["def", "route(", "model=", "\"anyrouter/free\"", "tokens", "stream=True", "{", "\"role\":", "\"user\"", "}", "usage", "cost: 0", "→", "200 OK", "delta", "choices[0]", "prompt", "completion"];
+        const streams = $("#s7-streams");
+        for (let r = 0; r < 14; r++) {
+          const d = document.createElement("div");
+          d.className = "stream s7s";
+          d.style.top = 20 + r * 76 + "px";
+          let s = "";
+          for (let k = 0; k < 26; k++) s += WORDS[Math.floor(rnd() * WORDS.length)] + "  ";
+          d.textContent = s;
+          streams.appendChild(d);
+        }
+
+        // S8 orbit
+        const s8o = $("#s8-orbit");
+        LOGOS.slice(0, 12).forEach((l, i) => {
+          const d = document.createElement("div");
+          d.className = "tile s8t";
+          d.innerHTML = `<img src="${P}${l}.svg" alt="">`;
+          s8o.appendChild(d);
+        });
+
+        // ─────────────────────────────── TIMELINE ───────────────────────────────
+        const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+        const B = 0.5; // one beat at 120 BPM
+
+        // background: slow drift, glows breathe
+        tl.set("#bg-grid", { x: 0, y: 0, opacity: 0, scale: 1.12 }, 0);
+        tl.to("#bg-grid", { x: -60, y: -30, duration: 18, ease: "none" }, 0);
+        tl.to("#bg-grid", { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" }, 0);
+        tl.fromTo("#bg-g1", { x: 0, y: 0, scale: 0.8 }, { x: -260, y: 140, scale: 1.15, duration: 18, ease: "sine.inOut" }, 0);
+        tl.fromTo("#bg-g2", { x: 0, y: 0 }, { x: 320, y: -120, duration: 18, ease: "sine.inOut" }, 0);
+
+        // ── S1 0.0–2.0 ───────────────────────────────────────────
+        tl.fromTo("#s1-ring div", { scale: 0.2, opacity: 1 }, { scale: 22, opacity: 0, duration: 1.1, ease: "expo.out" }, 0.02);
+        tl.fromTo("#s1-p1", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "expo.out" }, 0.18);
+        tl.fromTo("#s1-p2", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "expo.out" }, 0.5);
+        tl.fromTo("#s1-mark", { scale: 0.7, rotate: -8, x: MARK_SHIFT }, { scale: 1, rotate: 0, duration: 1.0, ease: "expo.out" }, 0.1);
+        tl.to("#s1-mark", { x: 0, duration: 0.6, ease: "expo.inOut" }, 0.8);
+        tl.fromTo("#s1-word .ch", { yPercent: 140 }, { yPercent: 0, duration: 0.55, stagger: 0.032, ease: "expo.out" }, 0.95);
+        tl.fromTo("#s1-tag .ch", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.018 }, 1.25);
+        tl.to("#s1-tag", { opacity: 0, y: -10, duration: 0.2, ease: "power2.in" }, 1.72);
+        // lockup flies to the HUD corner (match cut at 2.0)
+        tl.fromTo("#s1-inner", { x: 0, y: 0, scale: 1 }, { x: FLY.x, y: FLY.y, scale: FLY.s, duration: 0.42, ease: "power4.inOut" }, 1.6);
+        tl.to("#s1-lock", { opacity: 0, duration: 0.05 }, 2.0);
+
+        // HUD
+        tl.fromTo("#hud-brand", { opacity: 0 }, { opacity: 1, duration: 0.05 }, 1.99);
+        tl.fromTo("#hud-url", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.5 }, 2.1);
+        tl.fromTo("#hud-bar", { scaleX: 0 }, { scaleX: 1, duration: 16, ease: "none" }, 2.0);
+        tl.fromTo("#hud-barwrap", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.0);
+        tl.to("#hud", { opacity: 0, duration: 0.25 }, 15.8);
+
+        // ── S2 2.0–4.0 · kinetic hero ────────────────────────────
+        tl.fromTo("#s2-l1", { yPercent: 140 }, { yPercent: 0, duration: 0.5, ease: "expo.out" }, 2.0);
+        tl.fromTo("#s2-w0", { yPercent: 110 }, { yPercent: 0, duration: 0.4, ease: "expo.out" }, 2.25);
+        tl.fromTo("#s2-l3", { yPercent: 140 }, { yPercent: 0, duration: 0.5, ease: "expo.out" }, 2.5);
+        tl.set(["#s2-w1", "#s2-w2", "#s2-w3", "#s2-w4"], { yPercent: 110 }, 0);
+        [[0, 1, 3.0], [1, 2, 3.25], [2, 3, 3.5], [3, 4, 3.75]].forEach(([a, b, t]) => {
+          tl.to("#s2-w" + a, { yPercent: -110, duration: 0.12, ease: "power3.in" }, t - 0.08);
+          tl.fromTo("#s2-w" + b, { yPercent: 110 }, { yPercent: 0, duration: 0.22, ease: "expo.out", immediateRender: false }, t + 0.02);
+        });
+        tl.fromTo("#s2-sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5 }, 2.75);
+        // orbit: tiles spring out to a ring, rotate, then collapse into the hub
+        $$(".s2t").forEach((el, i) => {
+          const a0 = (i / LOGOS.length) * Math.PI * 2 - Math.PI / 2;
+          const st = { a: a0, r: 0 };
+          const place = () => gsap.set(el, { x: Math.cos(st.a) * st.r, y: Math.sin(st.a) * st.r });
+          place();
+          tl.fromTo(el, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" }, 2.0 + i * 0.03);
+          tl.fromTo(st, { r: 0 }, { r: OR, duration: 0.8, ease: "expo.out", onUpdate: place }, 2.0 + i * 0.03);
+          tl.fromTo(st, { a: a0 }, { a: a0 + 0.9, duration: 2.0, ease: "none", onUpdate: place, immediateRender: false }, 2.0);
+          tl.to(st, { r: 0, duration: 0.34, ease: "power3.in", onUpdate: place, immediateRender: false }, 3.46 + (i % 4) * 0.02);
+          tl.to(el, { scale: 0.3, opacity: 0, duration: 0.3, ease: "power3.in" }, 3.5 + (i % 4) * 0.02);
+        });
+        tl.fromTo("#hub", { scale: 0, rotate: -30 }, { scale: 1, rotate: 0, duration: 0.4, ease: "back.out(2.2)" }, 3.72);
+        // S2 exit — velocity-matched push left with blur
+        tl.to("#s2-head, #s2-sub", { x: -260, opacity: 0, filter: "blur(18px)", duration: 0.3, ease: "power3.in" }, 3.78);
+
+        // ── S3 4.0–6.0 · how it works ────────────────────────────
+        tl.fromTo("#s3-lab", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 4.0);
+        tl.fromTo("#s3-card", { x: -140, rotateY: 16, opacity: 0, filter: "blur(16px)", transformPerspective: 1400 },
+          { x: 0, rotateY: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 3.98);
+        tl.fromTo(reqLine, { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.1);
+        $$(".s3t").forEach((el, i) => tl.fromTo(el, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 4.05 + i * 0.04));
+        $$(".s3base").forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.1 + i * 0.03));
+        tl.fromTo("#s3-hl", { backgroundColor: "#16191e" }, { backgroundColor: "#262a31", duration: 0.25, yoyo: true, repeat: 1 }, 4.2);
+        const HOT = [0, 1, 2, 5];
+        HOT.forEach((pi, k) => {
+          const t = 4.0 + k * B;
+          const r = routes[pi], L = +r.dataset.len;
+          // request travels code → hub → provider
+          tl.fromTo(reqDot, { attr: { cx: 950 } }, { attr: { cx: 1420 }, duration: 0.2, ease: "power2.in", immediateRender: k === 0 }, t);
+          tl.fromTo(r, { strokeDashoffset: L, opacity: 1 }, { strokeDashoffset: 0, duration: 0.24, ease: "power2.out", immediateRender: false }, t + 0.18);
+          tl.fromTo(`.s3t:nth-child(${pi + 1}) .ring`, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, immediateRender: false }, t + 0.36);
+          tl.fromTo(`.s3t:nth-child(${pi + 1})`, { scale: 1 }, { scale: 1.14, duration: 0.2, ease: "back.out(3)", immediateRender: false }, t + 0.36);
+          tl.fromTo("#hub", { scale: 1 }, { scale: 1.08, duration: 0.1, yoyo: true, repeat: 1, immediateRender: false }, t + 0.16);
+          if (k < HOT.length - 1) {
+            tl.to(r, { opacity: 0, duration: 0.12 }, t + 0.66);
+            tl.to(`.s3t:nth-child(${pi + 1}) .ring`, { opacity: 0, duration: 0.12 }, t + 0.66);
+            tl.to(`.s3t:nth-child(${pi + 1})`, { scale: 1, duration: 0.12 }, t + 0.66);
+          }
+          if (k > 0) {
+            tl.to("#s3-model > span", { yPercent: -100 * k, duration: 0.22, ease: "power3.inOut" }, t - 0.05);
+          }
+        });
+        tl.fromTo("#s3-cap", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 4.5);
+        // S3 exit — velocity-matched up + blur; hub leaves with it
+        tl.to("#s3 > *:not(svg), #s3-svg", { y: -160, opacity: 0, filter: "blur(22px)", duration: 0.28, ease: "power2.in" }, 5.78);
+        tl.to("#hub", { y: -160, opacity: 0, filter: "blur(22px)", duration: 0.28, ease: "power2.in" }, 5.78);
+
+        // ── S4 6.0–8.0 · catalog ─────────────────────────────────
+        tl.fromTo("#s4-plane", { rotateX: 34, rotateZ: -12, rotateY: -6, x: 120, y: 220, scale: 0.9 },
+          { rotateX: 24, rotateZ: -8, rotateY: -2, x: -120, y: 60, scale: 1.02, duration: 2.2, ease: "power2.out" }, 5.95);
+        $$(".s4c").forEach((el, i) => {
+          tl.fromTo(el, { y: 380, z: -500, opacity: 0, rotateX: -30 }, { y: 0, z: 0, opacity: 1, rotateX: 0, duration: 0.7, ease: "expo.out" }, 6.0 + i * 0.0625);
+        });
+        tl.fromTo("#s4-lab", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 6.0);
+        tl.fromTo("#s4-num", { y: 160, opacity: 0, filter: "blur(20px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 6.0);
+        const cnt = { v: 0 };
+        tl.fromTo(cnt, { v: 0 }, { v: 200, duration: 0.95, ease: "power3.out", onUpdate: () => { $("#s4-count").textContent = Math.round(cnt.v); } }, 6.05);
+        tl.fromTo("#s4-plus", { scale: 0, rotate: -90 }, { scale: 1, rotate: 0, duration: 0.4, ease: "back.out(3)" }, 7.0);
+        tl.fromTo("#s4-sub .mask > span", { yPercent: 140 }, { yPercent: 0, duration: 0.5, stagger: 0.25, ease: "expo.out" }, 6.5);
+        $$("#s4-eps .chip").forEach((el, i) => tl.fromTo(el, { scale: 0.6, opacity: 0, y: 20 }, { scale: 1, opacity: 1, y: 0, duration: 0.35, ease: "back.out(2.4)" }, 7.0 + i * 0.125));
+        // S4 exit — zoom through
+        tl.to("#s4-stage", { scale: 1.25, opacity: 0, filter: "blur(18px)", duration: 0.3, ease: "power3.in" }, 7.76);
+        tl.to("#s4-scrim, #s4-lab, #s4-num, #s4-sub, #s4-eps", { scale: 1.12, opacity: 0, filter: "blur(18px)", duration: 0.3, ease: "power3.in", transformOrigin: "30% 50%" }, 7.76);
+
+        // ── S5 8.0–12.0 · the pool (centerpiece) ─────────────────
+        tl.fromTo("#s5-world", { scale: 0.86, opacity: 0, filter: "blur(16px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out", transformOrigin: "1300px 550px" }, 8.0);
+        tl.fromTo("#s5-world", { x: 0 }, { x: -40, duration: 4, ease: "none", immediateRender: false }, 8.0);
+        tl.fromTo("#s5-lab", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 8.0);
+        tl.fromTo("#s5-h1", { yPercent: 140 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, 8.0);
+        tl.fromTo("#s5-h2", { yPercent: 140 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, 10.0);
+        tl.fromTo("#s5-h3", { yPercent: 140 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, 10.5);
+        ["#g-mem", "#g-key", "#g-pool", "#g-fm"].forEach((g, i) => tl.fromTo(g, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.45 }, 8.05 + i * 0.06));
+        $$(".s5m").forEach((el, i) => tl.fromTo(el, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4 }, 8.1 + i * 0.08));
+        tl.fromTo("#pool", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 8.25);
+        $$(".s5f").forEach((el) => tl.set(el, { opacity: 0.28, filter: "grayscale(1)" }, 0));
+        tl.fromTo(".s5f", { y: 12 }, { y: 0, duration: 0.4, stagger: 0.04 }, 8.2);
+        allLinks.forEach((p) => { const L = p.getTotalLength(); tl.set(p, { strokeDasharray: `${L} ${L}`, strokeDashoffset: L }, 0); p._ends.forEach((c) => tl.set(c, { opacity: 0 }, 0)); });
+        const draw = (p, t, d = 0.3) => {
+          const L = p.getTotalLength();
+          tl.to(p, { strokeDashoffset: 0, duration: d, ease: "power2.inOut" }, t);
+          tl.fromTo(p._ends[0], { opacity: 0 }, { opacity: 1, duration: 0.05 }, t);
+          tl.fromTo(p._ends[1], { opacity: 0 }, { opacity: 1, duration: 0.05 }, t + d);
+          // switch to flowing dashes once drawn
+          tl.set(p, { strokeDasharray: "7 8", strokeDashoffset: 0 }, t + d + 0.01);
+          tl.fromTo(p, { strokeDashoffset: 0 }, { strokeDashoffset: -15 * Math.floor((12 - t - d) / 0.25), duration: 12 - t - d - 0.02, ease: "none", immediateRender: false }, t + d + 0.02);
+        };
+        // keys land on the beat: 8.5 · 9.0 · 9.5 · 10.0
+        KEYS.forEach((k, i) => {
+          const t = 8.5 + i * B;
+          tl.fromTo("#s5-k" + i, { y: -70, scale: 1.3, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "back.out(2.2)" }, t - 0.12);
+          draw(L_MK[i], t - 0.05, 0.25);
+          draw(L_KP[i], t + 0.15, 0.25);
+          const kd = keyDots[i];
+          tl.fromTo({ p: 0 }, { p: 0 }, { p: 1, duration: 0.3, ease: "power2.in", immediateRender: false,
+            onUpdate: function () { const q = this.targets()[0].p; const pt = kd.path.getPointAtLength(q * kd.len); kd.el.style.transform = `translate(${pt.x}px, ${pt.y}px)`; kd.el.style.opacity = q < 0.98 ? 1 : 0; } }, t + 0.2);
+          tl.set(kd.el, { opacity: 0 }, 0);
+          tl.fromTo("#pool", { scale: 1 }, { scale: 1.07, duration: 0.09, yoyo: true, repeat: 1, immediateRender: false }, t + 0.48);
+        });
+        // pool ignites at 10.5 → free models light up
+        tl.to("#pool", { backgroundColor: "#f38020", color: "#0a0c10", duration: 0.12 }, 10.5);
+        tl.fromTo("#pool", { scale: 1 }, { scale: 1.16, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 10.5);
+        tl.fromTo("#pool-burst div", { scale: 0.4, opacity: 0.9 }, { scale: 2.6, opacity: 0, duration: 0.8, ease: "expo.out" }, 10.5);
+        L_PF.forEach((p, i) => draw(p, 10.52 + i * 0.05, 0.28));
+        $$(".s5f").forEach((el, i) => tl.to(el, { opacity: 1, filter: "grayscale(0)", duration: 0.2 }, 10.72 + i * 0.05));
+        $$(".s5f img").forEach((el, i) => tl.fromTo(el, { scale: 1 }, { scale: 1.25, duration: 0.14, yoyo: true, repeat: 1, immediateRender: false }, 10.72 + i * 0.05));
+        TOK.forEach((tk) => {
+          tl.set(tk.el, { opacity: 0 }, 0);
+          const o = { p: 0 };
+          tl.fromTo(o, { p: 0 }, { p: 2.6, duration: 1.2, ease: "none", immediateRender: false,
+            onUpdate: () => { const q = (o.p + tk.off) % 1; const pt = tk.path.getPointAtLength(q * tk.len); tk.el.style.transform = `translate(${pt.x}px, ${pt.y}px)`; tk.el.style.opacity = o.p > 0.02 ? 1 : 0; } }, 10.8);
+        });
+        // live stats
+        $$("#s5-stats .stat").forEach((el, i) => {
+          tl.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 11.0 + i * 0.125);
+          const b = el.querySelector("b"), to = +b.dataset.to, o = { v: 0 };
+          tl.fromTo(o, { v: 0 }, { v: to, duration: 0.6, ease: "power2.out", onUpdate: () => { b.textContent = Math.round(o.v); } }, 11.0 + i * 0.125);
+        });
+        // S5 exit — whip left
+        tl.to("#s5 > *", { x: "-=420", opacity: 0, filter: "blur(24px)", duration: 0.28, ease: "power3.in" }, 11.76);
+
+        // ── S6 12.0–14.0 · pricing + cursor ─────────────────────
+        tl.fromTo("#s6-lab", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.4 }, 12.0);
+        tl.fromTo("#s6-h .mask > span", { yPercent: 140 }, { yPercent: 0, duration: 0.5, stagger: 0.12, ease: "expo.out" }, 12.0);
+        tl.fromTo("#s6-lines .line", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.25 }, 12.5);
+        tl.fromTo("#s6-go", { x: 420, rotateY: -28, opacity: 0, filter: "blur(18px)", transformPerspective: 1600 }, { x: 0, rotateY: -6, opacity: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 12.0);
+        tl.fromTo("#s6-pro", { x: 420, rotateY: -28, opacity: 0, filter: "blur(18px)", transformPerspective: 1600 }, { x: 0, rotateY: -10, opacity: 0.9, filter: "blur(0px)", duration: 0.55, ease: "expo.out" }, 12.25);
+        tl.fromTo("#s6-go", { y: 0 }, { y: -12, duration: 1.2, ease: "sine.inOut", immediateRender: false }, 12.6);
+        tl.set("#s6-press", { opacity: 0 }, 0);
+        tl.set("#s6-toast", { opacity: 0 }, 0);
+        tl.fromTo("#s6-cursor", { x: 1720, y: 1120 }, { x: 1300, y: 908, duration: 0.75, ease: "power3.inOut" }, 12.45);
+        tl.fromTo("#s6-cursor", { scale: 1 }, { scale: 0.82, duration: 0.07, yoyo: true, repeat: 1, immediateRender: false }, 13.22);
+        tl.fromTo("#s6-press", { opacity: 1, scale: 0.9 }, { opacity: 0, scale: 1.5, duration: 0.5, ease: "expo.out", immediateRender: false }, 13.25);
+        tl.fromTo("#s6-toast", { opacity: 0, y: 30, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 13.28);
+        // break at 13.5: hold breath — slow push in
+        tl.to("#s6-go, #s6-pro, #s6-copy, #s6-toast", { scale: 1.03, duration: 0.5, ease: "power1.in" }, 13.5);
+
+        // ── S7 14.0–16.0 · DROP ─────────────────────────────────
+        tl.fromTo("#s7-field div", { scale: 0 }, { scale: 1, duration: 0.55, ease: "expo.inOut" }, 13.66);
+        $$(".s7s").forEach((el, i) => {
+          const dir = i % 2 ? 1 : -1;
+          tl.fromTo(el, { x: dir > 0 ? -1400 : -200 }, { x: dir > 0 ? -200 : -1400, duration: 2.2, ease: "none" }, 13.9);
+          tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.0 + (i % 5) * 0.03);
+        });
+        tl.fromTo("#s7-lab", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4 }, 14.0);
+        tl.fromTo("#s7-num", { scale: 1.6, opacity: 0, filter: "blur(24px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, 14.0);
+        const tok = { v: 0 };
+        tl.fromTo(tok, { v: 0 }, { v: 16000000, duration: 1.25, ease: "power2.out", onUpdate: () => { $("#s7-count").textContent = (Math.round(tok.v / 1000) * 1000).toLocaleString("en-US"); } }, 14.12);
+        tl.fromTo("#s7-num", { y: 0 }, { y: -6, duration: 0.08, yoyo: true, repeat: 9, ease: "none", immediateRender: false }, 14.25);
+        tl.fromTo("#s7-tag .mask > span", { yPercent: 140 }, { yPercent: 0, duration: 0.55, ease: "expo.out" }, 15.0);
+        tl.fromTo("#s7-foot", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 15.25);
+
+        // ── S8 16.0–18.0 · end card ─────────────────────────────
+        tl.fromTo("#s8-field div", { scale: 0 }, { scale: 1, duration: 0.5, ease: "expo.inOut" }, 15.78);
+        tl.fromTo("#s8-mark", { scale: 0.4, rotate: -20, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, duration: 0.7, ease: "back.out(1.8)" }, 16.0);
+        tl.fromTo("#s8-word .ch", { yPercent: 140 }, { yPercent: 0, duration: 0.5, stagger: 0.03, ease: "expo.out" }, 16.08);
+        tl.fromTo("#s8-h", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45 }, 16.5);
+        tl.fromTo("#s8-pri", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.4)" }, 16.75);
+        tl.fromTo("#s8-sec", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.4)" }, 16.87);
+        tl.fromTo("#s8-cmd", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 }, 17.0);
+        tl.fromTo("#s8-fine", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.15);
+        tl.fromTo("#s8-cursor", { x: 1500, y: 1100 }, { x: 870, y: 640, duration: 0.6, ease: "power3.inOut" }, 16.95);
+        tl.fromTo("#s8-pri", { scale: 1 }, { scale: 0.94, duration: 0.08, yoyo: true, repeat: 1, immediateRender: false }, 17.55);
+        tl.fromTo("#s8-cursor", { scale: 1 }, { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, immediateRender: false }, 17.55);
+        $$(".s8t").forEach((el, i) => {
+          const a0 = (i / 12) * Math.PI * 2, st = { a: a0 };
+          const place = () => { el.style.left = 960 - 36 + Math.cos(st.a) * 820 + "px"; el.style.top = 540 - 36 + Math.sin(st.a) * 440 + "px"; };
+          place();
+          tl.fromTo(el, { opacity: 0, scale: 0 }, { opacity: 0.55, scale: 1, duration: 0.5, ease: "back.out(2)" }, 16.05 + i * 0.03);
+          tl.fromTo(st, { a: a0 }, { a: a0 + 0.35, duration: 2.0, ease: "none", onUpdate: place, immediateRender: false }, 16.0);
+        });
+
+        window.__timelines["main"] = tl;
+        if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
+      });
+    </script>
+  </body>
+</html>
