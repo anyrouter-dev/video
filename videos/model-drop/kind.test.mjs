@@ -3,12 +3,23 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import kind, { fmtCtx, layoutOf, listCapacity, dropPct } from './kind.mjs';
+import kind, { fmtCtx, fmtPrice, layoutOf, listCapacity, dropPct, dropFacts, chooseModels, markOf, makersOf } from './kind.mjs';
 import { buildRelease, diffCatalog, fingerprintParts, PROVIDER_CLAIM } from './catalog.mjs';
+import { OPEN, END, BEAT } from '../../lib/film.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const json = f => JSON.parse(fs.readFileSync(path.join(HERE, 'fixtures', f), 'utf8'));
 const release = () => buildRelease(json('catalog.json'), null, json('baseline.json')).release;
+const content = film => film.scenes.slice(1, -1);
+const typed = id => id.split('').map(c => `<span class="c">${c}</span>`).join('');
+const rowsOf = s => (s.body.match(/class="lr r\d/g) || []).length;
+/** A drop of `n` distinct models cut from the fixture's, for counts the fixture does not have. */
+const dropOf = (rel, n) => ({
+  ...rel,
+  added: Array.from({ length: n }, (_, i) => ({ ...rel.added[i % rel.added.length], id: `o/m${i}`, name: `Model ${i}` })),
+});
+
+// ── the facts ──────────────────────────────────────────────────────────────
 
 test('the diff reports what shipped: new models, price moves and retirements', () => {
   const rel = release();
@@ -34,7 +45,10 @@ test('a first run films the newest few, not the whole catalog', () => {
 });
 
 test('the provider count is the site claim, never computed from the API', () => {
-  assert.equal(release().totals.providers, PROVIDER_CLAIM);
+  const rel = release();
+  assert.equal(rel.totals.providers, PROVIDER_CLAIM);
+  // …and it is the number the end card prints.
+  assert.ok(kind.film(rel, {}).scenes.at(-1).body.includes(`<b>${PROVIDER_CLAIM}+</b> providers`));
 });
 
 test('the same release always has the same identity', () => {
@@ -49,40 +63,263 @@ test('context is shown in K below one million', () => {
   assert.equal(fmtCtx(null), '—');
 });
 
-test('the model count picks the layout', () => {
-  assert.deepEqual([1, 2, 4, 5, 37].map(layoutOf), ['hero', 'cards', 'cards', 'list', 'list']);
+test('a price keeps the digits that make it different from zero', () => {
+  // $0.074 printed as "$0.07" is fine; printed as "$0.0" or "$0" it would claim free.
+  assert.equal(fmtPrice(0), '$0');
+  assert.equal(fmtPrice(0.074), '$0.074');
+  assert.equal(fmtPrice(0.01), '$0.01');
+  assert.equal(fmtPrice(2), '$2.00');
 });
 
-for (const [limit, layout] of [[1, 'hero'], [3, 'cards'], [0, 'list']]) {
-  test(`a ${layout} film fills its length exactly and never overlaps`, () => {
-    const film = kind.film(release(), { flags: limit ? { limit: String(limit) } : {} });
-    assert.equal(film.layout, layout);
+// ── the story: count picks the layout, the plan picks the models ───────────
+
+test('the model count picks the layout', () => {
+  assert.deepEqual([1, 2, 4, 5, 37].map(layoutOf), ['hero', 'cards', 'cards', 'list', 'list']);
+  const rel = release();
+  assert.equal(kind.film(rel, { flags: { limit: '1' } }).layout, 'hero');
+  assert.equal(kind.film(rel, { flags: { limit: '3' } }).layout, 'cards');
+  assert.equal(kind.film(rel, {}).layout, 'list');
+});
+
+test('the plan picks which models and in what order, lead first', () => {
+  const rel = release();
+  const picks = ['baai/bge-m3', 'sakana/fugu-max', 'upstage/solar-decide'];
+  const film = kind.film(rel, { plan: { picks } });
+  // Picks alone are the selection: three picks is a three-card film, in pick order.
+  assert.equal(film.layout, 'cards');
+  assert.deepEqual(content(film).map(s => s.body.match(/class="idcode">(.*?)<\/div>/)[1].replace(/<[^>]+>/g, '')), picks);
+  // With a limit, picks lead and the rest of the drop follows in its own order.
+  const { models } = chooseModels(rel, { picks: ['baai/bge-m3'], limit: 5 });
+  assert.deepEqual(models.map(m => m.id), ['baai/bge-m3', ...rel.added.filter(m => m.id !== 'baai/bge-m3').slice(0, 4).map(m => m.id)]);
+  // A --limit flag beats the plan's.
+  assert.equal(chooseModels(rel, { limit: 5 }, { limit: '2' }).models.length, 2);
+});
+
+test('the lead gets the spotlight in a list, and the default lead is the newest', () => {
+  const rel = release();
+  const byDefault = content(kind.film(rel, {}))[0];
+  assert.equal(byDefault.id, 's01-lead');
+  assert.ok(byDefault.body.includes('newest in this drop'), 'the default lead says why it leads');
+  const newest = [...rel.added].sort((a, b) => b.created - a.created)[0];
+  assert.ok(byDefault.body.includes(typed(newest.id)), 'the spotlight is on the newest model');
+  const picked = content(kind.film(rel, { plan: { picks: ['baai/bge-m3'], limit: 7 } }))[0];
+  assert.ok(picked.body.includes('BGE-M3') && !picked.body.includes('newest in this drop'),
+    'a planned lead is not called the newest');
+});
+
+test('the plan\'s line is shown with its model; the catalog text is the fallback', () => {
+  const rel = release();
+  const m = rel.added[0];
+  const withLine = kind.film(rel, { flags: { limit: '1' }, plan: { lines: { [m.id]: 'A plain true line' } } });
+  assert.match(withLine.scenes.map(s => s.body).join(''), /A<\/span><\/span> <span class="w"><span>plain/);
+  const without = kind.film(rel, { flags: { limit: '1' } });
+  assert.ok(without.scenes.map(s => s.body).join('').includes('<span>OpenAI\'s</span>'), 'the excerpt is the lede');
+});
+
+test('the catalog\'s own description is held to the plan\'s bar before it becomes a lede', () => {
+  const rel = release();
+  const say = excerpt => kind.film({ ...rel, added: [{ ...rel.added[0], excerpt }] }, {}).scenes.map(s => s.body).join('');
+  assert.ok(say('A model for long documents.').includes('<span>documents.</span>'));
+  assert.ok(!say('The best model for long documents.').includes('documents.'), 'a vendor superlative is not a fact');
+  assert.ok(!say('Scores 93 on a benchmark.').includes('benchmark.'), 'a number the facts do not carry is not shown');
+});
+
+test('the bookends use the plan\'s kicker and headline, else facts', () => {
+  const rel = release();
+  const planned = kind.film(rel, { plan: { kicker: 'Seven in', headline: 'A drop <worth> a look' } });
+  assert.ok(planned.scenes[0].body.includes('>S</span>'), 'the opening types the plan\'s kicker');
+  const end = planned.scenes.at(-1).body;
+  assert.ok(end.includes('Seven in') && end.includes('A drop &lt;worth&gt; a look'), 'the headline is escaped');
+  const plain = kind.film(rel, {}).scenes.at(-1).body;
+  assert.ok(plain.includes('7 new models on one key'));
+  assert.ok(plain.includes(`<b>${rel.totals.listed}</b> models`) && plain.includes(`<b>${rel.totals.free}</b> free`));
+});
+
+test('a hero film is about its one model, and counts the rest of the drop honestly', () => {
+  const rel = release();
+  const film = kind.film(rel, { flags: { limit: '1' } });
+  const m = rel.added[0];
+  assert.ok(film.scenes.at(-1).body.includes(`${m.name} is live`), 'the end card names the model, not the drop');
+  assert.ok(film.scenes.map(s => s.body).join('').includes('+6 more in this drop'));
+  // A drop of exactly one has nothing more to count.
+  const solo = kind.film({ ...rel, added: [m] }, {});
+  assert.ok(!solo.scenes.map(s => s.body).join('').includes('more in this drop'));
+});
+
+// ── time: back-to-back, on the grid, readable ──────────────────────────────
+
+const variants = [
+  ['hero', r => r, { limit: '1' }], ['cards', r => r, { limit: '3' }], ['list', r => r, {}],
+  ['list of 37', r => dropOf(r, 37), {}], ['list of 37 at 45s', r => dropOf(r, 37), { seconds: '45' }],
+  ['list at 8s', r => r, { seconds: '8' }], ['cards at 8s', r => r, { limit: '4', seconds: '8' }],
+];
+for (const [name, shape, flags] of variants) {
+  test(`a ${name} film fills its length exactly, on the beat, never overlapping`, () => {
+    const film = kind.film(shape(release()), { flags });
     const scenes = [...film.scenes].sort((a, b) => a.start - b.start);
     assert.equal(new Set(scenes.map(s => s.id)).size, scenes.length, 'scene ids are unique');
     scenes.forEach((s, i) => {
       const end = i + 1 < scenes.length ? scenes[i + 1].start : film.duration;
       assert.ok(Math.abs(s.start + s.dur - end) < 0.01, `${s.id} ends where the next begins`);
+      assert.ok(s.dur >= 1, `${s.id} is long enough to see`);
+      if (s.start < film.duration - END) assert.equal(s.start % BEAT, 0, `${s.id} starts on the beat`);
     });
+    assert.equal(scenes[0].dur, OPEN);
   });
 }
 
-test('a list film shows no more models than can be read', () => {
-  const rel = release();
-  const many = { ...rel, added: Array.from({ length: 60 }, (_, i) => ({ ...rel.added[0], id: `o/m${i}` })) };
-  const film = kind.film(many, { flags: {} });
-  const rows = film.scenes.map(s => (s.body.match(/class="mrow"/g) || []).length).reduce((a, b) => a + b, 0);
-  assert.equal(rows, listCapacity(20));
+test('every ledger page holds for two seconds after its last row prints, and each row ticks', () => {
+  for (const seconds of ['12', '20', '30', '45', '60']) {
+    const film = kind.film(dropOf(release(), 37), { flags: { seconds } });
+    for (const page of content(film).filter(s => s.id.includes('ledger'))) {
+      const ticks = page.cues.filter(c => c.kind === 'tick');
+      assert.ok(ticks.length >= rowsOf(page), `${seconds}s ${page.id}: a tick for every row`);
+      const lastRow = Math.max(...ticks.slice(0, rowsOf(page)).map(c => c.at));
+      assert.ok(page.dur - lastRow >= 2 - 1e-9, `${seconds}s ${page.id}: holds ${page.dur - lastRow}s after the last row`);
+    }
+  }
+});
+
+test('a list film shows no more models than can be read, and says how many it left out', () => {
+  const film = kind.film(dropOf(release(), 60), { flags: {} });
+  const rows = content(film).map(rowsOf).reduce((a, b) => a + b, 0);
+  const shown = rows + 1;                                    // + the lead's spotlight
+  assert.equal(shown, listCapacity(20));
+  assert.ok(content(film).some(s => s.body.includes(`+${60 - shown} more in this drop`)));
   // The end card still states the true count, not the number that fit.
   assert.ok(film.scenes.at(-1).body.includes('60 new models'));
+  // A longer film shows more.
+  assert.ok(listCapacity(40) > listCapacity(20));
 });
+
+test('the film length comes from --seconds, then the plan, then 20', () => {
+  const rel = release();
+  assert.equal(kind.film(rel, {}).duration, 20);
+  assert.equal(kind.film(rel, { plan: { seconds: 30 } }).duration, 30);
+  assert.equal(kind.film(rel, { plan: { seconds: 30 }, flags: { seconds: '12' } }).duration, 12);
+});
+
+// ── honesty: every figure from the data, every word escaped ────────────────
 
 test('every number on screen comes from the catalog', () => {
   const rel = release();
-  const hero = kind.film(rel, { flags: { limit: '1' } }).scenes[1].body;
   const m = rel.added[0];
-  assert.ok(hero.includes(m.id) && hero.includes(`>${rel.totals.listed}<`));
-  assert.ok(hero.includes(m.free ? '$0' : `$${m.inPrice.toFixed(2)}`));
+  const hero = kind.film(rel, { flags: { limit: '1' } }).scenes.map(s => s.body).join('');
+  assert.ok(hero.includes(typed(m.id)), 'the id is typed from the data');
+  assert.ok(hero.includes(`>${fmtPrice(m.inPrice)}<`) && hero.includes(`>${fmtPrice(m.outPrice)}<`));
+  assert.ok(hero.includes(`>${fmtCtx(m.context)}<`));
+  assert.ok(hero.includes(`<b>${rel.totals.listed}</b>`));
 });
+
+test('the free pill appears only on free models', () => {
+  const rel = release();
+  const paid = kind.film(rel, { flags: { limit: '1' } }).scenes.map(s => s.body).join('');
+  assert.ok(!paid.includes('FREE'));
+  const free = { ...rel.added[0], id: 'o/free', inPrice: 0, outPrice: 0, free: true };
+  const freeFilm = kind.film({ ...rel, added: [free] }, {}).scenes.map(s => s.body).join('');
+  assert.ok(freeFilm.includes('$0 · FREE'));
+});
+
+test('text from the catalog is escaped before it reaches the page', () => {
+  const rel = release();
+  const evil = { ...rel.added[0], id: 'o/<img src=x>', name: 'Bad <script>alert(1)</script> & co', provider: '<i>p</i>' };
+  for (const r of [{ ...rel, added: [evil] }, dropOf({ ...rel, added: [evil] }, 3), dropOf({ ...rel, added: [evil] }, 9)]) {
+    const film = kind.film(r, {});
+    const html = film.scenes.map(s => s.body).join('');
+    assert.ok(!/<script>|<img src=x>|<i>p<\/i>/.test(html), 'no markup from the data survives');
+  }
+});
+
+test('the drop in numbers derives each fact from the data and labels it exactly', () => {
+  const rel = release();
+  const facts = Object.fromEntries(dropFacts(rel.added).map(f => [f.key, f]));
+  const maxCtx = Math.max(...rel.added.map(m => m.context || 0));
+  assert.equal(facts.context.value, fmtCtx(maxCtx));
+  assert.equal(facts.context.label, 'largest context in this drop');
+  assert.equal(facts.price, undefined, 'the drop in numbers quotes no price');
+  assert.equal(facts.orgs.value, String(new Set(rel.added.map(m => m.id.split('/')[0])).size));
+  assert.equal(facts.free, undefined, 'no "free" fact when nothing in the drop is free');
+  // Ties are said, not hidden: two models share the largest window here.
+  assert.match(facts.context.what, /\+1 tied$/);
+  for (const f of dropFacts(rel.added)) assert.doesNotMatch(`${f.label} ${f.what}`, /\b(best|fastest|top|leading)\b/i);
+});
+
+test('a film of five or more shows no prices anywhere — only what identifies each model', () => {
+  // The user's call: a 37-model film is about which models, not what they cost.
+  const rel = release();
+  const m0 = rel.added[0];
+  const plan = { lines: { [m0.id]: 'Costs $2 in per 1M tokens.', [rel.added[3].id]: 'A plain true line' } };
+  for (const r of [rel, dropOf(rel, 37)]) {
+    for (const seconds of ['12', '20', '45']) {
+      const film = kind.film(r, { flags: { seconds }, plan });
+      for (const s of content(film)) assert.doesNotMatch(s.body, /\$/, `${seconds}s ${s.id} has a dollar sign`);
+      // The end card's facts too (its install line's "$" prompt is a shell prompt, not a price).
+      assert.doesNotMatch(film.scenes.at(-1).body.replace(/<span class="p">\$<\/span>/, ''), /\$/);
+    }
+  }
+  // …while the ledger still carries the identity: mark, name, id, context, and FREE as a status.
+  const free = { ...rel.added[1], id: 'o/free', name: 'Free One', inPrice: 0, outPrice: 0, free: true };
+  const film = kind.film({ ...rel, added: [rel.added[0], free, ...rel.added.slice(2)] }, { plan });
+  const ledger = content(film).filter(s => s.id.includes('ledger')).map(s => s.body).join('');
+  assert.ok(ledger.includes('>Free One<') && ledger.includes('>o/free<') && ledger.includes('>FREE<'));
+  assert.ok(ledger.includes('>A plain true line<'), 'the plan\'s line is shown in its row');
+  assert.ok(ledger.includes(`>${fmtCtx(rel.added[2].context)}<`));
+});
+
+test('a hero and 2-4 cards keep their prices', () => {
+  const rel = release();
+  for (const limit of ['1', '3']) {
+    const body = content(kind.film(rel, { flags: { limit } })).map(s => s.body).join('');
+    assert.ok(body.includes(`>${fmtPrice(rel.added[0].inPrice)}<`), `limit ${limit} shows the price`);
+  }
+});
+
+test('every model is shown with its maker\'s real mark, or an honest monogram — never a borrowed logo', () => {
+  const m = { id: 'x/y', provider: '', logo: null };
+  // The catalog missed these; the shared resolver finds them.
+  assert.equal(markOf({ ...m, id: 'mistralai/mistral-small', provider: 'Mistral AI' }), 'mistral-color.svg');
+  assert.equal(markOf({ ...m, id: 'stepfun-ai/step-5-preview', provider: 'stepfun-ai' }), 'stepfun-color.svg');
+  // No vendored mark: a monogram of the provider's initials, not a dot and not someone else's logo.
+  assert.equal(markOf({ ...m, id: 'baai/bge-m3', provider: 'baai' }), null);
+  const rel = release();
+  const bge = rel.added.find(x => x.id === 'baai/bge-m3');
+  const html = kind.film({ ...rel, added: [bge] }, {}).scenes.map(s => s.body).join('');
+  assert.ok(html.includes('class="mono-mark">B<'), 'baai gets its monogram');
+  assert.ok(!html.includes('ldot'));
+});
+
+test('a many-maker drop gets a wall of its makers, counted from the data', () => {
+  const rel = release();
+  const film = kind.film(rel, {});
+  const wall = content(film).find(s => s.id.endsWith('-makers'));
+  assert.ok(wall, 'the list film has a makers scene');
+  const orgs = new Set(rel.added.map(m => m.id.split('/')[0]));
+  assert.equal((wall.body.match(/class="box maker"/g) || []).length, orgs.size);
+  assert.ok(wall.body.includes(`<i>${String(orgs.size).padStart(2, '0')}</i>model makers in this drop`));
+  // Counts per maker add up to the drop.
+  assert.equal(makersOf(rel.added).reduce((a, k) => a + k.count, 0), rel.added.length);
+  // The end card stamps the drop's real marks (no monograms, at most 12).
+  const end = film.scenes.at(-1).body;
+  const marks = [...new Set(rel.added.map(markOf).filter(Boolean))];
+  for (const f of marks.slice(0, 12)) assert.ok(end.includes(f), `end card has ${f}`);
+  // A one-maker drop has no wall to show.
+  assert.ok(!content(kind.film(dropOf(rel, 9), {})).some(s => s.id.endsWith('-makers')));
+});
+
+test('the plan sees every model in the drop as a pickable item', () => {
+  const rel = release();
+  const items = kind.items(rel);
+  assert.deepEqual(items.map(i => i.id), rel.added.map(m => m.id));
+  assert.equal(items[0].label, 'GPT-6.1 Sol · OpenAI · $2.00/$10.00 · 1.1M');
+  // A price cut is quotable as the percentage the film's own headline uses.
+  const cutId = 'openai/gpt-oss-120b';
+  const withCut = kind.items({ ...rel, added: [{ ...rel.added[0], id: cutId }] });
+  assert.match(withCut[0].detail, /price down 37%/);
+  // A price move with nothing added still has its model to pick.
+  assert.equal(kind.items({ ...rel, added: [] }).length, 1);
+});
+
+// ── copy for the Release ───────────────────────────────────────────────────
 
 test('the headline leads with what shipped', () => {
   const rel = release();
