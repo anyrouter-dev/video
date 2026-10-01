@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-01T14:28:54.550Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 236,
+    "listed": 227,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 43,
+    "providerBackends": 43,
+    "free": 34
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "inception/mercury-decide",
+      "name": "Mercury Decide",
+      "provider": "inception",
+      "logo": "inception.svg",
+      "context": 32768,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1790726400,
+      "category": "text",
+      "excerpt": "Mercury Decide is Inception's structured decision model."
+    }
+  ],
+  "changed": [
+    {
+      "id": "inclusionai/ling-3.0-flash-vl",
+      "from": "0/0@262144",
+      "to": "0.021/0.0616@262144",
+      "kind": "price-rise"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "inception/mercury-decide",
+    "name": "Mercury Decide",
+    "provider": "inception",
+    "logo": "inception.svg",
+    "context": 32768,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1790726400,
+    "category": "text",
+    "excerpt": "Mercury Decide is Inception's structured decision model."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+inception/mercury-decide@0/0@32768",
+    "~inclusionai/ling-3.0-flash-vl 0/0@262144->0.021/0.0616@262144"
+  ]
+}

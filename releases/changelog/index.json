@@ -16,6 +16,23 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-001-20260930-2026-09-30-7fb8483027"
       }
+    },
+    {
+      "id": "002-20261001-2026-10-01-ce741c25d0",
+      "hash": "ce741c25d0",
+      "kind": "changelog",
+      "label": "2026-10-01",
+      "title": "Mercury Decide",
+      "seconds": 15.5,
+      "renderedAt": "2026-10-01T14:30:02.759Z",
+      "commit": "ed2be3c",
+      "artifact": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.mp4",
+      "cover": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.png",
+      "source": "renders/changelog-002-20261001-2026-10-01-ce741c25d0-source.tar.gz",
+      "createdAt": "2026-10-01T14:30:02.762Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-002-20261001-2026-10-01-ce741c25d0"
+      }
     }
   ]
 }

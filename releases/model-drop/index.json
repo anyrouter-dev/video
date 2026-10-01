@@ -67,6 +67,23 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-004-20260930-models%2Bpricing-24f646933f"
       }
+    },
+    {
+      "id": "005-20261001-models-pricing-92beafcc01",
+      "hash": "92beafcc01",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "inception/mercury-decide is now free on AnyRouter",
+      "seconds": 20,
+      "renderedAt": "2026-10-01T14:31:09.580Z",
+      "commit": "ed2be3c",
+      "artifact": "renders/model-drop-005-20261001-models-pricing-92beafcc01.mp4",
+      "cover": "renders/model-drop-005-20261001-models-pricing-92beafcc01.png",
+      "source": "renders/model-drop-005-20261001-models-pricing-92beafcc01-source.tar.gz",
+      "createdAt": "2026-10-01T14:31:09.584Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-005-20261001-models-pricing-92beafcc01"
+      }
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-01",
+  "parts": [
+    "2026-10-01-mercury-decide"
+  ],
+  "date": "2026-10-01",
+  "entries": [
+    {
+      "slug": "2026-10-01-mercury-decide",
+      "date": "2026-10-01",
+      "title": "Mercury Decide",
+      "summary": "Inception's decision model joins the Decisions family: send state and typed questions, get back a choice, a score or a yes/no answer with a calibrated probability — no generated tokens, no per-token price.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-01-mercury-decide",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}

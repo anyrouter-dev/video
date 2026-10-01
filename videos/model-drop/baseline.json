@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-09-30T15:36:57.640Z",
+  "acceptedAt": "2026-10-01T14:28:54.550Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -54,6 +54,7 @@
     "google/gemma-4-31b",
     "ibm-granite/granite-4.0-h-micro",
     "inception/mercury-2.5",
+    "inception/mercury-decide",
     "inclusionai/ling-3.0-flash-fin",
     "inclusionai/ling-3.0-flash-sante",
     "inclusionai/ling-3.0-flash-vl",
@@ -548,6 +549,12 @@
       "context": 260000
     },
     {
+      "id": "inception/mercury-decide",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
       "id": "inclusionai/ling-3.0-flash-fin",
       "inPrice": 0.06,
       "outPrice": 0.18,
@@ -561,8 +568,8 @@
     },
     {
       "id": "inclusionai/ling-3.0-flash-vl",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.021,
+      "outPrice": 0.0616,
       "context": 262144
     },
     {
