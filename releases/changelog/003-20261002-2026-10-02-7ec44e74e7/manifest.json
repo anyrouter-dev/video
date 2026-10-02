@@ -1,0 +1,17 @@
+{
+  "id": "003-20261002-2026-10-02-7ec44e74e7",
+  "hash": "7ec44e74e7",
+  "kind": "changelog",
+  "label": "2026-10-02",
+  "title": "5 changelog updates: Pareto 26.10 Preview, Fledge Alpha +3 more",
+  "seconds": 28.5,
+  "renderedAt": "2026-10-02T13:55:06.397Z",
+  "commit": "9e93833",
+  "artifact": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.mp4",
+  "cover": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.png",
+  "source": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7-source.tar.gz",
+  "createdAt": "2026-10-02T13:55:06.401Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-003-20261002-2026-10-02-7ec44e74e7"
+  }
+}

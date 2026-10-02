@@ -1,0 +1,97 @@
+{
+  "generatedAt": "2026-10-02T13:52:54.785Z",
+  "mode": "diff",
+  "kind": "new-models",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 240,
+    "listed": 231,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 46,
+    "providerBackends": 46,
+    "free": 36
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "perplexity/pplx-decider-v1-27b",
+      "name": "PPLX Decider v1 (27B)",
+      "provider": "perplexity",
+      "logo": null,
+      "context": 262144,
+      "inPrice": 0.04,
+      "outPrice": 0,
+      "free": false,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "PPLX Decider v1 (27B) is Perplexity's multimodal decision model: send application state and typed questions (noul / choice / score) and get back a probability distribution over a fixed set of answers — it returns probabilities, not generated chat text, and produces no free-form output."
+    },
+    {
+      "id": "stealth/fledge-alpha",
+      "name": "Fledge Alpha",
+      "provider": "stealth",
+      "logo": "stealth.svg",
+      "context": 1048576,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "Fledge Alpha is a free-tier stealth preview reasoning model with text and image input and tool use."
+    },
+    {
+      "id": "strandsagents/strands-decider-2b",
+      "name": "Strands Decider 2B",
+      "provider": "strandsagents",
+      "logo": null,
+      "context": 4096,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "Strands Decider 2B is AWS Strands Labs' small open-weight decision model: send application state and typed questions (noul / choice / score) and get calibrated probabilities back in one forward pass — it returns answers with confidence scores, not generated chat text, and produces no free-form output."
+    },
+    {
+      "id": "unbiased/pareto-26.10-preview",
+      "name": "Pareto 26.10 Preview",
+      "provider": "unbiased",
+      "logo": "unbiased.svg",
+      "context": 1048576,
+      "inPrice": 0.8,
+      "outPrice": 3.2,
+      "free": false,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "Pareto 26.10 Preview is Unbiased's newer composite model — it blends several language models into one answer, takes text and image input, and returns text over a 1,048,576-token context window (131,072 max completion)."
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "spotlight": {
+    "id": "perplexity/pplx-decider-v1-27b",
+    "name": "PPLX Decider v1 (27B)",
+    "provider": "perplexity",
+    "logo": null,
+    "context": 262144,
+    "inPrice": 0.04,
+    "outPrice": 0,
+    "free": false,
+    "created": 1790812800,
+    "category": "text",
+    "excerpt": "PPLX Decider v1 (27B) is Perplexity's multimodal decision model: send application state and typed questions (noul / choice / score) and get back a probability distribution over a fixed set of answers — it returns probabilities, not generated chat text, and produces no free-form output."
+  },
+  "notable": true,
+  "label": "new-models",
+  "parts": [
+    "+perplexity/pplx-decider-v1-27b@0.04/0@262144",
+    "+stealth/fledge-alpha@0/0@1048576",
+    "+strandsagents/strands-decider-2b@0/0@4096",
+    "+unbiased/pareto-26.10-preview@0.8/3.2@1048576"
+  ]
+}

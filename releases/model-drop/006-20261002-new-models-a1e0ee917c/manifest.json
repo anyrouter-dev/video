@@ -1,0 +1,17 @@
+{
+  "id": "006-20261002-new-models-a1e0ee917c",
+  "hash": "a1e0ee917c",
+  "kind": "model-drop",
+  "label": "new-models",
+  "title": "4 new models: pplx-decider-v1-27b, fledge-alpha, strands-decider-2b +1 more",
+  "seconds": 20,
+  "renderedAt": "2026-10-02T13:56:30.810Z",
+  "commit": "9e93833",
+  "artifact": "renders/model-drop-006-20261002-new-models-a1e0ee917c.mp4",
+  "cover": "renders/model-drop-006-20261002-new-models-a1e0ee917c.png",
+  "source": "renders/model-drop-006-20261002-new-models-a1e0ee917c-source.tar.gz",
+  "createdAt": "2026-10-02T13:56:30.815Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-006-20261002-new-models-a1e0ee917c"
+  }
+}

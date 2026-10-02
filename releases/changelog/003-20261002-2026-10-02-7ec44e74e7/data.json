@@ -1,0 +1,55 @@
+{
+  "notable": true,
+  "label": "2026-10-02",
+  "parts": [
+    "2026-10-02",
+    "2026-10-02-fledge-alpha",
+    "2026-10-02-pplx-decider",
+    "2026-10-02-strands-decider",
+    "2026-10-02-disabled"
+  ],
+  "date": "2026-10-02",
+  "entries": [
+    {
+      "slug": "2026-10-02",
+      "date": "2026-10-02",
+      "title": "Pareto 26.10 Preview",
+      "summary": "Unbiased's newer composite model joins the catalog: 1,048,576-token context, text and image input, tool calling, and a 131,072-token maximum output at $0.80 / $3.20 per million input / output tokens. BYOK-only via OpenRouter.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-02",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-02-fledge-alpha",
+      "date": "2026-10-02",
+      "title": "Fledge Alpha",
+      "summary": "Fledge Alpha joins the catalog as a free stealth preview: a 1,048,576-token context window, text and image input, tool calling, and reasoning effort on low / high / max — $0 / $0 through OpenCode Zen.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-02-fledge-alpha",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-02-pplx-decider",
+      "date": "2026-10-02",
+      "title": "PPLX Decider v1 (27B)",
+      "summary": "Perplexity's multimodal decision model joins the Decisions family: send state — text or images — and typed questions, get back a probability distribution over a fixed set of answers, not generated chat text.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-02-pplx-decider",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-02-strands-decider",
+      "date": "2026-10-02",
+      "title": "Strands Decider 2B",
+      "summary": "Strands Labs' open-weight decision model joins the Decisions family: run `strands-decider serve` on your own hardware and route POST /api/v1/decisions to it through AnyRouter BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-02-strands-decider",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-02-disabled",
+      "date": "2026-10-02",
+      "title": "EuroLLM 9B IT disabled",
+      "summary": "Cloudflare has not published per-token pricing for this hosted SKU, so it cannot be billed accurately. It is listed for reference and will return once a published rate is available.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-02-disabled",
+      "type": "disabled"
+    }
+  ],
+  "total": 5
+}

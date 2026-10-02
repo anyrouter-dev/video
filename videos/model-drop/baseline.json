@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-01T14:28:54.550Z",
+  "acceptedAt": "2026-10-02T13:52:54.786Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -138,6 +138,7 @@
     "openai/o4-mini",
     "openrouter/free",
     "openrouter/fusion",
+    "perplexity/pplx-decider-v1-27b",
     "poolside/laguna-s-2.1",
     "poolside/laguna-xs-2.1",
     "qwen/qwen2.5-72b-instruct",
@@ -166,15 +167,18 @@
     "sakana/fugu",
     "sakana/sakana-namazu",
     "sao10k/l3.1-euryale-70b",
+    "stealth/fledge-alpha",
     "stealth/space-bunny-alpha",
     "stepfun-ai/step-3.5-flash",
     "stepfun-ai/step-3.7-flash",
     "stepfun-ai/step-5-preview",
+    "strandsagents/strands-decider-2b",
     "tencent/hy-mt2-30b-a3b",
     "tencent/hy4-preview",
     "thinkingmachines/inkling-small",
     "thinkingmachines/inkling",
     "typesafe/jev",
+    "unbiased/pareto-26.10-preview",
     "upstage/solar-decide",
     "upstage/solar-mini4",
     "upstage/solar-pro4",
@@ -1053,6 +1057,12 @@
       "context": 128000
     },
     {
+      "id": "perplexity/pplx-decider-v1-27b",
+      "inPrice": 0.04,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
       "id": "poolside/laguna-s-2.1",
       "inPrice": 0.1,
       "outPrice": 0.2,
@@ -1221,6 +1231,12 @@
       "context": 131072
     },
     {
+      "id": "stealth/fledge-alpha",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 1048576
+    },
+    {
       "id": "stealth/space-bunny-alpha",
       "inPrice": 0,
       "outPrice": 0,
@@ -1243,6 +1259,12 @@
       "inPrice": 1.08,
       "outPrice": 3.0888,
       "context": 1000000
+    },
+    {
+      "id": "strandsagents/strands-decider-2b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 4096
     },
     {
       "id": "tencent/hy-mt2-30b-a3b",
@@ -1273,6 +1295,12 @@
       "inPrice": 0.042,
       "outPrice": 0,
       "context": 64000
+    },
+    {
+      "id": "unbiased/pareto-26.10-preview",
+      "inPrice": 0.8,
+      "outPrice": 3.2,
+      "context": 1048576
     },
     {
       "id": "upstage/solar-decide",
