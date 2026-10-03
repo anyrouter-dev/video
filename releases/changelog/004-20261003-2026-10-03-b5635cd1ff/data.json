@@ -1,0 +1,28 @@
+{
+  "notable": true,
+  "label": "2026-10-03",
+  "parts": [
+    "2026-10-03",
+    "2026-10-03-gemma"
+  ],
+  "date": "2026-10-03",
+  "entries": [
+    {
+      "slug": "2026-10-03",
+      "date": "2026-10-03",
+      "title": "Ling 3.1 Flash",
+      "summary": "inclusionAI's Ling 3.1 Flash joins the catalog: a hybrid reasoning mixture-of-experts model with 25B active of 560B total parameters, a 262,144-token context window, and tool calling, available through BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-03",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-03-gemma",
+      "date": "2026-10-03",
+      "title": "Gemma 3 4B IT",
+      "summary": "Google's Gemma 3 4B IT joins the catalog: a 4B open-weight instruct model with text and image input, a 131,072-token context window, and multilingual coverage across 140+ languages, available through BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-03-gemma",
+      "type": "added"
+    }
+  ],
+  "total": 2
+}

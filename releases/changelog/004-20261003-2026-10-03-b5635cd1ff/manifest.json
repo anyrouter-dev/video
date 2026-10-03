@@ -1,0 +1,17 @@
+{
+  "id": "004-20261003-2026-10-03-b5635cd1ff",
+  "hash": "b5635cd1ff",
+  "kind": "changelog",
+  "label": "2026-10-03",
+  "title": "2 changelog updates: Ling 3.1 Flash, Gemma 3 4B IT",
+  "seconds": 22,
+  "renderedAt": "2026-10-03T12:36:37.430Z",
+  "commit": "88c9338",
+  "artifact": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.mp4",
+  "cover": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.png",
+  "source": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff-source.tar.gz",
+  "createdAt": "2026-10-03T12:36:37.434Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-004-20261003-2026-10-03-b5635cd1ff"
+  }
+}

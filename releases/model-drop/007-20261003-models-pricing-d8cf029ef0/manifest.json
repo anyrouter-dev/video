@@ -1,0 +1,17 @@
+{
+  "id": "007-20261003-models-pricing-d8cf029ef0",
+  "hash": "d8cf029ef0",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "3 new models: ling-3.1-flash, apodex-1.1-mini, gemma-3-4b-it",
+  "seconds": 20,
+  "renderedAt": "2026-10-03T12:37:58.646Z",
+  "commit": "88c9338",
+  "artifact": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.mp4",
+  "cover": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.png",
+  "source": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0-source.tar.gz",
+  "createdAt": "2026-10-03T12:37:58.650Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-007-20261003-models-pricing-d8cf029ef0"
+  }
+}
