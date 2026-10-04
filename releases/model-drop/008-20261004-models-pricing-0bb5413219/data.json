@@ -1,0 +1,182 @@
+{
+  "generatedAt": "2026-10-04T13:12:18.777Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 246,
+    "listed": 237,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 48,
+    "providerBackends": 48,
+    "free": 36
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "convaiinnovations/laya",
+      "name": "Laya",
+      "provider": "convaiinnovations",
+      "logo": null,
+      "context": 8192,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "Laya is Convai Innovations' System One evaluation model: send shared state and typed questions (noul / choice / score) and get structured answers with probabilities in one forward pass — not generated chat text."
+    },
+    {
+      "id": "mistralai/mistral-small-4",
+      "name": "Mistral Small 4",
+      "provider": "Mistral AI",
+      "logo": "mistral-color.svg",
+      "context": 262144,
+      "inPrice": 0.15,
+      "outPrice": 0.6,
+      "free": false,
+      "created": 1773619200,
+      "category": "text",
+      "excerpt": "Mistral Small 4 is a hybrid instruct-and-reasoning mixture-of-experts model on a 256k context window."
+    },
+    {
+      "id": "google/gemma-3n-e2b",
+      "name": "Gemma 3n E2B (on-device)",
+      "provider": "Google",
+      "logo": "google-color.svg",
+      "context": 32768,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1750896000,
+      "category": "text",
+      "excerpt": "Google's Gemma 3n E2B, run on a user's own paired phone and relayed to AnyRouter over an outbound WebSocket (no Google API key, no server-side compute)."
+    }
+  ],
+  "changed": [
+    {
+      "id": "deepseek/deepseek-r1",
+      "from": "0.7/2.5@64000",
+      "to": "1.35/5.4@128000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "deepseek/deepseek-v3.1",
+      "from": "0/0@131072",
+      "to": "0.25/0.95@163840",
+      "kind": "price-rise"
+    },
+    {
+      "id": "deepseek/deepseek-v4-pro",
+      "from": "0.55/2.19@1050000",
+      "to": "0.66/1.98@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite",
+      "from": "0.1/0.4@1000000",
+      "to": "0.1/0.4@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "google/gemini-2.5-pro",
+      "from": "1.25/10@1000000",
+      "to": "1.25/10@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "google/gemma-4-31b",
+      "from": "0.15/0.45@262144",
+      "to": "0.1/0.34@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "meituan/longcat-2.5-preview",
+      "from": "0.75/2.95@1048576",
+      "to": "0.3/1.2@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "meta/muse-spark-1.3",
+      "from": "1.375/4.675@1048576",
+      "to": "1.25/4.25@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "from": "0.085/0.4@262144",
+      "to": "0.15/0.65@262144",
+      "kind": "price-rise"
+    },
+    {
+      "id": "sakana/fugu-ultra",
+      "from": "5/30@272000",
+      "to": "5/30@1000000",
+      "kind": "context"
+    },
+    {
+      "id": "tencent/hy4-preview",
+      "from": "0.845/2.535@1048576",
+      "to": "0.834/2.501@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "from": "0.48/0.96@1050000",
+      "to": "0.435/0.87@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "google/gemma-latest",
+      "from": "0.15/0.45@262144",
+      "to": "0.1/0.34@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "deepseek/deepseek-latest",
+      "from": "0.55/2.19@1050000",
+      "to": "0.66/1.98@1050000",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "convaiinnovations/laya",
+    "name": "Laya",
+    "provider": "convaiinnovations",
+    "logo": null,
+    "context": 8192,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1790812800,
+    "category": "text",
+    "excerpt": "Laya is Convai Innovations' System One evaluation model: send shared state and typed questions (noul / choice / score) and get structured answers with probabilities in one forward pass — not generated chat text."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+convaiinnovations/laya@0/0@8192",
+    "+mistralai/mistral-small-4@0.15/0.6@262144",
+    "+google/gemma-3n-e2b@0/0@32768",
+    "~deepseek/deepseek-r1 0.7/2.5@64000->1.35/5.4@128000",
+    "~deepseek/deepseek-v3.1 0/0@131072->0.25/0.95@163840",
+    "~deepseek/deepseek-v4-pro 0.55/2.19@1050000->0.66/1.98@1050000",
+    "~google/gemini-2.5-flash-lite 0.1/0.4@1000000->0.1/0.4@1048576",
+    "~google/gemini-2.5-pro 1.25/10@1000000->1.25/10@1048576",
+    "~google/gemma-4-31b 0.15/0.45@262144->0.1/0.34@262144",
+    "~meituan/longcat-2.5-preview 0.75/2.95@1048576->0.3/1.2@1048576",
+    "~meta/muse-spark-1.3 1.375/4.675@1048576->1.25/4.25@1048576",
+    "~nvidia/nemotron-3-super-120b-a12b 0.085/0.4@262144->0.15/0.65@262144",
+    "~sakana/fugu-ultra 5/30@272000->5/30@1000000",
+    "~tencent/hy4-preview 0.845/2.535@1048576->0.834/2.501@1048576",
+    "~xiaomi/mimo-v2.6-pro 0.48/0.96@1050000->0.435/0.87@1050000",
+    "~google/gemma-latest 0.15/0.45@262144->0.1/0.34@262144",
+    "~deepseek/deepseek-latest 0.55/2.19@1050000->0.66/1.98@1050000"
+  ]
+}

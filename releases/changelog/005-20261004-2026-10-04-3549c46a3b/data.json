@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-04",
+  "parts": [
+    "2026-10-04"
+  ],
+  "date": "2026-10-04",
+  "entries": [
+    {
+      "slug": "2026-10-04",
+      "date": "2026-10-04",
+      "title": "Mistral Small 4",
+      "summary": "Mistral's Apache 2.0 hybrid model, which folds its instruct, reasoning and coding lines into one. 256k context, image input, $0.15 / $0.60 per 1M. BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-04",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}

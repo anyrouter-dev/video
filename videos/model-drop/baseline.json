@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-03T12:34:58.324Z",
+  "acceptedAt": "2026-10-04T13:12:18.778Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -32,6 +32,7 @@
     "cohere/command-a-plus",
     "cohere/command-a",
     "cohere/north-mini-code",
+    "convaiinnovations/laya",
     "deepseek/deepseek-r1",
     "deepseek/deepseek-v3.1",
     "deepseek/deepseek-v3",
@@ -52,6 +53,7 @@
     "google/gemini-3.8-flash",
     "google/gemini-embedding-2",
     "google/gemma-3-4b-it",
+    "google/gemma-3n-e2b",
     "google/gemma-4-26b-a4b-it",
     "google/gemma-4-31b",
     "ibm-granite/granite-4.0-h-micro",
@@ -85,6 +87,7 @@
     "mistralai/mistral-medium-3.5-128b",
     "mistralai/mistral-small-3.1-24b-instruct",
     "mistralai/mistral-small-3.2-24b-instruct",
+    "mistralai/mistral-small-4",
     "moonshotai/kimi-k2.5",
     "moonshotai/kimi-k2.6",
     "moonshotai/kimi-k2.7-code",
@@ -424,16 +427,22 @@
       "context": 262144
     },
     {
+      "id": "convaiinnovations/laya",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 8192
+    },
+    {
       "id": "deepseek/deepseek-r1",
-      "inPrice": 0.7,
-      "outPrice": 2.5,
-      "context": 64000
+      "inPrice": 1.35,
+      "outPrice": 5.4,
+      "context": 128000
     },
     {
       "id": "deepseek/deepseek-v3.1",
-      "inPrice": 0,
-      "outPrice": 0,
-      "context": 131072
+      "inPrice": 0.25,
+      "outPrice": 0.95,
+      "context": 163840
     },
     {
       "id": "deepseek/deepseek-v3",
@@ -449,8 +458,8 @@
     },
     {
       "id": "deepseek/deepseek-v4-pro",
-      "inPrice": 0.55,
-      "outPrice": 2.19,
+      "inPrice": 0.66,
+      "outPrice": 1.98,
       "context": 1050000
     },
     {
@@ -475,13 +484,13 @@
       "id": "google/gemini-2.5-flash-lite",
       "inPrice": 0.1,
       "outPrice": 0.4,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "google/gemini-2.5-pro",
       "inPrice": 1.25,
       "outPrice": 10,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "google/gemini-3-flash",
@@ -544,6 +553,12 @@
       "context": 131072
     },
     {
+      "id": "google/gemma-3n-e2b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
       "id": "google/gemma-4-26b-a4b-it",
       "inPrice": 0.1,
       "outPrice": 0.3,
@@ -551,8 +566,8 @@
     },
     {
       "id": "google/gemma-4-31b",
-      "inPrice": 0.15,
-      "outPrice": 0.45,
+      "inPrice": 0.1,
+      "outPrice": 0.34,
       "context": 262144
     },
     {
@@ -641,8 +656,8 @@
     },
     {
       "id": "meituan/longcat-2.5-preview",
-      "inPrice": 0.75,
-      "outPrice": 2.95,
+      "inPrice": 0.3,
+      "outPrice": 1.2,
       "context": 1048576
     },
     {
@@ -689,8 +704,8 @@
     },
     {
       "id": "meta/muse-spark-1.3",
-      "inPrice": 1.375,
-      "outPrice": 4.675,
+      "inPrice": 1.25,
+      "outPrice": 4.25,
       "context": 1048576
     },
     {
@@ -740,6 +755,12 @@
       "inPrice": 0.1,
       "outPrice": 0.31,
       "context": 131072
+    },
+    {
+      "id": "mistralai/mistral-small-4",
+      "inPrice": 0.15,
+      "outPrice": 0.6,
+      "context": 262144
     },
     {
       "id": "moonshotai/kimi-k2.5",
@@ -809,8 +830,8 @@
     },
     {
       "id": "nvidia/nemotron-3-super-120b-a12b",
-      "inPrice": 0.085,
-      "outPrice": 0.4,
+      "inPrice": 0.15,
+      "outPrice": 0.65,
       "context": 262144
     },
     {
@@ -1231,7 +1252,7 @@
       "id": "sakana/fugu-ultra",
       "inPrice": 5,
       "outPrice": 30,
-      "context": 272000
+      "context": 1000000
     },
     {
       "id": "sakana/fugu",
@@ -1295,8 +1316,8 @@
     },
     {
       "id": "tencent/hy4-preview",
-      "inPrice": 0.845,
-      "outPrice": 2.535,
+      "inPrice": 0.834,
+      "outPrice": 2.501,
       "context": 1048576
     },
     {
@@ -1457,8 +1478,8 @@
     },
     {
       "id": "xiaomi/mimo-v2.6-pro",
-      "inPrice": 0.48,
-      "outPrice": 0.96,
+      "inPrice": 0.435,
+      "outPrice": 0.87,
       "context": 1050000
     },
     {
@@ -1553,14 +1574,14 @@
     },
     {
       "id": "google/gemma-latest",
-      "inPrice": 0.15,
-      "outPrice": 0.45,
+      "inPrice": 0.1,
+      "outPrice": 0.34,
       "context": 262144
     },
     {
       "id": "deepseek/deepseek-latest",
-      "inPrice": 0.55,
-      "outPrice": 2.19,
+      "inPrice": 0.66,
+      "outPrice": 1.98,
       "context": 1050000
     },
     {

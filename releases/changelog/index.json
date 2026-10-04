@@ -67,6 +67,23 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-004-20261003-2026-10-03-b5635cd1ff"
       }
+    },
+    {
+      "id": "005-20261004-2026-10-04-3549c46a3b",
+      "hash": "3549c46a3b",
+      "kind": "changelog",
+      "label": "2026-10-04",
+      "title": "Mistral Small 4",
+      "seconds": 13.5,
+      "renderedAt": "2026-10-04T13:13:32.997Z",
+      "commit": "087e73d",
+      "artifact": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.mp4",
+      "cover": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.png",
+      "source": "renders/changelog-005-20261004-2026-10-04-3549c46a3b-source.tar.gz",
+      "createdAt": "2026-10-04T13:13:33.001Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-005-20261004-2026-10-04-3549c46a3b"
+      }
     }
   ]
 }
