@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-10-06T14:12:27.743Z",
+  "mode": "diff",
+  "kind": "context-change",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 246,
+    "listed": 237,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 48,
+    "providerBackends": 48,
+    "free": 36
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [],
+  "changed": [
+    {
+      "id": "stepfun-ai/step-3.7-flash",
+      "from": "0.2/1.15@256000",
+      "to": "0.2/1.15@262144",
+      "kind": "context"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "stepfun-ai/step-3.7-flash",
+    "name": "Step 3.7 Flash",
+    "provider": "stepfun-ai",
+    "logo": "stepfun-color.svg",
+    "context": 262144,
+    "inPrice": 0.2,
+    "outPrice": 1.15,
+    "free": false,
+    "created": 1780531200,
+    "category": "multimodal",
+    "excerpt": "A 1T parameter multimodal Mixture-of-Experts model optimized for long-horizon coding, agentic tool use, and image/video understanding."
+  },
+  "notable": true,
+  "label": "context-change",
+  "parts": [
+    "~stepfun-ai/step-3.7-flash 0.2/1.15@256000->0.2/1.15@262144"
+  ]
+}

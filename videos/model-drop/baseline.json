@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-04T13:12:18.778Z",
+  "acceptedAt": "2026-10-06T14:12:27.743Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -1294,7 +1294,7 @@
       "id": "stepfun-ai/step-3.7-flash",
       "inPrice": 0.2,
       "outPrice": 1.15,
-      "context": 256000
+      "context": 262144
     },
     {
       "id": "stepfun-ai/step-5-preview",

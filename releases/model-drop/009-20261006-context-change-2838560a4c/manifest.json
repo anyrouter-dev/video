@@ -1,0 +1,17 @@
+{
+  "id": "009-20261006-context-change-2838560a4c",
+  "hash": "2838560a4c",
+  "kind": "model-drop",
+  "label": "context-change",
+  "title": "Context windows updated on step-3.7-flash",
+  "seconds": 20,
+  "renderedAt": "2026-10-06T14:13:31.560Z",
+  "commit": "60bb7f3",
+  "artifact": "renders/model-drop-009-20261006-context-change-2838560a4c.mp4",
+  "cover": "renders/model-drop-009-20261006-context-change-2838560a4c.png",
+  "source": "renders/model-drop-009-20261006-context-change-2838560a4c-source.tar.gz",
+  "createdAt": "2026-10-06T14:13:31.564Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-009-20261006-context-change-2838560a4c"
+  }
+}
