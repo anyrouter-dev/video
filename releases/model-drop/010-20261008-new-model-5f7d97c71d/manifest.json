@@ -1,0 +1,17 @@
+{
+  "id": "010-20261008-new-model-5f7d97c71d",
+  "hash": "5f7d97c71d",
+  "kind": "model-drop",
+  "label": "new-model",
+  "title": "stealth/glyph-cluster is now free on AnyRouter",
+  "seconds": 20,
+  "renderedAt": "2026-10-08T14:37:22.626Z",
+  "commit": "e2c0753",
+  "artifact": "renders/model-drop-010-20261008-new-model-5f7d97c71d.mp4",
+  "cover": "renders/model-drop-010-20261008-new-model-5f7d97c71d.png",
+  "source": "renders/model-drop-010-20261008-new-model-5f7d97c71d-source.tar.gz",
+  "createdAt": "2026-10-08T14:37:22.631Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-010-20261008-new-model-5f7d97c71d"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-10-08T14:35:50.342Z",
+  "mode": "diff",
+  "kind": "new-model",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 247,
+    "listed": 238,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 48,
+    "providerBackends": 48,
+    "free": 37
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "stealth/glyph-cluster",
+      "name": "Glyph Cluster",
+      "provider": "stealth",
+      "logo": "stealth.svg",
+      "context": 256000,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1791331200,
+      "category": "text",
+      "excerpt": "Glyph Cluster is a reasoning model designed for coding and long-context workloads."
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "spotlight": {
+    "id": "stealth/glyph-cluster",
+    "name": "Glyph Cluster",
+    "provider": "stealth",
+    "logo": "stealth.svg",
+    "context": 256000,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1791331200,
+    "category": "text",
+    "excerpt": "Glyph Cluster is a reasoning model designed for coding and long-context workloads."
+  },
+  "notable": true,
+  "label": "new-model",
+  "parts": [
+    "+stealth/glyph-cluster@0/0@256000"
+  ]
+}
