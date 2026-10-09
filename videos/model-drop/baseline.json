@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-08T14:35:50.343Z",
+  "acceptedAt": "2026-10-09T14:22:58.432Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -8,6 +8,7 @@
     "agnes-ai/agnes-3.0-flash",
     "anthropic/claude-fable-5.1",
     "anthropic/claude-fable-5",
+    "anthropic/claude-haiku-5-5",
     "anthropic/claude-opus-4.1",
     "anthropic/claude-opus-4.5",
     "anthropic/claude-opus-4.6",
@@ -176,9 +177,9 @@
     "stealth/fledge-alpha",
     "stealth/glyph-cluster",
     "stealth/space-bunny-alpha",
+    "stepfun/step-5-preview",
     "stepfun-ai/step-3.5-flash",
     "stepfun-ai/step-3.7-flash",
-    "stepfun-ai/step-5-preview",
     "strandsagents/strands-decider-2b",
     "tencent/hy-mt2-30b-a3b",
     "tencent/hy4-preview",
@@ -229,6 +230,7 @@
     "deepseek/deepseek-flash-latest",
     "anthropic/claude-opus-latest",
     "anthropic/claude-sonnet-latest",
+    "anthropic/claude-haiku-latest",
     "openai/gpt-latest",
     "openai/gpt-mini-latest",
     "openai/gpt-nano-latest",
@@ -281,6 +283,12 @@
       "id": "anthropic/claude-fable-5",
       "inPrice": 10,
       "outPrice": 50,
+      "context": 1000000
+    },
+    {
+      "id": "anthropic/claude-haiku-5-5",
+      "inPrice": 0.1,
+      "outPrice": 0.5,
       "context": 1000000
     },
     {
@@ -1292,6 +1300,12 @@
       "context": 1000000
     },
     {
+      "id": "stepfun/step-5-preview",
+      "inPrice": 1.08,
+      "outPrice": 3.0888,
+      "context": 1000000
+    },
+    {
       "id": "stepfun-ai/step-3.5-flash",
       "inPrice": 0.1,
       "outPrice": 0.3,
@@ -1301,13 +1315,7 @@
       "id": "stepfun-ai/step-3.7-flash",
       "inPrice": 0.2,
       "outPrice": 1.15,
-      "context": 262144
-    },
-    {
-      "id": "stepfun-ai/step-5-preview",
-      "inPrice": 1.08,
-      "outPrice": 3.0888,
-      "context": 1000000
+      "context": 256000
     },
     {
       "id": "strandsagents/strands-decider-2b",
@@ -1533,8 +1541,8 @@
     },
     {
       "id": "z-ai/glm-5.3-flash",
-      "inPrice": 0.15,
-      "outPrice": 0.5,
+      "inPrice": 0.12,
+      "outPrice": 0.46,
       "context": 1050000
     },
     {
@@ -1610,6 +1618,12 @@
       "context": 1000000
     },
     {
+      "id": "anthropic/claude-haiku-latest",
+      "inPrice": 0.1,
+      "outPrice": 0.5,
+      "context": 1000000
+    },
+    {
       "id": "openai/gpt-latest",
       "inPrice": 2.5,
       "outPrice": 15,
@@ -1653,8 +1667,8 @@
     },
     {
       "id": "z-ai/glm-flash-latest",
-      "inPrice": 0.15,
-      "outPrice": 0.5,
+      "inPrice": 0.12,
+      "outPrice": 0.46,
       "context": 1050000
     },
     {

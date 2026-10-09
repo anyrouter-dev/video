@@ -1,0 +1,17 @@
+{
+  "id": "011-20261009-models-pricing-5f363bbc1b",
+  "hash": "5f363bbc1b",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "2 new models: claude-haiku-5-5, step-5-preview, plus 1 -latest alias",
+  "seconds": 20,
+  "renderedAt": "2026-10-09T14:24:07.317Z",
+  "commit": "a2cf4d2",
+  "artifact": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.mp4",
+  "cover": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.png",
+  "source": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b-source.tar.gz",
+  "createdAt": "2026-10-09T14:24:07.321Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-011-20261009-models-pricing-5f363bbc1b"
+  }
+}

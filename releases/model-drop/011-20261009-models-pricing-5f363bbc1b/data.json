@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-10-09T14:22:58.431Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 249,
+    "listed": 240,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 49,
+    "providerBackends": 49,
+    "free": 37
+  },
+  "pool": {
+    "keys": 92,
+    "donors": 42,
+    "requests": 3052
+  },
+  "added": [
+    {
+      "id": "anthropic/claude-haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "provider": "Anthropic",
+      "logo": "anthropic-color.svg",
+      "context": 1000000,
+      "inPrice": 0.1,
+      "outPrice": 0.5,
+      "free": false,
+      "created": 1791331200,
+      "category": "text",
+      "excerpt": "Anthropic's Claude Haiku 5.5 is the fastest and most cost-efficient model in the Claude 5.x lineup."
+    },
+    {
+      "id": "anthropic/claude-haiku-latest",
+      "name": "claude-haiku (latest)",
+      "provider": "Anthropic",
+      "logo": "anthropic-color.svg",
+      "context": 1000000,
+      "inPrice": 0.1,
+      "outPrice": 0.5,
+      "free": false,
+      "created": 1791331200,
+      "category": "text",
+      "excerpt": "Alias for the newest live claude-haiku model; currently anthropic/claude-haiku-5-5."
+    },
+    {
+      "id": "stepfun/step-5-preview",
+      "name": "Step 5 Preview",
+      "provider": "StepFun",
+      "logo": "stepfun-color.svg",
+      "context": 1000000,
+      "inPrice": 1.08,
+      "outPrice": 3.0888,
+      "free": false,
+      "created": 1789862400,
+      "category": "text",
+      "excerpt": "Step 5 Preview is StepFun's next-generation flagship base model designed for real-world tasks, with a focus on programming and professional expertise."
+    }
+  ],
+  "changed": [
+    {
+      "id": "stepfun-ai/step-3.7-flash",
+      "from": "0.2/1.15@262144",
+      "to": "0.2/1.15@256000",
+      "kind": "context"
+    },
+    {
+      "id": "z-ai/glm-5.3-flash",
+      "from": "0.15/0.5@1050000",
+      "to": "0.12/0.46@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "z-ai/glm-flash-latest",
+      "from": "0.15/0.5@1050000",
+      "to": "0.12/0.46@1050000",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [
+    "stepfun-ai/step-5-preview"
+  ],
+  "spotlight": {
+    "id": "anthropic/claude-haiku-5-5",
+    "name": "Claude Haiku 5.5",
+    "provider": "Anthropic",
+    "logo": "anthropic-color.svg",
+    "context": 1000000,
+    "inPrice": 0.1,
+    "outPrice": 0.5,
+    "free": false,
+    "created": 1791331200,
+    "category": "text",
+    "excerpt": "Anthropic's Claude Haiku 5.5 is the fastest and most cost-efficient model in the Claude 5.x lineup."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+anthropic/claude-haiku-5-5@0.1/0.5@1000000",
+    "+anthropic/claude-haiku-latest@0.1/0.5@1000000",
+    "+stepfun/step-5-preview@1.08/3.0888@1000000",
+    "~stepfun-ai/step-3.7-flash 0.2/1.15@262144->0.2/1.15@256000",
+    "~z-ai/glm-5.3-flash 0.15/0.5@1050000->0.12/0.46@1050000",
+    "~z-ai/glm-flash-latest 0.15/0.5@1050000->0.12/0.46@1050000",
+    "-stepfun-ai/step-5-preview"
+  ]
+}
