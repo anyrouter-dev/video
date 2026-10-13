@@ -1,0 +1,17 @@
+{
+  "id": "006-20261013-2026-10-12-4d55a6f3c7",
+  "hash": "4d55a6f3c7",
+  "kind": "changelog",
+  "label": "2026-10-12",
+  "title": "Muse Spark 1.3 Contributor, Muse Wonder, GPT-6 Astra Pro and 6 more added",
+  "seconds": 15.5,
+  "renderedAt": "2026-10-13T15:05:34.493Z",
+  "commit": "c4cb3f7",
+  "artifact": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.mp4",
+  "cover": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.png",
+  "source": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7-source.tar.gz",
+  "createdAt": "2026-10-13T15:05:34.497Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-006-20261013-2026-10-12-4d55a6f3c7"
+  }
+}

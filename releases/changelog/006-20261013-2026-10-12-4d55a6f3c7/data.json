@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-12",
+  "parts": [
+    "2026-10-12-catalog"
+  ],
+  "date": "2026-10-12",
+  "entries": [
+    {
+      "slug": "2026-10-12-catalog",
+      "date": "2026-10-12",
+      "title": "Muse Spark 1.3 Contributor, Muse Wonder, GPT-6 Astra Pro and 6 more added",
+      "summary": "9 models from 5 providers joined the catalog the week of 2026-10-12.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-12-catalog",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}
