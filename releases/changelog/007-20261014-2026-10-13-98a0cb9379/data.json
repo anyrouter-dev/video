@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-13",
+  "parts": [
+    "2026-10-13-amos-1"
+  ],
+  "date": "2026-10-13",
+  "entries": [
+    {
+      "slug": "2026-10-13-amos-1",
+      "date": "2026-10-13",
+      "title": "Amos 1",
+      "summary": "Scira's Amos 1 joins the Decisions family: four open-weight decision models, from a 0.5B CPU encoder to a 27B decoder, free on AnyRouter.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-13-amos-1",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}

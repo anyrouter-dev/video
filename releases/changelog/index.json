@@ -101,6 +101,23 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-006-20261013-2026-10-12-4d55a6f3c7"
       }
+    },
+    {
+      "id": "007-20261014-2026-10-13-98a0cb9379",
+      "hash": "98a0cb9379",
+      "kind": "changelog",
+      "label": "2026-10-13",
+      "title": "Amos 1",
+      "seconds": 15,
+      "renderedAt": "2026-10-14T12:54:49.164Z",
+      "commit": "9e7fd28",
+      "artifact": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.mp4",
+      "cover": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.png",
+      "source": "renders/changelog-007-20261014-2026-10-13-98a0cb9379-source.tar.gz",
+      "createdAt": "2026-10-14T12:54:49.168Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-007-20261014-2026-10-13-98a0cb9379"
+      }
     }
   ]
 }
