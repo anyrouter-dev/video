@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-16",
+  "parts": [
+    "2026-10-16-disabled"
+  ],
+  "date": "2026-10-16",
+  "entries": [
+    {
+      "slug": "2026-10-16-disabled",
+      "date": "2026-10-16",
+      "title": "Amos 1 Medium disabled",
+      "summary": "Scira's hosted Amos 1 Medium endpoint hangs: every probe returns a 504 after about 10 seconds, while Mini, Small and Large answer in about a second. Use Amos 1 Large, which is level with Medium on typed decisions.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-16-disabled",
+      "type": "disabled"
+    }
+  ],
+  "total": 1
+}

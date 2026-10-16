@@ -1,0 +1,17 @@
+{
+  "id": "008-20261016-2026-10-16-c77ec7d496",
+  "hash": "c77ec7d496",
+  "kind": "changelog",
+  "label": "2026-10-16",
+  "title": "Amos 1 Medium disabled",
+  "seconds": 16,
+  "renderedAt": "2026-10-16T12:27:39.315Z",
+  "commit": "4c7d322",
+  "artifact": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.mp4",
+  "cover": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.png",
+  "source": "renders/changelog-008-20261016-2026-10-16-c77ec7d496-source.tar.gz",
+  "createdAt": "2026-10-16T12:27:39.318Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-008-20261016-2026-10-16-c77ec7d496"
+  }
+}
