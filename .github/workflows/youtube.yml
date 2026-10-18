@@ -1,0 +1,86 @@
+name: youtube
+
+# Uploads a film that is already a GitHub Release to YouTube, for when the
+# render-video upload failed (an expired token). It renders nothing: it puts the
+# release's assets back where the ledger expects them and runs `publish`, which
+# leaves the release as it is and skips a film the ledger says is uploaded.
+
+on:
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: 'The film kind'
+        type: choice
+        options: [explainer, openrouter-unblock, teaser, intro, model-drop, release, changelog]
+      id:
+        description: 'The release id from releases/<kind>/index.json, e.g. 001-20261018-v1-1cbd1f149e'
+        required: true
+
+# Shares the render-video group: both commit the ledger to main.
+concurrency:
+  group: render-video
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      KIND: ${{ inputs.kind }}
+      ID: ${{ inputs.id }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The cover too: publish refreshes the release notes, and they show the
+      # cover only when its file is there.
+      - name: Fetch the release assets
+        run: |
+          set -euo pipefail
+          node -e '
+            const { releases } = JSON.parse(require("fs").readFileSync(`releases/${process.env.KIND}/index.json`, "utf8"));
+            const e = releases.find(r => r.id === process.env.ID);
+            if (!e) { console.error(`no ${process.env.KIND} release "${process.env.ID}"`); process.exit(1); }
+            console.log("mp4", e.artifact);
+            if (e.cover) console.log("png", e.cover);
+          ' > want.txt
+          while read -r ext dest; do
+            mkdir -p "$(dirname "$dest")"
+            gh release download "$KIND-$ID" -p "*.$ext" -O "$dest"
+          done < want.txt
+
+      - name: Upload to YouTube
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YT_PRIVACY: ${{ vars.YT_PRIVACY }}
+          YT_TITLE_TEMPLATE: ${{ vars.YT_TITLE_TEMPLATE }}
+        run: |
+          set -euo pipefail
+          node lib/cli.mjs publish "$KIND" "$ID" | tee publish.log
+          grep -q '── youtube: uploaded\|already uploaded' publish.log || { echo '::error::YouTube upload did not happen'; exit 1; }
+
+      - name: Commit the ledger
+        run: |
+          set -euo pipefail
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add releases
+          if git diff --cached --quiet; then echo 'nothing to record'; exit 0; fi
+          git commit -m "chore(video): record the youtube upload of $KIND $ID"
+          for i in 1 2 3; do
+            if git pull --rebase -q origin main && git push -q origin HEAD:main; then exit 0; fi
+            sleep $((i * 5))
+          done
+          echo '::error::could not push the ledger'; exit 1

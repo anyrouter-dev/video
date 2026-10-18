@@ -168,6 +168,9 @@ them for every kind — do not work around it.
   prompt per kind in `ci/prompts/`) → render → publish → one commit. On a quiet
   night it stops after the decide step. Its `regen` input re-renders released
   films of one kind (an id, or `all`).
+- `youtube.yml` uploads a release that is already out to YouTube, when the
+  render-video upload failed (an expired token). Dispatch it with the kind and the
+  release id; it fetches the release's assets, runs `publish` and records the link.
 - `ci.yml` runs `npm test` (including: every recorded release can be rebuilt
   from its record) and `check` on each kind's fixture for every change to
   `lib/`, `videos/`, `shared/` or `releases/`.
