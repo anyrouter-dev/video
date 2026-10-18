@@ -51,9 +51,11 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `release` | one product release, e.g. "AnyRouter 1.6" | `/changelog/rss.xml` | nightly |
 | `changelog` | one day of changelog entries | the `## Model releases` section of `/llms.txt` | nightly |
 | `intro` | the 60s introduction — hand-authored in `videos/intro/` | its own files | on demand |
+| `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
-An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is.
+An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
+and its `collect` is `collectAuthored` from `lib/authored.mjs`.
 
 To add a kind: create `videos/<name>/kind.mjs` following the contract in
 `lib/kinds.mjs`, add a fixture and a `kind.test.mjs`, and add it to the `check`

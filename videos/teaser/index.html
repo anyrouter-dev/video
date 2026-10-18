@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>AnyRouter — intro (light)</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+
+@font-face{font-family:'ArInter';src:url('fonts/inter.woff2') format('woff2-variations');
+  font-weight:100 900;font-display:block}
+@font-face{font-family:'ArMono';src:url('fonts/mono.woff2') format('woff2-variations');
+  font-weight:100 800;font-display:block}
+:root{
+  --bg:#FFFFFF;--card:#FFFFFF;--raised:#F6F5F1;--fg:#0B0B0C;
+  --muted:#5C5B58;--line:rgba(11,11,12,0.16);--line-solid:#8A8A8A;
+  --primary:#B4531F;--gold:#8A5A00;--free:#046B47;
+  --glow:rgba(180,83,31,0.26);--glow-soft:rgba(138,90,0,0.16);--scrim:rgba(255,255,255,0.72);
+  --node:radial-gradient(circle,#D96A1B 0%,#C2560B 46%,rgba(194,86,11,0) 76%);
+  --shot-frame:#141416;--shot-edge:rgba(0,0,0,0.14);
+  --mark-plate:rgba(11,11,12,0.05);
+  --c0:#8A5A00;
+  --c1:#B4531F;
+  --c2:#E17100;
+  --c3:#C2560B;
+  --c4:#973C00;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* NO background here. Each sub-composition is its own document, and the
+   framework composites it over the root — an opaque body on every clip hides
+   the plate layers underneath completely. The root's own html/body carries the
+   page background; scene bodies must stay transparent. */
+body{font-family:'ArInter',Inter,system-ui,sans-serif;color:var(--fg);
+  -webkit-font-smoothing:antialiased;perspective:2400px;transform-style:preserve-3d}
+.mono{font-family:'ArMono',ui-monospace,Menlo,monospace}
+.stage{position:relative;width:100%;height:100%;overflow:hidden;display:grid;place-items:center;
+  transform-style:preserve-3d}
+/* Every scene animates this wrapper for camera-ish moves only (punch, flip,
+   push-away). Entrances live on the children, so the two never fight over the
+   same transform property.
+   It MUST fill the stage: .stage is a centred grid, so a fit-content #punch
+   would shrink-wrap its scene and any absolutely-positioned child measured
+   from the frame centre (the estab orbit) would land off-frame. */
+.punch{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d}
+.mark{width:76px;height:76px;object-fit:contain}
+.mark-plate{background:var(--mark-plate);border:1px solid var(--line);border-radius:20px}
+/* the estab orbit: every tile is placed once at the frame centre and moved
+   with GSAP x/y, so nothing in this scene triggers a layout pass.
+   data-layout-allow-overflow: the tiles legitimately streak in from off-frame. */
+#ring{position:absolute;inset:0;width:100%;height:100%}
+.tile{position:absolute;left:960px;top:540px;width:96px;height:96px;margin:-48px 0 0 -48px;
+  display:grid;place-items:center;border-radius:22px;background:var(--mark-plate);
+  border:1px solid var(--line);will-change:transform,opacity}
+.tile .mark{width:56px;height:56px}
+
+/* type scale — 40px is the floor; nothing in the film sets below it.
+   Mono line-heights are generous on purpose: JetBrains Mono's em box is about
+   1.39em tall, so a line-height under that makes the glyphs spill out of their
+   own box and collide with whatever sits below. */
+.t-chip{font-family:'ArMono',monospace;font-size:40px;line-height:1.4;letter-spacing:-.01em}
+.t-body{font-size:46px;line-height:1.32;letter-spacing:-.012em}
+.t-lead{font-size:60px;line-height:1.22;letter-spacing:-.022em}
+.t-h2{font-size:104px;line-height:1.16;letter-spacing:-.038em;font-weight:700}
+.t-h1{font-size:184px;line-height:1.06;letter-spacing:-.045em;font-weight:700}
+.t-num{font-size:280px;line-height:1.3;letter-spacing:-.055em;font-weight:700}
+.t-dom{font-size:180px;line-height:1.12;letter-spacing:-.05em;font-weight:700}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.green{color:var(--free)}
+.amber{color:var(--primary)}
+
+/* shared atoms */
+.idline{font-family:'ArMono',monospace;font-weight:600;letter-spacing:-.03em}
+.eyebrow{font-size:44px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* Anything that carries TEXT gets the solid card surface, not the translucent
+   mark-plate tint. A tint over a photographic plate makes the backdrop a
+   function of whatever happens to be behind it — the end card's amber "curl"
+   measured 2.32:1 where the nebula plate brightened behind it. A solid
+   surface is both crisper and provably contrast-safe. The mark-plate token is
+   reserved for the decorative tiles that hold a provider mark and no text. */
+.chip{display:flex;align-items:baseline;gap:26px;padding:24px 40px;border-radius:20px;
+  border:2px solid var(--line-solid);background:var(--card)}
+/* the path is the subject and the note is the annotation — 44 vs 40, not the
+   other way round */
+.chip .t-chip{font-size:44px}
+.chip .note{font-size:40px;color:var(--muted);white-space:nowrap}
+.kicker{font-size:40px;letter-spacing:.30em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cmd{font-family:'ArMono',monospace;font-size:52px;padding:30px 48px;border-radius:18px;
+  background:var(--card);border:2px solid var(--line-solid);white-space:nowrap}
+.s1{color:var(--gold)} .s2{color:var(--muted)} .s3{color:var(--free)} .s4{color:var(--primary)}
+
+/* the amber glow the monogram lands in. The halo is deliberately 200px larger
+   than the 268px monogram on every side — that overspill IS the glow, so the
+   wrapper carries data-layout-allow-overflow in the markup. */
+.monowrap{position:relative;width:268px;height:268px;display:grid;place-items:center}
+.orb{position:absolute;inset:-200px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,var(--glow) 0%,var(--glow-soft) 46%,transparent 72%);
+  filter:blur(14px)}
+#mono{position:relative}
+
+html,body{width:1920px;height:1080px;overflow:hidden;background:#FFFFFF}
+#root{position:relative;width:1920px;height:1080px;overflow:hidden;transform-style:preserve-3d;
+  will-change:transform}
+.clip{position:absolute;inset:0}
+.platewrap{position:absolute;inset:0;overflow:hidden}
+.plate{position:absolute;left:50%;top:50%;width:100%;height:100%;object-fit:cover;
+  margin-left:-960px;margin-top:-540px;transform-origin:50% 50%;will-change:transform,opacity}
+.plate.blur{filter:blur(6px)}
+/* Centre-weighted, not a corner vignette: the type field is the middle of the
+   frame in every beat, so the scrim is densest there and the plate is left
+   visible in the outer third where nothing is read. */
+.vig{position:absolute;inset:0;background:
+  radial-gradient(56% 48% at 50% 50%,rgba(255,255,255,0.72) 0%,rgba(255,255,255,0.72) 44%,transparent 84%),
+  radial-gradient(100% 100% at 50% 50%,transparent 50%,rgba(255,255,255,0.24) 100%),
+  linear-gradient(180deg,rgba(255,255,255,0.24),transparent 20%,transparent 80%,rgba(255,255,255,0.24))}
+
+/* per-scene layout that only the root needs */
+.t-dom #dom,#edom{color:var(--fg)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center;width:1720px}
+.split .left{display:grid;justify-items:start;gap:14px}
+.nrow{display:flex;align-items:flex-start;gap:10px}
+/* the "+" sits on the numeral's cap line, not the 280px line box top */
+.plus{font-size:132px;line-height:1.32;font-weight:700;margin-top:-14px}
+.split .t-body{font-size:50px}
+.shot{border-radius:26px;overflow:hidden;background:#141416;
+  border:1px solid rgba(0,0,0,0.14);box-shadow:0 70px 160px rgba(0,0,0,.42);
+  transform-style:preserve-3d}
+.shot img{display:block;width:100%}
+.mrow{display:flex;align-items:baseline;gap:30px}
+.mlab{font-size:150px;font-weight:700;letter-spacing:-.045em;color:var(--free);line-height:1}
+.poolwrap{position:relative;width:1920px;height:1080px}
+.pkrow .pk{position:absolute;transform:translate(-50%,-50%);width:84px;height:84px;
+  display:grid;place-items:center;border-radius:20px;background:var(--mark-plate);
+  border:1px solid var(--line)}
+.pkrow .pk .mark{width:52px;height:52px}
+.flow{position:absolute;inset:0;width:1920px;height:1080px;overflow:visible}
+.fl{fill:none;stroke:url(#flg);stroke-width:3.5;stroke-linecap:round}
+.node{position:absolute;left:960px;top:604px;width:112px;height:112px;margin-left:-56px;
+  margin-top:-56px;border-radius:50%;background:var(--node);filter:blur(2px)}
+.statrow{position:absolute;left:0;right:0;top:800px;display:grid;grid-template-columns:repeat(3,1fr);
+  justify-items:center;gap:60px}
+.stat{display:grid;justify-items:center;gap:10px}
+/* 40px and .14em, not 44px and .22em: "requests, all time" is 17 characters
+   and at the larger setting it wrapped to two lines, knocking the third stat
+   out of line with the other two. nowrap keeps all three labels on one line. */
+.stat b{font-size:150px;line-height:1.0;letter-spacing:-.05em;color:var(--fg)}
+.stat i{font-style:normal;font-size:40px;line-height:1.4;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap}
+/* The board grid is sized from the longest id, not guessed. JetBrains Mono
+   advances 0.656em, so the longest model part (14 chars) at 42px needs 386px;
+   4 cells x (386 + 2x20 padding) + 3 x 20 gap = 1764px, leaving 78px margins.
+   There is deliberately no overflow/text-overflow here: a silently truncated
+   model id would be a false claim. facts.mjs caps model parts at 15 chars. */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;width:1764px}
+.cell{display:grid;gap:2px;padding:18px 20px;border-radius:16px;background:var(--card);
+  border:1px solid var(--line);min-width:0}
+.cell .own{font-size:40px;line-height:1.35;color:var(--muted);letter-spacing:.06em}
+.cell .mdl{font-family:'ArMono',monospace;font-size:42px;line-height:1.45;color:var(--fg);
+  letter-spacing:-.02em;white-space:nowrap}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-width="1920" data-height="1080"
+     data-duration="20" data-fps="30">
+
+    <div class="platewrap" data-layout-allow-overflow>
+      <img class="plate blur" id="pb-mountain" src="assets/plates/mountain-light-blur.jpg" alt="" />
+      <img class="plate" id="p-mountain" src="assets/plates/mountain-light.jpg" alt="" />
+    </div>
+    <div class="platewrap" data-layout-allow-overflow>
+      <img class="plate blur" id="pb-band" src="assets/plates/band-light-blur.jpg" alt="" />
+      <img class="plate" id="p-band" src="assets/plates/band-light.jpg" alt="" />
+    </div>
+    <div class="platewrap" data-layout-allow-overflow>
+      <img class="plate blur" id="pb-nebula" src="assets/plates/nebula-light-blur.jpg" alt="" />
+      <img class="plate" id="p-nebula" src="assets/plates/nebula-light.jpg" alt="" />
+    </div>
+  <div class="vig" data-layout-allow-overflow></div>
+  <div id="clip-s00-estab" class="clip" data-composition-id="s00-estab"
+     data-composition-src="compositions/s00-estab.html" data-start="0" data-duration="1.88"></div>
+  <div id="clip-s01-brand" class="clip" data-composition-id="s01-brand"
+     data-composition-src="compositions/s01-brand.html" data-start="1.88" data-duration="0.92"></div>
+  <div id="clip-s02-unify" class="clip" data-composition-id="s02-unify"
+     data-composition-src="compositions/s02-unify.html" data-start="2.8" data-duration="0.95"></div>
+  <div id="clip-s03-catalog" class="clip" data-composition-id="s03-catalog"
+     data-composition-src="compositions/s03-catalog.html" data-start="3.75" data-duration="1.55"></div>
+  <div id="clip-s04-endpoint" class="clip" data-composition-id="s04-endpoint"
+     data-composition-src="compositions/s04-endpoint.html" data-start="5.3" data-duration="1.26"></div>
+  <div id="clip-s05-free" class="clip" data-composition-id="s05-free"
+     data-composition-src="compositions/s05-free.html" data-start="6.56" data-duration="1.34"></div>
+  <div id="clip-s06-preset" class="clip" data-composition-id="s06-preset"
+     data-composition-src="compositions/s06-preset.html" data-start="7.9" data-duration="0.95"></div>
+  <div id="clip-s07-auto" class="clip" data-composition-id="s07-auto"
+     data-composition-src="compositions/s07-auto.html" data-start="8.85" data-duration="1.05"></div>
+  <div id="clip-s08-decision" class="clip" data-composition-id="s08-decision"
+     data-composition-src="compositions/s08-decision.html" data-start="9.9" data-duration="0.6"></div>
+  <div id="clip-s09-byok" class="clip" data-composition-id="s09-byok"
+     data-composition-src="compositions/s09-byok.html" data-start="10.5" data-duration="1.15"></div>
+  <div id="clip-s10-markup" class="clip" data-composition-id="s10-markup"
+     data-composition-src="compositions/s10-markup.html" data-start="11.65" data-duration="1.2"></div>
+  <div id="clip-s11-pool" class="clip" data-composition-id="s11-pool"
+     data-composition-src="compositions/s11-pool.html" data-start="12.85" data-duration="1.5"></div>
+  <div id="clip-s12-domain" class="clip" data-composition-id="s12-domain"
+     data-composition-src="compositions/s12-domain.html" data-start="14.35" data-duration="1.35"></div>
+  <div id="clip-s13-board" class="clip" data-composition-id="s13-board"
+     data-composition-src="compositions/s13-board.html" data-start="15.7" data-duration="1.5"></div>
+  <div id="clip-s14-end" class="clip" data-composition-id="s14-end"
+     data-composition-src="compositions/s14-end.html" data-start="17.2" data-duration="2.8"></div>
+  <audio id="music" data-start="0" data-duration="20" data-track-index="9"
+         src="audio/score.wav" data-volume="1"></audio>
+</div>
+<script>
+  // The camera is ONE continuous slow push on #root — capped at 1.06, because
+  // past that the catalog card and the 280px numerals clip the frame edge.
+  // Per-beat punches, the pool push-away and the three drops' 3D flips live in
+  // the sub-compositions (on #punch) so no two tweens ever fight over one
+  // element's transform.
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#root", { scale: 1.005, transformOrigin: "50% 50%" });
+  tl.to("#root", { scale: 1.06, duration: 20, ease: "sine.inOut" }, 0);
+  tl.fromTo("#p-mountain",{scale:1.16,x:0},{scale:1.26,x:-46,duration:20,ease:"sine.inOut"},0);
+  tl.fromTo("#pb-mountain",{scale:1.34,x:0},{scale:1.52,x:-96,duration:20,ease:"sine.inOut"},0);
+  tl.fromTo("#p-band",{scale:1.16,x:0},{scale:1.26,x:-46,duration:20,ease:"sine.inOut"},0);
+  tl.fromTo("#pb-band",{scale:1.34,x:0},{scale:1.52,x:-96,duration:20,ease:"sine.inOut"},0);
+  tl.fromTo("#p-nebula",{scale:1.16,x:0},{scale:1.26,x:-46,duration:20,ease:"sine.inOut"},0);
+  tl.fromTo("#pb-nebula",{scale:1.34,x:0},{scale:1.52,x:-96,duration:20,ease:"sine.inOut"},0);
+  tl.set("#p-mountain",{opacity:0},0);
+  tl.set("#pb-mountain",{opacity:0},0);
+  tl.set("#p-band",{opacity:0},0);
+  tl.set("#pb-band",{opacity:0},0);
+  tl.set("#p-nebula",{opacity:0},0);
+  tl.set("#pb-nebula",{opacity:0},0);
+  tl.set("#p-mountain",{opacity:1},0);
+  tl.set("#pb-mountain",{opacity:1},0);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},1.7);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},1.7);
+  tl.to("#p-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.06);
+  tl.to("#pb-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.06);
+  tl.to("#p-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.62);
+  tl.to("#pb-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.62);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.98);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},2.98);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},3.57);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},3.57);
+  tl.to("#p-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},3.93);
+  tl.to("#pb-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},3.93);
+  tl.to("#p-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},5.12);
+  tl.to("#pb-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},5.12);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},5.48);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},5.48);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},6.38);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},6.38);
+  tl.to("#p-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},6.74);
+  tl.to("#pb-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},6.74);
+  tl.to("#p-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},7.72);
+  tl.to("#pb-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},7.72);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},8.08);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},8.08);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},8.67);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},8.67);
+  tl.to("#p-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},9.03);
+  tl.to("#pb-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},9.03);
+  tl.to("#p-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},9.72);
+  tl.to("#pb-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},9.72);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.08);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.08);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.32);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.32);
+  tl.to("#p-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.68);
+  tl.to("#pb-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},10.68);
+  tl.to("#p-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},11.47);
+  tl.to("#pb-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},11.47);
+  tl.to("#p-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},11.83);
+  tl.to("#pb-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},11.83);
+  tl.to("#p-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},12.67);
+  tl.to("#pb-nebula",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},12.67);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},13.03);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},13.03);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},14.17);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},14.17);
+  tl.to("#p-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},14.53);
+  tl.to("#pb-band",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},14.53);
+  tl.to("#p-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},15.52);
+  tl.to("#pb-band",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},15.52);
+  tl.to("#p-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},15.88);
+  tl.to("#pb-mountain",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},15.88);
+  tl.to("#p-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},17.02);
+  tl.to("#pb-mountain",{opacity:0,duration:0.36,ease:"sine.inOut",overwrite:"auto"},17.02);
+  tl.to("#p-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},17.38);
+  tl.to("#pb-nebula",{opacity:1,duration:0.36,ease:"sine.inOut",overwrite:"auto"},17.38);
+  window.__timelines["main"] = tl;
+</script>
+</body></html>

@@ -1,0 +1,7 @@
+# Outputs and scratch — regenerated, never source.
+renders/
+renders-log.txt
+snapshots/
+verify/
+design-options/
+.DS_Store

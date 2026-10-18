@@ -17,6 +17,7 @@ Output lands in `renders/`.
 | Kind | Film | Facts from | Runs |
 |------|------|------------|------|
 | `intro` | the 60-second introduction, hand-authored | `videos/intro/` | on demand |
+| `teaser` | the 20-second brand film, dark and light from one source | `videos/teaser/` | on demand |
 | `release` | one product release, e.g. "AnyRouter 1.6" | [`/changelog/rss.xml`](https://anyrouter.dev/changelog/rss.xml) | nightly |
 | `model-drop` | models added to the catalog, and price moves | [`/api/v1/models`](https://anyrouter.dev/api/v1/models?all=1), diffed against a baseline | nightly |
 | `changelog` | one day of changelog entries | the *Model releases* section of [`/llms.txt`](https://anyrouter.dev/llms.txt) | nightly |

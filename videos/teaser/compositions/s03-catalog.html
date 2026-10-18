@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html lang="en"><head><meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>s03-catalog</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:'ArInter';src:url('fonts/inter.woff2') format('woff2-variations');
+  font-weight:100 900;font-display:block}
+@font-face{font-family:'ArMono';src:url('fonts/mono.woff2') format('woff2-variations');
+  font-weight:100 800;font-display:block}
+:root{
+  --bg:#FFFFFF;--card:#FFFFFF;--raised:#F6F5F1;--fg:#0B0B0C;
+  --muted:#5C5B58;--line:rgba(11,11,12,0.16);--line-solid:#8A8A8A;
+  --primary:#B4531F;--gold:#8A5A00;--free:#046B47;
+  --glow:rgba(180,83,31,0.26);--glow-soft:rgba(138,90,0,0.16);--scrim:rgba(255,255,255,0.72);
+  --node:radial-gradient(circle,#D96A1B 0%,#C2560B 46%,rgba(194,86,11,0) 76%);
+  --shot-frame:#141416;--shot-edge:rgba(0,0,0,0.14);
+  --mark-plate:rgba(11,11,12,0.05);
+  --c0:#8A5A00;
+  --c1:#B4531F;
+  --c2:#E17100;
+  --c3:#C2560B;
+  --c4:#973C00;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* NO background here. Each sub-composition is its own document, and the
+   framework composites it over the root — an opaque body on every clip hides
+   the plate layers underneath completely. The root's own html/body carries the
+   page background; scene bodies must stay transparent. */
+body{font-family:'ArInter',Inter,system-ui,sans-serif;color:var(--fg);
+  -webkit-font-smoothing:antialiased;perspective:2400px;transform-style:preserve-3d}
+.mono{font-family:'ArMono',ui-monospace,Menlo,monospace}
+.stage{position:relative;width:100%;height:100%;overflow:hidden;display:grid;place-items:center;
+  transform-style:preserve-3d}
+/* Every scene animates this wrapper for camera-ish moves only (punch, flip,
+   push-away). Entrances live on the children, so the two never fight over the
+   same transform property.
+   It MUST fill the stage: .stage is a centred grid, so a fit-content #punch
+   would shrink-wrap its scene and any absolutely-positioned child measured
+   from the frame centre (the estab orbit) would land off-frame. */
+.punch{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d}
+.mark{width:76px;height:76px;object-fit:contain}
+.mark-plate{background:var(--mark-plate);border:1px solid var(--line);border-radius:20px}
+/* the estab orbit: every tile is placed once at the frame centre and moved
+   with GSAP x/y, so nothing in this scene triggers a layout pass.
+   data-layout-allow-overflow: the tiles legitimately streak in from off-frame. */
+#ring{position:absolute;inset:0;width:100%;height:100%}
+.tile{position:absolute;left:960px;top:540px;width:96px;height:96px;margin:-48px 0 0 -48px;
+  display:grid;place-items:center;border-radius:22px;background:var(--mark-plate);
+  border:1px solid var(--line);will-change:transform,opacity}
+.tile .mark{width:56px;height:56px}
+
+/* type scale — 40px is the floor; nothing in the film sets below it.
+   Mono line-heights are generous on purpose: JetBrains Mono's em box is about
+   1.39em tall, so a line-height under that makes the glyphs spill out of their
+   own box and collide with whatever sits below. */
+.t-chip{font-family:'ArMono',monospace;font-size:40px;line-height:1.4;letter-spacing:-.01em}
+.t-body{font-size:46px;line-height:1.32;letter-spacing:-.012em}
+.t-lead{font-size:60px;line-height:1.22;letter-spacing:-.022em}
+.t-h2{font-size:104px;line-height:1.16;letter-spacing:-.038em;font-weight:700}
+.t-h1{font-size:184px;line-height:1.06;letter-spacing:-.045em;font-weight:700}
+.t-num{font-size:280px;line-height:1.3;letter-spacing:-.055em;font-weight:700}
+.t-dom{font-size:180px;line-height:1.12;letter-spacing:-.05em;font-weight:700}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.green{color:var(--free)}
+.amber{color:var(--primary)}
+
+/* shared atoms */
+.idline{font-family:'ArMono',monospace;font-weight:600;letter-spacing:-.03em}
+.eyebrow{font-size:44px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* Anything that carries TEXT gets the solid card surface, not the translucent
+   mark-plate tint. A tint over a photographic plate makes the backdrop a
+   function of whatever happens to be behind it — the end card's amber "curl"
+   measured 2.32:1 where the nebula plate brightened behind it. A solid
+   surface is both crisper and provably contrast-safe. The mark-plate token is
+   reserved for the decorative tiles that hold a provider mark and no text. */
+.chip{display:flex;align-items:baseline;gap:26px;padding:24px 40px;border-radius:20px;
+  border:2px solid var(--line-solid);background:var(--card)}
+/* the path is the subject and the note is the annotation — 44 vs 40, not the
+   other way round */
+.chip .t-chip{font-size:44px}
+.chip .note{font-size:40px;color:var(--muted);white-space:nowrap}
+.kicker{font-size:40px;letter-spacing:.30em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cmd{font-family:'ArMono',monospace;font-size:52px;padding:30px 48px;border-radius:18px;
+  background:var(--card);border:2px solid var(--line-solid);white-space:nowrap}
+.s1{color:var(--gold)} .s2{color:var(--muted)} .s3{color:var(--free)} .s4{color:var(--primary)}
+
+/* the amber glow the monogram lands in. The halo is deliberately 200px larger
+   than the 268px monogram on every side — that overspill IS the glow, so the
+   wrapper carries data-layout-allow-overflow in the markup. */
+.monowrap{position:relative;width:268px;height:268px;display:grid;place-items:center}
+.orb{position:absolute;inset:-200px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,var(--glow) 0%,var(--glow-soft) 46%,transparent 72%);
+  filter:blur(14px)}
+#mono{position:relative}
+</style></head>
+<body>
+<div id="root" data-composition-id="s03-catalog" data-width="1920" data-height="1080"
+     data-duration="1.55" data-fps="30">
+  <div class="stage" id="stage">
+    <div class="punch" id="punch" data-layout-allow-overflow><div class="split">
+    <div class="left">
+      <div class="nrow"><span class="t-num gold" id="count">0</span><span class="plus gold" id="plus">+</span></div>
+      <div class="t-body muted" id="cap">models across 17+ providers</div>
+    </div>
+    <div class="shot" id="shot">
+      <img src="assets/catalog.png" alt="The AnyRouter model catalog" />
+    </div>
+  </div></div>
+  </div>
+</div>
+<script>
+  // Animate #punch and its children, never the clip host — the framework owns
+  // clip visibility (rule 1).
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#punch", { transformOrigin: "50% 50%" });
+  tl.fromTo("#punch",{scale:1.046},{scale:1,duration:.44,ease:"expo.out"},0);
+  const c={v:0};
+  tl.from("#shot",{x:96,scale:.94,opacity:0,duration:.46,ease:"expo.out"},0);
+  tl.to(c,{v:192,duration:.92,ease:"power2.out",onUpdate:()=>{document.getElementById("count").textContent=String(Math.round(c.v));}},.10);
+  tl.from("#cap",{y:30,opacity:0,duration:.30,ease:"power3.out"},.34);
+  tl.from("#plus",{opacity:0,scale:.6,duration:.24,ease:"back.out(2)"},1.00);
+  window.__timelines["s03-catalog"] = tl;
+</script>
+</body></html>
