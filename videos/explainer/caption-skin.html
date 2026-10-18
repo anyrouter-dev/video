@@ -11,9 +11,8 @@
 <style data-brand-tokens></style>
 
 <style>
-  /* captions.mjs matches font files to a family by name prefix and only knows frame.md's
-     display/body families, so "Geist" claims geist-mono.woff2. This face wins over that
-     injected one: it is declared later and its weight range covers the 500 used here. */
+  /* captions.mjs injects a "Geist" face that points at geist-mono.woff2 (it matches files by
+     name prefix); shared/authoring/finish.mjs drops that rule, so this is the Geist face. */
   @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
   #captions-root {
     position: absolute;
