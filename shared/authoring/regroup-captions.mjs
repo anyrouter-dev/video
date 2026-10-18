@@ -27,8 +27,15 @@ let cur = null;
 const textOf = ws => ws.map(x => x.text).join(' ');
 for (const w of words) {
   const prev = cur?.words.at(-1);
-  if (cur && (w.frame !== cur.frame || (w.start - prev.end > PAUSE_S && cur.words.length >= MIN_WORDS))) cur = null;
-  if (cur && (cur.words.length >= MAX_WORDS || textOf([...cur.words, w]).length > MAX_CHARS)) {
+  // A pause splits a phrase, except right before the word (or two) that ends the sentence.
+  const endsSoon = SENT_END.test(w.text) || SENT_END.test(words[words.indexOf(w) + 1]?.text ?? '');
+  const pause = prev && w.start - prev.end > PAUSE_S && cur.words.length >= MIN_WORDS && !endsSoon;
+  if (cur && (w.frame !== cur.frame || pause)) cur = null;
+  // A word that closes its clause may run one past the cap rather than be left dangling.
+  const closes = /[.,!?;:]$/.test(w.text);
+  const over = cur && (cur.words.length >= MAX_WORDS + (closes ? 1 : 0)
+    || textOf([...cur.words, w]).length > MAX_CHARS + (closes ? 8 : 0));
+  if (over) {
     // Over the cap: break after the group's last comma if there is one, not mid-phrase.
     const k = cur.words.findLastIndex((x, i) => i < cur.words.length - 1 && /,$/.test(x.text));
     const carried = k >= 0 ? cur.words.splice(k + 1) : [];

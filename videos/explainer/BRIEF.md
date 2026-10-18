@@ -69,3 +69,13 @@ Three things the viewer actually wants, in this order:
   2026-10-18 for "calm minimal modern tech underscore". It is declared as host audio in
   `audio_meta.json` (`"source": "host"`) and the storyboard says `music: none`, so a
   re-voice never re-runs the lookup (which needs HeyGen and dropped the bed once).
+- Correction after the newcomer reviews (2026-10-19): `anyrouter/free` works on every
+  signed-in plan without donating anything (free-tier.md). Donating a key unlocks the
+  pool's free models ("Free via Pool" is open to Go subscribers and anyone with an active
+  donated key — shared-pool.md), plus Go at no cost and $4 credit a month while the key
+  stays donated. The film says exactly that; never frame free models as needing a donation.
+- `anyrouter/auto` mixes free and credit-billed routes, so it is labelled "may use credit".
+  The 2,400 requests/min limit is per AnyRouter API key, not per provider key.
+- Two reviews per round (a non-technical viewer, a skeptical developer) read stills every
+  1.5s plus the transcript. Their findings drove the narration rewrite of lines 4–9 and
+  the on-screen fixes; see the commit history.

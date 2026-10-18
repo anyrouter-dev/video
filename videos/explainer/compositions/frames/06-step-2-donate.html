@@ -45,7 +45,7 @@
       overflow: hidden;
     }
     .\30 6-step-2-donate-card-signin { left: 220px; top: 160px; width: 1050px; height: 710px; }
-    .\30 6-step-2-donate-card-pool { left: 79px; top: 330px; width: 1762px; height: 330px; }
+    .\30 6-step-2-donate-card-pool { left: 480px; top: 220px; width: 960px; height: 466px; }
     .\30 6-step-2-donate-bar {
       position: absolute; left: 0; top: 0; right: 0; height: 52px; box-sizing: border-box;
       background: #FAFAFA; border-bottom: 1.5px solid #E5E5E5;
@@ -60,10 +60,12 @@
     }
     .\30 6-step-2-donate-view { position: absolute; left: 0; top: 52px; right: 0; bottom: 0; overflow: hidden; }
     .\30 6-step-2-donate-signin-shot { position: absolute; left: 0; top: 0; width: 3840px; height: 2160px; display: block; transform-origin: 0 0; }
-    /* Crop of the 3840x2160 capture: x 806..3008, y 596..944 (header + top three rows) at 0.8. */
-    .\30 6-step-2-donate-pool-shot { position: absolute; left: -644.8px; top: -476.8px; width: 3072px; height: 1728px; display: block; }
+    /* The 3840x2160 capture at 1.2, image y 600..945 (header + top three rows), as in Frame 04:
+       abutting column slices Provider x 780..1200, Keys 2090..2260, Donate 2830..3040 drop Status and Tokens. */
+    .\30 6-step-2-donate-slice { position: absolute; top: 0; height: 414px; overflow: hidden; }
+    .\30 6-step-2-donate-pool-shot { position: absolute; top: -720px; width: 4608px; height: 2592px; display: block; }
     .\30 6-step-2-donate-row-tint {
-      position: absolute; left: 4px; top: 61px; width: 1754px; height: 69px; box-sizing: border-box;
+      position: absolute; left: 4px; top: 85px; width: 952px; height: 107px; box-sizing: border-box;
       background: #FFF4EC; mix-blend-mode: multiply; border: 1.5px solid #BB4D00; border-radius: 8px;
     }
     .\30 6-step-2-donate-veil { position: absolute; inset: 0; background: #0A0A0A; }
@@ -126,6 +128,8 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
       font-size: 20px; line-height: 1; color: #636363; white-space: nowrap;
     }
+    .\30 6-step-2-donate-safe svg { flex: none; }
+    .\30 6-step-2-donate-safe2 { top: 336px; }
 
     .\30 6-step-2-donate-pill {
       position: absolute; left: 0; top: 0; height: 52px; box-sizing: border-box;
@@ -213,10 +217,18 @@
     <div class="06-step-2-donate-card 06-step-2-donate-card-pool" id="06-step-2-donate-card">
       <div class="06-step-2-donate-bar">
         <div class="06-step-2-donate-dots"><span></span><span></span><span></span></div>
-        <div class="06-step-2-donate-url 06-step-2-donate-mono" id="06-step-2-donate-pool-url">anyrouter.dev/pool</div>
+        <div class="06-step-2-donate-url 06-step-2-donate-mono">anyrouter.dev/pool</div>
       </div>
       <div class="06-step-2-donate-view">
-        <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="anyrouter.dev/pool" />
+        <div class="06-step-2-donate-slice" style="left: 0; width: 504px">
+          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="anyrouter.dev/pool" style="left: -936px" />
+        </div>
+        <div class="06-step-2-donate-slice" style="left: 504px; width: 204px">
+          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -2508px" />
+        </div>
+        <div class="06-step-2-donate-slice" style="left: 708px; width: 252px">
+          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -3396px" />
+        </div>
         <div class="06-step-2-donate-row-tint" id="06-step-2-donate-row-tint"></div>
       </div>
       <div class="06-step-2-donate-veil" id="06-step-2-donate-veil"></div>
@@ -260,6 +272,10 @@
       <div class="06-step-2-donate-safe" id="06-step-2-donate-safe">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
         <span>Encrypted · stop sharing any time</span>
+      </div>
+      <div class="06-step-2-donate-safe 06-step-2-donate-safe2" id="06-step-2-donate-safe2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
+        <span>Members' requests run on your key · yours always come first</span>
       </div>
     </div>
 
@@ -309,8 +325,8 @@
       const T_CLICK = 4.85, T_NEXT = 5.56, T_OPENROUTER = 5.82;
       const T_PASTE = 6.89, T_YOUR = 7.52;
       const T_PRESS = 9.15, T_DONATE_BTN = 9.68, T_SUCCESS = 10.5;
-      const T_ENCRYPTED = 11.29;
-      const T_A_KEY = 13.07, T_NVIDIA = 13.38, T_WORKS = 13.97, T_SAME = 14.42, T_WAY = 14.72;
+      const T_ENCRYPTED = 11.29, T_TIME_END = 12.55;
+      const T_NVIDIA = 13.38, T_WORKS = 13.97, T_SAME = 14.42, T_WAY = 14.72;
       const DURATION = 15.696;
 
       // Sign-in capture: push in from the page onto the "Continue to AnyRouter" dialog.
@@ -325,9 +341,9 @@
       });
       const GITHUB_BTN = signinPoint(1920, 462);
 
-      // Pool crop at 0.8 from source (806, 596); the card's view starts at (79, 382).
-      const poolPoint = (sx, sy) => ({ x: 79 + 0.8 * (sx - 806), y: 382 + 0.8 * (sy - 596) });
-      const ROW_DONATE = poolPoint(2927.5, 715);
+      // Donate slice at 1.2 from source (2830, 600), placed at x 708 of the card's view, which starts at (480, 272).
+      const donatePoint = (sx, sy) => ({ x: 480 + 708 + 1.2 * (sx - 2830), y: 272 + 1.2 * (sy - 600) });
+      const ROW_DONATE = donatePoint(2925, 716);
 
       // Dialog is authored at 640px and shown at 1.5x from its top-left (480, 290).
       const DLG_SCALE = 1.5;
@@ -335,7 +351,7 @@
       const INPUT_TEXT = dlg(44 + 126, 113);
       const DONATE_BTN = dlg(528, 230);
 
-      // Parked clear of both browser cards (sign-in ends at x 1270, the pool table starts at y 330).
+      // Parked clear of both browser cards (sign-in ends at x 1270, the pool card at x 1440).
       const PARK = { x: 1640, y: 240 };
 
       gsap.set(q("dlg-outer"), { scale: DLG_SCALE });
@@ -371,9 +387,6 @@
       click(T_OPENROUTER, ROW_DONATE, "ripple1");
 
       tl.fromTo(q("veil"), { opacity: 0 }, { opacity: 0.4, duration: 0.4, ease: "none" }, T_OPENROUTER + 0.15);
-      // The dialog sits over the URL bar; hide the covered URL text while its form is up.
-      tl.to(q("pool-url"), { opacity: 0, duration: 0.2, ease: "none" }, T_OPENROUTER + 0.15);
-      tl.to(q("pool-url"), { opacity: 1, duration: 0.3, ease: "none" }, T_SUCCESS + 0.1);
       tl.to(q("row-tint"), { opacity: 0, duration: 0.3, ease: "none" }, T_OPENROUTER + 0.15);
       tl.fromTo(q("dlg"), { y: 50, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.6, ease: IN }, T_OPENROUTER + 0.2);
       tl.to(q("cursor"), { x: 1440, y: 770, duration: 0.7, ease: MOVE }, T_OPENROUTER + 0.4);
@@ -403,13 +416,15 @@
       tl.fromTo(q("label2-done"), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, T_SUCCESS);
 
       tl.fromTo(q("safe"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: IN }, T_ENCRYPTED);
+      tl.fromTo(q("safe2"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: IN }, T_ENCRYPTED + 0.4);
 
-      // NVIDIA aside: the success card settles left, NVIDIA gets its own card and holds to the end.
-      tl.to(q("veil"), { opacity: 0, duration: 0.5, ease: "none" }, T_A_KEY - 0.2);
-      tl.to(q("card"), { opacity: 0, duration: 0.5, ease: "none" }, T_A_KEY - 0.2);
-      tl.fromTo(q("dlg-outer"), { x: 0, y: 0, scale: DLG_SCALE }, { x: -256, y: 28, scale: 1.3, duration: 0.7, ease: MOVE, immediateRender: false }, T_A_KEY - 0.2);
-      tl.fromTo(q("nv"), { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: IN }, T_A_KEY);
-      tl.fromTo(q("nv-head"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: IN }, T_NVIDIA - 0.1);
+      // NVIDIA aside: the success card settles left in the pause after "time" (ends right edge x 1056),
+      // then NVIDIA's card enters with its heading, so no empty shell ever shows, and holds to the end.
+      tl.to(q("veil"), { opacity: 0, duration: 0.5, ease: "none" }, T_TIME_END);
+      tl.to(q("card"), { opacity: 0, duration: 0.5, ease: "none" }, T_TIME_END);
+      tl.fromTo(q("dlg-outer"), { x: 0, y: 0, scale: DLG_SCALE }, { x: -256, y: 28, scale: 1.3, duration: 0.7, ease: MOVE, immediateRender: false }, T_TIME_END);
+      tl.fromTo(q("nv"), { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: IN }, T_TIME_END + 0.7);
+      tl.fromTo(q("nv-head"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: IN }, T_TIME_END + 0.7);
       tl.fromTo(q("nv-path"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: IN }, T_NVIDIA + 0.25);
       tl.fromTo(q("nv-pill"), { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: IN }, T_WORKS);
       tl.fromTo(q("nv-btn"), { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: IN }, T_SAME);

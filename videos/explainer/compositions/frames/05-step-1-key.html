@@ -395,10 +395,18 @@
       letter-spacing: -0.025em;
       white-space: nowrap;
     }
-    [data-composition-id="05-step-1-key"] .card-title.mono {
-      font-size: 48px;
-      font-weight: 500;
-      letter-spacing: 0;
+    [data-composition-id="05-step-1-key"] .card-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    [data-composition-id="05-step-1-key"] .card-slug {
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 28px;
+      line-height: 1.2;
+      color: #636363;
+      white-space: nowrap;
     }
     [data-composition-id="05-step-1-key"] .chip {
       height: 52px;
@@ -418,6 +426,22 @@
     [data-composition-id="05-step-1-key"] .chip.accent {
       background: #FFF4EC;
       color: #BB4D00;
+    }
+    [data-composition-id="05-step-1-key"] .chip.who {
+      position: absolute;
+      right: 120px;
+      top: 136px;
+      height: 48px;
+      padding: 0 22px;
+      background: #F5F5F5;
+      color: #636363;
+      font-size: 26px;
+      font-weight: 400;
+    }
+    [data-composition-id="05-step-1-key"] .chip.who b {
+      font-weight: 600;
+      color: #0A0A0A;
+      white-space: pre;
     }
 
     /* Create-key modal over the Keys page */
@@ -478,7 +502,7 @@
     }
     [data-composition-id="05-step-1-key"] .m-create {
       left: 458px;
-      top: 300px;
+      top: 308px;
       width: 130px;
       height: 48px;
       border-radius: 10px;
@@ -542,7 +566,10 @@
     <div class="stage clip" data-start="0" data-duration="13.529" data-track-index="1">
       <div class="intro">
         <div class="card" id="05-step-1-key-card-a">
-          <div class="card-title mono">anyrouter/free</div>
+          <div class="card-head">
+            <div class="card-title">Free models</div>
+            <div class="card-slug">anyrouter/free</div>
+          </div>
           <div class="chip free" id="05-step-1-key-chip-a">works on sign-up</div>
         </div>
         <div class="card" id="05-step-1-key-card-b">
@@ -576,6 +603,8 @@
         <span id="05-step-1-key-w2">models in</span>
         <span id="05-step-1-key-w3">three steps</span>
       </h2>
+
+      <div class="chip who" id="05-step-1-key-who"><b>OpenRouter · </b>an AI service that hands out free keys</div>
 
       <div class="browser" id="05-step-1-key-browser">
         <div class="bar">
@@ -616,11 +645,12 @@
               <div class="scrim" id="05-step-1-key-scrim"></div>
               <div class="modal" id="05-step-1-key-modal">
                 <div class="phase" id="05-step-1-key-form">
-                  <div class="m-title" style="top:32px">Create a key</div>
-                  <div class="m-label" style="top:92px">Name</div>
-                  <div class="m-input" style="top:124px">anyrouter</div>
-                  <div class="m-label" style="top:196px">Credit limit <i>(optional)</i></div>
-                  <div class="m-input" style="top:228px"></div>
+                  <div class="m-title" style="top:28px">Create a key</div>
+                  <div class="m-label" style="top:80px">Name</div>
+                  <div class="m-input" style="top:110px">anyrouter</div>
+                  <div class="m-label" style="top:178px">Credit limit <i>(optional)</i></div>
+                  <div class="m-input" style="top:208px"></div>
+                  <div class="m-note" style="top:268px">optional · caps what this key can spend</div>
                   <div class="m-create" id="05-step-1-key-m-create">Create</div>
                 </div>
                 <div class="phase" id="05-step-1-key-done">
@@ -650,7 +680,7 @@
       </div>
 
       <div class="ripple" id="05-step-1-key-ripple-create" style="left:1617.5px;top:381.5px"></div>
-      <div class="ripple" id="05-step-1-key-ripple-m-create" style="left:1390.5px;top:771.5px"></div>
+      <div class="ripple" id="05-step-1-key-ripple-m-create" style="left:1390.5px;top:779.5px"></div>
       <div class="ripple" id="05-step-1-key-ripple-copy" style="left:1395.5px;top:643.5px"></div>
 
       <svg class="cursor" id="05-step-1-key-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -666,7 +696,7 @@
       // Canvas points (cursor hot spot targets), derived from the fixed layout above.
       const SIGN_UP = { x: 1751, y: 270.7 };
       const CREATE = { x: 1645.5, y: 409.5 };
-      const M_CREATE = { x: 1418.5, y: 799.5 };
+      const M_CREATE = { x: 1418.5, y: 807.5 };
       const COPY = { x: 1423.5, y: 671.5 };
       const PILL_SLOT = { x: 1129.5, y: 671.5 };
       const PILL_OUT = { x: 1500, y: 470 };
@@ -704,9 +734,11 @@
       // Scene 2 — real openrouter.ai, then cross-cut to the Keys page on "keys"
       tl.fromTo($("browser"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 6.53);
       tl.fromTo($("shot"), { scale: 1 }, { scale: 1.03, duration: 3.0, ease: "none" }, 6.6);
+      tl.fromTo($("who"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 7.27);
       tl.fromTo($("cursor"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 7.27);
       tl.fromTo($("cursor"), { x: 1558, y: 818 }, { ...at(SIGN_UP), duration: 0.8, ease: "power2.inOut" }, 7.27);
       tl.fromTo($("strip"), { x: 0 }, { x: -1187, duration: 0.55, ease: "power3.inOut" }, 9.4);
+      tl.to($("who"), { opacity: 0, duration: 0.25, ease: "power2.out" }, 9.35);
       tl.to($("url-home"), { opacity: 0, duration: 0.2, ease: "power2.out" }, 9.57);
       tl.fromTo($("url-keys"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 9.57);
       tl.to($("cursor"), { x: 1398, y: 558, duration: 0.6, ease: "power2.inOut" }, 9.35);

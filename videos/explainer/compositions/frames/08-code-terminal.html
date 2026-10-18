@@ -94,6 +94,18 @@
         white-space: pre;
         color: #F4F4F5;
       }
+      [class~="08-code-terminal-note"] {
+        position: absolute;
+        left: 290px;
+        top: 782px;
+        margin: 0;
+        font-family: "Geist", sans-serif;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #636363;
+        opacity: 0;
+      }
       [class~="08-code-terminal-hidden"] { opacity: 0; }
       [class~="08-code-terminal-prompt"] { color: #A1A1AA; }
       [class~="08-code-terminal-dim"] { color: #A1A1AA; }
@@ -119,7 +131,7 @@
     <div class="08-code-terminal-bg clip" data-start="0" data-duration="10.192" data-track-index="0"></div>
 
     <div class="08-code-terminal-stage clip" data-start="0" data-duration="10.192" data-track-index="1">
-      <p id="08-code-terminal-eyebrow" class="08-code-terminal-eyebrow">If you write code</p>
+      <p id="08-code-terminal-eyebrow" class="08-code-terminal-eyebrow">If you write code · Claude Code</p>
 
       <div id="08-code-terminal-card" class="08-code-terminal-card">
         <div class="08-code-terminal-bar">
@@ -141,6 +153,8 @@
         <p id="08-code-terminal-l5" class="08-code-terminal-line 08-code-terminal-ok 08-code-terminal-hidden" style="top: 317.6px;"><svg class="08-code-terminal-check" viewBox="0 0 20.4 34" aria-hidden="true"><path d="M3.5 18.5 L8.2 23.2 L17 12.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Signed in</p>
         <p id="08-code-terminal-l6" class="08-code-terminal-line 08-code-terminal-hidden" style="top: 372px;"><span class="08-code-terminal-prompt">$ </span><span id="08-code-terminal-t6"></span><span id="08-code-terminal-t6m" class="08-code-terminal-model"></span><span id="08-code-terminal-c6" class="08-code-terminal-caret"></span></p>
       </div>
+
+      <p id="08-code-terminal-note" class="08-code-terminal-note">macOS and Linux · anyr claude installs Claude Code if it's missing</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -207,6 +221,10 @@
           { el: $("t6m"), text: "anyrouter/free" },
         ], 7.89, 26);
         caret($("c6"), 6.4, 6.8, claudeEnd, DURATION);
+
+        // Frame 9 opens without the note.
+        tl.fromTo($("note"), { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 3.05);
+        tl.to($("note"), { opacity: 0, duration: 0.3, ease: "power1.in" }, DURATION - 0.3);
 
         tl.set({}, {}, DURATION);
 
