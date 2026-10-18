@@ -7,56 +7,54 @@
 
 ## Line 1 — The wall (Frame 1)
 
-**Time:** 0 – 11s
 **Delivery:** Matter of fact. A small drop on "too many requests".
 
-    You're using OpenRouter's free models. Then the errors start. Too many requests. That's a rate limit: a cap on how many requests one key can send. Twenty a minute. Fifty a day.
+    You're using OpenRouter's free models. Then the errors start. Too many requests. That's a rate limit. Your account gets twenty requests a minute, and fifty a day. A thousand, once you've bought ten dollars of credits.
 
 ## Line 2 — Why (Frame 2)
 
-**Time:** 11 – 14s
 **Delivery:** Plain, slower.
 
-    The reason is simple. One key means one limit.
+    The limit belongs to your OpenRouter account, so another key won't help.
 
 ## Line 3 — The fix (Frame 3)
 
-**Time:** 14 – 21s
 **Delivery:** The answer. Warm, confident.
 
-    AnyRouter takes that same key, and backs it with a shared pool of keys from other members. Three steps.
+    AnyRouter keeps your key. When it hits the limit, the request goes through a key another member shared. Their quota, not yours.
 
 ## Line 4 — Step one (Frame 4)
 
-**Time:** 21 – 27s
-**Delivery:** Instructional, clear, slower on the button name.
+**Delivery:** Instructional, clear.
 
-    Step one. On open router dot A. I., open Keys, click Create Key, and copy it.
+    Step one. On open router dot A. I., create a new key for AnyRouter, and copy it.
 
 ## Line 5 — Step two (Frame 5)
 
-**Time:** 27 – 35s
-**Delivery:** Instructional, same pace.
+**Delivery:** Instructional, same pace, slower on "bring your own key".
 
-    Step two. In AnyRouter, open B. Y. O. K., pick OpenRouter, and paste your key. AnyRouter checks it with one live call, then adds it.
+    Step two. Sign in to AnyRouter and open B. Y. O. K.: bring your own key. Pick OpenRouter, paste the key, click Test key, then Add key.
 
 ## Line 6 — Step three (Frame 6)
 
-**Time:** 35 – 41s
-**Delivery:** Instructional, a small payoff on "verified".
+**Delivery:** Instructional, honest, even.
 
-    Step three. Share your key with the pool, and confirm. That's what lets you draw from it.
+    Step three. Turn on Share with pool. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and show on your OpenRouter account. Yours always go first, and you can turn it off any time.
 
-## Line 7 — How it works (Frame 7)
+## Line 7 — Step four (Frame 7)
 
-**Time:** 41 – 52s
+**Delivery:** Instructional, clear on the model id.
+
+    Step four. In your app, switch to an AnyRouter key and the AnyRouter base URL, and set the model to open router slash free.
+
+## Line 8 — How it works (Frame 8)
+
 **Delivery:** Explaining, steady, a lift on the last sentence.
 
-    Now your key goes first. When it hits its limit, it rests for a moment, and a key from the pool answers instead. Your requests keep going.
+    Now each request tries your key first. When it's limited, it rests, and the next requests go to shared keys, each to a different one. Your requests keep going.
 
-## Line 8 — Close (Frame 8)
+## Line 9 — Close (Frame 9)
 
-**Time:** 52 – 62s
 **Delivery:** Settled, warm sign-off.
 
-    Same free models, with no daily cap on AnyRouter. And your key earns credits when it helps someone else. Start at any router dot dev.
+    Your own key still counts toward OpenRouter's limit. Past it, the pool keeps you going. Start at any router dot dev.

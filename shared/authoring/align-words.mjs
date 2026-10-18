@@ -21,13 +21,12 @@ function measuredGaps(file) {
 }
 
 /**
- * Order-preserving match of boundary words to gaps. Equal counts pair one to one. Otherwise
- * a DP minimises the time error after removing the line's overall stretch (`scale`), so
- * drift that builds along the line doesn't pull a word onto a later pause.
+ * Order-preserving match of boundary words to gaps. A DP minimises the time error after removing the line's overall stretch (`scale`), so
+ * drift that builds along the line doesn't pull a word onto a later pause. Equal counts
+ * still go through it: Whisper can add a comma Kokoro never paused at and drop one it did.
  */
 function match(bounds, gaps, scale) {
   const n = bounds.length, m = gaps.length;
-  if (n === m) return bounds.map((_, i) => [i, i]);
   const cost = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(Infinity));
   const back = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(null));
   cost[0][0] = 0;

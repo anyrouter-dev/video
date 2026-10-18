@@ -51,6 +51,7 @@ Every number or claim on screen is one of these. Sources were read 2026-10-18.
 | C9 | Add it: Dashboard → BYOK → OpenRouter → paste into "API key". AnyRouter makes one live call to OpenRouter before it stores the key; encrypted at rest, never shown again. Base URL `https://openrouter.ai/api/v1` is the default. | same guide + docs/features/byok-providers/openrouter.md |
 | C10 | Donating: per-key switch; AnyRouter verifies the key ("Key verified"); your own requests always come first; turn it off any time; earn 5% (Go or no plan) / 8% (Pro, Max) of the token cost of requests it serves, capped at $1 per key per UTC day. On the Free plan, donating an eligible key unlocks the shared pool's free models. | docs/features/shared-pool.md + the guide |
 | C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | `assets/anyrouter-pool.png` (real screenshot) |
+| C13 | The limit belongs to the account: more keys on one account do not raise it ("One account. One limit."). | openrouter.ai/docs/api-reference/limits.md (live 2026-10-19: "Making additional accounts or API keys will not affect your rate limits") |
 | C12 | Model ids on screen exist in `GET https://anyrouter.dev/api/v1/models?all=1` (checked 2026-10-18): `anyrouter/free`, `openrouter/free`. The live list has no `:free`-suffixed id, so none is shown. | live API |
 
 ## UI label source
@@ -65,3 +66,8 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 
 - Do not show anyone's real API key. Keys on screen are `sk-or-v1-••••••••••••`.
 - Never "unlimited". Never a number outside the ledger.
+- Music bed: `assets/bgm/track-84s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM).
+  A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
+  instead plays 0–40s, crossfades for 3s back to 21s (16s back, 4 bars, so the beat holds)
+  and runs to the real outro, 84s in all:
+  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit[a][b];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:68,asetpts=PTS-STARTPTS[y];[x][y]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-84s.mp3`
