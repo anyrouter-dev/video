@@ -1,0 +1,210 @@
+<template id="captions-template" data-composition-id="captions" data-width="1920" data-height="1080">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      :root {
+      --bg: #FFFFFF;
+      --surface: #FAFAFA;
+      --surface-2: #F5F5F5;
+      --ink: #0A0A0A;
+      --ink-2: #3F3F46;
+      --muted: #636363;
+      --line: #E5E5E5;
+      --line-strong: #D4D4D8;
+      --primary: #BB4D00;
+      --primary-tint: #FFF4EC;
+      --free: #007E55;
+      --free-tint: #ECFDF5;
+      --info: #1761D3;
+      --danger: #C0262D;
+      --terminal-bg: #0A0A0A;
+      --terminal-ink: #F4F4F5;
+      --terminal-dim: #A1A1AA;
+      --cap-ink: #0A0A0A;
+      --cap-canvas: #FFFFFF;
+      --cap-accent: #BB4D00;
+      --cap-accent-2: #007E55;
+      --font-display: "Geist", system-ui, serif;
+      --font-body: "Geist", system-ui, sans-serif;
+      --cap-band-top: 900px;
+      --cap-band-height: 180px;
+      }
+    </style>
+
+<style>
+  /* captions.mjs injects a "Geist" face that points at geist-mono.woff2 (it matches files by
+     name prefix); shared/authoring/finish.mjs drops that rule, so this is the Geist face. */
+  @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  .caption-pill {
+    max-width: 78%;
+    padding: 14px 34px 18px;
+    background: #0A0A0A;
+    border-radius: 16px;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.1em 0.34em;
+    font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* upcoming — grey on ink, 7.1:1 */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.12em;
+    color: #9A9AA3;
+    background-image: linear-gradient(#BB4D00, #BB4D00);
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+    background-size: 0 3px;
+  }
+  /* current word — white, with the film's one accent as a short underline */
+  .caption-word.is-active {
+    color: #FFFFFF;
+    background-size: 70% 3px;
+  }
+  /* already spoken — white */
+  .caption-word.is-spoken {
+    color: #FFFFFF;
+    background-size: 0 3px;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 48px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="111.401"
+  data-fps="30"
+  data-width="1920"
+  data-height="1080"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.054,"end":2.026,"text":"There are dozens of AI companies.","words":[{"id":"caption-word-0-0","text":"There","start":0.054,"end":0.406},{"id":"caption-word-0-1","text":"are","start":0.406,"end":0.65},{"id":"caption-word-0-2","text":"dozens","start":0.65,"end":1.138},{"id":"caption-word-0-3","text":"of","start":1.138,"end":1.246},{"id":"caption-word-0-4","text":"AI","start":1.3,"end":1.436},{"id":"caption-word-0-5","text":"companies.","start":1.481,"end":2.026}]},{"id":"caption-group-1","frame":1,"start":2.507,"end":3.881,"text":"Each one has its own website,","words":[{"id":"caption-word-1-0","text":"Each","start":2.507,"end":2.567},{"id":"caption-word-1-1","text":"one","start":2.567,"end":2.721},{"id":"caption-word-1-2","text":"has","start":2.721,"end":2.931},{"id":"caption-word-1-3","text":"its","start":2.931,"end":3.141},{"id":"caption-word-1-4","text":"own","start":3.141,"end":3.296},{"id":"caption-word-1-5","text":"website,","start":3.374,"end":3.881}]},{"id":"caption-group-2","frame":1,"start":4.107,"end":5.868,"text":"its own key, and its own bill.","words":[{"id":"caption-word-2-0","text":"its","start":4.107,"end":4.308},{"id":"caption-word-2-1","text":"own","start":4.308,"end":4.43},{"id":"caption-word-2-2","text":"key,","start":4.917,"end":4.977},{"id":"caption-word-2-3","text":"and","start":5.106,"end":5.192},{"id":"caption-word-2-4","text":"its","start":5.192,"end":5.398},{"id":"caption-word-2-5","text":"own","start":5.406,"end":5.62},{"id":"caption-word-2-6","text":"bill.","start":5.62,"end":5.868}]},{"id":"caption-group-3","frame":1,"start":6.427,"end":8.755,"text":"Using more than one gets messy fast.","words":[{"id":"caption-word-3-0","text":"Using","start":6.427,"end":6.54},{"id":"caption-word-3-1","text":"more","start":6.54,"end":6.867},{"id":"caption-word-3-2","text":"than","start":6.867,"end":7.122},{"id":"caption-word-3-3","text":"one","start":7.193,"end":7.438},{"id":"caption-word-3-4","text":"gets","start":7.438,"end":7.765},{"id":"caption-word-3-5","text":"messy","start":7.765,"end":8.163},{"id":"caption-word-3-6","text":"fast.","start":8.163,"end":8.755}]},{"id":"caption-group-4","frame":2,"start":9.269,"end":11.71,"text":"AnyRouter puts all of them behind one door,","words":[{"id":"caption-word-4-0","text":"AnyRouter","start":9.269,"end":9.785},{"id":"caption-word-4-1","text":"puts","start":9.851,"end":10.123},{"id":"caption-word-4-2","text":"all","start":10.123,"end":10.291},{"id":"caption-word-4-3","text":"of","start":10.357,"end":10.46},{"id":"caption-word-4-4","text":"them","start":10.46,"end":10.732},{"id":"caption-word-4-5","text":"behind","start":10.732,"end":11.144},{"id":"caption-word-4-6","text":"one","start":11.144,"end":11.341},{"id":"caption-word-4-7","text":"door,","start":11.65,"end":11.71}]},{"id":"caption-group-5","frame":2,"start":11.869,"end":13.719,"text":"one account, one key,","words":[{"id":"caption-word-5-0","text":"one","start":11.869,"end":11.941},{"id":"caption-word-5-1","text":"account,","start":11.997,"end":12.591},{"id":"caption-word-5-2","text":"one","start":13.099,"end":13.21},{"id":"caption-word-5-3","text":"key,","start":13.21,"end":13.719}]},{"id":"caption-group-6","frame":2,"start":14.072,"end":15.939,"text":"more than 260 models.","words":[{"id":"caption-word-6-0","text":"more","start":14.072,"end":14.229},{"id":"caption-word-6-1","text":"than","start":14.229,"end":14.584},{"id":"caption-word-6-2","text":"260","start":14.584,"end":15.391},{"id":"caption-word-6-3","text":"models.","start":15.391,"end":15.939}]},{"id":"caption-group-7","frame":3,"start":16.506,"end":18.281,"text":"Think of it like a power strip","words":[{"id":"caption-word-7-0","text":"Think","start":16.506,"end":16.802},{"id":"caption-word-7-1","text":"of","start":16.819,"end":16.945},{"id":"caption-word-7-2","text":"it","start":16.963,"end":17.115},{"id":"caption-word-7-3","text":"like","start":17.115,"end":17.429},{"id":"caption-word-7-4","text":"a","start":17.429,"end":17.501},{"id":"caption-word-7-5","text":"power","start":17.501,"end":17.895},{"id":"caption-word-7-6","text":"strip","start":17.895,"end":18.281}]},{"id":"caption-group-8","frame":3,"start":18.281,"end":18.572,"text":"for AI.","words":[{"id":"caption-word-8-0","text":"for","start":18.281,"end":18.344},{"id":"caption-word-8-1","text":"AI.","start":18.344,"end":18.572}]},{"id":"caption-group-9","frame":3,"start":19.03,"end":20.845,"text":"Your app or your coding tool plugs","words":[{"id":"caption-word-9-0","text":"Your","start":19.03,"end":19.09},{"id":"caption-word-9-1","text":"app","start":19.09,"end":19.252},{"id":"caption-word-9-2","text":"or","start":19.292,"end":19.442},{"id":"caption-word-9-3","text":"your","start":19.442,"end":19.568},{"id":"caption-word-9-4","text":"coding","start":19.773,"end":20.244},{"id":"caption-word-9-5","text":"tool","start":20.314,"end":20.634},{"id":"caption-word-9-6","text":"plugs","start":20.634,"end":20.845}]},{"id":"caption-group-10","frame":3,"start":21.316,"end":22.149,"text":"into AnyRouter.","words":[{"id":"caption-word-10-0","text":"into","start":21.316,"end":21.386},{"id":"caption-word-10-1","text":"AnyRouter.","start":21.386,"end":22.149}]},{"id":"caption-group-11","frame":3,"start":22.697,"end":24.542,"text":"AnyRouter sends each request to a provider","words":[{"id":"caption-word-11-0","text":"AnyRouter","start":22.697,"end":23.039},{"id":"caption-word-11-1","text":"sends","start":23.099,"end":23.41},{"id":"caption-word-11-2","text":"each","start":23.41,"end":23.681},{"id":"caption-word-11-3","text":"request","start":23.851,"end":24.232},{"id":"caption-word-11-4","text":"to","start":24.232,"end":24.342},{"id":"caption-word-11-5","text":"a","start":24.342,"end":24.402},{"id":"caption-word-11-6","text":"provider","start":24.402,"end":24.542}]},{"id":"caption-group-12","frame":3,"start":25.003,"end":25.845,"text":"that is ready.","words":[{"id":"caption-word-12-0","text":"that","start":25.003,"end":25.294},{"id":"caption-word-12-1","text":"is","start":25.294,"end":25.444},{"id":"caption-word-12-2","text":"ready.","start":25.785,"end":25.845}]},{"id":"caption-group-13","frame":3,"start":26.36,"end":27.584,"text":"And if one goes down,","words":[{"id":"caption-word-13-0","text":"And","start":26.36,"end":26.42},{"id":"caption-word-13-1","text":"if","start":26.42,"end":26.48},{"id":"caption-word-13-2","text":"one","start":26.48,"end":26.729},{"id":"caption-word-13-3","text":"goes","start":26.753,"end":27.122},{"id":"caption-word-13-4","text":"down,","start":27.122,"end":27.584}]},{"id":"caption-group-14","frame":3,"start":27.756,"end":29.212,"text":"it quietly tries the next.","words":[{"id":"caption-word-14-0","text":"it","start":27.756,"end":27.818},{"id":"caption-word-14-1","text":"quietly","start":27.818,"end":28.261},{"id":"caption-word-14-2","text":"tries","start":28.261,"end":28.381},{"id":"caption-word-14-3","text":"the","start":28.381,"end":28.805},{"id":"caption-word-14-4","text":"next.","start":28.805,"end":29.212}]},{"id":"caption-group-15","frame":4,"start":29.723,"end":31.14,"text":"There is also a shared pool.","words":[{"id":"caption-word-15-0","text":"There","start":29.723,"end":30.016},{"id":"caption-word-15-1","text":"is","start":30.016,"end":30.136},{"id":"caption-word-15-2","text":"also","start":30.136,"end":30.412},{"id":"caption-word-15-3","text":"a","start":30.412,"end":30.472},{"id":"caption-word-15-4","text":"shared","start":30.472,"end":30.876},{"id":"caption-word-15-5","text":"pool.","start":30.876,"end":31.14}]},{"id":"caption-group-16","frame":4,"start":31.637,"end":33.641,"text":"An API key is like a password","words":[{"id":"caption-word-16-0","text":"An","start":31.637,"end":31.697},{"id":"caption-word-16-1","text":"API","start":31.697,"end":31.833},{"id":"caption-word-16-2","text":"key","start":31.843,"end":32.123},{"id":"caption-word-16-3","text":"is","start":32.133,"end":32.322},{"id":"caption-word-16-4","text":"like","start":32.322,"end":32.702},{"id":"caption-word-16-5","text":"a","start":32.712,"end":32.802},{"id":"caption-word-16-6","text":"password","start":32.802,"end":33.641}]},{"id":"caption-group-17","frame":4,"start":33.691,"end":36.12,"text":"that lets software use an AI service.","words":[{"id":"caption-word-17-0","text":"that","start":33.691,"end":33.97},{"id":"caption-word-17-1","text":"lets","start":33.97,"end":34.3},{"id":"caption-word-17-2","text":"software","start":34.3,"end":34.949},{"id":"caption-word-17-3","text":"use","start":34.949,"end":35.089},{"id":"caption-word-17-4","text":"an","start":35.089,"end":35.339},{"id":"caption-word-17-5","text":"AI","start":35.339,"end":35.589},{"id":"caption-word-17-6","text":"service.","start":35.589,"end":36.12}]},{"id":"caption-group-18","frame":4,"start":36.705,"end":38.754,"text":"Members share keys they are not using,","words":[{"id":"caption-word-18-0","text":"Members","start":36.705,"end":36.934},{"id":"caption-word-18-1","text":"share","start":36.956,"end":37.351},{"id":"caption-word-18-2","text":"keys","start":37.351,"end":37.581},{"id":"caption-word-18-3","text":"they","start":37.658,"end":37.987},{"id":"caption-word-18-4","text":"are","start":37.987,"end":38.047},{"id":"caption-word-18-5","text":"not","start":38.047,"end":38.536},{"id":"caption-word-18-6","text":"using,","start":38.536,"end":38.754}]},{"id":"caption-group-19","frame":4,"start":39.162,"end":40.94,"text":"and together those keys become a big","words":[{"id":"caption-word-19-0","text":"and","start":39.162,"end":39.222},{"id":"caption-word-19-1","text":"together","start":39.222,"end":39.616},{"id":"caption-word-19-2","text":"those","start":39.625,"end":39.937},{"id":"caption-word-19-3","text":"keys","start":39.937,"end":40.21},{"id":"caption-word-19-4","text":"become","start":40.21,"end":40.366},{"id":"caption-word-19-5","text":"a","start":40.551,"end":40.677},{"id":"caption-word-19-6","text":"big","start":40.843,"end":40.94}]},{"id":"caption-group-20","frame":4,"start":41.018,"end":42.986,"text":"pool of free AI usage.","words":[{"id":"caption-word-20-0","text":"pool","start":41.018,"end":41.359},{"id":"caption-word-20-1","text":"of","start":41.359,"end":41.564},{"id":"caption-word-20-2","text":"free","start":41.564,"end":41.963},{"id":"caption-word-20-3","text":"AI","start":42.08,"end":42.148},{"id":"caption-word-20-4","text":"usage.","start":42.197,"end":42.986}]},{"id":"caption-group-21","frame":5,"start":43.567,"end":45.236,"text":"Some free models work the moment you","words":[{"id":"caption-word-21-0","text":"Some","start":43.567,"end":43.696},{"id":"caption-word-21-1","text":"free","start":43.696,"end":43.936},{"id":"caption-word-21-2","text":"models","start":43.936,"end":44.231},{"id":"caption-word-21-3","text":"work","start":44.286,"end":44.535},{"id":"caption-word-21-4","text":"the","start":44.535,"end":44.71},{"id":"caption-word-21-5","text":"moment","start":44.71,"end":45.015},{"id":"caption-word-21-6","text":"you","start":45.07,"end":45.236}]},{"id":"caption-group-22","frame":5,"start":45.236,"end":45.585,"text":"sign up.","words":[{"id":"caption-word-22-0","text":"sign","start":45.236,"end":45.411},{"id":"caption-word-22-1","text":"up.","start":45.494,"end":45.585}]},{"id":"caption-group-23","frame":5,"start":46.05,"end":47.1,"text":"To unlock the whole pool,","words":[{"id":"caption-word-23-0","text":"To","start":46.05,"end":46.11},{"id":"caption-word-23-1","text":"unlock","start":46.11,"end":46.274},{"id":"caption-word-23-2","text":"the","start":46.274,"end":46.439},{"id":"caption-word-23-3","text":"whole","start":46.468,"end":46.731},{"id":"caption-word-23-4","text":"pool,","start":46.731,"end":47.1}]},{"id":"caption-group-24","frame":5,"start":47.1,"end":48.478,"text":"share one free key.","words":[{"id":"caption-word-24-0","text":"share","start":47.1,"end":47.528},{"id":"caption-word-24-1","text":"one","start":47.528,"end":47.771},{"id":"caption-word-24-2","text":"free","start":47.771,"end":47.888},{"id":"caption-word-24-3","text":"key.","start":48.335,"end":48.478}]},{"id":"caption-group-25","frame":5,"start":48.95,"end":51.966,"text":"Step one, sign in at openrouter.ai","words":[{"id":"caption-word-25-0","text":"Step","start":48.95,"end":49.14},{"id":"caption-word-25-1","text":"one,","start":49.14,"end":49.601},{"id":"caption-word-25-2","text":"sign","start":49.989,"end":50.226},{"id":"caption-word-25-3","text":"in","start":50.277,"end":50.489},{"id":"caption-word-25-4","text":"at","start":50.489,"end":50.723},{"id":"caption-word-25-5","text":"openrouter.ai","start":50.723,"end":51.966}]},{"id":"caption-group-26","frame":5,"start":52.745,"end":53.718,"text":"and open keys.","words":[{"id":"caption-word-26-0","text":"and","start":52.745,"end":52.81},{"id":"caption-word-26-1","text":"open","start":52.81,"end":53.155},{"id":"caption-word-26-2","text":"keys.","start":53.155,"end":53.718}]},{"id":"caption-group-27","frame":5,"start":54.234,"end":56.007,"text":"Click Create Key and copy it.","words":[{"id":"caption-word-27-0","text":"Click","start":54.234,"end":54.294},{"id":"caption-word-27-1","text":"Create","start":54.294,"end":54.686},{"id":"caption-word-27-2","text":"Key","start":54.715,"end":54.972},{"id":"caption-word-27-3","text":"and","start":54.972,"end":55.228},{"id":"caption-word-27-4","text":"copy","start":55.228,"end":55.534},{"id":"caption-word-27-5","text":"it.","start":55.583,"end":56.007}]},{"id":"caption-group-28","frame":6,"start":56.608,"end":57.148,"text":"Step two,","words":[{"id":"caption-word-28-0","text":"Step","start":56.608,"end":56.826},{"id":"caption-word-28-1","text":"two,","start":56.826,"end":57.148}]},{"id":"caption-group-29","frame":6,"start":57.441,"end":59.944,"text":"sign in at anyrouter.dev and open the","words":[{"id":"caption-word-29-0","text":"sign","start":57.441,"end":57.588},{"id":"caption-word-29-1","text":"in","start":57.588,"end":57.755},{"id":"caption-word-29-2","text":"at","start":57.755,"end":57.923},{"id":"caption-word-29-3","text":"anyrouter.dev","start":57.923,"end":59.096},{"id":"caption-word-29-4","text":"and","start":59.255,"end":59.357},{"id":"caption-word-29-5","text":"open","start":59.441,"end":59.711},{"id":"caption-word-29-6","text":"the","start":59.711,"end":59.944}]},{"id":"caption-group-30","frame":6,"start":59.944,"end":60.72,"text":"shared pool.","words":[{"id":"caption-word-30-0","text":"shared","start":59.944,"end":60.409},{"id":"caption-word-30-1","text":"pool.","start":60.409,"end":60.72}]},{"id":"caption-group-31","frame":6,"start":61.338,"end":63.164,"text":"Click donate next to OpenRouter,","words":[{"id":"caption-word-31-0","text":"Click","start":61.338,"end":61.397},{"id":"caption-word-31-1","text":"donate","start":61.397,"end":61.692},{"id":"caption-word-31-2","text":"next","start":62.044,"end":62.104},{"id":"caption-word-31-3","text":"to","start":62.157,"end":62.305},{"id":"caption-word-31-4","text":"OpenRouter,","start":62.305,"end":63.164}]},{"id":"caption-group-32","frame":6,"start":63.375,"end":65.122,"text":"paste your key,","words":[{"id":"caption-word-32-0","text":"paste","start":63.375,"end":64.001},{"id":"caption-word-32-1","text":"your","start":64.001,"end":64.655},{"id":"caption-word-32-2","text":"key,","start":64.655,"end":65.122}]},{"id":"caption-group-33","frame":6,"start":65.575,"end":67.112,"text":"and press donate.","words":[{"id":"caption-word-33-0","text":"and","start":65.575,"end":65.635},{"id":"caption-word-33-1","text":"press","start":65.635,"end":66.164},{"id":"caption-word-33-2","text":"donate.","start":66.164,"end":67.112}]},{"id":"caption-group-34","frame":6,"start":67.358,"end":68.338,"text":"Your key is stored encrypted and you","words":[{"id":"caption-word-34-0","text":"Your","start":67.358,"end":67.418},{"id":"caption-word-34-1","text":"key","start":67.418,"end":67.478},{"id":"caption-word-34-2","text":"is","start":67.478,"end":67.548},{"id":"caption-word-34-3","text":"stored","start":67.548,"end":67.774},{"id":"caption-word-34-4","text":"encrypted","start":67.774,"end":68.112},{"id":"caption-word-34-5","text":"and","start":68.112,"end":68.225},{"id":"caption-word-34-6","text":"you","start":68.225,"end":68.338}]},{"id":"caption-group-35","frame":6,"start":68.338,"end":69.034,"text":"can stop sharing any time.","words":[{"id":"caption-word-35-0","text":"can","start":68.338,"end":68.451},{"id":"caption-word-35-1","text":"stop","start":68.451,"end":68.599},{"id":"caption-word-35-2","text":"sharing","start":68.599,"end":68.861},{"id":"caption-word-35-3","text":"any","start":68.861,"end":68.974},{"id":"caption-word-35-4","text":"time.","start":68.974,"end":69.034}]},{"id":"caption-group-36","frame":6,"start":69.554,"end":69.996,"text":"A key from NVIDIA","words":[{"id":"caption-word-36-0","text":"A","start":69.554,"end":69.614},{"id":"caption-word-36-1","text":"key","start":69.614,"end":69.674},{"id":"caption-word-36-2","text":"from","start":69.674,"end":69.861},{"id":"caption-word-36-3","text":"NVIDIA","start":69.861,"end":69.996}]},{"id":"caption-group-37","frame":6,"start":70.456,"end":71.692,"text":"works the same way.","words":[{"id":"caption-word-37-0","text":"works","start":70.456,"end":70.681},{"id":"caption-word-37-1","text":"the","start":70.681,"end":70.906},{"id":"caption-word-37-2","text":"same","start":70.906,"end":71.209},{"id":"caption-word-37-3","text":"way.","start":71.209,"end":71.692}]},{"id":"caption-group-38","frame":7,"start":72.258,"end":74.172,"text":"Step three, use the free models.","words":[{"id":"caption-word-38-0","text":"Step","start":72.258,"end":72.379},{"id":"caption-word-38-1","text":"three,","start":72.499,"end":72.864},{"id":"caption-word-38-2","text":"use","start":73.047,"end":73.138},{"id":"caption-word-38-3","text":"the","start":73.22,"end":73.394},{"id":"caption-word-38-4","text":"free","start":73.394,"end":73.686},{"id":"caption-word-38-5","text":"models.","start":73.686,"end":74.172}]},{"id":"caption-group-39","frame":7,"start":74.709,"end":75.809,"text":"While your key is shared,","words":[{"id":"caption-word-39-0","text":"While","start":74.709,"end":74.769},{"id":"caption-word-39-1","text":"your","start":74.832,"end":75.002},{"id":"caption-word-39-2","text":"key","start":75.002,"end":75.138},{"id":"caption-word-39-3","text":"is","start":75.138,"end":75.377},{"id":"caption-word-39-4","text":"shared,","start":75.377,"end":75.809}]},{"id":"caption-group-40","frame":7,"start":76.057,"end":77.588,"text":"you get the pool's free models with","words":[{"id":"caption-word-40-0","text":"you","start":76.057,"end":76.117},{"id":"caption-word-40-1","text":"get","start":76.117,"end":76.23},{"id":"caption-word-40-2","text":"the","start":76.23,"end":76.379},{"id":"caption-word-40-3","text":"pool's","start":76.379,"end":76.726},{"id":"caption-word-40-4","text":"free","start":76.726,"end":77.092},{"id":"caption-word-40-5","text":"models","start":77.092,"end":77.34},{"id":"caption-word-40-6","text":"with","start":77.449,"end":77.588}]},{"id":"caption-group-41","frame":7,"start":77.727,"end":78.58,"text":"no daily cap,","words":[{"id":"caption-word-41-0","text":"no","start":77.727,"end":77.875},{"id":"caption-word-41-1","text":"daily","start":77.875,"end":78.302},{"id":"caption-word-41-2","text":"cap,","start":78.302,"end":78.58}]},{"id":"caption-group-42","frame":7,"start":78.915,"end":80.19,"text":"the Go plan at no cost,","words":[{"id":"caption-word-42-0","text":"the","start":78.915,"end":79.005},{"id":"caption-word-42-1","text":"Go","start":79.005,"end":79.175},{"id":"caption-word-42-2","text":"plan","start":79.175,"end":79.345},{"id":"caption-word-42-3","text":"at","start":79.345,"end":79.674},{"id":"caption-word-42-4","text":"no","start":79.674,"end":79.911},{"id":"caption-word-42-5","text":"cost,","start":79.911,"end":80.19}]},{"id":"caption-group-43","frame":7,"start":80.363,"end":82.152,"text":"and $4 of credit every month.","words":[{"id":"caption-word-43-0","text":"and","start":80.363,"end":80.436},{"id":"caption-word-43-1","text":"$4","start":80.436,"end":80.708},{"id":"caption-word-43-2","text":"of","start":80.708,"end":80.843},{"id":"caption-word-43-3","text":"credit","start":80.843,"end":81.26},{"id":"caption-word-43-4","text":"every","start":81.26,"end":81.609},{"id":"caption-word-43-5","text":"month.","start":81.609,"end":82.152}]},{"id":"caption-group-44","frame":8,"start":82.677,"end":83.461,"text":"If you write code,","words":[{"id":"caption-word-44-0","text":"If","start":82.677,"end":82.737},{"id":"caption-word-44-1","text":"you","start":82.759,"end":82.923},{"id":"caption-word-44-2","text":"write","start":82.923,"end":83.206},{"id":"caption-word-44-3","text":"code,","start":83.206,"end":83.461}]},{"id":"caption-group-45","frame":8,"start":83.625,"end":85.131,"text":"here's how to use it with Claude.","words":[{"id":"caption-word-45-0","text":"here's","start":83.625,"end":84.007},{"id":"caption-word-45-1","text":"how","start":84.007,"end":84.235},{"id":"caption-word-45-2","text":"to","start":84.235,"end":84.38},{"id":"caption-word-45-3","text":"use","start":84.38,"end":84.59},{"id":"caption-word-45-4","text":"it","start":84.59,"end":84.754},{"id":"caption-word-45-5","text":"with","start":84.754,"end":84.9},{"id":"caption-word-45-6","text":"Claude.","start":84.963,"end":85.131}]},{"id":"caption-group-46","frame":8,"start":85.698,"end":87.722,"text":"Install the AnyRouter command line tool","words":[{"id":"caption-word-46-0","text":"Install","start":85.698,"end":85.833},{"id":"caption-word-46-1","text":"the","start":85.924,"end":86.076},{"id":"caption-word-46-2","text":"AnyRouter","start":86.076,"end":86.682},{"id":"caption-word-46-3","text":"command","start":86.682,"end":87.157},{"id":"caption-word-46-4","text":"line","start":87.157,"end":87.43},{"id":"caption-word-46-5","text":"tool","start":87.43,"end":87.722}]},{"id":"caption-group-47","frame":8,"start":87.722,"end":89.712,"text":"and run anyr login.","words":[{"id":"caption-word-47-0","text":"and","start":87.722,"end":87.884},{"id":"caption-word-47-1","text":"run","start":88.48,"end":88.54},{"id":"caption-word-47-2","text":"anyr","start":88.789,"end":89.238},{"id":"caption-word-47-3","text":"login.","start":89.238,"end":89.712}]},{"id":"caption-group-48","frame":8,"start":90.208,"end":92.348,"text":"Then run anyr claude with a model.","words":[{"id":"caption-word-48-0","text":"Then","start":90.208,"end":90.271},{"id":"caption-word-48-1","text":"run","start":90.339,"end":90.541},{"id":"caption-word-48-2","text":"anyr","start":90.541,"end":90.797},{"id":"caption-word-48-3","text":"claude","start":91.006,"end":91.208},{"id":"caption-word-48-4","text":"with","start":91.208,"end":91.493},{"id":"caption-word-48-5","text":"a","start":91.538,"end":91.628},{"id":"caption-word-48-6","text":"model.","start":91.628,"end":92.348}]},{"id":"caption-group-49","frame":9,"start":92.895,"end":94.528,"text":"Change the model whenever you like.","words":[{"id":"caption-word-49-0","text":"Change","start":92.895,"end":93.222},{"id":"caption-word-49-1","text":"the","start":93.222,"end":93.408},{"id":"caption-word-49-2","text":"model","start":93.408,"end":93.726},{"id":"caption-word-49-3","text":"whenever","start":93.726,"end":94.195},{"id":"caption-word-49-4","text":"you","start":94.222,"end":94.337},{"id":"caption-word-49-5","text":"like.","start":94.337,"end":94.528}]},{"id":"caption-group-50","frame":9,"start":94.976,"end":96.72,"text":"Free for free models only.","words":[{"id":"caption-word-50-0","text":"Free","start":94.976,"end":95.036},{"id":"caption-word-50-1","text":"for","start":95.089,"end":95.346},{"id":"caption-word-50-2","text":"free","start":95.56,"end":95.722},{"id":"caption-word-50-3","text":"models","start":95.722,"end":96.206},{"id":"caption-word-50-4","text":"only.","start":96.305,"end":96.72}]},{"id":"caption-group-51","frame":9,"start":97.266,"end":98.745,"text":"Auto to let AnyRouter pick the","words":[{"id":"caption-word-51-0","text":"Auto","start":97.266,"end":97.326},{"id":"caption-word-51-1","text":"to","start":97.326,"end":97.445},{"id":"caption-word-51-2","text":"let","start":97.445,"end":97.653},{"id":"caption-word-51-3","text":"AnyRouter","start":97.684,"end":98.412},{"id":"caption-word-51-4","text":"pick","start":98.412,"end":98.682},{"id":"caption-word-51-5","text":"the","start":98.682,"end":98.745}]},{"id":"caption-group-52","frame":9,"start":99.244,"end":99.426,"text":"best one,","words":[{"id":"caption-word-52-0","text":"best","start":99.244,"end":99.304},{"id":"caption-word-52-1","text":"one,","start":99.306,"end":99.426}]},{"id":"caption-group-53","frame":9,"start":99.8,"end":101.216,"text":"or coding for the best coding","words":[{"id":"caption-word-53-0","text":"or","start":99.8,"end":99.86},{"id":"caption-word-53-1","text":"coding","start":99.86,"end":100.161},{"id":"caption-word-53-2","text":"for","start":100.161,"end":100.378},{"id":"caption-word-53-3","text":"the","start":100.378,"end":100.519},{"id":"caption-word-53-4","text":"best","start":100.711,"end":100.881},{"id":"caption-word-53-5","text":"coding","start":100.881,"end":101.216}]},{"id":"caption-group-54","frame":9,"start":101.69,"end":102.992,"text":"model from the keys you added.","words":[{"id":"caption-word-54-0","text":"model","start":101.69,"end":101.75},{"id":"caption-word-54-1","text":"from","start":101.808,"end":101.926},{"id":"caption-word-54-2","text":"the","start":101.926,"end":102.084},{"id":"caption-word-54-3","text":"keys","start":102.084,"end":102.144},{"id":"caption-word-54-4","text":"you","start":102.321,"end":102.381},{"id":"caption-word-54-5","text":"added.","start":102.508,"end":102.992}]},{"id":"caption-group-55","frame":10,"start":103.527,"end":104.943,"text":"One key, every model,","words":[{"id":"caption-word-55-0","text":"One","start":103.527,"end":103.713},{"id":"caption-word-55-1","text":"key,","start":103.749,"end":104.043},{"id":"caption-word-55-2","text":"every","start":104.176,"end":104.568},{"id":"caption-word-55-3","text":"model,","start":104.568,"end":104.943}]},{"id":"caption-group-56","frame":10,"start":105.261,"end":106.837,"text":"and a shared pool that keeps it free.","words":[{"id":"caption-word-56-0","text":"and","start":105.261,"end":105.321},{"id":"caption-word-56-1","text":"a","start":105.321,"end":105.381},{"id":"caption-word-56-2","text":"shared","start":105.381,"end":105.483},{"id":"caption-word-56-3","text":"pool","start":105.633,"end":105.844},{"id":"caption-word-56-4","text":"that","start":105.884,"end":106.114},{"id":"caption-word-56-5","text":"keeps","start":106.114,"end":106.425},{"id":"caption-word-56-6","text":"it","start":106.425,"end":106.535},{"id":"caption-word-56-7","text":"free.","start":106.535,"end":106.837}]},{"id":"caption-group-57","frame":10,"start":107.226,"end":108.832,"text":"Start at anyrouter.dev.","words":[{"id":"caption-word-57-0","text":"Start","start":107.226,"end":107.376},{"id":"caption-word-57-1","text":"at","start":107.402,"end":107.54},{"id":"caption-word-57-2","text":"anyrouter.dev.","start":107.54,"end":108.832}]}];
+  var DURATION = 111.401;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.985 }, { scale: 1, duration: 0.18, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

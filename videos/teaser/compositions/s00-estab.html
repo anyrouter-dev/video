@@ -1,0 +1,185 @@
+<!doctype html>
+
+<html lang="en"><head><meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>s00-estab</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:'ArInter';src:url('fonts/inter.woff2') format('woff2-variations');
+  font-weight:100 900;font-display:block}
+@font-face{font-family:'ArMono';src:url('fonts/mono.woff2') format('woff2-variations');
+  font-weight:100 800;font-display:block}
+:root{
+  --bg:#FFFFFF;--card:#FFFFFF;--raised:#F6F5F1;--fg:#0B0B0C;
+  --muted:#5C5B58;--line:rgba(11,11,12,0.16);--line-solid:#8A8A8A;
+  --primary:#B4531F;--gold:#8A5A00;--free:#046B47;
+  --glow:rgba(180,83,31,0.26);--glow-soft:rgba(138,90,0,0.16);--scrim:rgba(255,255,255,0.72);
+  --node:radial-gradient(circle,#D96A1B 0%,#C2560B 46%,rgba(194,86,11,0) 76%);
+  --shot-frame:#141416;--shot-edge:rgba(0,0,0,0.14);
+  --mark-plate:rgba(11,11,12,0.05);
+  --c0:#8A5A00;
+  --c1:#B4531F;
+  --c2:#E17100;
+  --c3:#C2560B;
+  --c4:#973C00;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* NO background here. Each sub-composition is its own document, and the
+   framework composites it over the root — an opaque body on every clip hides
+   the plate layers underneath completely. The root's own html/body carries the
+   page background; scene bodies must stay transparent. */
+body{font-family:'ArInter',Inter,system-ui,sans-serif;color:var(--fg);
+  -webkit-font-smoothing:antialiased;perspective:2400px;transform-style:preserve-3d}
+.mono{font-family:'ArMono',ui-monospace,Menlo,monospace}
+.stage{position:relative;width:100%;height:100%;overflow:hidden;display:grid;place-items:center;
+  transform-style:preserve-3d}
+/* Every scene animates this wrapper for camera-ish moves only (punch, flip,
+   push-away). Entrances live on the children, so the two never fight over the
+   same transform property.
+   It MUST fill the stage: .stage is a centred grid, so a fit-content #punch
+   would shrink-wrap its scene and any absolutely-positioned child measured
+   from the frame centre (the estab orbit) would land off-frame. */
+.punch{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d}
+.mark{width:76px;height:76px;object-fit:contain}
+.mark-plate{background:var(--mark-plate);border:1px solid var(--line);border-radius:20px}
+/* the estab orbit: every tile is placed once at the frame centre and moved
+   with GSAP x/y, so nothing in this scene triggers a layout pass.
+   data-layout-allow-overflow: the tiles legitimately streak in from off-frame. */
+#ring{position:absolute;inset:0;width:100%;height:100%}
+.tile{position:absolute;left:960px;top:540px;width:96px;height:96px;margin:-48px 0 0 -48px;
+  display:grid;place-items:center;border-radius:22px;background:var(--mark-plate);
+  border:1px solid var(--line);will-change:transform,opacity}
+.tile .mark{width:56px;height:56px}
+
+/* type scale — 40px is the floor; nothing in the film sets below it.
+   Mono line-heights are generous on purpose: JetBrains Mono's em box is about
+   1.39em tall, so a line-height under that makes the glyphs spill out of their
+   own box and collide with whatever sits below. */
+.t-chip{font-family:'ArMono',monospace;font-size:40px;line-height:1.4;letter-spacing:-.01em}
+.t-body{font-size:46px;line-height:1.32;letter-spacing:-.012em}
+.t-lead{font-size:60px;line-height:1.22;letter-spacing:-.022em}
+.t-h2{font-size:104px;line-height:1.16;letter-spacing:-.038em;font-weight:700}
+.t-h1{font-size:184px;line-height:1.06;letter-spacing:-.045em;font-weight:700}
+.t-num{font-size:280px;line-height:1.3;letter-spacing:-.055em;font-weight:700}
+.t-dom{font-size:180px;line-height:1.12;letter-spacing:-.05em;font-weight:700}
+.muted{color:var(--muted)}
+.gold{color:var(--gold)}
+.green{color:var(--free)}
+.amber{color:var(--primary)}
+
+/* shared atoms */
+.idline{font-family:'ArMono',monospace;font-weight:600;letter-spacing:-.03em}
+.eyebrow{font-size:44px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* Anything that carries TEXT gets the solid card surface, not the translucent
+   mark-plate tint. A tint over a photographic plate makes the backdrop a
+   function of whatever happens to be behind it — the end card's amber "curl"
+   measured 2.32:1 where the nebula plate brightened behind it. A solid
+   surface is both crisper and provably contrast-safe. The mark-plate token is
+   reserved for the decorative tiles that hold a provider mark and no text. */
+.chip{display:flex;align-items:baseline;gap:26px;padding:24px 40px;border-radius:20px;
+  border:2px solid var(--line-solid);background:var(--card)}
+/* the path is the subject and the note is the annotation — 44 vs 40, not the
+   other way round */
+.chip .t-chip{font-size:44px}
+.chip .note{font-size:40px;color:var(--muted);white-space:nowrap}
+.kicker{font-size:40px;letter-spacing:.30em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cmd{font-family:'ArMono',monospace;font-size:52px;padding:30px 48px;border-radius:18px;
+  background:var(--card);border:2px solid var(--line-solid);white-space:nowrap}
+.s1{color:var(--gold)} .s2{color:var(--muted)} .s3{color:var(--free)} .s4{color:var(--primary)}
+
+/* the amber glow the monogram lands in. The halo is deliberately 200px larger
+   than the 268px monogram on every side — that overspill IS the glow, so the
+   wrapper carries data-layout-allow-overflow in the markup. */
+.monowrap{position:relative;width:268px;height:268px;display:grid;place-items:center}
+.orb{position:absolute;inset:-200px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,var(--glow) 0%,var(--glow-soft) 46%,transparent 72%);
+  filter:blur(14px)}
+#mono{position:relative}
+</style></head>
+<body>
+<div id="root" data-composition-id="s00-estab" data-width="1920" data-height="1080"
+     data-duration="1.88" data-fps="30">
+  <div class="stage" id="stage">
+    <div class="punch" id="punch" data-layout-allow-overflow><div id="ring" data-layout-allow-overflow>
+      <div class="tile" id="t0"><img class="mark " src="assets/providers/anthropic.svg" alt="anthropic" /></div>
+      <div class="tile" id="t1"><img class="mark " src="assets/providers/openai.svg" alt="openai" /></div>
+      <div class="tile" id="t2"><img class="mark " src="assets/providers/google.svg" alt="google" /></div>
+      <div class="tile" id="t3"><img class="mark " src="assets/providers/mistral.svg" alt="mistral" /></div>
+      <div class="tile" id="t4"><img class="mark " src="assets/providers/meta.svg" alt="meta" /></div>
+      <div class="tile" id="t5"><img class="mark " src="assets/providers/xai.svg" alt="xai" /></div>
+      <div class="tile" id="t6"><img class="mark " src="assets/providers/deepseek.svg" alt="deepseek" /></div>
+      <div class="tile" id="t7"><img class="mark " src="assets/providers/cohere.svg" alt="cohere" /></div>
+      <div class="tile" id="t8"><img class="mark " src="assets/providers/groq.svg" alt="groq" /></div>
+      <div class="tile" id="t9"><img class="mark " src="assets/providers/together.svg" alt="together" /></div>
+      <div class="tile" id="t10"><img class="mark " src="assets/providers/fireworks.svg" alt="fireworks" /></div>
+      <div class="tile" id="t11"><img class="mark " src="assets/providers/openrouter.svg" alt="openrouter" /></div>
+      <div class="tile" id="t12"><img class="mark " src="assets/providers/nvidia.svg" alt="nvidia" /></div>
+      <div class="tile" id="t13"><img class="mark " src="assets/providers/baseten.svg" alt="baseten" /></div>
+      <div class="tile" id="t14"><img class="mark " src="assets/providers/z-ai.svg" alt="z-ai" /></div>
+      <div class="tile" id="t15"><img class="mark " src="assets/providers/moonshotai.svg" alt="moonshotai" /></div>
+      <div class="tile" id="t16"><img class="mark " src="assets/providers/qwen.svg" alt="qwen" /></div>
+      <div class="tile" id="t17"><img class="mark " src="assets/providers/minimax.svg" alt="minimax" /></div>
+      <div class="tile" id="t18"><img class="mark " src="assets/providers/sakana.svg" alt="sakana" /></div>
+      <div class="tile" id="t19"><img class="mark " src="assets/providers/poolside.svg" alt="poolside" /></div>
+      <div class="tile" id="t20"><img class="mark " src="assets/providers/siliconflow.svg" alt="siliconflow" /></div>
+      <div class="tile" id="t21"><img class="mark " src="assets/providers/nousresearch.svg" alt="nousresearch" /></div>
+    </div></div>
+  </div>
+</div>
+<script>
+  // Animate #punch and its children, never the clip host — the framework owns
+  // clip visibility (rule 1).
+  const tl = gsap.timeline({ paused: true });
+  tl.set("#punch", { transformOrigin: "50% 50%" });
+  tl.fromTo("#punch",{scale:1.046},{scale:1,duration:.44,ease:"expo.out"},0);
+  tl.set("#ring",{transformOrigin:"50% 50%"});
+  tl.fromTo("#t0",{x:0,y:-940,scale:.30,opacity:0,rotation:-34},
+      {x:0,y:-340,scale:1,opacity:1,rotation:0,duration:.60,ease:"expo.out"},0);
+  tl.fromTo("#t1",{x:411.33,y:-901.923,scale:.30,opacity:0,rotation:-17.636},
+      {x:169.04,y:-326.228,scale:1,opacity:1,rotation:16.364,duration:.60,ease:"expo.out"},0.014);
+  tl.fromTo("#t2",{x:789.336,y:-790.778,scale:.30,opacity:0,rotation:-1.273},
+      {x:324.384,y:-286.026,scale:1,opacity:1,rotation:32.727,duration:.60,ease:"expo.out"},0.028);
+  tl.fromTo("#t3",{x:1103.394,y:-615.569,scale:.30,opacity:0,rotation:15.091},
+      {x:453.45,y:-222.653,scale:1,opacity:1,rotation:49.091,duration:.60,ease:"expo.out"},0.042);
+  tl.fromTo("#t4",{x:1328.063,y:-390.49,scale:.30,opacity:0,rotation:31.455},
+      {x:545.779,y:-141.241,scale:1,opacity:1,rotation:65.455,duration:.60,ease:"expo.out"},0.056);
+  tl.fromTo("#t5",{x:1445.139,y:-133.776,scale:.30,opacity:0,rotation:47.818},
+      {x:593.893,y:-48.387,scale:1,opacity:1,rotation:81.818,duration:.60,ease:"expo.out"},0.07);
+  tl.fromTo("#t6",{x:1445.139,y:133.776,scale:.30,opacity:0,rotation:64.182},
+      {x:593.893,y:48.387,scale:1,opacity:1,rotation:98.182,duration:.60,ease:"expo.out"},0.084);
+  tl.fromTo("#t7",{x:1328.063,y:390.49,scale:.30,opacity:0,rotation:80.545},
+      {x:545.779,y:141.241,scale:1,opacity:1,rotation:114.545,duration:.60,ease:"expo.out"},0.098);
+  tl.fromTo("#t8",{x:1103.394,y:615.569,scale:.30,opacity:0,rotation:96.909},
+      {x:453.45,y:222.653,scale:1,opacity:1,rotation:130.909,duration:.60,ease:"expo.out"},0.112);
+  tl.fromTo("#t9",{x:789.336,y:790.778,scale:.30,opacity:0,rotation:113.273},
+      {x:324.384,y:286.026,scale:1,opacity:1,rotation:147.273,duration:.60,ease:"expo.out"},0.126);
+  tl.fromTo("#t10",{x:411.33,y:901.923,scale:.30,opacity:0,rotation:129.636},
+      {x:169.04,y:326.228,scale:1,opacity:1,rotation:163.636,duration:.60,ease:"expo.out"},0.14);
+  tl.fromTo("#t11",{x:0,y:940,scale:.30,opacity:0,rotation:146},
+      {x:0,y:340,scale:1,opacity:1,rotation:180,duration:.60,ease:"expo.out"},0.154);
+  tl.fromTo("#t12",{x:-411.33,y:901.923,scale:.30,opacity:0,rotation:162.364},
+      {x:-169.04,y:326.228,scale:1,opacity:1,rotation:196.364,duration:.60,ease:"expo.out"},0.168);
+  tl.fromTo("#t13",{x:-789.336,y:790.778,scale:.30,opacity:0,rotation:178.727},
+      {x:-324.384,y:286.026,scale:1,opacity:1,rotation:212.727,duration:.60,ease:"expo.out"},0.182);
+  tl.fromTo("#t14",{x:-1103.394,y:615.569,scale:.30,opacity:0,rotation:195.091},
+      {x:-453.45,y:222.653,scale:1,opacity:1,rotation:229.091,duration:.60,ease:"expo.out"},0.196);
+  tl.fromTo("#t15",{x:-1328.063,y:390.49,scale:.30,opacity:0,rotation:211.455},
+      {x:-545.779,y:141.241,scale:1,opacity:1,rotation:245.455,duration:.60,ease:"expo.out"},0.21);
+  tl.fromTo("#t16",{x:-1445.139,y:133.776,scale:.30,opacity:0,rotation:227.818},
+      {x:-593.893,y:48.387,scale:1,opacity:1,rotation:261.818,duration:.60,ease:"expo.out"},0.224);
+  tl.fromTo("#t17",{x:-1445.139,y:-133.776,scale:.30,opacity:0,rotation:244.182},
+      {x:-593.893,y:-48.387,scale:1,opacity:1,rotation:278.182,duration:.60,ease:"expo.out"},0.238);
+  tl.fromTo("#t18",{x:-1328.063,y:-390.49,scale:.30,opacity:0,rotation:260.545},
+      {x:-545.779,y:-141.241,scale:1,opacity:1,rotation:294.545,duration:.60,ease:"expo.out"},0.252);
+  tl.fromTo("#t19",{x:-1103.394,y:-615.569,scale:.30,opacity:0,rotation:276.909},
+      {x:-453.45,y:-222.653,scale:1,opacity:1,rotation:310.909,duration:.60,ease:"expo.out"},0.266);
+  tl.fromTo("#t20",{x:-789.336,y:-790.778,scale:.30,opacity:0,rotation:293.273},
+      {x:-324.384,y:-286.026,scale:1,opacity:1,rotation:327.273,duration:.60,ease:"expo.out"},0.28);
+  tl.fromTo("#t21",{x:-411.33,y:-901.923,scale:.30,opacity:0,rotation:309.636},
+      {x:-169.04,y:-326.228,scale:1,opacity:1,rotation:343.636,duration:.60,ease:"expo.out"},0.294);
+  // the orbit breathes for a beat, then everything is drawn into the centre
+  tl.to("#ring",{rotate:20,duration:.72,ease:"sine.inOut"},.62);
+  tl.to(".tile",{scale:.04,opacity:0,duration:.46,ease:"power3.in",stagger:{each:.008,from:"random"}},1.30);
+  window.__timelines["s00-estab"] = tl;
+</script>
+</body></html>

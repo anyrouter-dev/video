@@ -9,43 +9,17 @@
  *
  * Rendered on demand (`node lib/cli.mjs run intro`), never by the nightly run.
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import crypto from 'node:crypto';
+import { collectAuthored } from '../../lib/authored.mjs';
 
 /** Everything the render depends on. Scratch (renders/, snapshots/, …) is not in the list. */
 const INPUTS = ['index.html', 'fonts', 'assets', 'audio/score.wav', 'compositions'];
-
-const sha256 = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
-
-/** Relative posix paths of every file under `p`, sorted; [] when it does not exist. */
-function filesUnder(dir, p) {
-  const abs = path.join(dir, p);
-  if (!fs.existsSync(abs)) return [];
-  if (fs.statSync(abs).isFile()) return [p];
-  return fs.readdirSync(abs)
-    .filter(n => n !== '.DS_Store')
-    .flatMap(n => filesUnder(dir, `${p}/${n}`));
-}
 
 export default {
   id: 'intro',
   title: 'Introduction',
   scheduled: false,
 
-  async collect({ dir }) {
-    const files = INPUTS.flatMap(p => filesUnder(dir, p)).sort();
-    const parts = files.map(f => `${f}:${sha256(path.join(dir, f))}`);
-
-    const { version } = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
-    if (!Number.isInteger(version)) throw new Error('videos/intro/meta.json needs an integer "version"');
-
-    const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
-    const seconds = parseFloat(/data-duration="([\d.]+)"/.exec(html)?.[1]);
-    if (!seconds) throw new Error('videos/intro/index.html has no data-duration on its root');
-
-    return { notable: true, label: `v${version}`, parts, version, seconds };
-  },
+  collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
   headline: data => `AnyRouter in ${data.seconds} seconds — one key, every model`,
 

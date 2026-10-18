@@ -1,0 +1,714 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+
+    [data-composition-id="06-step-3-share"] .bg {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+    }
+    [data-composition-id="06-step-3-share"] .stage {
+      position: absolute;
+      inset: 0;
+    }
+    [data-composition-id="06-step-3-share"] .mono {
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+    }
+
+    /* Step rail */
+    [data-composition-id="06-step-3-share"] .rail {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 72px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+    }
+    [data-composition-id="06-step-3-share"] .rail-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    [data-composition-id="06-step-3-share"] .rail-circle {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex: none;
+    }
+    [data-composition-id="06-step-3-share"] .rail-dot {
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    [data-composition-id="06-step-3-share"] .rail-dot.todo {
+      background: #FFFFFF;
+      border: 2px solid #D4D4D8;
+      color: #636363;
+    }
+    [data-composition-id="06-step-3-share"] .rail-dot.active {
+      background: #BB4D00;
+      color: #FFFFFF;
+    }
+    [data-composition-id="06-step-3-share"] .rail-dot.done {
+      background: #007E55;
+    }
+    [data-composition-id="06-step-3-share"] .rail-dot.done svg {
+      width: 22px;
+      height: 22px;
+    }
+    [data-composition-id="06-step-3-share"] .rail-label {
+      position: relative;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .rail-label .over {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    [data-composition-id="06-step-3-share"] .c-done { color: #3F3F46; }
+    [data-composition-id="06-step-3-share"] .c-active { color: #0A0A0A; }
+    [data-composition-id="06-step-3-share"] .c-todo { color: #636363; }
+    [data-composition-id="06-step-3-share"] .rail-line {
+      width: 72px;
+      height: 2px;
+      background: #D4D4D8;
+      flex: none;
+    }
+
+    /* Browser frame */
+    [data-composition-id="06-step-3-share"] .browser {
+      position: absolute;
+      left: 384px;
+      top: 164px;
+      width: 1152px;
+      height: 700px;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
+      overflow: hidden;
+    }
+    [data-composition-id="06-step-3-share"] .bar {
+      position: relative;
+      height: 52px;
+      box-sizing: border-box;
+      background: #FAFAFA;
+      border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="06-step-3-share"] .dots {
+      position: absolute;
+      left: 22px;
+      top: 20px;
+      display: flex;
+      gap: 8px;
+    }
+    [data-composition-id="06-step-3-share"] .dots i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #D4D4D8;
+    }
+    [data-composition-id="06-step-3-share"] .url-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    [data-composition-id="06-step-3-share"] .url {
+      height: 32px;
+      box-sizing: border-box;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 20px;
+      line-height: 29px;
+      color: #636363;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .viewport {
+      position: relative;
+      width: 1149px;
+      height: 645px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+
+    /* Provider panel (viewport-local coordinates) */
+    [data-composition-id="06-step-3-share"] .p-head {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 96px;
+      box-sizing: border-box;
+      padding: 0 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="06-step-3-share"] .logo {
+      width: 40px;
+      height: 40px;
+      flex: none;
+    }
+    [data-composition-id="06-step-3-share"] .p-name {
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+    [data-composition-id="06-step-3-share"] .chip-ok {
+      height: 38px;
+      box-sizing: border-box;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: #F5F5F5;
+      color: #3F3F46;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 38px;
+      margin-left: 6px;
+    }
+    [data-composition-id="06-step-3-share"] .row {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="06-step-3-share"] .row-label {
+      position: absolute;
+      left: 0;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 36px;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .row-hint {
+      position: absolute;
+      left: 0;
+      font-size: 24px;
+      line-height: 30px;
+      color: #636363;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .switch {
+      position: absolute;
+      right: 0;
+      width: 80px;
+      height: 44px;
+      border-radius: 999px;
+      background: #D4D4D8;
+    }
+    [data-composition-id="06-step-3-share"] .switch .track-on {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #0A0A0A;
+    }
+    [data-composition-id="06-step-3-share"] .switch .knob {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(10,10,10,.25);
+    }
+    [data-composition-id="06-step-3-share"] .keys-label {
+      position: absolute;
+      left: 56px;
+      top: 418px;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 32px;
+      color: #3F3F46;
+    }
+    [data-composition-id="06-step-3-share"] .keyline {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      top: 468px;
+      height: 92px;
+      box-sizing: border-box;
+      padding: 0 28px;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    [data-composition-id="06-step-3-share"] .gdot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #007E55;
+      flex: none;
+    }
+    [data-composition-id="06-step-3-share"] .keytext {
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 28px;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .badge-ok {
+      height: 38px;
+      box-sizing: border-box;
+      padding: 0 14px;
+      border-radius: 8px;
+      background: #ECFDF5;
+      color: #007E55;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 38px;
+    }
+
+    /* Modal layer */
+    [data-composition-id="06-step-3-share"] .scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,.32);
+    }
+    [data-composition-id="06-step-3-share"] .dialog {
+      position: absolute;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.06), 0 30px 80px rgba(10,10,10,.22);
+    }
+    [data-composition-id="06-step-3-share"] .consent {
+      left: 49.5px;
+      top: 58px;
+      width: 1050px;
+      height: 530px;
+      padding: 36px 40px;
+    }
+    [data-composition-id="06-step-3-share"] .d-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 44px;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .d-desc {
+      margin-top: 10px;
+      font-size: 24px;
+      line-height: 32px;
+      color: #636363;
+    }
+    [data-composition-id="06-step-3-share"] .d-short {
+      margin-top: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 32px;
+    }
+    [data-composition-id="06-step-3-share"] .d-item {
+      position: relative;
+      margin-top: 8px;
+      padding-left: 38px;
+      font-size: 24px;
+      line-height: 32px;
+      color: #3F3F46;
+    }
+    [data-composition-id="06-step-3-share"] .d-item svg {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+    }
+    [data-composition-id="06-step-3-share"] .d-check {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 344px;
+      padding-left: 46px;
+      font-size: 24px;
+      line-height: 32px;
+      color: #0A0A0A;
+    }
+    [data-composition-id="06-step-3-share"] .box {
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 30px;
+      height: 30px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      border: 2px solid #D4D4D8;
+      background: #FFFFFF;
+    }
+    [data-composition-id="06-step-3-share"] .box-on {
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: #0A0A0A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [data-composition-id="06-step-3-share"] .box-on svg {
+      width: 20px;
+      height: 20px;
+    }
+    [data-composition-id="06-step-3-share"] .btn {
+      position: absolute;
+      height: 60px;
+      border-radius: 12px;
+      background: #0A0A0A;
+      color: #FFFFFF;
+      font-size: 26px;
+      font-weight: 500;
+    }
+    [data-composition-id="06-step-3-share"] .btn .face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .btn-donate {
+      left: 710px;
+      top: 434px;
+      width: 300px;
+    }
+    [data-composition-id="06-step-3-share"] .spin {
+      width: 26px;
+      height: 26px;
+      flex: none;
+    }
+
+    [data-composition-id="06-step-3-share"] .result {
+      left: 194.5px;
+      top: 157.5px;
+      width: 760px;
+      height: 330px;
+      padding: 40px;
+    }
+    [data-composition-id="06-step-3-share"] .r-title {
+      font-size: 40px;
+      line-height: 48px;
+    }
+    [data-composition-id="06-step-3-share"] .inset {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 112px;
+      height: 80px;
+      box-sizing: border-box;
+      padding: 0 24px;
+      border-radius: 12px;
+      background: #FAFAFA;
+      border: 1.5px solid #E5E5E5;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 28px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .inset svg {
+      width: 32px;
+      height: 32px;
+      flex: none;
+    }
+    [data-composition-id="06-step-3-share"] .btn-gotit {
+      left: 540px;
+      top: 230px;
+      width: 180px;
+    }
+
+    [data-composition-id="06-step-3-share"] .chip-row {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 22px;
+      padding: 0 56px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    [data-composition-id="06-step-3-share"] .chip-row.low {
+      top: auto;
+      bottom: 22px;
+    }
+    [data-composition-id="06-step-3-share"] .chip-first {
+      height: 52px;
+      box-sizing: border-box;
+      padding: 0 22px 0 16px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      box-shadow: 0 8px 24px rgba(10,10,10,.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    [data-composition-id="06-step-3-share"] .chip-first svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    [data-composition-id="06-step-3-share"] .ripple {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 2.5px solid #BB4D00;
+      pointer-events: none;
+    }
+    [data-composition-id="06-step-3-share"] .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      filter: drop-shadow(0 2px 4px rgba(10,10,10,.25));
+      pointer-events: none;
+    }
+  </style>
+
+  <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="5.508">
+    <div class="bg clip" data-start="0" data-duration="5.508" data-track-index="0"></div>
+
+    <div class="stage clip" data-start="0" data-duration="5.508" data-track-index="1">
+      <div class="rail">
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot done"><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
+          </div>
+          <div class="rail-label c-done">Create a key</div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot active" id="06-step-3-share-c2-active">2</div>
+            <div class="rail-dot done" id="06-step-3-share-c2-done" data-layout-allow-overlap><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
+          </div>
+          <div class="rail-label c-active">Add it to AnyRouter<span class="over c-done" id="06-step-3-share-l2-done" data-layout-allow-overlap style="background:#FFFFFF">Add it to AnyRouter</span></div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot todo" id="06-step-3-share-c3-todo">3</div>
+            <div class="rail-dot active" id="06-step-3-share-c3-on" data-layout-allow-overlap>3</div>
+            <div class="rail-dot done" id="06-step-3-share-c3-done" data-layout-allow-overlap><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
+          </div>
+          <div class="rail-label c-todo">Share with the pool<span class="over c-active" id="06-step-3-share-l3-on" data-layout-allow-overlap style="background:#FFFFFF">Share with the pool</span><span class="over c-done" id="06-step-3-share-l3-done" data-layout-allow-overlap style="background:#FFFFFF">Share with the pool</span></div>
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url-wrap"><div class="url">anyrouter.dev/dashboard/byok</div></div>
+        </div>
+        <div class="viewport">
+          <div class="p-head">
+            <img class="logo" src="assets/provider-openrouter.svg" alt="" />
+            <span class="p-name">OpenRouter</span>
+            <span class="chip-ok">Healthy</span>
+          </div>
+
+          <div class="row" style="top:96px;height:90px">
+            <div class="row-label" style="top:27px" data-layout-allow-overlap>Use my key</div>
+            <div class="switch" style="top:23px"><div class="track-on"></div><div class="knob" style="left:41px"></div></div>
+          </div>
+          <div class="row" style="top:186px;height:90px">
+            <div class="row-label" style="top:27px" data-layout-allow-overlap>Only my key</div>
+            <div class="switch" style="top:23px"><div class="knob"></div></div>
+          </div>
+          <div class="row" style="top:276px;height:120px">
+            <div class="row-label" style="top:22px" data-layout-allow-overlap>Share with pool</div>
+            <div class="row-hint" style="top:64px" data-layout-allow-overlap>Earn credits back when others route through this key</div>
+            <div class="switch" id="06-step-3-share-share" style="top:38px">
+              <div class="track-on" id="06-step-3-share-share-on"></div>
+              <div class="knob" id="06-step-3-share-share-knob"></div>
+            </div>
+          </div>
+
+          <div class="keys-label" data-layout-allow-overlap>Keys · 1/1 active</div>
+          <div class="keyline">
+            <span class="gdot"></span>
+            <span class="keytext">sk-or-v1-••••••••••••</span>
+            <span class="badge-ok">validated</span>
+          </div>
+
+          <div class="scrim" id="06-step-3-share-scrim"></div>
+
+          <div class="dialog consent" id="06-step-3-share-consent">
+            <div class="d-title"><img class="logo" src="assets/provider-openrouter.svg" alt="" /><span>Donate your OpenRouter key</span></div>
+            <div class="d-desc">Choose what the shared pool may run on this OpenRouter key. Optional.</div>
+            <div class="d-short">In short</div>
+            <div class="d-item"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Other users' requests run on your key, and the usage appears on your OpenRouter account.</div>
+            <div class="d-item"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You are responsible for your provider's terms. You may withdraw at any time.</div>
+            <div class="d-check">
+              <div class="box"></div>
+              <div class="box-on" id="06-step-3-share-box-on"><svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg></div>
+              I have read this and authorize AnyRouter to use my key to serve other users' requests.
+            </div>
+            <div class="btn btn-donate" id="06-step-3-share-donate">
+              <div class="face" id="06-step-3-share-donate-idle">Donate key</div>
+              <div class="face" id="06-step-3-share-donate-busy">
+                <svg class="spin" id="06-step-3-share-spin" viewBox="0 0 26 26" fill="none" stroke-width="3" stroke-linecap="round"><circle cx="13" cy="13" r="10" stroke="rgba(255,255,255,.3)"/><path d="M13 3a10 10 0 0 1 10 10" stroke="#FFFFFF"/></svg>
+                <span>Verifying key…</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dialog result" id="06-step-3-share-result">
+            <div class="d-title r-title"><img class="logo" src="assets/provider-openrouter.svg" alt="" /><span>Key verified</span></div>
+            <div class="inset">
+              <svg id="06-step-3-share-live-check" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#007E55"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Key is live and working</span>
+            </div>
+            <div class="btn btn-gotit"><div class="face">Got it</div></div>
+          </div>
+
+          <div class="chip-row">
+            <div class="chip-first" id="06-step-3-share-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+              <span>Your own requests always come first</span>
+            </div>
+          </div>
+          <div class="chip-row low">
+            <div class="chip-first" id="06-step-3-share-chip2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="11" rx="5.5"/><circle cx="8" cy="12" r="2.5"/></svg>
+              <span>Turn sharing off any time</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ripple" id="06-step-3-share-ripple-share" style="left:1410.5px;top:525.5px"></div>
+      <div class="ripple" id="06-step-3-share-ripple-box" style="left:463.5px;top:609px"></div>
+      <div class="ripple" id="06-step-3-share-ripple-donate" style="left:1268.5px;top:713px"></div>
+
+      <svg class="cursor" id="06-step-3-share-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById("06-step-3-share-" + id);
+      const tl = gsap.timeline({ paused: true });
+
+      // Canvas hot-spot targets. Viewport origin is (385.5, 217.5): card 384,164 + 1.5 border, + 52 bar.
+      const START = { x: 1180, y: 770 };
+      const SHARE = { x: 1438.5, y: 553.5 };
+      const BOX = { x: 491.5, y: 637 };
+      const DONATE = { x: 1296.5, y: 741 };
+      const GOT_IT_REST = { x: 1262, y: 652 };
+      const CLICK_SHARE = 1.79;
+      const CLICK_BOX = 2.22;
+      const CLICK_DONATE = 2.75;
+      const RESULT = 3.18;
+      const LETS = 3.46;
+      const DRAW = 3.88;
+      const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
+
+      gsap.set($("cursor"), { transformOrigin: "2px 2px" });
+
+      const click = (target, ripple, t) => {
+        tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, t);
+        tl.to($("cursor"), { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
+        tl.to(target, { scale: 0.95, duration: 0.06, ease: "power2.in" }, t);
+        tl.to(target, { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
+        tl.fromTo($(ripple), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
+      };
+
+      // Hidden states held from t=0
+      tl.set([$("c2-done"), $("l2-done"), $("c3-on"), $("l3-on"), $("c3-done"), $("l3-done")], { opacity: 0 }, 0);
+      tl.set([$("ripple-share"), $("ripple-box"), $("ripple-donate")], { scale: 0, opacity: 0 }, 0);
+      tl.set([$("scrim"), $("consent"), $("result"), $("chip"), $("chip2"), $("share-on"), $("box-on"), $("donate-busy")], { opacity: 0 }, 0);
+      tl.set($("donate"), { opacity: 0.45 }, 0);
+
+      // Rail: step 2 done, step 3 active
+      tl.fromTo($("c2-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
+      tl.set($("c2-active"), { opacity: 0 }, 0.55);
+      tl.to($("l2-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
+      tl.fromTo($("c3-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.3);
+      tl.set($("c3-todo"), { opacity: 0 }, 0.65);
+      tl.to($("l3-on"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+
+      // Scene 1: cursor flips Share with pool on "pool"
+      tl.fromTo($("cursor"), { ...at(START), opacity: 0 }, { ...at(START), opacity: 1, duration: 0.25, ease: "power2.out" }, 0.06);
+      tl.to($("cursor"), { ...at(SHARE), duration: 0.6, ease: "power2.inOut" }, 1.02);
+      click($("share"), "ripple-share", CLICK_SHARE);
+
+      // Scene 2: consent dialog rises, box ticked on "confirm", Donate key pressed
+      tl.to($("scrim"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 1.88);
+      tl.fromTo($("consent"), { y: 40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 1.9);
+      tl.to($("cursor"), { ...at(BOX), duration: 0.29, ease: "power3.out" }, 1.88);
+      tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, CLICK_BOX);
+      tl.to($("cursor"), { scale: 1, duration: 0.06, ease: "power2.out" }, CLICK_BOX + 0.06);
+      tl.fromTo($("ripple-box"), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, CLICK_BOX);
+      tl.fromTo($("box-on"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.18, ease: "power3.out" }, CLICK_BOX + 0.02);
+      tl.to($("donate"), { opacity: 1, duration: 0.2, ease: "power2.out" }, CLICK_BOX + 0.02);
+      tl.to($("cursor"), { ...at(DONATE), duration: 0.38, ease: "power2.inOut" }, CLICK_BOX + 0.09);
+      click($("donate"), "ripple-donate", CLICK_DONATE);
+      tl.to($("cursor"), { x: DONATE.x + 108, y: DONATE.y + 24, duration: 0.3, ease: "power2.out" }, CLICK_DONATE + 0.14);
+      tl.to($("donate-idle"), { opacity: 0, duration: 0.12, ease: "power2.out" }, CLICK_DONATE + 0.04);
+      tl.to($("donate-busy"), { opacity: 1, duration: 0.12, ease: "power2.out" }, CLICK_DONATE + 0.04);
+      tl.fromTo($("spin"), { rotation: 0 }, { rotation: 540, duration: 0.6, ease: "none", transformOrigin: "50% 50%" }, CLICK_DONATE + 0.04);
+
+      // Scene 3: dialog becomes the result on "That's"; switch behind reads on
+      // Consent is fully out before the result starts, so the two dialogs never render together
+      tl.to($("consent"), { scale: 0.96, opacity: 0, duration: 0.12, ease: "power2.in" }, RESULT - 0.08);
+      tl.fromTo($("result"), { y: 16, scale: 0.92, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, RESULT + 0.04);
+      tl.fromTo($("live-check"), { scale: 0.4 }, { scale: 1, duration: 0.35, ease: "back.out(1.6)", transformOrigin: "50% 50%" }, RESULT + 0.16);
+      tl.to($("scrim"), { opacity: 0.55, duration: 0.4, ease: "power2.out" }, RESULT + 0.04);
+      tl.to($("share-on"), { opacity: 1, duration: 0.25, ease: "power2.out" }, RESULT + 0.11);
+      tl.to($("share-knob"), { x: 36, duration: 0.25, ease: "power2.inOut" }, RESULT + 0.11);
+      tl.to($("cursor"), { ...at(GOT_IT_REST), duration: 0.55, ease: "power2.inOut" }, RESULT + 0.21);
+      tl.fromTo($("chip"), { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, LETS);
+      tl.fromTo($("chip2"), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, DRAW);
+
+      // Rail: step 3 done on "draw"; second chip lands with it
+      tl.fromTo($("c3-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, DRAW);
+      tl.to($("l3-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, DRAW);
+      tl.set($("c3-on"), { opacity: 0 }, DRAW + 0.35);
+      tl.set($("l3-on"), { opacity: 0 }, DRAW + 0.3);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-step-3-share"] = tl;
+    })();
+  </script>
+</template>

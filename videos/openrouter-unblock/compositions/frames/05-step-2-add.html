@@ -1,0 +1,871 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+
+    [data-composition-id="05-step-2-add"] .bg {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .stage {
+      position: absolute;
+      inset: 0;
+    }
+    [data-composition-id="05-step-2-add"] .mono {
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+    }
+
+    /* Step rail (shared component) */
+    [data-composition-id="05-step-2-add"] .rail {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 72px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+    }
+    [data-composition-id="05-step-2-add"] .rail-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    [data-composition-id="05-step-2-add"] .rail-circle {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex: none;
+    }
+    [data-composition-id="05-step-2-add"] .rail-dot {
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    [data-composition-id="05-step-2-add"] .rail-dot.todo {
+      background: #FFFFFF;
+      border: 2px solid #D4D4D8;
+      color: #636363;
+    }
+    [data-composition-id="05-step-2-add"] .rail-dot.active {
+      background: #BB4D00;
+      color: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .rail-dot.done {
+      background: #007E55;
+    }
+    [data-composition-id="05-step-2-add"] .rail-dot.done svg {
+      width: 20px;
+      height: 20px;
+    }
+    [data-composition-id="05-step-2-add"] .rail-label {
+      position: relative;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      color: #636363;
+    }
+    [data-composition-id="05-step-2-add"] .rail-label.was-active {
+      color: #3F3F46;
+    }
+    [data-composition-id="05-step-2-add"] .rail-label .on {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #0A0A0A;
+    }
+    [data-composition-id="05-step-2-add"] .rail-line {
+      width: 72px;
+      height: 2px;
+      background: #D4D4D8;
+      flex: none;
+    }
+
+    /* Browser frame (shared geometry: x 384, y 164, 1152 x 700, bar 52) */
+    [data-composition-id="05-step-2-add"] .browser {
+      position: absolute;
+      left: 384px;
+      top: 164px;
+      width: 1152px;
+      height: 700px;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
+      overflow: hidden;
+    }
+    [data-composition-id="05-step-2-add"] .bar {
+      position: relative;
+      height: 52px;
+      box-sizing: border-box;
+      background: #FAFAFA;
+      border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="05-step-2-add"] .dots {
+      position: absolute;
+      left: 22px;
+      top: 20px;
+      display: flex;
+      gap: 8px;
+    }
+    [data-composition-id="05-step-2-add"] .dots i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #D4D4D8;
+    }
+    [data-composition-id="05-step-2-add"] .url-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    [data-composition-id="05-step-2-add"] .url {
+      height: 32px;
+      box-sizing: border-box;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 20px;
+      line-height: 29px;
+      color: #636363;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .url-wrap > .url {
+      grid-area: 1 / 1;
+    }
+
+    /* Viewport: 1149 x 645, canvas origin (385.5, 217.5) */
+    [data-composition-id="05-step-2-add"] .viewport {
+      position: relative;
+      width: 1149px;
+      height: 645px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .nav {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1149px;
+      height: 64px;
+      box-sizing: border-box;
+      border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="05-step-2-add"] .nav img {
+      position: absolute;
+      left: 32px;
+      top: 16px;
+      width: 32px;
+      height: 32px;
+    }
+    [data-composition-id="05-step-2-add"] .phase {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1149px;
+      height: 645px;
+    }
+    [data-composition-id="05-step-2-add"] .or-logo {
+      fill: #0A0A0A;
+      flex: none;
+    }
+
+    /* Phase 0: sign-in. A solid surface hides the page behind the real dialog. */
+    [data-composition-id="05-step-2-add"] .signin {
+      position: absolute;
+      inset: 0;
+      background: #FAFAFA;
+    }
+    /* Crop of assets/anyrouter-signin.png: source x 1524-2316, y 132-930, at 0.76 */
+    [data-composition-id="05-step-2-add"] .sdlg {
+      position: absolute;
+      left: 44px;
+      top: 19px;
+      width: 605px;
+      height: 609px;
+      box-sizing: border-box;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 18px;
+      background: #FFFFFF;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
+      overflow: hidden;
+    }
+    [data-composition-id="05-step-2-add"] .sdlg img {
+      position: absolute;
+      left: -1158.24px;
+      top: -100.32px;
+      width: 2918.4px;
+      height: 1641.6px;
+      max-width: none;
+    }
+
+    /* Phase A: BYOK page */
+    [data-composition-id="05-step-2-add"] .h1 {
+      position: absolute;
+      left: 40px;
+      top: 92px;
+      margin: 0;
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .panel {
+      position: absolute;
+      left: 40px;
+      top: 180px;
+      width: 1069px;
+      height: 205px;
+      box-sizing: border-box;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .panel-head {
+      height: 70px;
+      box-sizing: border-box;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1.5px solid #E5E5E5;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    [data-composition-id="05-step-2-add"] .chips {
+      position: absolute;
+      left: 24px;
+      top: 94px;
+      display: flex;
+      gap: 20px;
+    }
+    [data-composition-id="05-step-2-add"] .chip {
+      width: 499px;
+      height: 84px;
+      box-sizing: border-box;
+      padding: 0 24px;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 28px;
+      font-weight: 500;
+    }
+    [data-composition-id="05-step-2-add"] .chip svg.or-logo {
+      width: 32px;
+      height: 32px;
+    }
+    [data-composition-id="05-step-2-add"] .chip .box {
+      width: 32px;
+      height: 32px;
+      flex: none;
+    }
+    [data-composition-id="05-step-2-add"] .chip .sparkle {
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+
+    /* Phase B: add-key form */
+    [data-composition-id="05-step-2-add"] .prail {
+      position: absolute;
+      left: 0;
+      top: 64px;
+      width: 290px;
+      height: 581px;
+      box-sizing: border-box;
+      background: #FAFAFA;
+      border-right: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="05-step-2-add"] .prow {
+      position: absolute;
+      left: 16px;
+      top: 24px;
+      width: 256px;
+      height: 64px;
+      box-sizing: border-box;
+      padding: 0 18px;
+      border-radius: 10px;
+      background: #F0F0F0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 26px;
+      font-weight: 500;
+      overflow: hidden;
+    }
+    [data-composition-id="05-step-2-add"] .prow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #0A0A0A;
+    }
+    [data-composition-id="05-step-2-add"] .prow svg.or-logo {
+      width: 26px;
+      height: 26px;
+    }
+    [data-composition-id="05-step-2-add"] .pfoot {
+      position: absolute;
+      left: 24px;
+      bottom: 28px;
+      width: 240px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 24px;
+      line-height: 1.3;
+      color: #636363;
+    }
+    [data-composition-id="05-step-2-add"] .pfoot svg {
+      width: 22px;
+      height: 22px;
+      flex: none;
+      margin-top: 4px;
+    }
+    [data-composition-id="05-step-2-add"] .fhead {
+      position: absolute;
+      left: 330px;
+      top: 92px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    [data-composition-id="05-step-2-add"] .fhead svg.or-logo {
+      width: 40px;
+      height: 40px;
+    }
+    [data-composition-id="05-step-2-add"] .fname {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    [data-composition-id="05-step-2-add"] .badge {
+      height: 36px;
+      box-sizing: border-box;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #F5F5F5;
+      color: #3F3F46;
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 500;
+    }
+    [data-composition-id="05-step-2-add"] .base {
+      position: absolute;
+      left: 384px;
+      top: 142px;
+      font-size: 24px;
+      color: #636363;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .rule {
+      position: absolute;
+      left: 330px;
+      top: 190px;
+      width: 779px;
+      height: 1.5px;
+      background: #E5E5E5;
+    }
+    [data-composition-id="05-step-2-add"] .sect {
+      position: absolute;
+      left: 330px;
+      top: 208px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+    [data-composition-id="05-step-2-add"] .flabel {
+      position: absolute;
+      left: 330px;
+      top: 254px;
+      font-size: 24px;
+      font-weight: 500;
+      color: #3F3F46;
+    }
+    [data-composition-id="05-step-2-add"] .input {
+      position: absolute;
+      left: 330px;
+      top: 290px;
+      width: 540px;
+      height: 66px;
+      box-sizing: border-box;
+      border: 1.5px solid #D4D4D8;
+      border-radius: 10px;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .input .txt {
+      position: absolute;
+      left: 20px;
+      top: 0;
+      height: 63px;
+      display: flex;
+      align-items: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .input .ph {
+      color: #636363;
+    }
+    [data-composition-id="05-step-2-add"] .focus {
+      position: absolute;
+      left: 326px;
+      top: 286px;
+      width: 548px;
+      height: 74px;
+      box-sizing: border-box;
+      border: 2.5px solid #BB4D00;
+      border-radius: 13px;
+    }
+    [data-composition-id="05-step-2-add"] .status {
+      position: absolute;
+      left: 886px;
+      top: 301px;
+      height: 44px;
+    }
+    [data-composition-id="05-step-2-add"] .schip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 44px;
+      box-sizing: border-box;
+      padding: 0 18px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .schip.outline {
+      border: 1.5px solid #D4D4D8;
+      color: #3F3F46;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .schip.filled {
+      background: #E9E9EB;
+      color: #0A0A0A;
+    }
+
+    /* Action bar */
+    [data-composition-id="05-step-2-add"] .abar {
+      position: absolute;
+      left: 290px;
+      top: 553px;
+      width: 859px;
+      height: 92px;
+      box-sizing: border-box;
+      border-top: 1.5px solid #E5E5E5;
+      background: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .btn {
+      position: absolute;
+      top: 18px;
+      height: 56px;
+      box-sizing: border-box;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .btn svg {
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+    [data-composition-id="05-step-2-add"] .btn.ghost {
+      color: #0A0A0A;
+    }
+    [data-composition-id="05-step-2-add"] .btn.outline {
+      background: #FFFFFF;
+      border: 1.5px solid #D4D4D8;
+      color: #0A0A0A;
+    }
+    [data-composition-id="05-step-2-add"] .btn.primary {
+      background: #0A0A0A;
+      color: #FFFFFF;
+    }
+    [data-composition-id="05-step-2-add"] .stext {
+      position: absolute;
+      left: 40px;
+      top: 0;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #3F3F46;
+      white-space: nowrap;
+    }
+
+    /* Result dialog */
+    [data-composition-id="05-step-2-add"] .scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,.28);
+    }
+    [data-composition-id="05-step-2-add"] .dialog {
+      position: absolute;
+      left: 214.5px;
+      top: 172px;
+      width: 720px;
+      height: 300px;
+      box-sizing: border-box;
+      padding: 40px;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.16);
+    }
+    [data-composition-id="05-step-2-add"] .dtitle {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 44px;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .dtitle svg.or-logo {
+      width: 36px;
+      height: 36px;
+    }
+    [data-composition-id="05-step-2-add"] .ddesc {
+      margin-top: 14px;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #3F3F46;
+    }
+    [data-composition-id="05-step-2-add"] .dialog .btn {
+      top: auto;
+      right: 40px;
+      bottom: 36px;
+      width: 160px;
+    }
+
+    /* Key pill (shared component), fixed width so it can land on the input text */
+    [data-composition-id="05-step-2-add"] .pill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 408px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 52px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      border-radius: 10px;
+      background: #FAFAFA;
+      border: 1.5px dashed #D4D4D8;
+      box-shadow: 0 8px 24px rgba(10,10,10,.10);
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [data-composition-id="05-step-2-add"] .pill .glyph {
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+
+    [data-composition-id="05-step-2-add"] .ripple {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 2.5px solid #BB4D00;
+      pointer-events: none;
+    }
+    [data-composition-id="05-step-2-add"] .cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      filter: drop-shadow(0 2px 4px rgba(10,10,10,.25));
+      pointer-events: none;
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-step-2-add" data-width="1920" data-height="1080" data-duration="9.232">
+    <div class="bg clip" data-start="0" data-duration="9.232" data-track-index="0"></div>
+
+    <div class="stage clip" data-start="0" data-duration="9.232" data-track-index="1">
+      <div class="rail">
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot active" id="05-step-2-add-c1-active">1</div>
+            <div class="rail-dot done" id="05-step-2-add-c1-done" data-layout-allow-overlap>
+              <svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5l3.5 3.5 6.5-8"/></svg>
+            </div>
+          </div>
+          <div class="rail-label was-active">Create a key<span class="on" id="05-step-2-add-l1-on" data-layout-allow-overlap>Create a key</span></div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot todo" id="05-step-2-add-c2-todo">2</div>
+            <div class="rail-dot active" id="05-step-2-add-c2-on" data-layout-allow-overlap>2</div>
+          </div>
+          <div class="rail-label">Add it to AnyRouter<span class="on" id="05-step-2-add-l2-on" data-layout-allow-overlap>Add it to AnyRouter</span></div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle"><div class="rail-dot todo">3</div></div>
+          <div class="rail-label">Share with the pool</div>
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="url-wrap">
+            <div class="url" id="05-step-2-add-url-home">anyrouter.dev</div>
+            <div class="url" id="05-step-2-add-url" data-layout-allow-overlap>anyrouter.dev/dashboard/byok</div>
+          </div>
+        </div>
+        <div class="viewport">
+          <div class="nav" id="05-step-2-add-nav">
+            <img src="assets/anyrouter-logo-black.svg" alt="" />
+          </div>
+
+          <!-- Phase A: BYOK page -->
+          <div class="phase" id="05-step-2-add-pa">
+            <h1 class="h1" id="05-step-2-add-h1">BYOK &amp; Shared Pool</h1>
+            <div class="panel" id="05-step-2-add-panel">
+              <div class="panel-head">Add a provider</div>
+              <div class="chips">
+                <div class="chip" id="05-step-2-add-chip-or">
+                  <svg class="or-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+                  <span>OpenRouter</span>
+                  <svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.5 5.2 2.3 7 7.5 7.5v1.5c-5.2.5-7 2.3-7.5 7.5h-1.5c-.5-5.2-2.3-7-7.5-7.5V9c5.2-.5 7-2.3 7.5-7.5z" fill="#BB4D00" transform="translate(1.5 2.5)"/></svg>
+                </div>
+                <div class="chip" id="05-step-2-add-chip-nv">
+                  <svg class="box" viewBox="0 0 32 32" fill="none" stroke="#636363" stroke-width="2" stroke-linejoin="round"><path d="M16 4l11 6v12l-11 6-11-6V10z"/><path d="M5 10l11 6 11-6M16 16v12"/></svg>
+                  <span>NVIDIA NIM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase B: add-key form -->
+          <div class="phase" id="05-step-2-add-pb">
+            <div class="prail" id="05-step-2-add-prail">
+              <div class="prow">
+                <svg class="or-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+                <span>OpenRouter</span>
+              </div>
+              <div class="pfoot">
+                <svg viewBox="0 0 22 22" fill="none" stroke="#636363" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="14" height="10" rx="2"/><path d="M7 10V7a4 4 0 0 1 8 0v3"/></svg>
+                <span>Keys are encrypted at rest</span>
+              </div>
+            </div>
+
+            <div class="fhead" id="05-step-2-add-fhead">
+              <svg class="or-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+              <span class="fname">OpenRouter</span>
+              <span class="badge">Free tier</span>
+            </div>
+            <div class="base mono" id="05-step-2-add-base">https://openrouter.ai/api/v1</div>
+            <div class="rule" id="05-step-2-add-rule"></div>
+            <div class="sect" id="05-step-2-add-sect" data-layout-allow-overlap>Source details</div>
+            <div class="flabel" id="05-step-2-add-flabel" data-layout-allow-overlap>API key</div>
+            <div class="input" id="05-step-2-add-input">
+              <span class="txt ph" id="05-step-2-add-ph">sk-or-...</span>
+              <span class="txt" id="05-step-2-add-val" data-layout-allow-overlap>sk-or-v1-••••••••••••</span>
+            </div>
+            <div class="focus" id="05-step-2-add-focus"></div>
+            <div class="status" id="05-step-2-add-status">
+              <div class="schip outline" id="05-step-2-add-untested">Not tested</div>
+              <div class="schip filled" id="05-step-2-add-valid">Key valid</div>
+            </div>
+
+            <div class="abar" id="05-step-2-add-abar">
+              <div class="stext" id="05-step-2-add-stext">Key valid. Ready to add.</div>
+              <div class="btn ghost" id="05-step-2-add-cancel" style="left:357px;width:116px">Cancel</div>
+              <div class="btn outline" id="05-step-2-add-test" style="left:487px;width:150px">Test key</div>
+              <div class="btn outline" id="05-step-2-add-busy" style="left:245px;width:392px">
+                <svg id="05-step-2-add-spin" viewBox="0 0 22 22" fill="none" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="8" stroke="#E5E5E5"/><path d="M11 3a8 8 0 0 1 8 8" stroke="#0A0A0A"/></svg>
+                <span>Checking with OpenRouter…</span>
+              </div>
+              <div class="btn primary" id="05-step-2-add-add" style="left:651px;width:176px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+                <span>Add key</span>
+              </div>
+            </div>
+
+            <div class="scrim" id="05-step-2-add-scrim"></div>
+            <div class="dialog" id="05-step-2-add-dialog">
+              <div class="dtitle">
+                <svg class="or-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+                <span>Key verified and saved</span>
+              </div>
+              <div class="ddesc">Your OpenRouter key passed a live check and is ready to route requests.</div>
+              <div class="btn primary">Continue</div>
+            </div>
+          </div>
+
+          <!-- Phase 0: sign-in dialog (real capture), covers nav and page -->
+          <div class="signin" id="05-step-2-add-signin" data-layout-allow-overlap>
+            <div class="sdlg" id="05-step-2-add-sdlg">
+              <img src="assets/anyrouter-signin.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pill" id="05-step-2-add-pill">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+        <span>sk-or-v1-••••••••••••</span>
+      </div>
+
+      <div class="ripple" id="05-step-2-add-ripple-gh" style="left:703.5px;top:460px"></div>
+      <div class="ripple" id="05-step-2-add-ripple-or" style="left:672.5px;top:507px"></div>
+      <div class="ripple" id="05-step-2-add-ripple-test" style="left:1209.5px;top:788.5px"></div>
+      <div class="ripple" id="05-step-2-add-ripple-add" style="left:1386.5px;top:788.5px"></div>
+
+      <svg class="cursor" id="05-step-2-add-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById("05-step-2-add-" + id);
+      const tl = gsap.timeline({ paused: true });
+
+      // Canvas points. Viewport origin is (385.5, 217.5); the pill is 408 x 52 placed by its top-left.
+      const GITHUB = { x: 731.5, y: 488 };   // "Continue with GitHub" in the sign-in crop
+      const CHIP_OR = { x: 700.5, y: 535 };
+      const TEST = { x: 1237.5, y: 816.5 };
+      const ADD = { x: 1414.5, y: 816.5 };
+      const PILL_IN = { x: 756, y: 764 };     // centred at (960, 790)
+      const PILL_PARK = { x: 1096, y: 774 };  // centred at (1300, 800), right of the sign-in dialog
+      const PILL_FIELD = { x: 681.5, y: 514.5 }; // pill text start meets the input text start (737, 540.5)
+      const CANCEL_SHIFT = -242;               // Cancel moves left while the busy label is wider
+
+      // Word starts from the words file.
+      const W_ANYROUTER = 1.11, W_OPEN = 2.41, W_BYOK = 2.93, W_PICK = 3.94, W_PASTE = 4.83, W_KEY = 5.41;
+      const W_CHECKS = 6.42, W_CALL = 7.55, W_ADDS = 8.15;
+      const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
+
+      gsap.set($("cursor"), { transformOrigin: "2px 2px", opacity: 0 });
+      gsap.set($("pill"), { x: PILL_IN.x, y: PILL_IN.y });
+
+      const click = (target, ripple, t) => {
+        tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, t);
+        tl.to($("cursor"), { scale: 1, duration: 0.08, ease: "power2.out" }, t + 0.06);
+        if (target) {
+          tl.to(target, { scale: 0.96, duration: 0.06, ease: "power2.in" }, t);
+          tl.to(target, { scale: 1, duration: 0.08, ease: "power2.out" }, t + 0.06);
+        }
+        tl.fromTo(ripple, { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
+      };
+
+      // Rail: step 1 done, step 2 active
+      tl.fromTo($("c1-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
+      tl.set($("c1-active"), { opacity: 0 }, 0.55);
+      tl.fromTo($("l1-on"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out" }, 0.2);
+      tl.fromTo($("c2-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.28);
+      tl.set($("c2-todo"), { opacity: 0 }, 0.63);
+      tl.fromTo($("l2-on"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.28);
+
+      // Scene 0: the key parks lower right; "in AnyRouter" shows the real sign-in dialog at anyrouter.dev
+      tl.fromTo($("pill"), { x: PILL_IN.x, y: PILL_IN.y }, { x: PILL_PARK.x, y: PILL_PARK.y, duration: 1.1, ease: "power2.inOut" }, 0.3);
+      tl.fromTo($("url-home"), { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, W_ANYROUTER);
+      tl.fromTo($("signin"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W_ANYROUTER);
+      tl.fromTo($("sdlg"), { y: 20, scale: 0.98 }, { y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, W_ANYROUTER);
+      tl.fromTo($("cursor"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 1.5);
+      tl.fromTo($("cursor"), { x: 1060, y: 720 }, { ...at(GITHUB), duration: 0.6, ease: "power2.inOut" }, 1.5);
+      click(null, $("ripple-gh"), W_OPEN - 0.24);
+
+      // Scene 1: on "open" the browser becomes the AnyRouter BYOK page
+      tl.to($("signin"), { opacity: 0, duration: 0.2, ease: "power2.in" }, W_OPEN);
+      tl.to($("url-home"), { opacity: 0, duration: 0.15, ease: "power2.in" }, W_OPEN);
+      tl.fromTo($("url"), { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, W_OPEN + 0.1);
+      tl.fromTo($("nav"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W_OPEN);
+      tl.fromTo($("h1"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, W_OPEN + 0.1);
+      tl.fromTo($("panel"), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, W_BYOK);
+      tl.fromTo([$("chip-or"), $("chip-nv")], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out", stagger: 0.1 }, W_BYOK + 0.18);
+
+      // Scene 2: cursor picks OpenRouter, the panel swaps to the add-key form
+      tl.to($("cursor"), { ...at(CHIP_OR), duration: 0.75, ease: "power2.inOut" }, W_PICK - 0.98);
+      click($("chip-or"), $("ripple-or"), W_PICK);
+      tl.fromTo($("pa"), { opacity: 1, y: 0 }, { opacity: 0, y: -8, duration: 0.22, ease: "power2.in", immediateRender: false }, W_PICK + 0.12);
+      tl.fromTo($("pb"), { opacity: 0 }, { opacity: 1, duration: 0.01 }, W_PICK + 0.33);
+      tl.fromTo($("prail"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, W_PICK + 0.33);
+      tl.fromTo([$("fhead"), $("base"), $("rule"), $("sect"), $("flabel"), $("input"), $("status")],
+        { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.05 }, W_PICK + 0.36);
+      tl.to($("cursor"), { x: 1010, y: 640, duration: 0.6, ease: "power2.inOut" }, W_PICK + 0.47);
+
+      // Scene 3: the parked key flies into the API key field and becomes its value
+      gsap.set([$("val"), $("focus"), $("valid"), $("busy"), $("stext"), $("abar"), $("scrim"), $("dialog")], { opacity: 0 });
+      tl.to($("pill"), { x: PILL_FIELD.x, y: PILL_FIELD.y, duration: 0.6, ease: "power2.inOut" }, W_PASTE);
+      tl.to($("ph"), { opacity: 0, duration: 0.12, ease: "power2.out" }, W_PASTE + 0.45);
+      tl.to($("pill"), { opacity: 0, duration: 0.16, ease: "power2.out" }, W_PASTE + 0.6);
+      tl.fromTo($("val"), { opacity: 0 }, { opacity: 1, duration: 0.16, ease: "power2.out" }, W_PASTE + 0.6);
+      tl.fromTo($("focus"), { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, W_PASTE + 0.55);
+      tl.to($("focus"), { opacity: 0, duration: 0.3, ease: "power2.out" }, W_CHECKS);
+
+      // Scene 4: action bar, Test key, Key valid, Add key, result dialog
+      tl.fromTo($("abar"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, W_KEY + 0.05);
+      tl.fromTo($("add"), { opacity: 0.45 }, { opacity: 0.45, duration: 0.01 }, W_KEY + 0.05);
+      tl.to($("cursor"), { ...at(TEST), duration: 0.55, ease: "power2.inOut" }, W_CHECKS - 0.66);
+      click($("test"), $("ripple-test"), W_CHECKS);
+      tl.to($("test"), { opacity: 0, duration: 0.1, ease: "power2.out" }, W_CHECKS + 0.1);
+      tl.fromTo($("busy"), { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, W_CHECKS + 0.1);
+      tl.to($("cancel"), { x: CANCEL_SHIFT, duration: 0.2, ease: "power2.out" }, W_CHECKS + 0.1);
+      tl.fromTo($("spin"), { rotation: 0 }, { rotation: 630, duration: W_CALL - W_CHECKS - 0.1, ease: "none", transformOrigin: "50% 50%" }, W_CHECKS + 0.1);
+
+      tl.to($("busy"), { opacity: 0, duration: 0.1, ease: "power2.out" }, W_CALL);
+      tl.to($("test"), { opacity: 1, duration: 0.12, ease: "power2.out" }, W_CALL);
+      tl.to($("cancel"), { x: 0, duration: 0.2, ease: "power2.out" }, W_CALL);
+      tl.to($("untested"), { opacity: 0, duration: 0.12, ease: "power2.out" }, W_CALL);
+      tl.fromTo($("valid"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, W_CALL);
+      tl.fromTo($("stext"), { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, W_CALL + 0.05);
+      tl.to($("add"), { opacity: 1, duration: 0.2, ease: "power2.out" }, W_CALL);
+
+      tl.to($("cursor"), { ...at(ADD), duration: 0.32, ease: "power2.inOut" }, W_ADDS - 0.38);
+      click($("add"), $("ripple-add"), W_ADDS);
+      tl.fromTo($("scrim"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W_ADDS + 0.1);
+      tl.fromTo($("dialog"), { opacity: 0, y: 28, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, W_ADDS + 0.12);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-step-2-add"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,236 @@
+<template>
+  <div id="root" data-composition-id="08-code-terminal" data-width="1920" data-height="1080" data-duration="10.192">
+    <style>
+      @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      #root [class~="08-code-terminal-bg"] {
+        position: absolute;
+        inset: 0;
+        background: #FFFFFF;
+      }
+      #root [class~="08-code-terminal-stage"] {
+        position: absolute;
+        inset: 0;
+      }
+      [class~="08-code-terminal-eyebrow"] {
+        position: absolute;
+        left: 290px;
+        top: 140px;
+        margin: 0;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #636363;
+      }
+      [class~="08-code-terminal-card"] {
+        position: absolute;
+        left: 290px;
+        top: 190px;
+        width: 1340px;
+        height: 560px;
+        background: #0A0A0A;
+        border-radius: 20px;
+        box-shadow: 0 30px 80px rgba(10, 10, 10, 0.18);
+        overflow: hidden;
+      }
+      [class~="08-code-terminal-bar"] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 56px;
+        background: #18181B;
+      }
+      [class~="08-code-terminal-dots"] {
+        position: absolute;
+        left: 22px;
+        top: 21.5px;
+        display: flex;
+        gap: 8px;
+      }
+      [class~="08-code-terminal-dots"] span {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #3F3F46;
+      }
+      [class~="08-code-terminal-title"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 56px;
+        line-height: 56px;
+        text-align: center;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 22px;
+        color: #A1A1AA;
+      }
+      [class~="08-code-terminal-mark"] {
+        position: absolute;
+        right: 22px;
+        top: 17px;
+        width: 22px;
+        height: 22px;
+      }
+      [class~="08-code-terminal-line"] {
+        position: absolute;
+        left: 52px;
+        height: 54.4px;
+        margin: 0;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 34px;
+        line-height: 54.4px;
+        white-space: pre;
+        color: #F4F4F5;
+      }
+      [class~="08-code-terminal-note"] {
+        position: absolute;
+        left: 290px;
+        top: 782px;
+        margin: 0;
+        font-family: "Geist", sans-serif;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #636363;
+        opacity: 0;
+      }
+      [class~="08-code-terminal-hidden"] { opacity: 0; }
+      [class~="08-code-terminal-prompt"] { color: #A1A1AA; }
+      [class~="08-code-terminal-dim"] { color: #A1A1AA; }
+      [class~="08-code-terminal-ok"] { color: #4ADE80; }
+      [class~="08-code-terminal-model"] { color: #F0915A; }
+      [class~="08-code-terminal-check"] {
+        display: inline-block;
+        width: 20.4px;
+        height: 34px;
+        vertical-align: -6px;
+      }
+      [class~="08-code-terminal-caret"] {
+        display: inline-block;
+        width: 18px;
+        height: 38px;
+        margin-left: 2px;
+        vertical-align: -8px;
+        background: #F4F4F5;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="08-code-terminal-bg clip" data-start="0" data-duration="10.192" data-track-index="0"></div>
+
+    <div class="08-code-terminal-stage clip" data-start="0" data-duration="10.192" data-track-index="1">
+      <p id="08-code-terminal-eyebrow" class="08-code-terminal-eyebrow">If you write code · Claude Code</p>
+
+      <div id="08-code-terminal-card" class="08-code-terminal-card">
+        <div class="08-code-terminal-bar">
+          <div class="08-code-terminal-dots"><span></span><span></span><span></span></div>
+          <div class="08-code-terminal-title">~/my-project</div>
+          <svg class="08-code-terminal-mark" viewBox="203.66 206.57 801.34 801.34" fill="#A1A1AA" aria-hidden="true">
+            <g transform="translate(0,1254) scale(0.1,-0.1)">
+              <path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
+              <path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Line tops are card-local (100 + i * 54.4); Frame 9 matches these canvas y values: 290, 344.4, 398.8, 453.2, 507.6, 562. -->
+        <p id="08-code-terminal-l1" class="08-code-terminal-line" style="top: 100px;"><span class="08-code-terminal-prompt">$ </span><span id="08-code-terminal-t1"></span><span id="08-code-terminal-c1" class="08-code-terminal-caret"></span></p>
+        <p id="08-code-terminal-l2" class="08-code-terminal-line 08-code-terminal-dim 08-code-terminal-hidden" style="top: 154.4px;">Installed ~/.local/bin/anyr</p>
+        <p id="08-code-terminal-l3" class="08-code-terminal-line 08-code-terminal-hidden" style="top: 208.8px;"><span class="08-code-terminal-prompt">$ </span><span id="08-code-terminal-t3"></span><span id="08-code-terminal-c3" class="08-code-terminal-caret"></span></p>
+        <p id="08-code-terminal-l4" class="08-code-terminal-line 08-code-terminal-dim 08-code-terminal-hidden" style="top: 263.2px;">Opening browser to sign in…</p>
+        <p id="08-code-terminal-l5" class="08-code-terminal-line 08-code-terminal-ok 08-code-terminal-hidden" style="top: 317.6px;"><svg class="08-code-terminal-check" viewBox="0 0 20.4 34" aria-hidden="true"><path d="M3.5 18.5 L8.2 23.2 L17 12.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Signed in</p>
+        <p id="08-code-terminal-l6" class="08-code-terminal-line 08-code-terminal-hidden" style="top: 372px;"><span class="08-code-terminal-prompt">$ </span><span id="08-code-terminal-t6"></span><span id="08-code-terminal-t6m" class="08-code-terminal-model"></span><span id="08-code-terminal-c6" class="08-code-terminal-caret"></span></p>
+      </div>
+
+      <p id="08-code-terminal-note" class="08-code-terminal-note">macOS and Linux · anyr claude installs Claude Code if it's missing</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        const ID = "08-code-terminal";
+        const DURATION = 10.192;
+        const BLINK_HALF = 0.4;
+        const $ = (s) => document.getElementById(ID + "-" + s);
+
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo($("card"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0);
+        tl.fromTo($("eyebrow"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.27);
+
+        function type(parts, start, cps) {
+          // Per-character sets instead of an onUpdate driver: seek() suppresses callbacks.
+          let i = 0;
+          for (const p of parts) {
+            for (const ch of p.text) {
+              const span = document.createElement("span");
+              span.textContent = ch;
+              span.style.display = "none";
+              p.el.appendChild(span);
+              i += 1;
+              tl.set(span, { display: "inline" }, start + i / cps);
+            }
+          }
+          return start + i / cps;
+        }
+
+        function caret(el, on, typeStart, typeEnd, off) {
+          const steps = [];
+          const blink = (from, to) => {
+            let visible = true;
+            for (let t = from; t < to - 1e-6; t += BLINK_HALF) {
+              steps.push([t, visible ? 1 : 0]);
+              visible = !visible;
+            }
+          };
+          blink(on, typeStart);
+          steps.push([typeStart, 1]);
+          blink(typeEnd, off);
+          if (off < DURATION) steps.push([off, 0]);
+          for (const [t, o] of steps) tl.set(el, { opacity: o }, t);
+        }
+
+        const reveal = (el, t) => tl.set(el, { opacity: 1 }, t);
+
+        const curlEnd = type([{ el: $("t1"), text: "curl -fsSL https://anyrouter.dev/setup.sh | bash" }], 3.05, 25);
+        caret($("c1"), 0, 3.05, curlEnd, 5.45);
+        reveal($("l2"), 5.6);
+
+        reveal($("l3"), 5.75);
+        const loginEnd = type([{ el: $("t3"), text: "anyr login" }], 6.14, 20);
+        caret($("c3"), 5.75, 6.14, loginEnd, 6.85);
+        reveal($("l4"), 6.95);
+        reveal($("l5"), 7.4);
+
+        reveal($("l6"), 7.56);
+        // 26 cps ends typing at ~9.2s so the blink cycle has the caret on at the last frame; Frame 9 opens caret-on.
+        const claudeEnd = type([
+          { el: $("t6"), text: "anyr claude --model " },
+          { el: $("t6m"), text: "anyrouter/free" },
+        ], 7.89, 26);
+        caret($("c6"), 6.4, 6.8, claudeEnd, DURATION);
+
+        // Frame 9 opens without the note.
+        tl.fromTo($("note"), { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 3.05);
+        tl.to($("note"), { opacity: 0, duration: 0.3, ease: "power1.in" }, DURATION - 0.3);
+
+        tl.set({}, {}, DURATION);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

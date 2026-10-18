@@ -1,0 +1,415 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+
+    [data-composition-id="07-how-it-works"] .bg {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+    }
+    [data-composition-id="07-how-it-works"] .stage {
+      position: absolute;
+      inset: 0;
+    }
+    [data-composition-id="07-how-it-works"] .cam {
+      position: absolute;
+      inset: 0;
+      transform-origin: 960px 470px;
+    }
+    [data-composition-id="07-how-it-works"] .mono {
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+    }
+
+    [data-composition-id="07-how-it-works"] .h2 {
+      position: absolute;
+      left: 120px;
+      top: 90px;
+      margin: 0;
+      font-size: 60px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+
+    [data-composition-id="07-how-it-works"] .wires {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: visible;
+    }
+    [data-composition-id="07-how-it-works"] .wire {
+      fill: none;
+      stroke: #D4D4D8;
+      stroke-width: 2;
+      stroke-dasharray: 1;
+      stroke-linecap: round;
+    }
+
+    [data-composition-id="07-how-it-works"] .packet {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #BB4D00;
+      box-shadow: 0 0 0 7px rgba(187, 77, 0, 0.16);
+    }
+
+    [data-composition-id="07-how-it-works"] .card {
+      position: absolute;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    [data-composition-id="07-how-it-works"] .app {
+      left: 160px;
+      top: 395px;
+      width: 300px;
+      height: 150px;
+    }
+    [data-composition-id="07-how-it-works"] .hub {
+      left: 760px;
+      top: 380px;
+      width: 300px;
+      height: 180px;
+    }
+    [data-composition-id="07-how-it-works"] .card-label {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    [data-composition-id="07-how-it-works"] .app svg {
+      width: 52px;
+      height: 52px;
+    }
+    [data-composition-id="07-how-it-works"] .hub img {
+      display: block;
+      width: 72px;
+      height: 72px;
+    }
+
+    [data-composition-id="07-how-it-works"] .col-label {
+      position: absolute;
+      left: 1300px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    [data-composition-id="07-how-it-works"] .resting {
+      font-size: 24px;
+      font-weight: 400;
+      color: #636363;
+    }
+
+    [data-composition-id="07-how-it-works"] .pill {
+      position: absolute;
+      left: 1300px;
+      height: 52px;
+    }
+    [data-composition-id="07-how-it-works"] .pill-body {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      height: 52px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      border-radius: 10px;
+      background: #FAFAFA;
+      border: 1.5px dashed #D4D4D8;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+      transform-origin: left center;
+    }
+    [data-composition-id="07-how-it-works"] .pool .pill-body {
+      color: #636363;
+    }
+    [data-composition-id="07-how-it-works"] .glyph {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+    [data-composition-id="07-how-it-works"] .glyph svg {
+      position: absolute;
+      inset: 0;
+      width: 22px;
+      height: 22px;
+    }
+    [data-composition-id="07-how-it-works"] .ring {
+      position: absolute;
+      left: 10.5px;
+      top: 4px;
+      width: 44px;
+      height: 44px;
+      overflow: visible;
+    }
+    [data-composition-id="07-how-it-works"] .ring circle {
+      fill: none;
+      stroke-width: 2.5;
+    }
+    [data-composition-id="07-how-it-works"] .ring .track {
+      stroke: #E5E5E5;
+    }
+    [data-composition-id="07-how-it-works"] .ring .sweep {
+      stroke: #3F3F46;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+    }
+
+    [data-composition-id="07-how-it-works"] .chip {
+      position: absolute;
+      left: 1662px;
+      height: 44px;
+      box-sizing: border-box;
+      padding: 0 16px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      transform-origin: left center;
+    }
+    [data-composition-id="07-how-it-works"] .chip.ok {
+      background: #ECFDF5;
+      color: #007E55;
+    }
+    [data-composition-id="07-how-it-works"] .chip.err {
+      background: #C0262D;
+      color: #FFFFFF;
+    }
+
+    [data-composition-id="07-how-it-works"] .foot {
+      position: absolute;
+      left: 1300px;
+      top: 752px;
+      width: 480px;
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.35;
+      color: #636363;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-how-it-works" data-width="1920" data-height="1080" data-duration="9.113">
+    <div class="bg clip" data-start="0" data-duration="9.113" data-track-index="0"></div>
+
+    <div class="stage clip" data-start="0" data-duration="9.113" data-track-index="1">
+      <div class="cam" id="07-how-it-works-cam">
+        <h2 class="h2" id="07-how-it-works-head">Your requests keep going.</h2>
+
+        <svg class="wires" viewBox="0 0 1920 1080" aria-hidden="true">
+          <path class="wire" id="07-how-it-works-w-app" pathLength="1" d="M460 470 L760 470" />
+          <path class="wire" id="07-how-it-works-w-you" pathLength="1" d="M1060 470 C1180 470 1180 262 1300 262" />
+          <path class="wire" id="07-how-it-works-w-p1" pathLength="1" d="M1060 470 C1180 470 1180 408 1300 408" />
+          <path class="wire" id="07-how-it-works-w-p2" pathLength="1" d="M1060 470 C1180 470 1180 478 1300 478" />
+          <path class="wire" id="07-how-it-works-w-p3" pathLength="1" d="M1060 470 C1180 470 1180 548 1300 548" />
+          <path class="wire" id="07-how-it-works-w-p4" pathLength="1" d="M1060 470 C1180 470 1180 618 1300 618" />
+          <path class="wire" id="07-how-it-works-w-p5" pathLength="1" d="M1060 470 C1180 470 1180 688 1300 688" />
+        </svg>
+
+        <div class="packet" id="07-how-it-works-k1"></div>
+        <div class="packet" id="07-how-it-works-k2"></div>
+        <div class="packet" id="07-how-it-works-k3"></div>
+        <div class="packet" id="07-how-it-works-k4"></div>
+        <div class="packet" id="07-how-it-works-k5"></div>
+        <div class="packet" id="07-how-it-works-k6"></div>
+        <div class="packet" id="07-how-it-works-k7"></div>
+
+        <div class="card app" id="07-how-it-works-app">
+          <svg viewBox="0 0 52 52" fill="none" stroke="#3F3F46" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="42" height="34" rx="6"/><path d="M5 18h42"/><circle cx="11" cy="13.5" r="1.4" fill="#3F3F46" stroke="none"/><circle cx="16" cy="13.5" r="1.4" fill="#3F3F46" stroke="none"/></svg>
+          <div class="card-label">Your app</div>
+        </div>
+
+        <div class="card hub" id="07-how-it-works-hub">
+          <img src="assets/anyrouter-logo-black.svg" alt="" />
+          <div class="card-label">AnyRouter</div>
+        </div>
+
+        <div class="col-label" id="07-how-it-works-you-label" style="top:196px">
+          <span>Your key</span>
+          <span class="resting" id="07-how-it-works-resting">resting</span>
+        </div>
+        <div class="pill" id="07-how-it-works-you" style="top:236px">
+          <div class="pill-body" id="07-how-it-works-you-body">
+            <span class="glyph">
+              <svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+              <svg id="07-how-it-works-you-glyph-on" viewBox="0 0 24 24" fill="#BB4D00" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+            </span>
+            <span>sk-or-v1-••••••••</span>
+          </div>
+          <svg class="ring" id="07-how-it-works-ring" viewBox="0 0 44 44" aria-hidden="true">
+            <circle class="track" cx="22" cy="22" r="19" />
+            <circle class="sweep" id="07-how-it-works-sweep" cx="22" cy="22" r="19" pathLength="1" transform="rotate(-90 22 22)" />
+          </svg>
+        </div>
+
+        <div class="col-label" id="07-how-it-works-pool-label" style="top:342px"><span>Shared pool</span></div>
+        <div class="pill pool" id="07-how-it-works-p1" style="top:382px"><div class="pill-body" id="07-how-it-works-p1-body"><span class="glyph"><svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></span><span>sk-or-v1-••••••••</span></div></div>
+        <div class="pill pool" id="07-how-it-works-p2" style="top:452px"><div class="pill-body" id="07-how-it-works-p2-body"><span class="glyph"><svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></span><span>sk-or-v1-••••••••</span></div></div>
+        <div class="pill pool" id="07-how-it-works-p3" style="top:522px"><div class="pill-body" id="07-how-it-works-p3-body"><span class="glyph"><svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></span><span>sk-or-v1-••••••••</span></div></div>
+        <div class="pill pool" id="07-how-it-works-p4" style="top:592px"><div class="pill-body" id="07-how-it-works-p4-body"><span class="glyph"><svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></span><span>sk-or-v1-••••••••</span></div></div>
+        <div class="pill pool" id="07-how-it-works-p5" style="top:662px"><div class="pill-body" id="07-how-it-works-p5-body"><span class="glyph"><svg viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></span><span>sk-or-v1-••••••••</span></div></div>
+
+        <div class="chip ok" id="07-how-it-works-c-you-a" style="top:240px">200 OK</div>
+        <div class="chip err" id="07-how-it-works-c-you-429" style="top:240px">429</div>
+        <div class="chip ok" id="07-how-it-works-c-you-b" style="top:240px">200 OK</div>
+        <div class="chip ok" id="07-how-it-works-c-p1" style="top:386px">200 OK</div>
+        <div class="chip ok" id="07-how-it-works-c-p2" style="top:456px">200 OK</div>
+        <div class="chip ok" id="07-how-it-works-c-p3" style="top:526px">200 OK</div>
+        <div class="chip ok" id="07-how-it-works-c-p4" style="top:596px">200 OK</div>
+
+        <p class="foot" id="07-how-it-works-foot">Credits are the last fallback. Requests on your own key never use credits.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById("07-how-it-works-" + id);
+      const tl = gsap.timeline({ paused: true });
+
+      // Every request rides one route: a straight run from the app through the hub
+      // (packets pass under the hub card), then the hub-to-key curve drawn in the SVG.
+      const APP_X = 460;
+      const HUB_OUT = 1060;
+      const KEY_X = 1300;
+      const MID_Y = 470;
+      const KEY_Y = { you: 262, p1: 408, p2: 478, p3: 548, p4: 618, p5: 688 };
+
+      const bez = (ky, t) => {
+        const u = 1 - t;
+        const x = u * u * u * HUB_OUT + 3 * u * u * t * 1180 + 3 * u * t * t * 1180 + t * t * t * KEY_X;
+        const y = u * u * u * MID_Y + 3 * u * u * t * MID_Y + 3 * u * t * t * ky + t * t * t * ky;
+        return { x, y };
+      };
+      const curveLen = (ky) => {
+        let len = 0;
+        let prev = bez(ky, 0);
+        for (let i = 1; i <= 40; i++) {
+          const p = bez(ky, i / 40);
+          len += Math.hypot(p.x - prev.x, p.y - prev.y);
+          prev = p;
+        }
+        return len;
+      };
+      const route = (ky) => {
+        const lineLen = HUB_OUT - APP_X;
+        const split = lineLen / (lineLen + curveLen(ky));
+        return (s) => (s <= split
+          ? { x: APP_X + lineLen * (s / split), y: MID_Y }
+          : bez(ky, (s - split) / (1 - split)));
+      };
+
+      // Packet schedule: one request at a time, then the fan-out to the pool.
+      const PACKETS = [
+        { id: "k1", key: "you", at: 0.66, dur: 0.65 },
+        { id: "k2", key: "you", at: 1.9, dur: 0.54, bounce: true },
+        { id: "k3", key: "p1", at: 4.42, dur: 0.73 },
+        { id: "k4", key: "p2", at: 5.41, dur: 0.6 },
+        { id: "k5", key: "p3", at: 5.61, dur: 0.6 },
+        { id: "k6", key: "p4", at: 5.81, dur: 0.6 },
+        { id: "k7", key: "you", at: 7.35, dur: 0.6 },
+      ];
+
+      PACKETS.forEach((pk) => {
+        const el = $(pk.id);
+        const pos = route(KEY_Y[pk.key]);
+        const proxy = { s: 0 };
+        const place = () => gsap.set(el, pos(proxy.s));
+        gsap.set(el, { xPercent: -50, yPercent: -50, opacity: 0, ...pos(0) });
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power1.out", immediateRender: false }, pk.at);
+        tl.fromTo(proxy, { s: 0 }, { s: 1, duration: pk.dur, ease: "power1.inOut", immediateRender: false, onUpdate: place }, pk.at);
+        const arrive = pk.at + pk.dur;
+        if (pk.bounce) {
+          tl.fromTo(proxy, { s: 1 }, { s: 0.9, duration: 0.3, ease: "power2.out", immediateRender: false, onUpdate: place }, arrive);
+          tl.fromTo(el, { backgroundColor: "#BB4D00", boxShadow: "0 0 0 7px rgba(187, 77, 0, 0.16)" }, { backgroundColor: "#C0262D", boxShadow: "0 0 0 7px rgba(192, 38, 45, 0.18)", duration: 0.12, ease: "power1.out", immediateRender: false }, arrive);
+          tl.to(el, { opacity: 0, duration: 0.2, ease: "power1.out" }, arrive + 0.12);
+        } else {
+          tl.to(el, { scale: 0, opacity: 0, duration: 0.12, ease: "power2.in" }, arrive);
+          const body = pk.key === "you" ? $("you-body") : $(pk.key + "-body");
+          tl.fromTo(body, { scale: 1.05 }, { scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, arrive);
+        }
+        pk.arrive = arrive;
+      });
+      const ARR = Object.fromEntries(PACKETS.map((pk) => [pk.id, pk.arrive]));
+
+      const chipIn = (id, at) => tl.fromTo($(id), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, at);
+
+      // Scene 1: the request path draws on; the first packet goes to your key.
+      tl.fromTo($("cam"), { scale: 1 }, { scale: 1.015, duration: 8.613, ease: "none" }, 0);
+      tl.fromTo($("app"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0);
+      tl.fromTo($("w-app"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 0.15);
+      tl.fromTo($("hub"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.25);
+      tl.fromTo($("w-you"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 0.39);
+      tl.fromTo([$("you-label"), $("you")], { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.51);
+      tl.fromTo([$("w-p1"), $("w-p2"), $("w-p3"), $("w-p4"), $("w-p5")], { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out", stagger: 0.06 }, 0.8);
+      tl.fromTo($("pool-label"), { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.9);
+      tl.fromTo([$("p1"), $("p2"), $("p3"), $("p4"), $("p5")], { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.07 }, 0.95);
+      gsap.set($("resting"), { opacity: 0 });
+      gsap.set([$("ring"), $("sweep")], { opacity: 0 });
+      chipIn("c-you-a", ARR.k1);
+
+      // Scene 2: the next request bounces with 429; your key dims and starts its cooldown.
+      tl.fromTo($("c-you-a"), { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power1.out", immediateRender: false }, 1.95);
+      chipIn("c-you-429", ARR.k2);
+      tl.fromTo($("you-body"), { opacity: 1 }, { opacity: 0.4, duration: 0.4, ease: "power2.out", immediateRender: false }, 2.59);
+      tl.fromTo($("you-glyph-on"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.59);
+      tl.fromTo($("ring"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out", immediateRender: false }, 3.0);
+      tl.fromTo($("sweep"), { opacity: 1, strokeDashoffset: 1 }, { opacity: 1, strokeDashoffset: 0, duration: 4.3, ease: "none", immediateRender: false }, 3.1);
+      tl.fromTo($("resting"), { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out", immediateRender: false }, 3.1);
+
+      // Scene 3: a pool key answers, then three more requests fan out.
+      chipIn("c-p1", ARR.k3);
+      chipIn("c-p2", ARR.k4);
+      chipIn("c-p3", ARR.k5);
+      chipIn("c-p4", ARR.k6);
+
+      // Scene 4: headline; the cooldown completes and your key takes requests again.
+      tl.fromTo($("head"), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 6.86);
+      tl.fromTo($("foot"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 7.15);
+      const BACK = 7.4;
+      const swap = (id, from, to, dur, at) => tl.fromTo($(id), { opacity: from }, { opacity: to, duration: dur, ease: "power2.out", immediateRender: false }, at);
+      swap("you-body", 0.4, 1, 0.35, BACK);
+      swap("you-glyph-on", 0, 1, 0.3, BACK);
+      swap("resting", 1, 0, 0.25, BACK);
+      swap("c-you-429", 1, 0, 0.25, BACK);
+      swap("ring", 1, 0, 0.3, BACK + 0.1);
+      chipIn("c-you-b", ARR.k7);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["07-how-it-works"] = tl;
+    })();
+  </script>
+</template>

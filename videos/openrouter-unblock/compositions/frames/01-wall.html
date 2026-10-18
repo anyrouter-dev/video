@@ -1,0 +1,340 @@
+<template>
+  <div id="root" data-composition-id="01-wall" data-width="1920" data-height="1080" data-duration="12.228">
+    <style>
+      @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      #root [class~="01-wall-bg"] {
+        position: absolute;
+        inset: 0;
+        background: #FFFFFF;
+      }
+      #root [class~="01-wall-stage"] {
+        position: absolute;
+        inset: 0;
+      }
+
+      [class~="01-wall-term"] {
+        position: absolute;
+        left: 290px;
+        top: 150px;
+        width: 1340px;
+        height: 600px;
+        background: #0A0A0A;
+        border-radius: 20px;
+        box-shadow: 0 30px 80px rgba(10, 10, 10, 0.18);
+        overflow: hidden;
+        z-index: 2;
+        transform-origin: 0% 50%;
+      }
+      [class~="01-wall-bar"] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 56px;
+        background: #18181B;
+      }
+      [class~="01-wall-dots"] {
+        position: absolute;
+        left: 22px;
+        top: 21.5px;
+        display: flex;
+        gap: 8px;
+      }
+      [class~="01-wall-dots"] span {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #3F3F46;
+      }
+      [class~="01-wall-title"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 56px;
+        line-height: 56px;
+        text-align: center;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 22px;
+        color: #A1A1AA;
+      }
+      [class~="01-wall-mark"] {
+        position: absolute;
+        right: 22px;
+        top: 17px;
+        width: 22px;
+        height: 22px;
+      }
+      [class~="01-wall-window"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 98px;
+        height: 460px;
+        overflow: hidden;
+      }
+      [class~="01-wall-log"] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      [class~="01-wall-line"] {
+        position: absolute;
+        left: 52px;
+        height: 46px;
+        margin: 0;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 28px;
+        line-height: 46px;
+        white-space: pre;
+        color: #F4F4F5;
+        opacity: 0;
+      }
+      [class~="01-wall-dim"] { color: #A1A1AA; }
+      [class~="01-wall-model"] { color: #F0915A; }
+      [class~="01-wall-ok"] { color: #4ADE80; }
+      [class~="01-wall-err"] { color: #F87171; }
+
+      [class~="01-wall-def"] {
+        position: absolute;
+        left: 1015px;
+        top: 150px;
+        width: 785px;
+        z-index: 1;
+        filter: drop-shadow(0 1px 1px rgba(10, 10, 10, 0.05)) drop-shadow(0 12px 24px rgba(10, 10, 10, 0.07));
+      }
+      [class~="01-wall-head"] {
+        position: relative;
+        z-index: 2;
+        box-sizing: border-box;
+        height: 207px;
+        padding: 48px 52px 0;
+        background: #FFFFFF;
+        border: 1.5px solid #E5E5E5;
+        border-bottom: 0;
+        border-radius: 20px 20px 0 0;
+      }
+      [class~="01-wall-eyebrow"] {
+        margin: 0;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 29px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #636363;
+      }
+      [class~="01-wall-defn"] {
+        margin: 22px 0 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 1.35;
+        color: #3F3F46;
+      }
+      [class~="01-wall-mask"] {
+        position: relative;
+        z-index: 1;
+        height: 404px;
+        overflow: hidden;
+      }
+      [class~="01-wall-sheet"] {
+        box-sizing: border-box;
+        height: 404px;
+        padding: 30px 52px 44px;
+        background: #FFFFFF;
+        border: 1.5px solid #E5E5E5;
+        border-top: 0;
+        border-radius: 0 0 20px 20px;
+        will-change: transform;
+      }
+      [class~="01-wall-rule"] {
+        height: 1.5px;
+        background: #E5E5E5;
+      }
+      [class~="01-wall-stats"] {
+        display: flex;
+        margin-top: 34px;
+        height: 186px;
+      }
+      [class~="01-wall-stat"] {
+        width: 50%;
+      }
+      [class~="01-wall-num"] {
+        display: inline-block;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        font-size: 140px;
+        font-weight: 600;
+        line-height: 140px;
+        letter-spacing: -0.04em;
+        font-variant-numeric: tabular-nums;
+        color: #0A0A0A;
+        transform-origin: 0% 100%;
+      }
+      [class~="01-wall-label"] {
+        margin: 10px 0 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 36px;
+        color: #3F3F46;
+      }
+      [class~="01-wall-foot"] {
+        margin: 30px 0 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1.4;
+        text-wrap: balance;
+        color: #636363;
+      }
+    </style>
+
+    <div class="01-wall-bg clip" data-start="0" data-duration="12.228" data-track-index="0"></div>
+
+    <div class="01-wall-stage clip" data-start="0" data-duration="12.228" data-track-index="1">
+      <div id="01-wall-term" class="01-wall-term">
+        <div class="01-wall-bar">
+          <div class="01-wall-dots"><span></span><span></span><span></span></div>
+          <div class="01-wall-title">~/my-app</div>
+          <svg class="01-wall-mark" viewBox="0 0 24 24" fill="#A1A1AA" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+        </div>
+        <div class="01-wall-window">
+          <div id="01-wall-log" class="01-wall-log"></div>
+        </div>
+      </div>
+
+      <div id="01-wall-def" class="01-wall-def">
+        <div class="01-wall-head">
+          <p id="01-wall-eyebrow" class="01-wall-eyebrow">Rate limit</p>
+          <p id="01-wall-defn" class="01-wall-defn">A cap on how many requests one key can send.</p>
+        </div>
+        <div id="01-wall-mask" class="01-wall-mask" data-layout-allow-overflow>
+          <div id="01-wall-sheet" class="01-wall-sheet">
+            <div class="01-wall-rule"></div>
+            <div class="01-wall-stats">
+              <div class="01-wall-stat">
+                <span id="01-wall-n1" class="01-wall-num">20</span>
+                <p id="01-wall-l1" class="01-wall-label">requests a minute</p>
+              </div>
+              <div class="01-wall-stat">
+                <span id="01-wall-n2" class="01-wall-num">50</span>
+                <p id="01-wall-l2" class="01-wall-label">requests a day</p>
+              </div>
+            </div>
+            <p id="01-wall-foot" class="01-wall-foot">OpenRouter's free-model limits&nbsp;· 1000 a day with $10 of credits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        const ID = "01-wall";
+        const DURATION = 11.728;
+        const $ = (s) => document.getElementById(ID + "-" + s);
+
+        const LINE_H = 46;
+        const VISIBLE = 10;
+        const BODY_H = 360;
+        const TERM_SHIFT_X = 120 - 290;
+        const TERM_SCALE = 0.62;
+
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo($("term"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0);
+
+        // Log schedule: steady 200s, then 429s on a geometric hold decay into a flurry.
+        // 429s begin on "errors" (2.86); ERR_HOLD lands the first scroll (11th line) on "requests," (4.41).
+        const OK_START = 0.6, OK_HOLD = 0.42;
+        const ERR_START = 2.86, ERR_HOLD = 0.40, ERR_DECAY = 0.82, ERR_FLOOR = 0.11;
+        const CONTENT = [
+          ...Array.from({ length: 4 }, () => ({ kind: "ok" })),
+          ...Array.from({ length: 12 }, () => ({ kind: "err" })),
+        ];
+        let okT = OK_START, errT = ERR_START, errI = 0;
+        const TIMELINE = CONTENT.map((entry) => {
+          if (entry.kind === "ok") {
+            const at = okT;
+            okT += OK_HOLD;
+            return { ...entry, at, hold: OK_HOLD };
+          }
+          const hold = Math.max(ERR_FLOOR, ERR_HOLD * Math.pow(ERR_DECAY, errI));
+          const at = errT;
+          errT += hold;
+          errI += 1;
+          return { ...entry, at, hold };
+        });
+
+        const log = $("log");
+        const span = (cls, text) => {
+          const s = document.createElement("span");
+          if (cls) s.className = cls;
+          s.textContent = text;
+          return s;
+        };
+
+        TIMELINE.forEach((entry, i) => {
+          const line = document.createElement("p");
+          line.className = ID + "-line";
+          line.style.top = i * LINE_H + "px";
+          line.append(
+            span("", "POST /api/v1/chat/completions  "),
+            span(ID + "-model", "openrouter/free"),
+            span(ID + "-dim", "  → "),
+            entry.kind === "ok"
+              ? span(ID + "-ok", "200 OK")
+              : span(ID + "-err", "429 Too Many Requests"),
+          );
+          log.appendChild(line);
+
+          tl.set(line, { opacity: 1 }, entry.at);
+          if (i >= VISIBLE) {
+            tl.fromTo(
+              log,
+              { y: -(i - VISIBLE) * LINE_H },
+              { y: -(i - VISIBLE + 1) * LINE_H, duration: Math.min(0.09, entry.hold * 0.8), ease: "power2.out", immediateRender: false },
+              entry.at,
+            );
+          }
+        });
+
+        // Scene 3: the log steps aside, the definition card rises into the space.
+        tl.fromTo(
+          $("term"),
+          { x: 0, scale: 1 },
+          { x: TERM_SHIFT_X, scale: TERM_SCALE, duration: 0.9, ease: "power2.inOut", immediateRender: false },
+          5.43,
+        );
+        tl.fromTo($("def"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 5.72);
+        tl.fromTo($("defn"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 6.59);
+
+        // Scene 4: the card body grows down from under the definition to hold the limits.
+        tl.fromTo($("sheet"), { y: -BODY_H }, { y: 0, duration: 0.5, ease: "power3.out" }, 9.03);
+
+        const stat = (n, l, at) => {
+          tl.fromTo($(n), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, at);
+          tl.fromTo($(l), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, at + 0.12);
+        };
+        stat("n1", "l1", 9.56);
+        stat("n2", "l2", 10.53);
+        tl.fromTo($("foot"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 10.87);
+
+        tl.set({}, {}, DURATION);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -54,6 +54,12 @@ jobs:
             args: --from=videos/changelog/fixtures/llms.txt
           - kind: intro
             args: ''
+          - kind: teaser
+            args: ''
+          - kind: explainer
+            args: ''
+          - kind: openrouter-unblock
+            args: ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
