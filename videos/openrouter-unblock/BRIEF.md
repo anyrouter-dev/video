@@ -51,6 +51,7 @@ Every number or claim on screen is one of these. Sources were read 2026-10-18.
 | C9 | Add it: Dashboard → BYOK → OpenRouter → paste into "API key". AnyRouter makes one live call to OpenRouter before it stores the key; encrypted at rest, never shown again. Base URL `https://openrouter.ai/api/v1` is the default. | same guide + docs/features/byok-providers/openrouter.md |
 | C10 | Donating: per-key switch; AnyRouter verifies the key ("Key verified"); your own requests always come first; turn it off any time; earn 5% (Go or no plan) / 8% (Pro, Max) of the token cost of requests it serves, capped at $1 per key per UTC day. On the Free plan, donating an eligible key unlocks the shared pool's free models. | docs/features/shared-pool.md + the guide |
 | C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | `assets/anyrouter-pool.png` (real screenshot) |
+| C13 | The limit belongs to the account: more keys on one account do not raise it ("One account. One limit."). | openrouter.ai/docs/api-reference/limits.md (live 2026-10-19: "Making additional accounts or API keys will not affect your rate limits") |
 | C12 | Model ids on screen exist in `GET https://anyrouter.dev/api/v1/models?all=1` (checked 2026-10-18): `anyrouter/free`, `openrouter/free`. The live list has no `:free`-suffixed id, so none is shown. | live API |
 
 ## UI label source
