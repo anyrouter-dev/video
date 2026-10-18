@@ -52,8 +52,9 @@ meta.sfx = cues.map(cue => {
   };
 });
 
+// Prune only sounds no cue uses; other files there (a CREDITS.md) are not ours to remove.
 for (const f of fs.readdirSync('assets/sfx')) {
-  if (!meta.sfx.some(s => s.file === `assets/sfx/${f}`)) fs.rmSync(`assets/sfx/${f}`);
+  if (/\.(mp3|wav|ogg|m4a)$/i.test(f) && !meta.sfx.some(s => s.file === `assets/sfx/${f}`)) fs.rmSync(`assets/sfx/${f}`);
 }
 fs.writeFileSync('audio_meta.json', JSON.stringify(meta, null, 2));
 console.log(`${meta.sfx.length} sound cues → audio_meta.json`);
