@@ -16,6 +16,7 @@ const RULES = [
   [['clod'], ['Claude']],
   [['go', 'plan'], ['Go', 'plan']],
   [['open', 'router', 'slash', 'free'], ['openrouter/free']],
+  [['openrouter', 'slash', 'free'], ['openrouter/free']],
   [['openbee', 'why', 'okay'], ['open', 'BYOK']],
   [['openrouters'], ["OpenRouter's"]],
   [['open', "router's"], ["OpenRouter's"]],

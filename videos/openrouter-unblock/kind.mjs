@@ -23,7 +23,7 @@ export default {
 
   notes: data => [
     `A ${Math.round(data.seconds)}-second narrated tutorial for people who use OpenRouter's free models.`,
-    'It shows why your OpenRouter account hits its free limit, then adds a new OpenRouter key to AnyRouter as a BYOK key, shares it with the pool and points the app at AnyRouter, so requests keep going through donated keys.',
+    'It shows why your OpenRouter account hits its free limit, then adds a new OpenRouter key to AnyRouter as a BYOK key, shares it with the pool and points the app at an AnyRouter key, so donated keys give it more room past the limit.',
     `Film version v${data.version}.`,
   ],
 

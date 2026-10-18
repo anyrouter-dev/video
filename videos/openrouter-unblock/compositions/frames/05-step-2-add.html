@@ -676,10 +676,10 @@
     }
   </style>
 
-  <div id="root" data-composition-id="05-step-2-add" data-width="1920" data-height="1080" data-duration="9.68">
-    <div class="bg clip" data-start="0" data-duration="9.68" data-track-index="0"></div>
+  <div id="root" data-composition-id="05-step-2-add" data-width="1920" data-height="1080" data-duration="8.848">
+    <div class="bg clip" data-start="0" data-duration="8.848" data-track-index="0"></div>
 
-    <div class="stage clip" data-start="0" data-duration="9.68" data-track-index="1">
+    <div class="stage clip" data-start="0" data-duration="8.848" data-track-index="1">
       <div class="rail">
         <div class="rail-step">
           <div class="rail-circle">
@@ -846,8 +846,9 @@
       const PILL_FIELD = { x: 681.5, y: 514.5 }; // pill text start meets the input text start
 
       // Word starts from 05-step-2-add.words.json.
-      const W_SIGN = 0.9, W_OPEN = 2.38, W_BYOK = 3.76, W_BRING = 4.77, W_PICK = 5.95, W_OPENROUTER = 6.01;
-      const W_PASTE = 6.73, W_KEY = 7.08, W_TEST = 7.74, W_KEY2 = 8.02, W_ADD = 8.58;
+      // W_BYOK underlines "BYOK" on "Bring"; the callout follows on "Your".
+      const W_SIGN = 0.93, W_OPEN = 2.17, W_BYOK = 2.61, W_BRING = 2.94, W_PICK = 4.52, W_OPENROUTER = 4.61;
+      const W_PASTE = 5.68, W_KEY = 6.06, W_TEST = 6.75, W_KEY2 = 7.04, W_ADD = 7.74;
       const T_VALID = W_KEY2 + 0.15;
       const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
 
@@ -882,7 +883,7 @@
       tl.to($("cursor"), { x: 1238, y: 698, duration: 0.5, ease: "power2.inOut" }, W_SIGN + 1.05);
 
       // Scene 1: on "open" the browser becomes the BYOK dashboard; "BYOK" underlines; the callout lands on "bring"
-      // Clean swap: the sign-in is fully gone (2.33) before any dashboard element shows (2.38).
+      // Clean swap: the sign-in is fully gone before any dashboard element shows (W_OPEN).
       tl.to($("signin"), { opacity: 0, duration: 0.2, ease: "power2.in" }, W_OPEN - 0.25);
       tl.to($("url-home"), { opacity: 0, duration: 0.15, ease: "power2.in" }, W_OPEN - 0.2);
       tl.fromTo($("nav"), { opacity: 0 }, { opacity: 1, duration: 0.01 }, W_OPEN);
@@ -921,7 +922,7 @@
       tl.fromTo($("spin"), { rotation: 0 }, { rotation: 300, duration: T_VALID - W_TEST - 0.06, ease: "none", transformOrigin: "50% 50%" }, W_TEST + 0.06);
 
       tl.to($("busy"), { opacity: 0, duration: 0.1, ease: "power2.out" }, T_VALID);
-      tl.to([$("test"), $("cancel")], { opacity: 1, duration: 0.12, ease: "power2.out" }, T_VALID);
+      tl.to([$("test"), $("cancel")], { opacity: 1, duration: 0.12, ease: "power2.out" }, T_VALID + 0.1); // after busy is gone
       tl.to($("untested"), { opacity: 0, duration: 0.12, ease: "power2.out" }, T_VALID);
       tl.fromTo($("valid"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, T_VALID);
       tl.fromTo($("stext"), { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, T_VALID + 0.04);
