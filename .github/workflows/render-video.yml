@@ -108,14 +108,18 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       # A static ffmpeg kept in the cache: apt-get was slow and sometimes hung.
+      # Pinned: the rolling "latest" master build of 2026-10-10 stalls every render
+      # mid-encode. Month-end autobuilds are the ones BtbN keeps.
       - name: ffmpeg and the render browser
         if: steps.decide.outputs.kinds != ''
         timeout-minutes: 5
+        env:
+          FFMPEG_URL: https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08/ffmpeg-N-127021-ge0c94b2d1c-linux64-gpl.tar.xz
         run: |
           set -euo pipefail
           if [ ! -x ~/.cache/ffmpeg/ffmpeg ]; then
             mkdir -p ~/.cache/ffmpeg
-            curl -fsSL --retry 3 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz \
+            curl -fsSL --retry 3 "$FFMPEG_URL" \
               | tar -xJ --strip-components=2 -C ~/.cache/ffmpeg --wildcards '*/bin/ffmpeg' '*/bin/ffprobe'
           fi
           echo "$HOME/.cache/ffmpeg" >> "$GITHUB_PATH"
