@@ -281,12 +281,13 @@
 
         tl.fromTo($("term"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0);
 
-        // Log schedule: steady 200s, then 429s on a geometric hold decay into a flurry.
-        // 429s begin on "errors" (2.75); ERR_HOLD lands the first scroll (11th line) on "requests." (4.34).
-        const OK_START = 0.6, OK_HOLD = 0.42;
-        const ERR_START = 2.75, ERR_HOLD = 0.411, ERR_DECAY = 0.82, ERR_FLOOR = 0.11;
+        // Log schedule: the day's requests #45-#50 answer 200, then #51 onward get 429 (the 50 a day limit).
+        // 429s begin on "errors" (2.75); the first scroll (11th line) lands on "requests." (4.34).
+        const FIRST_REQ = 45;
+        const OK_START = 0.45, OK_HOLD = 0.36;
+        const ERR_START = 2.75, ERR_HOLD = 0.522, ERR_DECAY = 0.82, ERR_FLOOR = 0.11;
         const CONTENT = [
-          ...Array.from({ length: 4 }, () => ({ kind: "ok" })),
+          ...Array.from({ length: 6 }, () => ({ kind: "ok" })),
           ...Array.from({ length: 12 }, () => ({ kind: "err" })),
         ];
         let okT = OK_START, errT = ERR_START, errI = 0;
@@ -317,6 +318,7 @@
           line.className = ID + "-line";
           line.style.top = i * LINE_H + "px";
           line.append(
+            span(ID + "-dim", "#" + (FIRST_REQ + i) + " "),
             span("", "POST /api/v1/chat/completions  "),
             span(ID + "-model", "openrouter/free"),
             span(ID + "-dim", "  → "),

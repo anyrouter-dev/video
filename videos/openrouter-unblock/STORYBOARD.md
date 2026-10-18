@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 84s
+duration: 99s
 message: "Your OpenRouter free models stop at your account's limit. Add your key to AnyRouter and share it with the pool, and when you hit the limit your requests keep going through keys other members shared."
 arc: The wall → Why → The fix → Step 1 → Step 2 → Step 3 → Step 4 → How it works → Close
 audience: someone already using OpenRouter's free models, technical or not
@@ -41,6 +41,8 @@ music: none
 Keep the built frame's look and structure (log, definition card, stats). Changes:
 Scene 3 ("That's a rate limit"): the definition card body reads `A cap on how many requests you can send.` (was "one key can send").
 Scene 4 ("Your account gets twenty a minute, and fifty a day"): an eyebrow `Your OpenRouter account` lands on "account" above the stats; `20` + `requests a minute` on "twenty", `50` + `requests a day` on "fifty". On "thousand": a third stat lands beside them, smaller but readable (number 56px, label 26px): `1000` + `a day after $10 of credits`. No footnote. Hold.
+
+r4: the log numbers each request (`#45`…); `#45`–`#50` answer 200, `#51` on gets 429, so the 50-a-day wall reads before the first error.
 
 ## Frame 2 — Why: the limit is per account
 - src: compositions/frames/02-one-account.html
@@ -111,11 +113,11 @@ handoff_out: rail with step 1 active; browser frame at shared geometry; key pill
 - src: compositions/frames/05-step-2-add.html
 
 - scene: Sign in to AnyRouter (real capture), BYOK = Bring Your Own Key, Add a provider → OpenRouter → paste → Test key (its own click) → Key valid → Add key (its own click) → Key verified and saved
-- duration: 9.68s
+- duration: 8.848s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
-- voiceover: "Step two. Sign in to AnyRouter and open B. Y. O. K.: bring your own key. Pick OpenRouter, paste the key, click Test key, then Add key."
+- voiceover: "Step two. Sign in to AnyRouter and open the Bring Your Own Key page. Pick OpenRouter, paste the key, click Test key, then Add key."
 - asset_candidates: assets/anyrouter-signin.png — real "Continue to AnyRouter" sign-in dialog; assets/provider-openrouter.svg — OpenRouter mark; assets/anyrouter-logo-black.svg — AnyRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the API key field, then the two separate clicks, then the dialog
@@ -134,15 +136,17 @@ Keep the built frame's sign-in crop, dashboard, form and dialog. Changes:
 - Keep `Keys are encrypted at rest` visible while the form shows.
 handoff_out: rail with step 1 done, step 2 active; browser frame; dialog open.
 
+r4: BYOK is spoken as "Bring Your Own Key"; the underline lands on "Bring" and the callout on "Your".
+
 ## Frame 6 — Step 3: share it with the pool
 - src: compositions/frames/06-step-3-share.html
 
 - scene: The OpenRouter key panel: the Share with pool switch is ringed, then clicked → consent dialog with all four "In short" lines → checkbox ticked → Donate key → Key verified
-- duration: 14.779s
+- duration: 21.157s
 - transition_in: cut
 - type: tutorial_step
 - beat: payoff
-- voiceover: "Step three. Turn on Share with pool. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and show on your OpenRouter account. Yours always go first, and you can turn it off any time."
+- voiceover: "Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. Yours are tried first. Check that OpenRouter's terms allow sharing. You can turn it off any time."
 - asset_candidates: assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the Share with pool switch, then the consent dialog, then Key verified
@@ -162,15 +166,17 @@ Keep the built frame's panel and dialogs. Changes:
 - Once a dialog covers panel text, that text goes to opacity 0. Never two dialogs at once.
 handoff_out: rail with steps 1–3 done; clean cut to Frame 7.
 
+r4: a box and the note `Leave these as they are` mark Use my key / Only my key on "Leave"; the earnings hint under Share with pool is cropped. The dialog shows two "In short" lines (the paid-model pricing lines are cropped); both arrive with the dialog and each is tinted while spoken. `Donate` underlines on "donating". Notes: `Their requests use your OpenRouter quota` on "quota", `Your requests are tried first` on "Yours", `Turn sharing off any time` on "turn". The checkbox ticks on "sharing", Donate key just before "You".
+
 ## Frame 7 — Step 4: use it in your app
 - src: compositions/frames/07-step-4-app.html
 
 - scene: A code/config card for the viewer's app: the AnyRouter key (a different key, from anyrouter.dev/dashboard/keys), base URL https://anyrouter.dev/api/v1, and model openrouter/free
-- duration: 8.123s
+- duration: 15.248s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
-- voiceover: "Step four. In your app, switch to an AnyRouter key and the AnyRouter base URL, and set the model to open router slash free."
+- voiceover: "Step four. In AnyRouter, open API Keys and create a key for your app. Then, in your app's settings, swap in that key and the AnyRouter address. Keep the model, open router slash free. AnyRouter now runs it on your OpenRouter key."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter mark
 - blueprint: panel-edit-live-sync (Adapt)
 - focal: the three settings lines
@@ -185,15 +191,17 @@ Layout: the shared `terminal` card centred (x 290, y 200, 1340×520), title `my-
 3. `MODEL=` line: old value `MODEL=your-model:free` (dim) → `MODEL=openrouter/free` on "open router slash free" (the model id in `#F0915A`), then a `free`-green check and a 24px `terminal-dim` note `uses your OpenRouter key in BYOK`.
 Lines 1 and 2 swap on "AnyRouter key" and "base URL"; each gets a `free`-green check after its swap. Under the card, 26px ink: `Your AnyRouter key is a separate key. Your OpenRouter key stays in BYOK.` reveals right after line 1's swap. Step 4 checks on the last word. Hold.
 
+r4: two phases. On anyrouter.dev/dashboard/keys: `API Keys` underlines, `Create key`, `Key name` = `my-app`, `Your new API key` with `sk-ar-v1-••••••••` and Copy → Copied. On "Then": eyebrow `Your app's settings` and the .env card. API_KEY swaps on "that key", BASE_URL on "address", MODEL stays `openrouter/free` (dim → lit and checked on "Keep", note `unchanged · now runs on your OpenRouter key in BYOK`). Under the card: `Your AnyRouter key goes in your app. Your OpenRouter key stays in BYOK.`
+
 ## Frame 8 — How it works
 - src: compositions/frames/08-how-it-works.html
 
 - scene: Requests flow one at a time: your key first → 200 OK; your key is limited → 429 → rests; the next requests each go to one shared key (one request per key, over time) → 200 OK; requests keep going; your key comes back
-- duration: 10.043s
+- duration: 10.555s
 - transition_in: cut
 - type: key_feature
 - beat: understanding
-- voiceover: "Now each request tries your key first. When it's limited, it rests, and the next requests go to shared keys, each to a different one. Your requests keep going."
+- voiceover: "Now each request tries your key first. When it hits the limit, your key takes a short break, and the next requests go to keys other members shared. Then your key comes back."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter monogram for the hub; assets/provider-openrouter.svg — OpenRouter mark on the key pills
 - blueprint: constellation-hub (Adapt)
 - focal: the request path
@@ -207,15 +215,17 @@ Keep the built frame's layout and ring. Changes:
 - Remove the footnote about credits.
 - Headline `Your requests keep going.` on "keep"; ring completes and your key returns; a last request goes to your key → `200 OK`.
 
+r4: `resting` is now `short break`; the `each request → a different shared key` label is gone; headline `Your key first. Shared keys next.` on "comes back".
+
 ## Frame 9 — Close
 - src: compositions/frames/09-close.html
 
 - scene: The honest summary: your key counts toward OpenRouter's limit; past it, the pool keeps you going; AnyRouter lockup and anyrouter.dev
-- duration: 9.775s
+- duration: 12.121s
 - transition_in: crossfade
 - type: cta
 - beat: resolve
-- voiceover: "Your own key still counts toward OpenRouter's limit. Past it, the pool keeps you going. Start at any router dot dev."
+- voiceover: "With the pool on, you get more room past OpenRouter's limit. Shared keys have their own limits too, so the extra room can vary. Start at any router dot dev."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter wordmark and monogram
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: the AnyRouter lockup
@@ -227,3 +237,5 @@ Keep the built frame's lockup end. Replace the first two scenes:
 Scene 1 ("Your own key still counts toward OpenRouter's limit"): row 1, your key pill (OpenRouter glyph) + `Your key counts toward OpenRouter's limit`, on "own key".
 Scene 2 ("Past it, the pool keeps you going"): row 2, a small stack of three muted pills + `Past it, shared keys keep you going`, on "Past". No h2, no earnings line, no "no daily cap", no 2,400.
 Scene 3 ("Start at anyrouter.dev"): rows clear upward; the AnyRouter lockup and `anyrouter.dev` (Geist Mono, primary) settle; completely still for the last ≥2.5s.
+
+r4: row 1 is three shared-key pills + `More room past OpenRouter's limit` on "pool"; row 2 is an info mark + `Shared keys have limits too, so it can vary` on "Shared".

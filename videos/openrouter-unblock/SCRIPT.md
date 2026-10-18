@@ -31,30 +31,30 @@
 
 ## Line 5 — Step two (Frame 5)
 
-**Delivery:** Instructional, same pace, slower on "bring your own key".
+**Delivery:** Instructional, same pace, slower on "Bring Your Own Key".
 
-    Step two. Sign in to AnyRouter and open B. Y. O. K.: bring your own key. Pick OpenRouter, paste the key, click Test key, then Add key.
+    Step two. Sign in to AnyRouter and open the Bring Your Own Key page. Pick OpenRouter, paste the key, click Test key, then Add key.
 
 ## Line 6 — Step three (Frame 6)
 
 **Delivery:** Instructional, honest, even.
 
-    Step three. Turn on Share with pool. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and show on your OpenRouter account. Yours always go first, and you can turn it off any time.
+    Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. Yours are tried first. Check that OpenRouter's terms allow sharing. You can turn it off any time.
 
 ## Line 7 — Step four (Frame 7)
 
-**Delivery:** Instructional, clear on the model id.
+**Delivery:** Instructional, clear on the key and the model id.
 
-    Step four. In your app, switch to an AnyRouter key and the AnyRouter base URL, and set the model to open router slash free.
+    Step four. In AnyRouter, open API Keys and create a key for your app. Then, in your app's settings, swap in that key and the AnyRouter address. Keep the model, open router slash free. AnyRouter now runs it on your OpenRouter key.
 
 ## Line 8 — How it works (Frame 8)
 
 **Delivery:** Explaining, steady, a lift on the last sentence.
 
-    Now each request tries your key first. When it's limited, it rests, and the next requests go to shared keys, each to a different one. Your requests keep going.
+    Now each request tries your key first. When it hits the limit, your key takes a short break, and the next requests go to keys other members shared. Then your key comes back.
 
 ## Line 9 — Close (Frame 9)
 
 **Delivery:** Settled, warm sign-off.
 
-    Your own key still counts toward OpenRouter's limit. Past it, the pool keeps you going. Start at any router dot dev.
+    With the pool on, you get more room past OpenRouter's limit. Shared keys have their own limits too, so the extra room can vary. Start at any router dot dev.

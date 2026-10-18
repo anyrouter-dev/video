@@ -317,6 +317,8 @@
       left: 49.5px;
       top: 67.5px;
       width: 1050px;
+      height: 507px;
+      box-sizing: border-box;
       padding: 30px 40px 32px;
       display: flex;
       flex-direction: column;
@@ -345,21 +347,53 @@
     }
     [data-composition-id="06-step-3-share"] .d-item {
       position: relative;
-      margin-top: 8px;
-      padding-left: 38px;
-      font-size: 24px;
-      line-height: 32px;
+      margin-top: 10px;
+      padding: 6px 12px 6px 50px;
+      isolation: isolate;
+      border-radius: 10px;
+      font-size: 28px;
+      line-height: 36px;
       color: #3F3F46;
+    }
+    [data-composition-id="06-step-3-share"] .d-item .tint {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background: #FFF4EC;
+      z-index: -1;
+    }
+    [data-composition-id="06-step-3-share"] .kw {
+      position: relative;
+    }
+    [data-composition-id="06-step-3-share"] .kw-ul {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 4px;
+      border-radius: 2px;
+      background: #BB4D00;
+      transform-origin: 0% 50%;
+    }
+    [data-composition-id="06-step-3-share"] .keep {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 100px;
+      height: 172px;
+      box-sizing: border-box;
+      border: 3px solid #BB4D00;
+      border-radius: 14px;
     }
     [data-composition-id="06-step-3-share"] .d-item svg {
       position: absolute;
-      left: 0;
-      top: 4px;
-      width: 24px;
+      left: 12px;
+      top: 12px;
+      width: 28px;
       height: 24px;
     }
     [data-composition-id="06-step-3-share"] .d-foot {
-      margin-top: 24px;
+      margin-top: auto;
       display: flex;
       align-items: center;
       gap: 32px;
@@ -507,10 +541,10 @@
     }
   </style>
 
-  <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="14.779">
-    <div class="bg clip" data-start="0" data-duration="14.779" data-track-index="0"></div>
+  <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="21.157">
+    <div class="bg clip" data-start="0" data-duration="21.157" data-track-index="0"></div>
 
-    <div class="stage clip" data-start="0" data-duration="14.779" data-track-index="1">
+    <div class="stage clip" data-start="0" data-duration="21.157" data-track-index="1">
       <div class="rail">
         <div class="rail-step">
           <div class="rail-circle">
@@ -566,13 +600,14 @@
               <div class="switch" style="top:23px"><div class="knob"></div></div>
             </div>
             <div class="row" style="top:276px;height:120px">
-              <div class="row-label" style="top:22px">Share with pool</div>
-              <div class="row-hint" style="top:64px">Earn credits back when others route through this key</div>
+              <div class="row-label" style="top:42px">Share with pool</div>
               <div class="switch" id="06-step-3-share-share" style="top:38px">
                 <div class="knob"></div>
               </div>
               <svg class="ring" viewBox="0 0 96 60" fill="none"><rect id="06-step-3-share-ring" x="1.5" y="1.5" width="93" height="57" rx="28.5" pathLength="1" stroke="#BB4D00" stroke-width="3" stroke-dasharray="1 1"/></svg>
             </div>
+
+            <div class="keep" id="06-step-3-share-keep"></div>
 
             <div class="keys-label">Keys · 1/1 active</div>
             <div class="keyline">
@@ -585,13 +620,11 @@
           <div class="scrim" id="06-step-3-share-scrim"></div>
 
           <div class="dialog consent" id="06-step-3-share-consent">
-            <div class="d-title"><img class="logo" src="assets/provider-openrouter.svg" alt="" /><span>Donate your OpenRouter key</span></div>
+            <div class="d-title"><img class="logo" src="assets/provider-openrouter.svg" alt="" /><span><span class="kw">Donate<i class="kw-ul" id="06-step-3-share-ul"></i></span> your OpenRouter key</span></div>
             <div class="d-desc">Choose what the shared pool may run on this OpenRouter key. Optional.</div>
             <div class="d-short">In short</div>
-            <div class="d-item" id="06-step-3-share-li1"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Other users' requests run on your key, and the usage appears on your OpenRouter account.</div>
-            <div class="d-item" id="06-step-3-share-li2"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You are responsible for your provider's terms. You may withdraw at any time.</div>
-            <div class="d-item" id="06-step-3-share-li3"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You can price each paid model, from $0 up to 10% over its catalog price. On those models you receive what callers pay minus a 10% platform fee.</div>
-            <div class="d-item" id="06-step-3-share-li4"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Models left at the catalog price earn your usual reward, based on the catalog price.</div>
+            <div class="d-item" id="06-step-3-share-li1"><i class="tint" id="06-step-3-share-li1-tint"></i><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Other users' requests run on your key, and the usage appears on your OpenRouter account.</div>
+            <div class="d-item" id="06-step-3-share-li2"><i class="tint" id="06-step-3-share-li2-tint"></i><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You are responsible for your provider's terms. You may withdraw at any time.</div>
             <div class="d-foot">
               <div class="d-check" id="06-step-3-share-check">
                 <div class="box"></div>
@@ -619,13 +652,21 @@
         </div>
       </div>
 
+      <div class="note" id="06-step-3-share-note-leave" style="left:120px;top:300px">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5l6 6L23 8"/></svg>
+        <div>Leave these as they are</div>
+      </div>
+      <div class="note" id="06-step-3-share-note-quota" style="left:120px;top:536px">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="10"/><path d="M14 8v6l4 3"/></svg>
+        <div>Their requests use your OpenRouter quota</div>
+      </div>
       <div class="note" id="06-step-3-share-note-free" style="left:120px;top:300px">
         <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="12.5" width="18" height="12" rx="3"/><path d="M9.5 12.5V9a4.5 4.5 0 0 1 8.7-1.6"/></svg>
         <div>On the Free plan, sharing unlocks the pool</div>
       </div>
       <div class="note" id="06-step-3-share-note-first" style="left:1552px;top:300px">
         <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 23V5M7 12l7-7 7 7"/></svg>
-        <div>Your own requests always come first</div>
+        <div>Your requests are tried first</div>
       </div>
       <div class="note" id="06-step-3-share-note-off" style="left:1552px;top:536px">
         <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="23" height="12" rx="6"/><circle cx="8.5" cy="14" r="3"/></svg>
@@ -655,20 +696,22 @@
       const GOT_IT_REST = { x: 1262, y: 652 };
 
       // Word starts (06-step-3-share.words.json)
-      const TURN = 0.94;
-      const POOL = 2.13;
-      const FREE = 3.01;
-      const POOL_2 = 5.39;
-      const OTHER = 6.21;
-      const SHOW = 8.52;
-      const YOURS = 11.14;
-      const FIRST = 12.03;
-      const TURN_OFF = 13.08;
+      const LEAVE = 0.93;
+      const TURN = 2.75;
+      const POOL = 3.74;
+      const DONATING = 5.46;
+      const FREE = 6.8;
+      const OTHER = 10.06;
+      const QUOTA = 13.82;
+      const YOURS = 14.99;
+      const CHECK = 16.72;
+      const SHARING = 18.53;
+      const TURN_OFF = 19.61;
 
-      const CLICK_BOX = FIRST;
-      const CLICK_DONATE = 12.55;
-      const CONSENT_OUT = 13.25;
-      const RESULT = 13.58;
+      const CLICK_BOX = SHARING;
+      const CLICK_DONATE = 19.2;
+      const CONSENT_OUT = 20.0;
+      const RESULT = 20.33;
 
       const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
       gsap.set($("cursor"), { transformOrigin: "2px 2px" });
@@ -684,14 +727,16 @@
         }
         tl.fromTo($(ripple), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
       };
+      const note = (id, t) => tl.fromTo($(id), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, t);
 
       // Hidden states held from t=0
       tl.set([$("c2-done"), $("l2-done"), $("c3-on"), $("l3-on"), $("c3-done"), $("l3-done")], { opacity: 0 }, 0);
       tl.set([$("ripple-share"), $("ripple-box"), $("ripple-donate")], { scale: 0, opacity: 0 }, 0);
-      tl.set([$("scrim"), $("consent"), $("result"), $("box-on"), $("donate-busy")], { opacity: 0 }, 0);
-      tl.set([$("li1"), $("li2"), $("li3"), $("li4")], { opacity: 0 }, 0);
-      tl.set([$("note-free"), $("note-first"), $("note-off")], { opacity: 0 }, 0);
+      tl.set([$("scrim"), $("consent"), $("result"), $("box-on"), $("donate-busy"), $("keep"), $("li1-tint"), $("li2-tint")], { opacity: 0 }, 0);
+      tl.set([$("li1"), $("li2")], { opacity: 0 }, 0);
+      tl.set([$("note-leave"), $("note-quota"), $("note-free"), $("note-first"), $("note-off")], { opacity: 0 }, 0);
       tl.set($("ring"), { attr: { "stroke-dashoffset": 1 } }, 0);
+      tl.set($("ul"), { scaleX: 0 }, 0);
       tl.set($("donate"), { opacity: 0.45 }, 0);
 
       // Rail: step 2 done, step 3 active at 0.2s
@@ -702,53 +747,58 @@
       tl.set($("c3-todo"), { opacity: 0 }, 0.55);
       tl.to($("l3-on"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
 
-      // Scene 1: ring draws on "turn", cursor reaches the switch by "pool" and clicks on the second "pool"
+      // Scene 1: "Leave the other switches": a box around Use my key / Only my key, and its note
       tl.fromTo($("cursor"), { ...at(START), opacity: 0 }, { ...at(START), opacity: 1, duration: 0.25, ease: "power2.out" }, 0.06);
+      tl.fromTo($("keep"), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, LEAVE);
+      note("note-leave", LEAVE + 0.1);
+
+      // Scene 2: the ring draws on "turn"; the click lands on "pool"
+      tl.to($("keep"), { opacity: 0, duration: 0.3, ease: "power2.out" }, TURN);
       tl.to($("ring"), { attr: { "stroke-dashoffset": 0 }, duration: 0.45, ease: "power2.inOut" }, TURN);
-      tl.to($("cursor"), { ...at(SHARE), duration: 0.7, ease: "power2.inOut" }, 1.3);
-      press($("share"), "ripple-share", POOL_2);
+      tl.to($("cursor"), { ...at(SHARE), duration: 0.65, ease: "power2.inOut" }, TURN + 0.15);
+      press($("share"), "ripple-share", POOL);
+      tl.to($("note-leave"), { opacity: 0, duration: 0.3, ease: "power2.out" }, POOL);
 
-      // Scene 2: consent dialog rises; the panel it covers goes to 0 as it lands
-      tl.to($("scrim"), { opacity: 1, duration: 0.3, ease: "power2.out" }, POOL_2 + 0.06);
-      tl.fromTo($("consent"), { y: 40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, POOL_2 + 0.12);
-      tl.to($("panel"), { opacity: 0, duration: 0.12, ease: "power2.out" }, POOL_2 + 0.08);
-      tl.to($("cursor"), { ...at(PARK), duration: 0.5, ease: "power2.inOut" }, POOL_2 + 0.14);
+      // Scene 3: consent dialog rises; the panel it covers goes to 0 as it lands; "Donate" underlines on "donating"
+      tl.to($("scrim"), { opacity: 1, duration: 0.3, ease: "power2.out" }, POOL + 0.06);
+      tl.fromTo($("consent"), { y: 40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, POOL + 0.12);
+      tl.to($("panel"), { opacity: 0, duration: 0.12, ease: "power2.out" }, POOL + 0.08);
+      tl.to($("cursor"), { ...at(PARK), duration: 0.5, ease: "power2.inOut" }, POOL + 0.14);
+      tl.to($("ul"), { scaleX: 1, duration: 0.45, ease: "power3.out" }, DONATING);
 
-      // Chip on "free"
-      tl.fromTo($("note-free"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, FREE);
+      // Both "In short" lines arrive with the dialog; each is highlighted while it is spoken
+      tl.fromTo([$("li1"), $("li2")], { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out", stagger: 0.1 }, POOL + 0.35);
+      note("note-free", FREE);
+      tl.fromTo($("li1-tint"), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, OTHER);
+      note("note-quota", QUOTA);
+      note("note-first", YOURS);
 
-      // In short lines, in step with the voice
-      tl.fromTo($("li1"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, OTHER);
-      ["li2", "li3", "li4"].forEach((id, i) => {
-        tl.fromTo($(id), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, SHOW + i * 0.25);
-      });
+      // The terms line takes the highlight on "Check"
+      tl.to($("li1-tint"), { opacity: 0, duration: 0.3, ease: "power2.out" }, CHECK);
+      tl.fromTo($("li2-tint"), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, CHECK);
 
-      // Chip on "Yours"
-      tl.fromTo($("note-first"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, YOURS);
-
-      // Tick on "first", then Donate key (disabled until ticked)
+      // Tick on "sharing", then Donate key (disabled until ticked)
       tl.to($("cursor"), { ...at(BOX), duration: 0.55, ease: "power2.inOut" }, CLICK_BOX - 0.6);
       press(null, "ripple-box", CLICK_BOX);
       tl.fromTo($("box-on"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.15, ease: "power3.out" }, CLICK_BOX + 0.02);
       tl.to($("donate"), { opacity: 1, duration: 0.15, ease: "power2.out" }, CLICK_BOX + 0.04);
-      tl.to($("cursor"), { ...at(DONATE), duration: 0.32, ease: "power2.inOut" }, CLICK_BOX + 0.14);
+      tl.to($("cursor"), { ...at(DONATE), duration: 0.4, ease: "power2.inOut" }, CLICK_BOX + 0.2);
       press($("donate"), "ripple-donate", CLICK_DONATE);
       tl.to($("cursor"), { x: DONATE.x + 112, y: DONATE.y + 32, duration: 0.25, ease: "power2.out" }, CLICK_DONATE + 0.14);
       tl.set($("donate-idle"), { opacity: 0 }, CLICK_DONATE + 0.04);
       tl.to($("donate-busy"), { opacity: 1, duration: 0.08, ease: "power2.out" }, CLICK_DONATE + 0.04);
       tl.fromTo($("spin"), { rotation: 0 }, { rotation: 540, duration: RESULT - CLICK_DONATE, ease: "none", transformOrigin: "50% 50%" }, CLICK_DONATE + 0.04);
 
-      // Last chip on the second "turn"
-      tl.fromTo($("note-off"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, TURN_OFF);
+      note("note-off", TURN_OFF);
 
-      // Scene 3: consent fully out, then the result; step 3 checks; hold
+      // Scene 4: consent fully out, then the result; step 3 checks; hold
       tl.to($("consent"), { scale: 0.97, opacity: 0, duration: 0.3, ease: "power2.in" }, CONSENT_OUT);
       tl.fromTo($("result"), { y: 14, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, RESULT);
       tl.fromTo($("live-check"), { scale: 0.5 }, { scale: 1, duration: 0.3, ease: "power3.out", transformOrigin: "50% 50%" }, RESULT);
       tl.to($("cursor"), { ...at(GOT_IT_REST), duration: 0.3, ease: "power2.out" }, RESULT);
       tl.fromTo($("c3-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, RESULT);
       tl.to($("l3-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, RESULT);
-      tl.set([$("c3-on"), $("l3-on")], { opacity: 0 }, RESULT + 0.3);
+      tl.to([$("c3-on"), $("l3-on")], { opacity: 0, duration: 0.2, ease: "power2.out" }, RESULT);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["06-step-3-share"] = tl;

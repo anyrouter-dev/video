@@ -2,7 +2,7 @@
 workflow: product-launch-video
 flow: automation
 storyboard: no
-message: "Your OpenRouter free models stop at OpenRouter's limit. Add the same key to AnyRouter and turn on the pool, and your requests keep going."
+message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you get more room past that limit."
 destination: youtube
 aspect: 1920x1080
 language: en
@@ -52,6 +52,11 @@ Every number or claim on screen is one of these. Sources were read 2026-10-18.
 | C10 | Donating: per-key switch; AnyRouter verifies the key ("Key verified"); your own requests always come first; turn it off any time; earn 5% (Go or no plan) / 8% (Pro, Max) of the token cost of requests it serves, capped at $1 per key per UTC day. On the Free plan, donating an eligible key unlocks the shared pool's free models. | docs/features/shared-pool.md + the guide |
 | C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | `assets/anyrouter-pool.png` (real screenshot) |
 | C13 | The limit belongs to the account: more keys on one account do not raise it ("One account. One limit."). | openrouter.ai/docs/api-reference/limits.md (live 2026-10-19: "Making additional accounts or API keys will not affect your rate limits") |
+| C14 | Shared-pool traffic on your donated key runs on your OpenRouter account and uses its quota (its 20/min and 50/day). Your own requests are tried first. | anyrouter.dev/docs/features/shared-pool.md (live 2026-10-19: "route other users' matching requests through your provider account, exactly as if you'd made the call yourself"; "You always keep first call on your own key") + the dashboard consent line "the usage appears on your OpenRouter account" (`tools/ui-labels.md`) + C13 (limit per account) |
+| C15 | Check that OpenRouter's terms allow sharing before you donate; the dialog calls sharing "donating". | docs/guides/unblock-free-model-rate-limits-openrouter-key.md (live 2026-10-19: "Check that OpenRouter's terms allow sharing your key before you donate") + shared-pool.md ("You're responsible for confirming that before you donate") |
+| C16 | Your app uses an AnyRouter key: Dashboard → API Keys (`anyrouter.dev/dashboard/keys`) → Create key → "Key name" → "Your new API key", shown once, Copy. Keys are `sk-ar-…`. | anyrouter.dev/docs/features/api-keys.md (live 2026-10-19) + product source `apps/dashboard/src/app/keys/-components/create-key-form.tsx`, `packages/ui/src/components/dashboard/create-key-dialog/key-created-view.tsx`, nav label "API Keys" (`packages/lib/src/navigation.ts:399`) |
+| C17 | `openrouter/free` is OpenRouter's own Free Models Router: it picks a `:free` model, so the free limits (C1) apply. The same id works on OpenRouter and on AnyRouter, so the model line stays. | openrouter.ai/docs/guides/routing/routers/free-router.md (live 2026-10-19) + `GET https://openrouter.ai/api/v1/models` (`openrouter/free`, "Free Models Router") + C12 |
+| C18 | Shared keys are other members' provider accounts with their own limits, so the extra room is not fixed ("more room", "can vary"; never "keeps going"). | credential-selection.md (live 2026-10-19: shared pool is paid by "A donor's provider account") + C1, C13 |
 | C12 | Model ids on screen exist in `GET https://anyrouter.dev/api/v1/models?all=1` (checked 2026-10-18): `anyrouter/free`, `openrouter/free`. The live list has no `:free`-suffixed id, so none is shown. | live API |
 
 ## UI label source
@@ -66,8 +71,8 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 
 - Do not show anyone's real API key. Keys on screen are `sk-or-v1-••••••••••••`.
 - Never "unlimited". Never a number outside the ledger.
-- Music bed: `assets/bgm/track-84s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM).
+- Music bed: `assets/bgm/track-100s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 99.1s film.
   A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
-  instead plays 0–40s, crossfades for 3s back to 21s (16s back, 4 bars, so the beat holds)
-  and runs to the real outro, 84s in all:
-  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit[a][b];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:68,asetpts=PTS-STARTPTS[y];[x][y]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-84s.mp3`
+  instead jumps back 16s (4 bars, so the beat holds) twice, each with a 3s crossfade:
+  0–40s, then 21–56s, then 37s to the real outro, 100s in all:
+  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=37:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-100s.mp3`
