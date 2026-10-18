@@ -1,0 +1,196 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+    [id="10-close-bg"] { position: absolute; inset: 0; background: #FFFFFF; }
+    [id="10-close-stage"] { position: absolute; inset: 0; }
+
+    [id="10-close-lines"] {
+      position: absolute;
+      left: 120px;
+      right: 120px;
+      top: 0;
+      height: 880px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    [class~="10-close-line"] {
+      font-weight: 600;
+      font-size: 112px;
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+    [id="10-close-line3"] {
+      margin-top: 36px;
+      font-size: 84px;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+    [id="10-close-free"] { color: #007E55; }
+
+    [id="10-close-scene2"] { position: absolute; inset: 0; transform-origin: 960px 420px; }
+    [id="10-close-lockup"] {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 108px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    [id="10-close-row"] { display: flex; align-items: center; gap: 30px; height: 116px; }
+    [id="10-close-mark"] { width: 116px; height: 116px; display: block; }
+    [id="10-close-mark"] path { fill: #0A0A0A; fill-opacity: 0; stroke: #0A0A0A; stroke-width: 200; stroke-linejoin: round; }
+    [id="10-close-word"] {
+      font-weight: 600;
+      font-size: 112px;
+      line-height: 1.0;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+    [id="10-close-word"] span { display: inline-block; }
+    [id="10-close-url"] {
+      margin-top: 30px;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #BB4D00;
+    }
+
+    [id="10-close-browser"] {
+      position: absolute;
+      left: 570px;
+      top: 360px;
+      width: 780px;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 20px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
+      overflow: hidden;
+    }
+    [class~="10-close-bar"] {
+      position: relative;
+      height: 52px;
+      background: #FAFAFA;
+      border-bottom: 1.5px solid #E5E5E5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [class~="10-close-dots"] { position: absolute; left: 22px; top: 20px; display: flex; gap: 8px; }
+    [class~="10-close-dots"] i { width: 12px; height: 12px; border-radius: 999px; background: #D4D4D8; display: block; }
+    [class~="10-close-pill"] {
+      height: 32px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 20px;
+      color: #636363;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    [id="10-close-shot"] {
+      display: block;
+      width: 100%;
+      height: 438px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    [id="10-close-veil"] { position: absolute; inset: 0; background: #FFFFFF; opacity: 0; }
+  </style>
+
+  <div id="root" data-composition-id="10-close" data-width="1920" data-height="1080" data-duration="7.919">
+    <div id="10-close-bg" class="clip" data-start="0" data-duration="7.919" data-track-index="0"></div>
+
+    <div id="10-close-stage" class="clip" data-start="0" data-duration="7.919" data-track-index="1">
+      <div id="10-close-lines">
+        <div id="10-close-line1" class="10-close-line">One key.</div>
+        <div id="10-close-line2" class="10-close-line">Every model.</div>
+        <div id="10-close-line3" class="10-close-line">A shared pool that keeps it <span id="10-close-free">free</span>.</div>
+      </div>
+
+      <div id="10-close-scene2">
+        <div id="10-close-lockup">
+          <div id="10-close-row">
+            <svg id="10-close-mark" xmlns="http://www.w3.org/2000/svg" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter">
+              <g transform="translate(0,1254) scale(0.1,-0.1)">
+                <path id="10-close-mark-a" pathLength="1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
+                <path id="10-close-mark-b" pathLength="1" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
+              </g>
+            </svg>
+            <div id="10-close-word"><span>A</span><span>n</span><span>y</span><span>R</span><span>o</span><span>u</span><span>t</span><span>e</span><span>r</span></div>
+          </div>
+          <div id="10-close-url">anyrouter.dev</div>
+        </div>
+
+        <div id="10-close-browser">
+          <div class="10-close-bar">
+            <div class="10-close-dots"><i></i><i></i><i></i></div>
+            <div class="10-close-pill">anyrouter.dev</div>
+          </div>
+          <img id="10-close-shot" src="assets/anyrouter-home.png" alt="anyrouter.dev home page" />
+        </div>
+      </div>
+
+      <div id="10-close-veil"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById("10-close-" + id);
+      const DURATION = 7.919;
+      // Word starts from 10-close.words.json: "One", "every", "a" (shared pool), "Start", "anyrouter.dev" (word and URL mid-word).
+      const BEATS = [0.04, 0.69, 1.84];
+      const START = 3.74, ANY = 4.06, URL = 4.29;
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo($("line1"), { scale: 1.1, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: "power4.out" }, BEATS[0]);
+      tl.fromTo($("line2"), { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out" }, BEATS[1]);
+      tl.fromTo($("line3"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "circ.out" }, BEATS[2]);
+
+      // Opacity rides expo.in so the lines stay solid ink while they travel, never a grey hold before the lockup.
+      const EXIT = 3.42;
+      [$("line1"), $("line2"), $("line3")].forEach((line, i) => {
+        tl.to(line, { y: -160, duration: 0.26, ease: "power2.in" }, EXIT + i * 0.04);
+        tl.to(line, { opacity: 0, duration: 0.26, ease: "expo.in" }, EXIT + i * 0.04);
+      });
+
+      tl.fromTo($("mark-a"), { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START);
+      tl.fromTo($("mark-b"), { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START + 0.18);
+      tl.fromTo([$("mark-a"), $("mark-b")], { fillOpacity: 0 }, { fillOpacity: 1, duration: 0.45, ease: "power2.out" }, START + 0.6);
+
+      tl.fromTo($("word").children, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.035 }, ANY);
+      tl.fromTo($("url"), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, URL);
+      tl.fromTo($("browser"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 4.81);
+
+      tl.fromTo($("scene2"), { scale: 1 }, { scale: 1.012, duration: DURATION - 5.67, ease: "none" }, 5.67);
+
+      tl.fromTo($("veil"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.inOut" }, DURATION - 0.6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["10-close"] = tl;
+    })();
+  </script>
+</template>

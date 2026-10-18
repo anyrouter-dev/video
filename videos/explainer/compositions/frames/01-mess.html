@@ -1,0 +1,304 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+    [class~="01-mess-bg"] {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+    }
+    [class~="01-mess-eyebrow"] {
+      position: absolute;
+      left: 120px;
+      top: 70px;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #636363;
+      white-space: nowrap;
+    }
+    /* A cell is a zero-size anchor at stage centre; GSAP x/y carry it to its grid slot. */
+    [class~="01-mess-cell"] {
+      position: absolute;
+      left: 960px;
+      top: 540px;
+      width: 0;
+      height: 0;
+    }
+    [class~="01-mess-tile"] {
+      position: absolute;
+      left: -130px;
+      top: -100px;
+      width: 120px;
+      height: 120px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: 1.5px solid #E5E5E5;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06);
+      color: #0A0A0A;
+      z-index: 2;
+    }
+    [class~="01-mess-mark"] {
+      width: 60px;
+      height: 60px;
+      display: block;
+    }
+    [class~="01-mess-url"] {
+      position: absolute;
+      left: -70px;
+      top: 36px;
+      margin-left: -200px;
+      width: 400px;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+    }
+    [class~="01-mess-urltext"] {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: #F5F5F5;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 24px;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [class~="01-mess-key"] {
+      position: absolute;
+      left: -40px;
+      top: -126px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 52px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      background: #FAFAFA;
+      border: 1.5px dashed #D4D4D8;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+      z-index: 3;
+    }
+    [class~="01-mess-keyglyph"] {
+      width: 22px;
+      height: 22px;
+      color: #636363;
+      flex: none;
+    }
+    [class~="01-mess-receipt"] {
+      position: absolute;
+      left: 4px;
+      top: -36px;
+      width: 60px;
+      height: 74px;
+      z-index: 3;
+    }
+    [class~="01-mess-receiptshape"] {
+      position: absolute;
+      inset: 0;
+      width: 60px;
+      height: 74px;
+    }
+    [class~="01-mess-receipt"] span {
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 60px;
+      text-align: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      font-weight: 500;
+      color: #0A0A0A;
+    }
+  </style>
+
+  <div id="root" data-composition-id="01-mess" data-start="0" data-duration="9.232" data-width="1920" data-height="1080">
+    <div class="01-mess-bg clip" data-start="0" data-duration="9.232" data-track-index="0"></div>
+    <div class="01-mess-eyebrow"><span class="01-mess-ch">1</span><span class="01-mess-ch">2</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">a</span><span class="01-mess-ch">c</span><span class="01-mess-ch">c</span><span class="01-mess-ch">o</span><span class="01-mess-ch">u</span><span class="01-mess-ch">n</span><span class="01-mess-ch">t</span><span class="01-mess-ch">s</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">·</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">1</span><span class="01-mess-ch">2</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">k</span><span class="01-mess-ch">e</span><span class="01-mess-ch">y</span><span class="01-mess-ch">s</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">·</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">1</span><span class="01-mess-ch">2</span><span class="01-mess-ch">&nbsp;</span><span class="01-mess-ch">b</span><span class="01-mess-ch">i</span><span class="01-mess-ch">l</span><span class="01-mess-ch">l</span><span class="01-mess-ch">s</span></div>
+    <div class="01-mess-grid">
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">openai.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">anthropic.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">ai.google.dev</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M23 12.245c0-.905-.075-1.565-.236-2.25h-10.54v4.083h6.186c-.124 1.014-.797 2.542-2.294 3.569l-.021.136 3.332 2.53.23.022C21.779 18.417 23 15.593 23 12.245z"></path><path d="M12.225 23c3.03 0 5.574-.978 7.433-2.665l-3.542-2.688c-.948.648-2.22 1.1-3.891 1.1a6.745 6.745 0 01-6.386-4.572l-.132.011-3.465 2.628-.045.124C4.043 20.531 7.835 23 12.225 23z"></path><path d="M5.84 14.175A6.65 6.65 0 015.463 12c0-.758.138-1.491.361-2.175l-.006-.147-3.508-2.67-.115.054A10.831 10.831 0 001 12c0 1.772.436 3.447 1.197 4.938l3.642-2.763z"></path><path d="M12.225 5.253c2.108 0 3.529.892 4.34 1.638l3.167-3.031C17.787 2.088 15.255 1 12.225 1 7.834 1 4.043 3.469 2.197 7.062l3.63 2.763a6.77 6.77 0 016.398-4.572z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">deepseek.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M23.748 4.482c-.254-.124-.364.113-.512.234-.051.039-.094.09-.137.136-.372.397-.806.657-1.373.626-.829-.046-1.537.214-2.163.848-.133-.782-.575-1.248-1.247-1.548-.352-.156-.708-.311-.955-.65-.172-.241-.219-.51-.305-.774-.055-.16-.11-.323-.293-.35-.2-.031-.278.136-.356.276-.313.572-.434 1.202-.422 1.84.027 1.436.633 2.58 1.838 3.393.137.093.172.187.129.323-.082.28-.18.552-.266.833-.055.179-.137.217-.329.14a5.526 5.526 0 01-1.736-1.18c-.857-.828-1.631-1.742-2.597-2.458a11.365 11.365 0 00-.689-.471c-.985-.957.13-1.743.388-1.836.27-.098.093-.432-.779-.428-.872.004-1.67.295-2.687.684a3.055 3.055 0 01-.465.137 9.597 9.597 0 00-2.883-.102c-1.885.21-3.39 1.102-4.497 2.623C.082 8.606-.231 10.684.152 12.85c.403 2.284 1.569 4.175 3.36 5.653 1.858 1.533 3.997 2.284 6.438 2.14 1.482-.085 3.133-.284 4.994-1.86.47.234.962.327 1.78.397.63.059 1.236-.03 1.705-.128.735-.156.684-.837.419-.961-2.155-1.004-1.682-.595-2.113-.926 1.096-1.296 2.746-2.642 3.392-7.003.05-.347.007-.565 0-.845-.004-.17.035-.237.23-.256a4.173 4.173 0 001.545-.475c1.396-.763 1.96-2.015 2.093-3.517.02-.23-.004-.467-.247-.588zM11.581 18c-2.089-1.642-3.102-2.183-3.52-2.16-.392.024-.321.471-.235.763.09.288.207.486.371.739.114.167.192.416-.113.603-.673.416-1.842-.14-1.897-.167-1.361-.802-2.5-1.86-3.301-3.307-.774-1.393-1.224-2.887-1.298-4.482-.02-.386.093-.522.477-.592a4.696 4.696 0 011.529-.039c2.132.312 3.946 1.265 5.468 2.774.868.86 1.525 1.887 2.202 2.891.72 1.066 1.494 2.082 2.48 2.914.348.292.625.514.891.677-.802.09-2.14.11-3.054-.614zm1-6.44a.306.306 0 01.415-.287.302.302 0 01.2.288.306.306 0 01-.31.307.303.303 0 01-.304-.308zm3.11 1.596c-.2.081-.399.151-.59.16a1.245 1.245 0 01-.798-.254c-.274-.23-.47-.358-.552-.758a1.73 1.73 0 01.016-.588c.07-.327-.008-.537-.239-.727-.187-.156-.426-.199-.688-.199a.559.559 0 01-.254-.078c-.11-.054-.2-.19-.114-.358.028-.054.16-.186.192-.21.356-.202.767-.136 1.146.016.352.144.618.408 1.001.782.391.451.462.576.685.914.176.265.336.537.445.848.067.195-.019.354-.25.452z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">mistral.ai</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M3.428 3.4h3.429v3.428h3.429v3.429h-.002 3.431V6.828h3.427V3.4h3.43v13.714H24v3.429H13.714v-3.428h-3.428v-3.429h-3.43v3.428h3.43v3.429H0v-3.429h3.428V3.4zm10.286 13.715h3.428v-3.429h-3.427v3.429z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">x.ai</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M6.469 8.776L16.512 23h-4.464L2.005 8.776H6.47zm-.004 7.9l2.233 3.164L6.467 23H2l4.465-6.324zM22 2.582V23h-3.659V7.764L22 2.582zM22 1l-9.952 14.095-2.233-3.163L17.533 1H22z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">qwen.ai</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12.604 1.34c.393.69.784 1.382 1.174 2.075a.18.18 0 00.157.091h5.552c.174 0 .322.11.446.327l1.454 2.57c.19.337.24.478.024.837-.26.43-.513.864-.76 1.3l-.367.658c-.106.196-.223.28-.04.512l2.652 4.637c.172.301.111.494-.043.77-.437.785-.882 1.564-1.335 2.34-.159.272-.352.375-.68.37-.777-.016-1.552-.01-2.327.016a.099.099 0 00-.081.05 575.097 575.097 0 01-2.705 4.74c-.169.293-.38.363-.725.364-.997.003-2.002.004-3.017.002a.537.537 0 01-.465-.271l-1.335-2.323a.09.09 0 00-.083-.049H4.982c-.285.03-.553-.001-.805-.092l-1.603-2.77a.543.543 0 01-.002-.54l1.207-2.12a.198.198 0 000-.197 550.951 550.951 0 01-1.875-3.272l-.79-1.395c-.16-.31-.173-.496.095-.965.465-.813.927-1.625 1.387-2.436.132-.234.304-.334.584-.335a338.3 338.3 0 012.589-.001.124.124 0 00.107-.063l2.806-4.895a.488.488 0 01.422-.246c.524-.001 1.053 0 1.583-.006L11.704 1c.341-.003.724.032.9.34zm-3.432.403a.06.06 0 00-.052.03L6.254 6.788a.157.157 0 01-.135.078H3.253c-.056 0-.07.025-.041.074l5.81 10.156c.025.042.013.062-.034.063l-2.795.015a.218.218 0 00-.2.116l-1.32 2.31c-.044.078-.021.118.068.118l5.716.008c.046 0 .08.02.104.061l1.403 2.454c.046.081.092.082.139 0l5.006-8.76.783-1.382a.055.055 0 01.096 0l1.424 2.53a.122.122 0 00.107.062l2.763-.02a.04.04 0 00.035-.02.041.041 0 000-.04l-2.9-5.086a.108.108 0 010-.113l.293-.507 1.12-1.977c.024-.041.012-.062-.035-.062H9.2c-.059 0-.073-.026-.043-.077l1.434-2.505a.107.107 0 000-.114L9.225 1.774a.06.06 0 00-.053-.031zm6.29 8.02c.046 0 .058.02.034.06l-.832 1.465-2.613 4.585a.056.056 0 01-.05.029.058.058 0 01-.05-.029L8.498 9.841c-.02-.034-.01-.052.028-.054l.216-.012 6.722-.012z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">ai.meta.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M6.897 4c1.915 0 3.516.932 5.43 3.376l.282-.373c.19-.246.383-.484.58-.71l.313-.35C14.588 4.788 15.792 4 17.225 4c1.273 0 2.469.557 3.491 1.516l.218.213c1.73 1.765 2.917 4.71 3.053 8.026l.011.392.002.25c0 1.501-.28 2.759-.818 3.7l-.14.23-.108.153c-.301.42-.664.758-1.086 1.009l-.265.142-.087.04a3.493 3.493 0 01-.302.118 4.117 4.117 0 01-1.33.208c-.524 0-.996-.067-1.438-.215-.614-.204-1.163-.56-1.726-1.116l-.227-.235c-.753-.812-1.534-1.976-2.493-3.586l-1.43-2.41-.544-.895-1.766 3.13-.343.592C7.597 19.156 6.227 20 4.356 20c-1.21 0-2.205-.42-2.936-1.182l-.168-.184c-.484-.573-.837-1.311-1.043-2.189l-.067-.32a8.69 8.69 0 01-.136-1.288L0 14.468c.002-.745.06-1.49.174-2.23l.1-.573c.298-1.53.828-2.958 1.536-4.157l.209-.34c1.177-1.83 2.789-3.053 4.615-3.16L6.897 4zm-.033 2.615l-.201.01c-.83.083-1.606.673-2.252 1.577l-.138.199-.01.018c-.67 1.017-1.185 2.378-1.456 3.845l-.004.022a12.591 12.591 0 00-.207 2.254l.002.188c.004.18.017.36.04.54l.043.291c.092.503.257.908.486 1.208l.117.137c.303.323.698.492 1.17.492 1.1 0 1.796-.676 3.696-3.641l2.175-3.4.454-.701-.139-.198C9.11 7.3 8.084 6.616 6.864 6.616zm10.196-.552l-.176.007c-.635.048-1.223.359-1.82.933l-.196.198c-.439.462-.887 1.064-1.367 1.807l.266.398c.18.274.362.56.55.858l.293.475 1.396 2.335.695 1.114c.583.926 1.03 1.6 1.408 2.082l.213.262c.282.326.529.54.777.673l.102.05c.227.1.457.138.718.138.176.002.35-.023.518-.073.338-.104.61-.32.813-.637l.095-.163.077-.162c.194-.459.29-1.06.29-1.785l-.006-.449c-.08-2.871-.938-5.372-2.2-6.798l-.176-.189c-.67-.683-1.444-1.074-2.27-1.074z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">moonshot.ai</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" viewBox="0 0 24 25" fill="none"><path d="M21.7202 0.939941C22.9502 0.939941 23.9502 1.93994 23.9502 3.16994C23.9502 4.39994 22.9502 5.39994 21.7202 5.39994H19.7502C19.6002 5.39994 19.4902 5.27994 19.4902 5.13994V3.16994C19.4902 1.93994 20.4902 0.939941 21.7202 0.939941Z" fill="currentColor" /><path d="M9.39 13.9501L17.82 5.59012C17.98 5.43012 17.89 5.12012 17.68 5.12012H13.14C13.14 5.12012 13.04 5.14012 13 5.18012L3.92 14.1901C3.78 14.3301 3.57 14.2101 3.57 13.9801V5.39012C3.57 5.24012 3.47 5.12012 3.35 5.12012H0.219999C0.0999993 5.12012 0 5.24012 0 5.39012V23.9201C0 24.0701 0.0999993 24.1901 0.219999 24.1901H3.35C3.47 24.1901 3.57 24.0701 3.57 23.9201V20.1401C3.57 20.0601 3.6 19.9801 3.65 19.9301L6.47 17.1401C6.54 17.0701 6.63 17.0601 6.71 17.1101L14.24 22.6501C15.47 23.4801 16.85 23.9901 18.25 24.1401C18.37 24.1501 18.48 24.0301 18.48 23.8701V20.3101C18.48 20.1701 18.4 20.0601 18.29 20.0501C17.47 19.9201 16.66 19.6001 15.94 19.1101L9.42 14.3901C9.28 14.3001 9.27 14.0701 9.39 13.9501Z" fill="currentColor" /></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">build.nvidia.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" viewBox="0 0 512 512"><path d="M52.3 232.5s46.3-68.3 138.7-75.4v-24.8C88.7 140.5 0 227.2 0 227.2s50.2 145.2 191 158.4v-26.3C87.7 346.3 52.3 232.5 52.3 232.5M191 307v24.1C112.9 317.2 91.3 236 91.3 236s37.5-41.5 99.8-48.3v26.5h-.1c-32.7-3.9-58.2 26.6-58.2 26.6S147 292.2 191 307m0-220.4v45.7c3-.2 6-.4 9-.5 116.4-3.9 192.2 95.5 192.2 95.5s-87.1 105.9-177.8 105.9c-8.3 0-16.1-.8-23.4-2.1v28.3c6.3.8 12.7 1.3 19.5 1.3 84.4 0 145.5-43.1 204.6-94.2 9.8 7.9 49.9 27 58.2 35.3-56.2 47.1-187.3 85-261.5 85-7.2 0-14-.4-20.8-1.1v39.7h321V86.6zm0 101.1v-30.6c3-.2 6-.4 9-.5 83.7-2.6 138.6 71.9 138.6 71.9s-59.3 82.4-122.9 82.4c-9.2 0-17.4-1.5-24.7-4v-92.8c32.6 3.9 39.1 18.3 58.7 51l43.6-36.7s-31.8-41.7-85.4-41.7c-5.8 0-11.4.4-16.9 1" fill="currentColor"/></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">openrouter.ai</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+        <div class="01-mess-cell">
+          <div class="01-mess-url"><span class="01-mess-urltext">groq.com</span></div>
+          <div class="01-mess-tile"><svg class="01-mess-mark" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12.036 2c-3.853-.035-7 3-7.036 6.781-.035 3.782 3.055 6.872 6.908 6.907h2.42v-2.566h-2.292c-2.407.028-4.38-1.866-4.408-4.23-.029-2.362 1.901-4.298 4.308-4.326h.1c2.407 0 4.358 1.915 4.365 4.278v6.305c0 2.342-1.944 4.25-4.323 4.279a4.375 4.375 0 01-3.033-1.252l-1.851 1.818A7 7 0 0012.029 22h.092c3.803-.056 6.858-3.083 6.879-6.816v-6.5C18.907 4.963 15.817 2 12.036 2z"></path></svg></div>
+          <div class="01-mess-key"><svg class="01-mess-keyglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="16.5" r="4.5"/><path d="M10.7 13.3 20.5 3.5M17 7l3 3M14.5 9.5l2 2"/></svg><span>sk-••••</span></div>
+          <div class="01-mess-receipt"><svg class="01-mess-receiptshape" viewBox="0 0 60 74" fill="none"><path d="M2 5Q2 2 5 2H55Q58 2 58 5V71L51 65L44 71L37 65L30 71L23 65L16 71L9 65L2 71Z" fill="#FAFAFA" stroke="#D4D4D8" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="42" width="32" height="4" rx="2" fill="#D4D4D8"/><rect x="14" y="51" width="20" height="4" rx="2" fill="#D4D4D8"/></svg><span>$</span></div>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const root = document.querySelector('[data-composition-id="01-mess"]');
+      const q = (cls) => Array.from(root.getElementsByClassName(cls));
+
+      const cells = q("01-mess-cell");
+      const tiles = q("01-mess-tile");
+      const urls = q("01-mess-url");
+      const keys = q("01-mess-key");
+      const receipts = q("01-mess-receipt");
+      const chars = q("01-mess-ch");
+
+      // Word starts from 01-mess.words.json.
+      const CUE = { there: 0.05, website: 3.37, key: 4.92, bill: 5.62, using: 6.43, messy: 7.76 };
+      const LEAD = 0.12;
+
+      const COLS = [-538, -158, 222, 602];
+      const ROWS = [-280, -30, 220];
+      const targets = cells.map((_, i) => ({ x: COLS[i % 4], y: ROWS[Math.floor(i / 4)] }));
+
+      // Visual centre of a cell sits ~30px left / 25px up of its anchor; the grid's visual centre is (0, -60).
+      const order = targets
+        .map((t, i) => ({ i, d: Math.hypot(t.x - 30, t.y - 25 + 60) }))
+        .sort((a, b) => a.d - b.d || a.i - b.i)
+        .map((o) => o.i);
+
+      // Fixed pseudo-random in [-1, 1] so the clutter is identical on every seek.
+      const jitter = (i, k) => {
+        const s = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453;
+        return (s - Math.floor(s)) * 2 - 1;
+      };
+
+      const tl = gsap.timeline({ paused: true });
+
+      const START_PROGRESS = 0.3;
+      order.forEach((i, rank) => {
+        const t = targets[i];
+        tl.fromTo(
+          cells[i],
+          { x: t.x * START_PROGRESS, y: t.y * START_PROGRESS, scale: 0.6, opacity: 0, zIndex: i },
+          { x: t.x, y: t.y, scale: 1, opacity: 1, duration: 1.0, ease: "power3.out" },
+          CUE.there + rank * 0.07,
+        );
+      });
+
+      tl.fromTo(
+        urls,
+        { y: -46, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.035 },
+        CUE.website - LEAD,
+      );
+      tl.fromTo(
+        keys,
+        { x: 34, scale: 0.85, opacity: 0, transformOrigin: "0% 50%" },
+        { x: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power3.out", stagger: 0.035 },
+        CUE.key - LEAD,
+      );
+      tl.fromTo(
+        receipts,
+        { y: -44, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, ease: "power3.out", stagger: 0.035 },
+        CUE.bill - LEAD,
+      );
+
+      const SQUEEZE = 0.88;
+      cells.forEach((cell, i) => {
+        const t = targets[i];
+        tl.to(cell, { x: t.x * SQUEEZE, y: t.y * SQUEEZE, scale: 1.04, duration: 1.4, ease: "power2.inOut" }, CUE.using);
+        tl.to(tiles[i], { rotation: jitter(i, 1) * 4, duration: 1.4, ease: "power2.inOut" }, CUE.using);
+        tl.to(urls[i], { x: jitter(i, 2) * 10, rotation: jitter(i, 3) * 2.5, duration: 1.4, ease: "power2.inOut" }, CUE.using);
+      });
+
+      tl.fromTo(chars, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none", stagger: 0.03 }, CUE.using);
+
+      cells.forEach((cell, i) => {
+        const at = CUE.messy - LEAD + (i % 4) * 0.02;
+        tl.to(tiles[i], { rotation: jitter(i, 1) * 7, x: jitter(i, 4) * 8, y: jitter(i, 5) * 6, duration: 0.4, ease: "power3.out" }, at);
+        tl.to(urls[i], { x: jitter(i, 2) * 16, y: jitter(i, 6) * 8, rotation: jitter(i, 3) * 5, duration: 0.4, ease: "power3.out" }, at);
+        tl.to(keys[i], { x: jitter(i, 7) * 20, y: jitter(i, 8) * 12, rotation: jitter(i, 9) * 8, duration: 0.4, ease: "power3.out" }, at);
+        tl.to(receipts[i], { x: jitter(i, 10) * 16, y: jitter(i, 11) * 14, rotation: jitter(i, 12) * 10, duration: 0.4, ease: "power3.out" }, at);
+      });
+
+      tl.set({}, {}, 9.232);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-mess"] = tl;
+    })();
+  </script>
+</template>
