@@ -15,10 +15,16 @@ const RULES = [
   [['any', 'r', 'clod'], ['anyr', 'claude']],
   [['clod'], ['Claude']],
   [['go', 'plan'], ['Go', 'plan']],
+  [['open', 'router', 'slash', 'free'], ['openrouter/free']],
+  [['openbee', 'why', 'okay'], ['open', 'BYOK']],
+  [['openrouters'], ["OpenRouter's"]],
+  [['open', "router's"], ["OpenRouter's"]],
   [['open', 'router'], ['OpenRouter']],
   [['open', 'routers'], ["OpenRouter's"]],
   [['b', 'y', 'o', 'k'], ['BYOK']],
   [['step', '3'], ['Step', 'three']],
+  [['step', '1'], ['Step', 'one']],
+  [['step', '4'], ['Step', 'four']],
 ];
 
 const bare = s => s.toLowerCase().replace(/^[^\w$]+|[^\w$.]+$/g, '').replace(/\.$/, '');

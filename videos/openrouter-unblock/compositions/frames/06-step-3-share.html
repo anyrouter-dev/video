@@ -22,11 +22,8 @@
       position: absolute;
       inset: 0;
     }
-    [data-composition-id="06-step-3-share"] .mono {
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-    }
 
-    /* Step rail */
+    /* Step rail: four steps, gap 40, hairline 48x2 */
     [data-composition-id="06-step-3-share"] .rail {
       position: absolute;
       left: 0;
@@ -36,7 +33,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 64px;
+      gap: 40px;
     }
     [data-composition-id="06-step-3-share"] .rail-step {
       display: flex;
@@ -74,8 +71,8 @@
       background: #007E55;
     }
     [data-composition-id="06-step-3-share"] .rail-dot.done svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
     }
     [data-composition-id="06-step-3-share"] .rail-label {
       position: relative;
@@ -88,12 +85,13 @@
       position: absolute;
       left: 0;
       top: 0;
+      background: #FFFFFF;
     }
     [data-composition-id="06-step-3-share"] .c-done { color: #3F3F46; }
     [data-composition-id="06-step-3-share"] .c-active { color: #0A0A0A; }
     [data-composition-id="06-step-3-share"] .c-todo { color: #636363; }
     [data-composition-id="06-step-3-share"] .rail-line {
-      width: 72px;
+      width: 48px;
       height: 2px;
       background: #D4D4D8;
       flex: none;
@@ -161,6 +159,10 @@
     }
 
     /* Provider panel (viewport-local coordinates) */
+    [data-composition-id="06-step-3-share"] .panel {
+      position: absolute;
+      inset: 0;
+    }
     [data-composition-id="06-step-3-share"] .p-head {
       position: absolute;
       left: 0;
@@ -242,6 +244,14 @@
       background: #FFFFFF;
       box-shadow: 0 1px 3px rgba(10,10,10,.25);
     }
+    [data-composition-id="06-step-3-share"] .ring {
+      position: absolute;
+      right: -8px;
+      top: 30px;
+      width: 96px;
+      height: 60px;
+      overflow: visible;
+    }
     [data-composition-id="06-step-3-share"] .keys-label {
       position: absolute;
       left: 56px;
@@ -305,10 +315,11 @@
     }
     [data-composition-id="06-step-3-share"] .consent {
       left: 49.5px;
-      top: 58px;
+      top: 67.5px;
       width: 1050px;
-      height: 530px;
-      padding: 36px 40px;
+      padding: 30px 40px 32px;
+      display: flex;
+      flex-direction: column;
     }
     [data-composition-id="06-step-3-share"] .d-title {
       display: flex;
@@ -321,13 +332,13 @@
       white-space: nowrap;
     }
     [data-composition-id="06-step-3-share"] .d-desc {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: 24px;
       line-height: 32px;
       color: #636363;
     }
     [data-composition-id="06-step-3-share"] .d-short {
-      margin-top: 22px;
+      margin-top: 18px;
       font-size: 24px;
       font-weight: 600;
       line-height: 32px;
@@ -347,11 +358,15 @@
       width: 24px;
       height: 24px;
     }
+    [data-composition-id="06-step-3-share"] .d-foot {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
     [data-composition-id="06-step-3-share"] .d-check {
-      position: absolute;
-      left: 40px;
-      right: 40px;
-      top: 344px;
+      position: relative;
+      flex: 1;
       padding-left: 46px;
       font-size: 24px;
       line-height: 32px;
@@ -385,13 +400,14 @@
       height: 20px;
     }
     [data-composition-id="06-step-3-share"] .btn {
-      position: absolute;
+      position: relative;
       height: 60px;
       border-radius: 12px;
       background: #0A0A0A;
       color: #FFFFFF;
       font-size: 26px;
       font-weight: 500;
+      flex: none;
     }
     [data-composition-id="06-step-3-share"] .btn .face {
       position: absolute;
@@ -403,9 +419,7 @@
       white-space: nowrap;
     }
     [data-composition-id="06-step-3-share"] .btn-donate {
-      left: 710px;
-      top: 434px;
-      width: 300px;
+      width: 280px;
     }
     [data-composition-id="06-step-3-share"] .spin {
       width: 26px;
@@ -448,42 +462,31 @@
       flex: none;
     }
     [data-composition-id="06-step-3-share"] .btn-gotit {
+      position: absolute;
       left: 540px;
       top: 230px;
       width: 180px;
     }
 
-    [data-composition-id="06-step-3-share"] .chip-row {
+    /* Callout cards in the side gutters (x 120..368 and 1552..1800), outside the browser */
+    [data-composition-id="06-step-3-share"] .note {
       position: absolute;
-      left: 0;
-      right: 0;
-      top: 22px;
-      padding: 0 56px;
-      display: flex;
-      justify-content: flex-end;
-    }
-    [data-composition-id="06-step-3-share"] .chip-row.low {
-      top: auto;
-      bottom: 22px;
-    }
-    [data-composition-id="06-step-3-share"] .chip-first {
-      height: 52px;
+      width: 248px;
       box-sizing: border-box;
-      padding: 0 22px 0 16px;
-      border-radius: 999px;
+      padding: 20px 22px 22px;
+      border-radius: 16px;
       background: #FFFFFF;
       border: 1.5px solid #E5E5E5;
-      box-shadow: 0 8px 24px rgba(10,10,10,.12);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 12px 32px rgba(10,10,10,.08);
       font-size: 26px;
       font-weight: 500;
-      white-space: nowrap;
+      line-height: 34px;
     }
-    [data-composition-id="06-step-3-share"] .chip-first svg {
-      width: 24px;
-      height: 24px;
+    [data-composition-id="06-step-3-share"] .note svg {
+      display: block;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
     }
 
     [data-composition-id="06-step-3-share"] .ripple {
@@ -504,10 +507,10 @@
     }
   </style>
 
-  <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="5.508">
-    <div class="bg clip" data-start="0" data-duration="5.508" data-track-index="0"></div>
+  <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="14.779">
+    <div class="bg clip" data-start="0" data-duration="14.779" data-track-index="0"></div>
 
-    <div class="stage clip" data-start="0" data-duration="5.508" data-track-index="1">
+    <div class="stage clip" data-start="0" data-duration="14.779" data-track-index="1">
       <div class="rail">
         <div class="rail-step">
           <div class="rail-circle">
@@ -521,7 +524,7 @@
             <div class="rail-dot active" id="06-step-3-share-c2-active">2</div>
             <div class="rail-dot done" id="06-step-3-share-c2-done" data-layout-allow-overlap><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
           </div>
-          <div class="rail-label c-active">Add it to AnyRouter<span class="over c-done" id="06-step-3-share-l2-done" data-layout-allow-overlap style="background:#FFFFFF">Add it to AnyRouter</span></div>
+          <div class="rail-label c-active">Add it to AnyRouter<span class="over c-done" id="06-step-3-share-l2-done" data-layout-allow-overlap>Add it to AnyRouter</span></div>
         </div>
         <div class="rail-line"></div>
         <div class="rail-step">
@@ -530,7 +533,14 @@
             <div class="rail-dot active" id="06-step-3-share-c3-on" data-layout-allow-overlap>3</div>
             <div class="rail-dot done" id="06-step-3-share-c3-done" data-layout-allow-overlap><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
           </div>
-          <div class="rail-label c-todo">Share with the pool<span class="over c-active" id="06-step-3-share-l3-on" data-layout-allow-overlap style="background:#FFFFFF">Share with the pool</span><span class="over c-done" id="06-step-3-share-l3-done" data-layout-allow-overlap style="background:#FFFFFF">Share with the pool</span></div>
+          <div class="rail-label c-todo">Share with the pool<span class="over c-active" id="06-step-3-share-l3-on" data-layout-allow-overlap>Share with the pool</span><span class="over c-done" id="06-step-3-share-l3-done" data-layout-allow-overlap>Share with the pool</span></div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle">
+            <div class="rail-dot todo">4</div>
+          </div>
+          <div class="rail-label c-todo">Use it in your app</div>
         </div>
       </div>
 
@@ -540,34 +550,36 @@
           <div class="url-wrap"><div class="url">anyrouter.dev/dashboard/byok</div></div>
         </div>
         <div class="viewport">
-          <div class="p-head">
-            <img class="logo" src="assets/provider-openrouter.svg" alt="" />
-            <span class="p-name">OpenRouter</span>
-            <span class="chip-ok">Healthy</span>
-          </div>
-
-          <div class="row" style="top:96px;height:90px">
-            <div class="row-label" style="top:27px" data-layout-allow-overlap>Use my key</div>
-            <div class="switch" style="top:23px"><div class="track-on"></div><div class="knob" style="left:41px"></div></div>
-          </div>
-          <div class="row" style="top:186px;height:90px">
-            <div class="row-label" style="top:27px" data-layout-allow-overlap>Only my key</div>
-            <div class="switch" style="top:23px"><div class="knob"></div></div>
-          </div>
-          <div class="row" style="top:276px;height:120px">
-            <div class="row-label" style="top:22px" data-layout-allow-overlap>Share with pool</div>
-            <div class="row-hint" style="top:64px" data-layout-allow-overlap>Earn credits back when others route through this key</div>
-            <div class="switch" id="06-step-3-share-share" style="top:38px">
-              <div class="track-on" id="06-step-3-share-share-on"></div>
-              <div class="knob" id="06-step-3-share-share-knob"></div>
+          <div class="panel" id="06-step-3-share-panel">
+            <div class="p-head">
+              <img class="logo" src="assets/provider-openrouter.svg" alt="" />
+              <span class="p-name">OpenRouter</span>
+              <span class="chip-ok">Healthy</span>
             </div>
-          </div>
 
-          <div class="keys-label" data-layout-allow-overlap>Keys · 1/1 active</div>
-          <div class="keyline">
-            <span class="gdot"></span>
-            <span class="keytext">sk-or-v1-••••••••••••</span>
-            <span class="badge-ok">validated</span>
+            <div class="row" style="top:96px;height:90px">
+              <div class="row-label" style="top:27px">Use my key</div>
+              <div class="switch" style="top:23px"><div class="track-on"></div><div class="knob" style="left:41px"></div></div>
+            </div>
+            <div class="row" style="top:186px;height:90px">
+              <div class="row-label" style="top:27px">Only my key</div>
+              <div class="switch" style="top:23px"><div class="knob"></div></div>
+            </div>
+            <div class="row" style="top:276px;height:120px">
+              <div class="row-label" style="top:22px">Share with pool</div>
+              <div class="row-hint" style="top:64px">Earn credits back when others route through this key</div>
+              <div class="switch" id="06-step-3-share-share" style="top:38px">
+                <div class="knob"></div>
+              </div>
+              <svg class="ring" viewBox="0 0 96 60" fill="none"><rect id="06-step-3-share-ring" x="1.5" y="1.5" width="93" height="57" rx="28.5" pathLength="1" stroke="#BB4D00" stroke-width="3" stroke-dasharray="1 1"/></svg>
+            </div>
+
+            <div class="keys-label">Keys · 1/1 active</div>
+            <div class="keyline">
+              <span class="gdot"></span>
+              <span class="keytext">sk-or-v1-••••••••••••</span>
+              <span class="badge-ok">validated</span>
+            </div>
           </div>
 
           <div class="scrim" id="06-step-3-share-scrim"></div>
@@ -576,18 +588,22 @@
             <div class="d-title"><img class="logo" src="assets/provider-openrouter.svg" alt="" /><span>Donate your OpenRouter key</span></div>
             <div class="d-desc">Choose what the shared pool may run on this OpenRouter key. Optional.</div>
             <div class="d-short">In short</div>
-            <div class="d-item"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Other users' requests run on your key, and the usage appears on your OpenRouter account.</div>
-            <div class="d-item"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You are responsible for your provider's terms. You may withdraw at any time.</div>
-            <div class="d-check">
-              <div class="box"></div>
-              <div class="box-on" id="06-step-3-share-box-on"><svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg></div>
-              I have read this and authorize AnyRouter to use my key to serve other users' requests.
-            </div>
-            <div class="btn btn-donate" id="06-step-3-share-donate">
-              <div class="face" id="06-step-3-share-donate-idle">Donate key</div>
-              <div class="face" id="06-step-3-share-donate-busy">
-                <svg class="spin" id="06-step-3-share-spin" viewBox="0 0 26 26" fill="none" stroke-width="3" stroke-linecap="round"><circle cx="13" cy="13" r="10" stroke="rgba(255,255,255,.3)"/><path d="M13 3a10 10 0 0 1 10 10" stroke="#FFFFFF"/></svg>
-                <span>Verifying key…</span>
+            <div class="d-item" id="06-step-3-share-li1"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Other users' requests run on your key, and the usage appears on your OpenRouter account.</div>
+            <div class="d-item" id="06-step-3-share-li2"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You are responsible for your provider's terms. You may withdraw at any time.</div>
+            <div class="d-item" id="06-step-3-share-li3"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>You can price each paid model, from $0 up to 10% over its catalog price. On those models you receive what callers pay minus a 10% platform fee.</div>
+            <div class="d-item" id="06-step-3-share-li4"><svg viewBox="0 0 24 24" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Models left at the catalog price earn your usual reward, based on the catalog price.</div>
+            <div class="d-foot">
+              <div class="d-check" id="06-step-3-share-check">
+                <div class="box"></div>
+                <div class="box-on" id="06-step-3-share-box-on"><svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg></div>
+                I have read this and authorize AnyRouter to use my key to serve other users' requests.
+              </div>
+              <div class="btn btn-donate" id="06-step-3-share-donate">
+                <div class="face" id="06-step-3-share-donate-idle">Donate key</div>
+                <div class="face" id="06-step-3-share-donate-busy">
+                  <svg class="spin" id="06-step-3-share-spin" viewBox="0 0 26 26" fill="none" stroke-width="3" stroke-linecap="round"><circle cx="13" cy="13" r="10" stroke="rgba(255,255,255,.3)"/><path d="M13 3a10 10 0 0 1 10 10" stroke="#FFFFFF"/></svg>
+                  <span>Verifying key…</span>
+                </div>
               </div>
             </div>
           </div>
@@ -600,25 +616,25 @@
             </div>
             <div class="btn btn-gotit"><div class="face">Got it</div></div>
           </div>
-
-          <div class="chip-row">
-            <div class="chip-first" id="06-step-3-share-chip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
-              <span>Your own requests always come first</span>
-            </div>
-          </div>
-          <div class="chip-row low">
-            <div class="chip-first" id="06-step-3-share-chip2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="11" rx="5.5"/><circle cx="8" cy="12" r="2.5"/></svg>
-              <span>Turn sharing off any time</span>
-            </div>
-          </div>
         </div>
       </div>
 
+      <div class="note" id="06-step-3-share-note-free" style="left:120px;top:300px">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="12.5" width="18" height="12" rx="3"/><path d="M9.5 12.5V9a4.5 4.5 0 0 1 8.7-1.6"/></svg>
+        <div>On the Free plan, sharing unlocks the pool</div>
+      </div>
+      <div class="note" id="06-step-3-share-note-first" style="left:1552px;top:300px">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 23V5M7 12l7-7 7 7"/></svg>
+        <div>Your own requests always come first</div>
+      </div>
+      <div class="note" id="06-step-3-share-note-off" style="left:1552px;top:536px">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="23" height="12" rx="6"/><circle cx="8.5" cy="14" r="3"/></svg>
+        <div>Turn sharing off any time</div>
+      </div>
+
       <div class="ripple" id="06-step-3-share-ripple-share" style="left:1410.5px;top:525.5px"></div>
-      <div class="ripple" id="06-step-3-share-ripple-box" style="left:463.5px;top:609px"></div>
-      <div class="ripple" id="06-step-3-share-ripple-donate" style="left:1268.5px;top:713px"></div>
+      <div class="ripple" id="06-step-3-share-ripple-box" style="left:0px;top:0px"></div>
+      <div class="ripple" id="06-step-3-share-ripple-donate" style="left:0px;top:0px"></div>
 
       <svg class="cursor" id="06-step-3-share-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
     </div>
@@ -630,82 +646,109 @@
       const $ = (id) => document.getElementById("06-step-3-share-" + id);
       const tl = gsap.timeline({ paused: true });
 
-      // Canvas hot-spot targets. Viewport origin is (385.5, 217.5): card 384,164 + 1.5 border, + 52 bar.
+      // Canvas hot spots. Viewport origin is (385.5, 217.5): card 384,164 + 1.5 border, + 52 bar.
       const START = { x: 1180, y: 770 };
       const SHARE = { x: 1438.5, y: 553.5 };
-      const BOX = { x: 491.5, y: 637 };
-      const DONATE = { x: 1296.5, y: 741 };
+      const PARK = { x: 1505, y: 640 };
+      const BOX = { x: 490.5, y: 713.5 };
+      const DONATE = { x: 1303.5, y: 729.5 };
       const GOT_IT_REST = { x: 1262, y: 652 };
-      const CLICK_SHARE = 1.79;
-      const CLICK_BOX = 2.22;
-      const CLICK_DONATE = 2.75;
-      const RESULT = 3.18;
-      const LETS = 3.46;
-      const DRAW = 3.88;
+
+      // Word starts (06-step-3-share.words.json)
+      const TURN = 0.94;
+      const POOL = 2.13;
+      const FREE = 3.01;
+      const POOL_2 = 5.39;
+      const OTHER = 6.21;
+      const SHOW = 8.52;
+      const YOURS = 11.14;
+      const FIRST = 12.03;
+      const TURN_OFF = 13.08;
+
+      const CLICK_BOX = FIRST;
+      const CLICK_DONATE = 12.55;
+      const CONSENT_OUT = 13.25;
+      const RESULT = 13.58;
+
       const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
-
       gsap.set($("cursor"), { transformOrigin: "2px 2px" });
+      gsap.set($("ripple-box"), { left: BOX.x - 28, top: BOX.y - 28 });
+      gsap.set($("ripple-donate"), { left: DONATE.x - 28, top: DONATE.y - 28 });
 
-      const click = (target, ripple, t) => {
+      const press = (target, ripple, t) => {
         tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, t);
         tl.to($("cursor"), { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
-        tl.to(target, { scale: 0.95, duration: 0.06, ease: "power2.in" }, t);
-        tl.to(target, { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
+        if (target) {
+          tl.to(target, { scale: 0.95, duration: 0.06, ease: "power2.in" }, t);
+          tl.to(target, { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
+        }
         tl.fromTo($(ripple), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
       };
 
       // Hidden states held from t=0
       tl.set([$("c2-done"), $("l2-done"), $("c3-on"), $("l3-on"), $("c3-done"), $("l3-done")], { opacity: 0 }, 0);
       tl.set([$("ripple-share"), $("ripple-box"), $("ripple-donate")], { scale: 0, opacity: 0 }, 0);
-      tl.set([$("scrim"), $("consent"), $("result"), $("chip"), $("chip2"), $("share-on"), $("box-on"), $("donate-busy")], { opacity: 0 }, 0);
+      tl.set([$("scrim"), $("consent"), $("result"), $("box-on"), $("donate-busy")], { opacity: 0 }, 0);
+      tl.set([$("li1"), $("li2"), $("li3"), $("li4")], { opacity: 0 }, 0);
+      tl.set([$("note-free"), $("note-first"), $("note-off")], { opacity: 0 }, 0);
+      tl.set($("ring"), { attr: { "stroke-dashoffset": 1 } }, 0);
       tl.set($("donate"), { opacity: 0.45 }, 0);
 
-      // Rail: step 2 done, step 3 active
+      // Rail: step 2 done, step 3 active at 0.2s
       tl.fromTo($("c2-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
       tl.set($("c2-active"), { opacity: 0 }, 0.55);
       tl.to($("l2-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
-      tl.fromTo($("c3-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.3);
-      tl.set($("c3-todo"), { opacity: 0 }, 0.65);
-      tl.to($("l3-on"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+      tl.fromTo($("c3-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
+      tl.set($("c3-todo"), { opacity: 0 }, 0.55);
+      tl.to($("l3-on"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
 
-      // Scene 1: cursor flips Share with pool on "pool"
+      // Scene 1: ring draws on "turn", cursor reaches the switch by "pool" and clicks on the second "pool"
       tl.fromTo($("cursor"), { ...at(START), opacity: 0 }, { ...at(START), opacity: 1, duration: 0.25, ease: "power2.out" }, 0.06);
-      tl.to($("cursor"), { ...at(SHARE), duration: 0.6, ease: "power2.inOut" }, 1.02);
-      click($("share"), "ripple-share", CLICK_SHARE);
+      tl.to($("ring"), { attr: { "stroke-dashoffset": 0 }, duration: 0.45, ease: "power2.inOut" }, TURN);
+      tl.to($("cursor"), { ...at(SHARE), duration: 0.7, ease: "power2.inOut" }, 1.3);
+      press($("share"), "ripple-share", POOL_2);
 
-      // Scene 2: consent dialog rises, box ticked on "confirm", Donate key pressed
-      tl.to($("scrim"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 1.88);
-      tl.fromTo($("consent"), { y: 40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 1.9);
-      tl.to($("cursor"), { ...at(BOX), duration: 0.29, ease: "power3.out" }, 1.88);
-      tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, CLICK_BOX);
-      tl.to($("cursor"), { scale: 1, duration: 0.06, ease: "power2.out" }, CLICK_BOX + 0.06);
-      tl.fromTo($("ripple-box"), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, CLICK_BOX);
-      tl.fromTo($("box-on"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.18, ease: "power3.out" }, CLICK_BOX + 0.02);
-      tl.to($("donate"), { opacity: 1, duration: 0.2, ease: "power2.out" }, CLICK_BOX + 0.02);
-      tl.to($("cursor"), { ...at(DONATE), duration: 0.38, ease: "power2.inOut" }, CLICK_BOX + 0.09);
-      click($("donate"), "ripple-donate", CLICK_DONATE);
-      tl.to($("cursor"), { x: DONATE.x + 108, y: DONATE.y + 24, duration: 0.3, ease: "power2.out" }, CLICK_DONATE + 0.14);
-      tl.to($("donate-idle"), { opacity: 0, duration: 0.12, ease: "power2.out" }, CLICK_DONATE + 0.04);
-      tl.to($("donate-busy"), { opacity: 1, duration: 0.12, ease: "power2.out" }, CLICK_DONATE + 0.04);
-      tl.fromTo($("spin"), { rotation: 0 }, { rotation: 540, duration: 0.6, ease: "none", transformOrigin: "50% 50%" }, CLICK_DONATE + 0.04);
+      // Scene 2: consent dialog rises; the panel it covers goes to 0 as it lands
+      tl.to($("scrim"), { opacity: 1, duration: 0.3, ease: "power2.out" }, POOL_2 + 0.06);
+      tl.fromTo($("consent"), { y: 40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, POOL_2 + 0.12);
+      tl.to($("panel"), { opacity: 0, duration: 0.12, ease: "power2.out" }, POOL_2 + 0.08);
+      tl.to($("cursor"), { ...at(PARK), duration: 0.5, ease: "power2.inOut" }, POOL_2 + 0.14);
 
-      // Scene 3: dialog becomes the result on "That's"; switch behind reads on
-      // Consent is fully out before the result starts, so the two dialogs never render together
-      tl.to($("consent"), { scale: 0.96, opacity: 0, duration: 0.12, ease: "power2.in" }, RESULT - 0.08);
-      tl.fromTo($("result"), { y: 16, scale: 0.92, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, RESULT + 0.04);
-      tl.fromTo($("live-check"), { scale: 0.4 }, { scale: 1, duration: 0.35, ease: "back.out(1.6)", transformOrigin: "50% 50%" }, RESULT + 0.16);
-      tl.to($("scrim"), { opacity: 0.55, duration: 0.4, ease: "power2.out" }, RESULT + 0.04);
-      tl.to($("share-on"), { opacity: 1, duration: 0.25, ease: "power2.out" }, RESULT + 0.11);
-      tl.to($("share-knob"), { x: 36, duration: 0.25, ease: "power2.inOut" }, RESULT + 0.11);
-      tl.to($("cursor"), { ...at(GOT_IT_REST), duration: 0.55, ease: "power2.inOut" }, RESULT + 0.21);
-      tl.fromTo($("chip"), { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, LETS);
-      tl.fromTo($("chip2"), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, DRAW);
+      // Chip on "free"
+      tl.fromTo($("note-free"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, FREE);
 
-      // Rail: step 3 done on "draw"; second chip lands with it
-      tl.fromTo($("c3-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, DRAW);
-      tl.to($("l3-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, DRAW);
-      tl.set($("c3-on"), { opacity: 0 }, DRAW + 0.35);
-      tl.set($("l3-on"), { opacity: 0 }, DRAW + 0.3);
+      // In short lines, in step with the voice
+      tl.fromTo($("li1"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, OTHER);
+      ["li2", "li3", "li4"].forEach((id, i) => {
+        tl.fromTo($(id), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, SHOW + i * 0.25);
+      });
+
+      // Chip on "Yours"
+      tl.fromTo($("note-first"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, YOURS);
+
+      // Tick on "first", then Donate key (disabled until ticked)
+      tl.to($("cursor"), { ...at(BOX), duration: 0.55, ease: "power2.inOut" }, CLICK_BOX - 0.6);
+      press(null, "ripple-box", CLICK_BOX);
+      tl.fromTo($("box-on"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.15, ease: "power3.out" }, CLICK_BOX + 0.02);
+      tl.to($("donate"), { opacity: 1, duration: 0.15, ease: "power2.out" }, CLICK_BOX + 0.04);
+      tl.to($("cursor"), { ...at(DONATE), duration: 0.32, ease: "power2.inOut" }, CLICK_BOX + 0.14);
+      press($("donate"), "ripple-donate", CLICK_DONATE);
+      tl.to($("cursor"), { x: DONATE.x + 112, y: DONATE.y + 32, duration: 0.25, ease: "power2.out" }, CLICK_DONATE + 0.14);
+      tl.set($("donate-idle"), { opacity: 0 }, CLICK_DONATE + 0.04);
+      tl.to($("donate-busy"), { opacity: 1, duration: 0.08, ease: "power2.out" }, CLICK_DONATE + 0.04);
+      tl.fromTo($("spin"), { rotation: 0 }, { rotation: 540, duration: RESULT - CLICK_DONATE, ease: "none", transformOrigin: "50% 50%" }, CLICK_DONATE + 0.04);
+
+      // Last chip on the second "turn"
+      tl.fromTo($("note-off"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, TURN_OFF);
+
+      // Scene 3: consent fully out, then the result; step 3 checks; hold
+      tl.to($("consent"), { scale: 0.97, opacity: 0, duration: 0.3, ease: "power2.in" }, CONSENT_OUT);
+      tl.fromTo($("result"), { y: 14, scale: 0.94, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, RESULT);
+      tl.fromTo($("live-check"), { scale: 0.5 }, { scale: 1, duration: 0.3, ease: "power3.out", transformOrigin: "50% 50%" }, RESULT);
+      tl.to($("cursor"), { ...at(GOT_IT_REST), duration: 0.3, ease: "power2.out" }, RESULT);
+      tl.fromTo($("c3-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, RESULT);
+      tl.to($("l3-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, RESULT);
+      tl.set([$("c3-on"), $("l3-on")], { opacity: 0 }, RESULT + 0.3);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["06-step-3-share"] = tl;

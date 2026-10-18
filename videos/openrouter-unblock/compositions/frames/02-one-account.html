@@ -1,0 +1,266 @@
+<template>
+  <style>
+    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+      color: #0A0A0A;
+    }
+
+    [data-composition-id="02-one-account"] .bg {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+    }
+    [data-composition-id="02-one-account"] .stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Headline */
+    [data-composition-id="02-one-account"] .h1 {
+      position: absolute;
+      left: 120px;
+      right: 120px;
+      top: 176px;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 0.26em;
+      font-size: 84px;
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+    [data-composition-id="02-one-account"] .h1 span {
+      display: inline-block;
+    }
+
+    /* Account card: 760x353 at (580, 296). The ring is a box-shadow so children
+       are positioned against the outer edge with no border offset. */
+    [data-composition-id="02-one-account"] .card {
+      position: absolute;
+      left: 580px;
+      top: 296px;
+      width: 760px;
+      height: 353px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 1.5px #E5E5E5, 0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06);
+    }
+    [data-composition-id="02-one-account"] .head {
+      position: absolute;
+      left: 80px;
+      top: 26px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [data-composition-id="02-one-account"] .head svg {
+      width: 28px;
+      height: 28px;
+      flex: none;
+      fill: #0A0A0A;
+    }
+    [data-composition-id="02-one-account"] .divider {
+      position: absolute;
+      left: 0;
+      top: 84px;
+      width: 760px;
+      height: 1.5px;
+      background: #E5E5E5;
+    }
+
+    /* Hairlines: a bus at x 716 (canvas) from the first pill down to the meter,
+       with a stub from each pill's left edge (x 756) */
+    [data-composition-id="02-one-account"] .bus {
+      position: absolute;
+      left: 135px;
+      top: 133px;
+      width: 2px;
+      height: 127px;
+      background: #D4D4D8;
+      transform-origin: center top;
+    }
+    [data-composition-id="02-one-account"] .stub {
+      position: absolute;
+      left: 135px;
+      width: 41px;
+      height: 2px;
+      background: #D4D4D8;
+      transform-origin: right center;
+    }
+    [data-composition-id="02-one-account"] .stub-1 { top: 133px; }
+    [data-composition-id="02-one-account"] .stub-2 { top: 201px; }
+
+    /* Key pill: the shared component */
+    [data-composition-id="02-one-account"] .pill {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      height: 52px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      border-radius: 10px;
+      background: #FAFAFA;
+      border: 1.5px dashed #D4D4D8;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [data-composition-id="02-one-account"] .glyph {
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+    /* First pill lives on the stage, centred at (960, 430) via xPercent/yPercent */
+    [data-composition-id="02-one-account"] .pill-1 {
+      left: 960px;
+      top: 430px;
+    }
+    /* Second pill lives in the card, centred at canvas (960, 498) */
+    [data-composition-id="02-one-account"] .pill-2 {
+      left: 380px;
+      top: 202px;
+    }
+
+    /* Meter: 600x14 at canvas (660, 556), already full */
+    [data-composition-id="02-one-account"] .meter {
+      position: absolute;
+      left: 80px;
+      top: 260px;
+      width: 600px;
+      height: 70px;
+    }
+    [data-composition-id="02-one-account"] .track {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 600px;
+      height: 14px;
+      border-radius: 7px;
+      background: #C0262D;
+    }
+    [data-composition-id="02-one-account"] .tick {
+      position: absolute;
+      left: 598px;
+      top: -10px;
+      width: 4px;
+      height: 34px;
+      border-radius: 2px;
+      background: #C0262D;
+    }
+    [data-composition-id="02-one-account"] .limit {
+      position: absolute;
+      left: 540px;
+      top: 36px;
+      width: 120px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #C0262D;
+    }
+    [data-composition-id="02-one-account"] .shares {
+      position: absolute;
+      left: 80px;
+      top: 296px;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #636363;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div id="root" data-composition-id="02-one-account" data-width="1920" data-height="1080" data-duration="4.368">
+    <div class="bg clip" data-start="0" data-duration="4.368" data-track-index="0"></div>
+
+    <div class="stage clip" data-start="0" data-duration="4.368" data-track-index="1">
+      <h1 class="h1" id="02-one-account-h1">
+        <span id="02-one-account-p1">One account.</span>
+        <span id="02-one-account-p2">One limit.</span>
+      </h1>
+
+      <div class="card" id="02-one-account-card">
+        <div class="head">
+          <svg id="02-one-account-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+          <span id="02-one-account-head-label">Your OpenRouter account</span>
+        </div>
+        <div class="divider"></div>
+
+        <div class="bus" id="02-one-account-bus"></div>
+        <div class="stub stub-1" id="02-one-account-stub-1"></div>
+        <div class="stub stub-2" id="02-one-account-stub-2"></div>
+
+        <div class="pill pill-2" id="02-one-account-pill-2">
+          <svg class="glyph" viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+          <span>sk-or-v1-••••••••••••</span>
+        </div>
+
+        <div class="meter" id="02-one-account-meter">
+          <div class="track" id="02-one-account-track"></div>
+          <div class="tick" id="02-one-account-tick"></div>
+          <div class="limit" id="02-one-account-limit">limit</div>
+        </div>
+        <div class="shares" id="02-one-account-shares">Every key on the account shares it</div>
+      </div>
+
+      <div class="pill pill-1" id="02-one-account-pill">
+        <svg class="glyph" viewBox="0 0 24 24" fill="#BB4D00" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
+        <span>sk-or-v1-••••••••••••</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById("02-one-account-" + id);
+      const tl = gsap.timeline({ paused: true });
+
+      const DUR = 4.368;
+      // Ends a frame early so the last rendered frame shows only the pill.
+      const FADE_OUT = DUR - 0.34;
+
+      gsap.set([$("pill"), $("pill-2")], { xPercent: -50, yPercent: -50 });
+
+      // Scene 1: the account card rises; its full meter, the first key, then the header and headline
+      tl.fromTo($("card"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.06); // "The"
+      tl.fromTo($("meter"), { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.18); // "limit"
+      tl.fromTo($("pill"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.49); // "belongs"
+      tl.fromTo($("stub-1"), { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.inOut" }, 0.72);
+      tl.fromTo($("bus"), { scaleY: 0 }, { scaleY: 1, duration: 0.35, ease: "power2.inOut" }, 0.9);
+      tl.fromTo($("head-label"), { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 1.05); // "your"
+      tl.fromTo($("mark"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 1.35); // "OpenRouter"
+      tl.fromTo($("p1"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 1.92); // "account"
+      tl.fromTo($("p2"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 2.2);
+
+      // Scene 2: a second key joins the same meter; the meter stays full
+      tl.fromTo($("pill-2"), { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 2.63); // "another"
+      tl.fromTo($("stub-2"), { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.inOut" }, 3.02); // "key"
+      tl.fromTo($("shares"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 3.22); // "won't"
+
+      // Hand-off to Frame 3: everything clears, the first pill holds at (960, 430)
+      tl.to([$("card"), $("h1")], { opacity: 0, duration: 0.3, ease: "power2.inOut" }, FADE_OUT);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-one-account"] = tl;
+    })();
+  </script>
+</template>

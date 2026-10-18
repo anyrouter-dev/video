@@ -33,7 +33,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 64px;
+      gap: 40px;
     }
     [data-composition-id="04-step-1-key"] .rail-step {
       display: flex;
@@ -82,7 +82,7 @@
       color: #0A0A0A;
     }
     [data-composition-id="04-step-1-key"] .rail-line {
-      width: 72px;
+      width: 48px;
       height: 2px;
       background: #D4D4D8;
       flex: none;
@@ -264,14 +264,8 @@
       top: 13px;
       line-height: 30px;
     }
-    [data-composition-id="04-step-1-key"] .empty {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 96px;
-      text-align: center;
-      font-size: 26px;
-      color: #636363;
+    [data-composition-id="04-step-1-key"] .thead .th-key {
+      left: 300px;
     }
     [data-composition-id="04-step-1-key"] .row {
       position: absolute;
@@ -279,7 +273,62 @@
       right: 0;
       top: 68px;
       height: 92px;
+      box-sizing: border-box;
       border-bottom: 1.5px solid #E5E5E5;
+    }
+    [data-composition-id="04-step-1-key"] .row.new {
+      top: 160px;
+      background: #FFF4EC;
+    }
+    [data-composition-id="04-step-1-key"] .row-name {
+      position: absolute;
+      left: 24px;
+      top: 0;
+      line-height: 92px;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [data-composition-id="04-step-1-key"] .row .pill {
+      left: 300px;
+      top: 20px;
+    }
+    /* Inline name field: sits in the second row's slot until the key is created */
+    [data-composition-id="04-step-1-key"] .field {
+      position: absolute;
+      left: 0;
+      top: 178px;
+      width: 400px;
+      height: 56px;
+      box-sizing: border-box;
+      padding: 0 18px;
+      border-radius: 10px;
+      background: #FFFFFF;
+      border: 2px solid #BB4D00;
+      display: flex;
+      align-items: center;
+      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-size: 26px;
+      color: #0A0A0A;
+      white-space: nowrap;
+    }
+    [data-composition-id="04-step-1-key"] .field .ph {
+      position: absolute;
+      left: 18px;
+      top: 0;
+      line-height: 52px;
+      color: #636363;
+    }
+    [data-composition-id="04-step-1-key"] .field .ch {
+      display: none;
+    }
+    [data-composition-id="04-step-1-key"] .caret {
+      width: 2px;
+      height: 30px;
+      margin-left: 2px;
+      background: #0A0A0A;
+      flex: none;
     }
     [data-composition-id="04-step-1-key"] .copy {
       position: absolute;
@@ -312,6 +361,7 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
+      width: 408px;
       height: 52px;
       box-sizing: border-box;
       padding: 0 20px;
@@ -348,8 +398,8 @@
 
     [data-composition-id="04-step-1-key"] .toast {
       position: absolute;
-      left: 1330px;
-      top: 631px;
+      left: 1332.5px;
+      top: 721px;
       height: 48px;
       box-sizing: border-box;
       padding: 0 20px 0 16px;
@@ -385,10 +435,10 @@
     }
   </style>
 
-  <div id="root" data-composition-id="04-step-1-key" data-width="1920" data-height="1080" data-duration="5.392">
-    <div class="bg clip" data-start="0" data-duration="5.392" data-track-index="0"></div>
+  <div id="root" data-composition-id="04-step-1-key" data-width="1920" data-height="1080" data-duration="5.541">
+    <div class="bg clip" data-start="0" data-duration="5.541" data-track-index="0"></div>
 
-    <div class="stage clip" data-start="0" data-duration="5.392" data-track-index="1">
+    <div class="stage clip" data-start="0" data-duration="5.541" data-track-index="1">
       <div class="rail">
         <div class="rail-step">
           <div class="rail-circle">
@@ -406,6 +456,11 @@
         <div class="rail-step">
           <div class="rail-circle"><div class="rail-dot todo">3</div></div>
           <div class="rail-label">Share with the pool</div>
+        </div>
+        <div class="rail-line"></div>
+        <div class="rail-step">
+          <div class="rail-circle"><div class="rail-dot todo">4</div></div>
+          <div class="rail-label">Use it in your app</div>
         </div>
       </div>
 
@@ -434,9 +489,24 @@
                 <span>Create Key</span>
               </div>
               <div class="table">
-                <div class="thead"><span>Key</span></div>
-                <div class="empty" id="04-step-1-key-empty">No keys yet</div>
-                <div class="row" id="04-step-1-key-row">
+                <div class="thead"><span>Name</span><span class="th-key">Key</span></div>
+                <div class="row">
+                  <div class="row-name">my-app</div>
+                  <div class="pill">
+                    <span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg></span>
+                    <span class="pill-text">sk-or-v1-••••••••••••</span>
+                  </div>
+                  <div class="copy">
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5"/></svg>
+                    <span>Copy</span>
+                  </div>
+                </div>
+                <div class="field" id="04-step-1-key-field">
+                  <span class="ph" id="04-step-1-key-ph">Name</span>
+                  <span class="ch" id="04-step-1-key-ch0">A</span><span class="ch" id="04-step-1-key-ch1">n</span><span class="ch" id="04-step-1-key-ch2">y</span><span class="ch" id="04-step-1-key-ch3">R</span><span class="ch" id="04-step-1-key-ch4">o</span><span class="ch" id="04-step-1-key-ch5">u</span><span class="ch" id="04-step-1-key-ch6">t</span><span class="ch" id="04-step-1-key-ch7">e</span><span class="ch" id="04-step-1-key-ch8">r</span><span class="caret"></span>
+                </div>
+                <div class="row new" id="04-step-1-key-row">
+                  <div class="row-name">AnyRouter</div>
                   <div class="copy" id="04-step-1-key-copy">
                     <svg viewBox="0 0 20 20" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5"/></svg>
                     <span>Copy</span>
@@ -463,7 +533,7 @@
       </div>
 
       <div class="ripple" id="04-step-1-key-ripple-create" style="left:1343.5px;top:343.5px"></div>
-      <div class="ripple" id="04-step-1-key-ripple-copy" style="left:1369.5px;top:539.5px"></div>
+      <div class="ripple" id="04-step-1-key-ripple-copy" style="left:1369.5px;top:631.5px"></div>
 
       <svg class="cursor" id="04-step-1-key-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
     </div>
@@ -477,11 +547,13 @@
 
       // Canvas points. Viewport origin is (385.5, 217.5): card (384, 164) + 1.5 border + 52 bar.
       const CREATE = { x: 1371.5, y: 371.5 };
-      const COPY = { x: 1397.5, y: 567.5 };
-      const PILL_ROW = { x: 660, y: 567.5 };
+      const COPY = { x: 1397.5, y: 659.5 };
+      const PILL_ROW = { x: 937.5, y: 659.5 };
       const PILL_PARK = { x: 960, y: 790 };
-      const CLICK_CREATE = 3.25; // "create"
-      const CLICK_COPY = 4.23; // "copy"
+      const CLICK_CREATE = 2.95; // "create"
+      const TYPE_AT = 3.62; // "for AnyRouter"
+      const ROW_AT = 4.05; // end of "AnyRouter"
+      const CLICK_COPY = 4.53; // "copy"
       const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
 
       gsap.set($("cursor"), { transformOrigin: "2px 2px" });
@@ -489,43 +561,50 @@
 
       const press = (el, depth, t) => {
         tl.to(el, { scale: depth, duration: 0.06, ease: "power2.in" }, t);
-        tl.to(el, { scale: 1, duration: 0.08, ease: "power2.out" }, t + 0.06);
+        tl.to(el, { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
       };
 
-      // Scene 1: rail already present; step 1 turns active; browser rises on openrouter.ai
+      // Step 1 turns active; browser rises on the openrouter.ai home
       tl.fromTo($("c1-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
       tl.set($("c1-todo"), { opacity: 0 }, 0.55);
       tl.fromTo($("l1-on"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
       tl.set($("l1-todo"), { opacity: 0 }, 0.5);
       tl.fromTo($("browser"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.05);
-      tl.fromTo($("shot"), { scale: 1 }, { scale: 1.04, duration: 2.4, ease: "none" }, 0.1);
+      tl.fromTo($("shot"), { scale: 1 }, { scale: 1.04, duration: 2.3, ease: "none" }, 0.1);
 
-      // Scene 2: "Open keys" slides the same frame to the Keys page
-      tl.fromTo($("strip"), { x: 0 }, { x: -1149, duration: 0.55, ease: "power3.inOut" }, 2.4);
-      tl.to($("url-home"), { opacity: 0, duration: 0.2, ease: "power2.out" }, 2.57);
-      tl.fromTo($("url-keys"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.57);
-      tl.fromTo($("note"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.54);
-      tl.fromTo($("cursor"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 2.54);
+      // After "OpenRouter.ai": the same frame slides to the Keys page with the existing my-app key
+      tl.fromTo($("strip"), { x: 0 }, { x: -1149, duration: 0.45, ease: "power3.inOut" }, 2.4);
+      tl.to($("url-home"), { opacity: 0, duration: 0.18, ease: "power2.out" }, 2.52);
+      tl.fromTo($("url-keys"), { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 2.52);
+      tl.fromTo($("note"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
 
-      // Scene 3: cursor glides to Create Key on "click", presses on "create"
-      tl.fromTo($("cursor"), { x: 1180, y: 700 }, { ...at(CREATE), duration: 0.62, ease: "power3.out" }, 2.54);
+      // "create": cursor presses Create Key
+      tl.fromTo($("cursor"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.5);
+      tl.fromTo($("cursor"), { x: 1220, y: 720 }, { ...at(CREATE), duration: 0.42, ease: "power3.out" }, 2.5);
       press($("cursor"), 0.88, CLICK_CREATE);
       press($("create"), 0.95, CLICK_CREATE);
       tl.fromTo($("ripple-create"), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, CLICK_CREATE);
-      tl.to($("empty"), { opacity: 0, duration: 0.15, ease: "power2.out" }, CLICK_CREATE + 0.08);
-      tl.fromTo($("row"), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, CLICK_CREATE + 0.15);
-      tl.fromTo($("pill"), { x: PILL_ROW.x, y: PILL_ROW.y + 12, opacity: 0 }, { x: PILL_ROW.x, y: PILL_ROW.y, opacity: 1, duration: 0.4, ease: "power3.out" }, CLICK_CREATE + 0.15);
 
-      // Scene 4: click Copy on "copy", toast, the key lifts out and parks at (960, 790)
-      tl.to($("cursor"), { ...at(COPY), duration: 0.5, ease: "power2.inOut" }, 3.65);
+      // Name field opens in the second row's slot; "AnyRouter" types in on "for AnyRouter"
+      tl.fromTo($("field"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, CLICK_CREATE + 0.1);
+      tl.set($("ph"), { opacity: 0 }, TYPE_AT);
+      for (let i = 0; i < 9; i++) tl.set($("ch" + i), { display: "inline" }, TYPE_AT + i * 0.035);
+
+      // The new AnyRouter row replaces the field, tinted, with its own key pill
+      tl.set($("field"), { opacity: 0 }, ROW_AT);
+      tl.fromTo($("row"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, ROW_AT);
+      tl.fromTo($("pill"), { x: PILL_ROW.x, y: PILL_ROW.y + 10, opacity: 0 }, { x: PILL_ROW.x, y: PILL_ROW.y, opacity: 1, duration: 0.3, ease: "power3.out" }, ROW_AT);
+
+      // "copy": cursor presses that row's Copy, toast, the key lifts out and parks at (960, 790)
+      tl.to($("cursor"), { ...at(COPY), duration: 0.4, ease: "power2.inOut" }, ROW_AT + 0.03);
       press($("cursor"), 0.88, CLICK_COPY);
       press($("copy"), 0.95, CLICK_COPY);
       tl.fromTo($("ripple-copy"), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, CLICK_COPY);
       tl.fromTo($("toast"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, CLICK_COPY + 0.04);
-      tl.fromTo($("glyph-on"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, CLICK_COPY + 0.1);
-      tl.set($("glyph-off"), { opacity: 0 }, CLICK_COPY + 0.35);
-      tl.fromTo($("pill-shadow"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, CLICK_COPY + 0.12);
-      tl.to($("pill"), { x: PILL_PARK.x, y: PILL_PARK.y, duration: 0.55, ease: "power2.inOut" }, CLICK_COPY + 0.12);
+      tl.fromTo($("glyph-on"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, CLICK_COPY + 0.08);
+      tl.set($("glyph-off"), { opacity: 0 }, CLICK_COPY + 0.33);
+      tl.fromTo($("pill-shadow"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, CLICK_COPY + 0.1);
+      tl.to($("pill"), { x: PILL_PARK.x, y: PILL_PARK.y, duration: 0.55, ease: "power2.inOut" }, CLICK_COPY + 0.1);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["04-step-1-key"] = tl;
