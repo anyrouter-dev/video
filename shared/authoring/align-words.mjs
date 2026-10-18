@@ -88,6 +88,25 @@ function align(words, gaps, duration) {
 }
 
 const meta = JSON.parse(fs.readFileSync('audio_meta.json', 'utf8'));
+
+// --check: fail if any word sits inside a measured pause, runs out of order, or is shorter
+// than MIN_WORD_S. The invariants the alignment promises; run after any re-voice.
+if (process.argv.includes('--check')) {
+  const problems = [];
+  for (const v of meta.voices) {
+    const gaps = measuredGaps(v.path);
+    v.words.forEach((w, i) => {
+      // Times are rounded to the millisecond, so a word can read up to 1ms short of the minimum.
+      if (w.end - w.start < MIN_WORD_S - 0.0015) problems.push(`voice ${v.frame} "${w.text}" shorter than ${MIN_WORD_S}s`);
+      if (i > 0 && (w.start < v.words[i - 1].start || v.words[i - 1].end > w.start + 1e-6)) problems.push(`voice ${v.frame} "${w.text}" out of order`);
+      for (const g of gaps) if (Math.min(w.end, g.end) - Math.max(w.start, g.start) > 0.12) problems.push(`voice ${v.frame} "${w.text}" inside a pause at ${g.start.toFixed(2)}s`);
+    });
+  }
+  for (const p of problems) console.log(`✗ ${p}`);
+  console.log(problems.length ? `✗ ${problems.length} alignment problems` : '✓ alignment: no word inside a pause, all in order');
+  process.exit(problems.length ? 1 : 0);
+}
+
 for (const v of meta.voices) {
   if (v.aligned) continue;
   const before = v.words;

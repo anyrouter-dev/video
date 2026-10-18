@@ -1,7 +1,7 @@
-// Rebuilds a narrated film's index.html from its frames, run from the film's folder:
-// assemble → inject + verify transitions → group the narration → carve the music bed
-// under it. The assembler rewrites index.html from scratch, which drops the voice group
-// and the carve, so they are re-applied here every time instead of by hand.
+// Rebuilds a narrated film's index.html from its sources, run from the film's folder:
+// captions (build + regroup) → sound cues → assemble → inject + verify transitions →
+// group the narration → carve the music bed under it. The assembler rewrites index.html
+// from scratch, which drops the voice group and the carve, so every step runs every time.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -14,6 +14,11 @@ const CARVE = path.join(SKILLS, 'hyperframes-audio/scripts/carve.mjs');
 const CORE = path.join(os.homedir(), '.cache/hyperframes-core-0.8.78');
 
 const run = (script, args) => execFileSync(process.execPath, [script, ...args], { stdio: 'inherit' });
+const HERE = path.dirname(new URL(import.meta.url).pathname);
+
+run(path.join(LAUNCH, 'captions.mjs'), ['build', '--storyboard', './STORYBOARD.md', '--audio-meta', './audio_meta.json', '--hyperframes', '.', '--out', './caption_groups.json']);
+run(path.join(HERE, 'regroup-captions.mjs'), []);
+if (fs.existsSync('sfx-cues.json')) run(path.join(HERE, 'sfx-cues.mjs'), []);
 
 run(path.join(LAUNCH, 'assemble-index.mjs'), ['--storyboard', './STORYBOARD.md', '--hyperframes', '.']);
 run(path.join(LAUNCH, 'transitions.mjs'), ['inject', '--storyboard', './STORYBOARD.md', '--hyperframes', '.']);
