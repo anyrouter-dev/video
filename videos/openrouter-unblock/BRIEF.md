@@ -66,3 +66,8 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 
 - Do not show anyone's real API key. Keys on screen are `sk-or-v1-••••••••••••`.
 - Never "unlimited". Never a number outside the ledger.
+- Music bed: `assets/bgm/track-84s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM).
+  A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
+  instead plays 0–40s, crossfades for 3s back to 21s (16s back, 4 bars, so the beat holds)
+  and runs to the real outro, 84s in all:
+  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit[a][b];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:68,asetpts=PTS-STARTPTS[y];[x][y]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-84s.mp3`

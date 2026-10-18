@@ -1,9 +1,9 @@
 {
   "bgm": {
-    "path": "assets/bgm/track.mp3",
+    "path": "assets/bgm/track-84s.mp3",
     "source": "host",
     "volume": 0.12,
-    "duration_s": 68
+    "duration_s": 84
   },
   "bgm_pending": false,
   "voices": [
