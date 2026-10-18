@@ -1,0 +1,212 @@
+<template id="captions-template" data-composition-id="captions" data-width="1920" data-height="1080">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Geist'; src: url('assets/fonts/geist-mono.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      :root {
+      --bg: #FFFFFF;
+      --surface: #FAFAFA;
+      --surface-2: #F5F5F5;
+      --ink: #0A0A0A;
+      --ink-2: #3F3F46;
+      --muted: #636363;
+      --line: #E5E5E5;
+      --line-strong: #D4D4D8;
+      --primary: #BB4D00;
+      --primary-tint: #FFF4EC;
+      --free: #007E55;
+      --free-tint: #ECFDF5;
+      --info: #1761D3;
+      --danger: #C0262D;
+      --terminal-bg: #0A0A0A;
+      --terminal-ink: #F4F4F5;
+      --terminal-dim: #A1A1AA;
+      --cap-ink: #0A0A0A;
+      --cap-canvas: #FFFFFF;
+      --cap-accent: #BB4D00;
+      --cap-accent-2: #007E55;
+      --font-display: "Geist", system-ui, serif;
+      --font-body: "Geist", system-ui, sans-serif;
+      --cap-band-top: 900px;
+      --cap-band-height: 180px;
+      }
+    </style>
+
+<style>
+  /* captions.mjs matches font files to a family by name prefix and only knows frame.md's
+     display/body families, so "Geist" claims geist-mono.woff2. This face wins over that
+     injected one: it is declared later and its weight range covers the 500 used here. */
+  @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  .caption-pill {
+    max-width: 78%;
+    padding: 14px 34px 18px;
+    background: #0A0A0A;
+    border-radius: 16px;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.1em 0.34em;
+    font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* upcoming — grey on ink, 7.1:1 */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.12em;
+    color: #9A9AA3;
+    background-image: linear-gradient(#BB4D00, #BB4D00);
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+    background-size: 0 3px;
+  }
+  /* current word — white, with the film's one accent as a short underline */
+  .caption-word.is-active {
+    color: #FFFFFF;
+    background-size: 70% 3px;
+  }
+  /* already spoken — white */
+  .caption-word.is-spoken {
+    color: #FFFFFF;
+    background-size: 0 3px;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 48px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="60.297"
+  data-fps="30"
+  data-width="1920"
+  data-height="1080"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.053,"end":2.095,"text":"You're using OpenRouter's free models,","words":[{"id":"caption-word-0-0","text":"You're","start":0.053,"end":0.391},{"id":"caption-word-0-1","text":"using","start":0.391,"end":0.72},{"id":"caption-word-0-2","text":"OpenRouter's","start":0.72,"end":1.448},{"id":"caption-word-0-3","text":"free","start":1.448,"end":1.706},{"id":"caption-word-0-4","text":"models,","start":1.706,"end":2.095}]},{"id":"caption-group-1","frame":1,"start":2.437,"end":3.653,"text":"then the errors start.","words":[{"id":"caption-word-1-0","text":"then","start":2.437,"end":2.539},{"id":"caption-word-1-1","text":"the","start":2.605,"end":2.856},{"id":"caption-word-1-2","text":"errors","start":2.856,"end":3.348},{"id":"caption-word-1-3","text":"start.","start":3.413,"end":3.653}]},{"id":"caption-group-2","frame":1,"start":4.026,"end":5.042,"text":"Too many requests,","words":[{"id":"caption-word-2-0","text":"Too","start":4.026,"end":4.086},{"id":"caption-word-2-1","text":"many","start":4.086,"end":4.321},{"id":"caption-word-2-2","text":"requests,","start":4.414,"end":5.042}]},{"id":"caption-group-3","frame":1,"start":5.435,"end":5.927,"text":"that's a rate","words":[{"id":"caption-word-3-0","text":"that's","start":5.435,"end":5.656},{"id":"caption-word-3-1","text":"a","start":5.656,"end":5.716},{"id":"caption-word-3-2","text":"rate","start":5.716,"end":5.927}]},{"id":"caption-group-4","frame":1,"start":6.278,"end":6.365,"text":"limit,","words":[{"id":"caption-word-4-0","text":"limit,","start":6.278,"end":6.365}]},{"id":"caption-group-5","frame":1,"start":6.593,"end":8.279,"text":"a cap on how many requests one","words":[{"id":"caption-word-5-0","text":"a","start":6.593,"end":6.653},{"id":"caption-word-5-1","text":"cap","start":6.653,"end":6.755},{"id":"caption-word-5-2","text":"on","start":6.755,"end":6.907},{"id":"caption-word-5-3","text":"how","start":6.907,"end":7.117},{"id":"caption-word-5-4","text":"many","start":7.203,"end":7.441},{"id":"caption-word-5-5","text":"requests","start":7.441,"end":8.06},{"id":"caption-word-5-6","text":"one","start":8.06,"end":8.279}]},{"id":"caption-group-6","frame":1,"start":8.279,"end":9.039,"text":"key can send,","words":[{"id":"caption-word-6-0","text":"key","start":8.279,"end":8.431},{"id":"caption-word-6-1","text":"can","start":8.431,"end":8.774},{"id":"caption-word-6-2","text":"send,","start":8.774,"end":9.039}]},{"id":"caption-group-7","frame":1,"start":9.556,"end":11.239,"text":"20 a minute, 50 a day.","words":[{"id":"caption-word-7-0","text":"20","start":9.556,"end":9.715},{"id":"caption-word-7-1","text":"a","start":9.715,"end":9.783},{"id":"caption-word-7-2","text":"minute,","start":9.783,"end":10.238},{"id":"caption-word-7-3","text":"50","start":10.525,"end":10.724},{"id":"caption-word-7-4","text":"a","start":10.81,"end":10.87},{"id":"caption-word-7-5","text":"day.","start":10.87,"end":11.239}]},{"id":"caption-group-8","frame":2,"start":11.763,"end":12.733,"text":"The reason is simple.","words":[{"id":"caption-word-8-0","text":"The","start":11.763,"end":11.896},{"id":"caption-word-8-1","text":"reason","start":11.896,"end":12.241},{"id":"caption-word-8-2","text":"is","start":12.241,"end":12.347},{"id":"caption-word-8-3","text":"simple.","start":12.347,"end":12.733}]},{"id":"caption-group-9","frame":2,"start":13.074,"end":14.491,"text":"One key means one limit.","words":[{"id":"caption-word-9-0","text":"One","start":13.074,"end":13.134},{"id":"caption-word-9-1","text":"key","start":13.134,"end":13.339},{"id":"caption-word-9-2","text":"means","start":13.339,"end":13.708},{"id":"caption-word-9-3","text":"one","start":13.731,"end":13.943},{"id":"caption-word-9-4","text":"limit.","start":13.943,"end":14.491}]},{"id":"caption-group-10","frame":3,"start":14.994,"end":16.615,"text":"AnyRouter takes that same key","words":[{"id":"caption-word-10-0","text":"AnyRouter","start":14.994,"end":15.622},{"id":"caption-word-10-1","text":"takes","start":15.622,"end":15.945},{"id":"caption-word-10-2","text":"that","start":16.088,"end":16.269},{"id":"caption-word-10-3","text":"same","start":16.269,"end":16.555},{"id":"caption-word-10-4","text":"key","start":16.555,"end":16.615}]},{"id":"caption-group-11","frame":3,"start":16.983,"end":18.354,"text":"and backs it with a shared pool","words":[{"id":"caption-word-11-0","text":"and","start":16.983,"end":17.043},{"id":"caption-word-11-1","text":"backs","start":17.043,"end":17.326},{"id":"caption-word-11-2","text":"it","start":17.326,"end":17.44},{"id":"caption-word-11-3","text":"with","start":17.468,"end":17.687},{"id":"caption-word-11-4","text":"a","start":17.687,"end":17.747},{"id":"caption-word-11-5","text":"shared","start":17.747,"end":18.106},{"id":"caption-word-11-6","text":"pool","start":18.106,"end":18.354}]},{"id":"caption-group-12","frame":3,"start":18.354,"end":19.654,"text":"of keys from other members.","words":[{"id":"caption-word-12-0","text":"of","start":18.354,"end":18.42},{"id":"caption-word-12-1","text":"keys","start":18.563,"end":18.725},{"id":"caption-word-12-2","text":"from","start":18.725,"end":18.972},{"id":"caption-word-12-3","text":"other","start":18.972,"end":19.068},{"id":"caption-word-12-4","text":"members.","start":19.372,"end":19.654}]},{"id":"caption-group-13","frame":3,"start":20.204,"end":20.909,"text":"Three steps.","words":[{"id":"caption-word-13-0","text":"Three","start":20.204,"end":20.287},{"id":"caption-word-13-1","text":"steps.","start":20.287,"end":20.909}]},{"id":"caption-group-14","frame":4,"start":21.471,"end":23.388,"text":"Step one on OpenRouter.ai.","words":[{"id":"caption-word-14-0","text":"Step","start":21.471,"end":21.743},{"id":"caption-word-14-1","text":"one","start":21.743,"end":22.014},{"id":"caption-word-14-2","text":"on","start":22.014,"end":22.194},{"id":"caption-word-14-3","text":"OpenRouter.ai.","start":22.194,"end":23.388}]},{"id":"caption-group-15","frame":4,"start":23.866,"end":25.671,"text":"Open keys, click create key, and copy","words":[{"id":"caption-word-15-0","text":"Open","start":23.866,"end":23.926},{"id":"caption-word-15-1","text":"keys,","start":23.926,"end":24.285},{"id":"caption-word-15-2","text":"click","start":24.285,"end":24.632},{"id":"caption-word-15-3","text":"create","start":24.632,"end":25.05},{"id":"caption-word-15-4","text":"key,","start":25.05,"end":25.397},{"id":"caption-word-15-5","text":"and","start":25.397,"end":25.611},{"id":"caption-word-15-6","text":"copy","start":25.611,"end":25.671}]},{"id":"caption-group-16","frame":4,"start":26.039,"end":26.294,"text":"it.","words":[{"id":"caption-word-16-0","text":"it.","start":26.039,"end":26.294}]},{"id":"caption-group-17","frame":5,"start":26.832,"end":29.243,"text":"Step two, in AnyRouter, open","words":[{"id":"caption-word-17-0","text":"Step","start":26.832,"end":27.045},{"id":"caption-word-17-1","text":"two,","start":27.176,"end":27.543},{"id":"caption-word-17-2","text":"in","start":27.732,"end":27.886},{"id":"caption-word-17-3","text":"AnyRouter,","start":27.886,"end":28.839},{"id":"caption-word-17-4","text":"open","start":29.183,"end":29.243}]},{"id":"caption-group-18","frame":5,"start":29.704,"end":32.394,"text":"BYOK, pick OpenRouter and paste your key.","words":[{"id":"caption-word-18-0","text":"BYOK,","start":29.704,"end":30.465},{"id":"caption-word-18-1","text":"pick","start":30.71,"end":30.872},{"id":"caption-word-18-2","text":"OpenRouter","start":30.872,"end":31.383},{"id":"caption-word-18-3","text":"and","start":31.4,"end":31.601},{"id":"caption-word-18-4","text":"paste","start":31.601,"end":31.928},{"id":"caption-word-18-5","text":"your","start":31.928,"end":32.113},{"id":"caption-word-18-6","text":"key.","start":32.18,"end":32.394}]},{"id":"caption-group-19","frame":5,"start":32.946,"end":34.681,"text":"AnyRouter checks it with one live call,","words":[{"id":"caption-word-19-0","text":"AnyRouter","start":32.946,"end":33.188},{"id":"caption-word-19-1","text":"checks","start":33.188,"end":33.382},{"id":"caption-word-19-2","text":"it","start":33.564,"end":33.667},{"id":"caption-word-19-3","text":"with","start":33.667,"end":33.906},{"id":"caption-word-19-4","text":"one","start":33.906,"end":34.088},{"id":"caption-word-19-5","text":"live","start":34.088,"end":34.236},{"id":"caption-word-19-6","text":"call,","start":34.327,"end":34.681}]},{"id":"caption-group-20","frame":5,"start":34.681,"end":35.535,"text":"then adds it.","words":[{"id":"caption-word-20-0","text":"then","start":34.681,"end":34.92},{"id":"caption-word-20-1","text":"adds","start":34.92,"end":34.988},{"id":"caption-word-20-2","text":"it.","start":35.273,"end":35.535}]},{"id":"caption-group-21","frame":6,"start":36.068,"end":36.715,"text":"Step three,","words":[{"id":"caption-word-21-0","text":"Step","start":36.068,"end":36.295},{"id":"caption-word-21-1","text":"three,","start":36.51,"end":36.715}]},{"id":"caption-group-22","frame":6,"start":36.91,"end":38.224,"text":"share your key with the pool and","words":[{"id":"caption-word-22-0","text":"share","start":36.91,"end":37.061},{"id":"caption-word-22-1","text":"your","start":37.061,"end":37.266},{"id":"caption-word-22-2","text":"key","start":37.266,"end":37.334},{"id":"caption-word-22-3","text":"with","start":37.411,"end":37.599},{"id":"caption-word-22-4","text":"the","start":37.659,"end":37.719},{"id":"caption-word-22-5","text":"pool","start":37.796,"end":38.001},{"id":"caption-word-22-6","text":"and","start":38.01,"end":38.224}]},{"id":"caption-group-23","frame":6,"start":38.224,"end":38.762,"text":"confirm.","words":[{"id":"caption-word-23-0","text":"confirm.","start":38.224,"end":38.762}]},{"id":"caption-group-24","frame":6,"start":39.182,"end":40.515,"text":"That's what lets you draw from it.","words":[{"id":"caption-word-24-0","text":"That's","start":39.182,"end":39.242},{"id":"caption-word-24-1","text":"what","start":39.349,"end":39.469},{"id":"caption-word-24-2","text":"lets","start":39.469,"end":39.64},{"id":"caption-word-24-3","text":"you","start":39.64,"end":39.882},{"id":"caption-word-24-4","text":"draw","start":39.882,"end":40.053},{"id":"caption-word-24-5","text":"from","start":40.053,"end":40.203},{"id":"caption-word-24-6","text":"it.","start":40.274,"end":40.515}]},{"id":"caption-group-25","frame":7,"start":41.067,"end":42.462,"text":"Now your key goes first.","words":[{"id":"caption-word-25-0","text":"Now","start":41.067,"end":41.237},{"id":"caption-word-25-1","text":"your","start":41.237,"end":41.443},{"id":"caption-word-25-2","text":"key","start":41.524,"end":41.757},{"id":"caption-word-25-3","text":"goes","start":41.757,"end":42.044},{"id":"caption-word-25-4","text":"first.","start":42.044,"end":42.462}]},{"id":"caption-group-26","frame":7,"start":42.917,"end":43.784,"text":"When it hits its limit,","words":[{"id":"caption-word-26-0","text":"When","start":42.917,"end":42.977},{"id":"caption-word-26-1","text":"it","start":42.977,"end":43.037},{"id":"caption-word-26-2","text":"hits","start":43.037,"end":43.196},{"id":"caption-word-26-3","text":"its","start":43.275,"end":43.455},{"id":"caption-word-26-4","text":"limit,","start":43.455,"end":43.784}]},{"id":"caption-group-27","frame":7,"start":44.049,"end":45.418,"text":"it rests for a moment and a","words":[{"id":"caption-word-27-0","text":"it","start":44.049,"end":44.109},{"id":"caption-word-27-1","text":"rests","start":44.109,"end":44.226},{"id":"caption-word-27-2","text":"for","start":44.226,"end":44.448},{"id":"caption-word-27-3","text":"a","start":44.448,"end":44.67},{"id":"caption-word-27-4","text":"moment","start":44.67,"end":45.105},{"id":"caption-word-27-5","text":"and","start":45.298,"end":45.358},{"id":"caption-word-27-6","text":"a","start":45.358,"end":45.418}]},{"id":"caption-group-28","frame":7,"start":45.418,"end":46.507,"text":"key from the pool answers","words":[{"id":"caption-word-28-0","text":"key","start":45.418,"end":45.579},{"id":"caption-word-28-1","text":"from","start":45.666,"end":45.888},{"id":"caption-word-28-2","text":"the","start":45.888,"end":46.091},{"id":"caption-word-28-3","text":"pool","start":46.159,"end":46.381},{"id":"caption-word-28-4","text":"answers","start":46.381,"end":46.507}]},{"id":"caption-group-29","frame":7,"start":46.951,"end":47.438,"text":"instead.","words":[{"id":"caption-word-29-0","text":"instead.","start":46.951,"end":47.438}]},{"id":"caption-group-30","frame":7,"start":47.876,"end":49.134,"text":"Your requests keep going.","words":[{"id":"caption-word-30-0","text":"Your","start":47.876,"end":47.936},{"id":"caption-word-30-1","text":"requests","start":47.936,"end":48.38},{"id":"caption-word-30-2","text":"keep","start":48.411,"end":48.662},{"id":"caption-word-30-3","text":"going.","start":48.662,"end":49.134}]},{"id":"caption-group-31","frame":8,"start":49.747,"end":51.899,"text":"Same free models with no daily cap","words":[{"id":"caption-word-31-0","text":"Same","start":49.747,"end":49.932},{"id":"caption-word-31-1","text":"free","start":50.053,"end":50.275},{"id":"caption-word-31-2","text":"models","start":50.275,"end":50.637},{"id":"caption-word-31-3","text":"with","start":50.934,"end":51.092},{"id":"caption-word-31-4","text":"no","start":51.092,"end":51.249},{"id":"caption-word-31-5","text":"daily","start":51.249,"end":51.657},{"id":"caption-word-31-6","text":"cap","start":51.657,"end":51.899}]},{"id":"caption-group-32","frame":8,"start":51.899,"end":52.679,"text":"on AnyRouter.","words":[{"id":"caption-word-32-0","text":"on","start":51.899,"end":52.056},{"id":"caption-word-32-1","text":"AnyRouter.","start":52.056,"end":52.679}]},{"id":"caption-group-33","frame":8,"start":53.15,"end":54.67,"text":"And your key earns credits when it","words":[{"id":"caption-word-33-0","text":"And","start":53.15,"end":53.21},{"id":"caption-word-33-1","text":"your","start":53.21,"end":53.27},{"id":"caption-word-33-2","text":"key","start":53.309,"end":53.49},{"id":"caption-word-33-3","text":"earns","start":53.49,"end":53.82},{"id":"caption-word-33-4","text":"credits","start":53.82,"end":54.31},{"id":"caption-word-33-5","text":"when","start":54.31,"end":54.54},{"id":"caption-word-33-6","text":"it","start":54.58,"end":54.67}]},{"id":"caption-group-34","frame":8,"start":54.67,"end":55.644,"text":"helps someone else.","words":[{"id":"caption-word-34-0","text":"helps","start":54.67,"end":54.92},{"id":"caption-word-34-1","text":"someone","start":54.96,"end":55.38},{"id":"caption-word-34-2","text":"else.","start":55.38,"end":55.644}]},{"id":"caption-group-35","frame":8,"start":56.106,"end":57.707,"text":"Start at anyrouter.dev.","words":[{"id":"caption-word-35-0","text":"Start","start":56.106,"end":56.166},{"id":"caption-word-35-1","text":"at","start":56.292,"end":56.398},{"id":"caption-word-35-2","text":"anyrouter.dev.","start":56.398,"end":57.707}]}];
+  var DURATION = 60.297;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.985 }, { scale: 1, duration: 0.18, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>
