@@ -11,7 +11,7 @@ with its layout under `@media (orientation: portrait)`.
 - **Safe areas.** Landscape: x 96…1824, y 88…880 (captions own 900…1080).
   Portrait: x 60…960, y 200…1220 (captions own 1240…1480; platform buttons cover the
   right edge and the bottom quarter).
-- **Type floor.** 36px for any word a viewer reads, 32px only for a URL pill. Use the
+- **Type floor.** 36px for any word a viewer reads; badges 34px and URL pills 34px (the type audit gates at 32px and reads an exact 32px as just under it). Use the
   `k-` text classes; never set a smaller `font-size`.
 - **No stage literals.** Never write 1920 or 1080 outside the root's `width: 1920px;
   height: 1080px`. `shared/authoring/portrait.mjs` refuses them. Positions that must be
@@ -96,7 +96,7 @@ F .k-browser { position: absolute; box-sizing: border-box; background: var(--bg)
 F .k-browser-bar { position: relative; height: 56px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
 F .k-browser-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
 F .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-F .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 32px; line-height: 1; color: var(--muted); white-space: nowrap; }
+F .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
 F .k-view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
 F .k-view > img { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
@@ -106,7 +106,7 @@ F .k-key svg { width: 36px; height: 36px; flex: none; }
 
 /* terminal: the one dark surface */
 F .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
-F .k-term-bar { position: relative; height: 56px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 32px; color: var(--term-dim); }
+F .k-term-bar { position: relative; height: 56px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
 F .k-term-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
 F .k-term-dots i { width: 12px; height: 12px; border-radius: 50%; background: #3F3F46; }
 F .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.45; color: var(--term-ink); white-space: pre; }
