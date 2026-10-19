@@ -338,6 +338,8 @@ export default {
   id: 'changelog',
   title: 'Changelog',
   scheduled: true,
+  // lib/film.mjs has no portrait layout yet: its backdrop and frame chrome are drawn at 1920x1080.
+  renditions: ['landscape'],
   items,
 
   async collect({ flags }) {

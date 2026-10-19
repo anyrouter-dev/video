@@ -16,6 +16,9 @@ export default {
   id: 'explainer',
   title: 'Explainer',
   scheduled: false,
+  // Until its frames get their portrait layouts: portrait.mjs still finds 1920x1080 in
+  // 02-one-door and 06-step-2-donate. Delete this line once `check explainer` passes without it.
+  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 

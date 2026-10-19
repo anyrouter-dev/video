@@ -594,6 +594,8 @@ export default {
   id: 'model-drop',
   title: 'Model drop',
   scheduled: true,
+  // lib/film.mjs has no portrait layout yet: its backdrop and frame chrome are drawn at 1920x1080.
+  renditions: ['landscape'],
 
   async collect({ flags, dir, work }) {
     let raw, pool = null;
