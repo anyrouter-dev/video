@@ -37,7 +37,10 @@
         }
       },
       "source": null,
-      "createdAt": "2026-10-19T09:13:50.930Z"
+      "createdAt": "2026-10-19T09:13:50.930Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/explainer-002-20261019-v1-2591da164e"
+      }
     }
   ]
 }

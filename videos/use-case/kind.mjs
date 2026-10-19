@@ -277,6 +277,9 @@ export default {
 
   link: data => one(data).url,
 
+  // Several use cases ship on one day, so each film is named by its page.
+  asset: entry => entry.label,
+
   /** The title card once its words have risen: the marks, the kicker and the title. */
   coverAt: film => {
     const t = film.scenes[0];

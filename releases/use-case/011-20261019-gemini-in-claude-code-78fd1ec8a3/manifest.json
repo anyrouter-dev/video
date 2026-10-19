@@ -7,8 +7,19 @@
   "seconds": 25,
   "renderedAt": "2026-10-19T10:26:34.589Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.mp4",
-  "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.mp4",
+      "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-portrait.mp4",
+      "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-portrait.png"
+    }
+  },
   "source": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-source.tar.gz",
-  "createdAt": "2026-10-19T10:26:34.632Z"
+  "createdAt": "2026-10-19T10:26:34.632Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3"
+  }
 }

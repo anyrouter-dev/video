@@ -7,8 +7,19 @@
   "seconds": 23.7,
   "renderedAt": "2026-10-19T10:29:08.415Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.mp4",
-  "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.mp4",
+      "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-portrait.mp4",
+      "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-portrait.png"
+    }
+  },
   "source": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-source.tar.gz",
-  "createdAt": "2026-10-19T10:29:08.436Z"
+  "createdAt": "2026-10-19T10:29:08.436Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-014-20261019-nvidia-free-key-0064ad0a03"
+  }
 }

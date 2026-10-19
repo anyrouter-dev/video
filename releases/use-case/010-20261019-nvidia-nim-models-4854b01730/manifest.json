@@ -7,8 +7,19 @@
   "seconds": 24.2,
   "renderedAt": "2026-10-19T10:25:42.875Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.mp4",
-  "cover": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.mp4",
+      "cover": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-portrait.mp4",
+      "cover": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-portrait.png"
+    }
+  },
   "source": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-source.tar.gz",
-  "createdAt": "2026-10-19T10:25:42.896Z"
+  "createdAt": "2026-10-19T10:25:42.896Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-010-20261019-nvidia-nim-models-4854b01730"
+  }
 }

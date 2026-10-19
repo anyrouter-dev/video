@@ -7,8 +7,19 @@
   "seconds": 22.5,
   "renderedAt": "2026-10-19T10:38:42.758Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-027-20261019-sign-in-5e93149317.mp4",
-  "cover": "renders/use-case-027-20261019-sign-in-5e93149317.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-027-20261019-sign-in-5e93149317.mp4",
+      "cover": "renders/use-case-027-20261019-sign-in-5e93149317.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-027-20261019-sign-in-5e93149317-portrait.mp4",
+      "cover": "renders/use-case-027-20261019-sign-in-5e93149317-portrait.png"
+    }
+  },
   "source": "renders/use-case-027-20261019-sign-in-5e93149317-source.tar.gz",
-  "createdAt": "2026-10-19T10:38:42.784Z"
+  "createdAt": "2026-10-19T10:38:42.784Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-027-20261019-sign-in-5e93149317"
+  }
 }
