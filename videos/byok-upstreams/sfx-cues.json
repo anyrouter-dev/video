@@ -1,0 +1,18 @@
+[
+  {"frame": 1, "sound": "pop", "word": "keys,", "offset": -0.45, "volume": 0.2},
+  {"frame": 1, "sound": "whoosh-short", "word": "one", "offset": -0.25, "volume": 0.2},
+  {"frame": 2, "sound": "click-soft", "word": "OpenAI,", "volume": 0.22},
+  {"frame": 2, "sound": "click-soft", "word": "Anthropic,", "volume": 0.22},
+  {"frame": 2, "sound": "click-soft", "word": "Google,", "volume": 0.22},
+  {"frame": 2, "sound": "click-soft", "word": "OpenRouter,", "volume": 0.22},
+  {"frame": 2, "sound": "pop", "word": "many", "volume": 0.2},
+  {"frame": 3, "sound": "click", "word": "key", "volume": 0.28},
+  {"frame": 3, "sound": "click", "word": "Change", "volume": 0.3},
+  {"frame": 3, "sound": "click", "word": "switch.", "volume": 0.3},
+  {"frame": 4, "sound": "whoosh-short", "word": "run", "offset": -0.05, "volume": 0.2},
+  {"frame": 4, "sound": "pop", "word": "provider's", "volume": 0.2},
+  {"frame": 5, "sound": "ping", "word": "no", "volume": 0.2},
+  {"frame": 5, "sound": "click-soft", "word": "every", "volume": 0.22},
+  {"frame": 5, "sound": "pop", "word": "Free", "volume": 0.2},
+  {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]
