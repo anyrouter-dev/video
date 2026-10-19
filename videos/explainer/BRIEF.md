@@ -60,7 +60,10 @@ cap; `anyr claude` runs Claude Code with any model; one API for every model, sta
   (`shared/captures/2026-10-19/screens/signed-in/playground-three-models.png`). Token
   counts are left out (#5802). Kimi K3's platform route failed that day (upstream_exhausted),
   so no Kimi answer is shown.
-- Frame 8's free list is `model-billing.json` `free`: not byok and $0 in and out.
+- Frame 8's free list is `model-billing.json` `free`: not byok and $0 in and out. On 2026-10-19
+  the catalog's prices moved between fetches: the platform chat models (deepseek-v4-flash,
+  minimax-m3.1-flash, nemotron-3-super, kimi-k3) read $0 in some fetches and priced in others,
+  so frame 8 lists only models that were $0 in every fetch.
 - `anyr claude --model <id>` — the real `anyr --help` and `anyr models` output
   (`shared/captures/2026-10-19/terminal/`).
 - Say "no daily cap", never "unlimited". The /models tab counts ("All 89") are never on
@@ -75,8 +78,8 @@ cap; `anyr claude` runs Claude Code with any model; one API for every model, sta
 - Do NOT reuse or imitate the intro or teaser films (their print/dither look).
 - Voice: ElevenLabs Eric, voiced by `shared/authoring/eleven-voice.mjs`, word times from
   ElevenLabs' alignment. Breaths are stretched so every cut lands on a beat of the music
-  (`pad-voices.mjs --beat=0.5 --phase=0.059 --hold=4:0.5`, the grid `hyperframes beats` found;
-  frame 4 holds 0.5s more so its result cards can be read).
+  (`pad-voices.mjs --beat=0.5 --phase=0.059 --hold=4:1`, the grid `hyperframes beats` found;
+  frame 4 holds 1s more so its result cards can be read).
 - Music bed: `assets/bgm/track.mp3`, retrieved once from the HeyGen music library on
   2026-10-18 for "calm minimal modern tech underscore". It is host audio in
   `audio_meta.json` (`"source": "host"`), and the storyboard says `music: none`.
