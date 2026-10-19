@@ -38,10 +38,18 @@ cap; `anyr claude` runs Claude Code with any model; one API for every model, sta
   existing SDK", "bring-your-own-key at $0 markup", "a 401, 429, or 5xx from one upstream
   retries on the next upstream", "`anyrouter/free` and `:free` models work on every plan,
   Free included, with no daily cap" — https://anyrouter.dev/llms.txt
-- Ids one AnyRouter key runs on credit — `curl -s https://anyrouter.dev/api/v1/models`
-  (no `?all`): `deepseek/deepseek-v4.1-flash`, `moonshotai/kimi-k3`, `x-ai/grok-4.7`,
-  `z-ai/glm-5.3`, `anyrouter/auto`, `anyrouter/free`. It lists no Anthropic or OpenAI
-  chat ids, so Claude and OpenAI appear only in frame 5, as bring your own key, on their
+- Which ids one AnyRouter key runs: `pricing.billing` in
+  `curl -s 'https://anyrouter.dev/api/v1/models?all=1'`. Of 299 models, 266 are
+  `"billing": "byok"` (they need your own provider key or pool access) and 33 are routed
+  by AnyRouter itself. The default list without `?all` is not that list. An id shown as
+  working on one AnyRouter key (frames 3, 4, 6, 7 and 9) must not be `byok`:
+  `deepseek/deepseek-v4-flash`, `moonshotai/kimi-k3`, `minimax/minimax-m3.1-flash`,
+  `nvidia/nemotron-3-super-120b-a12b`, `anyrouter/auto`. Frame 2's list may show any
+  catalog id, AnyRouter-routed ones first. `x-ai/grok-4.7`, `z-ai/glm-5.3`,
+  `deepseek/deepseek-v4.1-flash` and every Anthropic, OpenAI GPT-5.x and Google Gemini id
+  are `byok`. The saved catalog is `model-billing.json` (refresh with
+  `node tools/model-ids.mjs --refresh`), and `model-ids.test.mjs` fails on any byok id a
+  frame shows. Claude and OpenAI appear only in frame 5, as bring your own key, on their
   real model pages ("AnyRouter has no platform route for … Requests use your key and bill
   your provider account. AnyRouter adds no fee.").
 - `anyr claude --model <id>` — the real `anyr --help` and `anyr models` output
