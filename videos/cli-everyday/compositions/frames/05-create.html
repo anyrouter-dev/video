@@ -265,7 +265,7 @@ const K = {
         tl.fromTo($("created"), { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, CREATED);
         // the new key is what just arrived: it rises into its line in the accent
         tl.fromTo($("key"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, KEY);
-        K.push(tl, $("cam"), DURATION - 0.2, { to: 1.06, at: 0.2 });
+        K.push(tl, $("cam"), DURATION, { to: 1.08, at: 0, ease: "none" });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-create"] = tl;

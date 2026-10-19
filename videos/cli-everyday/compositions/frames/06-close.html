@@ -239,7 +239,7 @@ const K = {
       const $ = (s) => document.getElementById("f06-" + s);
       // Word starts from audio_meta.json frame 6: "Models," 0, "keys," 1.01, "from" 1.324, "Start" 2.403, "anyrouter.dev." 2.856.
       // The camera drifts until SETTLE; the closing card may then hold still (pace-audit's end allowance, 3s).
-      const FROM = 1.27, START = 2.35, URL = 2.8, SETTLE = 4.7;
+      const FROM = 1.27, START = 2.35, URL = 2.8, SETTLE = 5.2;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
@@ -254,7 +254,7 @@ const K = {
         tl.fromTo($("brand"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out" }, START);
         K.rise(tl, $("url"), URL, { y: 30, d: 1.2 });
         // an even drift that stops at SETTLE: an eased tail reads as still long before it ends
-        K.push(tl, $("cam"), SETTLE - START, { from: 1.03, to: 1.08, ease: "none", at: START });
+        K.push(tl, $("cam"), SETTLE - START, { from: 1.03, to: 1.12, ease: "none", at: START });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["06-close"] = tl;

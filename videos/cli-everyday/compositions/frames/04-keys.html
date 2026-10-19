@@ -268,7 +268,7 @@ const K = {
         rows.forEach((r, i) => tl.fromTo(r, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, PRINT + i * ROW));
         // "each one masked": the masks take the accent together
         tl.set(root.querySelectorAll('[class~="f04-mask"]'), { color: "#F0915A" }, ACCENT);
-        K.push(tl, $("cam"), DURATION - 0.2, { to: 1.05, at: 0.2 });
+        K.push(tl, $("cam"), DURATION - 0.2, { to: 1.08, at: 0.2, ease: "none" });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["04-keys"] = tl;
