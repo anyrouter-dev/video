@@ -1,18 +1,15 @@
 <template>
   <style>
     /* kit:css */
-/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
-   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
    No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
 @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
 [data-composition-id="07-failover"] {
-  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-  --line: #E5E5E5; --line-strong: #D4D4D8;
-  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   font-family: var(--sans);
@@ -22,148 +19,173 @@
 }
 [data-composition-id="07-failover"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
 [data-composition-id="07-failover"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
-/* the camera: everything in a frame sits in it, and it never stops moving */
+/* the camera: everything in a frame sits in it */
 [data-composition-id="07-failover"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
-
-[data-composition-id="07-failover"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-[data-composition-id="07-failover"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-[data-composition-id="07-failover"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-[data-composition-id="07-failover"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-[data-composition-id="07-failover"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-[data-composition-id="07-failover"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-[data-composition-id="07-failover"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-[data-composition-id="07-failover"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 [data-composition-id="07-failover"] p, [data-composition-id="07-failover"] h1, [data-composition-id="07-failover"] h2 { margin: 0; }
 
-[data-composition-id="07-failover"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+/* the brand, top-left frame chrome */
+[data-composition-id="07-failover"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="07-failover"] .k-brand img { width: 40px; height: 40px; display: block; }
 
-[data-composition-id="07-failover"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-[data-composition-id="07-failover"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
-[data-composition-id="07-failover"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-[data-composition-id="07-failover"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-[data-composition-id="07-failover"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+/* type */
+[data-composition-id="07-failover"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="07-failover"] .k-headline, [data-composition-id="07-failover"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="07-failover"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="07-failover"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="07-failover"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="07-failover"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="07-failover"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="07-failover"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="07-failover"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="07-failover"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="07-failover"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="07-failover"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="07-failover"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="07-failover"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="07-failover"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="07-failover"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="07-failover"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-badge.is-ink, [data-composition-id="07-failover"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="07-failover"] .k-badge.is-muted, [data-composition-id="07-failover"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="07-failover"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="07-failover"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
 [data-composition-id="07-failover"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-[data-composition-id="07-failover"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-/* focus ring: placed over the named thing; animate its opacity and transform */
-[data-composition-id="07-failover"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="07-failover"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="07-failover"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="07-failover"] .k-chip img { width: 40px; height: 40px; flex: none; }
-[data-composition-id="07-failover"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+[data-composition-id="07-failover"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="07-failover"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
 
-/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
-[data-composition-id="07-failover"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="07-failover"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-[data-composition-id="07-failover"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
-[data-composition-id="07-failover"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-[data-composition-id="07-failover"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-[data-composition-id="07-failover"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+/* a window around redrawn product UI */
+[data-composition-id="07-failover"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="07-failover"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="07-failover"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="07-failover"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="07-failover"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="07-failover"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
 [data-composition-id="07-failover"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-/* code card: a light editor with a file tab */
-[data-composition-id="07-failover"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="07-failover"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
-[data-composition-id="07-failover"] .k-code-bar .k-url { height: 44px; }
-[data-composition-id="07-failover"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
-[data-composition-id="07-failover"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+/* code card: a hairline editor with a file tab */
+[data-composition-id="07-failover"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="07-failover"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="07-failover"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="07-failover"] .k-code-body .kw { color: inherit; }
 [data-composition-id="07-failover"] .k-code-body .cm { color: var(--muted); }
 [data-composition-id="07-failover"] .k-ln { display: block; }
 
-/* terminal: the one dark surface */
-[data-composition-id="07-failover"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
-[data-composition-id="07-failover"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-[data-composition-id="07-failover"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
-[data-composition-id="07-failover"] .k-term-body .p { color: var(--term-dim); }
-[data-composition-id="07-failover"] .k-term-body .id { color: var(--term-id); }
-[data-composition-id="07-failover"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+/* terminal: an ink card */
+[data-composition-id="07-failover"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="07-failover"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="07-failover"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="07-failover"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="07-failover"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="07-failover"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="07-failover"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
 
 /* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
-   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
-[data-composition-id="07-failover"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="07-failover"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
 [data-composition-id="07-failover"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
 [data-composition-id="07-failover"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="07-failover"] .k-roll > span + span, [data-composition-id="07-failover"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="07-failover"] .k-term .k-roll > span { color: var(--accent-on-ink); }
 
 /* portrait-only line break inside code */
 [data-composition-id="07-failover"] .k-pbr { display: none; }
 
 @media (orientation: portrait) {
   [data-composition-id="07-failover"] .k-cam { transform-origin: 510px 710px; }
-  [data-composition-id="07-failover"] .k-code-body, [data-composition-id="07-failover"] .k-term-body { font-size: 40px; padding: 32px 36px; }
-  [data-composition-id="07-failover"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="07-failover"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="07-failover"] .k-display { font-size: 148px; }
+  [data-composition-id="07-failover"] .k-headline, [data-composition-id="07-failover"] .k-h1 { font-size: 104px; }
+  [data-composition-id="07-failover"] .k-h2 { font-size: 76px; }
+  [data-composition-id="07-failover"] .k-title { font-size: 56px; }
+  [data-composition-id="07-failover"] .k-body { font-size: 48px; }
+  [data-composition-id="07-failover"] .k-stat { font-size: 280px; }
+  [data-composition-id="07-failover"] .k-card { border-radius: 28px; }
+  [data-composition-id="07-failover"] .k-code-body, [data-composition-id="07-failover"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="07-failover"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
   [data-composition-id="07-failover"] .k-pbr { display: inline; }
   [data-composition-id="07-failover"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="07-failover"] .f07-app { position: absolute; left: 120px; top: 120px; width: 940px; height: 740px; overflow: hidden; }
-    [data-composition-id="07-failover"] .f07-app-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; position: relative; }
-    [data-composition-id="07-failover"] .f07-app-title { font-size: 36px; font-weight: 500; color: var(--ink-2); }
-    [data-composition-id="07-failover"] .f07-illus { position: absolute; right: 12px; top: 6px; height: 52px; padding: 0 14px; color: var(--muted); font-size: 36px; }
-    [data-composition-id="07-failover"] .f07-chat { display: flex; flex-direction: column; gap: 28px; padding: 36px 40px; }
-    [data-composition-id="07-failover"] .f07-model { align-self: flex-start; font-family: var(--mono); }
-    [data-composition-id="07-failover"] .f07-ask { align-self: flex-end; max-width: 80%; padding: 24px 32px; border-radius: 28px 28px 8px 28px; background: var(--ink); color: #FFFFFF; font-size: 48px; line-height: 1.25; }
-    [data-composition-id="07-failover"] .f07-reply { position: relative; align-self: flex-start; min-height: 104px; }
-    [data-composition-id="07-failover"] .f07-dots, [data-composition-id="07-failover"] .f07-answer { position: absolute; left: 0; top: 0; padding: 24px 32px; border-radius: 28px 28px 28px 8px; background: var(--surface-2); white-space: nowrap; }
-    [data-composition-id="07-failover"] .f07-dots { display: flex; gap: 14px; height: 104px; box-sizing: border-box; align-items: center; }
-    [data-composition-id="07-failover"] .f07-dots i { width: 18px; height: 18px; border-radius: 50%; background: var(--muted); }
-    [data-composition-id="07-failover"] .f07-answer { font-size: 48px; line-height: 1.25; }
-    [data-composition-id="07-failover"] .f07-done { margin-top: 148px; }
+    [data-composition-id="07-failover"] .f07-illus { position: absolute; right: 96px; top: 78px; }
+    /* the app's request, which stays while providers are tried and the answer comes back */
+    [data-composition-id="07-failover"] .f07-app { position: absolute; left: 96px; right: 96px; top: 176px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    [data-composition-id="07-failover"] .f07-who { display: flex; flex-direction: column; gap: 12px; }
+    [data-composition-id="07-failover"] .f07-ask-row { display: flex; align-items: center; gap: 28px; }
+    [data-composition-id="07-failover"] .f07-ask { padding: 22px 36px; border-radius: 40px 40px 12px 40px; background: var(--surface); color: var(--ink); white-space: nowrap; }
+    [data-composition-id="07-failover"] .f07-dots { display: flex; gap: 12px; }
+    [data-composition-id="07-failover"] .f07-dots i { width: 16px; height: 16px; border-radius: 50%; background: var(--ink); opacity: 0.25; }
 
-    [data-composition-id="07-failover"] .f07-tiles { position: absolute; left: 1140px; right: 120px; top: 120px; display: flex; flex-direction: column; gap: 28px; }
-    [data-composition-id="07-failover"] .f07-tile { position: relative; display: flex; align-items: center; gap: 24px; height: 228px; padding: 0 36px; transition: none; }
-    [data-composition-id="07-failover"] .f07-tile > svg { width: 64px; height: 64px; flex: none; color: var(--ink-2); }
-    [data-composition-id="07-failover"] .f07-name { font-size: 48px; font-weight: 600; letter-spacing: -0.02em; flex: 1; white-space: nowrap; }
-    [data-composition-id="07-failover"] .f07-status { position: relative; width: 236px; height: 60px; }
-    [data-composition-id="07-failover"] .f07-status .k-badge { position: absolute; right: 0; top: 0; opacity: 0; }
-    [data-composition-id="07-failover"] .f07-ring { border-radius: 30px; }
+    [data-composition-id="07-failover"] .f07-tiles { position: absolute; left: 96px; right: 96px; top: 340px; bottom: 236px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; transform-origin: 50% 50%; }
+    [data-composition-id="07-failover"] .f07-tile { display: flex; flex-direction: column; padding: 52px; }
+    [data-composition-id="07-failover"] .f07-tile > svg { width: 80px; height: 80px; flex: none; }
+    [data-composition-id="07-failover"] .f07-name { margin-top: 32px; white-space: nowrap; }
+    [data-composition-id="07-failover"] .f07-status { position: relative; margin-top: auto; height: 48px; }
+    [data-composition-id="07-failover"] .f07-status > span { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 14px; opacity: 0; white-space: nowrap; }
+    [data-composition-id="07-failover"] .f07-status svg { width: 40px; height: 40px; }
+
+    /* the answer, back in the app */
+    [data-composition-id="07-failover"] .f07-reply { position: absolute; left: 96px; right: 96px; top: 340px; bottom: 236px; display: flex; flex-direction: column; justify-content: center; gap: 48px; }
+    [data-composition-id="07-failover"] .f07-answer { white-space: nowrap; }
 
     @media (orientation: portrait) {
-      [data-composition-id="07-failover"] .f07-app { left: 60px; top: 200px; width: 900px; height: 640px; }
-      [data-composition-id="07-failover"] .f07-chat { gap: 24px; padding: 32px 36px; }
-      [data-composition-id="07-failover"] .f07-tiles { left: 60px; right: 120px; top: 876px; flex-direction: row; gap: 20px; }
-      [data-composition-id="07-failover"] .f07-tile { flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px; height: 330px; padding: 0 24px; }
-      [data-composition-id="07-failover"] .f07-tile > svg { width: 56px; height: 56px; }
-      [data-composition-id="07-failover"] .f07-name { flex: none; font-size: 40px; }
-      [data-composition-id="07-failover"] .f07-status { width: 100%; }
-      [data-composition-id="07-failover"] .f07-status .k-badge { left: 0; right: auto; }
+      [data-composition-id="07-failover"] .f07-illus { right: 120px; top: 102px; }
+      [data-composition-id="07-failover"] .f07-app { left: 60px; right: 120px; top: 200px; flex-direction: column; align-items: stretch; gap: 28px; }
+      [data-composition-id="07-failover"] .f07-ask-row { justify-content: flex-end; }
+      [data-composition-id="07-failover"] .f07-tiles { left: 60px; right: 120px; top: 500px; bottom: 700px; grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); gap: 28px; }
+      [data-composition-id="07-failover"] .f07-tile { flex-direction: row; align-items: center; gap: 32px; padding: 0 44px; }
+      [data-composition-id="07-failover"] .f07-tile > svg { width: 64px; height: 64px; }
+      [data-composition-id="07-failover"] .f07-name { margin-top: 0; }
+      [data-composition-id="07-failover"] .f07-status { margin-top: 0; margin-left: auto; width: 150px; }
+      [data-composition-id="07-failover"] .f07-reply { left: 60px; right: 120px; top: 500px; bottom: 700px; }
+      [data-composition-id="07-failover"] .f07-answer { white-space: normal; }
     }
   </style>
 
   <div id="root" data-composition-id="07-failover" data-width="1920" data-height="1080" data-duration="6">
     <div id="f07-bg" class="k-bg clip" data-start="0" data-duration="6" data-track-index="0"></div>
     <div id="f07-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter</div>
+      <span class="k-badge f07-illus" data-outside-safe-area>Illustration</span>
       <div id="f07-cam" class="k-cam">
-        <div id="f07-app" class="k-card f07-app">
-          <div class="f07-app-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="f07-app-title">Your app</span><span class="k-badge is-outline f07-illus">Illustration</span></div>
-          <div class="f07-chat">
-            <span id="f07-model" class="k-badge is-outline f07-model">deepseek/deepseek-v4-flash</span>
-            <p id="f07-ask" class="f07-ask">Say hi in 3 words.</p>
-            <div class="f07-reply">
-              <div id="f07-dots" class="f07-dots"><i></i><i></i><i></i></div>
-              <p id="f07-answer" class="f07-answer">Hello there, friend.</p>
-              <span id="f07-done" class="k-badge is-free f07-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Answered</span>
-            </div>
+        <div id="f07-app" class="f07-app">
+          <div class="f07-who"><span class="k-title">Your app</span><span class="k-url">deepseek/deepseek-v4-flash</span></div>
+          <div class="f07-ask-row"><span id="f07-dots" class="f07-dots"><i></i><i></i><i></i></span><p id="f07-ask" class="k-body f07-ask">Say hi in 3 words.</p></div>
+        </div>
+
+        <div id="f07-tiles" class="f07-tiles">
+          <div id="f07-t1" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="k-title f07-name">Provider 1</span>
+            <span class="k-label f07-status"><span class="k-muted f07-trying">Trying</span><span class="k-muted f07-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>Down</span></span>
+          </div>
+          <div id="f07-t2" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="k-title f07-name">Provider 2</span>
+            <span class="k-label f07-status"><span class="k-muted f07-trying">Trying</span><span class="f07-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Up</span></span>
+          </div>
+          <div id="f07-t3" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="k-title f07-name">Provider 3</span>
           </div>
         </div>
 
-        <div class="f07-tiles">
-          <div id="f07-t1" class="k-card f07-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
-            <span class="f07-name">Provider 1</span>
-            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-danger f07-down">Down</span></span>
-          </div>
-          <div id="f07-t2" class="k-card f07-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
-            <span class="f07-name">Provider 2</span>
-            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-free f07-up">Up</span></span>
-          </div>
-          <div id="f07-t3" class="k-card f07-tile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
-            <span class="f07-name">Provider 3</span>
-          </div>
-          <div id="f07-ring" class="k-ring f07-ring"></div>
+        <div id="f07-reply" class="f07-reply">
+          <p id="f07-answer" class="k-display f07-answer"><span class="k-line">Hello there, friend.</span></p>
+          <span id="f07-done" class="k-badge is-ink is-big" style="align-self: flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Answered</span>
         </div>
       </div>
     </div>
@@ -173,32 +195,56 @@
   <script>
     (function () {
       // kit:js
-// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
 const K = {
-  /** An element rises into place. */
-  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
-    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
   },
-  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
   wash(tl, el, t, span = 0.6) {
-    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
-    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
-    const hold = Math.min(0.25, span * 0.4);
-    tl.set(el, on, t);
-    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
-  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or less when the next is sooner. */
   roll(tl, slot, at) {
     const items = [...slot.children];
+    slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      // the old value is gone before the new one is readable, so no frame shows both
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
-      const gap = (at[i + 1] ?? Infinity) - t;
-      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+      const d = Math.min(0.7, (at[i + 1] ?? Infinity) - t - 0.05);
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
     });
   },
   /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
@@ -216,63 +262,55 @@ const K = {
   scaleFor(view, r, max, margin = 48) {
     return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
   },
-  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
-      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
-  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
     const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
     const s = (v) => 1 + (v - 1) * k;
-    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
   },
 };
       // /kit:js
       const $ = (s) => document.getElementById("f07-" + s);
-      const DURATION = 6;
       // Word starts from audio_meta.json frame 7: "provider" 0.302, "down," 1.01, "retries" 2.171,
       // "another," 2.821, "still" 4.075.
-      const ASK = 0.2, DOWN = 0.98, RETRY = 2.12, ANOTHER = 2.8, ANSWER = 4.05;
+      const ASK = 0.2, DOWN = 0.96, RETRY = 2.12, ANOTHER = 2.77, ANSWER = 4.02;
       const one = (tile, cls) => tile.querySelector('[class~="' + cls + '"]');
+      const swap = (tl, from, to, t) => {
+        tl.to(from, { opacity: 0, duration: 0.3, ease: "power2.in" }, t);
+        tl.fromTo(to, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", immediateRender: false }, t + 0.15);
+      };
 
       document.fonts.ready.then(() => {
-        const ring = $("ring");
-        const onT1 = K.box(ring, $("t1"), 10), onT2 = K.box(ring, $("t2"), 10);
-
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.06, x: 30 });
+        K.rise(tl, $("app"), 0.02, { y: 40, d: 1.0, scale: 1 });
+        K.rise(tl, $("ask"), ASK, { y: 30, d: 1.0 });
+        K.cards(tl, $("tiles"), [$("t1"), $("t2"), $("t3")], 0.05);
 
-        K.rise(tl, $("app"), 0.02, { y: 60, d: 0.7 });
-        K.rise(tl, $("model"), 0.15, { y: 20, d: 0.45 });
-        K.rise(tl, $("ask"), ASK, { y: 30, d: 0.5 });
-        ["t1", "t2", "t3"].forEach((t, i) => K.rise(tl, $(t), 0.12 + i * 0.08, { y: 40, d: 0.6 }));
-
-        // the app waits: three dots, stepped by hand so the timeline stays seekable
-        K.rise(tl, $("dots"), ASK + 0.35, { y: 16, d: 0.35 });
+        // the app waits: three dots light in turn, stepped so the timeline stays seekable
         const dots = [...$("dots").children];
-        for (let t = ASK + 0.5, k = 0; t < ANSWER - 0.1; t += 0.16, k++) {
-          tl.to(dots[k % 3], { y: -10, duration: 0.16, ease: "sine.out" }, t);
-          tl.to(dots[k % 3], { y: 0, duration: 0.2, ease: "sine.in" }, t + 0.16);
+        tl.fromTo($("dots"), { opacity: 0 }, { opacity: 1, duration: 0.4 }, ASK + 0.4);
+        for (let t = ASK + 0.5, k = 0; t < ANSWER - 0.4; t += 0.22, k++) {
+          tl.to(dots[k % 3], { opacity: 1, duration: 0.2, ease: "power2.out" }, t);
+          tl.to(dots[k % 3], { opacity: 0.25, duration: 0.4, ease: "power2.in" }, t + 0.22);
         }
 
         // provider 1 is tried and goes down; AnyRouter tries provider 2, which answers
-        tl.set(ring, { ...onT1 }, 0);
-        tl.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
-        tl.to(one($("t1"), "f07-trying"), { opacity: 1, duration: 0.2 }, 0.5);
-        tl.to(one($("t1"), "f07-trying"), { opacity: 0, duration: 0.15 }, DOWN);
-        tl.to(one($("t1"), "f07-down"), { opacity: 1, duration: 0.2 }, DOWN + 0.05);
-        tl.to($("t1"), { backgroundColor: "#F5F5F5", duration: 0.35, ease: "power2.out" }, DOWN);
-        tl.to($("t1").querySelectorAll('svg, [class~="f07-name"]'), { color: "#636363", duration: 0.35 }, DOWN);
-        tl.to(ring, { opacity: 0, duration: 0.25 }, DOWN + 0.1);
+        const t1 = $("t1"), t2 = $("t2");
+        tl.fromTo(one(t1, "f07-trying"), { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.5);
+        swap(tl, one(t1, "f07-trying"), one(t1, "f07-down"), DOWN);
+        tl.to(t1, { backgroundColor: "#F5F5F5", borderColor: "#F5F5F5", duration: 0.6, ease: "power2.inOut" }, DOWN);
+        tl.to(t1.querySelectorAll(':scope > svg, [class~="f07-name"]'), { color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, DOWN);
 
-        tl.to(ring, { ...onT2, duration: 0.01 }, RETRY - 0.05);
-        tl.to(ring, { opacity: 1, duration: 0.3, ease: "power2.out" }, RETRY);
-        tl.to(one($("t2"), "f07-trying"), { opacity: 1, duration: 0.2 }, RETRY);
-        tl.to(one($("t2"), "f07-trying"), { opacity: 0, duration: 0.15 }, ANOTHER);
-        tl.to(one($("t2"), "f07-up"), { opacity: 1, duration: 0.2 }, ANOTHER + 0.05);
-        tl.to(ring, { borderColor: "#007E55", boxShadow: "0 0 0 8px rgba(0,126,85,.22)", duration: 0.3 }, ANOTHER);
+        tl.fromTo(one(t2, "f07-trying"), { opacity: 0 }, { opacity: 1, duration: 0.4 }, RETRY);
+        swap(tl, one(t2, "f07-trying"), one(t2, "f07-up"), ANOTHER);
+        K.ink(tl, t2, ANOTHER);
 
-        // the benefit: the answer lands
-        tl.to($("dots"), { opacity: 0, duration: 0.2 }, ANSWER - 0.1);
-        tl.fromTo($("answer"), { opacity: 0, y: 24, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, ANSWER);
-        tl.fromTo($("done"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, ANSWER + 0.35);
+        // the benefit: the answer lands in the app
+        K.exit(tl, $("tiles"), ANSWER - 0.45, { d: 0.7 });
+        tl.to($("dots"), { opacity: 0, duration: 0.3 }, ANSWER - 0.4);
+        K.headline(tl, $("answer"), ANSWER);
+        K.rise(tl, $("done"), ANSWER + 0.45, { y: 30, d: 1.0 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["07-failover"] = tl;
