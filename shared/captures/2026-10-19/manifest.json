@@ -248,5 +248,82 @@
     "shows": "The real output of anyr models, every model id usable with --model.",
     "redacted": "none found",
     "capturedAt": "2026-10-19T14:59:37.768Z"
+  },
+  {
+    "file": "screens/signed-in/playground-three-models.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "One prompt (\"Say hello in five words.\") answered side by side by deepseek/deepseek-v4-flash, nvidia/nemotron-3-super-120b-a12b and minimax/minimax-m3.1-flash, each at $0 cost, with real TTFT and speed. Downscaled to 1568 px wide.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-deepseek-v4-flash.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The DeepSeek V4 Flash panel of the same run at 2x: 5.81s TTFT, 96.9 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-nemotron-3-super.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Nemotron 3 Super 120B panel at 2x: 13.95s TTFT, 42.4 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-minimax-m3-1-flash.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The MiniMax M3.1 Flash panel at 2x: 4.35s TTFT, 142.9 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-add-provider-list.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Add a provider key dialog: search 68 providers, Anthropic and others listed, Free tier badges.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-add-openrouter-key.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Add key dialog with OpenRouter chosen: an empty sk-or-... field (placeholder, no key), \"Keys are encrypted at rest\", Add key.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-openrouter-key-routing.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "Key routing for an OpenRouter key: Free models only (32 routed) or All models (198 routed, 32 free + 166 paid; paid SKUs bill your OpenRouter account).",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
   }
 ]
