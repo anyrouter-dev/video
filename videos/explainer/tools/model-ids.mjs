@@ -1,6 +1,7 @@
 // The model ids the explainer's frames show, and whether one AnyRouter key runs them.
 // An id runs on AnyRouter's own routes when its catalog entry's pricing.billing is not "byok";
 // a byok id needs the viewer's own provider key, so a frame must not show it as just working.
+// A free id is one of those that also costs $0 in and out.
 // model-billing.json saves the catalog; refresh it from videos/explainer, from the live API or
 // from a saved response:
 //   node tools/model-ids.mjs --refresh [--from=models.json]
@@ -42,8 +43,10 @@ async function refresh(from) {
     body = await res.json();
   }
   const { data } = body;
-  const billing = Object.fromEntries(data.map(m => [m.id, m.pricing?.billing ?? null]).sort(([a], [b]) => a.localeCompare(b)));
-  fs.writeFileSync(CATALOG, JSON.stringify({ source: SOURCE, fetched: new Date().toISOString().slice(0, 10), billing }, null, 1) + '\n');
+  const sorted = [...data].sort((a, b) => a.id.localeCompare(b.id));
+  const billing = Object.fromEntries(sorted.map(m => [m.id, m.pricing?.billing ?? null]));
+  const free = sorted.filter(m => m.pricing?.billing !== 'byok' && Number(m.pricing?.prompt) === 0 && Number(m.pricing?.completion) === 0).map(m => m.id);
+  fs.writeFileSync(CATALOG, JSON.stringify({ source: SOURCE, fetched: new Date().toISOString().slice(0, 10), billing, free }, null, 1) + '\n');
   const byok = Object.values(billing).filter(b => b === 'byok').length;
   console.log(`${data.length} models, ${byok} byok, ${data.length - byok} routed by AnyRouter → ${CATALOG}`);
 }

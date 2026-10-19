@@ -5,7 +5,7 @@ import path from 'node:path';
 import { CATALOG, judgeIds, shownIds } from './tools/model-ids.mjs';
 
 const FRAMES = path.join(path.dirname(new URL(import.meta.url).pathname), 'compositions/frames');
-const { billing } = JSON.parse(fs.readFileSync(CATALOG, 'utf8'));
+const { billing, free } = JSON.parse(fs.readFileSync(CATALOG, 'utf8'));
 const frames = fs.readdirSync(FRAMES).filter(f => f.endsWith('.html'))
   .map(f => ({ name: f.replace(/\.html$/, ''), ids: shownIds(fs.readFileSync(path.join(FRAMES, f), 'utf8')) }));
 // Frame 2's voice says "more than 270 models behind one API", so its list may show any catalog id.
@@ -34,6 +34,12 @@ test('the frame 2 list shows real catalog ids, the ones AnyRouter routes itself 
   const firstByok = judged.findIndex(j => j.status === 'byok');
   assert.ok(firstByok > 0, 'the list starts with ids AnyRouter routes');
   assert.deepEqual(judged.slice(firstByok).filter(j => j.status === 'runnable'), []);
+});
+
+test('the free list shows only free models: AnyRouter routes them and they cost $0', () => {
+  const shown = frames.find(f => f.name === '08-free').ids;
+  assert.ok(shown.length > 0);
+  assert.deepEqual(shown.filter(id => !free.includes(id)), []);
 });
 
 test('putting a byok id back in a code roll is caught', () => {

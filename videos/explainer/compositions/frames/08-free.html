@@ -97,16 +97,21 @@
   [data-composition-id="08-free"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="08-free"] .f08-browser { left: 120px; width: 1100px; top: 120px; bottom: 220px; }
-    [data-composition-id="08-free"] .f08-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-    [data-composition-id="08-free"] .f08-shot img { display: block; max-width: none; }
+    /* free models, redrawn from GET /api/v1/models?all=1: not "byok" and $0 in and out (model-billing.json) */
+    [data-composition-id="08-free"] .f08-list { position: absolute; left: 120px; width: 1100px; top: 120px; bottom: 220px; overflow: hidden; }
+    [data-composition-id="08-free"] .f08-rows { list-style: none; margin: 0; padding: 0 40px; }
+    [data-composition-id="08-free"] .f08-row { height: 150px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 10px; border-bottom: 2px solid var(--surface-2); }
+    [data-composition-id="08-free"] .f08-name { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 500; white-space: nowrap; }
+    [data-composition-id="08-free"] .f08-name .k-badge { height: 48px; padding: 0 16px; }
+    [data-composition-id="08-free"] .f08-id { font-family: var(--mono); font-size: 36px; color: var(--muted); white-space: nowrap; }
     [data-composition-id="08-free"] .f08-side { position: absolute; left: 1300px; right: 96px; top: 230px; display: flex; flex-direction: column; align-items: flex-start; gap: 32px; }
     [data-composition-id="08-free"] .f08-badges { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 
     @media (orientation: portrait) {
       [data-composition-id="08-free"] .f08-side { left: 60px; right: 120px; top: 210px; gap: 28px; }
       [data-composition-id="08-free"] .f08-badges { flex-direction: row; flex-wrap: wrap; gap: 20px; }
-      [data-composition-id="08-free"] .f08-browser { left: 60px; width: auto; right: 120px; top: 520px; bottom: 700px; }
+      [data-composition-id="08-free"] .f08-list { left: 60px; width: auto; right: 120px; top: 520px; bottom: 700px; }
+      [data-composition-id="08-free"] .f08-rows { padding: 0 32px; }
     }
   </style>
 
@@ -114,10 +119,7 @@
     <div id="f08-bg" class="k-bg clip" data-start="0" data-duration="3.5" data-track-index="0"></div>
     <div id="f08-stage" class="k-stage clip" data-start="0" data-duration="3.5" data-track-index="1">
       <div id="f08-cam" class="k-cam">
-        <div id="f08-browser" class="k-browser f08-browser">
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/models?free=true</span></div>
-          <div id="f08-view" class="k-view"><div id="f08-shot" class="f08-shot"><img src="assets/captures/models-free.png" alt="" /></div></div>
-        </div>
+        <div id="f08-list" class="k-card f08-list"><ul id="f08-rows" class="f08-rows"><li class="f08-row"><span class="f08-name">Beam 1.0<span class="k-badge is-free">Free</span></span><span class="f08-id">reflection/beam-1.0</span></li><li class="f08-row"><span class="f08-name">Amos 1 Large<span class="k-badge is-free">Free</span></span><span class="f08-id">scira/amos-1-large</span></li><li class="f08-row"><span class="f08-name">Amos 1 Small<span class="k-badge is-free">Free</span></span><span class="f08-id">scira/amos-1-small</span></li><li class="f08-row"><span class="f08-name">Amos 1 Mini<span class="k-badge is-free">Free</span></span><span class="f08-id">scira/amos-1-mini</span></li><li class="f08-row"><span class="f08-name">THX-01<span class="k-badge is-free">Free</span></span><span class="f08-id">hal-x/thx-01</span></li><li class="f08-row"><span class="f08-name">Glyph Cluster<span class="k-badge is-free">Free</span></span><span class="f08-id">stealth/glyph-cluster</span></li><li class="f08-row"><span class="f08-name">Riva Translate 4B Instruct v2<span class="k-badge is-free">Free</span></span><span class="f08-id">nvidia/riva-translate-4b-instruct-v2</span></li></ul></div>
         <div class="f08-side">
           <h2 id="f08-title" class="k-h2">Free models</h2>
           <div class="f08-badges">
@@ -189,20 +191,14 @@ const K = {
       const DURATION = 3.5;
       // Word starts from audio_meta.json frame 8: "every" 1.057, "no" 1.881.
       const EVERY = 1.0, NO = 1.82;
-      // The model column of the 2x capture, from the first row down: the tab bar and its counts stay out of view.
-      const TOP = { x: 50, y: 630 };
+      // the list scrolls two rows over the frame
+      const SCROLL = 2 * 150;
 
       document.fonts.ready.then(() => {
-        // the list scrolls 420 capture px, its left edge pinned to the view's. At these capture scales
-        // 14 px page text renders at 32 px or more, and the widest row's Free badge still fits the view.
-        const scale = matchMedia("(orientation: portrait)").matches ? 1.15 : 1.3;
-        const from = { scale, x: -TOP.x * scale, y: -TOP.y * scale };
-        const to = { ...from, y: -(TOP.y + 420) * scale };
-
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.05 });
-        K.rise(tl, $("browser"), 0.02, { y: 60, d: 0.7 });
-        tl.fromTo($("shot"), from, { ...to, duration: DURATION, ease: "sine.inOut" }, 0);
+        K.rise(tl, $("list"), 0.02, { y: 60, d: 0.7 });
+        tl.fromTo($("rows"), { y: 0 }, { y: -SCROLL, duration: DURATION, ease: "sine.inOut" }, 0);
         K.rise(tl, $("title"), 0.1);
         tl.fromTo($("plan"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, EVERY);
         tl.fromTo($("cap"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, NO);

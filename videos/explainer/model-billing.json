@@ -301,5 +301,20 @@
   "z-ai/glm-5.3-prime": "byok",
   "z-ai/glm-flash-latest": "byok",
   "z-ai/glm-latest": "byok"
- }
+ },
+ "free": [
+  "apple/foundation-model",
+  "google/gemma-3n-e2b",
+  "hal-x/thx-01",
+  "nvidia/nemotron-3-embed-1b",
+  "nvidia/nemotron-3.5-content-safety",
+  "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "nvidia/nemotron-parse-2.0",
+  "nvidia/riva-translate-4b-instruct-v2",
+  "reflection/beam-1.0",
+  "scira/amos-1-large",
+  "scira/amos-1-mini",
+  "scira/amos-1-small",
+  "stealth/glyph-cluster"
+ ]
 }
