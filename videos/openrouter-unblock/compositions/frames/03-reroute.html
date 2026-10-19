@@ -120,19 +120,21 @@
   [data-composition-id="03-reroute"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    /* the request travels on the wires, under the cards: it never crosses a card's text */
+    /* one vertical chain: the request runs straight down through AnyRouter, then on the wires, and stops outside each card */
     [data-composition-id="03-reroute"] .f03-wires { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
-    [data-composition-id="03-reroute"] .f03-wires path { fill: none; stroke: var(--hair); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-    [data-composition-id="03-reroute"] .f03-node { position: absolute; top: 176px; height: 136px; display: flex; align-items: center; gap: 24px; padding: 0 44px; white-space: nowrap; }
+    [data-composition-id="03-reroute"] .f03-wires path { fill: none; stroke: var(--on-ink-muted); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    [data-composition-id="03-reroute"] .f03-node { position: absolute; height: 120px; display: flex; align-items: center; gap: 24px; padding: 0 44px; white-space: nowrap; }
     [data-composition-id="03-reroute"] .f03-node svg { width: 56px; height: 56px; flex: none; }
-    [data-composition-id="03-reroute"] .f03-app { left: 96px; width: 760px; }
-    [data-composition-id="03-reroute"] .f03-ar { left: 920px; width: 460px; justify-content: center; }
+    [data-composition-id="03-reroute"] .f03-app { left: 580px; width: 760px; top: 160px; }
+    [data-composition-id="03-reroute"] .f03-ar { left: 730px; width: 460px; top: 340px; justify-content: center; }
+    [data-composition-id="03-reroute"] #f03-group { transform-origin: 50% 880px; }
     [data-composition-id="03-reroute"] .f03-slot { position: relative; margin-left: auto; width: 280px; height: 96px; }
     [data-composition-id="03-reroute"] .f03-slot .k-badge { position: absolute; right: 0; top: 0; }
-    [data-composition-id="03-reroute"] .f03-card { position: absolute; top: 420px; bottom: 200px; width: 844px; padding: 44px 48px; display: flex; flex-direction: column; }
+    [data-composition-id="03-reroute"] .f03-card { position: absolute; top: 560px; bottom: 200px; width: 844px; padding: 40px 48px; display: flex; flex-direction: column; }
     [data-composition-id="03-reroute"] .f03-mine { left: 96px; }
     [data-composition-id="03-reroute"] .f03-pool { right: 96px; }
     [data-composition-id="03-reroute"] .f03-card-head { display: flex; align-items: center; gap: 20px; }
+    [data-composition-id="03-reroute"] .f03-room { margin-top: 8px; }
     [data-composition-id="03-reroute"] .f03-card-head img { width: 56px; height: 56px; }
     [data-composition-id="03-reroute"] .f03-limit { margin-top: auto; align-self: flex-start; color: var(--muted); }
     [data-composition-id="03-reroute"] .f03-pills { display: flex; gap: 20px; margin-top: auto; }
@@ -143,6 +145,7 @@
       [data-composition-id="03-reroute"] .f03-node { height: 128px; }
       [data-composition-id="03-reroute"] .f03-app { left: 60px; width: 900px; top: 200px; }
       [data-composition-id="03-reroute"] .f03-ar { left: 290px; width: 440px; top: 400px; }
+      [data-composition-id="03-reroute"] #f03-group { transform-origin: 50% 1180px; }
       [data-composition-id="03-reroute"] .f03-card { top: 640px; bottom: 700px; width: 436px; padding: 36px 32px; }
       [data-composition-id="03-reroute"] .f03-mine { left: 60px; }
       [data-composition-id="03-reroute"] .f03-pool { right: auto; left: 524px; }
@@ -175,6 +178,7 @@
         </div>
         <div id="f03-pool" class="k-card f03-card f03-pool">
           <div class="f03-card-head"><span class="k-title">Keys members share</span></div>
+          <span class="k-small f03-room">Used when they have room</span>
           <div class="f03-pills">
             <span class="k-card f03-pill">sk-or-v1-••••</span>
             <span class="k-card f03-pill">sk-or-v1-••••</span>
@@ -205,7 +209,7 @@ const K = {
   },
   /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
   cards(tl, group, cards, t) {
-    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(group, { scale: 1.05 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
     tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
   },
   /** A beat leaves, up and out, before the next one arrives. */
@@ -279,10 +283,8 @@ const K = {
         const box = (el) => { const r = el.getBoundingClientRect(); return { l: (r.left - c.left) * k, t: (r.top - c.top) * k, r: (r.right - c.left) * k, b: (r.bottom - c.top) * k }; };
         const app = box($("app")), ar = box($("ar")), mine = box($("mine")), pool = box($("pool"));
         const mid = (b) => (b.l + b.r) / 2;
-        // app to AnyRouter: side by side in landscape, stacked in portrait
-        const appWire = ar.t >= app.b
-          ? [{ x: mid(ar), y: app.b }, { x: mid(ar), y: ar.t }]
-          : [{ x: app.r, y: (app.t + app.b) / 2 }, { x: ar.l, y: (ar.t + ar.b) / 2 }];
+        // app straight down to AnyRouter
+        const appWire = [{ x: mid(ar), y: app.b }, { x: mid(ar), y: ar.t }];
         // AnyRouter down to the top edge of each card, with one elbow halfway
         const drop = (to) => { const y = (ar.b + to.t) / 2; return [{ x: mid(ar), y: ar.b }, { x: mid(ar), y }, { x: mid(to), y }, { x: mid(to), y: to.t }]; };
         const toMine = drop(mine), toPool = drop(pool);
@@ -291,6 +293,9 @@ const K = {
         $("w-mine").setAttribute("d", d(toMine));
         $("w-pool").setAttribute("d", d(toPool));
 
+        // where the dot rests: just outside a card's edge, never on it
+        const R = 22;
+        const stop = (pts) => [...pts.slice(0, -1), { x: pts.at(-1).x, y: pts.at(-1).y - R }];
         // move the dot along a polyline at an even speed, eased over the whole trip
         const dot = $("d0");
         const travel = (pts, t, dur) => {
@@ -307,33 +312,35 @@ const K = {
 
         const tl = gsap.timeline({ paused: true });
         K.push(tl, cam, DURATION, { to: 1.03 });
-        K.cards(tl, group, [$("app"), $("ar"), $("mine"), $("pool")], 0);
+        // the card camera, kept short of the caption band: the group settles about the cards' bottom edge
+        tl.fromTo(group, { scale: 1.05 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, 0);
+        tl.fromTo([$("app"), $("ar"), $("mine"), $("pool")], { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, 0.05);
         tl.fromTo($("wires"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.inOut" }, 0.3);
         tl.set([$("limit"), $("ok")], { opacity: 0 }, 0);
         tl.set(dot, { x: appWire[0].x, y: appWire[0].y }, 0);
 
-        // the request goes to your account, which is at its limit
+        // the request goes down through AnyRouter to your account, which is at its limit
         tl.to(dot, { opacity: 1, duration: 0.2 }, GO - 0.05);
-        travel([...appWire, ...toMine.slice(1)], GO, LIMIT - GO);
+        travel(stop([...appWire, ...toMine]), GO, LIMIT - GO);
         tl.to($("mine"), { backgroundColor: "#F5F5F5", borderColor: "#F5F5F5", duration: 0.6, ease: "power2.inOut" }, LIMIT);
         tl.to($("mine").querySelector('[class~="f03-mine-name"]'), { color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, LIMIT);
         tl.fromTo($("mine").querySelector('[class~="k-mark"]'), { filter: "brightness(0) invert(0)" }, { filter: "brightness(0) invert(0.42)", duration: 0.6, ease: "power2.inOut", immediateRender: false }, LIMIT);
         tl.fromTo($("limit"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", immediateRender: false }, LIMIT + 0.1);
 
-        // AnyRouter takes it back and is the one in focus
-        travel(rev(toMine), LIMIT + 0.15, AR - LIMIT - 0.1);
+        // it comes back up to AnyRouter, the one in focus
+        const under = { x: mid(ar), y: ar.b + R };
+        travel([...stop(toMine).reverse().slice(0, -1), under], LIMIT + 0.15, AR - LIMIT - 0.1);
         K.ink(tl, $("ar"), AR);
-        // and sends it to a key another member shares
-        travel(toPool, SEND, KEYS - SEND - 0.05);
+        // which sends it to a key another member shares
+        travel(stop([under, ...toPool.slice(1)]), SEND, KEYS - SEND - 0.05);
         K.ink(tl, $("ar"), SEND + 0.3, false);
         const pill = root.querySelector('[class~="f03-pill"]');
         K.ink(tl, pill, KEYS);
 
-        // the answer comes back to your app
-        travel([...rev(toPool), ...rev(appWire).slice(1)], BACK, 1.0);
-        K.ink(tl, pill, BACK + 0.6, false);
-        tl.to(dot, { opacity: 0, duration: 0.25 }, BACK + 0.95);
-        K.rise(tl, $("ok"), BACK + 0.95, { y: 30 });
+        // and your app gets its answer
+        tl.to(dot, { opacity: 0, duration: 0.3 }, BACK);
+        K.ink(tl, pill, BACK + 0.3, false);
+        K.rise(tl, $("ok"), BACK + 0.3, { y: 30 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["03-reroute"] = tl;
