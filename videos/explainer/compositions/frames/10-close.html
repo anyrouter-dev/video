@@ -194,8 +194,9 @@ const K = {
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
-        // an even push that stops at SETTLE: an eased tail reads as still long before it ends
-        K.push(tl, $("cam"), SETTLE, { from: 0.96, to: 1, ease: "none" });
+        // An even pull-back that stops at SETTLE: an eased tail reads as still long before it ends.
+        // It ends at scale 1, so unlike K.push it needs no portrait damping to stay in the safe area.
+        tl.fromTo($("cam"), { scale: 0.96 }, { scale: 1, duration: SETTLE, ease: "none" }, 0);
 
         K.rise(tl, $("line"), LINE, { y: 48, d: 0.7 });
         tl.fromTo($("mark"), { scale: 0.7, rotation: -8, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.5)" }, START);
