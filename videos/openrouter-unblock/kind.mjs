@@ -16,6 +16,10 @@ export default {
   id: 'openrouter-unblock',
   title: 'Unblock OpenRouter free models',
   scheduled: false,
+  // The portrait cut fails shared/authoring/stage-audit.mjs in 04-step-1-key (26.5s) and 05-step-2-add (32.5s): the zoomed
+  // screen leaves the stage bare.
+  // Captions also need data-outside-safe-area. Delete this once `check openrouter-unblock` passes without it.
+  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 

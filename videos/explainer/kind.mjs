@@ -16,6 +16,10 @@ export default {
   id: 'explainer',
   title: 'Explainer',
   scheduled: false,
+  // The portrait cut fails shared/authoring/stage-audit.mjs in 05-step-1-key (44.5s: text past the right edge, the zoomed
+  // screen leaves the stage bare) and 06-step-2-donate (52s, same zoom).
+  // Captions also need data-outside-safe-area. Delete this once `check explainer` passes without it.
+  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
