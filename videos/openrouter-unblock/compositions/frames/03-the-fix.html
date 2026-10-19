@@ -3,529 +3,139 @@
     @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
     @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
-    #root {
+    #root[data-composition-id="03-the-fix"] {
       position: absolute;
       inset: 0;
-      width: 1920px;
-      height: 1080px;
-      overflow: hidden;
-      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-      color: #0A0A0A;
-    }
-
-    [data-composition-id="03-the-fix"] .bg {
-      position: absolute;
-      inset: 0;
-      background: #FFFFFF;
-    }
-    [data-composition-id="03-the-fix"] .stage {
-      position: absolute;
-      inset: 0;
-    }
-
-    /* Step rail (shared component, four steps, all todo) */
-    [data-composition-id="03-the-fix"] .rail {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 72px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-    }
-    [data-composition-id="03-the-fix"] .rail-step {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    [data-composition-id="03-the-fix"] .rail-dot {
-      width: 40px;
-      height: 40px;
-      flex: none;
-      box-sizing: border-box;
-      border-radius: 50%;
-      background: #FFFFFF;
-      border: 2px solid #D4D4D8;
-      color: #636363;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 20px;
-      font-weight: 500;
-    }
-    [data-composition-id="03-the-fix"] .rail-label {
-      font-size: 26px;
-      font-weight: 500;
-      line-height: 1;
-      white-space: nowrap;
-      color: #636363;
-    }
-    [data-composition-id="03-the-fix"] .rail-line {
-      width: 48px;
-      height: 2px;
-      background: #D4D4D8;
-      flex: none;
-      transform-origin: left center;
-    }
-
-    /* AnyRouter card: 760x496 at (160, 288) */
-    [data-composition-id="03-the-fix"] .card {
-      position: absolute;
-      left: 160px;
-      top: 288px;
-      width: 760px;
-      height: 496px;
-      box-sizing: border-box;
-      background: #FFFFFF;
-      border: 1.5px solid #E5E5E5;
-      border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06);
       overflow: hidden;
     }
-    [data-composition-id="03-the-fix"] .card-head {
-      position: absolute;
-      left: 32px;
-      top: 32px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    [data-composition-id="03-the-fix"] .card-head img {
-      width: 34px;
-      height: 34px;
-      display: block;
-    }
-    [data-composition-id="03-the-fix"] .card-head span {
-      font-size: 30px;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-    }
-    [data-composition-id="03-the-fix"] .your-key {
-      position: absolute;
-      left: 455px;
-      top: 110px;
-      line-height: 32px;
-      font-size: 24px;
-      font-weight: 500;
-      color: #BB4D00;
-      white-space: nowrap;
-    }
-    [data-composition-id="03-the-fix"] .status {
-      position: absolute;
-      height: 36px;
-      box-sizing: border-box;
-      padding: 0 14px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 24px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    [data-composition-id="03-the-fix"] .status.limit {
-      right: 32px;
-      top: 108px;
-      background: #FDEDEE;
-      color: #C0262D;
-    }
-    [data-composition-id="03-the-fix"] .status.ok {
-      right: 38px;
-      top: 200px;
-      background: #ECFDF5;
-      color: #007E55;
-    }
-    [data-composition-id="03-the-fix"] .divider {
-      position: absolute;
-      left: 32px;
-      right: 32px;
-      top: 180px;
-      height: 1.5px;
-      background: #E5E5E5;
-      transform-origin: left center;
-    }
-    [data-composition-id="03-the-fix"] .eyebrow {
-      position: absolute;
-      left: 32px;
-      top: 206px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 24px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #636363;
-      line-height: 1;
-    }
-    [data-composition-id="03-the-fix"] .pool {
-      position: absolute;
-      left: 32px;
-      top: 252px;
-      display: grid;
-      grid-template-columns: repeat(3, 220px);
-      column-gap: 14px;
-      row-gap: 12px;
-    }
-    /* Pool key pill: a smaller key pill, muted */
-    [data-composition-id="03-the-fix"] .mini {
-      position: relative;
-      width: 220px;
-      height: 44px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: #FAFAFA;
-      border: 1.5px dashed #D4D4D8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 24px;
-      color: #636363;
-      white-space: nowrap;
-      opacity: 0;
-    }
-    [data-composition-id="03-the-fix"] .mini svg {
-      width: 18px;
-      height: 18px;
-      flex: none;
-      fill: #636363;
-    }
-    /* The lit state of the shared key that answers: overlaid, cross-faded in */
-    [data-composition-id="03-the-fix"] .mini-lit {
-      position: absolute;
-      inset: -1.5px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background: #FFF4EC;
-      border: 1.5px solid #BB4D00;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: #0A0A0A;
-      opacity: 0;
-    }
-    [data-composition-id="03-the-fix"] .mini-lit svg {
-      fill: #BB4D00;
-    }
+    [data-composition-id="03-the-fix"] {
+      .bg { position: absolute; inset: 0; background: #FFFFFF; }
+      .stage {
+        position: absolute;
+        inset: 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #0A0A0A;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+      .safe { position: absolute; left: 96px; right: 96px; top: 88px; bottom: 200px; }
+      .scene { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; }
 
-    /* Your key pill (shared component); on the stage so it can travel from Frame 2's spot */
-    [data-composition-id="03-the-fix"] .pill {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      height: 52px;
-      box-sizing: border-box;
-      padding: 0 20px;
-      border-radius: 10px;
-      background: #FAFAFA;
-      border: 1.5px dashed #D4D4D8;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 26px;
-      color: #0A0A0A;
-      white-space: nowrap;
-    }
-    [data-composition-id="03-the-fix"] .glyph {
-      width: 22px;
-      height: 22px;
-      flex: none;
-    }
+      .card {
+        box-sizing: border-box;
+        width: 1320px;
+        padding: 48px;
+        background: #FFFFFF;
+        border: 2px solid #E5E5E5;
+        border-radius: 24px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+      }
+      .head { display: flex; align-items: center; gap: 20px; font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+      .head svg { width: 56px; height: 56px; flex: none; }
+      .rows { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+      .row {
+        position: relative;
+        display: grid;
+        grid-template-columns: 260px auto 1fr;
+        grid-template-areas: "label key status";
+        align-items: center;
+        column-gap: 32px;
+        padding: 16px 20px;
+        border-radius: 16px;
+      }
+      .label { grid-area: label; font-size: 40px; font-weight: 500; line-height: 1.2; color: #3F3F46; white-space: nowrap; }
+      .key {
+        grid-area: key;
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        box-sizing: border-box;
+        height: 80px;
+        padding: 0 28px;
+        background: #FAFAFA;
+        border: 2px dashed #D4D4D8;
+        border-radius: 12px;
+        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-size: 40px;
+        white-space: nowrap;
+      }
+      .key svg { width: 36px; height: 36px; flex: none; }
+      .status { grid-area: status; justify-self: end; display: inline-flex; align-items: center; height: 56px; padding: 0 20px; border-radius: 12px; font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+      .status.err { background: #FEF2F2; color: #C0262D; }
+      .status.ok { background: #ECFDF5; color: #007E55; }
+      .ring { position: absolute; inset: 0; border: 2px solid #BB4D00; border-radius: 16px; box-shadow: 0 0 0 6px rgba(187, 77, 0, .35); pointer-events: none; }
+      .say { margin: 0; font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; text-align: center; }
 
-    /* The request: a small primary dot */
-    [data-composition-id="03-the-fix"] .req {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #BB4D00;
-      opacity: 0;
-    }
-
-    /* Browser frame (shared component), 760 wide, cropped to the OpenRouter row */
-    [data-composition-id="03-the-fix"] .browser {
-      position: absolute;
-      left: 1000px;
-      top: 404px;
-      width: 760px;
-      height: 203px;
-      box-sizing: border-box;
-      background: #FFFFFF;
-      border: 1.5px solid #E5E5E5;
-      border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
-      overflow: hidden;
-      opacity: 0;
-    }
-    [data-composition-id="03-the-fix"] .bar {
-      position: relative;
-      height: 52px;
-      box-sizing: border-box;
-      background: #FAFAFA;
-      border-bottom: 1.5px solid #E5E5E5;
-    }
-    [data-composition-id="03-the-fix"] .dots {
-      position: absolute;
-      left: 22px;
-      top: 20px;
-      display: flex;
-      gap: 8px;
-    }
-    [data-composition-id="03-the-fix"] .dots i {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #D4D4D8;
-    }
-    [data-composition-id="03-the-fix"] .url-wrap {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-    }
-    [data-composition-id="03-the-fix"] .url {
-      height: 32px;
-      box-sizing: border-box;
-      padding: 0 18px;
-      border-radius: 999px;
-      background: #FFFFFF;
-      border: 1.5px solid #E5E5E5;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 20px;
-      line-height: 29px;
-      color: #636363;
-      white-space: nowrap;
-    }
-    /* Shows source px x 776..2290, y 480..776 of the 3840x2160 capture at 0.5 */
-    [data-composition-id="03-the-fix"] .viewport {
-      position: relative;
-      width: 757px;
-      height: 148px;
-      overflow: hidden;
-    }
-    [data-composition-id="03-the-fix"] .viewport img {
-      position: absolute;
-      left: -388px;
-      top: -240px;
-      width: 1920px;
-      height: 1080px;
-      display: block;
-    }
-    /* OpenRouter row: source y 672..760 */
-    [data-composition-id="03-the-fix"] .row-hl {
-      position: absolute;
-      left: 0;
-      top: 96px;
-      width: 757px;
-      height: 44px;
-      background: #FFF4EC;
-      mix-blend-mode: multiply;
-      transform-origin: left center;
-    }
-
-    /* Callout under the browser; its arrow points up at the "74" (canvas x ~1722) */
-    [data-composition-id="03-the-fix"] .callout {
-      position: absolute;
-      right: 160px;
-      top: 623px;
-      height: 48px;
-      box-sizing: border-box;
-      padding: 0 22px;
-      border-radius: 999px;
-      background: #FFF4EC;
-      color: #BB4D00;
-      display: flex;
-      align-items: center;
-      font-size: 26px;
-      font-weight: 500;
-      white-space: nowrap;
-      opacity: 0;
-    }
-    [data-composition-id="03-the-fix"] .callout svg {
-      position: absolute;
-      right: 29px;
-      top: -9px;
-      width: 18px;
-      height: 10px;
-    }
-
-    /* Payoff chip under the card */
-    [data-composition-id="03-the-fix"] .payoff {
-      position: absolute;
-      left: 540px;
-      top: 808px;
-      height: 52px;
-      box-sizing: border-box;
-      padding: 0 24px;
-      border-radius: 999px;
-      background: #F5F5F5;
-      color: #0A0A0A;
-      display: flex;
-      align-items: center;
-      font-size: 26px;
-      font-weight: 500;
-      white-space: nowrap;
-      opacity: 0;
+      @media (orientation: portrait) {
+        .safe { left: 60px; right: 120px; top: 200px; bottom: 700px; }
+        .card { width: 900px; padding: 40px; }
+        .row { grid-template-columns: auto 1fr; grid-template-areas: "label label" "key status"; row-gap: 12px; column-gap: 20px; padding: 16px; }
+        .label { font-size: 36px; }
+        .say { font-size: 72px; }
+      }
     }
   </style>
 
-  <div id="root" data-composition-id="03-the-fix" data-width="1920" data-height="1080" data-duration="7.76">
-    <div class="bg clip" data-start="0" data-duration="7.76" data-track-index="0"></div>
-
-    <div class="stage clip" data-start="0" data-duration="7.76" data-track-index="1">
-      <div class="rail">
-        <div class="rail-step">
-          <div class="rail-dot" id="03-the-fix-c1">1</div>
-          <div class="rail-label" id="03-the-fix-l1">Create a key</div>
-        </div>
-        <div class="rail-line" id="03-the-fix-h1"></div>
-        <div class="rail-step">
-          <div class="rail-dot" id="03-the-fix-c2">2</div>
-          <div class="rail-label" id="03-the-fix-l2">Add it to AnyRouter</div>
-        </div>
-        <div class="rail-line" id="03-the-fix-h2"></div>
-        <div class="rail-step">
-          <div class="rail-dot" id="03-the-fix-c3">3</div>
-          <div class="rail-label" id="03-the-fix-l3">Share with the pool</div>
-        </div>
-        <div class="rail-line" id="03-the-fix-h3"></div>
-        <div class="rail-step">
-          <div class="rail-dot" id="03-the-fix-c4">4</div>
-          <div class="rail-label" id="03-the-fix-l4">Use it in your app</div>
-        </div>
-      </div>
-
-      <div class="card" id="03-the-fix-card">
-        <div class="card-head" id="03-the-fix-head">
-          <img src="assets/anyrouter-logo-black.svg" alt="" />
-          <span>AnyRouter</span>
-        </div>
-        <div class="your-key" id="03-the-fix-your-key">Your key</div>
-        <div class="status limit" id="03-the-fix-limit">429</div>
-        <div class="divider" id="03-the-fix-divider"></div>
-        <div class="eyebrow" id="03-the-fix-eyebrow">Shared pool</div>
-        <div class="status ok" id="03-the-fix-ok">200 OK</div>
-        <div class="pool">
-          <div class="mini" id="03-the-fix-k1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span id="03-the-fix-k3-text">sk-or-v1-•••</span>
-            <div class="mini-lit" id="03-the-fix-lit" data-layout-allow-overlap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
+  <div id="root" data-composition-id="03-the-fix" data-width="1920" data-height="1080" data-duration="8.945">
+    <div id="t3-bg" class="bg clip" data-start="0" data-duration="8.945" data-track-index="0"></div>
+    <div id="t3-stage" class="stage clip" data-start="0" data-duration="8.945" data-track-index="1">
+      <div class="safe">
+        <div class="scene">
+          <div class="card" id="t3-card">
+            <div class="head">
+              <svg viewBox="203.66 206.57 801.34 801.34" aria-hidden="true"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#0A0A0A"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
+              <span>AnyRouter</span>
+            </div>
+            <div class="rows">
+              <div class="row" id="t3-r1">
+                <span class="label">Your key</span>
+                <span class="key" id="t3-k1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+                  <span>sk-or-v1-••••••••</span>
+                </span>
+                <span class="status err" id="t3-s1">429</span>
+              </div>
+              <div class="row" id="t3-r2">
+                <span class="label">Shared key</span>
+                <span class="key">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+                  <span>sk-or-v1-••••••••</span>
+                </span>
+                <span class="status ok" id="t3-s2">200 OK</span>
+                <i class="ring" id="t3-ring"></i>
+              </div>
+            </div>
           </div>
-          <div class="mini" id="03-the-fix-k4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k6"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k7"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k9"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k10"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
-          <div class="mini" id="03-the-fix-k12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg><span>sk-or-v1-•••</span></div>
+          <p class="say" id="t3-say">That request uses their quota.</p>
         </div>
       </div>
-
-      <div class="browser" id="03-the-fix-browser">
-        <div class="bar">
-          <div class="dots"><i></i><i></i><i></i></div>
-          <div class="url-wrap"><div class="url">anyrouter.dev/pool</div></div>
-        </div>
-        <div class="viewport">
-          <img src="assets/anyrouter-pool.png" alt="" />
-          <div class="row-hl" id="03-the-fix-row-hl"></div>
-        </div>
-      </div>
-
-      <div class="callout" id="03-the-fix-callout">
-        <svg viewBox="0 0 18 10" aria-hidden="true"><path d="M0 10 L9 0 L18 10 Z" fill="#FFF4EC"/></svg>
-        <span>OpenRouter · 74 keys in the pool</span>
-      </div>
-
-      <div class="payoff" id="03-the-fix-payoff">Their quota, not yours</div>
-
-      <div class="pill" id="03-the-fix-pill">
-        <svg class="glyph" viewBox="0 0 24 24" fill="#BB4D00" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
-        <span>sk-or-v1-••••••••••••</span>
-      </div>
-
-      <div class="req" id="03-the-fix-req"></div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
     (function () {
-      const $ = (id) => document.getElementById("03-the-fix-" + id);
+      const $ = (id) => document.getElementById("t3-" + id);
+      // Word starts from 03-the-fix.words.json (seconds from frame start).
+      const KEEPS = 0.58, LIMIT = 2.75, SENDS = 3.63, MEMBER = 5.55, THAT = 6.41;
       const tl = gsap.timeline({ paused: true });
 
-      // Frame 2 hands the pill over centred at (960, 430). Its slot in the card:
-      // card left 160 + border 1.5 + pad 32 + half the pill width (403.6 / 2);
-      // card top 288 + border 1.5 + slot centre 126.
-      const HANDOFF = { x: 960, y: 430 };
-      const SLOT = { x: 395.3, y: 415.5 };
-      // Request dot centres: parked left of your key, then on the lit pool key (k3)
-      const DOT_IN = { x: 100, y: SLOT.y };
-      const DOT_KEY = { x: 177, y: SLOT.y };
-      const DOT_POOL = { x: 682, y: 563.5 };
-      const CARD_SHADOW = "0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06)";
+      tl.fromTo($("card"), { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.05);
+      tl.fromTo($("r1"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, KEEPS);
 
-      gsap.set([$("pill"), $("req")], { xPercent: -50, yPercent: -50 });
-      gsap.set($("pill"), { x: HANDOFF.x, y: HANDOFF.y });
-      gsap.set($("payoff"), { xPercent: -50 });
+      // "When it hits the limit": your key answers 429 and steps back.
+      tl.fromTo($("s1"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, LIMIT);
+      tl.to($("k1"), { opacity: 0.45, duration: 0.4, ease: "power2.out" }, LIMIT + 0.3);
 
-      // Scene 1: "AnyRouter keeps your key." The card rises in; the key glides into its slot
-      tl.fromTo($("card"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.04);
-      tl.fromTo(
-        $("card"),
-        { scale: 0.94, borderRadius: 36, boxShadow: "0 0px 0px rgba(10,10,10,0), 0 0px 0px rgba(10,10,10,0)" },
-        { scale: 1, borderRadius: 20, boxShadow: CARD_SHADOW, duration: 0.9, ease: "power2.inOut" },
-        0.04
-      );
-      tl.fromTo($("head"), { opacity: 0 }, { opacity: 1, duration: 0.36, ease: "power1.out" }, 0.3);
-      tl.fromTo($("pill"), { x: HANDOFF.x, y: HANDOFF.y }, { x: SLOT.x, y: SLOT.y, duration: 0.8, ease: "power2.inOut" }, 0.66); // "keeps"
-      tl.fromTo($("your-key"), { x: -10, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 1.17); // "key"
+      // "AnyRouter sends the request through a key another member shared"
+      tl.fromTo($("r2"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, SENDS);
+      tl.fromTo($("ring"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, MEMBER);
+      tl.fromTo($("s2"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, MEMBER + 0.15);
+      tl.to($("ring"), { opacity: 0, duration: 0.3, ease: "power2.out" }, THAT - 0.2);
 
-      // Scene 2: "When it hits the limit," a request reaches your key and bounces off a 429
-      tl.fromTo($("req"), { x: DOT_IN.x, y: DOT_IN.y, opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out" }, 1.81); // "When"
-      tl.to($("req"), { x: DOT_KEY.x, duration: 0.52, ease: "power3.out" }, 1.81);
-      tl.fromTo($("limit"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, 2.33); // "limit"
-      tl.to($("pill"), { opacity: 0.4, duration: 0.4, ease: "power2.out" }, 2.33);
-      tl.to($("req"), { x: DOT_KEY.x - 10, duration: 0.25, ease: "power2.out" }, 2.33);
+      tl.fromTo($("say"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, THAT);
+      tl.set({}, {}, 8.945);
 
-      // Scene 3: "the request goes through a key" the shared pool fills in under your key
-      tl.fromTo($("divider"), { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 2.85); // "request"
-      tl.fromTo($("eyebrow"), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 3.16); // "goes"
-      for (let i = 1; i <= 12; i++) {
-        tl.fromTo($("k" + i), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 3.35 + (i - 1) * 0.04); // "through"
-      }
-
-      // "another member": one shared key lights, the request hops to it, 200 OK
-      tl.fromTo($("lit"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 4.4); // "another"
-      tl.set($("k3-text"), { opacity: 0 }, 4.4);
-      tl.to($("req"), { x: DOT_POOL.x, duration: 0.18, ease: "power2.inOut" }, 4.4);
-      tl.to($("req"), { y: DOT_POOL.y, duration: 0.18, ease: "power2.in" }, 4.4);
-      tl.to($("req"), { opacity: 0, duration: 0.15, ease: "power1.out" }, 4.58);
-      tl.fromTo($("ok"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, 4.58); // "member"
-
-      // "shared": the real pool page, OpenRouter row called out
-      tl.fromTo($("browser"), { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.92); // "shared"
-      tl.fromTo($("row-hl"), { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power2.out" }, 5.2);
-      tl.fromTo($("callout"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 5.35);
-
-      // Scene 4: "Their quota, not yours." then the four-step rail draws on, all todo
-      tl.fromTo($("payoff"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 5.77); // "Their"
-      const STEP = 0.12;
-      tl.fromTo([$("c1"), $("c2"), $("c3"), $("c4")], { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out", stagger: STEP }, 6.55); // "not"
-      tl.fromTo([$("l1"), $("l2"), $("l3"), $("l4")], { x: -10, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out", stagger: STEP }, 6.61);
-      tl.fromTo([$("h1"), $("h2"), $("h3")], { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.inOut", stagger: STEP }, 6.7);
-
-      window.__timelines = window.__timelines || {};
       window.__timelines["03-the-fix"] = tl;
     })();
   </script>

@@ -1,0 +1,14 @@
+{
+  "id": "022-20261019-model-evals-58f6f1bc5b",
+  "hash": "58f6f1bc5b",
+  "kind": "use-case",
+  "label": "model-evals",
+  "title": "Run one eval across many models",
+  "seconds": 22.7,
+  "renderedAt": "2026-10-19T10:35:01.212Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-022-20261019-model-evals-58f6f1bc5b.mp4",
+  "cover": "renders/use-case-022-20261019-model-evals-58f6f1bc5b.png",
+  "source": "renders/use-case-022-20261019-model-evals-58f6f1bc5b-source.tar.gz",
+  "createdAt": "2026-10-19T10:35:01.233Z"
+}

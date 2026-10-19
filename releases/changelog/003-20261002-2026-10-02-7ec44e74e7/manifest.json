@@ -7,8 +7,12 @@
   "seconds": 28.5,
   "renderedAt": "2026-10-02T13:55:06.397Z",
   "commit": "9e93833",
-  "artifact": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.mp4",
-  "cover": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.mp4",
+      "cover": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.png"
+    }
+  },
   "source": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7-source.tar.gz",
   "createdAt": "2026-10-02T13:55:06.401Z",
   "published": {

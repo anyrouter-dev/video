@@ -1,0 +1,76 @@
+{
+  "notable": true,
+  "label": "claude-code",
+  "parts": [
+    "claude-code:76136750b1611dfdedcf801dcdd5fc03dcff5737d49270103efdb4abc0df1dc7"
+  ],
+  "useCases": [
+    {
+      "slug": "claude-code",
+      "url": "https://anyrouter.dev/use-cases/claude-code",
+      "kicker": "Claude Code",
+      "title": "Run Claude Code through AnyRouter",
+      "summary": "Run Claude Code through AnyRouter with one command",
+      "problem": "Claude Code talks to Anthropic by default. To use other models, share billing across tools, or keep an audit log, you need a custom base URL without rewriting how the CLI works.",
+      "logos": [
+        "anthropic"
+      ],
+      "command": {
+        "text": "anyr claude",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude",
+          "title": "anyr CLI"
+        },
+        {
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nclaude",
+          "title": "Env wrapper"
+        }
+      ],
+      "steps": [
+        "Install the anyr CLI with the curl | bash one-liner (native binary, no npm).",
+        "Run anyr claude. First run signs you in or pastes an sk-ar- key; later runs reuse ~/.anyrouter/config.yaml.",
+        "Pin a catalog model when you want one (anyr claude --model anyrouter/auto). Env vars remain the manual fallback."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "note": null,
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "one URL",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "m",
+            "kind": "provider",
+            "label": "Your model",
+            "note": "any model",
+            "provider": "anthropic"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "m",
+            "dashed": false
+          }
+        ]
+      }
+    }
+  ]
+}

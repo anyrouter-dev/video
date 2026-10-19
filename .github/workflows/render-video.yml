@@ -2,12 +2,14 @@ name: render-video
 
 # One job. It asks each kind "is there anything unreleased?" using nothing but
 # Node, and stops there on a quiet night — no npm ci, no Chrome, no ffmpeg.
-# When there is something, an agent may pick the story, then it renders,
-# publishes to a GitHub Release, and records the ledger and baselines in ONE
-# commit. Two jobs pushing to main from one checkout is a race; keep it one job.
+# When there is something, an agent may pick the story, then it renders every
+# rendition the kind makes (landscape, portrait), publishes them to a GitHub
+# Release and YouTube, and records the ledger and baselines in ONE commit. Two
+# jobs pushing to main from one checkout is a race; keep it one job.
 #
 # `regen` re-renders releases that are already out, from their frozen facts, and
-# replaces the assets of their GitHub Releases in place.
+# replaces the assets of their GitHub Releases in place. It never uploads to
+# YouTube: dispatch youtube.yml for a rendition it added.
 
 on:
   workflow_dispatch:
@@ -52,8 +54,10 @@ jobs:
   film:
     name: film
     runs-on: ubuntu-latest
-    # A regen of every release of a kind is several renders back to back.
-    timeout-minutes: 45
+    # A regen of every release of a kind is several renders back to back, and a
+    # release renders once per rendition. A portrait frame has the same pixel
+    # count as a landscape one, so it costs about the same: twice the old budget.
+    timeout-minutes: 90
     # Creates the GitHub Release and commits the ledger.
     permissions:
       contents: write

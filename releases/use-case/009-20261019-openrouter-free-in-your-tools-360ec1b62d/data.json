@@ -1,0 +1,77 @@
+{
+  "notable": true,
+  "label": "openrouter-free-in-your-tools",
+  "parts": [
+    "openrouter-free-in-your-tools:aae7dcf99d8b2b3e62bc4d9377cf8cfa9266cc89f20e0d2f3ecb2deefd762996"
+  ],
+  "useCases": [
+    {
+      "slug": "openrouter-free-in-your-tools",
+      "url": "https://anyrouter.dev/use-cases/openrouter-free-in-your-tools",
+      "kicker": "Editor tools",
+      "title": "OpenRouter free models in OpenCode and Cline",
+      "summary": "One OpenAI-compatible URL for Cline, OpenCode and more",
+      "problem": "Each editor tool wants its own provider, key and model list. Free models change often, so the setup you copied last month points at a model that is gone.",
+      "logos": [
+        "openrouter",
+        "opencode"
+      ],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "API Provider: OpenAI Compatible\nBase URL: https://anyrouter.dev/api/v1\nAPI Key:  sk-ar-...\nModel:    google/gemma-4-31b:free",
+          "title": "Cline · OpenAI Compatible"
+        },
+        {
+          "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"anyrouter\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"AnyRouter\",\n      \"options\": {\n        \"baseURL\": \"https://anyrouter.dev/api/v1\",\n        \"apiKey\": \"{env:ANYROUTER_API_KEY}\"\n      },\n      \"models\": {\n        \"google/gemma-4-31b:free\": { \"name\": \"Gemma 4 31B (free)\" }\n      }\n    }\n  },\n  \"model\": \"anyrouter/google/gemma-4-31b:free\"\n}",
+          "title": "opencode.json"
+        }
+      ],
+      "steps": [
+        "Create an AnyRouter key under Dashboard → Keys. It starts with sk-ar-.",
+        "In the tool, add an OpenAI-compatible provider with the base URL and your key, and set the model to a :free id such as google/gemma-4-31b:free.",
+        "Prefer a model that AnyRouter picks for you? Use anyrouter/free instead. If a :free model has no route left, AnyRouter answers through anyrouter/free."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "tool",
+            "kind": "tool",
+            "label": "Cline or OpenCode",
+            "note": "OpenAI API",
+            "provider": null
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "one base URL",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "free",
+            "kind": "provider",
+            "label": "Free model",
+            "note": "a :free id",
+            "provider": "anyrouter"
+          }
+        ],
+        "edges": [
+          {
+            "from": "tool",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "free",
+            "dashed": false
+          }
+        ]
+      }
+    }
+  ]
+}

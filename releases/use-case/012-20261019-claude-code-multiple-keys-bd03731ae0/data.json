@@ -1,0 +1,84 @@
+{
+  "notable": true,
+  "label": "claude-code-multiple-keys",
+  "parts": [
+    "claude-code-multiple-keys:5fe834d3cc9970f1ecf3917e0c46ebbf84ef697a35d125d1b0a412838b3a3c85"
+  ],
+  "useCases": [
+    {
+      "slug": "claude-code-multiple-keys",
+      "url": "https://anyrouter.dev/use-cases/claude-code-multiple-keys",
+      "kicker": "Keys behind Claude Code",
+      "title": "Several provider keys behind Claude Code",
+      "summary": "Add more than one provider key and fail over",
+      "problem": "One revoked, paused or capped key stops Claude Code mid-task. Swapping keys in your shell by hand loses the session.",
+      "logos": [
+        "anthropic"
+      ],
+      "command": {
+        "text": "anyr claude --model anyrouter/coding",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anyrouter/coding",
+          "title": "anyr CLI"
+        }
+      ],
+      "steps": [
+        "Add a key for one provider under Dashboard → BYOK, then add a key for a second provider, such as OpenRouter.",
+        "On each provider card, keep the Fallback strategy. Round Robin and Weighted spread requests across a provider's keys instead.",
+        "Run anyr claude. anyrouter/coding picks from every model your saved keys can reach and moves on if a provider is busy."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "note": null,
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": null,
+            "provider": "anyrouter"
+          },
+          {
+            "id": "k1",
+            "kind": "provider",
+            "label": "Anthropic key",
+            "note": "tried first",
+            "provider": "anthropic"
+          },
+          {
+            "id": "k2",
+            "kind": "fallback",
+            "label": "OpenRouter key",
+            "note": "if the first fails",
+            "provider": "openrouter"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "k1",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "k2",
+            "dashed": true
+          }
+        ]
+      }
+    }
+  ]
+}

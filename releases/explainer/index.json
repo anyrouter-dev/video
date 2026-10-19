@@ -9,13 +9,35 @@
       "seconds": 111.401,
       "renderedAt": "2026-10-18T18:32:16.385Z",
       "commit": "378f7de",
-      "artifact": "renders/explainer-001-20261018-v1-1cbd1f149e.mp4",
-      "cover": "renders/explainer-001-20261018-v1-1cbd1f149e.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-001-20261018-v1-1cbd1f149e.mp4",
+          "cover": "renders/explainer-001-20261018-v1-1cbd1f149e.png"
+        }
+      },
       "source": null,
       "createdAt": "2026-10-18T18:32:16.389Z",
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/explainer-001-20261018-v1-1cbd1f149e"
       }
+    },
+    {
+      "id": "002-20261019-v1-2591da164e",
+      "hash": "2591da164e",
+      "kind": "explainer",
+      "label": "v1",
+      "title": "What is AnyRouter, and how do you get its free models?",
+      "seconds": 108.359,
+      "renderedAt": "2026-10-19T09:13:50.904Z",
+      "commit": "4c77b93",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-002-20261019-v1-2591da164e.mp4",
+          "cover": "renders/explainer-002-20261019-v1-2591da164e.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T09:13:50.930Z"
     }
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "id": "005-20261019-hermes-agent-0db4be80c8",
+  "hash": "0db4be80c8",
+  "kind": "use-case",
+  "label": "hermes-agent",
+  "title": "Run Hermes Agent on AnyRouter",
+  "seconds": 24,
+  "renderedAt": "2026-10-19T10:21:45.845Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-005-20261019-hermes-agent-0db4be80c8.mp4",
+  "cover": "renders/use-case-005-20261019-hermes-agent-0db4be80c8.png",
+  "source": "renders/use-case-005-20261019-hermes-agent-0db4be80c8-source.tar.gz",
+  "createdAt": "2026-10-19T10:21:45.867Z"
+}

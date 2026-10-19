@@ -2,14 +2,14 @@
 workflow: product-launch-video
 flow: automation
 storyboard: no
-message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you get more room past that limit."
+message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you can send more requests than that limit allows."
 destination: youtube
 aspect: 1920x1080
 language: en
 audience: "someone already using OpenRouter's free models, technical or not"
 length: 60s
 angle: tutorial-walkthrough
-voice: kokoro af_heart
+voice: elevenlabs "Eric - Smooth, Trustworthy" (cjVigY5qzO86Huf0OWal)
 ---
 
 ## Intent
@@ -26,10 +26,12 @@ user can unblock the rate limit by using the keys pool."
 ## Customizations
 
 - Shares the explainer's design truth (`frame.md` is a symlink to
-  `../explainer/frame.md`) and its components (browser frame, cursor, key pill,
-  terminal, step rail; `../explainer/tools/shared-components.md`). The step rail
-  carries this film's own labels: `Create a key`, `Add it to AnyRouter`,
-  `Share with the pool`.
+  `../explainer/frame.md`, v2) and its components (step header, browser frame,
+  focus ring, callout, key pill, terminal, Demo badge). The step header carries
+  this film's own steps: `Create a key`, `Add it to AnyRouter`,
+  `Share with the pool`, `Use it in your app`.
+- Ships landscape (1920x1080) and portrait (1080x1920) from the same frames; each
+  frame's portrait layout sits under `@media (orientation: portrait)`.
 - Dashboard screens are rebuilt in HTML from the product's UI source, labels
   exact (`tools/ui-labels.md`). Keys are always redacted.
 - Does not reuse or open the repo's older films (intro, teaser, `lib/film.mjs`).
@@ -71,8 +73,12 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 
 - Do not show anyone's real API key. Keys on screen are `sk-or-v1-••••••••••••`.
 - Never "unlimited". Never a number outside the ledger.
-- Music bed: `assets/bgm/track-100s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 99.1s film.
+- Voice: ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), model
+  `eleven_multilingual_v2`, stability 0.5, similarity_boost 0.8, style 0.15, speaker
+  boost on, the same for every line. Each mp3 is converted to 24 kHz mono wav.
+- Music bed: `assets/bgm/track-108s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 106.6s film.
   A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
-  instead jumps back 16s (4 bars, so the beat holds) twice, each with a 3s crossfade:
-  0–40s, then 21–56s, then 37s to the real outro, 100s in all:
-  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=37:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-100s.mp3`
+  instead jumps back twice on the bar, each with a 3s crossfade: 16s (4 bars), then 24s
+  (6 bars). 0–40s, then 21–56s, then 29s to the real outro, 108s in all, so the bed runs
+  1.4s past the film's end and the film closes inside the real outro:
+  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=29:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-108s.mp3`

@@ -1,5 +1,5 @@
 ---
-version: 1
+version: 2
 name: AnyRouter Clear — Frame (video / frame layer)
 description: >
   Bespoke frame system for the AnyRouter newcomer explainer, built from anyrouter.dev's own
@@ -30,64 +30,77 @@ colors:
   terminal-dim: "#A1A1AA"
 
 radii:
-  card: "20px"
-  ui: "12px"
+  card: "24px"
+  ui: "16px"
+  badge: "12px"
   chip: "999px"
-  key: "10px"
+  key: "12px"
 
+# The frame is a 2x shadcn page: one CSS px on anyrouter.dev = 2 film px.
+# shadcn's text-sm (14px) would be 28px here, which is unreadable on a phone,
+# so the type scale below is phone-first, not 2x.
 typography:
-  display:  { fontFamily: "Geist", px: 112, weight: 600, lineHeight: 1.0, tracking: "-0.035em", color: "ink" }
-  h1:       { fontFamily: "Geist", px: 84, weight: 600, lineHeight: 1.04, tracking: "-0.03em", color: "ink" }
-  h2:       { fontFamily: "Geist", px: 60, weight: 600, lineHeight: 1.1, tracking: "-0.025em", color: "ink" }
-  body-lg:  { fontFamily: "Geist", px: 40, weight: 400, lineHeight: 1.35, color: "ink-2" }
-  label:    { fontFamily: "Geist", px: 30, weight: 500, lineHeight: 1.2, color: "ink" }
-  eyebrow:  { fontFamily: "Geist Mono", px: 24, weight: 500, tracking: "0.08em", upper: true, color: "muted" }
-  step-num: { fontFamily: "Geist Mono", px: 28, weight: 500, color: "primary" }
-  code:     { fontFamily: "Geist Mono", px: 44, weight: 400, lineHeight: 1.5, color: "terminal-ink" }
-  code-sm:  { fontFamily: "Geist Mono", px: 30, weight: 400, lineHeight: 1.5, color: "ink" }
-  stat:     { fontFamily: "Geist", px: 140, weight: 600, lineHeight: 1.0, tracking: "-0.04em", color: "ink" }
+  display:  { fontFamily: "Geist", px: 140, weight: 600, lineHeight: 1.0, tracking: "-0.04em", color: "ink" }
+  h1:       { fontFamily: "Geist", px: 104, weight: 600, lineHeight: 1.02, tracking: "-0.035em", color: "ink" }
+  h2:       { fontFamily: "Geist", px: 76, weight: 600, lineHeight: 1.08, tracking: "-0.03em", color: "ink" }
+  title:    { fontFamily: "Geist", px: 56, weight: 600, lineHeight: 1.1, tracking: "-0.025em", color: "ink" }
+  body:     { fontFamily: "Geist", px: 44, weight: 400, lineHeight: 1.3, color: "muted" }
+  label:    { fontFamily: "Geist", px: 40, weight: 500, lineHeight: 1.2, color: "ink" }
+  small:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.2, color: "muted" }
+  badge:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.0, color: "ink" }
+  code:     { fontFamily: "Geist Mono", px: 48, weight: 400, lineHeight: 1.45, color: "terminal-ink" }
+  code-sm:  { fontFamily: "Geist Mono", px: 40, weight: 400, lineHeight: 1.45, color: "ink" }
+  stat:     { fontFamily: "Geist", px: 200, weight: 600, lineHeight: 1.0, tracking: "-0.05em", color: "ink", numeric: "tabular-nums" }
+  floor:    "36px for any word a viewer must read, 32px for incidental mono metadata (URL pills). Enforced by shared/authoring/type-audit.mjs on the rendered frame, transforms included."
 
 spacing:
-  pad-x: "120px"
-  pad-top: "110px"
-  gap: "28px"
-  caption-band: "bottom 180px kept clear"
+  pad-x: "96px"
+  pad-top: "88px"
+  gap: "32px"
+  caption-band: "bottom 200px kept clear"
 
 components:
   card:
     backgroundColor: "{colors.bg}"
-    border: "1.5px solid {colors.line}"
+    border: "2px solid {colors.line}"
     rounded: "{radii.card}"
-    shadow: "0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06)"
-    description: "The one elevated surface. Holds a UI panel, a provider tile, a step card."
+    shadow: "0 2px 4px rgba(0,0,0,.05)"
+    description: "shadcn Card at 2x: hairline border, shadow-sm, padding 48px. Header = title (title type) + description (body type, muted). No big soft drop shadows."
   browser-frame:
     backgroundColor: "{colors.bg}"
-    border: "1.5px solid {colors.line}"
+    border: "2px solid {colors.line}"
     rounded: "{radii.card}"
-    description: "Wraps a real screenshot. Thin top bar (surface fill) with three line-strong dots and a URL pill in Geist Mono muted. No fake browser chrome beyond that."
-  provider-tile:
-    backgroundColor: "{colors.bg}"
-    border: "1.5px solid {colors.line}"
-    rounded: "{radii.ui}"
-    description: "Square tile with one official provider mark in ink, never recolored to the accent."
-  chip:
-    backgroundColor: "{colors.surface-2}"
-    textColor: "{colors.ink}"
-    rounded: "{radii.chip}"
-    description: "Small label. Free variant: free-tint fill, free text. Accent variant: primary-tint fill, primary text."
-  button-primary:
-    backgroundColor: "{colors.primary}"
+    description: "Wraps a real screenshot. Top bar 56px, surface fill, URL pill in Geist Mono 32px muted. The screenshot inside is cropped to the region the voice names and shown at >= 0.9 of its captured pixels, never the whole page shrunk."
+  button:
+    backgroundColor: "{colors.ink}"
     textColor: "#FFFFFF"
     rounded: "{radii.ui}"
-    description: "Matches the site's 'Get API key' / 'Donate a key' button."
+    description: "shadcn default Button: ink fill, label type in white, height 88px, padding 0 40px. Use the orange variant only when it mirrors a real orange button on anyrouter.dev."
+  button-outline:
+    backgroundColor: "{colors.bg}"
+    border: "2px solid {colors.line}"
+    rounded: "{radii.ui}"
+  badge:
+    backgroundColor: "{colors.surface-2}"
+    textColor: "{colors.ink}"
+    rounded: "{radii.badge}"
+    description: "shadcn Badge: height 56px, padding 0 20px, badge type. Variants: secondary (surface-2), outline (2px line border, bg), free (free-tint / free), accent (primary-tint / primary)."
+  step-header:
+    description: "Replaces the tiny four-dot rail. Top-left: an outline Badge 'Step 2 of 4', then the step name in h2 under it. One step on screen, big."
+  callout:
+    description: "shadcn Alert: card with a 40px icon left, a label-type title and body-type text. Use for one side note at a time; never a floating 26px annotation."
+  focus-ring:
+    description: "shadcn focus ring at 2x: 6px ring in primary at 35% alpha around the control the voice names, plus a 2px primary border. The way the film points at things."
+  demo-badge:
+    description: "Outline Badge reading 'Demo' pinned top-right of every frame that shows a third-party site (openrouter.ai, build.nvidia.com). Third-party screens are shown for demonstration only."
   terminal:
     backgroundColor: "{colors.terminal-bg}"
     textColor: "{colors.terminal-ink}"
     rounded: "{radii.card}"
-    description: "The only dark surface in the film. Prompt glyph `$` in terminal-dim, model ids in a lighter orange #F0915A (7.1:1 on terminal-bg)."
+    description: "The only dark surface. code type (48px). At most 6 lines and 52 characters visible: crop long logs, never shrink them. Prompt `$` in terminal-dim, model ids in #F0915A."
   key-pill:
     backgroundColor: "{colors.surface}"
-    border: "1.5px dashed {colors.line-strong}"
+    border: "2px dashed {colors.line-strong}"
     rounded: "{radii.key}"
     typography: "{typography.code-sm}"
     description: "An API key, always redacted: prefix + bullets, e.g. sk-or-v1-••••••••. Never a real key."
@@ -101,8 +114,36 @@ should feel like the product: clean, exact, unhurried.
 
 ## The Frame
 
-1920×1080, white. Content sits in the top ~83%; the bottom 180px stays clear for
-captions. Margins 120px. One idea per frame, one focal element per moment.
+1920×1080, white. Content sits in the top ~81%; the bottom 200px stays clear for
+captions. Margins 96px. One idea per frame, one focal element per moment.
+
+**Phone first.** Most viewers watch on a phone, where the frame is 390 to 844px
+wide: a 1920px frame shrinks 2.3 to 5 times. So the focal element fills the frame
+(at least 55% of the safe width), text is never below the floor, and a frame
+says one thing in at most 12 on-screen words besides the caption. If a detail
+cannot be read at 640px wide, enlarge it, crop to it, or cut it; the caption
+already carries the words.
+
+## Two renditions: landscape and portrait
+
+Every film ships twice from one source: **landscape** 1920×1080 (YouTube) and
+**portrait** 1080×1920 (Reels, Shorts, TikTok). Same timeline, same voice, same
+captions; only layout changes.
+
+- Author at 1920×1080. Put each frame's portrait layout under
+  `@media (orientation: portrait) { … }` in the same file. Tweens animate
+  transforms and opacity, so one timeline drives both layouts.
+- Never hard-code the stage size outside the root declarations. Sizes that follow
+  the stage use `%`, `vw/vh`, `xPercent/yPercent`, or a value read from the root's
+  box at runtime. `shared/authoring/portrait.mjs` writes the portrait project and
+  fails on any leftover literal 1920/1080 (an SVG `viewBox="0 0 1920 1080"`, a
+  point computed in landscape px).
+- Portrait safe area: content between y 200 and y 1220, x 60 to 960 (the
+  platforms draw buttons on the right and over the bottom quarter). Captions sit in
+  the band 1240–1480. Stack what landscape puts side by side; the focal element
+  takes the full 960px width. The type floor is the same in px, which reads larger
+  on a phone held upright.
+- Check both: `type-audit.mjs` and a phone sheet on the portrait project too.
 
 ## Colors
 
@@ -117,17 +158,23 @@ captions. Margins 120px. One idea per frame, one focal element per moment.
 ## Typography
 
 Geist for everything spoken as words; Geist Mono for anything typed: ids, URLs, keys,
-commands, step numbers. Nothing below 24px. Headlines are sentence case.
+commands. Sentence case everywhere; no uppercase eyebrows (shadcn uses none, and
+caps tracking reads as noise when small). Two weights only: 600 for headings and
+titles, 400/500 for the rest. Numbers use `font-variant-numeric: tabular-nums`.
+Every text element sets `-webkit-font-smoothing: antialiased` and
+`text-rendering: geometricPrecision`. Nothing a viewer must read below 36px.
 
 ## Depth & Surface
 
-Flat white with one soft shadow level on cards. No glow, no blur fields, no bokeh, no
+Flat white, shadcn surfaces: 2px hairline borders and shadow-sm, nothing deeper. No glow, no blur fields, no bokeh, no
 noise, no dither, no halftone, no 3D tilt of real screenshots beyond a gentle push.
 
 ## Approved Entities
 
 AnyRouter mark (`anyrouter-logo-black.svg`), official provider marks (`provider-*.svg`),
-real screenshots of anyrouter.dev and openrouter.ai, Geist faces.
+real screenshots of anyrouter.dev and openrouter.ai, Geist faces. Say and caption
+"OpenRouter", never the domain "openrouter.ai". Every third-party screen carries
+the Demo badge.
 
 ## Numerals & Claims (hard rule)
 
@@ -139,4 +186,6 @@ API keys on screen are always redacted.
 
 - Is there exactly one accent-colored thing per moment?
 - Could a non-technical viewer read every word on screen in the time it holds?
-- Is anything in the bottom 180px?
+- Is anything in the bottom 200px?
+- Does `node ../../shared/authoring/type-audit.mjs` pass?
+- Does the phone sheet (frames scaled to 640px wide) read without zooming?

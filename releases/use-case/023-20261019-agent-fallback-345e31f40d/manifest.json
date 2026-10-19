@@ -1,0 +1,14 @@
+{
+  "id": "023-20261019-agent-fallback-345e31f40d",
+  "hash": "345e31f40d",
+  "kind": "use-case",
+  "label": "agent-fallback",
+  "title": "Keep an agent up when a provider goes down",
+  "seconds": 24.5,
+  "renderedAt": "2026-10-19T10:35:47.460Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d.mp4",
+  "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d.png",
+  "source": "renders/use-case-023-20261019-agent-fallback-345e31f40d-source.tar.gz",
+  "createdAt": "2026-10-19T10:35:47.481Z"
+}

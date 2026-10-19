@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "unify-api",
+  "parts": [
+    "unify-api:2f47cf6c2914e835068af8f6d9c28b9fc4ab6c6676c2ac662b78d7f0e2bc0c94"
+  ],
+  "useCases": [
+    {
+      "slug": "unify-api",
+      "url": "https://anyrouter.dev/use-cases/unify-api",
+      "kicker": "One endpoint",
+      "title": "One API in front of every provider dialect",
+      "summary": "Chat Completions, Messages, and Responses on one key",
+      "problem": "Apps accumulate one client per vendor. Failover and logging then live in your code instead of the gateway.",
+      "logos": [],
+      "command": {
+        "text": "curl https://anyrouter.dev/api/v1/chat/completions",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ],
+      "steps": [
+        "Use https://anyrouter.dev/api/v1 for OpenAI-compatible calls.",
+        "Use https://anyrouter.dev/api for Anthropic /messages (Claude Code, Agent SDK).",
+        "Start with anyrouter/auto so the first request is not a single upstream."
+      ]
+    }
+  ]
+}

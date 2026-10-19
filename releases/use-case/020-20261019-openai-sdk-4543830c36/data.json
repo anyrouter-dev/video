@@ -1,0 +1,35 @@
+{
+  "notable": true,
+  "label": "openai-sdk",
+  "parts": [
+    "openai-sdk:98e5afc49ce8cca45edfb1904ee18297bdb048b5dcc8a26fcafddde7db88e03f"
+  ],
+  "useCases": [
+    {
+      "slug": "openai-sdk",
+      "url": "https://anyrouter.dev/use-cases/openai-sdk",
+      "kicker": "OpenAI SDK",
+      "title": "Keep the OpenAI SDK, change two fields",
+      "summary": "Override baseURL and apiKey, keep the SDK",
+      "problem": "The official openai package looks vendor-locked. It is not — it only needs a compatible base URL.",
+      "logos": [
+        "openai"
+      ],
+      "command": {
+        "text": "baseURL: \"https://anyrouter.dev/api/v1\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "import OpenAI from \"openai\"\n\nconst client = new OpenAI({\n  baseURL: \"https://anyrouter.dev/api/v1\",\n  apiKey: process.env.ANYROUTER_API_KEY,\n})\n\nconst res = await client.chat.completions.create({\n  model: \"anyrouter/free\",\n  messages: [{ role: \"user\", content: \"Say hello in one sentence.\" }],\n})\nconsole.log(res.choices[0]?.message.content)",
+          "title": "OpenAI SDK"
+        }
+      ],
+      "steps": [
+        "Keep openai installed.",
+        "Set baseURL to https://anyrouter.dev/api/v1 and apiKey to your sk-ar key.",
+        "Use model \"anyrouter/free\" or \"anyrouter/auto\" for the first call."
+      ]
+    }
+  ]
+}

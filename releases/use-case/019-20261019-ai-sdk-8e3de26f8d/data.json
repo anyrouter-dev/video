@@ -1,0 +1,35 @@
+{
+  "notable": true,
+  "label": "ai-sdk",
+  "parts": [
+    "ai-sdk:a3517619265257cd8f778cfd4f5f9fe11d6e89eebe4a4f6e52157f5b103749ee"
+  ],
+  "useCases": [
+    {
+      "slug": "ai-sdk",
+      "url": "https://anyrouter.dev/use-cases/ai-sdk",
+      "kicker": "Vercel AI SDK",
+      "title": "One AI SDK provider for the whole catalog",
+      "summary": "One provider for generateText and streamText",
+      "problem": "Vercel AI SDK providers are usually one-vendor. Switching models should not mean a new client or a new key.",
+      "logos": [
+        "vercel"
+      ],
+      "command": {
+        "text": "model: anyrouter(\"anyrouter/free\")",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst { text } = await generateText({\n  model: anyrouter(\"anyrouter/free\"),\n  prompt: \"What is AnyRouter?\",\n})\nconsole.log(text)",
+          "title": "generateText"
+        }
+      ],
+      "steps": [
+        "npm install @anyr/ai-sdk-provider ai",
+        "createAnyRouter() reads ANYROUTER_API_KEY when you omit the key.",
+        "Call anyrouter(\"anyrouter/free\") or anyrouter(\"anyrouter/auto\")."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "013-20261019-virtual-presets-f65d80ccd3",
+  "hash": "f65d80ccd3",
+  "kind": "use-case",
+  "label": "virtual-presets",
+  "title": "Start on anyrouter/free or anyrouter/auto",
+  "seconds": 21.3,
+  "renderedAt": "2026-10-19T10:28:13.472Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.mp4",
+  "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.png",
+  "source": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-source.tar.gz",
+  "createdAt": "2026-10-19T10:28:13.506Z"
+}

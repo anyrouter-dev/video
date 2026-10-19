@@ -1,0 +1,14 @@
+{
+  "id": "015-20261019-go-plan-9062e5bb79",
+  "hash": "9062e5bb79",
+  "kind": "use-case",
+  "label": "go-plan",
+  "title": "Go: paid models from $2 a month",
+  "seconds": 22,
+  "renderedAt": "2026-10-19T10:29:51.408Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-015-20261019-go-plan-9062e5bb79.mp4",
+  "cover": "renders/use-case-015-20261019-go-plan-9062e5bb79.png",
+  "source": "renders/use-case-015-20261019-go-plan-9062e5bb79-source.tar.gz",
+  "createdAt": "2026-10-19T10:29:51.428Z"
+}

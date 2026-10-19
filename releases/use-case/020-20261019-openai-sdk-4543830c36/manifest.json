@@ -1,0 +1,14 @@
+{
+  "id": "020-20261019-openai-sdk-4543830c36",
+  "hash": "4543830c36",
+  "kind": "use-case",
+  "label": "openai-sdk",
+  "title": "Keep the OpenAI SDK, change two fields",
+  "seconds": 22,
+  "renderedAt": "2026-10-19T10:33:36.246Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-020-20261019-openai-sdk-4543830c36.mp4",
+  "cover": "renders/use-case-020-20261019-openai-sdk-4543830c36.png",
+  "source": "renders/use-case-020-20261019-openai-sdk-4543830c36-source.tar.gz",
+  "createdAt": "2026-10-19T10:33:36.268Z"
+}

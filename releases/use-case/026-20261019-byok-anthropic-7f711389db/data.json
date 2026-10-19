@@ -1,0 +1,41 @@
+{
+  "notable": true,
+  "label": "byok-anthropic",
+  "parts": [
+    "byok-anthropic:a8cf9bd79b8fabca2b6bbc1204a3410061e00ceda20f4c51c1e56f79caff674a"
+  ],
+  "useCases": [
+    {
+      "slug": "byok-anthropic",
+      "url": "https://anyrouter.dev/use-cases/byok-anthropic",
+      "kicker": "Anthropic key",
+      "title": "Bring your own Anthropic key",
+      "summary": "Use your own Anthropic plan through one AnyRouter endpoint",
+      "problem": "You already pay Anthropic, and your plan has its own limits and billing. Add that key to AnyRouter and keep one endpoint and one API for every tool, with other models ready if Claude is busy or you hit a limit.",
+      "logos": [
+        "anthropic"
+      ],
+      "command": {
+        "text": "anyr claude --model anthropic/claude-sonnet-4-6",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anthropic/claude-sonnet-4-6\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anthropic/claude-sonnet-4-6"
+        },
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anthropic/claude-sonnet-4-6",
+          "title": "Claude Code · anyr claude"
+        }
+      ],
+      "steps": [
+        "Open Dashboard → BYOK → Add key.",
+        "Pick Anthropic and paste your sk-ant-… key.",
+        "Press Test key. It checks the key and the models you picked.",
+        "Save the key.",
+        "Call anthropic/claude-… models with your AnyRouter key, from curl or from Claude Code with anyr claude."
+      ]
+    }
+  ]
+}

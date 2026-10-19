@@ -1,0 +1,35 @@
+{
+  "notable": true,
+  "label": "claude-agent-sdk",
+  "parts": [
+    "claude-agent-sdk:64b81ccd622cc718541a587708610021d423a969d789b8ac791d5313521bfbcb"
+  ],
+  "useCases": [
+    {
+      "slug": "claude-agent-sdk",
+      "url": "https://anyrouter.dev/use-cases/claude-agent-sdk",
+      "kicker": "Agent SDK",
+      "title": "Run the Claude Agent SDK on any model",
+      "summary": "Point query() at AnyRouter, no SDK fork",
+      "problem": "The Agent SDK is built for Anthropic's /messages API. Teams still want GPT, GLM, Llama, or a failover preset without rewriting the loop.",
+      "logos": [
+        "anthropic"
+      ],
+      "command": {
+        "text": "model: \"anyrouter/auto\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "import { query } from \"@anthropic-ai/claude-agent-sdk\"\n\nfor await (const message of query({\n  prompt: \"List the files here and summarize the project.\",\n  options: {\n    model: \"anyrouter/auto\",\n    env: {\n      ...process.env,\n      ANTHROPIC_BASE_URL: \"https://anyrouter.dev/api\",\n      ANTHROPIC_API_KEY: process.env.ANYROUTER_API_KEY ?? \"\",\n    },\n  },\n})) {\n  if (message.type === \"result\") console.log(message.result)\n}",
+          "title": "query()"
+        }
+      ],
+      "steps": [
+        "Install @anthropic-ai/claude-agent-sdk.",
+        "Set ANTHROPIC_BASE_URL to https://anyrouter.dev/api and ANTHROPIC_API_KEY to your sk-ar key.",
+        "Pass model: \"anyrouter/auto\" (or any catalog id) in query() options."
+      ]
+    }
+  ]
+}

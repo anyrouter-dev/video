@@ -7,8 +7,12 @@
   "seconds": 20,
   "renderedAt": "2026-10-09T14:24:07.317Z",
   "commit": "a2cf4d2",
-  "artifact": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.mp4",
-  "cover": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.mp4",
+      "cover": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.png"
+    }
+  },
   "source": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b-source.tar.gz",
   "createdAt": "2026-10-09T14:24:07.321Z",
   "published": {

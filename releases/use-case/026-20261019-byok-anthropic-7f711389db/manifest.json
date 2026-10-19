@@ -1,0 +1,14 @@
+{
+  "id": "026-20261019-byok-anthropic-7f711389db",
+  "hash": "7f711389db",
+  "kind": "use-case",
+  "label": "byok-anthropic",
+  "title": "Bring your own Anthropic key",
+  "seconds": 24.3,
+  "renderedAt": "2026-10-19T10:38:01.732Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-026-20261019-byok-anthropic-7f711389db.mp4",
+  "cover": "renders/use-case-026-20261019-byok-anthropic-7f711389db.png",
+  "source": "renders/use-case-026-20261019-byok-anthropic-7f711389db-source.tar.gz",
+  "createdAt": "2026-10-19T10:38:01.752Z"
+}

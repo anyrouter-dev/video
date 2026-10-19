@@ -1,0 +1,39 @@
+{
+  "notable": true,
+  "label": "grokbot",
+  "parts": [
+    "grokbot:3fce5ba0d2449ef0a646278c7d64e4539f4bc11f8f2a8e856be1e07a29ff2fd0"
+  ],
+  "useCases": [
+    {
+      "slug": "grokbot",
+      "url": "https://anyrouter.dev/use-cases/grokbot",
+      "kicker": "Grok Bot",
+      "title": "Grok Bot + Herdr + Anyr CLI coding loop",
+      "summary": "A live coding loop: Grok Bot, Herdr, anyr CLI",
+      "problem": "Cursor cloud on-demand can be exhausted or blocked. You still need a live terminal you can attach, a fleet manager to assign goals, and a way to run Claude Code against catalog models.",
+      "logos": [
+        "xai"
+      ],
+      "command": {
+        "text": "anyr claude --model \"poolside/laguna-s-2.1[1m]\" --yolo",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude",
+          "title": "anyr CLI"
+        },
+        {
+          "code": "anyr claude --model \"poolside/laguna-s-2.1[1m]\" --yolo",
+          "title": "Grok Bot loop"
+        }
+      ],
+      "steps": [
+        "Install the anyr CLI if needed, then open a Herdr space on the repo checkout at the branch tip.",
+        "Launch anyr claude in that space with --yolo so it injects the base URL, key, and model.",
+        "Paste the goal into Grok Bot and let it drive the agent; squash-merge the PR and deploy from local."
+      ]
+    }
+  ]
+}

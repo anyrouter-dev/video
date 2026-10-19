@@ -11,24 +11,25 @@ music: none
 ## Video direction
 
 - **Palette system** (from `frame.md`). White `bg` on every frame. `ink` for headlines and provider marks. `primary` burnt orange is the one accent per moment: the AnyRouter node, the active step number, the button being pressed. `free` green only means free / works. `danger` only on the provider that goes down in Frame 3. The terminal (Frames 8–9) is the one dark surface.
-- **Type.** Geist display / h1 / h2 for spoken words, Geist Mono for anything typed (ids, URLs, keys, commands, step numbers). Sentence case. Nothing below 24px.
+- **Type.** Geist display / h1 / h2 for spoken words, Geist Mono for anything typed (ids, URLs, keys, commands). Sentence case. Phone first: nothing a viewer reads below 36px (badges and URL pills 34px), one focal element filling the frame. Components and sizes: `tools/shared-components.md`.
 - **Motion grammar.** Long-tail `power3` settles, never bouncy. Every piece reveals on its spoken cue; nothing is on screen before the voice reaches it. Internal seams are velocity-matched cuts. Holds stay still; subtle jitter at most.
 - **Continuity spine.** The AnyRouter mark is the one recurring object. It is born at the centre of Frame 2, becomes the strip in Frame 3, the pool's drain in Frame 4, and the closing lockup in Frame 10.
-- **Step chrome.** Frames 5–7 share one step rail at the top: three numbered dots (1 · 2 · 3) with labels "Create a key", "Donate it", "Use free models". The active dot is `primary`, done dots are `free` with a check.
+- **Step chrome.** Frames 5–7 open with the kit's step header, top-left: an outline badge "Step N of 3" over an h2 naming the step ("Create an OpenRouter key", "Donate it to the pool", "Use the free models"). Third-party screens carry the Demo badge, top-right.
 - **Rhythm.** Busy: 1, 3, 6. Held / breather: 7 (payoff) and 10 (close). Everything else reveals at a steady walk.
 - **Redaction.** Every API key on screen is a `key-pill` with bullets. No real key ever appears.
 - **Negative list.** No gradients, glows, bokeh, noise, dither, halftone, neon, emoji, stock 3D blobs. No front-load-then-freeze slides. No screensaver float. No lazy breathing, no back-half pans. No `repeat` / `yoyo`, no randomness.
-- **Caption band.** Bottom 180px stays clear in every frame.
+- **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080×1920): content sits in y 200–1220 and x 60–960; captions own 1240–1480.
+- **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`; `shared/authoring/portrait.mjs` writes the 1080×1920 project. The scene notes below describe the landscape layout and predate design v2.
 
 ## Frame 1 — The mess
 - src: compositions/frames/01-mess.html
 
 - scene: Provider logos pile up, each dragging its own key and its own bill, until the frame is cluttered
-- duration: 9.232s
+- duration: 8.248s
 - transition_in: cut
 - type: problem
 - beat: frustration
-- voiceover: "There are dozens of AI companies. Each one has its own website, its own key, and its own bill. Using more than one gets messy, fast."
+- voiceover: "There are dozens of AI companies, and each one has its own key and its own bill. Use three, and you have three keys and three bills to manage."
 - asset_candidates: assets/provider-openai.svg — OpenAI mark; assets/provider-anthropic.svg — Anthropic mark; assets/provider-google.svg — Google mark; assets/provider-deepseek.svg — DeepSeek mark; assets/provider-mistral.svg — Mistral mark; assets/provider-xai.svg — xAI mark; assets/provider-qwen.svg — Qwen mark; assets/provider-meta.svg — Meta mark; assets/provider-moonshotai.svg — Moonshot mark; assets/provider-nvidia.svg — NVIDIA mark; assets/provider-openrouter.svg — OpenRouter mark; assets/provider-groq.svg — Groq mark
 - blueprint: overwhelm-surround (Adapt)
 - focal: the grid of provider tiles
@@ -45,11 +46,11 @@ Scene 3 (5.6–8.0s): "messy, fast" — the attachments jostle and overlap as th
 - src: compositions/frames/02-one-door.html
 
 - scene: All the clutter is swept into a single AnyRouter node; one key, one account, 260+ models
-- duration: 7.184s
+- duration: 4.858s
 - transition_in: cut
 - type: product_intro
 - beat: relief
-- voiceover: "AnyRouter puts all of them behind one door. One account. One key. More than two hundred and sixty models."
+- voiceover: "AnyRouter gives you one account and one key for more than two hundred and sixty models."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter wordmark and monogram; assets/provider-openai.svg — OpenAI mark; assets/provider-anthropic.svg — Anthropic mark; assets/provider-google.svg — Google mark; assets/provider-deepseek.svg — DeepSeek mark; assets/provider-mistral.svg — Mistral mark; assets/provider-xai.svg — xAI mark; assets/provider-qwen.svg — Qwen mark; assets/provider-meta.svg — Meta mark
 - blueprint: constellation-hub (Adapt)
 - focal: AnyRouter mark
@@ -67,11 +68,11 @@ Scene 3 (4.6–7.0s): "260+ models" — the number counts up 0 → 260 with a `+
 - src: compositions/frames/03-power-strip.html
 
 - scene: An isometric power strip: apps plug in on the left, the strip is AnyRouter, providers sit on its outlets; a request travels, one provider fails, the request reroutes
-- duration: 13.264s
+- duration: 12.521s
 - transition_in: crossfade
 - type: key_feature
 - beat: understanding
-- voiceover: "Think of it like a power strip for AI. Your app, or your coding tool, plugs into AnyRouter. AnyRouter sends each request to a provider that is ready. And if one goes down, it quietly tries the next."
+- voiceover: "It works like a power strip for AI. Your app, or your coding tool, plugs into AnyRouter. AnyRouter sends each request to a provider that is ready. If one goes down, it tries the next one."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter monogram for the strip's badge; assets/provider-anthropic.svg — Anthropic mark; assets/provider-openai.svg — OpenAI mark; assets/provider-google.svg — Google mark; assets/provider-deepseek.svg — DeepSeek mark
 - blueprint: compose (anatomy isometric figure)
 - focal: the isometric strip
@@ -89,11 +90,11 @@ Scene 4 (8.0–12.0s): "if one goes down" — the first outlet's LED turns `dang
 - src: compositions/frames/04-shared-pool.html
 
 - scene: A plain definition of an API key, then the real Shared pool page, then donated keys filling one pool of tokens
-- duration: 13.776s
+- duration: 11.638s
 - transition_in: crossfade
 - type: key_feature
 - beat: discovery
-- voiceover: "There is also a shared pool. An API key is like a password that lets software use an AI service. Members share keys they are not using, and together those keys become a big pool of free AI usage."
+- voiceover: "There is also a shared pool. An API key is like a password that lets software use an AI service. Members share keys they are not using, and those keys make up a pool of free AI usage."
 - asset_candidates: assets/anyrouter-pool.png — real anyrouter.dev/pool page: OpenRouter Free 74 keys 1.2B tokens, NVIDIA NIM Free 33 keys, Donate buttons; assets/provider-openrouter.svg — OpenRouter mark; assets/provider-nvidia.svg — NVIDIA mark; assets/provider-google.svg — Google mark
 - blueprint: grid-card-assemble (Adapt)
 - focal: assets/anyrouter-pool.png
@@ -110,11 +111,11 @@ Scene 4 (9.0–13.0s): "a big pool of tokens" — the key-pills stream down into
 - src: compositions/frames/05-step-1-key.html
 
 - scene: Real openrouter.ai, then the Keys page: cursor clicks Create Key, a redacted sk-or- key appears and is copied
-- duration: 13.029s
+- duration: 13.125s
 - transition_in: push-slide LEFT
 - type: tutorial_step
 - beat: doing
-- voiceover: "Some free models work the moment you sign up. To unlock the whole pool, share one free key. Step one. Sign in at open router dot A. I., and open Keys. Click Create Key, and copy it."
+- voiceover: "Some free models work as soon as you sign up. To unlock the whole pool, share one free key. Step one. Sign in at OpenRouter and open Keys. Click Create Key, and copy it."
 - asset_candidates: assets/openrouter-home.png — real openrouter.ai home, light, purple Get API Key button; assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the Keys panel with the Create Key button
@@ -133,11 +134,11 @@ handoff_out: key-pill `sk-or-v1-••••` at right-centre, scale 1, opacity 
 - src: compositions/frames/06-step-2-donate.html
 
 - scene: Real anyrouter.dev/pool, Donate on OpenRouter, the real donate dialog rebuilt from product source, paste the redacted key, Donate, success
-- duration: 15.696s
+- duration: 17.536s
 - transition_in: push-slide LEFT
 - type: tutorial_step
 - beat: doing
-- voiceover: "Step two. Sign in at any router dot dev, and open the Shared pool. Click Donate next to OpenRouter, paste your key, and press Donate. Your key is stored encrypted, and you can stop sharing any time. A key from NVIDIA works the same way."
+- voiceover: "Step two. Sign in at any router dot dev and open the Shared pool. Click Donate next to OpenRouter, paste your key, and press Donate. AnyRouter encrypts your key, and you can stop sharing any time. A key from NVIDIA works the same way."
 - asset_candidates: assets/anyrouter-pool.png — real anyrouter.dev/pool table with Donate buttons; assets/provider-openrouter.svg — OpenRouter mark; assets/provider-nvidia.svg — NVIDIA mark; assets/anyrouter-logo-black.svg — AnyRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the donate dialog
@@ -156,7 +157,7 @@ Scene 4 (8.4–12.0s): "A key from NVIDIA works the same way" — the dialog sli
 - src: compositions/frames/07-step-3-free.html
 
 - scene: The payoff — three plain benefit cards: free models with no daily cap, Go plan free, $4 credit a month
-- duration: 10.469s
+- duration: 12.103s
 - transition_in: crossfade
 - type: benefits
 - beat: payoff
@@ -176,11 +177,11 @@ Scene 2 (2.0–8.0s): three equal cards reveal left to right, each on its spoken
 - src: compositions/frames/08-code-terminal.html
 
 - scene: A clean terminal types the install, then anyr login (browser sign-in confirms), then anyr claude --model
-- duration: 10.192s
+- duration: 10.988s
 - transition_in: zoom-through
 - type: key_feature
 - beat: doing
-- voiceover: "If you write code, here is how to use it with Claude. Install the AnyRouter command line tool, and run: any R login. Then run: any R claude, with a model."
+- voiceover: "If you write code, here is how to use AnyRouter with Claude Code. Install the AnyRouter command line tool, and run any R login. Then run any R claude with a model."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter mark
 - blueprint: prompt-type-submit-generate (Adapt)
 - focal: the terminal
@@ -199,11 +200,11 @@ handoff_out: terminal at centre, ~70% width, still; the line `anyr claude --mode
 - src: compositions/frames/09-pick-model.html
 
 - scene: The same terminal line; the model id rotates free → auto → coding, each with a one-line meaning beside it, then Claude Code starts
-- duration: 10.64s
+- duration: 9.409s
 - transition_in: cut
 - type: key_feature
 - beat: choice
-- voiceover: "Change the model whenever you like. Free, for free models only. Auto, to let AnyRouter pick the best one. Or coding, for the best coding model from the keys you added."
+- voiceover: "Change the model whenever you like. Free uses free models only. Auto lets AnyRouter pick the best one. Coding picks the best coding model from the keys you added."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter mark
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the rotating model id
@@ -222,11 +223,11 @@ Scene 4 (6.8–10.0s): "coding" — retype to `anyrouter/coding`; row 3 lights: 
 - src: compositions/frames/10-close.html
 
 - scene: AnyRouter lockup; three short lines; anyrouter.dev
-- duration: 7.919s
+- duration: 7.933s
 - transition_in: crossfade
 - type: cta
 - beat: resolve
-- voiceover: "One key. Every model. And a shared pool that keeps it free. Start at any router dot dev."
+- voiceover: "One key for every model, and a shared pool for free models. Start at any router dot dev."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter wordmark and monogram; assets/anyrouter-home.png — real anyrouter.dev home page
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: AnyRouter lockup
