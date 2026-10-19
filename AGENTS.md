@@ -149,8 +149,9 @@ logo comes from `lib/marks.mjs`; a provider with no vendored mark gets a monogra
 never a borrowed logo.
 
 `use-case` is the exception. It brings its own `write` (`videos/use-case/project.mjs`)
-in the Clear look of `videos/explainer/frame.md`: white, Geist, shadcn surfaces,
-one accent per moment. A film is one sub-composition in three beats, its
+in the Monolith look of `videos/explainer/frame.md` (v3): white, near-black ink,
+display-size Geist, flat hairline cards, the terminal as the ink surface, and one
+accent, on the model id in the command. A film is one sub-composition in three beats, its
 headline carried through all three; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
 Where the page's command names an `anyrouter/*` preset, the id rolls through a
