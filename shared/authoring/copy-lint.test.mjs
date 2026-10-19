@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const NARRATED = ['explainer', 'openrouter-unblock'];
+const NARRATED = ['explainer', 'openrouter-unblock', 'cli-agents', 'cli-everyday'];
 
 const RULES = [
   [/[—–]/, 'a long or short dash'],

@@ -1,6 +1,6 @@
 # Authoring tools for narrated films
 
-Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`).
+Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`, `cli-agents`, `cli-everyday`).
 Run each from the film's own folder: they read and write that folder's
 `audio_meta.json` and `.hyperframes/frame-packets/`.
 

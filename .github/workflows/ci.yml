@@ -62,6 +62,10 @@ jobs:
             args: ''
           - kind: openrouter-unblock
             args: ''
+          - kind: cli-agents
+            args: ''
+          - kind: cli-everyday
+            args: ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
