@@ -72,8 +72,8 @@ export const TYPE = {
     portrait: { sizes: [148, 140, 132, 124, 120], width: SAFE.portrait, lines: 5 } },
 };
 
-// The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, badge.
-const HERO = { landscape: 160 + 40 + 64, portrait: 144 + 40 + 64 };
+// The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, kicker.
+const HERO = { landscape: 160 + 40 + 80, portrait: 144 + 40 + 80 };
 
 /**
  * The lines the headline takes at `px`, or null when it cannot be set there: a
@@ -375,6 +375,8 @@ export const CSS = `
   .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px}
   .film .tile{width:160px;height:160px;display:grid;place-items:center}
   .film .tile .mk{width:92px;height:92px}
+  /* frame.md's badge a quarter larger: at 36px the kicker is a smudge on a phone */
+  .film .kick{height:80px;padding:0 32px;font-size:45px}
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
   .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;text-wrap:balance;transform-origin:50% 0}
 

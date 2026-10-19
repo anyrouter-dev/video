@@ -292,3 +292,11 @@ test('the written project turns into the portrait rendition with nothing left at
   }
   fs.rmSync(tmp, { recursive: true, force: true });
 });
+
+test('the kicker is a quarter larger than frame.md\'s badge, so it reads on a phone', () => {
+  // at 36px the kicker on a portrait film shown on a phone is a few px tall
+  const film = filmOf(doc(), 'openai-sdk');
+  const px = rule => Number(film.css.match(new RegExp(`\\.film \\.kick\\{[^}]*${rule}:(\\d+)px`))?.[1]);
+  assert.ok(px('font-size') >= 36 * 1.25, `kicker at ${px('font-size')}px`);
+  assert.ok(px('height') >= 64 * 1.25, `kicker pill ${px('height')}px tall`);
+});
