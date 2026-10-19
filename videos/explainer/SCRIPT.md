@@ -1,76 +1,66 @@
-# SCRIPT — AnyRouter explainer
+# SCRIPT — AnyRouter explainer, v2
 
-**Voice:** Eric, Smooth & Trustworthy (ElevenLabs `cjVigY5qzO86Huf0OWal`, `eleven_multilingual_v2`, stability 0.5, similarity boost 0.8, style 0.15, speaker boost on; the same settings on every line)
-**Voice direction:** Calm, clear, friendly. A person showing a friend something useful. No hype, unhurried, short pauses between sentences.
+**Voice:** Eric (ElevenLabs `cjVigY5qzO86Huf0OWal`, `eleven_multilingual_v2`, stability 0.5, similarity boost 0.8, style 0.15, speaker boost on; the same settings on every line). Voiced by `shared/authoring/eleven-voice.mjs`, which reads these lines as written and speaks product names the way its `SAY` table says.
+**Voice direction:** Quick, warm, sure. A friend showing you something that saves time. One idea per line, no hype.
 
 ---
 
-## Line 1 — The mess (Frame 1)
+## Line 1 — Every company, its own bill (Frame 1)
 
-**Time:** 0 – 8s
-**Delivery:** Matter of fact.
+**Delivery:** Matter of fact, a little tired of it.
 
-    There are dozens of AI companies, and each one has its own key and its own bill. Use three, and you have three keys and three bills to manage.
+    Every AI company has its own account, its own key and its own bill.
 
-## Line 2 — One door (Frame 2)
+## Line 2 — One API (Frame 2)
 
-**Time:** 8 – 15s
-**Delivery:** The answer. Warm, confident.
+**Delivery:** The answer. Brighter.
 
-    AnyRouter gives you one account and one key for more than two hundred and sixty models.
+    AnyRouter puts more than 270 models behind one API.
 
-## Line 3 — How it works (Frame 3)
+## Line 3 — Two lines change (Frame 3)
 
-**Time:** 15 – 27s
-**Delivery:** Explaining, steady.
+**Delivery:** Easy, reassuring.
 
-    It works like a power strip for AI. Your app, or your coding tool, plugs into AnyRouter. AnyRouter sends each request to a provider that is ready. If one goes down, it tries the next one.
+    Your code barely changes. Swap the base URL and the key, and keep the rest.
 
-## Line 4 — The shared pool (Frame 4)
+## Line 4 — Call a model by name (Frame 4)
 
-**Time:** 27 – 40s
-**Delivery:** Curious, inviting.
+**Delivery:** Light, the four names evenly spaced.
 
-    There is also a shared pool. An API key is like a password that lets software use an AI service. Members share keys they are not using, and those keys make up a pool of free AI usage.
+    Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word.
 
-## Line 5 — Step one (Frame 5)
+## Line 5 — Your own keys (Frame 5)
 
-**Time:** 40 – 49s
-**Delivery:** Instructional, clear, slower on the button name.
+**Delivery:** A question to the viewer, then plain.
 
-    Some free models work as soon as you sign up. To unlock the whole pool, share one free key. Step one. Sign in at OpenRouter and open Keys. Click Create Key, and copy it.
+    Already pay for Claude or OpenAI? Add your own key and use them here too, at no markup.
 
-## Line 6 — Step two (Frame 6)
+## Line 6 — Let it pick (Frame 6)
 
-**Time:** 49 – 61s
-**Delivery:** Instructional, same pace.
+**Delivery:** An easy aside.
 
-    Step two. Sign in at any router dot dev and open the Shared pool. Click Donate next to OpenRouter, paste your key, and press Donate. AnyRouter encrypts your key, and you can stop sharing any time. A key from NVIDIA works the same way.
+    Or let AnyRouter pick one for you.
 
-## Line 7 — Step three (Frame 7)
+## Line 7 — It keeps answering (Frame 7)
 
-**Time:** 61 – 69s
-**Delivery:** A small payoff. Pleased, not loud.
+**Delivery:** Calm, the payoff on the last clause.
 
-    Step three. Use the free models. While your key is shared, you get the pool's free models with no daily cap, the Go plan at no cost, and four dollars of credit every month.
+    If a provider goes down, AnyRouter retries on another, and your app still gets its answer.
 
-## Line 8 — Coding (Frame 8)
+## Line 8 — Free models (Frame 8)
 
-**Time:** 69 – 79s
-**Delivery:** Practical, unhurried, spell the command out.
+**Delivery:** Pleased, not loud.
 
-    If you write code, here is how to use AnyRouter with Claude Code. Install the AnyRouter command line tool, and run any R login. Then run any R claude with a model.
+    Free models work on every plan, with no daily cap.
 
-## Line 9 — Pick a model (Frame 9)
+## Line 9 — Claude Code (Frame 9)
 
-**Time:** 79 – 89s
-**Delivery:** Light, a list of three with equal weight.
+**Delivery:** Practical, a nod to developers.
 
-    Change the model whenever you like. Free uses free models only. Auto lets AnyRouter pick the best one. Coding picks the best coding model from the keys you added.
+    Using Claude Code? Run anyr claude, with any model you like.
 
 ## Line 10 — Close (Frame 10)
 
-**Time:** 89 – 96s
 **Delivery:** Settled, warm sign-off.
 
-    One key for every model, and a shared pool for free models. Start at any router dot dev.
+    One API for every model. Start free at anyrouter.dev.
