@@ -132,7 +132,7 @@ const CSS = `
   .split{flex-direction:row;align-items:center;gap:0}
   .split .col-n{width:600px;flex:none;display:flex;flex-direction:column;gap:34px}
   .split .big-n{position:relative;font-weight:800;font-size:330px;letter-spacing:-.07em;line-height:.8;padding:0 20px 20px 0}
-  .split .vr{width:2px;align-self:stretch;background:var(--rule);transform-origin:50% 0;margin:0 72px 0 24px}
+  .split .vr{width:2px;align-self:stretch;background:var(--rule);margin:0 72px 0 24px}
   .split .col-s{flex:1;display:flex;flex-direction:column;gap:48px}
   .split .hl-say{font-size:calc(var(--k) * 1px)}
   .split .hl-say.x{--k:112}.split .hl-say.l{--k:94}.split .hl-say.m{--k:78}.split .hl-say.s{--k:62}
@@ -187,7 +187,47 @@ const CSS = `
   .gl-rows.x .gl-row{min-height:150px}
   .gl-rows.x .label{font-size:22px}
   .gl-row .say{flex:1;font-weight:700;letter-spacing:-.03em;line-height:1.14;text-wrap:pretty}
-  .gl-rows.x .say{font-size:54px}.gl-rows.l .say{font-size:44px}.gl-rows.m .say{font-size:38px}.gl-rows.s .say{font-size:32px}`;
+  .gl-rows.x .say{font-size:54px}.gl-rows.l .say{font-size:44px}.gl-rows.m .say{font-size:38px}.gl-rows.s .say{font-size:32px}
+
+  /* portrait: every row above becomes a stack in the 900px column */
+  @media (orientation: portrait){
+    .rv-mid{flex-direction:column;align-items:flex-start;gap:44px}
+    .rv-side{flex:none;flex-direction:row;align-items:center;gap:48px;padding-bottom:0}
+    .rv-tail{max-width:none}
+
+    .hl-foot{flex-wrap:wrap;gap:30px 40px}
+    .hl-marks{flex-wrap:wrap;gap:20px}
+    .hl-marks .tile{width:112px;height:112px}
+    .hl-marks .tile .mark{width:66px;height:66px}
+    .res{max-width:100%}
+
+    .lead .hl-say,.lead .hl-say.m,.lead .hl-say.s{max-width:none}
+    .lead .hl-say.x{font-size:104px}.lead .hl-say.l{font-size:90px}.lead .hl-say.m{font-size:78px}.lead .hl-say.s{font-size:64px}
+
+    .split{flex-direction:column;align-items:stretch;justify-content:center}
+    .split .col-n{width:auto;flex-direction:row;align-items:flex-end;gap:40px}
+    .split .big-n{font-size:240px}
+    .split .col-n .kicker{padding-bottom:30px}
+    .split .vr{width:auto;height:2px;margin:44px 0}
+    .split .col-s{gap:40px}
+    .split .hl-say.x{--k:96}.split .hl-say.l{--k:84}.split .hl-say.m{--k:72}.split .hl-say.s{--k:60}
+
+    .right{flex-direction:column;align-items:stretch;gap:44px}
+    .right .col-m{width:auto;height:auto;padding:0;display:grid;grid-template-columns:auto 1fr;align-items:end;gap:14px 48px}
+    .right .col-m .kicker,.right .col-m .hl-src{grid-column:1 / -1}
+    .right .col-m .num{font-size:110px}
+    .right .col-m .res{justify-self:end}
+    .right .card{flex:none;height:auto}
+    .right .card > .face{padding:56px 60px}
+    .right .hl-say.x{font-size:92px}.right .hl-say.l{font-size:80px}.right .hl-say.m{font-size:68px}.right .hl-say.s{font-size:56px}
+    .right .card .hl-marks{margin-top:44px}
+
+    .gl-row{display:grid;grid-template-columns:44px 64px 1fr;column-gap:26px;row-gap:8px}
+    .gl-row .num,.gl-row .tick{grid-row:1 / 3}
+    .gl-row .label{width:auto}
+    .gl-row .say{grid-column:3}
+    .gl-rows.x .say{font-size:48px}.gl-rows.l .say{font-size:40px}.gl-rows.m .say{font-size:36px}.gl-rows.s .say{font-size:32px}
+  }`;
 
 // Numerals set at line-height .8: the empty em-box above the digits reaches into
 // the line over them, the ink does not. The layout audit measures the em-box.
@@ -273,7 +313,8 @@ function highlightScene(rel, h, i, n, at) {
     inner: `
     tl.fromTo(Q(".rv-shade"), { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "steps(8)" }, 0.05);
     tl.fromTo(Q(".rv-ink"), { scale: 1.12, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, 0.3);
-    tl.fromTo(Q(".vr"), { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "expo.out" }, 0.2);
+    // Drawn by a clip, so the same tween draws it down in landscape and across in portrait.
+    tl.fromTo(Q(".vr"), { clipPath: "inset(0% 100% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "expo.out" }, 0.2);
     slide(".col-n .kicker", 0.3);
     rise(".hl-say", ${HL_TEXT_AT}, ${WORD_STAGGER});
     ${asset}`,
@@ -349,8 +390,6 @@ export default {
   id: 'release',
   title: 'Release',
   scheduled: true,
-  // lib/film.mjs has no portrait layout yet: its backdrop and frame chrome are drawn at 1920x1080.
-  renditions: ['landscape'],
 
   async collect({ flags }) {
     let xml;
