@@ -252,7 +252,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     if (has(".ctx")) tl.fromTo(Q(".ctx"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
     let t = TYPE_AT;
     $$(".typed").forEach((ln, k) => {
-      if (k > 0) t += LINE_PAUSE;
+      // a later line, prompt and all, shows only once it starts
+      if (k > 0) { t += LINE_PAUSE; tl.set(ln, { opacity: 0 }, 0); tl.set(ln, { opacity: 1 }, t); }
       // the rolled-in ids are not typed: only the characters of the line and its first id
       ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
     });
