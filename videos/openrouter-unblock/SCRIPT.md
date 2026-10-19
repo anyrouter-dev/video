@@ -19,24 +19,24 @@ Claims C9, C10.
 
 ## Line 3 — What it does (Frame 3)
 
-Claims C3, C4, C18: shared keys have their own limits, so the line says "can", never "keeps going".
+Claims C3, C4, C13, C18: the limit belongs to the account, and shared keys have their own limits, so the line says "can", never "keeps going".
 
-    When your key hits its limit, AnyRouter can send your requests through keys other members share.
+    When your account hits its limit, AnyRouter can send your requests through keys other members share.
 
 ## Line 4 — Your app (Frame 4)
 
-Claims C16, C17: the app uses an AnyRouter key, and `openrouter/free` is the same id on both.
+Claims C16, C17: the app uses its own AnyRouter API key, never the OpenRouter key, and `openrouter/free` is the same id on both.
 
-    In your app, switch the address and the key to AnyRouter's. Keep the model, openrouter/free.
+    In your app, use AnyRouter's address and an AnyRouter API key. Keep the model, openrouter/free.
 
 ## Line 5 — What sharing means (Frame 5)
 
-Claims C10, C14.
+Claims C10, C14, C15: members' requests run on your account and use its quota, and the terms are yours to check.
 
-    Sharing lets other members use your OpenRouter quota too, and you can stop any time.
+    Sharing means members' requests run on your OpenRouter account and use its quota. Check that OpenRouter's terms allow it. You can stop any time.
 
 ## Line 6 — Close (Frame 6)
 
-Claim C18: "more room", never "unlimited" or "no daily wall".
+Claim C18: the extra room depends on what shared keys have left, so the line says when, never "unlimited" or "no daily wall".
 
-    Free models, with more room than 50 a day. Start at anyrouter.dev.
+    Free models, past 50 a day when shared keys have room. Start at anyrouter.dev.

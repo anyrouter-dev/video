@@ -123,9 +123,9 @@
     }
   </style>
 
-  <div id="root" data-composition-id="03-reroute" data-width="1920" data-height="1080" data-duration="6">
-    <div id="f03-bg" class="k-bg clip" data-start="0" data-duration="6" data-track-index="0"></div>
-    <div id="f03-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
+  <div id="root" data-composition-id="03-reroute" data-width="1920" data-height="1080" data-duration="5.5">
+    <div id="f03-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
+    <div id="f03-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
       <div id="f03-cam" class="k-cam">
         <svg id="f03-wires" class="f03-wires" data-layout-allow-overlap><path id="f03-w-app" /><path id="f03-w-mine" /><path id="f03-w-pool" /></svg>
         <div class="f03-flow">
@@ -219,10 +219,10 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f03-" + s);
       const root = $("cam").closest('[data-composition-id="03-reroute"]');
-      const DURATION = 6;
-      // Word starts from audio_meta.json frame 3: "key" 0.418, "limit," 1.196, "AnyRouter" 1.753, "send" 2.566,
-      // "keys" 3.773, "members" 4.342, "share." 4.656.
-      const GO = 0.1, LIMIT = 1.1, AR = 1.7, SEND = 2.5, KEYS = 3.7, BACK = 4.1;
+      const DURATION = 5.5;
+      // Word starts from audio_meta.json frame 3: "account" 0.325, "limit," 1.068, "AnyRouter" 1.672, "send" 2.508,
+      // "keys" 3.553, "members" 4.133, "share." 4.447.
+      const GO = 0.05, LIMIT = 1.0, AR = 1.6, SEND = 2.4, KEYS = 3.5, BACK = 3.85;
 
       document.fonts.ready.then(() => {
         const cam = $("cam");

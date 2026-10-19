@@ -221,10 +221,10 @@
     {
       "frame": 3,
       "path": "assets/voice/03.wav",
-      "duration_s": 6,
-      "raw_s": 5.294,
-      "text": "When your key hits its limit, AnyRouter can send your requests through keys other members share.",
-      "say": "When your key hits its limit, AnyRouter can send your requests through keys other members share.",
+      "duration_s": 5.5,
+      "raw_s": 5.062,
+      "text": "When your account hits its limit, AnyRouter can send your requests through keys other members share.",
+      "say": "When your account hits its limit, AnyRouter can send your requests through keys other members share.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -238,108 +238,108 @@
           "id": "w0",
           "text": "When",
           "start": 0,
-          "end": 0.197
+          "end": 0.186
         },
         {
           "id": "w1",
           "text": "your",
-          "start": 0.232,
-          "end": 0.348
+          "start": 0.209,
+          "end": 0.302
         },
         {
           "id": "w2",
-          "text": "key",
-          "start": 0.418,
-          "end": 0.639
+          "text": "account",
+          "start": 0.325,
+          "end": 0.592
         },
         {
           "id": "w3",
           "text": "hits",
-          "start": 0.72,
-          "end": 0.94
+          "start": 0.639,
+          "end": 0.824
         },
         {
           "id": "w4",
           "text": "its",
-          "start": 0.987,
-          "end": 1.126
+          "start": 0.871,
+          "end": 0.998
         },
         {
           "id": "w5",
           "text": "limit,",
-          "start": 1.196,
-          "end": 1.579
+          "start": 1.068,
+          "end": 1.463
         },
         {
           "id": "w6",
           "text": "AnyRouter",
-          "start": 1.753,
-          "end": 2.299
+          "start": 1.672,
+          "end": 2.264
         },
         {
           "id": "w7",
           "text": "can",
-          "start": 2.357,
-          "end": 2.485
+          "start": 2.322,
+          "end": 2.438
         },
         {
           "id": "w8",
           "text": "send",
-          "start": 2.566,
-          "end": 2.763
+          "start": 2.508,
+          "end": 2.694
         },
         {
           "id": "w9",
           "text": "your",
-          "start": 2.81,
-          "end": 2.902
+          "start": 2.728,
+          "end": 2.844
         },
         {
           "id": "w10",
           "text": "requests",
-          "start": 2.949,
-          "end": 3.425
+          "start": 2.879,
+          "end": 3.262
         },
         {
           "id": "w11",
           "text": "through",
-          "start": 3.471,
-          "end": 3.715
+          "start": 3.286,
+          "end": 3.506
         },
         {
           "id": "w12",
           "text": "keys",
-          "start": 3.773,
-          "end": 4.04
+          "start": 3.553,
+          "end": 3.843
         },
         {
           "id": "w13",
           "text": "other",
-          "start": 4.11,
-          "end": 4.296
+          "start": 3.901,
+          "end": 4.075
         },
         {
           "id": "w14",
           "text": "members",
-          "start": 4.342,
-          "end": 4.621
+          "start": 4.133,
+          "end": 4.412
         },
         {
           "id": "w15",
           "text": "share.",
-          "start": 4.656,
-          "end": 5.294
+          "start": 4.447,
+          "end": 5.062
         }
       ],
-      "padded_s": 0.706
+      "padded_s": 0.438
     },
     {
       "frame": 4,
       "path": "assets/voice/04.wav",
-      "duration_s": 7,
-      "raw_s": 6.594,
-      "text": "In your app, switch the address and the key to AnyRouter's. Keep the model, openrouter/free.",
-      "say": "In your app, switch the address and the key to AnyRouter's. Keep the model, open router slash free.",
+      "duration_s": 7.5,
+      "raw_s": 6.873,
+      "text": "In your app, use AnyRouter's address and an AnyRouter API key. Keep the model, openrouter/free.",
+      "say": "In your app, use AnyRouter's address and an AnyRouter API key. Keep the model, open router slash free.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -359,96 +359,96 @@
           "id": "w1",
           "text": "your",
           "start": 0.186,
-          "end": 0.325
+          "end": 0.302
         },
         {
           "id": "w2",
           "text": "app,",
-          "start": 0.395,
-          "end": 0.731
+          "start": 0.337,
+          "end": 0.522
         },
         {
           "id": "w3",
-          "text": "switch",
-          "start": 0.882,
-          "end": 1.196
+          "text": "use",
+          "start": 0.58,
+          "end": 0.801
         },
         {
           "id": "w4",
-          "text": "the",
-          "start": 1.242,
-          "end": 1.324
+          "text": "AnyRouter's",
+          "start": 0.859,
+          "end": 1.463
         },
         {
           "id": "w5",
           "text": "address",
-          "start": 1.382,
-          "end": 1.858
+          "start": 1.498,
+          "end": 1.962
         },
         {
           "id": "w6",
           "text": "and",
-          "start": 2.101,
-          "end": 2.392
+          "start": 2.171,
+          "end": 2.45
         },
         {
           "id": "w7",
-          "text": "the",
-          "start": 2.438,
-          "end": 2.508
+          "text": "an",
+          "start": 2.496,
+          "end": 2.554
         },
         {
           "id": "w8",
-          "text": "key",
-          "start": 2.554,
-          "end": 2.705
+          "text": "AnyRouter",
+          "start": 2.624,
+          "end": 3.146
         },
         {
           "id": "w9",
-          "text": "to",
-          "start": 2.74,
-          "end": 2.798
+          "text": "API",
+          "start": 3.204,
+          "end": 3.646
         },
         {
           "id": "w10",
-          "text": "AnyRouter's.",
-          "start": 2.868,
-          "end": 3.634
+          "text": "key.",
+          "start": 3.727,
+          "end": 4.04
         },
         {
           "id": "w11",
           "text": "Keep",
-          "start": 3.913,
-          "end": 4.122
+          "start": 4.365,
+          "end": 4.563
         },
         {
           "id": "w12",
           "text": "the",
-          "start": 4.168,
-          "end": 4.238
+          "start": 4.598,
+          "end": 4.667
         },
         {
           "id": "w13",
           "text": "model,",
-          "start": 4.284,
-          "end": 4.76
+          "start": 4.714,
+          "end": 5.085
         },
         {
           "id": "w14",
           "text": "openrouter/free.",
-          "start": 4.969,
-          "end": 6.594
+          "start": 5.155,
+          "end": 6.873
         }
       ],
-      "padded_s": 0.406
+      "padded_s": 0.627
     },
     {
       "frame": 5,
       "path": "assets/voice/05.wav",
-      "duration_s": 5.5,
-      "raw_s": 4.876,
-      "text": "Sharing lets other members use your OpenRouter quota too, and you can stop any time.",
-      "say": "Sharing lets other members use your OpenRouter quota too, and you can stop any time.",
+      "duration_s": 9,
+      "raw_s": 8.359,
+      "text": "Sharing means members' requests run on your OpenRouter account and use its quota. Check that OpenRouter's terms allow it. You can stop any time.",
+      "say": "Sharing means members' requests run on your OpenRouter account and use its quota. Check that OpenRouter's terms allow it. You can stop any time.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -462,102 +462,156 @@
           "id": "w0",
           "text": "Sharing",
           "start": 0,
-          "end": 0.383
+          "end": 0.36
         },
         {
           "id": "w1",
-          "text": "lets",
-          "start": 0.43,
+          "text": "means",
+          "start": 0.406,
           "end": 0.604
         },
         {
           "id": "w2",
-          "text": "other",
-          "start": 0.65,
-          "end": 0.824
+          "text": "members'",
+          "start": 0.673,
+          "end": 0.964
         },
         {
           "id": "w3",
-          "text": "members",
-          "start": 0.871,
-          "end": 1.149
-        },
-        {
-          "id": "w4",
-          "text": "use",
-          "start": 1.219,
+          "text": "requests",
+          "start": 0.998,
           "end": 1.37
         },
         {
+          "id": "w4",
+          "text": "run",
+          "start": 1.428,
+          "end": 1.567
+        },
+        {
           "id": "w5",
-          "text": "your",
-          "start": 1.393,
-          "end": 1.509
+          "text": "on",
+          "start": 1.614,
+          "end": 1.672
         },
         {
           "id": "w6",
-          "text": "OpenRouter",
-          "start": 1.579,
-          "end": 2.159
+          "text": "your",
+          "start": 1.718,
+          "end": 1.834
         },
         {
           "id": "w7",
-          "text": "quota",
-          "start": 2.241,
-          "end": 2.566
+          "text": "OpenRouter",
+          "start": 1.892,
+          "end": 2.403
         },
         {
           "id": "w8",
-          "text": "too,",
-          "start": 2.635,
-          "end": 3.042
+          "text": "account",
+          "start": 2.461,
+          "end": 2.821
         },
         {
           "id": "w9",
           "text": "and",
-          "start": 3.216,
-          "end": 3.367
+          "start": 2.995,
+          "end": 3.239
         },
         {
           "id": "w10",
-          "text": "you",
-          "start": 3.413,
-          "end": 3.483
+          "text": "use",
+          "start": 3.309,
+          "end": 3.471
         },
         {
           "id": "w11",
-          "text": "can",
-          "start": 3.518,
-          "end": 3.634
+          "text": "its",
+          "start": 3.506,
+          "end": 3.622
         },
         {
           "id": "w12",
-          "text": "stop",
+          "text": "quota.",
           "start": 3.68,
-          "end": 3.959
+          "end": 4.145
         },
         {
           "id": "w13",
-          "text": "any",
-          "start": 4.017,
-          "end": 4.168
+          "text": "Check",
+          "start": 4.656,
+          "end": 4.876
         },
         {
           "id": "w14",
+          "text": "that",
+          "start": 4.923,
+          "end": 5.039
+        },
+        {
+          "id": "w15",
+          "text": "OpenRouter's",
+          "start": 5.097,
+          "end": 5.735
+        },
+        {
+          "id": "w16",
+          "text": "terms",
+          "start": 5.793,
+          "end": 6.2
+        },
+        {
+          "id": "w17",
+          "text": "allow",
+          "start": 6.235,
+          "end": 6.49
+        },
+        {
+          "id": "w18",
+          "text": "it.",
+          "start": 6.56,
+          "end": 6.769
+        },
+        {
+          "id": "w19",
+          "text": "You",
+          "start": 6.978,
+          "end": 7.094
+        },
+        {
+          "id": "w20",
+          "text": "can",
+          "start": 7.14,
+          "end": 7.233
+        },
+        {
+          "id": "w21",
+          "text": "stop",
+          "start": 7.268,
+          "end": 7.488
+        },
+        {
+          "id": "w22",
+          "text": "any",
+          "start": 7.546,
+          "end": 7.697
+        },
+        {
+          "id": "w23",
           "text": "time.",
-          "start": 4.238,
-          "end": 4.876
+          "start": 7.767,
+          "end": 8.359
         }
       ],
-      "padded_s": 0.624
+      "padded_s": 0.641
     },
     {
       "frame": 6,
       "path": "assets/voice/06.wav",
-      "duration_s": 6.726,
-      "raw_s": 4.226,
-      "text": "Free models, with more room than 50 a day. Start at anyrouter.dev.",
-      "say": "Free models, with more room than fifty a day. Start at any router dot dev.",
+      "duration_s": 7.655,
+      "raw_s": 5.155,
+      "text": "Free models, past 50 a day when shared keys have room. Start at anyrouter.dev.",
+      "say": "Free models, past fifty a day when shared keys have room. Start at any router dot dev.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -577,67 +631,79 @@
           "id": "w1",
           "text": "models,",
           "start": 0.313,
-          "end": 0.697
+          "end": 0.743
         },
         {
           "id": "w2",
-          "text": "with",
-          "start": 0.72,
-          "end": 0.859
+          "text": "past",
+          "start": 0.778,
+          "end": 1.01
         },
         {
           "id": "w3",
-          "text": "more",
-          "start": 0.906,
-          "end": 1.045
+          "text": "50",
+          "start": 1.045,
+          "end": 1.312
         },
         {
           "id": "w4",
-          "text": "room",
-          "start": 1.08,
-          "end": 1.219
+          "text": "a",
+          "start": 1.358,
+          "end": 1.382
         },
         {
           "id": "w5",
-          "text": "than",
-          "start": 1.254,
-          "end": 1.37
+          "text": "day",
+          "start": 1.44,
+          "end": 1.637
         },
         {
           "id": "w6",
-          "text": "50",
-          "start": 1.44,
-          "end": 1.741
+          "text": "when",
+          "start": 1.707,
+          "end": 1.858
         },
         {
           "id": "w7",
-          "text": "a",
-          "start": 1.8,
-          "end": 1.823
+          "text": "shared",
+          "start": 1.904,
+          "end": 2.194
         },
         {
           "id": "w8",
-          "text": "day.",
-          "start": 1.869,
-          "end": 2.183
+          "text": "keys",
+          "start": 2.241,
+          "end": 2.473
         },
         {
           "id": "w9",
-          "text": "Start",
-          "start": 2.357,
-          "end": 2.624
+          "text": "have",
+          "start": 2.519,
+          "end": 2.67
         },
         {
           "id": "w10",
-          "text": "at",
-          "start": 2.659,
-          "end": 2.728
+          "text": "room.",
+          "start": 2.728,
+          "end": 3.053
         },
         {
           "id": "w11",
+          "text": "Start",
+          "start": 3.297,
+          "end": 3.564
+        },
+        {
+          "id": "w12",
+          "text": "at",
+          "start": 3.599,
+          "end": 3.669
+        },
+        {
+          "id": "w13",
           "text": "anyrouter.dev.",
-          "start": 2.786,
-          "end": 4.226
+          "start": 3.738,
+          "end": 5.155
         }
       ],
       "padded_s": 2.5
@@ -703,7 +769,7 @@
     {
       "frame": 3,
       "file": "assets/sfx/error.mp3",
-      "offset_s": 1.096,
+      "offset_s": 0.968,
       "duration_s": 1.62,
       "volume": 0.18,
       "source": "bundled"
@@ -711,7 +777,7 @@
     {
       "frame": 3,
       "file": "assets/sfx/whoosh-short.mp3",
-      "offset_s": 2.516,
+      "offset_s": 2.458,
       "duration_s": 0.575,
       "volume": 0.2,
       "source": "bundled"
@@ -719,7 +785,7 @@
     {
       "frame": 3,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 4.742,
+      "offset_s": 4.533,
       "duration_s": 2.5,
       "volume": 0.18,
       "source": "bundled"
@@ -735,7 +801,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 1.382,
+      "offset_s": 1.498,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -743,7 +809,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 2.554,
+      "offset_s": 3.727,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -751,7 +817,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 4.969,
+      "offset_s": 5.155,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
@@ -759,7 +825,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 0.871,
+      "offset_s": 0.673,
       "duration_s": 0.366,
       "volume": 0.2,
       "source": "bundled"
@@ -767,7 +833,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 3.6,
+      "offset_s": 7.188,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -783,7 +849,7 @@
     {
       "frame": 6,
       "file": "assets/sfx/sparkle.mp3",
-      "offset_s": 2.357,
+      "offset_s": 3.297,
       "duration_s": 1.802,
       "volume": 0.2,
       "source": "bundled"

@@ -1,5 +1,5 @@
 {
-  "total_duration_s": 35.285,
+  "total_duration_s": 39.714,
   "width": 1920,
   "height": 1080,
   "groups": [
@@ -217,230 +217,230 @@
       "id": "caption-group-4",
       "frame": 3,
       "start": 10.059,
-      "end": 11.638,
-      "text": "When your key hits its limit,",
+      "end": 11.522,
+      "text": "When your account hits its limit,",
       "words": [
         {
           "id": "caption-word-4-0",
           "text": "When",
           "start": 10.059,
-          "end": 10.256
+          "end": 10.245
         },
         {
           "id": "caption-word-4-1",
           "text": "your",
-          "start": 10.291,
-          "end": 10.407
+          "start": 10.268,
+          "end": 10.361
         },
         {
           "id": "caption-word-4-2",
-          "text": "key",
-          "start": 10.477,
-          "end": 10.698
+          "text": "account",
+          "start": 10.384,
+          "end": 10.651
         },
         {
           "id": "caption-word-4-3",
           "text": "hits",
-          "start": 10.779,
-          "end": 10.999
+          "start": 10.698,
+          "end": 10.883
         },
         {
           "id": "caption-word-4-4",
           "text": "its",
-          "start": 11.046,
-          "end": 11.185
+          "start": 10.93,
+          "end": 11.057
         },
         {
           "id": "caption-word-4-5",
           "text": "limit,",
-          "start": 11.255,
-          "end": 11.638
+          "start": 11.127,
+          "end": 11.522
         }
       ]
     },
     {
       "id": "caption-group-5",
       "frame": 3,
-      "start": 11.812,
-      "end": 13.484,
+      "start": 11.731,
+      "end": 13.321,
       "text": "AnyRouter can send your requests",
       "words": [
         {
           "id": "caption-word-5-0",
           "text": "AnyRouter",
-          "start": 11.812,
-          "end": 12.358
+          "start": 11.731,
+          "end": 12.323
         },
         {
           "id": "caption-word-5-1",
           "text": "can",
-          "start": 12.416,
-          "end": 12.544
+          "start": 12.381,
+          "end": 12.497
         },
         {
           "id": "caption-word-5-2",
           "text": "send",
-          "start": 12.625,
-          "end": 12.822
+          "start": 12.567,
+          "end": 12.753
         },
         {
           "id": "caption-word-5-3",
           "text": "your",
-          "start": 12.869,
-          "end": 12.961
+          "start": 12.787,
+          "end": 12.903
         },
         {
           "id": "caption-word-5-4",
           "text": "requests",
-          "start": 13.008,
-          "end": 13.484
+          "start": 12.938,
+          "end": 13.321
         }
       ]
     },
     {
       "id": "caption-group-6",
       "frame": 3,
-      "start": 13.53,
-      "end": 15.353,
+      "start": 13.345,
+      "end": 15.121,
       "text": "through keys other members share.",
       "words": [
         {
           "id": "caption-word-6-0",
           "text": "through",
-          "start": 13.53,
-          "end": 13.774
+          "start": 13.345,
+          "end": 13.565
         },
         {
           "id": "caption-word-6-1",
           "text": "keys",
-          "start": 13.832,
-          "end": 14.099
+          "start": 13.612,
+          "end": 13.902
         },
         {
           "id": "caption-word-6-2",
           "text": "other",
-          "start": 14.169,
-          "end": 14.355
+          "start": 13.96,
+          "end": 14.134
         },
         {
           "id": "caption-word-6-3",
           "text": "members",
-          "start": 14.401,
-          "end": 14.68
+          "start": 14.192,
+          "end": 14.471
         },
         {
           "id": "caption-word-6-4",
           "text": "share.",
-          "start": 14.715,
-          "end": 15.353
+          "start": 14.506,
+          "end": 15.121
         }
       ]
     },
     {
       "id": "caption-group-7",
       "frame": 4,
-      "start": 16.059,
-      "end": 19.693,
-      "text": "In your app, switch the address and the key to AnyRouter's.",
+      "start": 15.559,
+      "end": 19.599,
+      "text": "In your app, use AnyRouter's address and an AnyRouter API key.",
       "words": [
         {
           "id": "caption-word-7-0",
           "text": "In",
-          "start": 16.059,
-          "end": 16.198
+          "start": 15.559,
+          "end": 15.698
         },
         {
           "id": "caption-word-7-1",
           "text": "your",
-          "start": 16.245,
-          "end": 16.384
+          "start": 15.745,
+          "end": 15.861
         },
         {
           "id": "caption-word-7-2",
           "text": "app,",
-          "start": 16.454,
-          "end": 16.79
+          "start": 15.896,
+          "end": 16.081
         },
         {
           "id": "caption-word-7-3",
-          "text": "switch",
-          "start": 16.941,
-          "end": 17.255
+          "text": "use",
+          "start": 16.139,
+          "end": 16.36
         },
         {
           "id": "caption-word-7-4",
-          "text": "the",
-          "start": 17.301,
-          "end": 17.383
+          "text": "AnyRouter's",
+          "start": 16.418,
+          "end": 17.022
         },
         {
           "id": "caption-word-7-5",
           "text": "address",
-          "start": 17.441,
-          "end": 17.917
+          "start": 17.057,
+          "end": 17.521
         },
         {
           "id": "caption-word-7-6",
           "text": "and",
-          "start": 18.16,
-          "end": 18.451
+          "start": 17.73,
+          "end": 18.009
         },
         {
           "id": "caption-word-7-7",
-          "text": "the",
-          "start": 18.497,
-          "end": 18.567
+          "text": "an",
+          "start": 18.055,
+          "end": 18.113
         },
         {
           "id": "caption-word-7-8",
-          "text": "key",
-          "start": 18.613,
-          "end": 18.764
+          "text": "AnyRouter",
+          "start": 18.183,
+          "end": 18.705
         },
         {
           "id": "caption-word-7-9",
-          "text": "to",
-          "start": 18.799,
-          "end": 18.857
+          "text": "API",
+          "start": 18.763,
+          "end": 19.205
         },
         {
           "id": "caption-word-7-10",
-          "text": "AnyRouter's.",
-          "start": 18.927,
-          "end": 19.693
+          "text": "key.",
+          "start": 19.286,
+          "end": 19.599
         }
       ]
     },
     {
       "id": "caption-group-8",
       "frame": 4,
-      "start": 19.972,
-      "end": 22.653,
+      "start": 19.924,
+      "end": 22.432,
       "text": "Keep the model, openrouter/free.",
       "words": [
         {
           "id": "caption-word-8-0",
           "text": "Keep",
-          "start": 19.972,
-          "end": 20.181
+          "start": 19.924,
+          "end": 20.122
         },
         {
           "id": "caption-word-8-1",
           "text": "the",
-          "start": 20.227,
-          "end": 20.297
+          "start": 20.157,
+          "end": 20.226
         },
         {
           "id": "caption-word-8-2",
           "text": "model,",
-          "start": 20.343,
-          "end": 20.819
+          "start": 20.273,
+          "end": 20.644
         },
         {
           "id": "caption-word-8-3",
           "text": "openrouter/free.",
-          "start": 21.028,
-          "end": 22.653
+          "start": 20.714,
+          "end": 22.432
         }
       ]
     },
@@ -448,197 +448,281 @@
       "id": "caption-group-9",
       "frame": 5,
       "start": 23.059,
-      "end": 26.101,
-      "text": "Sharing lets other members use your OpenRouter quota too,",
+      "end": 24.626,
+      "text": "Sharing means members' requests run",
       "words": [
         {
           "id": "caption-word-9-0",
           "text": "Sharing",
           "start": 23.059,
-          "end": 23.442
+          "end": 23.419
         },
         {
           "id": "caption-word-9-1",
-          "text": "lets",
-          "start": 23.489,
+          "text": "means",
+          "start": 23.465,
           "end": 23.663
         },
         {
           "id": "caption-word-9-2",
-          "text": "other",
-          "start": 23.709,
-          "end": 23.883
+          "text": "members'",
+          "start": 23.732,
+          "end": 24.023
         },
         {
           "id": "caption-word-9-3",
-          "text": "members",
-          "start": 23.93,
-          "end": 24.208
-        },
-        {
-          "id": "caption-word-9-4",
-          "text": "use",
-          "start": 24.278,
+          "text": "requests",
+          "start": 24.057,
           "end": 24.429
         },
         {
-          "id": "caption-word-9-5",
-          "text": "your",
-          "start": 24.452,
-          "end": 24.568
-        },
-        {
-          "id": "caption-word-9-6",
-          "text": "OpenRouter",
-          "start": 24.638,
-          "end": 25.218
-        },
-        {
-          "id": "caption-word-9-7",
-          "text": "quota",
-          "start": 25.3,
-          "end": 25.625
-        },
-        {
-          "id": "caption-word-9-8",
-          "text": "too,",
-          "start": 25.694,
-          "end": 26.101
+          "id": "caption-word-9-4",
+          "text": "run",
+          "start": 24.487,
+          "end": 24.626
         }
       ]
     },
     {
       "id": "caption-group-10",
       "frame": 5,
-      "start": 26.275,
-      "end": 27.935,
-      "text": "and you can stop any time.",
+      "start": 24.673,
+      "end": 27.204,
+      "text": "on your OpenRouter account and use its quota.",
       "words": [
         {
           "id": "caption-word-10-0",
-          "text": "and",
-          "start": 26.275,
-          "end": 26.426
+          "text": "on",
+          "start": 24.673,
+          "end": 24.731
         },
         {
           "id": "caption-word-10-1",
-          "text": "you",
-          "start": 26.472,
-          "end": 26.542
+          "text": "your",
+          "start": 24.777,
+          "end": 24.893
         },
         {
           "id": "caption-word-10-2",
-          "text": "can",
-          "start": 26.577,
-          "end": 26.693
+          "text": "OpenRouter",
+          "start": 24.951,
+          "end": 25.462
         },
         {
           "id": "caption-word-10-3",
-          "text": "stop",
-          "start": 26.739,
-          "end": 27.018
+          "text": "account",
+          "start": 25.52,
+          "end": 25.88
         },
         {
           "id": "caption-word-10-4",
-          "text": "any",
-          "start": 27.076,
-          "end": 27.227
+          "text": "and",
+          "start": 26.054,
+          "end": 26.298
         },
         {
           "id": "caption-word-10-5",
-          "text": "time.",
-          "start": 27.297,
-          "end": 27.935
+          "text": "use",
+          "start": 26.368,
+          "end": 26.53
+        },
+        {
+          "id": "caption-word-10-6",
+          "text": "its",
+          "start": 26.565,
+          "end": 26.681
+        },
+        {
+          "id": "caption-word-10-7",
+          "text": "quota.",
+          "start": 26.739,
+          "end": 27.204
         }
       ]
     },
     {
       "id": "caption-group-11",
-      "frame": 6,
-      "start": 28.559,
-      "end": 30.742,
-      "text": "Free models, with more room than 50 a day.",
+      "frame": 5,
+      "start": 27.715,
+      "end": 29.828,
+      "text": "Check that OpenRouter's terms allow it.",
       "words": [
         {
           "id": "caption-word-11-0",
-          "text": "Free",
-          "start": 28.559,
-          "end": 28.826
+          "text": "Check",
+          "start": 27.715,
+          "end": 27.935
         },
         {
           "id": "caption-word-11-1",
-          "text": "models,",
-          "start": 28.872,
-          "end": 29.256
+          "text": "that",
+          "start": 27.982,
+          "end": 28.098
         },
         {
           "id": "caption-word-11-2",
-          "text": "with",
-          "start": 29.279,
-          "end": 29.418
+          "text": "OpenRouter's",
+          "start": 28.156,
+          "end": 28.794
         },
         {
           "id": "caption-word-11-3",
-          "text": "more",
-          "start": 29.465,
-          "end": 29.604
+          "text": "terms",
+          "start": 28.852,
+          "end": 29.259
         },
         {
           "id": "caption-word-11-4",
-          "text": "room",
-          "start": 29.639,
-          "end": 29.778
+          "text": "allow",
+          "start": 29.294,
+          "end": 29.549
         },
         {
           "id": "caption-word-11-5",
-          "text": "than",
-          "start": 29.813,
-          "end": 29.929
-        },
-        {
-          "id": "caption-word-11-6",
-          "text": "50",
-          "start": 29.999,
-          "end": 30.3
-        },
-        {
-          "id": "caption-word-11-7",
-          "text": "a",
-          "start": 30.359,
-          "end": 30.382
-        },
-        {
-          "id": "caption-word-11-8",
-          "text": "day.",
-          "start": 30.428,
-          "end": 30.742
+          "text": "it.",
+          "start": 29.619,
+          "end": 29.828
         }
       ]
     },
     {
       "id": "caption-group-12",
-      "frame": 6,
-      "start": 30.916,
-      "end": 32.785,
-      "text": "Start at anyrouter.dev.",
+      "frame": 5,
+      "start": 30.037,
+      "end": 31.418,
+      "text": "You can stop any time.",
       "words": [
         {
           "id": "caption-word-12-0",
-          "text": "Start",
-          "start": 30.916,
-          "end": 31.183
+          "text": "You",
+          "start": 30.037,
+          "end": 30.153
         },
         {
           "id": "caption-word-12-1",
-          "text": "at",
-          "start": 31.218,
-          "end": 31.287
+          "text": "can",
+          "start": 30.199,
+          "end": 30.292
         },
         {
           "id": "caption-word-12-2",
+          "text": "stop",
+          "start": 30.327,
+          "end": 30.547
+        },
+        {
+          "id": "caption-word-12-3",
+          "text": "any",
+          "start": 30.605,
+          "end": 30.756
+        },
+        {
+          "id": "caption-word-12-4",
+          "text": "time.",
+          "start": 30.826,
+          "end": 31.418
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 6,
+      "start": 32.059,
+      "end": 35.112,
+      "text": "Free models, past 50 a day when shared keys have room.",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "Free",
+          "start": 32.059,
+          "end": 32.326
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "models,",
+          "start": 32.372,
+          "end": 32.802
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "past",
+          "start": 32.837,
+          "end": 33.069
+        },
+        {
+          "id": "caption-word-13-3",
+          "text": "50",
+          "start": 33.104,
+          "end": 33.371
+        },
+        {
+          "id": "caption-word-13-4",
+          "text": "a",
+          "start": 33.417,
+          "end": 33.441
+        },
+        {
+          "id": "caption-word-13-5",
+          "text": "day",
+          "start": 33.499,
+          "end": 33.696
+        },
+        {
+          "id": "caption-word-13-6",
+          "text": "when",
+          "start": 33.766,
+          "end": 33.917
+        },
+        {
+          "id": "caption-word-13-7",
+          "text": "shared",
+          "start": 33.963,
+          "end": 34.253
+        },
+        {
+          "id": "caption-word-13-8",
+          "text": "keys",
+          "start": 34.3,
+          "end": 34.532
+        },
+        {
+          "id": "caption-word-13-9",
+          "text": "have",
+          "start": 34.578,
+          "end": 34.729
+        },
+        {
+          "id": "caption-word-13-10",
+          "text": "room.",
+          "start": 34.787,
+          "end": 35.112
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 6,
+      "start": 35.356,
+      "end": 37.214,
+      "text": "Start at anyrouter.dev.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "Start",
+          "start": 35.356,
+          "end": 35.623
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "at",
+          "start": 35.658,
+          "end": 35.728
+        },
+        {
+          "id": "caption-word-14-2",
           "text": "anyrouter.dev.",
-          "start": 31.345,
-          "end": 32.785
+          "start": 35.797,
+          "end": 37.214
         }
       ]
     }

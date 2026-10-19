@@ -111,6 +111,8 @@
     [data-composition-id="02-add-share"] .f02-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
     [data-composition-id="02-add-share"] .f02-shot img { display: block; max-width: none; }
     [data-composition-id="02-add-share"] .f02-row-ring { border-radius: 14px; }
+    /* the spotlight: the page dims around the OpenRouter row; it moves in capture px */
+    [data-composition-id="02-add-share"] .f02-spot { position: absolute; border-radius: 14px; box-shadow: 0 0 0 4000px rgba(255,255,255,0); pointer-events: none; }
     [data-composition-id="02-add-share"] .f02-badge { position: absolute; left: 50%; top: 700px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
 
     @media (orientation: portrait) {
@@ -141,11 +143,11 @@
         <div id="f02-browser" class="k-browser f02-browser">
           <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/pool</span></div>
           <div id="f02-view" class="k-view">
-            <div id="f02-shot" class="f02-shot"><img src="assets/anyrouter-pool.png" alt="" /></div>
+            <div id="f02-shot" class="f02-shot"><img src="assets/anyrouter-pool.png" alt="" /><div id="f02-spot" class="f02-spot"></div></div>
             <div id="f02-ring" class="k-ring f02-row-ring"></div>
           </div>
         </div>
-        <span id="f02-badge" class="k-badge is-big f02-badge">74 OpenRouter keys shared</span>
+        <span id="f02-badge" class="k-badge is-big f02-badge">74 OpenRouter keys shared on Oct 18</span>
       </div>
     </div>
   </div>
@@ -247,6 +249,8 @@ const K = {
           width: ROW.w * near.scale + 16, height: ROW.h * near.scale + 8,
         }, 0);
         tl.fromTo(ring, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, POOL);
+        tl.set($("spot"), { left: ROW.x, top: ROW.y, width: ROW.w, height: ROW.h }, 0);
+        tl.to($("spot"), { boxShadow: "0 0 0 4000px rgba(255,255,255,0.8)", duration: 0.4, ease: "power2.out" }, POOL);
         tl.set($("badge"), { xPercent: -50 }, 0);
         tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, POOL + 0.2);
 

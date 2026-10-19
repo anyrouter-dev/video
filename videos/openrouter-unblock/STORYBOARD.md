@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 35.285s
+duration: 39.714s
 message: "OpenRouter's free models stop at 50 requests a day. Share your OpenRouter key with AnyRouter's pool and your requests can go on through keys other members share."
 arc: The wall → Add and share → What it does → Your app → What sharing means → Close
 audience: a developer whose app or agent keeps hitting OpenRouter's free-model limit (HTTP 429)
@@ -56,11 +56,11 @@ music: none
 - src: compositions/frames/03-reroute.html
 
 - scene: A request goes to your key, which shows "Limit reached"; the same request takes another path to one of the keys other members share and comes back "200 OK"
-- duration: 6s
+- duration: 5.5s
 - transition_in: cut
 - type: how_it_works
 - beat: relief
-- voiceover: "When your key hits its limit, AnyRouter can send your requests through keys other members share."
+- voiceover: "When your account hits its limit, AnyRouter can send your requests through keys other members share."
 - asset_candidates: assets/provider-openrouter.svg
 - blueprint: ui-callout (Adapt)
 - focal: the request moving to a shared key
@@ -72,11 +72,11 @@ music: none
 - src: compositions/frames/04-your-app.html
 
 - scene: The explainer's code card; the base URL and the key roll to AnyRouter's, and the model line `openrouter/free` gets an "Unchanged" badge
-- duration: 7s
+- duration: 7.5s
 - transition_in: cut
 - type: how_it_works
 - beat: ease
-- voiceover: "In your app, switch the address and the key to AnyRouter's. Keep the model, openrouter/free."
+- voiceover: "In your app, use AnyRouter's address and an AnyRouter API key. Keep the model, openrouter/free."
 - asset_candidates: none, typed code only
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the two changing values, then the model id
@@ -87,12 +87,12 @@ music: none
 ## Frame 5 — What sharing means
 - src: compositions/frames/05-sharing.html
 
-- scene: Your key's card with its OpenRouter quota meter; your requests fill it, then members' requests add to it; the "Share with pool" switch turns off and reads "Not shared"
-- duration: 5.5s
+- scene: Your OpenRouter account's daily quota; your requests and members' requests fill it side by side; the terms note lands; the "Share with pool" switch turns off, reads "Not shared", and members' share stops growing
+- duration: 9s
 - transition_in: cut
 - type: key_feature
 - beat: trust
-- voiceover: "Sharing lets other members use your OpenRouter quota too, and you can stop any time."
+- voiceover: "Sharing means members' requests run on your OpenRouter account and use its quota. Check that OpenRouter's terms allow it. You can stop any time."
 - asset_candidates: assets/provider-openrouter.svg
 - blueprint: ui-callout (Adapt)
 - focal: the shared quota, then the switch
@@ -103,12 +103,12 @@ music: none
 ## Frame 6 — Close
 - src: compositions/frames/06-close.html
 
-- scene: "More room than 50 a day." with a muted note that shared keys have their own limits, then the AnyRouter lockup and anyrouter.dev
-- duration: 6.726s
+- scene: "Past 50 a day" and "when shared keys have room", then the AnyRouter lockup and anyrouter.dev
+- duration: 7.655s
 - transition_in: cut
 - type: cta
 - beat: resolve
-- voiceover: "Free models, with more room than 50 a day. Start at anyrouter.dev."
+- voiceover: "Free models, past 50 a day when shared keys have room. Start at anyrouter.dev."
 - asset_candidates: none, the AnyRouter mark is inline SVG
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: AnyRouter lockup

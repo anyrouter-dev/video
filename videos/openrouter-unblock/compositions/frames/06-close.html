@@ -97,8 +97,9 @@
   [data-composition-id="06-close"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="06-close"] .f06-col { position: absolute; left: 96px; right: 96px; top: 150px; display: flex; flex-direction: column; align-items: center; gap: 44px; text-align: center; }
-    [data-composition-id="06-close"] .f06-brand { display: flex; align-items: center; gap: 32px; }
+    [data-composition-id="06-close"] .f06-col { position: absolute; left: 96px; right: 96px; top: 140px; display: flex; flex-direction: column; align-items: center; gap: 40px; text-align: center; }
+    [data-composition-id="06-close"] .f06-lines { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    [data-composition-id="06-close"] .f06-brand { display: flex; align-items: center; gap: 32px; margin-top: 16px; }
     [data-composition-id="06-close"] .f06-mark { width: 132px; height: 132px; }
     [data-composition-id="06-close"] .f06-url { font-family: var(--mono); font-size: 48px; }
 
@@ -106,18 +107,20 @@
       [data-composition-id="06-close"] .f06-col { left: 60px; right: 120px; top: 260px; gap: 56px; }
       [data-composition-id="06-close"] .f06-mark { width: 104px; height: 104px; }
       [data-composition-id="06-close"] .f06-word { font-size: 112px; }
-      [data-composition-id="06-close"] .f06-line, [data-composition-id="06-close"] .f06-note { text-wrap: balance; }
+      [data-composition-id="06-close"] .f06-when { text-wrap: balance; }
     }
   </style>
 
-  <div id="root" data-composition-id="06-close" data-width="1920" data-height="1080" data-duration="6.726">
-    <div id="f06-bg" class="k-bg clip" data-start="0" data-duration="6.726" data-track-index="0"></div>
-    <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="6.726" data-track-index="1">
+  <div id="root" data-composition-id="06-close" data-width="1920" data-height="1080" data-duration="7.655">
+    <div id="f06-bg" class="k-bg clip" data-start="0" data-duration="7.655" data-track-index="0"></div>
+    <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="7.655" data-track-index="1">
       <div id="f06-cam" class="k-cam">
         <div class="f06-col">
           <span id="f06-free" class="k-badge is-free is-big">Free models</span>
-          <p id="f06-line" class="k-h1 f06-line">More room than 50 a day.</p>
-          <p id="f06-note" class="k-body f06-note">Shared keys have their own limits, so how much more can vary.</p>
+          <div class="f06-lines">
+            <p id="f06-line" class="k-h1">Past 50 a day</p>
+            <p id="f06-when" class="k-h2 f06-when">when shared keys have room</p>
+          </div>
           <div id="f06-brand" class="f06-brand">
             <svg id="f06-mark" class="f06-mark" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
             <span id="f06-word" class="k-display f06-word">AnyRouter</span>
@@ -185,18 +188,18 @@ const K = {
 };
       // /kit:js
       const $ = (s) => document.getElementById("f06-" + s);
-      // Word starts from audio_meta.json frame 6: "Free" 0, "more" 0.906, "50" 1.44, "Start" 2.357, "anyrouter.dev." 2.786.
-      // The lockup settles by 3.9s; the closing card may then hold still (pace-audit's end allowance).
-      const FREE = 0.02, MORE = 0.85, NOTE = 1.85, START = 2.3, URL = 2.75, SETTLE = 3.9;
+      // Word starts from audio_meta.json frame 6: "Free" 0, "past" 0.778, "when" 1.707, "Start" 3.297, "anyrouter.dev." 3.738.
+      // The pull-back runs until SETTLE, so the closing card holds still under pace-audit's 3s end allowance.
+      const FREE = 0.02, PAST = 0.72, WHEN = 1.65, START = 3.25, URL = 3.7, SETTLE = 5.2;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
         // An even pull-back that stops at SETTLE: an eased tail reads as still long before it ends.
-        tl.fromTo($("cam"), { scale: 0.96 }, { scale: 1, duration: SETTLE, ease: "none" }, 0);
+        tl.fromTo($("cam"), { scale: 0.95 }, { scale: 1, duration: SETTLE, ease: "none" }, 0);
 
         tl.fromTo($("free"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, FREE);
-        K.rise(tl, $("line"), MORE, { y: 48, d: 0.7 });
-        K.rise(tl, $("note"), NOTE, { y: 32 });
+        K.rise(tl, $("line"), PAST, { y: 48, d: 0.7 });
+        K.rise(tl, $("when"), WHEN, { y: 32 });
         tl.fromTo($("mark"), { scale: 0.7, rotation: -8, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.5)" }, START);
         K.rise(tl, $("word"), START, { y: 32 });
         K.rise(tl, $("url"), URL, { y: 32 });

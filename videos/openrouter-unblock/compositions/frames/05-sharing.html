@@ -97,15 +97,15 @@
   [data-composition-id="05-sharing"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="05-sharing"] .f05-card { position: absolute; left: 240px; right: 240px; top: 110px; padding: 48px 56px; display: flex; flex-direction: column; gap: 44px; }
+    [data-composition-id="05-sharing"] .f05-card { position: absolute; left: 240px; right: 240px; top: 96px; padding: 44px 56px; display: flex; flex-direction: column; gap: 36px; }
     [data-composition-id="05-sharing"] .f05-head { display: flex; align-items: center; gap: 20px; }
     [data-composition-id="05-sharing"] .f05-head img { width: 72px; height: 72px; }
     [data-composition-id="05-sharing"] .f05-head .k-h2 { flex: 1; }
     [data-composition-id="05-sharing"] .f05-illus { color: var(--muted); }
-    [data-composition-id="05-sharing"] .f05-meter { position: relative; height: 80px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); overflow: hidden; }
-    [data-composition-id="05-sharing"] .f05-seg { position: absolute; top: 0; bottom: 0; transform-origin: 0 50%; }
-    [data-composition-id="05-sharing"] .f05-you { left: 0; width: 34%; background: var(--ink); }
-    [data-composition-id="05-sharing"] .f05-them { left: 34%; width: 32%; background: var(--primary); }
+    [data-composition-id="05-sharing"] .f05-meter { display: flex; height: 80px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); overflow: hidden; }
+    [data-composition-id="05-sharing"] .f05-seg { width: 0; flex: none; }
+    [data-composition-id="05-sharing"] .f05-you { background: var(--ink); }
+    [data-composition-id="05-sharing"] .f05-them { background: var(--primary); }
     [data-composition-id="05-sharing"] .f05-legend { display: flex; gap: 48px; flex-wrap: wrap; }
     [data-composition-id="05-sharing"] .f05-legend span { display: inline-flex; align-items: center; gap: 14px; }
     [data-composition-id="05-sharing"] .f05-legend i { width: 28px; height: 28px; border-radius: 6px; flex: none; }
@@ -114,26 +114,26 @@
     [data-composition-id="05-sharing"] .f05-row .k-title { flex: 1; }
     [data-composition-id="05-sharing"] .f05-switch { position: relative; width: 144px; height: 80px; border-radius: 999px; background: var(--ink); flex: none; }
     [data-composition-id="05-sharing"] .f05-knob { position: absolute; left: 72px; top: 8px; width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
-    [data-composition-id="05-sharing"] .f05-terms { position: absolute; left: 240px; right: 240px; top: 740px; }
+    [data-composition-id="05-sharing"] .f05-notes { position: absolute; left: 240px; right: 240px; top: 690px; display: flex; flex-direction: column; gap: 20px; }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-sharing"] .f05-card { left: 60px; right: 120px; top: 260px; padding: 36px 32px; }
+      [data-composition-id="05-sharing"] .f05-card { left: 60px; right: 120px; top: 240px; padding: 36px 32px; }
       [data-composition-id="05-sharing"] .f05-head { flex-wrap: wrap; }
       [data-composition-id="05-sharing"] .f05-head .k-h2 { font-size: 56px; }
       [data-composition-id="05-sharing"] .f05-legend { flex-direction: column; gap: 16px; }
-      [data-composition-id="05-sharing"] .f05-terms { left: 60px; right: 120px; top: 980px; }
+      [data-composition-id="05-sharing"] .f05-notes { left: 60px; right: 120px; top: 930px; }
     }
   </style>
 
-  <div id="root" data-composition-id="05-sharing" data-width="1920" data-height="1080" data-duration="5.5">
-    <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
-    <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
+  <div id="root" data-composition-id="05-sharing" data-width="1920" data-height="1080" data-duration="9">
+    <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="9" data-track-index="0"></div>
+    <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="9" data-track-index="1">
       <div id="f05-cam" class="k-cam">
         <div id="f05-card" class="k-card f05-card">
-          <div class="f05-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-h2">Your OpenRouter key</span><span class="k-badge is-outline f05-illus">Illustration</span></div>
+          <div class="f05-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-h2">Your OpenRouter account</span><span class="k-badge is-outline f05-illus">Illustration</span></div>
           <div class="f05-meter"><div id="f05-you" class="f05-seg f05-you"></div><div id="f05-them" class="f05-seg f05-them"></div></div>
           <div class="f05-legend">
-            <span id="f05-l-you" class="k-label"><i style="background:#0A0A0A"></i>Your requests, tried first</span>
+            <span id="f05-l-you" class="k-label"><i style="background:#0A0A0A"></i>Your requests</span>
             <span id="f05-l-them" class="k-label"><i style="background:#BB4D00"></i>Members' requests</span>
           </div>
           <div class="f05-rule"></div>
@@ -143,7 +143,10 @@
             <span id="f05-switch" class="f05-switch"><span id="f05-knob" class="f05-knob"></span></span>
           </div>
         </div>
-        <p id="f05-terms" class="k-body f05-terms">Check that OpenRouter's terms allow sharing.</p>
+        <div class="f05-notes">
+          <p id="f05-terms" class="k-body">Check that OpenRouter's terms allow sharing.</p>
+          <p id="f05-free" class="k-body">On the Free plan, you need a shared key to use the pool.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -205,25 +208,31 @@ const K = {
 };
       // /kit:js
       const $ = (s) => document.getElementById("f05-" + s);
-      const DURATION = 5.5;
-      // Word starts from audio_meta.json frame 5: "members" 0.871, "quota" 2.241, "stop" 3.68, "time." 4.238.
-      const YOU = 0.3, THEM = 0.85, STOP = 3.6, TIME = 4.2;
+      const DURATION = 9;
+      // Word starts from audio_meta.json frame 5: "members'" 0.673, "run" 1.428, "account" 2.461, "quota." 3.68,
+      // "Check" 4.656, "stop" 7.268, "time." 7.767.
+      const FILL = 0.6, CHECK = 4.6, STOP = 7.2;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.05 });
 
         K.rise(tl, $("card"), 0.02, { y: 70, d: 0.7 });
-        tl.fromTo($("you"), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, YOU);
-        K.rise(tl, $("l-you"), YOU + 0.1, { y: 20, d: 0.4 });
-        tl.fromTo($("them"), { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power1.inOut" }, THEM);
-        K.rise(tl, $("l-them"), THEM, { y: 20, d: 0.4 });
+        // one daily quota: your requests and members' requests fill it side by side
+        tl.to($("you"), { width: "22%", duration: 3.2, ease: "none" }, FILL);
+        tl.to($("them"), { width: "26%", duration: 3.2, ease: "none" }, FILL);
+        tl.to($("you"), { width: "34%", duration: DURATION - FILL - 3.2, ease: "none" }, FILL + 3.2);
+        tl.to($("them"), { width: "36%", duration: STOP - FILL - 3.2, ease: "none" }, FILL + 3.2);
+        K.rise(tl, $("l-you"), FILL, { y: 20, d: 0.4 });
+        K.rise(tl, $("l-them"), FILL + 0.15, { y: 20, d: 0.4 });
 
-        // "you can stop any time": the switch goes off
+        K.rise(tl, $("terms"), CHECK, { y: 24 });
+
+        // "you can stop any time": the switch goes off, and members' share stops growing
         tl.to($("knob"), { x: -64, duration: 0.3, ease: "power2.inOut" }, STOP);
         tl.to($("switch"), { backgroundColor: "#D4D4D8", duration: 0.3, ease: "power2.inOut" }, STOP);
         K.roll(tl, $("state"), [STOP]);
-        K.rise(tl, $("terms"), TIME, { y: 24 });
+        K.rise(tl, $("free"), STOP + 0.3, { y: 24 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-sharing"] = tl;
