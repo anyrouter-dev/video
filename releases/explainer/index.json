@@ -240,6 +240,50 @@
       },
       "source": null,
       "createdAt": "2026-10-19T16:50:26.394Z"
+    },
+    {
+      "id": "012-20261019-v2-1577aa362f",
+      "hash": "1577aa362f",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 47.496,
+      "renderedAt": "2026-10-19T17:06:25.913Z",
+      "commit": "9d338cd",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-012-20261019-v2-1577aa362f.mp4",
+          "cover": "renders/explainer-012-20261019-v2-1577aa362f.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-012-20261019-v2-1577aa362f-portrait.mp4",
+          "cover": "renders/explainer-012-20261019-v2-1577aa362f-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:06:25.938Z"
+    },
+    {
+      "id": "013-20261019-v2-81f14270e3",
+      "hash": "81f14270e3",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 47.496,
+      "renderedAt": "2026-10-19T17:10:38.229Z",
+      "commit": "16b5833",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-013-20261019-v2-81f14270e3.mp4",
+          "cover": "renders/explainer-013-20261019-v2-81f14270e3.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-013-20261019-v2-81f14270e3-portrait.mp4",
+          "cover": "renders/explainer-013-20261019-v2-81f14270e3-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:10:38.257Z"
     }
   ]
 }
