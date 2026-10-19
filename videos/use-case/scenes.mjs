@@ -64,17 +64,17 @@ const SAFE = { landscape: 1728 * 0.96, portrait: 900 * 0.96 };
 /** Type for each text role: sizes to try, the box, the line budget, per orientation. */
 export const TYPE = {
   title: { weight: 600, tracking: -0.035,
-    landscape: { sizes: [112, 96, 80], width: SAFE.landscape, lines: 2 },
-    portrait: { sizes: [96, 84, 72, 64], width: SAFE.portrait, lines: 4 } },
+    landscape: { sizes: [140, 124, 112, 96, 80], width: SAFE.landscape, lines: 2 },
+    portrait: { sizes: [112, 96, 84, 72, 64], width: SAFE.portrait, lines: 4 } },
   problem: { weight: 500, tracking: -0.02,
     landscape: { sizes: [72, 64, 56], width: (1728 - 128 - 112) * 0.96, lines: 3 },
     portrait: { sizes: [64, 56, 48, 44], width: (900 - 96) * 0.96, lines: 7 } },
   step: { weight: 500, tracking: -0.01,
-    landscape: { sizes: [72, 64, 56, 48, 44], width: SAFE.landscape, lines: 2 },
+    landscape: { sizes: [64, 56, 48, 44], width: SAFE.landscape, lines: 2 },
     portrait: { sizes: [64, 56, 48, 44], width: SAFE.portrait, lines: 5 } },
   // a short command is set large on one line; a long one wraps at the frame's code size
   code: { weight: 'mono', tracking: 0,
-    landscape: { sizes: [72, 60, 48], width: (1728 - 96) * 0.98, lines: 1, wrap: 48 },
+    landscape: { sizes: [64, 56, 48], width: (1400 - 96) * 0.98, lines: 1, wrap: 48 },
     portrait: { sizes: [60, 48], width: (900 - 96) * 0.98, lines: 1, wrap: 48 } },
   label: { weight: 600, tracking: 0,
     landscape: { sizes: [44], width: (500 - 56) * 0.96, lines: 2 },
@@ -158,10 +158,9 @@ export function commandScene(copy) {
     return part.trim() ? `<span class="tok">${spans}</span>` : spans;
   }).join('');
   // the caret is measured as one more character, so it never wraps onto a line of its own
-  const cols = [...text].length + (shell ? 2 : 0) + 1;
   const size = setIn('code', `${shell ? '$ ' : ''}${text}█`);
-  // As wide as the line needs, so a short command does not sit in an empty slab.
-  const width = Math.round(Math.min(1728, Math.max(1100, cols * 0.6 * size.landscape + 96 + 8)));
+  // One terminal width for every film: the same 1400px slab, whatever the command.
+  const width = 1400;
   const each = typing(text), typed = TYPE_AT + each * [...text].length;
   const blink = Array.from({ length: 6 }, (_, k) => `tl.set(Q(".caret"), { opacity: ${k % 2 ? 1 : 0} }, ${(typed + 0.4 + k * 0.45).toFixed(2)});`).join(' ');
   return {
@@ -174,15 +173,14 @@ export function commandScene(copy) {
   };
 }
 
-/** 4. One step, numbered, with where it sits among the others. */
+/** 4. One step, with where it sits among the others. */
 export function stepScene(copy, i) {
   const n = copy.steps.length, step = copy.steps[i];
-  const dots = Array.from({ length: n }, (_, k) => `<span class="n${k < i ? ' done' : k === i ? ' on' : ''}">${k + 1}</span>${k < n - 1 ? '<span class="ln"></span>' : ''}`).join('');
   return {
     cls: 'step',
-    body: `<div class="stepper">${dots}</div>
+    body: `<div class="badge line stepno">Step ${i + 1} of ${n}</div>
       <p class="st" style="${fsVars(step.type)}">${masked(step.text)}</p>`,
-    inner: `up(".stepper", 0.02); pop(".stepper .on", 0.12); rise(".st", 0.25);`,
+    inner: `up(".stepno", 0.02); rise(".st", 0.25);`,
     cues: [{ at: 0.12, kind: 'tick', gain: 0.45 }],
     seconds: read(step.text, copy.wps),
   };
@@ -272,6 +270,8 @@ export function endScene(copy) {
 
 // ── the look of the scenes, in frame.md's tokens ───────────────────────────
 export const CSS = `
+  .badge.line{background:${C.bg};border:2px solid ${C.line};color:${C.ink}}
+  .title .safe{align-items:center;text-align:center}
   .title .tiles{display:flex;align-items:center;gap:24px}
   .title .tile{width:152px;height:152px;display:grid;place-items:center;border-radius:30px}
   .title .tile .mk{width:92px;height:92px}
@@ -295,12 +295,6 @@ export const CSS = `
   .command .code .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap}
   .command .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.termInk};opacity:0}
 
-  .step .stepper{display:flex;align-items:center;gap:18px}
-  .step .n{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-size:44px;font-weight:600;
-    font-variant-numeric:tabular-nums;border:2px solid ${C.lineStrong};color:${C.muted};background:${C.bg}}
-  .step .n.done{background:${C.ink};border-color:${C.ink};color:#FFFFFF}
-  .step .n.on{background:${C.primary};border-color:${C.primary};color:#FFFFFF}
-  .step .ln{width:72px;height:2px;background:${C.lineStrong}}
   .step .st{font-size:var(--fs);font-weight:500;line-height:1.22;letter-spacing:-.01em}
 
   .flow .safe{align-items:stretch}
@@ -322,8 +316,8 @@ export const CSS = `
 
   .end .safe{align-items:center;text-align:center;gap:64px}
   .end .lock{display:flex;align-items:center;gap:30px}
-  .end .lock svg{width:124px;height:124px;display:block}
-  .end .lock b{font-size:116px;font-weight:600;letter-spacing:-.04em;line-height:1}
+  .end .lock svg{width:140px;height:140px;display:block}
+  .end .lock b{font-size:140px;font-weight:600;letter-spacing:-.04em;line-height:1}
   .end .url{font-size:48px;color:${C.primary};padding:22px 40px;border:2px solid ${C.line};border-radius:16px;background:${C.surface}}
   .end .url span{white-space:nowrap}
 
@@ -338,8 +332,8 @@ export const CSS = `
     .step .st{font-size:var(--fs-p)}
     .flow .fl{flex-direction:column;align-items:stretch;gap:100px}
     .flow .lvl{flex-direction:row;gap:40px}
-    .flow .node{width:auto;flex:1;height:270px}
-    .end .lock svg{width:104px;height:104px}
-    .end .lock b{font-size:96px}
+    .flow .node{width:auto;flex:1;height:270px;max-width:560px;margin-left:auto;margin-right:auto}
+    .end .lock svg{width:112px;height:112px}
+    .end .lock b{font-size:112px}
     .end .url{font-size:44px;padding:22px 32px}
   }`;

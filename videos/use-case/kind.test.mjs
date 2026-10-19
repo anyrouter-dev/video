@@ -36,8 +36,8 @@ const shown = html => html
 const factsOf = u => [u.kicker, u.title, u.summary, u.problem, u.url, ...u.steps, u.command?.text,
   ...u.snippets.map(s => s.title), ...(u.diagram?.nodes ?? []).flatMap(n => [n.label, n.note])]
   .filter(Boolean).map(redact);
-// Chrome, not copy: the stepper's numbers and the brand.
-const CHROME = s => /^\d+$/.test(s) || s === 'AnyRouter';
+// Chrome, not copy: the step badge's numbering and the brand.
+const CHROME = s => /^\d+$/.test(s) || /^Step \d+ of \d+$/.test(s) || s === 'AnyRouter';
 
 // ── one release per use case ───────────────────────────────────────────────
 
