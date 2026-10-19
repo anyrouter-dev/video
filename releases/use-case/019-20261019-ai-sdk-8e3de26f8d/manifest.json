@@ -7,8 +7,19 @@
   "seconds": 20.9,
   "renderedAt": "2026-10-19T10:32:43.697Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.mp4",
-  "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.mp4",
+      "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-portrait.mp4",
+      "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-portrait.png"
+    }
+  },
   "source": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-source.tar.gz",
-  "createdAt": "2026-10-19T10:32:43.721Z"
+  "createdAt": "2026-10-19T10:32:43.721Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-019-20261019-ai-sdk-8e3de26f8d"
+  }
 }

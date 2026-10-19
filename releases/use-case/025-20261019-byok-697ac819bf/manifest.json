@@ -7,8 +7,19 @@
   "seconds": 24.6,
   "renderedAt": "2026-10-19T10:37:12.336Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-025-20261019-byok-697ac819bf.mp4",
-  "cover": "renders/use-case-025-20261019-byok-697ac819bf.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-025-20261019-byok-697ac819bf.mp4",
+      "cover": "renders/use-case-025-20261019-byok-697ac819bf.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-025-20261019-byok-697ac819bf-portrait.mp4",
+      "cover": "renders/use-case-025-20261019-byok-697ac819bf-portrait.png"
+    }
+  },
   "source": "renders/use-case-025-20261019-byok-697ac819bf-source.tar.gz",
-  "createdAt": "2026-10-19T10:37:12.358Z"
+  "createdAt": "2026-10-19T10:37:12.358Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-025-20261019-byok-697ac819bf"
+  }
 }

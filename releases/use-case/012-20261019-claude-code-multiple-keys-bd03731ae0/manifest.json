@@ -7,8 +7,19 @@
   "seconds": 25,
   "renderedAt": "2026-10-19T10:27:28.070Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.mp4",
-  "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.mp4",
+      "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-portrait.mp4",
+      "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-portrait.png"
+    }
+  },
   "source": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-source.tar.gz",
-  "createdAt": "2026-10-19T10:27:28.095Z"
+  "createdAt": "2026-10-19T10:27:28.095Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0"
+  }
 }

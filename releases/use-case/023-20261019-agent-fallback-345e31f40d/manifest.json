@@ -7,8 +7,19 @@
   "seconds": 24.5,
   "renderedAt": "2026-10-19T10:35:47.460Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d.mp4",
-  "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d.mp4",
+      "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d-portrait.mp4",
+      "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d-portrait.png"
+    }
+  },
   "source": "renders/use-case-023-20261019-agent-fallback-345e31f40d-source.tar.gz",
-  "createdAt": "2026-10-19T10:35:47.481Z"
+  "createdAt": "2026-10-19T10:35:47.481Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-023-20261019-agent-fallback-345e31f40d"
+  }
 }

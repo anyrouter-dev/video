@@ -7,8 +7,19 @@
   "seconds": 24.4,
   "renderedAt": "2026-10-19T10:39:36.133Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.mp4",
-  "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.mp4",
+      "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-portrait.mp4",
+      "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-portrait.png"
+    }
+  },
   "source": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-source.tar.gz",
-  "createdAt": "2026-10-19T10:39:36.167Z"
+  "createdAt": "2026-10-19T10:39:36.167Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-028-20261019-mcp-gateway-425589e7e2"
+  }
 }

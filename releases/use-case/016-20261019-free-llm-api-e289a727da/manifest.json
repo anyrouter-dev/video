@@ -7,8 +7,19 @@
   "seconds": 21.3,
   "renderedAt": "2026-10-19T10:30:36.509Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da.mp4",
-  "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da.mp4",
+      "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da-portrait.mp4",
+      "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da-portrait.png"
+    }
+  },
   "source": "renders/use-case-016-20261019-free-llm-api-e289a727da-source.tar.gz",
-  "createdAt": "2026-10-19T10:30:36.536Z"
+  "createdAt": "2026-10-19T10:30:36.536Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-016-20261019-free-llm-api-e289a727da"
+  }
 }

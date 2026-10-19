@@ -7,8 +7,19 @@
   "seconds": 23.9,
   "renderedAt": "2026-10-19T10:32:03.788Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.mp4",
-  "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.mp4",
+      "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-portrait.mp4",
+      "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-portrait.png"
+    }
+  },
   "source": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-source.tar.gz",
-  "createdAt": "2026-10-19T10:32:03.809Z"
+  "createdAt": "2026-10-19T10:32:03.809Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-018-20261019-cheapest-llm-api-d7b1c646ea"
+  }
 }

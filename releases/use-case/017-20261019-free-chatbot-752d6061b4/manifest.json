@@ -7,8 +7,19 @@
   "seconds": 22.7,
   "renderedAt": "2026-10-19T10:31:22.268Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-017-20261019-free-chatbot-752d6061b4.mp4",
-  "cover": "renders/use-case-017-20261019-free-chatbot-752d6061b4.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-017-20261019-free-chatbot-752d6061b4.mp4",
+      "cover": "renders/use-case-017-20261019-free-chatbot-752d6061b4.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-017-20261019-free-chatbot-752d6061b4-portrait.mp4",
+      "cover": "renders/use-case-017-20261019-free-chatbot-752d6061b4-portrait.png"
+    }
+  },
   "source": "renders/use-case-017-20261019-free-chatbot-752d6061b4-source.tar.gz",
-  "createdAt": "2026-10-19T10:31:22.302Z"
+  "createdAt": "2026-10-19T10:31:22.302Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-017-20261019-free-chatbot-752d6061b4"
+  }
 }

@@ -7,8 +7,19 @@
   "seconds": 21.3,
   "renderedAt": "2026-10-19T10:28:13.472Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.mp4",
-  "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.mp4",
+      "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-portrait.mp4",
+      "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-portrait.png"
+    }
+  },
   "source": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-source.tar.gz",
-  "createdAt": "2026-10-19T10:28:13.506Z"
+  "createdAt": "2026-10-19T10:28:13.506Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-013-20261019-virtual-presets-f65d80ccd3"
+  }
 }

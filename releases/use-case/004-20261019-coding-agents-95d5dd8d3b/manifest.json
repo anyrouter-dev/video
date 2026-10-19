@@ -7,8 +7,19 @@
   "seconds": 22,
   "renderedAt": "2026-10-19T10:21:00.542Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.mp4",
-  "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.mp4",
+      "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-portrait.mp4",
+      "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-portrait.png"
+    }
+  },
   "source": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-source.tar.gz",
-  "createdAt": "2026-10-19T10:21:00.566Z"
+  "createdAt": "2026-10-19T10:21:00.566Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-004-20261019-coding-agents-95d5dd8d3b"
+  }
 }

@@ -20,7 +20,10 @@
         }
       },
       "source": "renders/use-case-001-20261019-claude-code-8b52221894-source.tar.gz",
-      "createdAt": "2026-10-19T10:16:19.997Z"
+      "createdAt": "2026-10-19T10:16:19.997Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-001-20261019-claude-code-8b52221894"
+      }
     },
     {
       "id": "002-20261019-grokbot-a8531764e3",
@@ -42,7 +45,10 @@
         }
       },
       "source": "renders/use-case-002-20261019-grokbot-a8531764e3-source.tar.gz",
-      "createdAt": "2026-10-19T10:17:01.550Z"
+      "createdAt": "2026-10-19T10:17:01.550Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-002-20261019-grokbot-a8531764e3"
+      }
     },
     {
       "id": "003-20261019-opencode-111b3a4d8f",
@@ -64,7 +70,10 @@
         }
       },
       "source": "renders/use-case-003-20261019-opencode-111b3a4d8f-source.tar.gz",
-      "createdAt": "2026-10-19T10:18:48.644Z"
+      "createdAt": "2026-10-19T10:18:48.644Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-003-20261019-opencode-111b3a4d8f"
+      }
     },
     {
       "id": "004-20261019-coding-agents-95d5dd8d3b",
@@ -86,7 +95,10 @@
         }
       },
       "source": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-source.tar.gz",
-      "createdAt": "2026-10-19T10:21:00.566Z"
+      "createdAt": "2026-10-19T10:21:00.566Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-004-20261019-coding-agents-95d5dd8d3b"
+      }
     },
     {
       "id": "005-20261019-hermes-agent-0db4be80c8",
@@ -108,7 +120,10 @@
         }
       },
       "source": "renders/use-case-005-20261019-hermes-agent-0db4be80c8-source.tar.gz",
-      "createdAt": "2026-10-19T10:21:45.867Z"
+      "createdAt": "2026-10-19T10:21:45.867Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-005-20261019-hermes-agent-0db4be80c8"
+      }
     },
     {
       "id": "006-20261019-claude-agent-sdk-36e0c55d8f",
@@ -130,7 +145,10 @@
         }
       },
       "source": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f-source.tar.gz",
-      "createdAt": "2026-10-19T10:22:29.567Z"
+      "createdAt": "2026-10-19T10:22:29.567Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-006-20261019-claude-agent-sdk-36e0c55d8f"
+      }
     },
     {
       "id": "007-20261019-claude-code-free-models-f8e05fc0f1",
@@ -152,7 +170,10 @@
         }
       },
       "source": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1-source.tar.gz",
-      "createdAt": "2026-10-19T10:23:15.025Z"
+      "createdAt": "2026-10-19T10:23:15.025Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-007-20261019-claude-code-free-models-f8e05fc0f1"
+      }
     },
     {
       "id": "008-20261019-openrouter-free-fallback-5965ba86b5",
@@ -174,7 +195,10 @@
         }
       },
       "source": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5-source.tar.gz",
-      "createdAt": "2026-10-19T10:24:04.125Z"
+      "createdAt": "2026-10-19T10:24:04.125Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-008-20261019-openrouter-free-fallback-5965ba86b5"
+      }
     },
     {
       "id": "009-20261019-openrouter-free-in-your-tools-360ec1b62d",
@@ -196,7 +220,10 @@
         }
       },
       "source": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d-source.tar.gz",
-      "createdAt": "2026-10-19T10:24:55.579Z"
+      "createdAt": "2026-10-19T10:24:55.579Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d"
+      }
     },
     {
       "id": "010-20261019-nvidia-nim-models-4854b01730",
@@ -218,7 +245,10 @@
         }
       },
       "source": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-source.tar.gz",
-      "createdAt": "2026-10-19T10:25:42.896Z"
+      "createdAt": "2026-10-19T10:25:42.896Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-010-20261019-nvidia-nim-models-4854b01730"
+      }
     },
     {
       "id": "011-20261019-gemini-in-claude-code-78fd1ec8a3",
@@ -240,7 +270,10 @@
         }
       },
       "source": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-source.tar.gz",
-      "createdAt": "2026-10-19T10:26:34.632Z"
+      "createdAt": "2026-10-19T10:26:34.632Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3"
+      }
     },
     {
       "id": "012-20261019-claude-code-multiple-keys-bd03731ae0",
@@ -262,7 +295,10 @@
         }
       },
       "source": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-source.tar.gz",
-      "createdAt": "2026-10-19T10:27:28.095Z"
+      "createdAt": "2026-10-19T10:27:28.095Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0"
+      }
     },
     {
       "id": "013-20261019-virtual-presets-f65d80ccd3",
@@ -284,7 +320,10 @@
         }
       },
       "source": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-source.tar.gz",
-      "createdAt": "2026-10-19T10:28:13.506Z"
+      "createdAt": "2026-10-19T10:28:13.506Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-013-20261019-virtual-presets-f65d80ccd3"
+      }
     },
     {
       "id": "014-20261019-nvidia-free-key-0064ad0a03",
@@ -306,7 +345,10 @@
         }
       },
       "source": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-source.tar.gz",
-      "createdAt": "2026-10-19T10:29:08.436Z"
+      "createdAt": "2026-10-19T10:29:08.436Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-014-20261019-nvidia-free-key-0064ad0a03"
+      }
     },
     {
       "id": "015-20261019-go-plan-9062e5bb79",
@@ -328,7 +370,10 @@
         }
       },
       "source": "renders/use-case-015-20261019-go-plan-9062e5bb79-source.tar.gz",
-      "createdAt": "2026-10-19T10:29:51.428Z"
+      "createdAt": "2026-10-19T10:29:51.428Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-015-20261019-go-plan-9062e5bb79"
+      }
     },
     {
       "id": "016-20261019-free-llm-api-e289a727da",
@@ -350,7 +395,10 @@
         }
       },
       "source": "renders/use-case-016-20261019-free-llm-api-e289a727da-source.tar.gz",
-      "createdAt": "2026-10-19T10:30:36.536Z"
+      "createdAt": "2026-10-19T10:30:36.536Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-016-20261019-free-llm-api-e289a727da"
+      }
     },
     {
       "id": "017-20261019-free-chatbot-752d6061b4",
@@ -372,7 +420,10 @@
         }
       },
       "source": "renders/use-case-017-20261019-free-chatbot-752d6061b4-source.tar.gz",
-      "createdAt": "2026-10-19T10:31:22.302Z"
+      "createdAt": "2026-10-19T10:31:22.302Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-017-20261019-free-chatbot-752d6061b4"
+      }
     },
     {
       "id": "018-20261019-cheapest-llm-api-d7b1c646ea",
@@ -394,7 +445,10 @@
         }
       },
       "source": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-source.tar.gz",
-      "createdAt": "2026-10-19T10:32:03.809Z"
+      "createdAt": "2026-10-19T10:32:03.809Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-018-20261019-cheapest-llm-api-d7b1c646ea"
+      }
     },
     {
       "id": "019-20261019-ai-sdk-8e3de26f8d",
@@ -416,7 +470,10 @@
         }
       },
       "source": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-source.tar.gz",
-      "createdAt": "2026-10-19T10:32:43.721Z"
+      "createdAt": "2026-10-19T10:32:43.721Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-019-20261019-ai-sdk-8e3de26f8d"
+      }
     },
     {
       "id": "020-20261019-openai-sdk-4543830c36",
@@ -438,7 +495,10 @@
         }
       },
       "source": "renders/use-case-020-20261019-openai-sdk-4543830c36-source.tar.gz",
-      "createdAt": "2026-10-19T10:33:36.268Z"
+      "createdAt": "2026-10-19T10:33:36.268Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-020-20261019-openai-sdk-4543830c36"
+      }
     },
     {
       "id": "021-20261019-unify-api-be024f7854",
@@ -460,7 +520,10 @@
         }
       },
       "source": "renders/use-case-021-20261019-unify-api-be024f7854-source.tar.gz",
-      "createdAt": "2026-10-19T10:34:22.101Z"
+      "createdAt": "2026-10-19T10:34:22.101Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-021-20261019-unify-api-be024f7854"
+      }
     },
     {
       "id": "022-20261019-model-evals-58f6f1bc5b",
@@ -482,7 +545,10 @@
         }
       },
       "source": "renders/use-case-022-20261019-model-evals-58f6f1bc5b-source.tar.gz",
-      "createdAt": "2026-10-19T10:35:01.233Z"
+      "createdAt": "2026-10-19T10:35:01.233Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-022-20261019-model-evals-58f6f1bc5b"
+      }
     },
     {
       "id": "023-20261019-agent-fallback-345e31f40d",
@@ -504,7 +570,10 @@
         }
       },
       "source": "renders/use-case-023-20261019-agent-fallback-345e31f40d-source.tar.gz",
-      "createdAt": "2026-10-19T10:35:47.481Z"
+      "createdAt": "2026-10-19T10:35:47.481Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-023-20261019-agent-fallback-345e31f40d"
+      }
     },
     {
       "id": "024-20261019-donate-keys-f8f4641122",
@@ -526,7 +595,10 @@
         }
       },
       "source": "renders/use-case-024-20261019-donate-keys-f8f4641122-source.tar.gz",
-      "createdAt": "2026-10-19T10:36:26.499Z"
+      "createdAt": "2026-10-19T10:36:26.499Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-024-20261019-donate-keys-f8f4641122"
+      }
     },
     {
       "id": "025-20261019-byok-697ac819bf",
@@ -548,7 +620,10 @@
         }
       },
       "source": "renders/use-case-025-20261019-byok-697ac819bf-source.tar.gz",
-      "createdAt": "2026-10-19T10:37:12.358Z"
+      "createdAt": "2026-10-19T10:37:12.358Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-025-20261019-byok-697ac819bf"
+      }
     },
     {
       "id": "026-20261019-byok-anthropic-7f711389db",
@@ -570,7 +645,10 @@
         }
       },
       "source": "renders/use-case-026-20261019-byok-anthropic-7f711389db-source.tar.gz",
-      "createdAt": "2026-10-19T10:38:01.752Z"
+      "createdAt": "2026-10-19T10:38:01.752Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-026-20261019-byok-anthropic-7f711389db"
+      }
     },
     {
       "id": "027-20261019-sign-in-5e93149317",
@@ -592,7 +670,10 @@
         }
       },
       "source": "renders/use-case-027-20261019-sign-in-5e93149317-source.tar.gz",
-      "createdAt": "2026-10-19T10:38:42.784Z"
+      "createdAt": "2026-10-19T10:38:42.784Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-027-20261019-sign-in-5e93149317"
+      }
     },
     {
       "id": "028-20261019-mcp-gateway-425589e7e2",
@@ -614,7 +695,10 @@
         }
       },
       "source": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-source.tar.gz",
-      "createdAt": "2026-10-19T10:39:36.167Z"
+      "createdAt": "2026-10-19T10:39:36.167Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-028-20261019-mcp-gateway-425589e7e2"
+      }
     },
     {
       "id": "029-20261019-mcp-for-agents-07317c593c",
@@ -636,7 +720,10 @@
         }
       },
       "source": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-source.tar.gz",
-      "createdAt": "2026-10-19T10:40:30.879Z"
+      "createdAt": "2026-10-19T10:40:30.879Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-029-20261019-mcp-for-agents-07317c593c"
+      }
     }
   ]
 }

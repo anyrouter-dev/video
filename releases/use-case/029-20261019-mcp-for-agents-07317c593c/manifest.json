@@ -7,8 +7,19 @@
   "seconds": 22,
   "renderedAt": "2026-10-19T10:40:30.844Z",
   "commit": "41fa3ef",
-  "artifact": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.mp4",
-  "cover": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.mp4",
+      "cover": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.png"
+    },
+    "portrait": {
+      "artifact": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-portrait.mp4",
+      "cover": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-portrait.png"
+    }
+  },
   "source": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-source.tar.gz",
-  "createdAt": "2026-10-19T10:40:30.879Z"
+  "createdAt": "2026-10-19T10:40:30.879Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/use-case-029-20261019-mcp-for-agents-07317c593c"
+  }
 }
