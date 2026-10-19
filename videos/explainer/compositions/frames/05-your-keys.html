@@ -195,19 +195,22 @@ const K = {
       const OPENAI = 1.0, ADD = 1.85, NO = 3.45, MARKUP = 3.75;
       const portrait = matchMedia("(orientation: portrait)").matches;
       // Rectangles of the 2x captures (3840 px wide), measured on the GPT-5.5 page; the Claude page has the same layout.
-      // The title row and its "Add your key" button, stopping above the model blurb.
-      const HEAD = portrait ? { x: 780, y: 130, w: 900, h: 280 } : { x: 780, y: 130, w: 1630, h: 280 };
+      // The breadcrumb, title and model id rows, stopping above the model blurb.
+      const HEAD = portrait ? { x: 780, y: 180, w: 720, h: 210 } : { x: 780, y: 180, w: 1340, h: 210 };
       const BUTTON = { x: 2584, y: 250, w: 227, h: 71 };
       const NO_FEE = { x: 2092, y: 604, w: 318, h: 52 };
-      // "Requests use your key and bill your provider account. AnyRouter adds no fee." on the GPT-5.5 page
-      const SENTENCES = { x: 1405, y: 600, w: 1005, h: 60 };
+      // "Requests use your key and bill your provider account. AnyRouter adds no fee." on the GPT-5.5 page;
+      // portrait keeps "bill your provider account. AnyRouter adds no fee." so it stays large enough to read
+      const SENTENCES = portrait ? { x: 1800, y: 600, w: 610, h: 60 } : { x: 1405, y: 600, w: 1005, h: 60 };
+      // Capture scales: 1 is 2x the page's CSS size, so 14 px page text renders at 32 px or more from 1.15 up.
+      const HEAD_SCALE = 1.15, BUTTON_SCALE = 1.35, SENTENCES_SCALE = 1.3;
 
       document.fonts.ready.then(() => {
         const view = $("view-gpt");
-        const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, 1));
+        const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, HEAD_SCALE));
         // the button at the middle of the view, at the title row's height
-        const button = K.fit(view, { x: BUTTON.x, y: 160, w: BUTTON.w, h: 280 }, 0.95);
-        const noFee = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, 1.2));
+        const button = K.fit(view, { x: BUTTON.x, y: HEAD.y, w: BUTTON.w, h: HEAD.h }, BUTTON_SCALE);
+        const noFee = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, SENTENCES_SCALE));
 
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.03 });
@@ -219,8 +222,8 @@ const K = {
         // Claude's page steps back until only its address bar shows above GPT-5.5's
         tl.to($("claude"), { x: -40, y: -84, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
 
-        // "Add your own key": the camera fits the button, the ring lands on it
-        tl.to($("shot-gpt"), { ...button, duration: 0.7, ease: "power3.inOut" }, ADD);
+        // "Add your own key": the camera pans along the title row and pushes in on the button, the ring lands on it
+        tl.to($("shot-gpt"), { ...button, duration: 0.8, ease: "power3.inOut" }, ADD - 0.1);
         const ring = $("ring");
         tl.set(ring, {
           left: button.x + BUTTON.x * button.scale - 12, top: button.y + BUTTON.y * button.scale - 12,
@@ -240,7 +243,7 @@ const K = {
         tl.to($("mark"), { backgroundColor: "rgba(240,145,90,0.32)", duration: 0.3, ease: "power2.out" }, NO + 0.45);
         tl.set($("badge"), { xPercent: -50 }, 0);
         tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, MARKUP);
-        const drift = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, 1.2) * 1.04);
+        const drift = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, SENTENCES_SCALE) * 1.04);
         tl.to($("shot-gpt"), { ...drift, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
 
         window.__timelines = window.__timelines || {};

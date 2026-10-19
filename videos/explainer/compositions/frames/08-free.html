@@ -193,8 +193,9 @@ const K = {
       const TOP = { x: 50, y: 630 };
 
       document.fonts.ready.then(() => {
-        // the list scrolls 420 capture px, its left edge pinned to the view's
-        const scale = 0.9;
+        // the list scrolls 420 capture px, its left edge pinned to the view's. At these capture scales
+        // 14 px page text renders at 32 px or more, and the widest row's Free badge still fits the view.
+        const scale = matchMedia("(orientation: portrait)").matches ? 1.15 : 1.3;
         const from = { scale, x: -TOP.x * scale, y: -TOP.y * scale };
         const to = { ...from, y: -(TOP.y + 420) * scale };
 
