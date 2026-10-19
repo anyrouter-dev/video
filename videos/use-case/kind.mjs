@@ -146,7 +146,7 @@ export function windowOf(u) {
 /** Every string the film can show, and how each is set. Throws when one cannot be set legibly. */
 export function copyOf(u, pools) {
   const title = redact(u.title);
-  if (!setIn('title', title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
+  if (!setIn(title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text) }));
   const roll = rollOf(u, pools);

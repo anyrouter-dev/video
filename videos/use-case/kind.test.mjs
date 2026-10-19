@@ -6,6 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import kind, { FILM, parseDoc, redact, rollPools } from './kind.mjs';
+import { linesOf, TYPE } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait } from '../../shared/authoring/portrait.mjs';
 
@@ -231,7 +232,7 @@ test('every film is 12 to 18 seconds, its three beats back to back on whole fram
 
 test('the headline fills the frame and the code reads from across the room', () => {
   // A 1920 frame holding a thin strip of 40px code reads as an empty white frame, and a phone screen as a smudge.
-  let large = 0, display = 0;
+  let large = 0;
   for (const [u, f] of films()) {
     const h = html(f);
     const [, l, p] = h.match(/--fs:(\d+)px;--fs-p:(\d+)px/);
@@ -242,10 +243,21 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+cl >= 48 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
     assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
-    if (+l === 184 && +p === 148) display++;
   }
-  assert.ok(display >= films().length * 0.75, `${display} of ${films().length} headlines at display size in both frames`);
   assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
+});
+
+test('no headline word is wider than its frame', () => {
+  // each word rises in its own mask, which never breaks: "anyrouter/free" at 148px runs past a portrait frame
+  for (const [u, f] of films()) {
+    const [, l, p] = html(f).match(/--fs:(\d+)px;--fs-p:(\d+)px/);
+    for (const [o, px] of [['landscape', +l], ['portrait', +p]]) {
+      for (const word of u.title.split(/\s+/)) {
+        const lines = linesOf(word, { px, width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
+        assert.equal(lines, 1, `${u.slug}: "${word}" at ${px}px is wider than the ${o} frame`);
+      }
+    }
+  }
 });
 
 test('code too tall to sit under the caption fails the build, never a caption too small to read', () => {

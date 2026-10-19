@@ -46,12 +46,13 @@ const em = (ch, weight) => {
 };
 
 /** How many lines `text` takes at `px` in a box `width` wide, breaking at spaces as the browser does. */
-export function linesOf(text, { px, width, weight = 400, tracking = 0 }) {
+export function linesOf(text, { px, width, weight = 400, tracking = 0, breakWords = true }) {
   const wide = w => [...w].reduce((sum, ch) => sum + em(ch, weight) + tracking, 0) * px;
   const space = (em(' ', weight) + tracking) * px;
   let lines = 1, x = 0;
   for (const w of String(text).split(/\s+/).filter(Boolean)) {
     const ww = wide(w);
+    if (!breakWords && ww > width) return Infinity;
     if (x > 0 && x + space + ww > width) { lines++; x = 0; }
     x += (x > 0 ? space : 0) + ww;
     // a token wider than the line is broken anywhere (overflow-wrap)
@@ -59,9 +60,6 @@ export function linesOf(text, { px, width, weight = 400, tracking = 0 }) {
   }
   return lines;
 }
-
-/** The first size in `sizes` that sets `text` in at most `lines` lines, else null. */
-export const sizeFor = (text, sizes, opts, lines) => sizes.find(px => linesOf(text, { ...opts, px }) <= lines) ?? null;
 
 // The boxes text is set in, in px of each frame. Kept a few percent under the
 // CSS widths below so rounding in the browser can never add a line.
@@ -74,21 +72,33 @@ export const TYPE = {
     portrait: { sizes: [148, 140, 132, 124, 120], width: SAFE.portrait, lines: 5 } },
 };
 
-/** `--fs` and `--fs-p` for a text in a role, or null when no size fits either frame. */
-export function setIn(role, text) {
-  const t = TYPE[role];
-  const at = o => sizeFor(text, t[o].sizes, { width: t[o].width, weight: t.weight, tracking: t.tracking }, t[o].lines);
-  const landscape = at('landscape'), portrait = at('portrait');
-  return landscape && portrait ? { landscape, portrait } : null;
+// The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, badge.
+const HERO = { landscape: 160 + 40 + 64, portrait: 144 + 40 + 64 };
+
+/**
+ * The lines the headline takes at `px`, or null when it cannot be set there: a
+ * word wider than the line (a word sits in its own mask, which never breaks),
+ * more lines than the budget, or a beat 1 taller than the safe area once the
+ * camera has leaned in.
+ */
+export function titleLines(text, o, px) {
+  const t = TYPE.title, w = WIN[o];
+  const n = linesOf(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, breakWords: false });
+  return n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean ? n : null;
 }
+
+/** Whether the headline can be set at some size in both frames. */
+export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].sizes.some(px => titleLines(text, o, px)));
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
 // The code window: as wide as the safe area, its text inside the padding. In
 // beat 2 the caption and the window share the safe area's height (`sh`); the
-// caption is the headline scaled down, never below `capMin`.
+// caption is the headline scaled down, never below `capMin`. The camera leans in
+// over beat 1 (`lean`) and the window pushes in over beat 2 (`push`), both about
+// the middle, so a beat's column is sized to stay in the safe area at full scale.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64 },
-  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56 },
+  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02 },
+  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02 },
 };
 // the window's 2px border, both sides
 const BAR = 72, EDGE = 4, CODE_LH = 1.45, TITLE_LH = 0.98;
@@ -112,8 +122,8 @@ export function idFitsRow(line, preset, id, shell) {
 
 /**
  * The headline and code sizes per orientation. The headline is the largest that
- * fits its line budget and still leaves the window its room under the caption,
- * since the caption keeps the headline's lines. The code is the largest at
+ * fits its line budget and leaves the window room for the code at its largest
+ * size, since the caption keeps the headline's lines. The code is the largest at
  * which every typed line fits on one line, each roll id in place, with its
  * prompt and caret, and the window still leaves room for the caption at its
  * smallest. A line too long for every
@@ -123,7 +133,6 @@ export function idFitsRow(line, preset, id, shell) {
  * line never reflows mid-roll. Null when no size leaves the caption its room.
  */
 export function codeSizes(lines, roll, shell, title) {
-  const t = TYPE.title;
   const prompt = shell ? '$ ' : '';
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
@@ -141,7 +150,8 @@ export function codeSizes(lines, roll, shell, title) {
   }, 0);
   const codeFor = (o, tLines) => {
     const w = WIN[o];
-    const room = px => EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
+    // the window pushes in about its own middle, so its bottom edge drops by half its growth
+    const room = px => (EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
     // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
     const clean = (l, px) => variants(l).every(t => fits(t, px, o)) || (l.focus && !!roll && (() => {
       const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length), lead = shell ? '' : '  ';
@@ -150,14 +160,11 @@ export function codeSizes(lines, roll, shell, title) {
     // a clean line at a smaller size reads better than a wrapped one at a larger
     return w.sizes.find(px => lines.filter(isTyped).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
   };
-  const pick = o => {
-    for (const px of t[o].sizes) {
-      const tLines = linesOf(title, { px, width: t[o].width, weight: t.weight, tracking: t.tracking });
-      const code = tLines <= t[o].lines && codeFor(o, tLines);
-      if (code) return { title: px, code };
-    }
-    return null;
-  };
+  // the code reads first: the largest code size, then the largest headline that leaves it its room
+  const pick = o => TYPE.title[o].sizes.map(px => {
+    const tLines = titleLines(title, o, px);
+    return { title: px, code: tLines && codeFor(o, tLines) };
+  }).filter(c => c.code).reduce((best, c) => (!best || c.code > best.code ? c : best), null);
   const l = pick('landscape'), p = pick('portrait');
   if (!l || !p) return null;
   const landscape = l.code, portrait = p.code;
@@ -255,7 +262,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     const T1 = ${doing.start}, T2 = ${lockup.start};
     const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
-    const SY = v("--sy"), SH = v("--sh"), G = v("--gap");
+    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean"), PUSH = v("--push");
     const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
 
     // Where the headline sits in each beat. It scales from its top edge, so a
@@ -266,7 +273,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     hero.style.top = top1 + "px";
     h.style.top = top1 + heroH + G + "px";
     // the caption is as large as fits above the window, up to the headline itself, so the two fill the safe area as one block
-    const s2 = Math.min(v("--cap2") / fs, (SH - G - win.offsetHeight) / hH), s3 = v("--cap3") / fs;
+    // leaned and pushed in, it still sits in the safe area (see codeSizes)
+    const s2 = Math.min(v("--cap2") / fs, (SH / LEAN - G - win.offsetHeight * PUSH) / hH), s3 = v("--cap3") / fs;
     const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
     win.style.top = cap2 + hH * s2 + G + "px";
     const cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
@@ -323,8 +331,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     }
 
     // 2 → 3 · the window drops away; the headline settles above the lockup.
-    tl.to(win, { y: below, duration: 0.55, ease: "power4.inOut" }, T2);
-    tl.set(win, { autoAlpha: 0 }, T2 + 0.55);
+    tl.to(win, { y: below, duration: 0.5, ease: "power4.inOut" }, T2);
+    tl.set(win, { autoAlpha: 0 }, T2 + 0.5);
     tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power4.inOut" }, T2 + 0.05);
     tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.35);
     tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.45);
@@ -347,7 +355,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 // the line in focus: on the ink it is white, its other lines muted; in the
 // editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:1.05;--lean:1.03}
+  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--lean:${WIN.landscape.lean}}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
@@ -400,7 +408,7 @@ export const CSS = `
   .film .url span{white-space:nowrap}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:1.04;--lean:1.04}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--lean:${WIN.portrait.lean}}
     .film .cam{transform-origin:510px 710px}
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
