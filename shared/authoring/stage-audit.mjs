@@ -6,7 +6,7 @@
 //
 //   layers  a canvas, svg, img or video whose visible part (cut to the ancestors that clip it)
 //           spans the stage one way is a full-bleed layer, and must span it the other way too
-//   safe    with --safe, readable text stays inside that box. Frame chrome and captions sit
+//   safe    with --safe, readable text stays inside that box (the part of it not clipped away). Frame chrome and captions sit
 //           outside it on purpose: they carry data-outside-safe-area and only have to stay
 //           on the stage.
 //
@@ -109,7 +109,7 @@ async function seekAndMeasure(t, frame, safe, tol) {
     if (p && n.nodeValue.trim() && !p.closest('script,style,template,noscript,title')) holders.add(p);
   }
   for (const el of holders) {
-    const r = el.getBoundingClientRect();
+    const r = clipped(el);
     if (!shown(el, r)) continue;
     const free = el.closest('[data-outside-safe-area]');
     const [x0, y0, x1, y1] = free || !safe ? [0, 0, frame.w, frame.h] : safe;
