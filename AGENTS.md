@@ -155,7 +155,8 @@ headline carried through all three; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
 Where the page's command names an `anyrouter/*` preset, the id rolls through the
 newest id of a few model makers from the catalog (`ROLL_OWNERS` in its `kind.mjs`;
-free ids only for `anyrouter/free`) and comes back to the preset. Anthropic, OpenAI
+free ids only for `anyrouter/free`, and no credit ids under a page that promises
+"$0" or "free") and comes back to the preset. Anthropic, OpenAI
 and Google ids never roll: they run on the user's own key, not AnyRouter credits.
 
 ## Rules every generated film obeys
