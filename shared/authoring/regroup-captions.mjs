@@ -1,19 +1,19 @@
 // Regroups the caption words that captions.mjs wrote into compositions/captions.html into
 // longer phrases. captions.mjs caps a group at 2–4 words and splits at every comma, so
 // captions flip several times a second and pull the eye off the picture (both newcomer
-// reviews of the explainer said so). Here a group runs to a sentence end, a pause after at
-// least MIN_WORDS, a frame change, or MAX_WORDS / MAX_CHARS (breaking at a comma when it
-// can), whichever comes first.
+// reviews of the explainer said so). Here a group runs to a sentence end, a pause or a
+// frame change, and a run longer than one line splits at its most natural break.
 //
 // Run from the film's folder after captions.mjs build. Rewrites the GROUPS array in
 // captions.html and caption_groups.json; reads only the words, so it is idempotent.
 import fs from 'node:fs';
 
-// one line of the 48px caption chip holds about 60 characters
-const MAX_WORDS = 10;
-const MAX_CHARS = 56;
+// one line of the 48px caption chip holds about 64 characters (two lines in portrait)
+const MAX_WORDS = 12;
+const MAX_CHARS = 60;
 const ORPHAN_WORDS = 2;
 const PAUSE_S = 0.35;
+const LONG_PAUSE_S = 1.2;
 const MIN_WORDS = 3;
 const SENT_END = /[.?!]$/;
 
@@ -24,29 +24,43 @@ const m = /var GROUPS = (\[.*?\]);\n/s.exec(html);
 if (!m) throw new Error(`${HTML}: no "var GROUPS = [...]" to regroup`);
 
 const words = JSON.parse(m[1]).flatMap(g => g.words.map(w => ({ ...w, frame: g.frame })));
-const groups = [];
-let cur = null;
 const textOf = ws => ws.map(x => x.text).join(' ');
-for (const w of words) {
+const fits = ws => ws.length <= MAX_WORDS && textOf(ws).length <= MAX_CHARS;
+
+// 1. Runs: a run ends at a sentence end, a frame change, or a pause at a clause boundary.
+// Whisper hears short pauses inside clauses ("its own | key"); a subtitle stays up through
+// those, so only a pause after a comma or before a joining word splits, or a long silence.
+const JOINERS = /^(and|but|or|so|then|while|when|if|because|to|with|for|from|on|in|at|into|than|that|which)$/i;
+const runs = [];
+let cur = null;
+words.forEach((w, i) => {
   const prev = cur?.words.at(-1);
-  // A pause splits a phrase, except right before the word (or two) that ends the sentence.
-  const endsSoon = SENT_END.test(w.text) || SENT_END.test(words[words.indexOf(w) + 1]?.text ?? '');
-  const pause = prev && w.start - prev.end > PAUSE_S && cur.words.length >= MIN_WORDS && !endsSoon;
-  if (cur && (w.frame !== cur.frame || pause)) cur = null;
-  // A word that closes its clause may run one past the cap rather than be left dangling.
-  const closes = /[.,!?;:]$/.test(w.text);
-  const over = cur && (cur.words.length >= MAX_WORDS + (closes ? 1 : 0)
-    || textOf([...cur.words, w]).length > MAX_CHARS + (closes ? 8 : 0));
-  if (over) {
-    // Over the cap: break after the group's last comma if there is one, not mid-phrase.
-    const k = cur.words.findLastIndex((x, i) => i < cur.words.length - 1 && /,$/.test(x.text));
-    const carried = k >= 0 ? cur.words.splice(k + 1) : [];
-    groups.push(cur = { frame: w.frame, words: carried });
-  }
-  if (!cur) groups.push(cur = { frame: w.frame, words: [] });
+  const endsSoon = SENT_END.test(w.text) || SENT_END.test(words[i + 1]?.text ?? '');
+  const gap = prev ? w.start - prev.end : 0;
+  const atClause = prev && (/[,;:]$/.test(prev.text) || JOINERS.test(w.text));
+  const pause = prev && cur.words.length >= MIN_WORDS && !endsSoon
+    && ((gap > PAUSE_S && atClause) || gap > LONG_PAUSE_S);
+  if (!cur || w.frame !== cur.frame || pause) runs.push(cur = { frame: w.frame, words: [] });
   cur.words.push(w);
   if (SENT_END.test(w.text)) cur = null;
-}
+});
+
+// 2. A run too long for one line splits where a reader would pause: after a comma first,
+// then before a joining word, never inside a phrase like "no daily | cap". Among equal
+// breaks the most even split wins, and each side splits again until it fits.
+const breakCost = (ws, i) => {
+  const kind = /[,;:]$/.test(ws[i - 1].text) ? 0 : JOINERS.test(ws[i].text) ? 1 : 3;
+  const left = textOf(ws.slice(0, i)).length;
+  const right = textOf(ws.slice(i)).length;
+  return kind + 1.5 * Math.abs(left - right) / (left + right);
+};
+const split = ws => {
+  if (fits(ws) || ws.length < 4) return [ws];
+  let best = 2;
+  for (let i = 2; i <= ws.length - 2; i++) if (breakCost(ws, i) < breakCost(ws, best)) best = i;
+  return [...split(ws.slice(0, best)), ...split(ws.slice(best))];
+};
+const groups = runs.flatMap(r => split(r.words).map(ws => ({ frame: r.frame, words: ws })));
 
 // A one- or two-word phrase on its own ("into AnyRouter.") flashes by; it joins the phrase
 // before it when they share a frame, run on without a real pause, and still fit one line.
