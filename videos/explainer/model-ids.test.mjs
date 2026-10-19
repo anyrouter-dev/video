@@ -51,4 +51,5 @@ test('putting a byok id back in a code roll is caught', () => {
 test('an id split across spans still reads as one id, and URLs and paths are not ids', () => {
   assert.deepEqual(shownIds('<li><span class="f02-org">nvidia/</span>nemotron-3-super-120b-a12b</li>'), ['nvidia/nemotron-3-super-120b-a12b']);
   assert.deepEqual(shownIds('<span>anyrouter.dev<span>/model/openai/gpt-5.5</span></span> ~/my-project'), []);
+  assert.deepEqual(shownIds('<span>@anthropic-ai/sdk</span>'), []);
 });

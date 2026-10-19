@@ -55,6 +55,8 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
+| `why-gateway` | the narrated short on why a unified LLM gateway, same series look and tools | its own files | on demand |
+| `byok-upstreams` | the narrated short on bringing your own provider keys, same series look and tools | its own files | on demand |
 | `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page. Each use case is its own release | `/use-cases.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
@@ -87,7 +89,7 @@ on the GitHub Release is the file to post, and the release notes say so.
 
 A kind ships every rendition unless its `kind.mjs` says `renditions: ['landscape']`.
 The CLI prints a warning for each such kind on every run, so the gap stays in
-view. Today every kind but `explainer`, `openrouter-unblock` and `use-case` says it:
+view. Today every kind but `explainer`, `openrouter-unblock`, `why-gateway`, `byok-upstreams` and `use-case` says it:
 
 | Kind | Why it is landscape only |
 |------|--------------------------|
