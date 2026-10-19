@@ -50,9 +50,10 @@ jobs:
           node --input-type=module -e '
             import { find } from "./lib/ledger.mjs";
             import { releaseFiles } from "./lib/publish.mjs";
+            import { loadKind } from "./lib/kinds.mjs";
             const e = find(process.env.KIND, process.env.ID);
             if (!e) { console.error(`no ${process.env.KIND} release "${process.env.ID}"`); process.exit(1); }
-            for (const f of releaseFiles(process.env.KIND, e)) if (!f.youtube) console.log(f.name, f.artifact);
+            for (const f of releaseFiles(await loadKind(process.env.KIND), e)) if (!f.youtube) console.log(f.name, f.artifact);
           ' > want.txt
           cat want.txt
           while read -r name dest; do
