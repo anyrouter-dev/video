@@ -134,13 +134,13 @@
     }
   </style>
 
-  <div id="root" data-composition-id="02-named-model" data-width="1920" data-height="1080" data-duration="6">
-    <div id="f02-bg" class="k-bg clip" data-start="0" data-duration="6" data-track-index="0"></div>
-    <div id="f02-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
+  <div id="root" data-composition-id="02-named-model" data-width="1920" data-height="1080" data-duration="6.5">
+    <div id="f02-bg" class="k-bg clip" data-start="0" data-duration="6.5" data-track-index="0"></div>
+    <div id="f02-stage" class="k-stage clip" data-start="0" data-duration="6.5" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f02-cam" class="k-cam">
         <div class="f02-col">
-          <h2 id="f02-title" class="k-headline f02-title"><span class="k-line">Claude Code, on any model</span></h2>
+          <h2 id="f02-title" class="k-headline f02-title"><span class="k-line">Claude Code, on your model</span></h2>
           <div id="f02-term" class="k-term f02-term">
             <div class="k-term-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div>~/my-project</div>
 <div class="k-term-body"><span class="p">$ </span><span id="f02-cmd">anyr claude --model <span class="k-pbr">
@@ -233,10 +233,10 @@ const K = {
 };
       // /kit:js
       const $ = (s) => document.getElementById("f02-" + s);
-      const DURATION = 6;
-      // Word starts from audio_meta.json frame 2: "start" 0.267, "Claude" 0.522, "any" 1.428, "name," 2.218, "DeepSeek" 2.612.
+      const DURATION = 6.5;
+      // Word starts from audio_meta.json frame 2: "start" 0.29, "Claude" 0.569, "model" 1.474, "name," 1.985, "DeepSeek" 2.856.
       // The command is real (`anyr claude --help`, --model <id>); the id runs on credits (BRIEF A5).
-      const TYPE_FROM = 0.45, TYPE_TO = 1.35, ID_AT = 2.55;
+      const TYPE_FROM = 0.45, TYPE_TO = 1.35, ID_AT = 2.8;
       const BLINK = 0.5;
 
       // Split typed text into one span per character, so each can appear on its own beat.

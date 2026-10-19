@@ -1,5 +1,5 @@
 {
-  "total_duration_s": 32.157,
+  "total_duration_s": 32.635,
   "width": 1920,
   "height": 1080,
   "groups": [
@@ -52,440 +52,446 @@
       "id": "caption-group-1",
       "frame": 2,
       "start": 3.559,
-      "end": 5.974,
-      "text": "Then start Claude Code on any model you name,",
+      "end": 5.858,
+      "text": "Then start Claude Code on the model you name,",
       "words": [
         {
           "id": "caption-word-1-0",
           "text": "Then",
           "start": 3.559,
-          "end": 3.768
+          "end": 3.78
         },
         {
           "id": "caption-word-1-1",
           "text": "start",
-          "start": 3.826,
-          "end": 4.035
+          "start": 3.849,
+          "end": 4.07
         },
         {
           "id": "caption-word-1-2",
           "text": "Claude",
-          "start": 4.081,
-          "end": 4.418
+          "start": 4.128,
+          "end": 4.453
         },
         {
           "id": "caption-word-1-3",
           "text": "Code",
-          "start": 4.453,
-          "end": 4.755
+          "start": 4.499,
+          "end": 4.79
         },
         {
           "id": "caption-word-1-4",
           "text": "on",
-          "start": 4.778,
-          "end": 4.871
+          "start": 4.813,
+          "end": 4.883
         },
         {
           "id": "caption-word-1-5",
-          "text": "any",
-          "start": 4.987,
-          "end": 5.231
+          "text": "the",
+          "start": 4.929,
+          "end": 4.999
         },
         {
           "id": "caption-word-1-6",
           "text": "model",
-          "start": 5.289,
-          "end": 5.556
+          "start": 5.033,
+          "end": 5.289
         },
         {
           "id": "caption-word-1-7",
           "text": "you",
-          "start": 5.626,
-          "end": 5.707
+          "start": 5.37,
+          "end": 5.475
         },
         {
           "id": "caption-word-1-8",
           "text": "name,",
-          "start": 5.777,
-          "end": 5.974
+          "start": 5.544,
+          "end": 5.858
         }
       ]
     },
     {
       "id": "caption-group-2",
       "frame": 2,
-      "start": 5.997,
-      "end": 7.831,
+      "start": 6.183,
+      "end": 8.11,
       "text": "like DeepSeek V4 Flash.",
       "words": [
         {
           "id": "caption-word-2-0",
           "text": "like",
-          "start": 5.997,
-          "end": 6.136
+          "start": 6.183,
+          "end": 6.369
         },
         {
           "id": "caption-word-2-1",
           "text": "DeepSeek",
-          "start": 6.171,
-          "end": 6.601
+          "start": 6.415,
+          "end": 6.798
         },
         {
           "id": "caption-word-2-2",
           "text": "V4",
-          "start": 6.67,
-          "end": 7.019
+          "start": 6.868,
+          "end": 7.228
         },
         {
           "id": "caption-word-2-3",
           "text": "Flash.",
-          "start": 7.088,
-          "end": 7.831
+          "start": 7.286,
+          "end": 8.11
         }
       ]
     },
     {
       "id": "caption-group-3",
       "frame": 3,
-      "start": 9.559,
-      "end": 12.531,
+      "start": 10.059,
+      "end": 13.031,
       "text": "Codex and OpenCode start the same way, with the same key.",
       "words": [
         {
           "id": "caption-word-3-0",
           "text": "Codex",
-          "start": 9.559,
-          "end": 10
+          "start": 10.059,
+          "end": 10.5
         },
         {
           "id": "caption-word-3-1",
           "text": "and",
-          "start": 10.058,
-          "end": 10.128
+          "start": 10.558,
+          "end": 10.628
         },
         {
           "id": "caption-word-3-2",
           "text": "OpenCode",
-          "start": 10.186,
-          "end": 10.697
+          "start": 10.686,
+          "end": 11.197
         },
         {
           "id": "caption-word-3-3",
           "text": "start",
-          "start": 10.743,
-          "end": 10.987
+          "start": 11.243,
+          "end": 11.487
         },
         {
           "id": "caption-word-3-4",
           "text": "the",
-          "start": 11.022,
-          "end": 11.092
+          "start": 11.522,
+          "end": 11.592
         },
         {
           "id": "caption-word-3-5",
           "text": "same",
-          "start": 11.138,
-          "end": 11.335
+          "start": 11.638,
+          "end": 11.835
         },
         {
           "id": "caption-word-3-6",
           "text": "way,",
-          "start": 11.382,
-          "end": 11.556
+          "start": 11.882,
+          "end": 12.056
         },
         {
           "id": "caption-word-3-7",
           "text": "with",
-          "start": 11.579,
-          "end": 11.718
+          "start": 12.079,
+          "end": 12.218
         },
         {
           "id": "caption-word-3-8",
           "text": "the",
-          "start": 11.753,
-          "end": 11.823
+          "start": 12.253,
+          "end": 12.323
         },
         {
           "id": "caption-word-3-9",
           "text": "same",
-          "start": 11.858,
-          "end": 12.067
+          "start": 12.358,
+          "end": 12.567
         },
         {
           "id": "caption-word-3-10",
           "text": "key.",
-          "start": 12.113,
-          "end": 12.531
+          "start": 12.613,
+          "end": 13.031
         }
       ]
     },
     {
       "id": "caption-group-4",
       "frame": 4,
-      "start": 14.059,
-      "end": 16.892,
+      "start": 14.559,
+      "end": 17.392,
       "text": "Pick from six coding agents, all on one AnyRouter key.",
       "words": [
         {
           "id": "caption-word-4-0",
           "text": "Pick",
-          "start": 14.059,
-          "end": 14.28
+          "start": 14.559,
+          "end": 14.78
         },
         {
           "id": "caption-word-4-1",
           "text": "from",
-          "start": 14.326,
-          "end": 14.442
+          "start": 14.826,
+          "end": 14.942
         },
         {
           "id": "caption-word-4-2",
           "text": "six",
-          "start": 14.5,
-          "end": 14.698
+          "start": 15,
+          "end": 15.198
         },
         {
           "id": "caption-word-4-3",
           "text": "coding",
-          "start": 14.756,
-          "end": 15.057
+          "start": 15.256,
+          "end": 15.557
         },
         {
           "id": "caption-word-4-4",
           "text": "agents,",
-          "start": 15.104,
-          "end": 15.441
+          "start": 15.604,
+          "end": 15.941
         },
         {
           "id": "caption-word-4-5",
           "text": "all",
-          "start": 15.475,
-          "end": 15.661
+          "start": 15.975,
+          "end": 16.161
         },
         {
           "id": "caption-word-4-6",
           "text": "on",
-          "start": 15.719,
-          "end": 15.789
+          "start": 16.219,
+          "end": 16.289
         },
         {
           "id": "caption-word-4-7",
           "text": "one",
-          "start": 15.859,
-          "end": 15.998
+          "start": 16.359,
+          "end": 16.498
         },
         {
           "id": "caption-word-4-8",
           "text": "AnyRouter",
-          "start": 16.033,
-          "end": 16.462
+          "start": 16.533,
+          "end": 16.962
         },
         {
           "id": "caption-word-4-9",
           "text": "key.",
-          "start": 16.509,
-          "end": 16.892
+          "start": 17.009,
+          "end": 17.392
         }
       ]
     },
     {
       "id": "caption-group-5",
       "frame": 5,
-      "start": 18.559,
-      "end": 21.392,
+      "start": 19.059,
+      "end": 21.95,
       "text": "anyr points the agent at AnyRouter for that session only.",
       "words": [
         {
           "id": "caption-word-5-0",
           "text": "anyr",
-          "start": 18.559,
-          "end": 18.965
+          "start": 19.059,
+          "end": 19.442
         },
         {
           "id": "caption-word-5-1",
           "text": "points",
-          "start": 19.047,
-          "end": 19.29
+          "start": 19.512,
+          "end": 19.744
         },
         {
           "id": "caption-word-5-2",
           "text": "the",
-          "start": 19.325,
-          "end": 19.407
+          "start": 19.779,
+          "end": 19.86
         },
         {
           "id": "caption-word-5-3",
           "text": "agent",
-          "start": 19.465,
-          "end": 19.72
+          "start": 19.907,
+          "end": 20.162
         },
         {
           "id": "caption-word-5-4",
           "text": "at",
-          "start": 19.755,
-          "end": 19.813
+          "start": 20.197,
+          "end": 20.266
         },
         {
           "id": "caption-word-5-5",
           "text": "AnyRouter",
-          "start": 19.883,
-          "end": 20.335
+          "start": 20.336,
+          "end": 20.859
         },
         {
           "id": "caption-word-5-6",
           "text": "for",
-          "start": 20.382,
-          "end": 20.463
+          "start": 20.917,
+          "end": 21.021
         },
         {
           "id": "caption-word-5-7",
           "text": "that",
-          "start": 20.498,
-          "end": 20.626
+          "start": 21.056,
+          "end": 21.207
         },
         {
           "id": "caption-word-5-8",
           "text": "session",
-          "start": 20.684,
-          "end": 20.997
+          "start": 21.265,
+          "end": 21.578
         },
         {
           "id": "caption-word-5-9",
           "text": "only.",
-          "start": 21.055,
-          "end": 21.392
+          "start": 21.636,
+          "end": 21.95
         }
       ]
     },
     {
       "id": "caption-group-6",
       "frame": 5,
-      "start": 21.543,
-      "end": 23.342,
-      "text": "Your own setup stays as it was.",
+      "start": 22.194,
+      "end": 24.585,
+      "text": "The agent's own config stays as it was.",
       "words": [
         {
           "id": "caption-word-6-0",
-          "text": "Your",
-          "start": 21.543,
-          "end": 21.705
+          "text": "The",
+          "start": 22.194,
+          "end": 22.321
         },
         {
           "id": "caption-word-6-1",
-          "text": "own",
-          "start": 21.74,
-          "end": 21.845
+          "text": "agent's",
+          "start": 22.368,
+          "end": 22.681
         },
         {
           "id": "caption-word-6-2",
-          "text": "setup",
-          "start": 21.879,
-          "end": 22.123
+          "text": "own",
+          "start": 22.716,
+          "end": 22.832
         },
         {
           "id": "caption-word-6-3",
-          "text": "stays",
-          "start": 22.181,
-          "end": 22.472
+          "text": "config",
+          "start": 22.879,
+          "end": 23.297
         },
         {
           "id": "caption-word-6-4",
-          "text": "as",
-          "start": 22.518,
-          "end": 22.599
+          "text": "stays",
+          "start": 23.355,
+          "end": 23.645
         },
         {
           "id": "caption-word-6-5",
-          "text": "it",
-          "start": 22.646,
-          "end": 22.715
+          "text": "as",
+          "start": 23.703,
+          "end": 23.784
         },
         {
           "id": "caption-word-6-6",
+          "text": "it",
+          "start": 23.842,
+          "end": 23.912
+        },
+        {
+          "id": "caption-word-6-7",
           "text": "was.",
-          "start": 22.75,
-          "end": 23.342
+          "start": 23.958,
+          "end": 24.585
         }
       ]
     },
     {
       "id": "caption-group-7",
       "frame": 6,
-      "start": 24.559,
-      "end": 25.198,
+      "start": 26.059,
+      "end": 26.732,
       "text": "One install.",
       "words": [
         {
           "id": "caption-word-7-0",
           "text": "One",
-          "start": 24.559,
-          "end": 24.733
+          "start": 26.059,
+          "end": 26.233
         },
         {
           "id": "caption-word-7-1",
           "text": "install.",
-          "start": 24.768,
-          "end": 25.198
+          "start": 26.268,
+          "end": 26.732
         }
       ]
     },
     {
       "id": "caption-group-8",
       "frame": 6,
-      "start": 25.221,
-      "end": 26.393,
-      "text": "Any agent, any model.",
+      "start": 26.767,
+      "end": 27.8,
+      "text": "Your agent, your model.",
       "words": [
         {
           "id": "caption-word-8-0",
-          "text": "Any",
-          "start": 25.221,
-          "end": 25.395
+          "text": "Your",
+          "start": 26.767,
+          "end": 26.918
         },
         {
           "id": "caption-word-8-1",
           "text": "agent,",
-          "start": 25.453,
-          "end": 25.755
+          "start": 26.965,
+          "end": 27.255
         },
         {
           "id": "caption-word-8-2",
-          "text": "any",
-          "start": 25.79,
-          "end": 25.964
+          "text": "your",
+          "start": 27.278,
+          "end": 27.394
         },
         {
           "id": "caption-word-8-3",
           "text": "model.",
-          "start": 26.022,
-          "end": 26.393
+          "start": 27.441,
+          "end": 27.8
         }
       ]
     },
     {
       "id": "caption-group-9",
       "frame": 6,
-      "start": 27.09,
-      "end": 29.157,
+      "start": 27.847,
+      "end": 29.635,
       "text": "Start at anyrouter.dev.",
       "words": [
         {
           "id": "caption-word-9-0",
           "text": "Start",
-          "start": 27.09,
-          "end": 27.427
+          "start": 27.847,
+          "end": 28.091
         },
         {
           "id": "caption-word-9-1",
           "text": "at",
-          "start": 27.461,
-          "end": 27.543
+          "start": 28.114,
+          "end": 28.172
         },
         {
           "id": "caption-word-9-2",
           "text": "anyrouter.dev.",
-          "start": 27.601,
-          "end": 29.157
+          "start": 28.218,
+          "end": 29.635
         }
       ]
     }

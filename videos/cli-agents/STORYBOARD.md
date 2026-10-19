@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 32.157s
+duration: 32.635s
 message: "Install anyr once and sign in. Then start Claude Code, Codex or OpenCode on any model you name, with one AnyRouter key."
 arc: One install → A named model → Other agents → Six agents → Nothing to undo → Close
 audience: a developer who uses a coding agent in the terminal
@@ -39,12 +39,12 @@ music: none
 ## Frame 2 — A named model
 - src: compositions/frames/02-named-model.html
 
-- scene: "Claude Code, on any model" headline over the terminal; `anyr claude --model` types, and `deepseek/deepseek-v4-flash` lands in the accent on "DeepSeek"
-- duration: 6s
+- scene: "Claude Code, on your model" headline over the terminal; `anyr claude --model` types, and `deepseek/deepseek-v4-flash` lands in the accent on "DeepSeek"
+- duration: 6.5s
 - transition_in: cut
 - type: key_feature
 - beat: relief
-- voiceover: "Then start Claude Code on any model you name, like DeepSeek V4 Flash."
+- voiceover: "Then start Claude Code on the model you name, like DeepSeek V4 Flash."
 - asset_candidates: none, typed commands only
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the model id
@@ -87,12 +87,12 @@ music: none
 ## Frame 5 — Nothing to undo
 - src: compositions/frames/05-session.html
 
-- scene: two cards. "This session" with "AnyRouter" inks on "session only"; then the ink moves to "Your agent's config files" with "Unchanged" on "Your own setup"
-- duration: 6s
+- scene: two cards. "This session" with "AnyRouter" inks on "session only"; then the ink moves to "Agent config files" with "Unchanged" on "The agent's own config"
+- duration: 7s
 - transition_in: cut
 - type: trust
 - beat: trust
-- voiceover: "anyr points the agent at AnyRouter for that session only. Your own setup stays as it was."
+- voiceover: "anyr points the agent at AnyRouter for that session only. The agent's own config stays as it was."
 - asset_candidates: none
 - blueprint: ui-callout (Adapt)
 - focal: the card that is inked
@@ -103,12 +103,12 @@ music: none
 ## Frame 6 — Close
 - src: compositions/frames/06-close.html
 
-- scene: "One install." then "Any agent, any model." in display type, alone; then the AnyRouter lockup and anyrouter.dev
-- duration: 7.598s
+- scene: "One install." then "Your agent, your model." in display type, alone; then the AnyRouter lockup and anyrouter.dev
+- duration: 6.576s
 - transition_in: cut
 - type: cta
 - beat: resolve
-- voiceover: "One install. Any agent, any model. Start at anyrouter.dev."
+- voiceover: "One install. Your agent, your model. Start at anyrouter.dev."
 - asset_candidates: assets/anyrouter-logo-black.svg
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: AnyRouter lockup

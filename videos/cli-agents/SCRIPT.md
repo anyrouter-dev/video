@@ -15,7 +15,7 @@ Claims A1, A2.
 
 Claims A3, A4, A5. A named model, never a preset, comes first.
 
-    Then start Claude Code on any model you name, like DeepSeek V4 Flash.
+    Then start Claude Code on the model you name, like DeepSeek V4 Flash.
 
 ## Line 3 — Other agents (Frame 3)
 
@@ -33,8 +33,8 @@ Claim A7.
 
 Claim A8.
 
-    anyr points the agent at AnyRouter for that session only. Your own setup stays as it was.
+    anyr points the agent at AnyRouter for that session only. The agent's own config stays as it was.
 
 ## Line 6 — Close (Frame 6)
 
-    One install. Any agent, any model. Start at anyrouter.dev.
+    One install. Your agent, your model. Start at anyrouter.dev.

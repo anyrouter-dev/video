@@ -8,7 +8,7 @@
   {"frame": 4, "sound": "whoosh-short", "word": "six", "offset": -0.15, "volume": 0.22},
   {"frame": 4, "sound": "pop", "word": "one", "volume": 0.22},
   {"frame": 5, "sound": "click-soft", "word": "AnyRouter", "volume": 0.2},
-  {"frame": 5, "sound": "click", "word": "Your", "offset": -0.05, "volume": 0.28},
+  {"frame": 5, "sound": "click", "word": "The", "offset": -0.05, "volume": 0.28},
   {"frame": 6, "sound": "chime", "word": "One", "volume": 0.16},
   {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
 ]

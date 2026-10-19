@@ -134,13 +134,13 @@
     }
   </style>
 
-  <div id="root" data-composition-id="06-close" data-width="1920" data-height="1080" data-duration="7.598">
-    <div id="f06-bg" class="k-bg clip" data-start="0" data-duration="7.598" data-track-index="0"></div>
-    <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="7.598" data-track-index="1">
+  <div id="root" data-composition-id="06-close" data-width="1920" data-height="1080" data-duration="6.576">
+    <div id="f06-bg" class="k-bg clip" data-start="0" data-duration="6.576" data-track-index="0"></div>
+    <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="6.576" data-track-index="1">
       <div id="f06-cam" class="k-cam">
         <div id="f06-line" class="f06-line">
           <span id="f06-one" class="k-h2">One install.</span>
-          <h2 id="f06-any" class="k-display"><span class="k-line">Any agent,</span><span class="k-line">any model.</span></h2>
+          <h2 id="f06-any" class="k-display"><span class="k-line">Your agent,</span><span class="k-line">your model.</span></h2>
         </div>
         <div id="f06-lockup" class="f06-lockup">
           <div id="f06-brand" class="f06-brand">
@@ -235,17 +235,17 @@ const K = {
 };
       // /kit:js
       const $ = (s) => document.getElementById("f06-" + s);
-      // Word starts from audio_meta.json frame 6: "One" 0, "Any" 0.662, "any" 1.231, "Start" 2.531, "anyrouter.dev." 3.042.
+      // Word starts from audio_meta.json frame 6: "One" 0, "Your" 0.708, "your" 1.219, "model." 1.382, "Start" 1.788, "anyrouter.dev." 2.159.
       // The camera drifts until SETTLE; the closing card may then hold still (pace-audit's end allowance, 3s).
-      const ANY = 0.6, START = 2.48, URL = 2.99, SETTLE = 5.6;
+      const ANY = 0.65, START = 2.0, URL = 2.15, SETTLE = 4.6;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
-        // "One install. Any agent, any model.": the promise, alone
+        // "One install. Your agent, your model.": the promise, alone
         K.rise(tl, $("one"), 0.02, { y: 40 });
         K.headline(tl, $("any"), ANY);
         K.push(tl, $("cam"), START, { to: 1.03, ease: "none" });
-        K.exit(tl, $("line"), START - 0.55, { d: 0.7 });
+        K.exit(tl, $("line"), START - 0.45, { d: 0.5 });
 
         // "Start at anyrouter.dev.": the lockup settles from a push, and the address arrives on its word
         tl.fromTo($("lockup"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, START);
