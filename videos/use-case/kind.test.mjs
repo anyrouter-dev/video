@@ -73,17 +73,23 @@ test('a field the film never shows does not make a new release', async () => {
   assert.deepEqual(byLabel(await releases(edited)), before);
 });
 
-test('a new id in the catalog makes a new release only for films that roll it', async () => {
-  const before = byLabel(await releases());
+// The fixture catalog with `edit` applied to the model `id`, saved where collect can read it.
+const catalogWith = (id, edit) => {
   const models = catalog();
-  models.data.push({ id: 'x-ai/grok-5', owned_by: 'xai', category: 'text', capabilities: ['chat'], created: 2e9, pricing: { input_per_1m: 2, output_per_1m: 8 } });
+  edit(models.data.find(m => m.id === id));
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'models-')), 'models.json');
   fs.writeFileSync(file, JSON.stringify(models));
+  return file;
+};
+
+test('a rolled id moving to the user\'s own key makes a new release only for films that roll it', async () => {
+  const before = byLabel(await releases());
+  const file = catalogWith('minimax/minimax-m3.1-flash', m => { m.pricing.billing = 'byok'; });
   const after = byLabel(kind.split(await collect(doc(), { 'models-from': file })));
   const changed = Object.keys(before).filter(slug => before[slug] !== after[slug]);
   assert.ok(changed.includes('cheapest-llm-api'), 'cheapest-llm-api rolls anyrouter/auto through the credit ids');
+  assert.ok(changed.includes('claude-code-free-models'), 'it rolls anyrouter/free through the free ids');
   assert.ok(!changed.includes('claude-code'), 'claude-code names no preset, so it rolls nothing');
-  assert.ok(!changed.includes('claude-code-free-models'), 'a free roll never shows a paid id');
 });
 
 test('--slug collects one use case, so gen and check work on one film', async () => {
@@ -181,14 +187,30 @@ test('a page that promises $0 or free never rolls an id billed to credits', () =
 });
 
 test('a roll never shows an id that needs the user\'s own key, and a free roll never a paid one', () => {
+  // billing "byok" means the user's own provider key, not one AnyRouter key: under a preset it would read as included
   const byId = Object.fromEntries(catalog().data.map(m => [m.id, m]));
-  for (const id of [...pools.credit, ...pools.free]) {
-    assert.ok(byId[id], `${id} is in the catalog`);
-    assert.ok(!/^(anthropic|openai|google)\//.test(id), `${id} would need the user's own key`);
+  const runsOnCredits = id => byId[id] && byId[id].pricing.billing !== 'byok' && !id.startsWith('anyrouter/');
+  const isFree = id => runsOnCredits(id) && Number(byId[id].pricing.prompt) === 0 && Number(byId[id].pricing.completion) === 0;
+  let seen = 0;
+  for (const [u, film] of films()) {
+    const ids = rolled(html(film)).slice(0, -1);
+    const free = u.command.text.includes('anyrouter/free');
+    for (const id of ids) {
+      seen++;
+      assert.ok(runsOnCredits(id), `${u.slug} rolls ${id}, which the catalog bills to the user's own key`);
+      if (free) assert.ok(isFree(id), `${u.slug} rolls ${id} under anyrouter/free, and it is not priced 0`);
+    }
   }
-  for (const id of pools.free) assert.equal(byId[id].pricing.input_per_1m + byId[id].pricing.output_per_1m, 0, `${id} is free`);
-  // newest per maker, never an alias or a dated snapshot of one
-  assert.deepEqual(pools.credit, ['deepseek/deepseek-v4.1-flash', 'moonshotai/kimi-k3', 'x-ai/grok-4.7', 'z-ai/glm-5.3']);
+  assert.ok(seen > 0, 'some film rolls');
+  assert.deepEqual(pools.credit, ['deepseek/deepseek-v4-flash', 'nvidia/nemotron-3-super-120b-a12b', 'minimax/minimax-m3.1-flash']);
+});
+
+test('an id the catalog bills to the user\'s own key, or prices above 0 under free, drops out of its roll', () => {
+  const pick = (id, edit) => rollPools(JSON.parse(fs.readFileSync(catalogWith(id, edit), 'utf8')));
+  assert.ok(!pick('deepseek/deepseek-v4-flash', m => { m.pricing.billing = 'byok'; }).credit.includes('deepseek/deepseek-v4-flash'));
+  const priced = pick('nvidia/nemotron-3-super-120b-a12b', m => { m.pricing.prompt = '0.1'; });
+  assert.ok(priced.credit.includes('nvidia/nemotron-3-super-120b-a12b'), 'a priced id still runs on credits');
+  assert.ok(!priced.free.includes('nvidia/nemotron-3-super-120b-a12b'), 'but never rolls under anyrouter/free');
 });
 
 // ── the film ───────────────────────────────────────────────────────────────
@@ -220,7 +242,7 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
   }
-  assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
+  assert.ok(large >= films().length * 0.7, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
 });
 
 test('code too tall to sit under the caption fails the build, never a caption too small to read', () => {

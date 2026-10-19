@@ -55,7 +55,7 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
-| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup. Each use case is its own release | `/use-cases.json`, and the ids a preset rolls through from `/api/v1/models` | on demand |
+| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup. Each use case is its own release | `/use-cases.json`, and the ids a preset rolls through from `/api/v1/models?all=1` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
@@ -125,7 +125,7 @@ Kind flags: `--limit=N`, `--seconds=N`, `--from=FILE` (build from a saved
 response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 `--baseline=FILE`; `release` takes `--version=X.Y.Z`; `changelog` takes
 `--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG` and `--models-from=FILE`
-(a saved `/api/v1/models` response, so a fixture build needs no network).
+(a saved `/api/v1/models?all=1` response, so a fixture build needs no network).
 
 ## model-drop layouts
 
@@ -153,11 +153,14 @@ in the Clear look of `videos/explainer/frame.md`: white, Geist, shadcn surfaces,
 one accent per moment. A film is one sub-composition in three beats, its
 headline carried through all three; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
-Where the page's command names an `anyrouter/*` preset, the id rolls through the
-newest id of a few model makers from the catalog (`ROLL_OWNERS` in its `kind.mjs`;
-free ids only for `anyrouter/free`, and no credit ids under a page that promises
-"$0" or "free") and comes back to the preset. Anthropic, OpenAI
-and Google ids never roll: they run on the user's own key, not AnyRouter credits.
+Where the page's command names an `anyrouter/*` preset, the id rolls through a
+few hand-picked ids (`ROLL_IDS` in its `kind.mjs`) and comes back to the preset.
+An id rolls only while `/api/v1/models?all=1` lists it as a chat model whose
+`pricing.billing` is not `"byok"`: a byok id needs the user's own provider key,
+so under a preset it would read as included. `anyrouter/free` rolls only ids
+priced 0, and no credit id rolls under a page that promises "$0" or "free".
+No film shows a screenshot of anyrouter.dev: any UI on screen is drawn in the
+film's kit from real facts.
 
 ## Rules every generated film obeys
 

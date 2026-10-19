@@ -11,7 +11,7 @@
  * caption over the code, then settles above the lockup.
  *
  * Facts come from https://anyrouter.dev/use-cases.json, and the model ids a film
- * rolls through from https://anyrouter.dev/api/v1/models. Every word on screen is
+ * rolls through from https://anyrouter.dev/api/v1/models?all=1. Every word on screen is
  * a fact taken verbatim, with API keys redacted. Where the page's command names an
  * `anyrouter/*` preset, the id rolls through a few real ids the same key runs and
  * comes back to the preset, so the film never implies the presets are all there is.
@@ -22,7 +22,7 @@
  *
  *   --slug=SLUG          collect just this use case
  *   --from=FILE          build from a saved use-cases.json instead of the live site
- *   --models-from=FILE   read the catalog from a saved /api/v1/models response
+ *   --models-from=FILE   read the catalog from a saved /api/v1/models?all=1 response
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,7 +32,8 @@ import { writeProject } from './project.mjs';
 import { CSS, read, setIn, codeSizes, filmScene, ROLL_EVERY } from './scenes.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
-export const MODELS_API = 'https://anyrouter.dev/api/v1/models';
+// every model, with the billing field that says which ones run on the user's own key
+export const MODELS_API = 'https://anyrouter.dev/api/v1/models?all=1';
 // A page with little to show runs short rather than holding a still frame.
 export const FILM = { min: 10, max: 18 };
 
@@ -66,25 +67,21 @@ export function parseDoc(doc) {
 }
 
 // ── the roll: real ids one AnyRouter key runs ──────────────────────────────
-// The model makers whose newest id a film rolls through. Only the owners are
-// chosen here; each id is read from the catalog. Anthropic, OpenAI and Google
-// are never in a roll: their ids run on the user's own key, and a roll must not
-// suggest they run on AnyRouter credits. A page about anyrouter/free rolls
-// through free ids only, so "free" on screen stays true.
-export const ROLL_OWNERS = { credit: ['deepseek', 'moonshotai', 'x-ai', 'z-ai'], free: ['z-ai', 'liquid', 'reflection'] };
+// The ids a roll may show, in order. Each answered on the platform route with
+// AnyRouter credits (2026-10-19); moonshotai/kimi-k3 is left out, its route was
+// exhausted. An id rolls only while the full catalog says one AnyRouter key runs
+// it: a chat model whose billing is not "byok", which needs the user's own
+// provider key. A page about anyrouter/free rolls ids priced 0 only, so "free"
+// on screen stays true.
+export const ROLL_IDS = ['deepseek/deepseek-v4-flash', 'nvidia/nemotron-3-super-120b-a12b', 'minimax/minimax-m3.1-flash'];
 
-/** The roll pools from a /api/v1/models response: per pool, each owner's newest chat model. */
+/** The roll pools from a /api/v1/models?all=1 response: the ROLL_IDS one key runs, and of those the free ones. */
 export function rollPools(doc) {
-  const models = list(doc?.data, 'models.data');
-  const chat = models.filter(m => typeof m?.id === 'string'
-    && ['text', 'multimodal'].includes(m.category) && (m.capabilities ?? []).includes('chat')
-    // an alias or a dated snapshot is a second name for a model already in the pool
-    && !/-latest$/.test(m.id) && !/-\d{4}$/.test(m.id));
-  const free = m => Number(m.pricing?.input_per_1m) === 0 && Number(m.pricing?.output_per_1m) === 0;
-  const newest = (owner, pick) => chat.filter(m => m.id.startsWith(`${owner}/`) && pick(m))
-    .sort((a, b) => b.created - a.created)[0]?.id;
-  const pool = (owners, pick) => owners.map(o => newest(o, pick)).filter(Boolean);
-  return { credit: pool(ROLL_OWNERS.credit, () => true), free: pool(ROLL_OWNERS.free, free) };
+  const byId = new Map(list(doc?.data, 'models.data').filter(m => typeof m?.id === 'string').map(m => [m.id, m]));
+  const credit = m => !!m && !m.id.startsWith('anyrouter/') && m.pricing?.billing !== 'byok'
+    && ['text', 'multimodal'].includes(m.category) && (m.capabilities ?? []).includes('chat');
+  const free = m => credit(m) && Number(m.pricing?.prompt) === 0 && Number(m.pricing?.completion) === 0;
+  return { credit: ROLL_IDS.filter(id => credit(byId.get(id))), free: ROLL_IDS.filter(id => free(byId.get(id))) };
 }
 
 // An anyrouter/* preset inside a line of the page's code.
