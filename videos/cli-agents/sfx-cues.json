@@ -1,0 +1,14 @@
+[
+  {"frame": 1, "sound": "click-soft", "word": "Install", "offset": 0.2, "volume": 0.2},
+  {"frame": 1, "sound": "click", "word": "sign", "volume": 0.26},
+  {"frame": 2, "sound": "click-soft", "word": "start", "offset": 0.2, "volume": 0.2},
+  {"frame": 2, "sound": "pop", "word": "DeepSeek", "offset": -0.06, "volume": 0.22},
+  {"frame": 3, "sound": "click", "word": "Codex", "offset": 0.45, "volume": 0.24},
+  {"frame": 3, "sound": "click", "word": "OpenCode", "offset": 0.5, "volume": 0.24},
+  {"frame": 4, "sound": "whoosh-short", "word": "six", "offset": -0.15, "volume": 0.22},
+  {"frame": 4, "sound": "pop", "word": "one", "volume": 0.22},
+  {"frame": 5, "sound": "click-soft", "word": "AnyRouter", "volume": 0.2},
+  {"frame": 5, "sound": "click", "word": "Your", "offset": -0.05, "volume": 0.28},
+  {"frame": 6, "sound": "chime", "word": "One", "volume": 0.16},
+  {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]
