@@ -3,6 +3,100 @@
     @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
     @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
+    [data-composition-id="09-pick-model"] {
+      --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+      --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+      --line: #E5E5E5; --line-strong: #D4D4D8;
+      --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+      --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A; --term-ok: #4ADE80;
+      --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+      --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-family: var(--sans);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+    [data-composition-id="09-pick-model"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+    [data-composition-id="09-pick-model"] .k-stage { position: absolute; inset: 0; }
+
+    /* type scale (frame.md typography) */
+    [data-composition-id="09-pick-model"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+    [data-composition-id="09-pick-model"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+    [data-composition-id="09-pick-model"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+    [data-composition-id="09-pick-model"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+    [data-composition-id="09-pick-model"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+    [data-composition-id="09-pick-model"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+    [data-composition-id="09-pick-model"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+    [data-composition-id="09-pick-model"] .k-code { font-family: var(--mono); font-size: 48px; line-height: 1.45; }
+    [data-composition-id="09-pick-model"] .k-code-sm { font-family: var(--mono); font-size: 40px; line-height: 1.45; }
+    [data-composition-id="09-pick-model"] .k-stat { font-size: 200px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+    [data-composition-id="09-pick-model"] .k-mono { font-family: var(--mono); }
+
+    /* card: shadcn Card at 2x */
+    [data-composition-id="09-pick-model"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 48px; }
+
+    /* badge: shadcn Badge */
+    [data-composition-id="09-pick-model"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+    [data-composition-id="09-pick-model"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line); }
+    [data-composition-id="09-pick-model"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+    [data-composition-id="09-pick-model"] .k-badge.is-accent { background: var(--primary-tint); color: var(--primary); }
+    [data-composition-id="09-pick-model"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+    [data-composition-id="09-pick-model"] .k-badge svg { width: 32px; height: 32px; flex: none; }
+
+    /* button: shadcn Button */
+    [data-composition-id="09-pick-model"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 40px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 40px; font-weight: 500; line-height: 1; white-space: nowrap; }
+    [data-composition-id="09-pick-model"] .k-btn.is-outline { background: var(--bg); color: var(--ink); border: 2px solid var(--line); }
+    [data-composition-id="09-pick-model"] .k-btn.is-primary { background: var(--primary); }  /* only where it mirrors a real orange button on anyrouter.dev */
+    [data-composition-id="09-pick-model"] .k-btn svg { width: 36px; height: 36px; flex: none; }
+
+    /* focus ring: wrap the named control; animate the ring's opacity */
+    [data-composition-id="09-pick-model"] .k-ring { position: absolute; inset: -10px; border-radius: inherit; border: 2px solid var(--primary); box-shadow: 0 0 0 6px rgba(187,77,0,.35); pointer-events: none; opacity: 0; }
+
+    /* step header: replaces the old four-dot rail */
+    [data-composition-id="09-pick-model"] .k-step { position: absolute; left: 96px; top: 88px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+
+    /* demo badge: every frame that shows a third-party site */
+    [data-composition-id="09-pick-model"] .k-demo { position: absolute; right: 96px; top: 88px; }
+
+    /* callout: shadcn Alert, one side note at a time */
+    [data-composition-id="09-pick-model"] .k-callout { display: flex; align-items: flex-start; gap: 28px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 36px 44px; }
+    [data-composition-id="09-pick-model"] .k-callout > svg, [data-composition-id="09-pick-model"] .k-callout > img { width: 40px; height: 40px; flex: none; margin-top: 4px; }
+    [data-composition-id="09-pick-model"] .k-callout-text { display: flex; flex-direction: column; gap: 8px; }
+
+    /* browser frame: wraps a real screenshot, cropped to what the voice names */
+    [data-composition-id="09-pick-model"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); overflow: hidden; }
+    [data-composition-id="09-pick-model"] .k-browser-bar { position: relative; height: 56px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+    [data-composition-id="09-pick-model"] .k-browser-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
+    [data-composition-id="09-pick-model"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+    [data-composition-id="09-pick-model"] .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+    [data-composition-id="09-pick-model"] .k-view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
+    [data-composition-id="09-pick-model"] .k-view > img { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+    /* key pill: an API key, always redacted (prefix + bullets) */
+    [data-composition-id="09-pick-model"] .k-key { display: inline-flex; align-items: center; gap: 16px; height: 72px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 40px; line-height: 1; color: var(--ink); white-space: nowrap; }
+    [data-composition-id="09-pick-model"] .k-key svg { width: 36px; height: 36px; flex: none; }
+
+    /* terminal: the one dark surface */
+    [data-composition-id="09-pick-model"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+    [data-composition-id="09-pick-model"] .k-term-bar { position: relative; height: 56px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+    [data-composition-id="09-pick-model"] .k-term-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
+    [data-composition-id="09-pick-model"] .k-term-dots i { width: 12px; height: 12px; border-radius: 50%; background: #3F3F46; }
+    [data-composition-id="09-pick-model"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.45; color: var(--term-ink); white-space: pre; }
+    [data-composition-id="09-pick-model"] .k-term-body .p { color: var(--term-dim); }     /* the $ prompt */
+    [data-composition-id="09-pick-model"] .k-term-body .dim { color: var(--term-dim); }   /* output */
+    [data-composition-id="09-pick-model"] .k-term-body .id { color: var(--term-id); }     /* a model id */
+    [data-composition-id="09-pick-model"] .k-term-body .ok { color: var(--term-ok); }     /* success */
+    [data-composition-id="09-pick-model"] .k-caret { display: inline-block; width: 26px; height: 52px; vertical-align: -8px; background: var(--term-ink); }
+
+    /* cursor: macOS arrow at 2x so it reads on a phone */
+    [data-composition-id="09-pick-model"] .k-cursor { position: absolute; left: 0; top: 0; width: 44px; height: 54px; filter: drop-shadow(0 2px 4px rgba(10,10,10,.25)); pointer-events: none; transform-origin: 3px 3px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="09-pick-model"] .k-step { left: 60px; top: 200px; }
+      [data-composition-id="09-pick-model"] .k-demo { right: 120px; top: 200px; }
+      [data-composition-id="09-pick-model"] .k-term-body { font-size: 40px; white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; padding: 32px 36px; }
+    }
+
     #root {
       position: absolute;
       inset: 0;
@@ -11,191 +105,87 @@
       overflow: hidden;
       font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
     }
-    .\30 9-pick-model-bg { position: absolute; inset: 0; background: #FFFFFF; }
-    .\30 9-pick-model-stage { position: absolute; inset: 0; }
+    /* .f09-col and the terminal inside it match 08-code-terminal exactly: 08 hard-cuts into this frame. */
+    [data-composition-id="09-pick-model"] .f09-col { position: absolute; left: 96px; right: 96px; top: 88px; display: flex; flex-direction: column; gap: 48px; }
+    [data-composition-id="09-pick-model"] .f09-title { margin: 0; }
+    [data-composition-id="09-pick-model"] .f09-col .k-term { position: relative; }
+    [data-composition-id="09-pick-model"] .f09-col .k-term-body { white-space: normal; }
+    [data-composition-id="09-pick-model"] .f09-line { white-space: pre; }
+    [data-composition-id="09-pick-model"] .f09-check { display: inline-block; width: 0.6em; height: 1em; vertical-align: -0.16em; }
+    [data-composition-id="09-pick-model"] .k-caret { margin-left: 2px; }
 
-    .\30 9-pick-model-card {
-      position: absolute;
-      left: 290px;
-      top: 190px;
-      width: 1340px;
-      height: 560px;
-      transform-origin: 0 0;
-    }
-    .\30 9-pick-model-shadow {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 1340px;
-      border-radius: 20px;
-      box-shadow: 0 30px 80px rgba(10, 10, 10, .18);
-    }
-    .\30 9-pick-model-shadow-big { height: 560px; }
-    .\30 9-pick-model-shadow-small { height: 170.4px; opacity: 0; }
-    .\30 9-pick-model-titlebar {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 1340px;
-      height: 56px;
-      background: #18181B;
-      border-radius: 20px 20px 0 0;
-    }
-    .\30 9-pick-model-dots { position: absolute; left: 22px; top: 21.5px; display: flex; gap: 8px; }
-    .\30 9-pick-model-dots span { width: 13px; height: 13px; border-radius: 50%; background: #3F3F46; }
-    .\30 9-pick-model-title {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      line-height: 56px;
-      text-align: center;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 22px;
-      color: #A1A1AA;
-    }
-    .\30 9-pick-model-mark { position: absolute; right: 22px; top: 17px; width: 22px; height: 22px; }
-    .\30 9-pick-model-filler {
-      position: absolute;
-      left: 0;
-      top: 56px;
-      width: 1340px;
-      height: 484px;
-      background: #0A0A0A;
-      transform-origin: 50% 0;
-    }
-    .\30 9-pick-model-cap {
-      position: absolute;
-      left: 0;
-      top: 540px;
-      width: 1340px;
-      height: 20px;
-      background: #0A0A0A;
-      border-radius: 0 0 20px 20px;
-    }
-    .\30 9-pick-model-line {
-      position: absolute;
-      left: 52px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 34px;
-      line-height: 1.6;
-      height: 54.4px;
-      white-space: pre;
-      color: #F4F4F5;
-    }
-    .\30 9-pick-model-dim { color: #A1A1AA; }
-    .\30 9-pick-model-ok { color: #4ADE80; }
-    .\30 9-pick-model-model { color: #F0915A; }
-    .\30 9-pick-model-caret {
-      display: inline-block;
-      width: 18px;
-      height: 38px;
-      margin-left: 4px;
-      vertical-align: -0.2em;
-      background: #F4F4F5;
-    }
-
-    .\30 9-pick-model-legend {
-      position: absolute;
-      left: 357px;
-      top: 400px;
-      width: 1206px;
-    }
-    .\30 9-pick-model-row {
-      position: relative;
-      height: 116px;
-    }
-    .\30 9-pick-model-row-bg {
-      position: absolute;
-      inset: 10px 0;
-      border-radius: 12px;
-      background: #FAFAFA;
-      opacity: 0;
-    }
-    .\30 9-pick-model-row-bar {
-      position: absolute;
-      left: 0;
-      top: 30px;
-      width: 3px;
-      height: 56px;
-      background: #BB4D00;
-      opacity: 0;
-    }
-    .\30 9-pick-model-rule {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1.5px;
-      background: #E5E5E5;
-      transform-origin: 0 50%;
-    }
-    .\30 9-pick-model-cell {
-      position: absolute;
-      top: 0;
-      height: 116px;
+    [data-composition-id="09-pick-model"] .f09-cards { position: absolute; left: 96px; right: 96px; top: 352px; display: flex; gap: 32px; }
+    [data-composition-id="09-pick-model"] .f09-card {
+      flex: 1 1 0;
+      min-width: 0;
       display: grid;
-      align-items: center;
-      white-space: nowrap;
-      font-size: 40px;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: "id" "desc" "badge";
+      row-gap: 16px;
+      justify-items: start;
+      padding: 40px;
     }
-    .\30 9-pick-model-cell > span { grid-area: 1 / 1; }
-    .\30 9-pick-model-idcol { left: 40px; font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-weight: 400; }
-    .\30 9-pick-model-meaning { left: 470px; font-size: 36px; font-weight: 400; }
-    .\30 9-pick-model-off { color: #636363; }
-    .\30 9-pick-model-on { color: #0A0A0A; opacity: 0; }
-    .\30 9-pick-model-on-free { color: #007E55; opacity: 0; }
+    [data-composition-id="09-pick-model"] .f09-id { grid-area: id; font-family: var(--mono); font-size: 48px; font-weight: 500; line-height: 1.3; white-space: nowrap; }
+    [data-composition-id="09-pick-model"] .f09-desc { grid-area: desc; margin: 0; color: var(--ink-2); }
+    [data-composition-id="09-pick-model"] .f09-badge { grid-area: badge; margin-top: 16px; }
+    [data-composition-id="09-pick-model"] .f09-ring { inset: auto; border-radius: 34px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="09-pick-model"] .f09-col { left: 60px; right: 120px; top: 200px; gap: 40px; }
+      [data-composition-id="09-pick-model"] .f09-title { text-wrap: balance; }
+      [data-composition-id="09-pick-model"] .f09-line { white-space: pre-wrap; }
+      [data-composition-id="09-pick-model"] .k-caret { width: 22px; height: 44px; vertical-align: -7px; }
+
+      [data-composition-id="09-pick-model"] .f09-cards { left: 60px; right: 120px; top: 476px; flex-direction: column; gap: 24px; }
+      [data-composition-id="09-pick-model"] .f09-card {
+        flex: none;
+        padding: 36px 40px;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        grid-template-areas: "id badge" "desc desc";
+        column-gap: 24px;
+        row-gap: 8px;
+        align-items: center;
+      }
+      [data-composition-id="09-pick-model"] .f09-badge { margin-top: 0; }
+    }
   </style>
 
-  <div id="root" data-composition-id="09-pick-model" data-width="1920" data-height="1080" data-duration="10.838">
-    <div class="09-pick-model-bg clip" data-start="0" data-duration="10.838" data-track-index="0"></div>
+  <div id="root" data-composition-id="09-pick-model" data-width="1920" data-height="1080" data-duration="9.909">
+    <div id="f09-bg" class="k-bg clip" data-start="0" data-duration="9.909" data-track-index="0"></div>
 
-    <div class="09-pick-model-stage clip" data-start="0" data-duration="10.838" data-track-index="1">
-      <div class="09-pick-model-card" id="09-pick-model-card">
-        <div class="09-pick-model-shadow 09-pick-model-shadow-big" id="09-pick-model-shadow-big"></div>
-        <div class="09-pick-model-shadow 09-pick-model-shadow-small" id="09-pick-model-shadow-small"></div>
-        <div class="09-pick-model-titlebar">
-          <div class="09-pick-model-dots"><span></span><span></span><span></span></div>
-          <div class="09-pick-model-title">~/my-project</div>
-          <svg class="09-pick-model-mark" viewBox="203.66 206.57 801.34 801.34" fill="#A1A1AA">
-            <g transform="translate(0,1254) scale(0.1,-0.1)">
-              <path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
-              <path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
-            </g>
-          </svg>
+    <div id="f09-stage" class="k-stage clip" data-start="0" data-duration="9.909" data-track-index="1">
+      <div class="f09-col">
+        <h2 id="f09-title" class="k-h2 f09-title">Use it with Claude Code</h2>
+        <div id="f09-term" class="k-term">
+          <div class="k-term-bar"><div class="k-term-dots"><i></i><i></i><i></i></div>~/my-project</div>
+          <div id="f09-body" class="k-term-body">
+            <div id="f09-l1" class="f09-line f09-old"><span class="p">$ </span>curl -fsSL https://anyrouter.dev&#8203;/setup.sh | bash</div>
+            <div class="f09-line f09-old dim">Installed ~/.local/bin/anyr</div>
+            <div class="f09-line f09-old"><span class="p">$ </span>anyr login</div>
+            <div class="f09-line f09-old dim">Opening browser to sign in…</div>
+            <div class="f09-line f09-old ok"><svg class="f09-check" viewBox="0 0 24 40" aria-hidden="true"><path d="M3 22 L9.5 28.5 L21 14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Signed in</div>
+            <div id="f09-l6" class="f09-line"><span class="p">$ </span>anyr claude --model <span class="id">anyrouter/<span id="f09-word"></span></span><span id="f09-caret" class="k-caret"></span></div>
+          </div>
         </div>
-        <div class="09-pick-model-filler" id="09-pick-model-filler"></div>
-        <div class="09-pick-model-cap" id="09-pick-model-cap"></div>
-
-        <div class="09-pick-model-line 09-pick-model-old" style="top: 100px"><span class="09-pick-model-dim">$ </span>curl -fsSL https://anyrouter.dev/setup.sh | bash</div>
-        <div class="09-pick-model-line 09-pick-model-old 09-pick-model-dim" style="top: 154.4px">Installed ~/.local/bin/anyr</div>
-        <div class="09-pick-model-line 09-pick-model-old" style="top: 208.8px"><span class="09-pick-model-dim">$ </span>anyr login</div>
-        <div class="09-pick-model-line 09-pick-model-old 09-pick-model-dim" style="top: 263.2px">Opening browser to sign in…</div>
-        <div class="09-pick-model-line 09-pick-model-old 09-pick-model-ok" style="top: 317.6px">✓ Signed in</div>
-        <div class="09-pick-model-line" id="09-pick-model-cmd" style="top: 372px"><span class="09-pick-model-dim">$ </span>anyr claude --model <span class="09-pick-model-model" id="09-pick-model-id">anyrouter/free</span><span class="09-pick-model-caret" id="09-pick-model-caret"></span></div>
       </div>
 
-      <div class="09-pick-model-legend">
-        <div class="09-pick-model-row" id="09-pick-model-row-0">
-          <div class="09-pick-model-row-bg"></div>
-          <div class="09-pick-model-row-bar"></div>
-          <div class="09-pick-model-cell 09-pick-model-idcol"><span class="09-pick-model-off">anyrouter/free</span><span class="09-pick-model-on">anyrouter/free</span></div>
-          <div class="09-pick-model-cell 09-pick-model-meaning"><span class="09-pick-model-off">only $0 models · never uses credit</span><span class="09-pick-model-on-free">only $0 models · never uses credit</span></div>
-          <div class="09-pick-model-rule"></div>
+      <div id="f09-cards" class="f09-cards">
+        <div id="f09-card-free" class="k-card f09-card">
+          <span class="f09-id">anyrouter/free</span>
+          <p class="k-body f09-desc">Only $0 models</p>
+          <span class="k-badge is-free f09-badge">Never uses credit</span>
         </div>
-        <div class="09-pick-model-row" id="09-pick-model-row-1">
-          <div class="09-pick-model-row-bg"></div>
-          <div class="09-pick-model-row-bar"></div>
-          <div class="09-pick-model-cell 09-pick-model-idcol"><span class="09-pick-model-off">anyrouter/auto</span><span class="09-pick-model-on">anyrouter/auto</span></div>
-          <div class="09-pick-model-cell 09-pick-model-meaning"><span class="09-pick-model-off">AnyRouter picks the best · may use credit</span><span class="09-pick-model-on">AnyRouter picks the best · may use credit</span></div>
-          <div class="09-pick-model-rule"></div>
+        <div id="f09-card-auto" class="k-card f09-card">
+          <span class="f09-id">anyrouter/auto</span>
+          <p class="k-body f09-desc">AnyRouter picks the best</p>
+          <span class="k-badge f09-badge">May use credit</span>
         </div>
-        <div class="09-pick-model-row" id="09-pick-model-row-2">
-          <div class="09-pick-model-row-bg"></div>
-          <div class="09-pick-model-row-bar"></div>
-          <div class="09-pick-model-cell 09-pick-model-idcol"><span class="09-pick-model-off">anyrouter/coding</span><span class="09-pick-model-on">anyrouter/coding</span></div>
-          <div class="09-pick-model-cell 09-pick-model-meaning"><span class="09-pick-model-off">best coding model from your keys</span><span class="09-pick-model-on">best coding model from your keys</span></div>
+        <div id="f09-card-coding" class="k-card f09-card">
+          <span class="f09-id">anyrouter/coding</span>
+          <p class="k-body f09-desc">Best coding model from your keys</p>
         </div>
+        <div id="f09-ring" class="k-ring f09-ring"></div>
       </div>
     </div>
   </div>
@@ -203,98 +193,88 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
   <script>
     (function () {
-      const DURATION = 10.64;
-      const byId = (id) => document.getElementById("09-pick-model-" + id);
-      const card = byId("card");
-      const cmd = byId("cmd");
-      const idEl = byId("id");
-      const caret = byId("caret");
-      const rows = [0, 1, 2].map((i) => byId("row-" + i));
-      const oldLines = card.querySelectorAll('[class~="09-pick-model-old"]');
-      const part = (row, name) => row.querySelectorAll('[class~="09-pick-model-' + name + '"]');
+      const $ = (s) => document.getElementById("f09-" + s);
+      const DURATION = parseFloat($("stage").parentElement.dataset.duration);
+      const BLINK_HALF = 0.5;
+      // A card the voice has moved past goes muted, not faded: faded text would drop under 4.5:1.
+      const QUIET = "#636363";
+      // Word starts from 09-pick-model.words.json ("Free", "Auto", "Coding"); retypes on the typing cues in sfx-cues.json.
+      const CARD_AT = [1.95, 3.75, 6.14];
 
-      const tl = gsap.timeline({ paused: true });
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+        const term = $("term");
+        const title = $("title");
+        const l1 = $("l1");
+        const l6 = $("l6");
 
-      // Compact card: title bar 56 + body (30 pad + 54.4 line + 30 pad) = 170.4px tall.
-      tl.to(oldLines, { opacity: 0, duration: 0.36, ease: "power2.out" }, 0.04);
-      tl.to(cmd, { y: -286, duration: 0.8, ease: "power2.inOut" }, 0.4);
-      tl.to(byId("filler"), { scaleY: 94.4 / 484, duration: 0.8, ease: "power2.inOut" }, 0.4);
-      tl.to(byId("cap"), { y: -389.6, duration: 0.8, ease: "power2.inOut" }, 0.4);
-      tl.to(byId("shadow-big"), { opacity: 0, duration: 0.8, ease: "power2.inOut" }, 0.4);
-      tl.to(byId("shadow-small"), { opacity: 1, duration: 0.8, ease: "power2.inOut" }, 0.4);
-      tl.to(card, { x: 67, y: -20, scale: 0.9, duration: 0.8, ease: "power2.inOut" }, 0.4);
+        // Per-character sets for the model id; seek() suppresses onUpdate drivers.
+        const chars = (text, visible) => [...text].map((ch) => {
+          const span = document.createElement("span");
+          span.textContent = ch;
+          span.style.display = visible ? "inline" : "none";
+          $("word").appendChild(span);
+          return span;
+        });
+        const free = chars("free", true);
+        const auto = chars("auto", false);
+        const coding = chars("coding", false);
+        function retype(from, to, t) {
+          from.slice().reverse().forEach((span, i) => tl.set(span, { display: "none" }, t + i * 0.035));
+          const typeAt = t + from.length * 0.035 + 0.02;
+          to.forEach((span, i) => tl.set(span, { display: "inline" }, typeAt + i * 0.05));
+          return typeAt + to.length * 0.05;
+        }
 
-      [0.89, 1.03, 1.17].forEach((t, i) => {
-        tl.fromTo(rows[i], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, t);
-        // The last row has no divider under it.
-        const rule = part(rows[i], "rule");
-        if (rule.length) tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power3.out" }, t + 0.08);
+        // Measured after the id is in place: in portrait "anyrouter/free" wraps the command onto a second line.
+        // The terminal settles into the title's place and shrinks to its last line. Its height, not a
+        // clip-path, animates so the kit's shadow and rounded corners match 08's last frame exactly.
+        const padBottom = parseFloat(getComputedStyle($("body")).paddingBottom);
+        const compact = l1.offsetTop + l6.offsetHeight + padBottom;
+        tl.to([title, ...term.querySelectorAll('[class~="f09-old"]')], { opacity: 0, duration: 0.35, ease: "power2.inOut" }, 0.08);
+        tl.to(term, { y: title.offsetTop - term.offsetTop, duration: 0.8, ease: "power2.inOut" }, 0.3);
+        tl.fromTo(term, { height: term.offsetHeight }, { height: compact, duration: 0.8, ease: "power2.inOut" }, 0.3);
+        tl.to(l6, { y: l1.offsetTop - l6.offsetTop, duration: 0.8, ease: "power2.inOut" }, 0.3);
+
+        // Idle caret blink, timed back from `to` so the caret is solid when typing starts.
+        function blink(el, from, to) {
+          tl.set(el, { opacity: 1 }, from);
+          const toggles = [];
+          for (let t = to - BLINK_HALF; t > from + 0.25; t -= BLINK_HALF) toggles.push(t);
+          if (toggles.length % 2) toggles.pop();
+          toggles.forEach((t, i) => tl.set(el, { opacity: i % 2 ? 0 : 1 }, t));
+        }
+
+        const caret = $("caret");
+        blink(caret, 0, 3.6);
+        const autoEnd = retype(free, auto, 3.6);
+        blink(caret, autoEnd, 6.04);
+        const codingEnd = retype(auto, coding, 6.04);
+        blink(caret, codingEnd, DURATION);
+
+        // One focus ring, sized to the first card, moves to each card as the voice names it.
+        const cards = ["free", "auto", "coding"].map((k) => $("card-" + k));
+        const ring = $("ring");
+        const first = cards[0];
+        Object.assign(ring.style, {
+          left: first.offsetLeft - 10 + "px",
+          top: first.offsetTop - 10 + "px",
+          width: first.offsetWidth + 20 + "px",
+          height: first.offsetHeight + 20 + "px",
+        });
+        cards.forEach((card, i) => {
+          tl.fromTo(card, { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, CARD_AT[i]);
+          if (i === 0) {
+            tl.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power3.out" }, CARD_AT[0] + 0.15);
+            return;
+          }
+          tl.to(ring, { x: card.offsetLeft - first.offsetLeft, y: card.offsetTop - first.offsetTop, duration: 0.5, ease: "power2.inOut" }, CARD_AT[i]);
+          tl.to(cards[i - 1].querySelectorAll('[class~="f09-id"], [class~="f09-desc"]'), { color: QUIET, duration: 0.4, ease: "power2.inOut" }, CARD_AT[i]);
+        });
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["09-pick-model"] = tl;
       });
-
-      function light(i, t) {
-        const row = rows[i];
-        tl.to(part(row, "off"), { opacity: 0, duration: 0.3, ease: "power2.out" }, t);
-        tl.fromTo([...part(row, "on"), ...part(row, "on-free")], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, t);
-        tl.fromTo(part(row, "row-bg"), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power3.out" }, t);
-        tl.fromTo(part(row, "row-bar"), { opacity: 1, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.4, ease: "power3.out" }, t);
-        if (i > 0) {
-          const prev = rows[i - 1];
-          tl.to([...part(prev, "row-bg"), ...part(prev, "row-bar")], { opacity: 0, duration: 0.3, ease: "power2.out" }, t);
-        }
-      }
-      light(0, 2.13);
-      light(1, 4.42);
-      light(2, 7.02);
-
-      const SEQUENCE = [
-        { t: 0, text: "anyrouter/free" },
-        { t: 4.2, text: "anyrouter/fre" },
-        { t: 4.25, text: "anyrouter/fr" },
-        { t: 4.3, text: "anyrouter/f" },
-        { t: 4.35, text: "anyrouter/" },
-        { t: 4.42, text: "anyrouter/a" },
-        { t: 4.48, text: "anyrouter/au" },
-        { t: 4.54, text: "anyrouter/aut" },
-        { t: 4.6, text: "anyrouter/auto" },
-        { t: 6.89, text: "anyrouter/aut" },
-        { t: 6.92, text: "anyrouter/au" },
-        { t: 6.95, text: "anyrouter/a" },
-        { t: 6.98, text: "anyrouter/" },
-        { t: 7.02, text: "anyrouter/c" },
-        { t: 7.07, text: "anyrouter/co" },
-        { t: 7.12, text: "anyrouter/cod" },
-        { t: 7.17, text: "anyrouter/codi" },
-        { t: 7.22, text: "anyrouter/codin" },
-        { t: 7.27, text: "anyrouter/coding" },
-      ];
-      function textAt(time) {
-        for (let i = SEQUENCE.length - 1; i >= 0; i--) {
-          if (time >= SEQUENCE[i].t) return SEQUENCE[i].text;
-        }
-        return SEQUENCE[0].text;
-      }
-      const driver = { t: 0 };
-      tl.to(driver, {
-        t: DURATION,
-        duration: DURATION,
-        ease: "none",
-        onUpdate: () => { idEl.textContent = textAt(driver.t); },
-      }, 0);
-
-      // Caret stays solid while keys are pressed and blinks only in the idle windows.
-      tl.set(caret, { opacity: 1 }, 0);
-      [[0, 4.2], [4.66, 6.89], [7.33, DURATION]].forEach(([from, to]) => {
-        tl.set(caret, { opacity: 1 }, from);
-        let on = true;
-        for (let t = from + 0.5; t < to; t += 0.5) {
-          on = !on;
-          tl.set(caret, { opacity: on ? 1 : 0 }, t);
-        }
-      });
-
-      tl.set({}, {}, DURATION);
-      window.__timelines = window.__timelines || {};
-      window.__timelines["09-pick-model"] = tl;
     })();
   </script>
 </template>
