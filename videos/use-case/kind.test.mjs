@@ -220,7 +220,7 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
   }
-  assert.ok(large >= films().length - 2, 'only a tall editor under a three-line headline steps down to 48px');
+  assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
 });
 
 test('code too tall to sit under the caption fails the build, never a caption too small to read', () => {

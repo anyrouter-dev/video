@@ -88,8 +88,11 @@ const WIN = {
   portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56 },
 };
 const BAR = 84, CODE_LH = 1.45, TITLE_LH = 1.05;
-const textWidth = o => (WIN[o].width - 2 * WIN[o].padX) * 0.99;
+// a couple of px short of the box, so rounding in the browser can never add a row
+const textWidth = o => WIN[o].width - 2 * WIN[o].padX - 2;
 const monoWidth = (text, px) => [...text].length * 0.6 * px;
+// the caret, as .caret draws it
+const caretWidth = px => 0.56 * px + 4;
 
 /**
  * The code size per orientation. The largest at which every typed line fits on
@@ -104,7 +107,7 @@ export function codeSizes(lines, roll, shell, title) {
   const prompt = shell ? '$ ' : '';
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
-  const fits = (t, px, o) => monoWidth(`${prompt}${t}█`, px) <= textWidth(o);
+  const fits = (t, px, o) => monoWidth(`${prompt}${t}`, px) + caretWidth(px) <= textWidth(o);
   // a wrapped row hangs past the prompt, so it is measured two characters short
   const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - 1.2 * px, weight: 'mono' }));
   const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => !fits(t, px, o)));
@@ -118,7 +121,8 @@ export function codeSizes(lines, roll, shell, title) {
     const w = WIN[o], tLines = linesOf(title.text, { px: title.px[o], width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
     const room = px => BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
     const oneLine = px => lines.filter(isTyped).every(l => variants(l).every(t => fits(t, px, o)));
-    return w.sizes.find(px => (oneLine(px) || px <= w.wrap) && room(px)) ?? null;
+    // one line at a smaller size reads better than a wrapped one at a larger
+    return w.sizes.find(px => oneLine(px) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
   };
   const landscape = pick('landscape'), portrait = pick('portrait');
   if (!landscape || !portrait) return null;
