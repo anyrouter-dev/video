@@ -123,9 +123,13 @@ export function codeSizes(lines, roll, shell, title) {
   const pick = o => {
     const w = WIN[o], tLines = linesOf(title.text, { px: title.px[o], width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
     const room = px => BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
-    const oneLine = px => lines.filter(isTyped).every(l => variants(l).every(t => fits(t, px, o)));
-    // one line at a smaller size reads better than a wrapped one at a larger
-    return w.sizes.find(px => oneLine(px) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
+    // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
+    const clean = (l, px) => variants(l).every(t => fits(t, px, o)) || (l.focus && !!roll && (() => {
+      const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length), lead = shell ? '' : '  ';
+      return fits(l.text.slice(0, at), px, o) && [roll.preset, ...roll.ids].every(id => fits(lead + id + after, px, o));
+    })());
+    // a clean line at a smaller size reads better than a wrapped one at a larger
+    return w.sizes.find(px => lines.filter(isTyped).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
   };
   const landscape = pick('landscape'), portrait = pick('portrait');
   if (!landscape || !portrait) return null;
