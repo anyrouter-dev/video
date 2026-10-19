@@ -110,11 +110,11 @@ Scene 4 (9.0–13.0s): "a big pool of tokens" — the key-pills stream down into
 - src: compositions/frames/05-step-1-key.html
 
 - scene: Real openrouter.ai, then the Keys page: cursor clicks Create Key, a redacted sk-or- key appears and is copied
-- duration: 13.029s
+- duration: 11.749s
 - transition_in: push-slide LEFT
 - type: tutorial_step
 - beat: doing
-- voiceover: "Some free models work the moment you sign up. To unlock the whole pool, share one free key. Step one. Sign in at open router dot A. I., and open Keys. Click Create Key, and copy it."
+- voiceover: "Some free models work the moment you sign up. To unlock the whole pool, share one free key. Step one. Sign in at OpenRouter, and open Keys. Click Create Key, and copy it."
 - asset_candidates: assets/openrouter-home.png — real openrouter.ai home, light, purple Get API Key button; assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the Keys panel with the Create Key button

@@ -759,205 +759,205 @@
     {
       "frame": 5,
       "path": "assets/voice/05.wav",
-      "duration_s": 13.029,
+      "duration_s": 11.749,
       "words": [
         {
           "id": "w0",
           "text": "Some",
-          "start": 0.111,
-          "end": 0.24
+          "start": 0.112,
+          "end": 0.233
         },
         {
           "id": "w1",
           "text": "free",
-          "start": 0.24,
-          "end": 0.48
+          "start": 0.233,
+          "end": 0.466
         },
         {
           "id": "w2",
           "text": "models",
-          "start": 0.48,
-          "end": 0.775
+          "start": 0.466,
+          "end": 0.783
         },
         {
           "id": "w3",
           "text": "work",
           "start": 0.83,
-          "end": 1.079
+          "end": 0.932
         },
         {
           "id": "w4",
           "text": "the",
-          "start": 1.079,
-          "end": 1.254
+          "start": 1.063,
+          "end": 1.23
         },
         {
           "id": "w5",
           "text": "moment",
-          "start": 1.254,
-          "end": 1.559
+          "start": 1.23,
+          "end": 1.575
         },
         {
           "id": "w6",
           "text": "you",
-          "start": 1.614,
-          "end": 1.78
+          "start": 1.575,
+          "end": 1.762
         },
         {
           "id": "w7",
           "text": "sign",
-          "start": 1.78,
-          "end": 1.955
+          "start": 1.762,
+          "end": 1.976
         },
         {
           "id": "w8",
           "text": "up.",
-          "start": 2.038,
+          "start": 1.976,
           "end": 2.129
         },
         {
           "id": "w9",
           "text": "To",
-          "start": 2.594,
-          "end": 2.654
+          "start": 2.569,
+          "end": 2.629
         },
         {
           "id": "w10",
           "text": "unlock",
-          "start": 2.654,
-          "end": 2.818
+          "start": 2.629,
+          "end": 2.826
         },
         {
           "id": "w11",
           "text": "the",
-          "start": 2.818,
-          "end": 2.983
+          "start": 2.826,
+          "end": 2.981
         },
         {
           "id": "w12",
           "text": "whole",
-          "start": 3.012,
-          "end": 3.275
+          "start": 3.001,
+          "end": 3.302
         },
         {
           "id": "w13",
           "text": "pool,",
-          "start": 3.275,
-          "end": 3.644
+          "start": 3.302,
+          "end": 3.691
         },
         {
           "id": "w14",
           "text": "share",
-          "start": 3.644,
-          "end": 4.072
+          "start": 3.691,
+          "end": 4.09
         },
         {
           "id": "w15",
           "text": "one",
-          "start": 4.072,
-          "end": 4.315
+          "start": 4.09,
+          "end": 4.323
         },
         {
           "id": "w16",
           "text": "free",
-          "start": 4.315,
-          "end": 4.432
+          "start": 4.323,
+          "end": 4.421
         },
         {
           "id": "w17",
           "text": "key.",
-          "start": 4.879,
-          "end": 5.022
+          "start": 4.849,
+          "end": 4.998
         },
         {
           "id": "w18",
           "text": "Step",
-          "start": 5.494,
-          "end": 5.684
+          "start": 5.419,
+          "end": 5.646
         },
         {
           "id": "w19",
           "text": "one,",
-          "start": 5.684,
-          "end": 6.145
+          "start": 5.646,
+          "end": 6.073
         },
         {
           "id": "w20",
           "text": "sign",
-          "start": 6.533,
-          "end": 6.77
+          "start": 6.431,
+          "end": 6.637
         },
         {
           "id": "w21",
           "text": "in",
-          "start": 6.821,
-          "end": 7.033
+          "start": 6.637,
+          "end": 6.811
         },
         {
           "id": "w22",
           "text": "at",
-          "start": 7.033,
-          "end": 7.267
+          "start": 6.811,
+          "end": 7.004
         },
         {
-          "id": "w23",
-          "text": "openrouter.ai",
-          "start": 7.267,
-          "end": 8.51
-        },
-        {
-          "id": "w24",
-          "text": "and",
-          "start": 9.289,
-          "end": 9.354
+          "id": "w23-0",
+          "text": "OpenRouter",
+          "start": 7.004,
+          "end": 7.912
         },
         {
           "id": "w25",
-          "text": "open",
-          "start": 9.354,
-          "end": 9.699
+          "text": "and",
+          "start": 7.912,
+          "end": 8.188
         },
         {
           "id": "w26",
-          "text": "keys.",
-          "start": 9.699,
-          "end": 10.262
+          "text": "open",
+          "start": 8.188,
+          "end": 8.555
         },
         {
           "id": "w27",
-          "text": "Click",
-          "start": 10.778,
-          "end": 10.838
+          "text": "Keys.",
+          "start": 8.555,
+          "end": 9.009
         },
         {
           "id": "w28",
-          "text": "Create",
-          "start": 10.838,
-          "end": 11.23
+          "text": "Click",
+          "start": 9.531,
+          "end": 9.604
         },
         {
           "id": "w29",
-          "text": "Key",
-          "start": 11.259,
-          "end": 11.516
+          "text": "Create",
+          "start": 9.604,
+          "end": 10.063
         },
         {
           "id": "w30",
-          "text": "and",
-          "start": 11.516,
-          "end": 11.772
+          "text": "Key",
+          "start": 10.063,
+          "end": 10.262
         },
         {
           "id": "w31",
-          "text": "copy",
-          "start": 11.772,
-          "end": 12.078
+          "text": "and",
+          "start": 10.398,
+          "end": 10.533
         },
         {
           "id": "w32",
+          "text": "copy",
+          "start": 10.533,
+          "end": 10.836
+        },
+        {
+          "id": "w33",
           "text": "it.",
-          "start": 12.127,
-          "end": 12.551
+          "start": 10.836,
+          "end": 11.274
         }
       ],
       "padded_s": 0.4,
@@ -1362,13 +1362,13 @@
           "end": 6.824
         },
         {
-          "id": "w22-0",
+          "id": "w22-0-0",
           "text": "Go",
           "start": 6.824,
           "end": 6.994
         },
         {
-          "id": "w22-1",
+          "id": "w22-0-1",
           "text": "plan",
           "start": 6.994,
           "end": 7.164
@@ -2051,7 +2051,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 0.111,
+      "offset_s": 0.112,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
@@ -2059,7 +2059,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 2.594,
+      "offset_s": 2.569,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
@@ -2067,7 +2067,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 10.838,
+      "offset_s": 9.604,
       "duration_s": 0.366,
       "volume": 0.35,
       "source": "bundled"
@@ -2075,7 +2075,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 11.338,
+      "offset_s": 10.104,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -2083,7 +2083,7 @@
     {
       "frame": 5,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 11.772,
+      "offset_s": 10.533,
       "duration_s": 0.366,
       "volume": 0.35,
       "source": "bundled"

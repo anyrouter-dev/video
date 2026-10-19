@@ -38,7 +38,7 @@
 **Time:** 40 – 49s
 **Delivery:** Instructional, clear, slower on the button name.
 
-    Some free models work the moment you sign up. To unlock the whole pool, share one free key. Step one. Sign in at open router dot A. I., and open Keys. Click Create Key, and copy it.
+    Some free models work the moment you sign up. To unlock the whole pool, share one free key. Step one. Sign in at OpenRouter, and open Keys. Click Create Key, and copy it.
 
 ## Line 6 — Step two (Frame 6)
 
