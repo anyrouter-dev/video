@@ -96,6 +96,17 @@ const indentOf = text => text.match(/^ */)[0].length;
 const caretWidth = px => 0.56 * px + 4;
 
 /**
+ * Whether `id`, rolled into the preset's place in `line`, sits whole on a row
+ * of its own in both frames at their smallest code size. An id that needs more
+ * would break mid-roll, so it does not roll.
+ */
+export function idFitsRow(line, preset, id, shell) {
+  const after = line.text.slice(line.text.indexOf(preset) + preset.length);
+  const row = `${shell ? '$ ' : '  '}${id}${after}`;
+  return Object.keys(WIN).every(o => { const px = WIN[o].sizes.at(-1); return monoWidth(row, px) + caretWidth(px) <= textWidth(o); });
+}
+
+/**
  * The code size per orientation. The largest at which every typed line fits on
  * one line, each roll id in place, with its prompt and caret, and the window
  * still leaves room for the caption at its smallest. A line too long for every

@@ -29,7 +29,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
-import { CSS, read, setIn, codeSizes, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, idFitsRow, filmScene, ROLL_EVERY } from './scenes.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
@@ -91,14 +91,16 @@ const PRICE = /\$0\b|\bfree\b/i;
 /**
  * The ids a use case's film rolls through, or null when its command names no
  * preset. Ids billed to credits never roll under a page that promises "$0" or
- * "free": a viewer would read the promise as covering them.
+ * "free": a viewer would read the promise as covering them. An id too long to
+ * sit whole on a row of the window is left out of that film's roll.
  */
 export function rollOf(u, pools) {
   const preset = u.command?.text.match(PRESET)?.[0];
   if (!preset || !pools) return null;
   const free = preset === 'anyrouter/free';
   if (!free && PRICE.test(`${u.kicker} ${u.title} ${u.summary}`)) return null;
-  const ids = free ? pools.free : pools.credit;
+  const focus = windowOf(u).lines.find(l => l.focus);
+  const ids = (free ? pools.free : pools.credit).filter(id => idFitsRow(focus, preset, id, u.command.shell));
   return ids.length >= 2 ? { preset, ids } : null;
 }
 
