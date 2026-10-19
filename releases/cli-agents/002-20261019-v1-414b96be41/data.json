@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "v1",
+  "parts": [
+    "assets/anyrouter-logo-black.svg:470da5aeb0e69ff983a8686970be78c5afe2f6c5e9b042acbb7a142520018a52",
+    "assets/bgm/track.mp3:3e835f27e127aaa5cfa56240a1f0d84fc8900e63c9898dc4f3ae28e51ca9f022",
+    "assets/fonts/geist-mono.woff2:684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+    "assets/fonts/geist.woff2:19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1",
+    "assets/sfx/CREDITS.md:c756b441352fc92de6d200cf618eff3bc0bdffabf3077fc14e08f7000fe82d3d",
+    "assets/sfx/chime.mp3:74823b1b27703c56e0652db838f503c150ce9c2442d47d27430af3d5121d6d12",
+    "assets/sfx/click-soft.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/click.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/pop.mp3:19ab7193f626ff57fdeef60b45543bac416fcbcec803cfb417abe4b271c1b352",
+    "assets/sfx/sparkle.mp3:a66b2829a307bcb5b1f6551d7cdc72fe45bbe9a91abfb994d28db8d5e4e42ea8",
+    "assets/sfx/whoosh-short.mp3:c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30",
+    "assets/voice/01.wav:566c748686741670bc563663a5d4131e8f61bce9df64cf557e9294ba93175e5c",
+    "assets/voice/02.wav:1abe488b3bc46ccfff10a8059737615865a4467c3e81c6d08d664789f4e4328f",
+    "assets/voice/03.wav:68763f3e4618982f5ba9780181de3a4c564f051816dcd30dfac943b59f9ba798",
+    "assets/voice/04.wav:ef86851526735c73508d179ba8710cf2e488dc21a79af24ee757be8e0e59bda9",
+    "assets/voice/05.wav:14364a4f031066c7ee2bca7a32b568bc3e435952b8bd54db13bba988ae0b1376",
+    "assets/voice/06.wav:8344dee566dd8dcdd1a8b3acd97d99ac6b436c60d6f793afbe5a857d199fa63d",
+    "compositions/captions.html:b48c429e48629cf8acd83270b49b398c52e227083b1af0387b2c86e0f0f01a5b",
+    "compositions/frames/01-install.html:c4afa0f5e57a06e2ac23527b289fde4aac9cfb61e478787f72903d8312fe0510",
+    "compositions/frames/02-named-model.html:c58c559635b2b96b1a1df4a1d2a8aeab808c743388ff35ab8b60eb1eec76f22c",
+    "compositions/frames/03-other-agents.html:386a40c8c8e322f03d101fc37afa58d47cb1f7a0c22514d8d973b2fd1f8d685e",
+    "compositions/frames/04-six-agents.html:0c469f0358c66758891cffc1f56e7bb2ef4ae4204fdc06b0994fd9d470a2b0cc",
+    "compositions/frames/05-session.html:66df27bac5b72d8bd086450aa0eb0f0ef6532408a122f2f98a96f38737715722",
+    "compositions/frames/06-close.html:69bc9bba833e1e4cd67162ee633c460989e32cafe4b83b8b4f504caa2cd14fe8",
+    "index.html:3629ee5804830bf4f3e740d769fa65a4675103ba9d7c94b654c52d74b22beaa6"
+  ],
+  "version": 1,
+  "seconds": 32.157
+}

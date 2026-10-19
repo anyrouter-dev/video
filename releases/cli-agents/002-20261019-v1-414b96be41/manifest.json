@@ -1,0 +1,22 @@
+{
+  "id": "002-20261019-v1-414b96be41",
+  "hash": "414b96be41",
+  "kind": "cli-agents",
+  "label": "v1",
+  "title": "Install anyr once, then run Claude Code, Codex or OpenCode on any model",
+  "seconds": 32.157,
+  "renderedAt": "2026-10-19T20:19:34.338Z",
+  "commit": "5ff8548",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/cli-agents-002-20261019-v1-414b96be41.mp4",
+      "cover": "renders/cli-agents-002-20261019-v1-414b96be41.png"
+    },
+    "portrait": {
+      "artifact": "renders/cli-agents-002-20261019-v1-414b96be41-portrait.mp4",
+      "cover": "renders/cli-agents-002-20261019-v1-414b96be41-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T20:19:34.360Z"
+}
