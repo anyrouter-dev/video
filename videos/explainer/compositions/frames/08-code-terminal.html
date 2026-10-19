@@ -116,6 +116,9 @@
         [data-composition-id="08-code-terminal"] .f08-brk { display: none !important; }
       }
       [data-composition-id="08-code-terminal"] .f08-check { display: inline-block; width: 0.6em; height: 1em; vertical-align: -0.16em; }
+      /* The part of the command that just changed: an orange wash that fades once the eye has found it. */
+      [data-composition-id="08-code-terminal"] .f08-hl { border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+      [data-composition-id="08-code-terminal"] .f08-off { display: none; }
 
       @media (orientation: portrait) {
         [data-composition-id="08-code-terminal"] .f08-col { left: 60px; right: 120px; top: 200px; gap: 40px; }
@@ -138,7 +141,7 @@
             <div id="f08-l3" class="f08-line f08-hidden"><span class="p">$ </span><span id="f08-t3"></span><span id="f08-c3" class="k-caret"></span></div>
             <div id="f08-l4" class="f08-line dim f08-hidden">Opening browser to sign in…</div>
             <div id="f08-l5" class="f08-line ok f08-hidden"><svg class="f08-check" viewBox="0 0 24 40" aria-hidden="true"><path d="M3 22 L9.5 28.5 L21 14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Signed in</div>
-            <div id="f08-l6" class="f08-line f08-hidden"><span class="p">$ </span><span id="f08-t6"></span><span id="f08-brk" class="f08-brk"></span><span id="f08-t6id" class="id"></span><span id="f08-c6" class="k-caret"></span></div>
+            <div id="f08-l6" class="f08-line f08-hidden"><span class="p">$ </span><span id="f08-anyr" class="f08-hl f08-off">anyr </span><span id="f08-t6"></span><span id="f08-flag" class="f08-hl f08-off"><span id="f08-t6flag"></span><span id="f08-brk" class="f08-brk"></span><span id="f08-t6id" class="id"></span></span><span id="f08-c6" class="k-caret"></span></div>
           </div>
         </div>
       </div>
@@ -185,16 +188,24 @@
         const show = (el, t) => tl.set(el, { opacity: 1 }, t);
         const hide = (el, t) => tl.set(el, { opacity: 0 }, t);
 
+        // Wash the part of the command that just appeared, hold it, then let it fade.
+        const HL = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+        const HL_OFF = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+        function highlight(el, t) {
+          tl.set(el, { display: "inline", ...HL }, t);
+          tl.fromTo(el, HL, { ...HL_OFF, duration: 0.8, ease: "power2.out", immediateRender: false }, t + 0.45);
+        }
+
         // Times from 08-code-terminal.words.json and the typing / key-press cues in sfx-cues.json.
         tl.fromTo($("term"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0);
         tl.fromTo($("title"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 2.38);
 
         blink($("c1"), 0, 3.88);
-        // The zero-width space lets the portrait line break after "anyrouter.dev" (break-all never breaks before "/").
-        type([{ el: $("t1"), text: "curl -fsSL https://anyrouter.dev​/setup.sh | bash" }], 3.88, 5.38);
-        blink($("c1"), 5.38, 6.08);
-        hide($("c1"), 6.08);
-        show($("l2"), 6.14);
+        // Pasted, not typed: the whole line lands on "Install". The zero-width space lets the
+        // portrait line break after "anyrouter.dev" (break-all never breaks before "/").
+        type([{ el: $("t1"), text: "curl -fsSL https://anyrouter.dev​/setup.sh | bash" }], 3.88, 4.3);
+        hide($("c1"), 4.45);
+        show($("l2"), 4.55);
 
         show($("l3"), 6.26);
         blink($("c3"), 6.26, 6.79);
@@ -203,15 +214,19 @@
         show($("l4"), 7.81);
         show($("l5"), 8.25);
 
+        // The command grows the way you would edit it: claude, then anyr in front ("then run anyr
+        // claude"), then a model on the end ("with a model"). Each new part is washed as it lands.
         show($("l6"), 8.4);
-        blink($("c6"), 8.4, 8.64);
+        type([{ el: $("t6"), text: "claude" }], 8.42, 8.6);
+        highlight($("anyr"), 8.64);
+        highlight($("flag"), 9.52);
         const [, idAt] = type([
-          { el: $("t6"), text: "anyr claude --model " },
+          { el: $("t6flag"), text: " --model " },
           { el: $("t6id"), text: "anyrouter/free" },
-        ], 8.64, 10.14);
+        ], 9.52, 9.92);
         // Portrait wraps the id onto its own line; break there as typing reaches it, so the half-typed id never jumps lines.
         tl.set($("brk"), { display: "block" }, idAt);
-        blink($("c6"), 10.14, DURATION);
+        blink($("c6"), 9.92, DURATION);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["08-code-terminal"] = tl;

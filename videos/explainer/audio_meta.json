@@ -2152,16 +2152,16 @@
     },
     {
       "frame": 8,
-      "file": "assets/sfx/typing.mp3",
+      "file": "assets/sfx/click-soft.mp3",
       "offset_s": 3.884,
-      "duration_s": 1.5,
-      "volume": 0.18,
+      "duration_s": 0.366,
+      "volume": 0.22,
       "source": "bundled"
     },
     {
       "frame": 8,
       "file": "assets/sfx/key-press.mp3",
-      "offset_s": 6.08,
+      "offset_s": 4.454,
       "duration_s": 0.4,
       "volume": 0.25,
       "source": "bundled"
@@ -2192,18 +2192,42 @@
     },
     {
       "frame": 9,
-      "file": "assets/sfx/typing.mp3",
-      "offset_s": 3.599,
-      "duration_s": 1.5,
-      "volume": 0.15,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 3.6,
+      "duration_s": 0.366,
+      "volume": 0.18,
       "source": "bundled"
     },
     {
       "frame": 9,
-      "file": "assets/sfx/typing.mp3",
-      "offset_s": 6.044,
-      "duration_s": 1.5,
-      "volume": 0.15,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 6,
+      "duration_s": 0.366,
+      "volume": 0.18,
+      "source": "bundled"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 7.3,
+      "duration_s": 0.366,
+      "volume": 0.18,
+      "source": "bundled"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 8,
+      "duration_s": 0.366,
+      "volume": 0.18,
+      "source": "bundled"
+    },
+    {
+      "frame": 9,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 8.7,
+      "duration_s": 0.366,
+      "volume": 0.18,
       "source": "bundled"
     },
     {
