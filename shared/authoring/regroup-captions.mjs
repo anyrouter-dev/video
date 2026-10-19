@@ -12,6 +12,7 @@ import fs from 'node:fs';
 const MAX_WORDS = 12;
 const MAX_CHARS = 60;
 const ORPHAN_WORDS = 2;
+const MIN_SHOW_S = 1.0;
 const PAUSE_S = 0.35;
 const LONG_PAUSE_S = 1.2;
 const MIN_WORDS = 3;
@@ -62,16 +63,22 @@ const split = ws => {
 };
 const groups = runs.flatMap(r => split(r.words).map(ws => ({ frame: r.frame, words: ws })));
 
-// A one- or two-word phrase on its own ("into AnyRouter.") flashes by; it joins the phrase
-// before it when they share a frame, run on without a real pause, and still fit one line.
-const merged = [];
-for (const g of groups.filter(x => x.words.length)) {
-  const prev = merged.at(-1);
-  const joins = prev && g.words.length <= ORPHAN_WORDS && g.frame === prev.frame
-    && g.words[0].start - prev.words.at(-1).end < 0.6
-    && textOf([...prev.words, ...g.words]).length <= MAX_CHARS + 10;
-  if (joins) prev.words.push(...g.words);
-  else merged.push(g);
+// A phrase of one or two words, or one spoken in under a second ("Use three,"), flashes by.
+// It joins the next phrase of its sentence, or else the one before when that one has not
+// ended its sentence, as long as the two still fit about one line.
+const spoken = ws => ws.at(-1).end - ws[0].start;
+const short = g => g.words.length <= ORPHAN_WORDS || spoken(g.words) < MIN_SHOW_S;
+const joinable = (a, b) => a.frame === b.frame && !SENT_END.test(a.words.at(-1).text)
+  && b.words[0].start - a.words.at(-1).end < 0.6
+  && textOf([...a.words, ...b.words]).length <= MAX_CHARS + 10;
+const merged = groups.filter(x => x.words.length);
+for (let i = 0; i < merged.length; i++) {
+  const g = merged[i];
+  if (!short(g)) continue;
+  const next = merged[i + 1];
+  const prev = merged[i - 1];
+  if (next && joinable(g, next)) { next.words.unshift(...g.words); merged.splice(i--, 1); }
+  else if (prev && joinable(prev, g)) { prev.words.push(...g.words); merged.splice(i--, 1); }
 }
 
 const out = merged.map((g, gi) => ({

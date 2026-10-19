@@ -45,3 +45,10 @@ test('a sentence with no comma splits before a joining word', () => {
 test('a short sentence stays whole', () => {
   assert.deepEqual(regroup(['There is also a shared pool.']), ['There is also a shared pool.']);
 });
+
+test('a phrase spoken in a moment joins the rest of its sentence', () => {
+  assert.deepEqual(regroup(['And each one has its own key and its own bill.', 'Use three, and you have three keys and three bills to manage.']), [
+    'And each one has its own key and its own bill.',
+    'Use three, and you have three keys and three bills to manage.',
+  ]);
+});
