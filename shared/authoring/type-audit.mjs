@@ -101,12 +101,35 @@ async function seekAndMeasure(t, frame) {
   };
   // Layout box vs rendered box gives the accumulated scale of every ancestor transform and,
   // for SVG, the viewBox. min() of the two axes keeps a squashed axis from reading as full size.
+  // HTML text changes size only through transforms, so its scale is the product of the
+  // transform and scale of it and every ancestor, read exactly. Dividing the rendered box by
+  // offsetWidth would not do: offsetWidth is rounded to a whole pixel, so text drawn at
+  // exactly 36px measured 35.92px. SVG text also scales with its viewBox; its box and getBBox
+  // are both fractional.
   const scaleOf = (el, rect) => {
-    let w, h;
-    if (el instanceof SVGGraphicsElement) ({ width: w, height: h } = el.getBBox());
-    else { w = el.offsetWidth; h = el.offsetHeight; }
-    if (!w || !h) return null;
-    return Math.min(rect.width / w, rect.height / h);
+    if (el instanceof SVGGraphicsElement) {
+      const { width: w, height: h } = el.getBBox();
+      return w && h ? Math.min(rect.width / w, rect.height / h) : null;
+    }
+    if (!el.offsetWidth || !el.offsetHeight) return null;
+    let sx = 1, sy = 1;
+    for (let n = el; n; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.transform !== 'none') {
+        const m = new DOMMatrixReadOnly(cs.transform);
+        sx *= Math.hypot(m.a, m.b);
+        sy *= Math.hypot(m.c, m.d);
+      }
+      if (cs.scale !== 'none') {
+        const [x, y = x] = cs.scale.split(' ').map(Number.parseFloat);
+        sx *= x;
+        sy *= y;
+      }
+      const zoom = Number.parseFloat(cs.zoom) || 1;
+      sx *= zoom;
+      sy *= zoom;
+    }
+    return Math.min(sx, sy);
   };
   const ownText = el => [...el.childNodes].filter(c => c.nodeType === 3).map(c => c.nodeValue).join(' ').replace(/\s+/g, ' ').trim();
   // Report a line, not its pieces: split-text effects (typewriters, karaoke captions) wrap each
