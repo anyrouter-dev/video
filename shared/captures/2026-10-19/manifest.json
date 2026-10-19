@@ -168,5 +168,85 @@
     "shows": "An eased 9s scroll at 60 fps from the top of /models through about three and a half screens of the catalog.",
     "redacted": "none found",
     "capturedAt": "2026-10-19T14:58:13.301Z"
+  },
+  {
+    "file": "terminal/anyr-claude-dry-run.json",
+    "kind": "terminal",
+    "command": "anyr claude --model anthropic/claude-sonnet-5-5 --dry-run",
+    "viewport": null,
+    "scale": null,
+    "shows": "The handoff anyr claude --model anthropic/claude-sonnet-5-5 makes: the claude command and the AnyRouter env it launches with.",
+    "redacted": "API key tail",
+    "capturedAt": "2026-10-19T14:59:38.358Z"
+  },
+  {
+    "file": "terminal/anyr-claude-dry-run.txt",
+    "kind": "terminal",
+    "command": "anyr claude --model anthropic/claude-sonnet-5-5 --dry-run",
+    "viewport": null,
+    "scale": null,
+    "shows": "The handoff anyr claude --model anthropic/claude-sonnet-5-5 makes: the claude command and the AnyRouter env it launches with.",
+    "redacted": "API key tail",
+    "capturedAt": "2026-10-19T14:59:38.358Z"
+  },
+  {
+    "file": "terminal/anyr-help-commands.json",
+    "kind": "terminal",
+    "command": "anyr help commands",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr help commands, the full command map.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.764Z"
+  },
+  {
+    "file": "terminal/anyr-help-commands.txt",
+    "kind": "terminal",
+    "command": "anyr help commands",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr help commands, the full command map.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.764Z"
+  },
+  {
+    "file": "terminal/anyr-help.json",
+    "kind": "terminal",
+    "command": "anyr --help",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr --help.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.746Z"
+  },
+  {
+    "file": "terminal/anyr-help.txt",
+    "kind": "terminal",
+    "command": "anyr --help",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr --help.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.746Z"
+  },
+  {
+    "file": "terminal/anyr-models.json",
+    "kind": "terminal",
+    "command": "anyr models",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr models, every model id usable with --model.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.768Z"
+  },
+  {
+    "file": "terminal/anyr-models.txt",
+    "kind": "terminal",
+    "command": "anyr models",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr models, every model id usable with --model.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.768Z"
   }
 ]
