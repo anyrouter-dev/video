@@ -52,6 +52,8 @@ jobs:
             args: --from=videos/release/fixtures/rss.xml
           - kind: changelog
             args: --from=videos/changelog/fixtures/llms.txt
+          - kind: use-case
+            args: --from=videos/use-case/fixtures/use-cases.json --slug=openrouter-free-fallback
           - kind: intro
             args: ''
           - kind: teaser

@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "mcp-for-agents",
+  "parts": [
+    "mcp-for-agents:6d8b58b2e18faa5579bce2f66481ef2912311354f75bd630d295b2ef88d68126"
+  ],
+  "useCases": [
+    {
+      "slug": "mcp-for-agents",
+      "url": "https://anyrouter.dev/use-cases/mcp-for-agents",
+      "kicker": "Agent tools",
+      "title": "Give agents MCP tools without per-client sprawl",
+      "summary": "Connect agents to AnyRouter over MCP",
+      "problem": "Every new MCP server is another token and another JSON blob copied into Claude Desktop, Cursor, and your own agents.",
+      "logos": [],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1/mcp",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "https://anyrouter.dev/api/v1/mcp",
+          "title": "MCP endpoint"
+        }
+      ],
+      "steps": [
+        "Read how MCP servers expose tools over one JSON-RPC transport.",
+        "Point clients at AnyRouter's MCP endpoint instead of N server URLs.",
+        "Keep model calls on anyrouter/auto so tool-using agents have a healthy default."
+      ]
+    }
+  ]
+}

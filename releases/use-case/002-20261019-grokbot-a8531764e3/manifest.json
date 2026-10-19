@@ -1,0 +1,14 @@
+{
+  "id": "002-20261019-grokbot-a8531764e3",
+  "hash": "a8531764e3",
+  "kind": "use-case",
+  "label": "grokbot",
+  "title": "Grok Bot + Herdr + Anyr CLI coding loop",
+  "seconds": 25,
+  "renderedAt": "2026-10-19T10:17:01.529Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-002-20261019-grokbot-a8531764e3.mp4",
+  "cover": "renders/use-case-002-20261019-grokbot-a8531764e3.png",
+  "source": "renders/use-case-002-20261019-grokbot-a8531764e3-source.tar.gz",
+  "createdAt": "2026-10-19T10:17:01.550Z"
+}

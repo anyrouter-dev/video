@@ -1,0 +1,72 @@
+{
+  "notable": true,
+  "label": "nvidia-nim-models",
+  "parts": [
+    "nvidia-nim-models:3db500b384c4ab4ea715849cdc704cb09490dfa8cdec3ccd40c3187223bd89d4"
+  ],
+  "useCases": [
+    {
+      "slug": "nvidia-nim-models",
+      "url": "https://anyrouter.dev/use-cases/nvidia-nim-models",
+      "kicker": "NVIDIA NIM",
+      "title": "NVIDIA NIM models through one endpoint",
+      "summary": "Call NVIDIA models with an AnyRouter key",
+      "problem": "NVIDIA's endpoint is OpenAI-compatible, but it is one more key, one more base URL and one more rate limit to track next to your other providers.",
+      "logos": [
+        "nvidia"
+      ],
+      "command": {
+        "text": "\"model\": \"nvidia/nemotron-3-super-120b-a12b\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"nvidia/nemotron-3-super-120b-a12b\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · nvidia/nemotron-3-super-120b-a12b"
+        }
+      ],
+      "steps": [
+        "Pick a model on the NVIDIA page of the catalog. Models marked Free run on the shared route.",
+        "Call it with your AnyRouter key, as in the curl below.",
+        "Optional: get a key at build.nvidia.com (it starts with nvapi-), add it under Dashboard → BYOK → NVIDIA NIM, and turn on Always use → Strict. Requests for these models then use only your key, and if it fails the request fails."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "app",
+            "kind": "tool",
+            "label": "Your app",
+            "note": "OpenAI API",
+            "provider": null
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": null,
+            "provider": "anyrouter"
+          },
+          {
+            "id": "nim",
+            "kind": "provider",
+            "label": "NVIDIA NIM",
+            "note": "free route or your key",
+            "provider": "nvidia"
+          }
+        ],
+        "edges": [
+          {
+            "from": "app",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "nim",
+            "dashed": false
+          }
+        ]
+      }
+    }
+  ]
+}

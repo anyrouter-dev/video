@@ -1,0 +1,47 @@
+{
+  "notable": true,
+  "label": "hermes-agent",
+  "parts": [
+    "hermes-agent:cf0c54620dfd7b8474b0864329de287e2bf976582e1d1eebe5bf14f210b2646d"
+  ],
+  "useCases": [
+    {
+      "slug": "hermes-agent",
+      "url": "https://anyrouter.dev/use-cases/hermes-agent",
+      "kicker": "Hermes Agent",
+      "title": "Run Hermes Agent on AnyRouter",
+      "summary": "Install the AnyRouter plugin and pick a model",
+      "problem": "Hermes Agent runs long tool loops, and a single upstream model means you eat that provider's outages and rate limits. Picking a model that cannot call tools breaks the loop.",
+      "logos": [
+        "hermes"
+      ],
+      "command": {
+        "text": "hermes plugins install anyrouter",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "hermes plugins install anyrouter\nhermes plugins list",
+          "title": "Install the plugin"
+        },
+        {
+          "code": "ANYROUTER_API_KEY=sk-...",
+          "title": "~/.hermes/.env"
+        },
+        {
+          "code": "hermes --provider anyrouter -m anyrouter/hermes",
+          "title": "Run Hermes on AnyRouter"
+        },
+        {
+          "code": "# Point Hermes at a proxy or self-hosted relay\nANYROUTER_BASE_URL=https://relay.example.com/api/v1\n# Credit Hermes traffic in the public app rankings\nANYROUTER_APP_ATTRIBUTION=1",
+          "title": "Optional settings"
+        }
+      ],
+      "steps": [
+        "Install the plugin with hermes plugins install anyrouter, then check it with hermes plugins list.",
+        "Add the key to ~/.hermes/.env as ANYROUTER_API_KEY=sk-.... Get one at anyrouter.dev; the same key also works against the OpenAI-compatible endpoint anyrouter.dev/api/v1.",
+        "Pick a model: run hermes model and choose anyrouter, or launch with hermes --provider anyrouter -m anyrouter/hermes. anyrouter/hermes auto-routes across the top tool-calling models with fallback, a good default for agentic work."
+      ]
+    }
+  ]
+}

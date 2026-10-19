@@ -1,0 +1,45 @@
+{
+  "notable": true,
+  "label": "coding-agents",
+  "parts": [
+    "coding-agents:6e4f5a718d64f4abe450fdc903d8816340fc58ac962e3b025647fbc22d308a05"
+  ],
+  "useCases": [
+    {
+      "slug": "coding-agents",
+      "url": "https://anyrouter.dev/use-cases/coding-agents",
+      "kicker": "One gateway",
+      "title": "Run every coding agent through one URL",
+      "summary": "Point every OpenAI-compatible coding agent at one URL",
+      "problem": "Each coding agent wants its own provider key and base URL. Switching models or comparing cost means editing every tool separately.",
+      "logos": [
+        "anthropic",
+        "opencode",
+        "cursor"
+      ],
+      "command": {
+        "text": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"",
+          "title": "Claude Code"
+        },
+        {
+          "code": "export OPENAI_BASE_URL=\"https://anyrouter.dev/api/v1\"\nexport OPENAI_API_KEY=\"$ANYROUTER_API_KEY\"",
+          "title": "Codex / Cursor"
+        },
+        {
+          "code": "anyr opencode",
+          "title": "OpenCode"
+        }
+      ],
+      "steps": [
+        "Mint one AnyRouter key.",
+        "Set Anthropic env vars for Claude Code, and OpenAI env vars for Codex, Cursor, and similar tools.",
+        "Start on anyrouter/auto so failover picks a model that is answering."
+      ]
+    }
+  ]
+}

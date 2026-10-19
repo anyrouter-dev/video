@@ -1,0 +1,37 @@
+{
+  "notable": true,
+  "label": "virtual-presets",
+  "parts": [
+    "virtual-presets:85e0a8e7a65b001e4c09835e317a3b2174f913ab3ff10b7af21751fa73b95c4a"
+  ],
+  "useCases": [
+    {
+      "slug": "virtual-presets",
+      "url": "https://anyrouter.dev/use-cases/virtual-presets",
+      "kicker": "Built-in presets",
+      "title": "Start on anyrouter/free or anyrouter/auto",
+      "summary": "Start on anyrouter/free or anyrouter/auto",
+      "problem": "A first request that pins a single free SKU often 404s or 429s. You want something that is answering right now, with automatic fallback.",
+      "logos": [],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        },
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ],
+      "steps": [
+        "Create a key. anyrouter/free needs the Go plan ($2/mo) or a donated provider key; it does not deduct credits and has no daily limit.",
+        "Call model anyrouter/free for the subsidized free chain, or anyrouter/auto for paid models that are healthy right now.",
+        "Read the model pages and the free-tier docs for failover behavior."
+      ]
+    }
+  ]
+}

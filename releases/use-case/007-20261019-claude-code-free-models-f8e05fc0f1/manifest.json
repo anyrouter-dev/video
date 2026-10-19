@@ -1,0 +1,14 @@
+{
+  "id": "007-20261019-claude-code-free-models-f8e05fc0f1",
+  "hash": "f8e05fc0f1",
+  "kind": "use-case",
+  "label": "claude-code-free-models",
+  "title": "Run Claude Code on free models",
+  "seconds": 25,
+  "renderedAt": "2026-10-19T10:23:15.006Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1.mp4",
+  "cover": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1.png",
+  "source": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1-source.tar.gz",
+  "createdAt": "2026-10-19T10:23:15.025Z"
+}

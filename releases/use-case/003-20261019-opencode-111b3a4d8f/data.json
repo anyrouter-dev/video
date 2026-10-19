@@ -1,0 +1,39 @@
+{
+  "notable": true,
+  "label": "opencode",
+  "parts": [
+    "opencode:1a5654389f63c364a85b043813fc477edb249261ef49306029f23f207e65943b"
+  ],
+  "useCases": [
+    {
+      "slug": "opencode",
+      "url": "https://anyrouter.dev/use-cases/opencode",
+      "kicker": "OpenCode",
+      "title": "Run OpenCode through AnyRouter",
+      "summary": "Add an AnyRouter provider to OpenCode",
+      "problem": "OpenCode's built-in providers each want their own key. Switching models or sharing billing with Claude Code and Codex means editing every tool separately.",
+      "logos": [
+        "opencode"
+      ],
+      "command": {
+        "text": "anyr opencode",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "anyr opencode",
+          "title": "anyr launcher"
+        },
+        {
+          "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"anyrouter\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"AnyRouter\",\n      \"options\": {\n        \"baseURL\": \"https://anyrouter.dev/api/v1\",\n        \"apiKey\": \"{env:ANYROUTER_API_KEY}\"\n      },\n      \"models\": {\n        \"anthropic/claude-sonnet-4-6\": {\n          \"name\": \"Claude Sonnet 4.6\"\n        }\n      }\n    }\n  },\n  \"model\": \"anyrouter/anthropic/claude-sonnet-4-6\"\n}",
+          "title": "opencode.json"
+        }
+      ],
+      "steps": [
+        "Create an AnyRouter key in the dashboard (sk-ar-…), or let the CLI sign you in.",
+        "Launch with anyr opencode so it injects the provider for that session, or add AnyRouter to opencode.json for a persistent config.",
+        "Pick an anyrouter/… model in /models and confirm the call in request logs."
+      ]
+    }
+  ]
+}

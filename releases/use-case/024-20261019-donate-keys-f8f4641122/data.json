@@ -1,0 +1,36 @@
+{
+  "notable": true,
+  "label": "donate-keys",
+  "parts": [
+    "donate-keys:b221e4a2b8a0a3fcb09968525a7d381ad3d3598facc68a390693e3bf86d90838"
+  ],
+  "useCases": [
+    {
+      "slug": "donate-keys",
+      "url": "https://anyrouter.dev/use-cases/donate-keys",
+      "kicker": "Shared pool",
+      "title": "Donate an idle key, earn credits back",
+      "summary": "Share an idle provider key, earn credits",
+      "problem": "Free-tier and flat-rate keys sit unused at the end of the month. That headroom evaporates unless someone else can use it.",
+      "logos": [
+        "nvidia",
+        "openrouter"
+      ],
+      "command": {
+        "text": "Dashboard → BYOK → open the key → Donate to the shared pool",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "Dashboard → BYOK → open the key → Donate to the shared pool",
+          "title": "Where to click"
+        }
+      ],
+      "steps": [
+        "Add the key under BYOK.",
+        "Turn on donate for that key. Confirm your provider's terms allow sharing it.",
+        "Pending credits accrue from pool traffic. A donated key can also unlock Go so you can call anyrouter/free."
+      ]
+    }
+  ]
+}

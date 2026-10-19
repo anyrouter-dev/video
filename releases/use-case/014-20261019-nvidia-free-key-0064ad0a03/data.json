@@ -1,0 +1,35 @@
+{
+  "notable": true,
+  "label": "nvidia-free-key",
+  "parts": [
+    "nvidia-free-key:7b015e15a7e816f1142d69ff1fdc9449df59dece3e969db8deb817d2edca97d2"
+  ],
+  "useCases": [
+    {
+      "slug": "nvidia-free-key",
+      "url": "https://anyrouter.dev/use-cases/nvidia-free-key",
+      "kicker": "NVIDIA BYOK",
+      "title": "Route a free NVIDIA key through one URL",
+      "summary": "Use a free NVIDIA key as BYOK",
+      "problem": "A raw NVIDIA key only works in NVIDIA's client. Other apps still need their own keys, and you get no failover if NIM is down.",
+      "logos": [
+        "nvidia"
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ],
+      "steps": [
+        "Create a free NVIDIA API key from NVIDIA's developer site.",
+        "Add it under BYOK in the AnyRouter dashboard.",
+        "Call AnyRouter with your sk-ar key. Use anyrouter/free when you want the shared free chain instead of one provider."
+      ]
+    }
+  ]
+}

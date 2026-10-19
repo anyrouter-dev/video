@@ -1,0 +1,642 @@
+{
+  "releases": [
+    {
+      "id": "001-20261019-claude-code-8b52221894",
+      "hash": "8b52221894",
+      "kind": "use-case",
+      "label": "claude-code",
+      "title": "Run Claude Code through AnyRouter",
+      "seconds": 24,
+      "renderedAt": "2026-10-19T10:16:19.963Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-001-20261019-claude-code-8b52221894.mp4",
+          "cover": "renders/use-case-001-20261019-claude-code-8b52221894.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-001-20261019-claude-code-8b52221894-portrait.mp4",
+          "cover": "renders/use-case-001-20261019-claude-code-8b52221894-portrait.png"
+        }
+      },
+      "source": "renders/use-case-001-20261019-claude-code-8b52221894-source.tar.gz",
+      "createdAt": "2026-10-19T10:16:19.997Z"
+    },
+    {
+      "id": "002-20261019-grokbot-a8531764e3",
+      "hash": "a8531764e3",
+      "kind": "use-case",
+      "label": "grokbot",
+      "title": "Grok Bot + Herdr + Anyr CLI coding loop",
+      "seconds": 25,
+      "renderedAt": "2026-10-19T10:17:01.529Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-002-20261019-grokbot-a8531764e3.mp4",
+          "cover": "renders/use-case-002-20261019-grokbot-a8531764e3.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-002-20261019-grokbot-a8531764e3-portrait.mp4",
+          "cover": "renders/use-case-002-20261019-grokbot-a8531764e3-portrait.png"
+        }
+      },
+      "source": "renders/use-case-002-20261019-grokbot-a8531764e3-source.tar.gz",
+      "createdAt": "2026-10-19T10:17:01.550Z"
+    },
+    {
+      "id": "003-20261019-opencode-111b3a4d8f",
+      "hash": "111b3a4d8f",
+      "kind": "use-case",
+      "label": "opencode",
+      "title": "Run OpenCode through AnyRouter",
+      "seconds": 24,
+      "renderedAt": "2026-10-19T10:18:48.620Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-003-20261019-opencode-111b3a4d8f.mp4",
+          "cover": "renders/use-case-003-20261019-opencode-111b3a4d8f.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-003-20261019-opencode-111b3a4d8f-portrait.mp4",
+          "cover": "renders/use-case-003-20261019-opencode-111b3a4d8f-portrait.png"
+        }
+      },
+      "source": "renders/use-case-003-20261019-opencode-111b3a4d8f-source.tar.gz",
+      "createdAt": "2026-10-19T10:18:48.644Z"
+    },
+    {
+      "id": "004-20261019-coding-agents-95d5dd8d3b",
+      "hash": "95d5dd8d3b",
+      "kind": "use-case",
+      "label": "coding-agents",
+      "title": "Run every coding agent through one URL",
+      "seconds": 22,
+      "renderedAt": "2026-10-19T10:21:00.542Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.mp4",
+          "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-portrait.mp4",
+          "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-portrait.png"
+        }
+      },
+      "source": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-source.tar.gz",
+      "createdAt": "2026-10-19T10:21:00.566Z"
+    },
+    {
+      "id": "005-20261019-hermes-agent-0db4be80c8",
+      "hash": "0db4be80c8",
+      "kind": "use-case",
+      "label": "hermes-agent",
+      "title": "Run Hermes Agent on AnyRouter",
+      "seconds": 24,
+      "renderedAt": "2026-10-19T10:21:45.845Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-005-20261019-hermes-agent-0db4be80c8.mp4",
+          "cover": "renders/use-case-005-20261019-hermes-agent-0db4be80c8.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-005-20261019-hermes-agent-0db4be80c8-portrait.mp4",
+          "cover": "renders/use-case-005-20261019-hermes-agent-0db4be80c8-portrait.png"
+        }
+      },
+      "source": "renders/use-case-005-20261019-hermes-agent-0db4be80c8-source.tar.gz",
+      "createdAt": "2026-10-19T10:21:45.867Z"
+    },
+    {
+      "id": "006-20261019-claude-agent-sdk-36e0c55d8f",
+      "hash": "36e0c55d8f",
+      "kind": "use-case",
+      "label": "claude-agent-sdk",
+      "title": "Run the Claude Agent SDK on any model",
+      "seconds": 23,
+      "renderedAt": "2026-10-19T10:22:29.543Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f.mp4",
+          "cover": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f-portrait.mp4",
+          "cover": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f-portrait.png"
+        }
+      },
+      "source": "renders/use-case-006-20261019-claude-agent-sdk-36e0c55d8f-source.tar.gz",
+      "createdAt": "2026-10-19T10:22:29.567Z"
+    },
+    {
+      "id": "007-20261019-claude-code-free-models-f8e05fc0f1",
+      "hash": "f8e05fc0f1",
+      "kind": "use-case",
+      "label": "claude-code-free-models",
+      "title": "Run Claude Code on free models",
+      "seconds": 25,
+      "renderedAt": "2026-10-19T10:23:15.006Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1.mp4",
+          "cover": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1-portrait.mp4",
+          "cover": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1-portrait.png"
+        }
+      },
+      "source": "renders/use-case-007-20261019-claude-code-free-models-f8e05fc0f1-source.tar.gz",
+      "createdAt": "2026-10-19T10:23:15.025Z"
+    },
+    {
+      "id": "008-20261019-openrouter-free-fallback-5965ba86b5",
+      "hash": "5965ba86b5",
+      "kind": "use-case",
+      "label": "openrouter-free-fallback",
+      "title": "OpenRouter free models, with fallback to another free model",
+      "seconds": 24.6,
+      "renderedAt": "2026-10-19T10:24:04.104Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5.mp4",
+          "cover": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5-portrait.mp4",
+          "cover": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5-portrait.png"
+        }
+      },
+      "source": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5-source.tar.gz",
+      "createdAt": "2026-10-19T10:24:04.125Z"
+    },
+    {
+      "id": "009-20261019-openrouter-free-in-your-tools-360ec1b62d",
+      "hash": "360ec1b62d",
+      "kind": "use-case",
+      "label": "openrouter-free-in-your-tools",
+      "title": "OpenRouter free models in OpenCode and Cline",
+      "seconds": 24.6,
+      "renderedAt": "2026-10-19T10:24:55.552Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d.mp4",
+          "cover": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d-portrait.mp4",
+          "cover": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d-portrait.png"
+        }
+      },
+      "source": "renders/use-case-009-20261019-openrouter-free-in-your-tools-360ec1b62d-source.tar.gz",
+      "createdAt": "2026-10-19T10:24:55.579Z"
+    },
+    {
+      "id": "010-20261019-nvidia-nim-models-4854b01730",
+      "hash": "4854b01730",
+      "kind": "use-case",
+      "label": "nvidia-nim-models",
+      "title": "NVIDIA NIM models through one endpoint",
+      "seconds": 24.2,
+      "renderedAt": "2026-10-19T10:25:42.875Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.mp4",
+          "cover": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-portrait.mp4",
+          "cover": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-portrait.png"
+        }
+      },
+      "source": "renders/use-case-010-20261019-nvidia-nim-models-4854b01730-source.tar.gz",
+      "createdAt": "2026-10-19T10:25:42.896Z"
+    },
+    {
+      "id": "011-20261019-gemini-in-claude-code-78fd1ec8a3",
+      "hash": "78fd1ec8a3",
+      "kind": "use-case",
+      "label": "gemini-in-claude-code",
+      "title": "Gemini models in Claude Code",
+      "seconds": 25,
+      "renderedAt": "2026-10-19T10:26:34.589Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.mp4",
+          "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-portrait.mp4",
+          "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-portrait.png"
+        }
+      },
+      "source": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-source.tar.gz",
+      "createdAt": "2026-10-19T10:26:34.632Z"
+    },
+    {
+      "id": "012-20261019-claude-code-multiple-keys-bd03731ae0",
+      "hash": "bd03731ae0",
+      "kind": "use-case",
+      "label": "claude-code-multiple-keys",
+      "title": "Several provider keys behind Claude Code",
+      "seconds": 25,
+      "renderedAt": "2026-10-19T10:27:28.070Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.mp4",
+          "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-portrait.mp4",
+          "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-portrait.png"
+        }
+      },
+      "source": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-source.tar.gz",
+      "createdAt": "2026-10-19T10:27:28.095Z"
+    },
+    {
+      "id": "013-20261019-virtual-presets-f65d80ccd3",
+      "hash": "f65d80ccd3",
+      "kind": "use-case",
+      "label": "virtual-presets",
+      "title": "Start on anyrouter/free or anyrouter/auto",
+      "seconds": 21.3,
+      "renderedAt": "2026-10-19T10:28:13.472Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.mp4",
+          "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-portrait.mp4",
+          "cover": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-portrait.png"
+        }
+      },
+      "source": "renders/use-case-013-20261019-virtual-presets-f65d80ccd3-source.tar.gz",
+      "createdAt": "2026-10-19T10:28:13.506Z"
+    },
+    {
+      "id": "014-20261019-nvidia-free-key-0064ad0a03",
+      "hash": "0064ad0a03",
+      "kind": "use-case",
+      "label": "nvidia-free-key",
+      "title": "Route a free NVIDIA key through one URL",
+      "seconds": 23.7,
+      "renderedAt": "2026-10-19T10:29:08.415Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.mp4",
+          "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-portrait.mp4",
+          "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-portrait.png"
+        }
+      },
+      "source": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-source.tar.gz",
+      "createdAt": "2026-10-19T10:29:08.436Z"
+    },
+    {
+      "id": "015-20261019-go-plan-9062e5bb79",
+      "hash": "9062e5bb79",
+      "kind": "use-case",
+      "label": "go-plan",
+      "title": "Go: paid models from $2 a month",
+      "seconds": 22,
+      "renderedAt": "2026-10-19T10:29:51.408Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-015-20261019-go-plan-9062e5bb79.mp4",
+          "cover": "renders/use-case-015-20261019-go-plan-9062e5bb79.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-015-20261019-go-plan-9062e5bb79-portrait.mp4",
+          "cover": "renders/use-case-015-20261019-go-plan-9062e5bb79-portrait.png"
+        }
+      },
+      "source": "renders/use-case-015-20261019-go-plan-9062e5bb79-source.tar.gz",
+      "createdAt": "2026-10-19T10:29:51.428Z"
+    },
+    {
+      "id": "016-20261019-free-llm-api-e289a727da",
+      "hash": "e289a727da",
+      "kind": "use-case",
+      "label": "free-llm-api",
+      "title": "A real free LLM API for side projects",
+      "seconds": 21.3,
+      "renderedAt": "2026-10-19T10:30:36.509Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da.mp4",
+          "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da-portrait.mp4",
+          "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da-portrait.png"
+        }
+      },
+      "source": "renders/use-case-016-20261019-free-llm-api-e289a727da-source.tar.gz",
+      "createdAt": "2026-10-19T10:30:36.536Z"
+    },
+    {
+      "id": "017-20261019-free-chatbot-752d6061b4",
+      "hash": "752d6061b4",
+      "kind": "use-case",
+      "label": "free-chatbot",
+      "title": "Build a free chatbot for a side project",
+      "seconds": 22.7,
+      "renderedAt": "2026-10-19T10:31:22.268Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-017-20261019-free-chatbot-752d6061b4.mp4",
+          "cover": "renders/use-case-017-20261019-free-chatbot-752d6061b4.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-017-20261019-free-chatbot-752d6061b4-portrait.mp4",
+          "cover": "renders/use-case-017-20261019-free-chatbot-752d6061b4-portrait.png"
+        }
+      },
+      "source": "renders/use-case-017-20261019-free-chatbot-752d6061b4-source.tar.gz",
+      "createdAt": "2026-10-19T10:31:22.302Z"
+    },
+    {
+      "id": "018-20261019-cheapest-llm-api-d7b1c646ea",
+      "hash": "d7b1c646ea",
+      "kind": "use-case",
+      "label": "cheapest-llm-api",
+      "title": "Shop for the cheapest model without lock-in",
+      "seconds": 23.9,
+      "renderedAt": "2026-10-19T10:32:03.788Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.mp4",
+          "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-portrait.mp4",
+          "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-portrait.png"
+        }
+      },
+      "source": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-source.tar.gz",
+      "createdAt": "2026-10-19T10:32:03.809Z"
+    },
+    {
+      "id": "019-20261019-ai-sdk-8e3de26f8d",
+      "hash": "8e3de26f8d",
+      "kind": "use-case",
+      "label": "ai-sdk",
+      "title": "One AI SDK provider for the whole catalog",
+      "seconds": 20.9,
+      "renderedAt": "2026-10-19T10:32:43.697Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.mp4",
+          "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-portrait.mp4",
+          "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-portrait.png"
+        }
+      },
+      "source": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-source.tar.gz",
+      "createdAt": "2026-10-19T10:32:43.721Z"
+    },
+    {
+      "id": "020-20261019-openai-sdk-4543830c36",
+      "hash": "4543830c36",
+      "kind": "use-case",
+      "label": "openai-sdk",
+      "title": "Keep the OpenAI SDK, change two fields",
+      "seconds": 22,
+      "renderedAt": "2026-10-19T10:33:36.246Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-020-20261019-openai-sdk-4543830c36.mp4",
+          "cover": "renders/use-case-020-20261019-openai-sdk-4543830c36.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-020-20261019-openai-sdk-4543830c36-portrait.mp4",
+          "cover": "renders/use-case-020-20261019-openai-sdk-4543830c36-portrait.png"
+        }
+      },
+      "source": "renders/use-case-020-20261019-openai-sdk-4543830c36-source.tar.gz",
+      "createdAt": "2026-10-19T10:33:36.268Z"
+    },
+    {
+      "id": "021-20261019-unify-api-be024f7854",
+      "hash": "be024f7854",
+      "kind": "use-case",
+      "label": "unify-api",
+      "title": "One API in front of every provider dialect",
+      "seconds": 23.3,
+      "renderedAt": "2026-10-19T10:34:22.080Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-021-20261019-unify-api-be024f7854.mp4",
+          "cover": "renders/use-case-021-20261019-unify-api-be024f7854.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-021-20261019-unify-api-be024f7854-portrait.mp4",
+          "cover": "renders/use-case-021-20261019-unify-api-be024f7854-portrait.png"
+        }
+      },
+      "source": "renders/use-case-021-20261019-unify-api-be024f7854-source.tar.gz",
+      "createdAt": "2026-10-19T10:34:22.101Z"
+    },
+    {
+      "id": "022-20261019-model-evals-58f6f1bc5b",
+      "hash": "58f6f1bc5b",
+      "kind": "use-case",
+      "label": "model-evals",
+      "title": "Run one eval across many models",
+      "seconds": 22.7,
+      "renderedAt": "2026-10-19T10:35:01.212Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-022-20261019-model-evals-58f6f1bc5b.mp4",
+          "cover": "renders/use-case-022-20261019-model-evals-58f6f1bc5b.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-022-20261019-model-evals-58f6f1bc5b-portrait.mp4",
+          "cover": "renders/use-case-022-20261019-model-evals-58f6f1bc5b-portrait.png"
+        }
+      },
+      "source": "renders/use-case-022-20261019-model-evals-58f6f1bc5b-source.tar.gz",
+      "createdAt": "2026-10-19T10:35:01.233Z"
+    },
+    {
+      "id": "023-20261019-agent-fallback-345e31f40d",
+      "hash": "345e31f40d",
+      "kind": "use-case",
+      "label": "agent-fallback",
+      "title": "Keep an agent up when a provider goes down",
+      "seconds": 24.5,
+      "renderedAt": "2026-10-19T10:35:47.460Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d.mp4",
+          "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-023-20261019-agent-fallback-345e31f40d-portrait.mp4",
+          "cover": "renders/use-case-023-20261019-agent-fallback-345e31f40d-portrait.png"
+        }
+      },
+      "source": "renders/use-case-023-20261019-agent-fallback-345e31f40d-source.tar.gz",
+      "createdAt": "2026-10-19T10:35:47.481Z"
+    },
+    {
+      "id": "024-20261019-donate-keys-f8f4641122",
+      "hash": "f8f4641122",
+      "kind": "use-case",
+      "label": "donate-keys",
+      "title": "Donate an idle key, earn credits back",
+      "seconds": 22,
+      "renderedAt": "2026-10-19T10:36:26.478Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-024-20261019-donate-keys-f8f4641122.mp4",
+          "cover": "renders/use-case-024-20261019-donate-keys-f8f4641122.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-024-20261019-donate-keys-f8f4641122-portrait.mp4",
+          "cover": "renders/use-case-024-20261019-donate-keys-f8f4641122-portrait.png"
+        }
+      },
+      "source": "renders/use-case-024-20261019-donate-keys-f8f4641122-source.tar.gz",
+      "createdAt": "2026-10-19T10:36:26.499Z"
+    },
+    {
+      "id": "025-20261019-byok-697ac819bf",
+      "hash": "697ac819bf",
+      "kind": "use-case",
+      "label": "byok",
+      "title": "Bring your own keys, $0 markup",
+      "seconds": 24.6,
+      "renderedAt": "2026-10-19T10:37:12.336Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-025-20261019-byok-697ac819bf.mp4",
+          "cover": "renders/use-case-025-20261019-byok-697ac819bf.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-025-20261019-byok-697ac819bf-portrait.mp4",
+          "cover": "renders/use-case-025-20261019-byok-697ac819bf-portrait.png"
+        }
+      },
+      "source": "renders/use-case-025-20261019-byok-697ac819bf-source.tar.gz",
+      "createdAt": "2026-10-19T10:37:12.358Z"
+    },
+    {
+      "id": "026-20261019-byok-anthropic-7f711389db",
+      "hash": "7f711389db",
+      "kind": "use-case",
+      "label": "byok-anthropic",
+      "title": "Bring your own Anthropic key",
+      "seconds": 24.3,
+      "renderedAt": "2026-10-19T10:38:01.732Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-026-20261019-byok-anthropic-7f711389db.mp4",
+          "cover": "renders/use-case-026-20261019-byok-anthropic-7f711389db.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-026-20261019-byok-anthropic-7f711389db-portrait.mp4",
+          "cover": "renders/use-case-026-20261019-byok-anthropic-7f711389db-portrait.png"
+        }
+      },
+      "source": "renders/use-case-026-20261019-byok-anthropic-7f711389db-source.tar.gz",
+      "createdAt": "2026-10-19T10:38:01.752Z"
+    },
+    {
+      "id": "027-20261019-sign-in-5e93149317",
+      "hash": "5e93149317",
+      "kind": "use-case",
+      "label": "sign-in",
+      "title": "Let users sign in with their AnyRouter account",
+      "seconds": 22.5,
+      "renderedAt": "2026-10-19T10:38:42.758Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-027-20261019-sign-in-5e93149317.mp4",
+          "cover": "renders/use-case-027-20261019-sign-in-5e93149317.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-027-20261019-sign-in-5e93149317-portrait.mp4",
+          "cover": "renders/use-case-027-20261019-sign-in-5e93149317-portrait.png"
+        }
+      },
+      "source": "renders/use-case-027-20261019-sign-in-5e93149317-source.tar.gz",
+      "createdAt": "2026-10-19T10:38:42.784Z"
+    },
+    {
+      "id": "028-20261019-mcp-gateway-425589e7e2",
+      "hash": "425589e7e2",
+      "kind": "use-case",
+      "label": "mcp-gateway",
+      "title": "Manage models and keys from any MCP client",
+      "seconds": 24.4,
+      "renderedAt": "2026-10-19T10:39:36.133Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.mp4",
+          "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-portrait.mp4",
+          "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-portrait.png"
+        }
+      },
+      "source": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-source.tar.gz",
+      "createdAt": "2026-10-19T10:39:36.167Z"
+    },
+    {
+      "id": "029-20261019-mcp-for-agents-07317c593c",
+      "hash": "07317c593c",
+      "kind": "use-case",
+      "label": "mcp-for-agents",
+      "title": "Give agents MCP tools without per-client sprawl",
+      "seconds": 22,
+      "renderedAt": "2026-10-19T10:40:30.844Z",
+      "commit": "41fa3ef",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.mp4",
+          "cover": "renders/use-case-029-20261019-mcp-for-agents-07317c593c.png"
+        },
+        "portrait": {
+          "artifact": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-portrait.mp4",
+          "cover": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-portrait.png"
+        }
+      },
+      "source": "renders/use-case-029-20261019-mcp-for-agents-07317c593c-source.tar.gz",
+      "createdAt": "2026-10-19T10:40:30.879Z"
+    }
+  ]
+}

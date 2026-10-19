@@ -1,0 +1,83 @@
+{
+  "notable": true,
+  "label": "openrouter-free-fallback",
+  "parts": [
+    "openrouter-free-fallback:ca129950e8e87847da0fe0a7930b1be877fed29098dcd3db5ae0039601dc40ea"
+  ],
+  "useCases": [
+    {
+      "slug": "openrouter-free-fallback",
+      "url": "https://anyrouter.dev/use-cases/openrouter-free-fallback",
+      "kicker": "Free models",
+      "title": "OpenRouter free models, with fallback to another free model",
+      "summary": "Free models that fall back to another free model",
+      "problem": "A free model on one route runs out at busy hours, and a script that retries the same route keeps failing. You want a different free model to answer without writing the retry yourself.",
+      "logos": [
+        "openrouter"
+      ],
+      "command": {
+        "text": "\"model\": \"google/gemma-4-31b:free\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl -si https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"google/gemma-4-31b:free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }' | grep -i -e x-anyrouter-fallback -e '\"model\"'",
+          "title": "curl · which model answered"
+        }
+      ],
+      "steps": [
+        "Call a :free model id with your AnyRouter key, as in the curl below. No provider key is needed and no credits are used.",
+        "Check the model field in the response, and the X-AnyRouter-Fallback header. When the header reads anyrouter/free, a different free model answered."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "app",
+            "kind": "tool",
+            "label": "Your app",
+            "note": "OpenAI API",
+            "provider": null
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": null,
+            "provider": "anyrouter"
+          },
+          {
+            "id": "or",
+            "kind": "provider",
+            "label": "Your :free model",
+            "note": "free route",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "free",
+            "kind": "fallback",
+            "label": "Other free model",
+            "note": "anyrouter/free",
+            "provider": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "app",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "or",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "free",
+            "dashed": true
+          }
+        ]
+      }
+    }
+  ]
+}

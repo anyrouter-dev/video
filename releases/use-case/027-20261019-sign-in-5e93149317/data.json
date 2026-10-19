@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "sign-in",
+  "parts": [
+    "sign-in:dfd1cda8c64ddb5555ae7a27e4fe89c9fffe9e049f454ebcfe9339f13a12c6c8"
+  ],
+  "useCases": [
+    {
+      "slug": "sign-in",
+      "url": "https://anyrouter.dev/use-cases/sign-in",
+      "kicker": "For app builders",
+      "title": "Let users sign in with their AnyRouter account",
+      "summary": "Give your app a temporary inference-only key",
+      "problem": "Shipping your own LLM keys means you eat every user's bill. Asking them to paste an OpenAI key is a bad secret-handling story.",
+      "logos": [],
+      "command": {
+        "text": "https://anyrouter.dev/oauth/consent",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "https://anyrouter.dev/oauth/consent",
+          "title": "Consent endpoint"
+        }
+      ],
+      "steps": [
+        "Register your app and implement the OAuth 2.1 + PKCE consent flow.",
+        "Exchange the code for a short-lived sk-ar-v1 key scoped to that user.",
+        "Call models on their behalf — start with anyrouter/free or anyrouter/auto."
+      ]
+    }
+  ]
+}

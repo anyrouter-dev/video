@@ -55,10 +55,15 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
+| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page. Each use case is its own release | `/use-cases.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
 and its `collect` is `collectAuthored` from `lib/authored.mjs`.
+
+A kind whose facts hold several films (`use-case`: one per page) has a `split`.
+`pending use-case` then lists each unreleased slug, `run use-case` renders each
+one, and `--slug=SLUG` collects just one for `gen`, `check` and `run`.
 
 To add a kind: create `videos/<name>/kind.mjs` following the contract in
 `lib/kinds.mjs`, add a fixture and a `kind.test.mjs`, and add it to the `check`
@@ -119,7 +124,7 @@ npm test                               # unit tests — Node builtins only, no i
 Kind flags: `--limit=N`, `--seconds=N`, `--from=FILE` (build from a saved
 response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 `--baseline=FILE`; `release` takes `--version=X.Y.Z`; `changelog` takes
-`--date=YYYY-MM-DD`.
+`--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG`.
 
 ## model-drop layouts
 
@@ -141,6 +146,11 @@ on every cut, the frame chrome and the closing card; kinds compose scenes from i
 classes and helpers (read its header). No gradients, glows, blur or emoji. Every
 logo comes from `lib/marks.mjs`; a provider with no vendored mark gets a monogram,
 never a borrowed logo.
+
+`use-case` is the exception. It brings its own `write` (`videos/use-case/project.mjs`)
+in the Clear look of `videos/explainer/frame.md`: white, Geist, shadcn surfaces,
+one accent per moment. Its scenes carry their portrait layout, so
+`shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
 
 ## Rules every generated film obeys
 

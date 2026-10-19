@@ -1,0 +1,14 @@
+{
+  "id": "019-20261019-ai-sdk-8e3de26f8d",
+  "hash": "8e3de26f8d",
+  "kind": "use-case",
+  "label": "ai-sdk",
+  "title": "One AI SDK provider for the whole catalog",
+  "seconds": 20.9,
+  "renderedAt": "2026-10-19T10:32:43.697Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.mp4",
+  "cover": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d.png",
+  "source": "renders/use-case-019-20261019-ai-sdk-8e3de26f8d-source.tar.gz",
+  "createdAt": "2026-10-19T10:32:43.721Z"
+}

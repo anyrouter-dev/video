@@ -1,0 +1,14 @@
+{
+  "id": "028-20261019-mcp-gateway-425589e7e2",
+  "hash": "425589e7e2",
+  "kind": "use-case",
+  "label": "mcp-gateway",
+  "title": "Manage models and keys from any MCP client",
+  "seconds": 24.4,
+  "renderedAt": "2026-10-19T10:39:36.133Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.mp4",
+  "cover": "renders/use-case-028-20261019-mcp-gateway-425589e7e2.png",
+  "source": "renders/use-case-028-20261019-mcp-gateway-425589e7e2-source.tar.gz",
+  "createdAt": "2026-10-19T10:39:36.167Z"
+}

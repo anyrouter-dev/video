@@ -1,0 +1,14 @@
+{
+  "id": "012-20261019-claude-code-multiple-keys-bd03731ae0",
+  "hash": "bd03731ae0",
+  "kind": "use-case",
+  "label": "claude-code-multiple-keys",
+  "title": "Several provider keys behind Claude Code",
+  "seconds": 25,
+  "renderedAt": "2026-10-19T10:27:28.070Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.mp4",
+  "cover": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0.png",
+  "source": "renders/use-case-012-20261019-claude-code-multiple-keys-bd03731ae0-source.tar.gz",
+  "createdAt": "2026-10-19T10:27:28.095Z"
+}

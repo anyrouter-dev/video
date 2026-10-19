@@ -1,0 +1,37 @@
+{
+  "notable": true,
+  "label": "free-llm-api",
+  "parts": [
+    "free-llm-api:c1a172b48331181deb0ac05d9b196d9c99309ef207053c2255f6b3b6229edc1b"
+  ],
+  "useCases": [
+    {
+      "slug": "free-llm-api",
+      "url": "https://anyrouter.dev/use-cases/free-llm-api",
+      "kicker": "Students & side projects",
+      "title": "A real free LLM API for side projects",
+      "summary": "A documented free tier for side projects",
+      "problem": "Most “free LLM API” posts dump a list of expired keys. You need no daily cap, a model id that fails over, and a path to pay $2 when you outgrow it.",
+      "logos": [],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        },
+        {
+          "code": "import OpenAI from \"openai\"\n\nconst client = new OpenAI({\n  baseURL: \"https://anyrouter.dev/api/v1\",\n  apiKey: process.env.ANYROUTER_API_KEY,\n})\n\nconst res = await client.chat.completions.create({\n  model: \"anyrouter/free\",\n  messages: [{ role: \"user\", content: \"Say hello in one sentence.\" }],\n})\nconsole.log(res.choices[0]?.message.content)",
+          "title": "OpenAI SDK"
+        }
+      ],
+      "steps": [
+        "Sign up and create a key.",
+        "Upgrade to Go ($2/mo) or donate a key to get paid-model access.",
+        "Call anyrouter/free from curl, the OpenAI SDK, or the playground."
+      ]
+    }
+  ]
+}

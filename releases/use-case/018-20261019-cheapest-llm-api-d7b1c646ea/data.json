@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "cheapest-llm-api",
+  "parts": [
+    "cheapest-llm-api:18dec8d2e73f410782cdf2eefe1d281e85251f87fd421b50fd5ba687c0c4665d"
+  ],
+  "useCases": [
+    {
+      "slug": "cheapest-llm-api",
+      "url": "https://anyrouter.dev/use-cases/cheapest-llm-api",
+      "kicker": "Cost per token",
+      "title": "Shop for the cheapest model without lock-in",
+      "summary": "Compare list prices, switch with a string",
+      "problem": "The cheapest SKU on a landing page is often the wrong unit (cached vs uncached, input vs output) or a model that is not actually serving.",
+      "logos": [],
+      "command": {
+        "text": "\"model\": \"anyrouter/auto\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ],
+      "steps": [
+        "Compare models on /models and /compare — use the published list prices, not screenshots.",
+        "Start traffic on anyrouter/auto so health-aware failover avoids a dead cheap SKU.",
+        "Pin a specific id only after you have measured quality on your prompts."
+      ]
+    }
+  ]
+}
