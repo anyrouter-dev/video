@@ -1,0 +1,14 @@
+{
+  "id": "004-20261019-coding-agents-95d5dd8d3b",
+  "hash": "95d5dd8d3b",
+  "kind": "use-case",
+  "label": "coding-agents",
+  "title": "Run every coding agent through one URL",
+  "seconds": 22,
+  "renderedAt": "2026-10-19T10:21:00.542Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.mp4",
+  "cover": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b.png",
+  "source": "renders/use-case-004-20261019-coding-agents-95d5dd8d3b-source.tar.gz",
+  "createdAt": "2026-10-19T10:21:00.566Z"
+}

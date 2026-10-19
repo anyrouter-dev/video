@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "go-plan",
+  "parts": [
+    "go-plan:96158939f8189db5cc8e793938d26f160cb48d02091a5ab388f576ebd5ef9bcd"
+  ],
+  "useCases": [
+    {
+      "slug": "go-plan",
+      "url": "https://anyrouter.dev/use-cases/go-plan",
+      "kicker": "Go plan",
+      "title": "Go: paid models from $2 a month",
+      "summary": "A $2 plan for paid models, or donate to unlock",
+      "problem": "anyrouter/free and :free models have no daily limit. Paid models need credits; Go (or a donated key) is the cheapest way in.",
+      "logos": [],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ],
+      "steps": [
+        "Open pricing and start Go at $2/mo, or donate an eligible provider key.",
+        "Call anyrouter/free — no credit deduction and no daily limit.",
+        "Use anyrouter/auto when you want paid failover billed to credits."
+      ]
+    }
+  ]
+}

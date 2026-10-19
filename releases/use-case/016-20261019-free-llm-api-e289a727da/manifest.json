@@ -1,0 +1,14 @@
+{
+  "id": "016-20261019-free-llm-api-e289a727da",
+  "hash": "e289a727da",
+  "kind": "use-case",
+  "label": "free-llm-api",
+  "title": "A real free LLM API for side projects",
+  "seconds": 21.3,
+  "renderedAt": "2026-10-19T10:30:36.509Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-016-20261019-free-llm-api-e289a727da.mp4",
+  "cover": "renders/use-case-016-20261019-free-llm-api-e289a727da.png",
+  "source": "renders/use-case-016-20261019-free-llm-api-e289a727da-source.tar.gz",
+  "createdAt": "2026-10-19T10:30:36.536Z"
+}

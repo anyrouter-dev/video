@@ -1,0 +1,14 @@
+{
+  "id": "011-20261019-gemini-in-claude-code-78fd1ec8a3",
+  "hash": "78fd1ec8a3",
+  "kind": "use-case",
+  "label": "gemini-in-claude-code",
+  "title": "Gemini models in Claude Code",
+  "seconds": 25,
+  "renderedAt": "2026-10-19T10:26:34.589Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.mp4",
+  "cover": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3.png",
+  "source": "renders/use-case-011-20261019-gemini-in-claude-code-78fd1ec8a3-source.tar.gz",
+  "createdAt": "2026-10-19T10:26:34.632Z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "018-20261019-cheapest-llm-api-d7b1c646ea",
+  "hash": "d7b1c646ea",
+  "kind": "use-case",
+  "label": "cheapest-llm-api",
+  "title": "Shop for the cheapest model without lock-in",
+  "seconds": 23.9,
+  "renderedAt": "2026-10-19T10:32:03.788Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.mp4",
+  "cover": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea.png",
+  "source": "renders/use-case-018-20261019-cheapest-llm-api-d7b1c646ea-source.tar.gz",
+  "createdAt": "2026-10-19T10:32:03.809Z"
+}

@@ -1,0 +1,88 @@
+{
+  "notable": true,
+  "label": "claude-code-free-models",
+  "parts": [
+    "claude-code-free-models:f295a408af4c8f5e0d71964acca48192e53beb1c501b27c7b8c082770d073001"
+  ],
+  "useCases": [
+    {
+      "slug": "claude-code-free-models",
+      "url": "https://anyrouter.dev/use-cases/claude-code-free-models",
+      "kicker": "Free coding agent",
+      "title": "Run Claude Code on free models",
+      "summary": "Code with Claude Code on anyrouter/free",
+      "problem": "Trying a coding agent on a hobby repo should not need a paid plan with one vendor. You want a free model that fails over, and no daily cap.",
+      "logos": [
+        "anthropic"
+      ],
+      "command": {
+        "text": "anyr claude --model anyrouter/free",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anyrouter/free",
+          "title": "anyr CLI"
+        },
+        {
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nclaude --model anyrouter/free",
+          "title": "Env wrapper"
+        }
+      ],
+      "steps": [
+        "Install the anyr CLI and sign in. Upgrade to Go ($2/mo) or donate a key to get paid-model access.",
+        "Run anyr claude --model anyrouter/free. Requests do not deduct credits.",
+        "Run anyr models to list catalog ids, and switch to anyrouter/auto or a pinned model when a task needs more."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "note": null,
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": null,
+            "provider": "anyrouter"
+          },
+          {
+            "id": "a",
+            "kind": "provider",
+            "label": "Free model",
+            "note": "first candidate",
+            "provider": null
+          },
+          {
+            "id": "b",
+            "kind": "fallback",
+            "label": "Next free model",
+            "note": "if first fails",
+            "provider": null
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "a",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "b",
+            "dashed": true
+          }
+        ]
+      }
+    }
+  ]
+}

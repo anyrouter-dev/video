@@ -1,0 +1,86 @@
+{
+  "notable": true,
+  "label": "agent-fallback",
+  "parts": [
+    "agent-fallback:a75794fbaa75be7ef20e71b1d63737d6be3b0cf0494f505ce753f5c904694348"
+  ],
+  "useCases": [
+    {
+      "slug": "agent-fallback",
+      "url": "https://anyrouter.dev/use-cases/agent-fallback",
+      "kicker": "Uptime",
+      "title": "Keep an agent up when a provider goes down",
+      "summary": "List backup models so an agent stays up",
+      "problem": "An agent pinned to one model stops mid-task during a provider outage or a 429 burst. Retry loops in your code add latency and still hit the same provider.",
+      "logos": [],
+      "command": {
+        "text": "\"models\": [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"]",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"openai/gpt-5.4-mini\",\n    \"models\": [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"],\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Plan the next step.\" }]\n  }'",
+          "title": "curl · models fallback"
+        },
+        {
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst { text } = await generateText({\n  model: anyrouter(\"openai/gpt-5.4-mini\"),\n  prompt: \"Plan the next step.\",\n  providerOptions: {\n    anyrouter: {\n      extraBody: { models: [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"] },\n    },\n  },\n})\nconsole.log(text)",
+          "title": "AI SDK"
+        }
+      ],
+      "steps": [
+        "Keep your primary model in model.",
+        "Add backup ids in models, in the order you want them tried. Fallbacks run on /api/v1/chat/completions.",
+        "Read the model field in the response to see which one answered. Or use anyrouter/auto and let AnyRouter pick a healthy model."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "agent",
+            "kind": "tool",
+            "label": "Your agent",
+            "note": null,
+            "provider": null
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": null,
+            "provider": "anyrouter"
+          },
+          {
+            "id": "a",
+            "kind": "provider",
+            "label": "Primary model",
+            "note": "model",
+            "provider": "openai"
+          },
+          {
+            "id": "b",
+            "kind": "fallback",
+            "label": "Backup model",
+            "note": "models[0]",
+            "provider": "anthropic"
+          }
+        ],
+        "edges": [
+          {
+            "from": "agent",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "a",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "b",
+            "dashed": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "024-20261019-donate-keys-f8f4641122",
+  "hash": "f8f4641122",
+  "kind": "use-case",
+  "label": "donate-keys",
+  "title": "Donate an idle key, earn credits back",
+  "seconds": 22,
+  "renderedAt": "2026-10-19T10:36:26.478Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-024-20261019-donate-keys-f8f4641122.mp4",
+  "cover": "renders/use-case-024-20261019-donate-keys-f8f4641122.png",
+  "source": "renders/use-case-024-20261019-donate-keys-f8f4641122-source.tar.gz",
+  "createdAt": "2026-10-19T10:36:26.499Z"
+}

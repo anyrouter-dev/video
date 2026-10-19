@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "byok",
+  "parts": [
+    "byok:733f867397a84f7214ea6643cb8e1a9bc4719e1b6461b7ad6652cec023e10515"
+  ],
+  "useCases": [
+    {
+      "slug": "byok",
+      "url": "https://anyrouter.dev/use-cases/byok",
+      "kicker": "Your keys",
+      "title": "Bring your own keys, $0 markup",
+      "summary": "Attach your provider keys with no per-token cut",
+      "problem": "You already pay providers. A second gateway invoice is waste if all you needed was one URL, logs, and failover across the keys you have.",
+      "logos": [],
+      "command": {
+        "text": "\"model\": \"anyrouter/auto\"",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ],
+      "steps": [
+        "Open /byok and add each provider key.",
+        "Call AnyRouter with your sk-ar key. Matching models go out on your BYOK key.",
+        "Optionally donate idle quota, or fall through to credits when a key is exhausted."
+      ]
+    }
+  ]
+}

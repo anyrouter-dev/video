@@ -1,0 +1,14 @@
+{
+  "id": "025-20261019-byok-697ac819bf",
+  "hash": "697ac819bf",
+  "kind": "use-case",
+  "label": "byok",
+  "title": "Bring your own keys, $0 markup",
+  "seconds": 24.6,
+  "renderedAt": "2026-10-19T10:37:12.336Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-025-20261019-byok-697ac819bf.mp4",
+  "cover": "renders/use-case-025-20261019-byok-697ac819bf.png",
+  "source": "renders/use-case-025-20261019-byok-697ac819bf-source.tar.gz",
+  "createdAt": "2026-10-19T10:37:12.358Z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "001-20261019-claude-code-8b52221894",
+  "hash": "8b52221894",
+  "kind": "use-case",
+  "label": "claude-code",
+  "title": "Run Claude Code through AnyRouter",
+  "seconds": 24,
+  "renderedAt": "2026-10-19T10:16:19.963Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-001-20261019-claude-code-8b52221894.mp4",
+  "cover": "renders/use-case-001-20261019-claude-code-8b52221894.png",
+  "source": "renders/use-case-001-20261019-claude-code-8b52221894-source.tar.gz",
+  "createdAt": "2026-10-19T10:16:19.997Z"
+}

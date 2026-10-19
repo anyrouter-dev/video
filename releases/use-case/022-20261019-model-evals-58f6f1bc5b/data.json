@@ -1,0 +1,40 @@
+{
+  "notable": true,
+  "label": "model-evals",
+  "parts": [
+    "model-evals:a0766d856c6f3b0a00610dc948d52b61134925f63aa5dac20492225cdbb47e6e"
+  ],
+  "useCases": [
+    {
+      "slug": "model-evals",
+      "url": "https://anyrouter.dev/use-cases/model-evals",
+      "kicker": "Evals",
+      "title": "Run one eval across many models",
+      "summary": "Loop the same prompts over many models",
+      "problem": "Evaluating models from different vendors means one SDK and one key per provider, and cost lands on separate invoices you have to add up.",
+      "logos": [
+        "openai",
+        "anthropic"
+      ],
+      "command": {
+        "text": "anyr models",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\nconst models = [\"openai/gpt-5.4-mini\", \"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"]\n\nfor (const id of models) {\n  const started = Date.now()\n  const { text, usage } = await generateText({\n    model: anyrouter(id),\n    prompt: \"Summarize the CAP theorem in two sentences.\",\n  })\n  console.log(id, Date.now() - started, \"ms\", usage.totalTokens, \"tokens\\n\", text)\n}",
+          "title": "Eval loop"
+        },
+        {
+          "code": "anyr models",
+          "title": "anyr CLI"
+        }
+      ],
+      "steps": [
+        "Run anyr models (or open /models) and pick the ids you want to compare.",
+        "Send the same prompt to each id through one AI SDK provider.",
+        "Compare outputs and token usage, then check cost per request in Dashboard → Logs."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "008-20261019-openrouter-free-fallback-5965ba86b5",
+  "hash": "5965ba86b5",
+  "kind": "use-case",
+  "label": "openrouter-free-fallback",
+  "title": "OpenRouter free models, with fallback to another free model",
+  "seconds": 24.6,
+  "renderedAt": "2026-10-19T10:24:04.104Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5.mp4",
+  "cover": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5.png",
+  "source": "renders/use-case-008-20261019-openrouter-free-fallback-5965ba86b5-source.tar.gz",
+  "createdAt": "2026-10-19T10:24:04.125Z"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "014-20261019-nvidia-free-key-0064ad0a03",
+  "hash": "0064ad0a03",
+  "kind": "use-case",
+  "label": "nvidia-free-key",
+  "title": "Route a free NVIDIA key through one URL",
+  "seconds": 23.7,
+  "renderedAt": "2026-10-19T10:29:08.415Z",
+  "commit": "41fa3ef",
+  "artifact": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.mp4",
+  "cover": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03.png",
+  "source": "renders/use-case-014-20261019-nvidia-free-key-0064ad0a03-source.tar.gz",
+  "createdAt": "2026-10-19T10:29:08.436Z"
+}

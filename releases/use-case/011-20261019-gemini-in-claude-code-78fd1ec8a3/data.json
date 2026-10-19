@@ -1,0 +1,77 @@
+{
+  "notable": true,
+  "label": "gemini-in-claude-code",
+  "parts": [
+    "gemini-in-claude-code:461c1b9115a5124bb5aefb9b9cd722800c454395f054333b47693caa5137ce94"
+  ],
+  "useCases": [
+    {
+      "slug": "gemini-in-claude-code",
+      "url": "https://anyrouter.dev/use-cases/gemini-in-claude-code",
+      "kicker": "Claude Code + Gemini",
+      "title": "Gemini models in Claude Code",
+      "summary": "Pick a Gemini model inside Claude Code",
+      "problem": "You like Claude Code's loop but want to try Gemini on the same repo, without switching to another tool or editing its config by hand.",
+      "logos": [
+        "anthropic",
+        "google"
+      ],
+      "command": {
+        "text": "anyr claude --model google/gemini-2.5-pro",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model google/gemini-2.5-pro",
+          "title": "anyr CLI"
+        },
+        {
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nexport ANTHROPIC_DEFAULT_HAIKU_MODEL=\"google/gemini-2.5-pro\"\nclaude --model google/gemini-2.5-pro",
+          "title": "Env wrapper"
+        }
+      ],
+      "steps": [
+        "Create a key in Google AI Studio, then add it under Dashboard → BYOK → Google AI Studio.",
+        "Install the anyr CLI and run anyr claude with a Gemini model. A concrete --model also sets Claude Code's haiku, sonnet, opus and subagent models, so background tasks use Gemini too.",
+        "Prefer plain env vars? Point ANTHROPIC_BASE_URL at https://anyrouter.dev/api and pass the same model to claude."
+      ],
+      "diagram": {
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "note": "Messages API",
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "translates",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "gem",
+            "kind": "provider",
+            "label": "Gemini",
+            "note": "your Google key",
+            "provider": "google"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw",
+            "dashed": false
+          },
+          {
+            "from": "gw",
+            "to": "gem",
+            "dashed": false
+          }
+        ]
+      }
+    }
+  ]
+}

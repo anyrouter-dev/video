@@ -1,0 +1,39 @@
+{
+  "notable": true,
+  "label": "free-chatbot",
+  "parts": [
+    "free-chatbot:6fa0660de856b4364b50b2c10f5be46d6d774b9c590be3ca14f81bed0a895dbc"
+  ],
+  "useCases": [
+    {
+      "slug": "free-chatbot",
+      "url": "https://anyrouter.dev/use-cases/free-chatbot",
+      "kicker": "Side-project chatbot",
+      "title": "Build a free chatbot for a side project",
+      "summary": "Stream anyrouter/free replies with the AI SDK",
+      "problem": "A demo chatbot dies the day its one free model gets rate-limited, and a paid key on a public page is a bill waiting to happen.",
+      "logos": [
+        "vercel"
+      ],
+      "command": {
+        "text": "model: anyrouter(\"anyrouter/free\"),",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { streamText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst result = streamText({\n  model: anyrouter(\"anyrouter/free\"),\n  system: \"You are a friendly help bot for my project.\",\n  prompt: \"How do I reset my password?\",\n})\n\nfor await (const textPart of result.textStream) {\n  process.stdout.write(textPart)\n}",
+          "title": "streamText"
+        },
+        {
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ],
+      "steps": [
+        "Create a key and keep it on your server. Go ($2/mo) or a donated key gets you paid-model access.",
+        "npm install @anyr/ai-sdk-provider ai, then stream with anyrouter/free.",
+        "Read the model field in the response or Dashboard → Logs to see which free model answered."
+      ]
+    }
+  ]
+}

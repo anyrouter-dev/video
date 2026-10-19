@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "mcp-gateway",
+  "parts": [
+    "mcp-gateway:52f9cf66c70b550a6078f790a09cd93de62d1784bf1d551281307875bbbc2600"
+  ],
+  "useCases": [
+    {
+      "slug": "mcp-gateway",
+      "url": "https://anyrouter.dev/use-cases/mcp-gateway",
+      "kicker": "Workspace tools",
+      "title": "Manage models and keys from any MCP client",
+      "summary": "One MCP endpoint for every client",
+      "problem": "Checking credits, listing models, or rotating a key means leaving the editor. MCP puts those tools next to the agent.",
+      "logos": [],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1/mcp",
+        "shell": false
+      },
+      "snippets": [
+        {
+          "code": "https://anyrouter.dev/api/v1/mcp",
+          "title": "MCP endpoint"
+        }
+      ],
+      "steps": [
+        "Point the MCP client at https://anyrouter.dev/api/v1/mcp.",
+        "Complete OAuth when the client prompts.",
+        "Use the landing page recipes for Claude Desktop, Claude Code, Cursor, and OpenCode."
+      ]
+    }
+  ]
+}
