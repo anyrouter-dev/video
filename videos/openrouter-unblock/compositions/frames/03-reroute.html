@@ -1,18 +1,15 @@
 <template>
   <style>
     /* kit:css */
-/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
-   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
    No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
 @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
 [data-composition-id="03-reroute"] {
-  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-  --line: #E5E5E5; --line-strong: #D4D4D8;
-  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   font-family: var(--sans);
@@ -22,139 +19,168 @@
 }
 [data-composition-id="03-reroute"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
 [data-composition-id="03-reroute"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
-/* the camera: everything in a frame sits in it, and it never stops moving */
+/* the camera: everything in a frame sits in it */
 [data-composition-id="03-reroute"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
-
-[data-composition-id="03-reroute"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-[data-composition-id="03-reroute"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-[data-composition-id="03-reroute"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-[data-composition-id="03-reroute"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-[data-composition-id="03-reroute"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-[data-composition-id="03-reroute"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-[data-composition-id="03-reroute"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-[data-composition-id="03-reroute"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 [data-composition-id="03-reroute"] p, [data-composition-id="03-reroute"] h1, [data-composition-id="03-reroute"] h2 { margin: 0; }
 
-[data-composition-id="03-reroute"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+/* the brand, top-left frame chrome */
+[data-composition-id="03-reroute"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="03-reroute"] .k-brand img { width: 40px; height: 40px; display: block; }
 
-[data-composition-id="03-reroute"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-[data-composition-id="03-reroute"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
-[data-composition-id="03-reroute"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-[data-composition-id="03-reroute"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-[data-composition-id="03-reroute"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+/* type */
+[data-composition-id="03-reroute"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="03-reroute"] .k-headline, [data-composition-id="03-reroute"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="03-reroute"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="03-reroute"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="03-reroute"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="03-reroute"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="03-reroute"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="03-reroute"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="03-reroute"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="03-reroute"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="03-reroute"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="03-reroute"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="03-reroute"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="03-reroute"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="03-reroute"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="03-reroute"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="03-reroute"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="03-reroute"] .k-badge.is-ink, [data-composition-id="03-reroute"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="03-reroute"] .k-badge.is-muted, [data-composition-id="03-reroute"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="03-reroute"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="03-reroute"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
 [data-composition-id="03-reroute"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-[data-composition-id="03-reroute"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="03-reroute"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-/* focus ring: placed over the named thing; animate its opacity and transform */
-[data-composition-id="03-reroute"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="03-reroute"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="03-reroute"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="03-reroute"] .k-chip img { width: 40px; height: 40px; flex: none; }
-[data-composition-id="03-reroute"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+[data-composition-id="03-reroute"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="03-reroute"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="03-reroute"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
 
-/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
-[data-composition-id="03-reroute"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="03-reroute"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-[data-composition-id="03-reroute"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
-[data-composition-id="03-reroute"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-[data-composition-id="03-reroute"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-[data-composition-id="03-reroute"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+/* a window around redrawn product UI */
+[data-composition-id="03-reroute"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="03-reroute"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="03-reroute"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="03-reroute"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="03-reroute"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="03-reroute"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
 [data-composition-id="03-reroute"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-/* code card: a light editor with a file tab */
-[data-composition-id="03-reroute"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="03-reroute"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
-[data-composition-id="03-reroute"] .k-code-bar .k-url { height: 44px; }
-[data-composition-id="03-reroute"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
-[data-composition-id="03-reroute"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+/* code card: a hairline editor with a file tab */
+[data-composition-id="03-reroute"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="03-reroute"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="03-reroute"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="03-reroute"] .k-code-body .kw { color: inherit; }
 [data-composition-id="03-reroute"] .k-code-body .cm { color: var(--muted); }
 [data-composition-id="03-reroute"] .k-ln { display: block; }
 
-/* terminal: the one dark surface */
-[data-composition-id="03-reroute"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
-[data-composition-id="03-reroute"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-[data-composition-id="03-reroute"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
-[data-composition-id="03-reroute"] .k-term-body .p { color: var(--term-dim); }
-[data-composition-id="03-reroute"] .k-term-body .id { color: var(--term-id); }
-[data-composition-id="03-reroute"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+/* terminal: an ink card */
+[data-composition-id="03-reroute"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="03-reroute"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="03-reroute"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="03-reroute"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="03-reroute"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="03-reroute"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="03-reroute"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
 
 /* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
-   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
-[data-composition-id="03-reroute"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="03-reroute"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
 [data-composition-id="03-reroute"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
 [data-composition-id="03-reroute"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="03-reroute"] .k-roll > span + span, [data-composition-id="03-reroute"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="03-reroute"] .k-term .k-roll > span { color: var(--accent-on-ink); }
 
 /* portrait-only line break inside code */
 [data-composition-id="03-reroute"] .k-pbr { display: none; }
 
 @media (orientation: portrait) {
   [data-composition-id="03-reroute"] .k-cam { transform-origin: 510px 710px; }
-  [data-composition-id="03-reroute"] .k-code-body, [data-composition-id="03-reroute"] .k-term-body { font-size: 40px; padding: 32px 36px; }
-  [data-composition-id="03-reroute"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="03-reroute"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="03-reroute"] .k-display { font-size: 148px; }
+  [data-composition-id="03-reroute"] .k-headline, [data-composition-id="03-reroute"] .k-h1 { font-size: 104px; }
+  [data-composition-id="03-reroute"] .k-h2 { font-size: 76px; }
+  [data-composition-id="03-reroute"] .k-title { font-size: 56px; }
+  [data-composition-id="03-reroute"] .k-body { font-size: 48px; }
+  [data-composition-id="03-reroute"] .k-stat { font-size: 280px; }
+  [data-composition-id="03-reroute"] .k-card { border-radius: 28px; }
+  [data-composition-id="03-reroute"] .k-code-body, [data-composition-id="03-reroute"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="03-reroute"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
   [data-composition-id="03-reroute"] .k-pbr { display: inline; }
   [data-composition-id="03-reroute"] .k-lbr { display: none; }
 }
     /* /kit:css */
+    /* the request travels on the wires, under the cards: it never crosses a card's text */
     [data-composition-id="03-reroute"] .f03-wires { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
-    [data-composition-id="03-reroute"] .f03-wires path { fill: none; stroke: var(--line-strong); stroke-width: 4; stroke-linecap: round; }
-    [data-composition-id="03-reroute"] .f03-flow { position: absolute; left: 120px; right: 120px; top: 110px; height: 760px; display: flex; align-items: center; justify-content: space-between; }
-    [data-composition-id="03-reroute"] .f03-node { position: relative; display: flex; align-items: center; gap: 20px; padding: 36px 40px; }
-    [data-composition-id="03-reroute"] .f03-node svg, [data-composition-id="03-reroute"] .f03-node img { width: 56px; height: 56px; flex: none; }
-    [data-composition-id="03-reroute"] .f03-app-icon { color: var(--ink-2); }
-    [data-composition-id="03-reroute"] .f03-side { display: flex; flex-direction: column; gap: 36px; width: 600px; }
-    [data-composition-id="03-reroute"] .f03-mine, [data-composition-id="03-reroute"] .f03-pool { padding: 32px 36px; display: flex; flex-direction: column; gap: 20px; }
-    [data-composition-id="03-reroute"] .f03-mine-head { display: flex; align-items: center; gap: 18px; }
-    [data-composition-id="03-reroute"] .f03-mine-head img { width: 48px; height: 48px; }
-    [data-composition-id="03-reroute"] .f03-status { position: relative; height: 60px; }
-    [data-composition-id="03-reroute"] .f03-status .k-badge { position: absolute; left: 0; top: 0; }
-    [data-composition-id="03-reroute"] .f03-pills { display: flex; flex-direction: column; gap: 16px; }
-    [data-composition-id="03-reroute"] .f03-pill { display: flex; align-items: center; justify-content: space-between; height: 76px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 36px; white-space: nowrap; }
-    [data-composition-id="03-reroute"] .f03-ok { position: absolute; left: 0; top: calc(100% + 24px); }
-    [data-composition-id="03-reroute"] .f03-dot { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.18); opacity: 0; }
-    [data-composition-id="03-reroute"] .f03-ar-ring { border-radius: 28px; }
+    [data-composition-id="03-reroute"] .f03-wires path { fill: none; stroke: var(--hair); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    [data-composition-id="03-reroute"] .f03-node { position: absolute; top: 176px; height: 136px; display: flex; align-items: center; gap: 24px; padding: 0 44px; white-space: nowrap; }
+    [data-composition-id="03-reroute"] .f03-node svg { width: 56px; height: 56px; flex: none; }
+    [data-composition-id="03-reroute"] .f03-app { left: 96px; width: 760px; }
+    [data-composition-id="03-reroute"] .f03-ar { left: 920px; width: 460px; justify-content: center; }
+    [data-composition-id="03-reroute"] .f03-slot { position: relative; margin-left: auto; width: 280px; height: 96px; }
+    [data-composition-id="03-reroute"] .f03-slot .k-badge { position: absolute; right: 0; top: 0; }
+    [data-composition-id="03-reroute"] .f03-card { position: absolute; top: 420px; bottom: 200px; width: 844px; padding: 44px 48px; display: flex; flex-direction: column; }
+    [data-composition-id="03-reroute"] .f03-mine { left: 96px; }
+    [data-composition-id="03-reroute"] .f03-pool { right: 96px; }
+    [data-composition-id="03-reroute"] .f03-card-head { display: flex; align-items: center; gap: 20px; }
+    [data-composition-id="03-reroute"] .f03-card-head img { width: 56px; height: 56px; }
+    [data-composition-id="03-reroute"] .f03-limit { margin-top: auto; align-self: flex-start; color: var(--muted); }
+    [data-composition-id="03-reroute"] .f03-pills { display: flex; gap: 20px; margin-top: auto; }
+    [data-composition-id="03-reroute"] .f03-pill { flex: 1; display: flex; align-items: center; justify-content: center; height: 88px; padding: 0; border-radius: 20px; font-family: var(--mono); font-size: 36px; white-space: nowrap; }
+    [data-composition-id="03-reroute"] .f03-dot { position: absolute; left: -18px; top: -18px; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); opacity: 0; }
 
     @media (orientation: portrait) {
-      [data-composition-id="03-reroute"] .f03-flow { left: 60px; right: 120px; top: 200px; height: 1000px; flex-direction: column; align-items: stretch; justify-content: space-between; }
-      [data-composition-id="03-reroute"] .f03-app, [data-composition-id="03-reroute"] .f03-ar { align-self: center; }
-      [data-composition-id="03-reroute"] .f03-side { flex-direction: row; width: auto; gap: 24px; align-items: flex-start; }
-      [data-composition-id="03-reroute"] .f03-mine, [data-composition-id="03-reroute"] .f03-pool { flex: 1; padding: 28px 24px; }
+      [data-composition-id="03-reroute"] .f03-node { height: 128px; }
+      [data-composition-id="03-reroute"] .f03-app { left: 60px; width: 900px; top: 200px; }
+      [data-composition-id="03-reroute"] .f03-ar { left: 290px; width: 440px; top: 400px; }
+      [data-composition-id="03-reroute"] .f03-card { top: 640px; bottom: 700px; width: 436px; padding: 36px 32px; }
+      [data-composition-id="03-reroute"] .f03-mine { left: 60px; }
+      [data-composition-id="03-reroute"] .f03-pool { right: auto; left: 524px; }
+      [data-composition-id="03-reroute"] .f03-card-head { flex-wrap: wrap; gap: 16px; }
+      [data-composition-id="03-reroute"] .f03-pills { flex-direction: column; gap: 16px; }
+      [data-composition-id="03-reroute"] .f03-pill { flex: none; height: 76px; }
     }
   </style>
 
   <div id="root" data-composition-id="03-reroute" data-width="1920" data-height="1080" data-duration="5.5">
     <div id="f03-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
     <div id="f03-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f03-cam" class="k-cam">
+        <div id="f03-group" class="k-cam">
         <svg id="f03-wires" class="f03-wires" data-layout-allow-overlap><path id="f03-w-app" /><path id="f03-w-mine" /><path id="f03-w-pool" /></svg>
-        <div class="f03-flow">
-          <div id="f03-app" class="k-card f03-node f03-app">
-            <svg class="f03-app-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
-            <span class="k-title">Your app</span>
-            <span id="f03-ok" class="k-badge is-free is-big f03-ok">200 OK</span>
-          </div>
-          <div id="f03-ar" class="k-card f03-node f03-ar">
-            <svg viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
-            <span class="k-title">AnyRouter</span>
-          </div>
-          <div class="f03-side">
-            <div id="f03-mine" class="k-card f03-mine">
-              <div class="f03-mine-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-label">Your account</span></div>
-              <div class="f03-status"><span id="f03-limit" class="k-badge is-danger">Limit reached</span></div>
-            </div>
-            <div id="f03-pool" class="k-card f03-pool">
-              <span class="k-label">Keys members share</span>
-              <div class="f03-pills">
-                <span class="f03-pill">sk-or-v1-••••</span>
-                <span class="f03-pill">sk-or-v1-••••</span>
-                <span class="f03-pill">sk-or-v1-••••</span>
-              </div>
-            </div>
+        <div id="f03-d0" class="f03-dot"></div>
+        <div id="f03-app" class="k-card f03-node f03-app">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+          <span class="k-title">Your app</span>
+          <span class="f03-slot"><span id="f03-ok" class="k-badge is-ink is-big">200 OK</span></span>
+        </div>
+        <div id="f03-ar" class="k-card f03-node f03-ar">
+          <svg viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter" fill="currentColor"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
+          <span class="k-title">AnyRouter</span>
+        </div>
+        <div id="f03-mine" class="k-card f03-card f03-mine">
+          <div class="f03-card-head"><img class="k-mark" src="assets/provider-openrouter.svg" alt="" /><span class="k-title f03-mine-name">Your account</span></div>
+          <span id="f03-limit" class="k-badge is-big f03-limit">Limit reached</span>
+        </div>
+        <div id="f03-pool" class="k-card f03-card f03-pool">
+          <div class="f03-card-head"><span class="k-title">Keys members share</span></div>
+          <div class="f03-pills">
+            <span class="k-card f03-pill">sk-or-v1-••••</span>
+            <span class="k-card f03-pill">sk-or-v1-••••</span>
           </div>
         </div>
-        <div id="f03-ring" class="k-ring f03-ar-ring"></div>
-        <div id="f03-d0" class="f03-dot"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -163,32 +189,57 @@
   <script>
     (function () {
       // kit:js
-// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
 const K = {
-  /** An element rises into place. */
-  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
-    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
   },
-  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
   wash(tl, el, t, span = 0.6) {
-    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
-    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
-    const hold = Math.min(0.25, span * 0.4);
-    tl.set(el, on, t);
-    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
-  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
+    slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      // the old value is gone before the new one is readable, so no frame shows both
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
-      const gap = (at[i + 1] ?? Infinity) - t;
-      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
     });
   },
   /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
@@ -206,12 +257,12 @@ const K = {
   scaleFor(view, r, max, margin = 48) {
     return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
   },
-  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
-      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
-  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
     const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
     const s = (v) => 1 + (v - 1) * k;
-    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
   },
 };
       // /kit:js
@@ -220,56 +271,69 @@ const K = {
       const DURATION = 5.5;
       // Word starts from audio_meta.json frame 3: "account" 0.325, "limit," 1.068, "AnyRouter" 1.672, "send" 2.508,
       // "keys" 3.553, "members" 4.133, "share." 4.447.
-      const GO = 0.05, LIMIT = 1.0, AR = 1.6, SEND = 2.4, KEYS = 3.5, BACK = 3.85;
+      const GO = 0.5, LIMIT = 1.02, AR = 1.62, SEND = 2.45, KEYS = 3.5, BACK = 3.9;
 
       document.fonts.ready.then(() => {
-        const cam = $("cam");
-        const c = cam.getBoundingClientRect(), k = cam.offsetWidth / c.width;
-        const at = (el) => { const r = el.getBoundingClientRect(); return { x: (r.left - c.left + r.width / 2) * k, y: (r.top - c.top + r.height / 2) * k }; };
-        const app = at($("app")), ar = at($("ar")), mine = at($("mine"));
-        const pills = [...root.querySelectorAll('[class~="f03-pill"]')];
-        const pool = pills.map(at);
-        const wire = (el, a, b) => el.setAttribute("d", `M${a.x},${a.y} L${b.x},${b.y}`);
-        wire($("w-app"), app, ar);
-        wire($("w-mine"), ar, mine);
-        wire($("w-pool"), ar, at($("pool")));
+        const cam = $("cam"), group = $("group");
+        const c = group.getBoundingClientRect(), k = group.offsetWidth / c.width;
+        const box = (el) => { const r = el.getBoundingClientRect(); return { l: (r.left - c.left) * k, t: (r.top - c.top) * k, r: (r.right - c.left) * k, b: (r.bottom - c.top) * k }; };
+        const app = box($("app")), ar = box($("ar")), mine = box($("mine")), pool = box($("pool"));
+        const mid = (b) => (b.l + b.r) / 2;
+        // app to AnyRouter: side by side in landscape, stacked in portrait
+        const appWire = ar.t >= app.b
+          ? [{ x: mid(ar), y: app.b }, { x: mid(ar), y: ar.t }]
+          : [{ x: app.r, y: (app.t + app.b) / 2 }, { x: ar.l, y: (ar.t + ar.b) / 2 }];
+        // AnyRouter down to the top edge of each card, with one elbow halfway
+        const drop = (to) => { const y = (ar.b + to.t) / 2; return [{ x: mid(ar), y: ar.b }, { x: mid(ar), y }, { x: mid(to), y }, { x: mid(to), y: to.t }]; };
+        const toMine = drop(mine), toPool = drop(pool);
+        const d = (pts) => "M" + pts.map((p) => p.x + "," + p.y).join(" L");
+        $("w-app").setAttribute("d", d(appWire));
+        $("w-mine").setAttribute("d", d(toMine));
+        $("w-pool").setAttribute("d", d(toPool));
+
+        // move the dot along a polyline at an even speed, eased over the whole trip
+        const dot = $("d0");
+        const travel = (pts, t, dur) => {
+          const seg = pts.slice(1).map((p, i) => Math.hypot(p.x - pts[i].x, p.y - pts[i].y));
+          const total = seg.reduce((a, b) => a + b, 0), s = { v: 0 };
+          tl.fromTo(s, { v: 0 }, { v: 1, duration: dur, ease: "power2.inOut", immediateRender: false, onUpdate: () => {
+            let left = s.v * total, i = 0;
+            while (i < seg.length - 1 && left > seg[i]) left -= seg[i++];
+            const f = seg[i] ? Math.min(1, left / seg[i]) : 0;
+            gsap.set(dot, { x: pts[i].x + (pts[i + 1].x - pts[i].x) * f, y: pts[i].y + (pts[i + 1].y - pts[i].y) * f });
+          } }, t);
+        };
+        const rev = (pts) => [...pts].reverse();
 
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, cam, DURATION, { to: 1.04 });
+        K.push(tl, cam, DURATION, { to: 1.03 });
+        K.cards(tl, group, [$("app"), $("ar"), $("mine"), $("pool")], 0);
+        tl.fromTo($("wires"), { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.inOut" }, 0.3);
+        tl.set([$("limit"), $("ok")], { opacity: 0 }, 0);
+        tl.set(dot, { x: appWire[0].x, y: appWire[0].y }, 0);
 
-        K.rise(tl, $("app"), 0.02, { y: 40 });
-        K.rise(tl, $("ar"), 0.08, { y: 40 });
-        K.rise(tl, $("mine"), 0.14, { y: 40 });
-        K.rise(tl, $("pool"), 0.2, { y: 40 });
-        tl.fromTo($("wires"), { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.1);
-        tl.set($("limit"), { opacity: 0 }, 0);
-        tl.set($("ok"), { opacity: 0 }, 0);
+        // the request goes to your account, which is at its limit
+        tl.to(dot, { opacity: 1, duration: 0.2 }, GO - 0.05);
+        travel([...appWire, ...toMine.slice(1)], GO, LIMIT - GO);
+        tl.to($("mine"), { backgroundColor: "#F5F5F5", borderColor: "#F5F5F5", duration: 0.6, ease: "power2.inOut" }, LIMIT);
+        tl.to($("mine").querySelector('[class~="f03-mine-name"]'), { color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, LIMIT);
+        tl.fromTo($("mine").querySelector('[class~="k-mark"]'), { filter: "brightness(0) invert(0)" }, { filter: "brightness(0) invert(0.42)", duration: 0.6, ease: "power2.inOut", immediateRender: false }, LIMIT);
+        tl.fromTo($("limit"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", immediateRender: false }, LIMIT + 0.1);
 
-        // one request goes to your key, which is out of quota, and comes back to AnyRouter
-        const d0 = $("d0");
-        tl.set(d0, { x: app.x, y: app.y }, 0);
-        tl.to(d0, { opacity: 1, duration: 0.15 }, GO + 0.3);
-        tl.to(d0, { x: ar.x, y: ar.y, duration: 0.35, ease: "power1.inOut" }, GO + 0.3);
-        tl.to(d0, { x: mine.x, y: mine.y, duration: 0.35, ease: "power1.inOut" }, GO + 0.65);
-        tl.to($("mine"), { borderColor: "#C0262D", duration: 0.2 }, LIMIT);
-        tl.fromTo($("limit"), { opacity: 0, x: -16, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.4, ease: "back.out(1.6)", immediateRender: false }, LIMIT);
-        tl.to(d0, { x: ar.x, y: ar.y, duration: 0.45, ease: "power2.inOut" }, LIMIT + 0.15);
+        // AnyRouter takes it back and is the one in focus
+        travel(rev(toMine), LIMIT + 0.15, AR - LIMIT - 0.1);
+        K.ink(tl, $("ar"), AR);
+        // and sends it to a key another member shares
+        travel(toPool, SEND, KEYS - SEND - 0.05);
+        K.ink(tl, $("ar"), SEND + 0.3, false);
+        const pill = root.querySelector('[class~="f03-pill"]');
+        K.ink(tl, pill, KEYS);
 
-        // AnyRouter picks a key another member shares; the request goes there instead
-        const ring = $("ring");
-        tl.set(ring, K.box(ring, $("ar"), 12), 0);
-        tl.fromTo(ring, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, AR);
-        // one request takes one shared key that has room
-        tl.to(d0, { x: pool[1].x, y: pool[1].y, duration: 0.6, ease: "power2.inOut" }, SEND);
-        tl.to(pills[1], { borderColor: "#BB4D00", backgroundColor: "#FFF4EC", duration: 0.25, ease: "power2.out" }, SEND + 0.55);
-        tl.to(ring, { opacity: 0, duration: 0.3 }, KEYS);
-
-        // and the answers come back to your app
-        tl.to(d0, { x: ar.x, y: ar.y, backgroundColor: "#007E55", boxShadow: "0 0 0 8px rgba(0,126,85,.18)", duration: 0.35, ease: "power2.inOut" }, BACK);
-        tl.to(d0, { x: app.x, y: app.y, duration: 0.35, ease: "power2.inOut" }, BACK + 0.35);
-        tl.to(d0, { opacity: 0, duration: 0.15 }, BACK + 0.65);
-        tl.to($("app"), { borderColor: "#007E55", duration: 0.25 }, BACK + 0.6);
-        tl.fromTo($("ok"), { opacity: 0, y: 20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)", immediateRender: false }, BACK + 0.6);
+        // the answer comes back to your app
+        travel([...rev(toPool), ...rev(appWire).slice(1)], BACK, 1.0);
+        K.ink(tl, pill, BACK + 0.6, false);
+        tl.to(dot, { opacity: 0, duration: 0.25 }, BACK + 0.95);
+        K.rise(tl, $("ok"), BACK + 0.95, { y: 30 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["03-reroute"] = tl;
