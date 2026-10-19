@@ -135,11 +135,13 @@
     /* beat 2: the terms, said on their own */
     [data-composition-id="05-sharing"] .f05-say { position: absolute; left: 96px; right: 96px; top: 88px; height: 792px; display: flex; flex-direction: column; justify-content: center; gap: 56px; }
     /* beat 3: the switch, large */
-    [data-composition-id="05-sharing"] .f05-stop { position: absolute; left: 260px; right: 260px; top: 340px; height: 240px; padding: 0 64px; display: flex; align-items: center; gap: 40px; transform-origin: 50% 50%; }
-    [data-composition-id="05-sharing"] .f05-stop .k-title { flex: 1; white-space: nowrap; }
-    [data-composition-id="05-sharing"] .f05-state { color: var(--ink-2); }
-    [data-composition-id="05-sharing"] .f05-switch { position: relative; width: 200px; height: 112px; border-radius: 999px; background: var(--ink); flex: none; }
-    [data-composition-id="05-sharing"] .f05-knob { position: absolute; left: 96px; top: 8px; width: 96px; height: 96px; border-radius: 50%; background: #FFFFFF; }
+    [data-composition-id="05-sharing"] .f05-stop { position: absolute; left: 160px; right: 160px; top: 304px; height: 360px; padding: 0 80px; display: flex; align-items: center; gap: 56px; transform-origin: 50% 50%; }
+    [data-composition-id="05-sharing"] .f05-stop .k-h2 { white-space: nowrap; }
+    [data-composition-id="05-sharing"] .f05-name { flex: 1; }
+    /* a share that stopped goes quiet: muted, not the accent */
+    [data-composition-id="05-sharing"] .f05-state > span + span { color: var(--muted); }
+    [data-composition-id="05-sharing"] .f05-switch { position: relative; width: 240px; height: 136px; border-radius: 999px; background: var(--ink); flex: none; }
+    [data-composition-id="05-sharing"] .f05-knob { position: absolute; left: 112px; top: 8px; width: 120px; height: 120px; border-radius: 50%; background: #FFFFFF; }
 
     @media (orientation: portrait) {
       [data-composition-id="05-sharing"] .f05-illus { right: 120px; top: 102px; }
@@ -148,8 +150,8 @@
       [data-composition-id="05-sharing"] .f05-head img { width: 64px; height: 64px; }
       [data-composition-id="05-sharing"] .f05-legend { flex-direction: column; gap: 20px; }
       [data-composition-id="05-sharing"] .f05-say { left: 60px; right: 120px; top: 200px; height: 1020px; gap: 48px; }
-      [data-composition-id="05-sharing"] .f05-stop { left: 60px; right: 120px; top: 460px; height: auto; padding: 48px 44px; flex-wrap: wrap; gap: 32px; }
-      [data-composition-id="05-sharing"] .f05-stop .k-title { flex: 0 0 100%; }
+      [data-composition-id="05-sharing"] .f05-stop { left: 60px; right: 120px; top: 500px; height: auto; padding: 64px 52px; flex-wrap: wrap; gap: 48px; }
+      [data-composition-id="05-sharing"] .f05-name { flex: 0 0 100%; }
       [data-composition-id="05-sharing"] .f05-state { flex: 1; }
     }
   </style>
@@ -158,7 +160,7 @@
     <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="9" data-track-index="0"></div>
     <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="9" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
-      <span class="k-badge f05-illus" data-outside-safe-area>Illustration</span>
+      <span id="f05-illus" class="k-badge f05-illus" data-outside-safe-area>Illustration</span>
       <div id="f05-cam" class="k-cam">
         <div id="f05-card" class="k-card f05-card">
           <div class="f05-head"><img class="k-mark" src="assets/provider-openrouter.svg" alt="" /><span class="k-h2">Your OpenRouter account</span></div>
@@ -171,12 +173,12 @@
 
         <div id="f05-say" class="f05-say">
           <h2 id="f05-terms" class="k-headline"><span class="k-line">Check that OpenRouter's</span><span class="k-line">terms allow sharing.</span></h2>
-          <p id="f05-free" class="k-body k-muted">On the Free plan, you need a shared key to use the pool.</p>
+          <p id="f05-free" class="k-body">On the Free plan, share a key to use the pool.</p>
         </div>
 
         <div id="f05-stop" class="k-card f05-stop">
-          <span class="k-title">Share with pool</span>
-          <span id="f05-state" class="k-roll k-title f05-state" data-layout-allow-overlap><span data-layout-allow-overlap>Shared</span><span data-layout-allow-overlap>Not shared</span></span>
+          <span class="k-h2 f05-name">Share with pool</span>
+          <span id="f05-state" class="k-roll k-h2 f05-state" data-layout-allow-overlap><span data-layout-allow-overlap>Shared</span><span data-layout-allow-overlap>Not shared</span></span>
           <span id="f05-switch" class="f05-switch"><span id="f05-knob" class="f05-knob"></span></span>
         </div>
       </div>
@@ -268,7 +270,7 @@ const K = {
       const DURATION = 9;
       // Word starts from audio_meta.json frame 5: "members'" 0.673, "run" 1.428, "account" 2.461, "quota." 3.68,
       // "Check" 4.656, "terms" 5.793, "You" 6.978, "stop" 7.268, "time." 7.767.
-      const FILL = 0.6, QUOTA = 3.7, CHECK = 4.6, FREE = 5.3, YOU = 6.7, STOP = 7.22;
+      const FILL = 0.6, QUOTA = 3.7, CHECK = 4.6, FREE = 5.0, YOU = 6.7, STOP = 7.22;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
@@ -276,12 +278,13 @@ const K = {
         tl.set([$("say"), $("stop")], { opacity: 0 }, 0);
 
         // one daily quota: your requests and members' requests fill it side by side
-        K.cards(tl, $("card"), [$("card")], 0);
+        K.rise(tl, $("card"), 0.02);
         tl.to($("you"), { width: "42%", duration: QUOTA - FILL, ease: "none" }, FILL);
         tl.to($("them"), { width: "58%", duration: QUOTA - FILL, ease: "none" }, FILL);
         K.rise(tl, $("l-you"), FILL, { y: 30 });
         K.rise(tl, $("l-them"), FILL + 0.14, { y: 30 });
-        K.exit(tl, $("card"), CHECK - 0.5);
+        // only the quota card is drawn: the badge leaves with it
+        K.exit(tl, [$("card"), $("illus")], CHECK - 0.5);
 
         // "Check that OpenRouter's terms allow it."
         tl.set($("say"), { opacity: 1 }, CHECK - 0.05);
@@ -290,8 +293,8 @@ const K = {
         K.exit(tl, $("say"), YOU - 0.6);
 
         // "You can stop any time.": the switch goes off
-        K.cards(tl, $("stop"), [$("stop")], YOU);
-        tl.to($("knob"), { x: -88, duration: 0.6, ease: "power2.inOut" }, STOP);
+        K.rise(tl, $("stop"), YOU);
+        tl.to($("knob"), { x: -104, duration: 0.6, ease: "power2.inOut" }, STOP);
         tl.to($("switch"), { backgroundColor: K.HAIR, duration: 0.6, ease: "power2.inOut" }, STOP);
         K.roll(tl, $("state"), [STOP]);
 
