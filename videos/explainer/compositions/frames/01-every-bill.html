@@ -126,7 +126,7 @@
     [data-composition-id="01-every-bill"] .f01-name { margin-top: 32px; white-space: nowrap; }
     [data-composition-id="01-every-bill"] .f01-co { margin-top: 10px; white-space: nowrap; }
     [data-composition-id="01-every-bill"] .f01-rows { margin-top: auto; display: flex; flex-direction: column; gap: 14px; }
-    [data-composition-id="01-every-bill"] .f01-row { display: flex; align-items: center; gap: 18px; height: 92px; box-sizing: border-box; padding: 0 28px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 44px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
+    [data-composition-id="01-every-bill"] .f01-row { display: flex; align-items: center; gap: 18px; height: 92px; box-sizing: border-box; padding: 0 28px; border-radius: 20px; background: var(--surface); color: var(--ink); font-size: 44px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
     [data-composition-id="01-every-bill"] .f01-row svg { width: 40px; height: 40px; flex: none; }
     [data-composition-id="01-every-bill"] .f01-row.is-key { font-family: var(--mono); letter-spacing: 0.06em; }
 
@@ -232,14 +232,15 @@ const K = {
     tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
   /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
-      new one comes up from below in the slot, power4.inOut, 0.7s or less when the next is sooner. */
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
     slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      const d = Math.min(0.7, (at[i + 1] ?? Infinity) - t - 0.05);
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
       tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
@@ -278,11 +279,9 @@ const K = {
         const tl = gsap.timeline({ paused: true });
         K.cards(tl, root.querySelector("#f01-grid"), all("f01-card"), 0);
 
-        // each word drops its row into all four cards, inked; the rows before it go quiet
-        const sets = [["f01-acct", ACCOUNT], ["f01-key", KEY], ["f01-bill", BILL]];
-        sets.forEach(([cls, t], i) => {
+        // each word drops its row into all four cards
+        [["f01-acct", ACCOUNT], ["f01-key", KEY], ["f01-bill", BILL]].forEach(([cls, t]) => {
           tl.fromTo(all(cls), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out", stagger: 0.08 }, t);
-          if (i) tl.to(all(sets[i - 1][0]), { backgroundColor: "#F5F5F5", color: "#27272A", duration: 0.6, ease: "power2.inOut" }, t);
         });
 
         window.__timelines = window.__timelines || {};

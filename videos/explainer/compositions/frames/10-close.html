@@ -198,14 +198,15 @@ const K = {
     tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
   /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
-      new one comes up from below in the slot, power4.inOut, 0.7s or less when the next is sooner. */
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
     slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      const d = Math.min(0.7, (at[i + 1] ?? Infinity) - t - 0.05);
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
       tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
@@ -237,8 +238,8 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f10-" + s);
       // Word starts from audio_meta.json frame 10: "Start" 1.416, "free" 1.718, "anyrouter.dev." 2.02.
-      // The lockup settles by about 3.6s; the closing card may then hold still (pace-audit's end allowance).
-      const START = 1.36, URL = 1.98;
+      // The camera drifts until SETTLE; the closing card may then hold still (pace-audit's end allowance, 3s).
+      const START = 1.36, URL = 1.98, SETTLE = 3.4;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
@@ -250,6 +251,8 @@ const K = {
         tl.fromTo($("lockup"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, START);
         tl.fromTo([$("brand"), $("cta")], { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, START);
         K.rise(tl, $("url"), URL, { y: 30, d: 1.2 });
+        // an even drift that stops at SETTLE: an eased tail reads as still long before it ends
+        K.push(tl, $("cam"), SETTLE - START, { to: 1.02, ease: "none", at: START });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["10-close"] = tl;

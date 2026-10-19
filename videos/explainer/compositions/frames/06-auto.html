@@ -122,16 +122,15 @@
     /* /kit:css */
     /* the call from frame 4, in the same place and type */
     [data-composition-id="06-auto"] .f06-call { position: absolute; left: 96px; right: 96px; top: 88px; height: 792px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; }
-    [data-composition-id="06-auto"] .f06-names { height: 1.1em; }
-    [data-composition-id="06-auto"] .f06-names.k-roll > span { display: inline-flex; align-items: center; gap: 32px; color: var(--ink); }
-    [data-composition-id="06-auto"] .f06-names img { width: 104px; height: 104px; }
+    [data-composition-id="06-auto"] .f06-pick { display: flex; align-items: center; gap: 32px; height: 1.1em; white-space: nowrap; }
+    [data-composition-id="06-auto"] .f06-pick img { width: 104px; height: 104px; }
     [data-composition-id="06-auto"] .f06-line { font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; white-space: pre; color: var(--muted); }
     [data-composition-id="06-auto"] .f06-line .k-roll > span:first-child { color: var(--ink); }
 
     @media (orientation: portrait) {
       [data-composition-id="06-auto"] .f06-call { left: 60px; right: 120px; top: 200px; height: 1020px; gap: 48px; }
-      [data-composition-id="06-auto"] .f06-names img { width: 88px; height: 88px; }
-      [data-composition-id="06-auto"] .f06-names.k-roll > span { gap: 24px; }
+      [data-composition-id="06-auto"] .f06-pick img { width: 88px; height: 88px; }
+      [data-composition-id="06-auto"] .f06-pick { gap: 24px; }
       [data-composition-id="06-auto"] .f06-line { font-size: 42px; text-align: center; }
     }
   </style>
@@ -142,7 +141,7 @@
       <div class="k-brand" data-outside-safe-area><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter</div>
       <div id="f06-cam" class="k-cam">
         <div id="f06-call" class="f06-call">
-          <div class="k-headline"><span id="f06-names" class="k-roll f06-names" data-layout-allow-overlap><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/nvidia.svg" alt="" />Nemotron</span><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/anyrouter.svg" alt="" />AnyRouter picks</span></span></div>
+          <div id="f06-pick" class="k-headline f06-pick"><img class="k-mark" src="assets/providers/anyrouter.svg" alt="" />AnyRouter picks</div>
           <div id="f06-line" class="f06-line">model:<span class="k-lbr"> </span><span class="k-pbr">
 </span><span id="f06-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"nvidia/nemotron-3-super-120b-a12b"</span><span data-layout-allow-overlap>"anyrouter/auto"</span></span></div>
         </div>
@@ -193,14 +192,15 @@ const K = {
     tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
   /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
-      new one comes up from below in the slot, power4.inOut, 0.7s or less when the next is sooner. */
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
     slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      const d = Math.min(0.7, (at[i + 1] ?? Infinity) - t - 0.05);
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
       tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
       tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
@@ -237,10 +237,11 @@ const K = {
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
-        // back to the call from frame 4, settling from a push; on "pick" it rolls to anyrouter/auto
-        tl.fromTo($("call"), { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.2, ease: "expo.out" }, 0);
-        K.roll(tl, $("names"), [PICK]);
+        // back to the model line from frame 4, settling from a push; on "pick" it rolls to anyrouter/auto
+        tl.fromTo($("call"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, 0);
+        K.rise(tl, $("line"), 0, { y: 40, d: 1.0 });
         K.roll(tl, $("id"), [PICK]);
+        K.rise(tl, $("pick"), PICK - 0.05, { y: 60, d: 1.2, scale: 1 });
         K.push(tl, $("cam"), DURATION - 1.6, { to: 1.02, at: 1.6 });
 
         window.__timelines = window.__timelines || {};
