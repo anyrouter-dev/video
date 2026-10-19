@@ -139,16 +139,16 @@
     <div id="f06-bg" class="k-bg clip" data-start="0" data-duration="5.983" data-track-index="0"></div>
     <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="5.983" data-track-index="1">
       <div id="f06-cam" class="k-cam">
-      <div id="f06-line" class="f06-line">
-        <h2 class="k-display"><span id="f06-l1" class="k-line">Your keys.</span><span id="f06-l2" class="k-line">One endpoint.</span></h2>
-      </div>
-      <div id="f06-lockup" class="f06-lockup">
-        <div id="f06-brand" class="f06-brand">
-          <img id="f06-mark" class="k-mark f06-mark" src="assets/anyrouter-logo-black.svg" alt="AnyRouter" />
-          <span id="f06-word" class="k-display f06-word">AnyRouter</span>
-        </div>
-        <span id="f06-url" class="k-btn f06-url">anyrouter.dev</span>
-      </div>
+<div id="f06-line" class="f06-line">
+  <h2 class="k-display"><span id="f06-l1" class="k-line">Your keys.</span><span id="f06-l2" class="k-line">One endpoint.</span></h2>
+</div>
+<div id="f06-lockup" class="f06-lockup">
+  <div id="f06-brand" class="f06-brand">
+    <img id="f06-mark" class="k-mark f06-mark" src="assets/anyrouter-logo-black.svg" alt="AnyRouter" />
+    <span id="f06-word" class="k-display f06-word">AnyRouter</span>
+  </div>
+  <span id="f06-url" class="k-btn f06-url">anyrouter.dev</span>
+</div>
       </div>
     </div>
   </div>
@@ -241,13 +241,13 @@ const K = {
         const tl = gsap.timeline({ paused: true });
         // Word starts from audio_meta.json frame 6: "keys," 0.255, "one" 0.569, "Start" 1.602, "anyrouter.dev." 2.055.
         // The camera drifts until SETTLE; the closing card may then hold still (pace-audit's end allowance, 3s).
-        const L1 = 0.02, L2 = 0.52, START = 1.55, URL = 2.0, SETTLE = 4.0;
+        const L1 = 0.02, L2 = 0.52, START = 1.6, URL = 2.0, SETTLE = 4.0;
         for (const [el, t] of [[$("l1"), L1], [$("l2"), L2]]) {
           tl.fromTo(el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "expo.out" }, t);
         }
         tl.fromTo($("line"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, 0);
         K.push(tl, $("cam"), START, { to: 1.03, ease: "none" });
-        K.exit(tl, $("line"), START - 0.5, { d: 0.65 });
+        K.exit(tl, $("line"), START - 0.45, { d: 0.55 });
         tl.fromTo($("lockup"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, START);
         tl.fromTo($("brand"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out" }, START);
         K.rise(tl, $("url"), URL, { y: 30, d: 1.2 });

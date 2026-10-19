@@ -120,7 +120,7 @@
   [data-composition-id="06-fallback"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="06-fallback"] .f06-col { position: absolute; left: 96px; right: 96px; top: 210px; display: flex; flex-direction: column; gap: 40px; }
+    [data-composition-id="06-fallback"] .f06-col { position: absolute; left: 96px; right: 96px; top: 230px; display: flex; flex-direction: column; gap: 40px; }
     [data-composition-id="06-fallback"] .f06-card { height: 240px; padding: 0 52px; display: flex; align-items: center; gap: 32px; }
     [data-composition-id="06-fallback"] .f06-card img { width: 72px; height: 72px; }
     [data-composition-id="06-fallback"] .f06-id { flex: 1 1 auto; font-family: var(--mono); font-size: 56px; font-weight: 400; letter-spacing: -0.02em; white-space: nowrap; }
@@ -142,12 +142,12 @@
     <div id="f06-stage" class="k-stage clip" data-start="0" data-duration="4.5" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f06-cam" class="k-cam">
-      <div class="f06-col">
-        <div id="f06-main" class="k-card f06-card"><img class="k-mark" src="assets/providers/deepseek.svg" alt="" /><span id="f06-mainid" class="f06-id">deepseek/deepseek-v4-flash</span>
-          <span class="f06-tag"><span id="f06-model" class="k-badge is-big" data-layout-allow-overlap>Model</span><span id="f06-err" class="k-badge is-big is-muted" data-layout-allow-overlap>Provider error</span></span></div>
-        <div id="f06-back" class="k-card f06-card"><img class="k-mark" src="assets/providers/moonshotai.svg" alt="" /><span class="f06-id">moonshotai/kimi-k2.6</span>
-          <span class="f06-tag"><span id="f06-backup" class="k-badge is-big" data-layout-allow-overlap>Backup</span><span id="f06-ok" class="k-badge is-big f06-ok" data-layout-allow-overlap>200 OK</span></span></div>
-      </div>
+<div class="f06-col">
+  <div id="f06-main" class="k-card f06-card"><img class="k-mark" src="assets/providers/deepseek.svg" alt="" /><span id="f06-mainid" class="f06-id">deepseek/deepseek-v4-flash</span>
+    <span class="f06-tag"><span id="f06-model" class="k-badge is-big" data-layout-allow-overlap>Model</span><span id="f06-err" class="k-badge is-big is-muted" data-layout-allow-overlap>Provider error</span></span></div>
+  <div id="f06-back" class="k-card f06-card"><img class="k-mark" src="assets/providers/moonshotai.svg" alt="" /><span class="f06-id">moonshotai/kimi-k2.6</span>
+    <span class="f06-tag"><span id="f06-backup" class="k-badge is-big" data-layout-allow-overlap>Backup</span><span id="f06-ok" class="k-badge is-big f06-ok" data-layout-allow-overlap>200 OK</span></span></div>
+</div>
       </div>
     </div>
   </div>
@@ -249,11 +249,11 @@ const K = {
         tl.to($("main"), { backgroundColor: "#F5F5F5", borderColor: "#F5F5F5", duration: 0.6, ease: "power2.inOut" }, FAILS);
         tl.to($("mainid"), { color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, FAILS);
         tl.to($("model"), { opacity: 0, y: -30, duration: 0.45, ease: "power4.inOut" }, FAILS);
-        tl.fromTo($("err"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, FAILS + 0.2);
+        tl.fromTo($("err"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, FAILS + 0.35);
         // "answers": the backup is the ink card, and it answered
         K.ink(tl, $("back"), ANSWERS, true);
         tl.to($("backup"), { opacity: 0, y: -30, duration: 0.45, ease: "power4.inOut" }, ANSWERS);
-        tl.fromTo($("ok"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, ANSWERS + 0.2);
+        tl.fromTo($("ok"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, ANSWERS + 0.35);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["06-fallback"] = tl;

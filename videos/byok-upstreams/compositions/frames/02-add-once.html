@@ -127,14 +127,16 @@
     [data-composition-id="02-add-once"] .f02-field { height: 96px; box-sizing: border-box; padding: 0 32px; border: 2px solid var(--hair); border-radius: 20px; display: flex; align-items: center; gap: 20px; }
     [data-composition-id="02-add-once"] .f02-icon { width: 40px; height: 40px; flex: none; }
     [data-composition-id="02-add-once"] .f02-key { font-family: var(--mono); font-size: 40px; font-weight: 400; letter-spacing: -0.02em; white-space: nowrap; }
-    [data-composition-id="02-add-once"] .f02-more { position: absolute; left: 0; right: 0; top: 784px; display: flex; justify-content: center; }
+    [data-composition-id="02-add-once"] .f02-more { position: absolute; left: 0; right: 0; top: 770px; display: flex; justify-content: center; }
+    [data-composition-id="02-add-once"] .f02-chip { height: 104px; font-size: 44px; padding: 0 44px; }
 
     @media (orientation: portrait) {
       [data-composition-id="02-add-once"] .f02-grid { left: 60px; right: 120px; top: 210px; grid-template-columns: 1fr; gap: 20px; }
-      [data-composition-id="02-add-once"] .f02-card { padding: 28px 36px; gap: 16px; }
-      [data-composition-id="02-add-once"] .f02-head { height: 64px; }
-      [data-composition-id="02-add-once"] .f02-field { height: 84px; }
-      [data-composition-id="02-add-once"] .f02-more { left: 60px; right: 120px; top: 1110px; }
+      [data-composition-id="02-add-once"] .f02-card { padding: 24px 32px; gap: 12px; }
+      [data-composition-id="02-add-once"] .f02-head { height: 56px; }
+      [data-composition-id="02-add-once"] .f02-field { height: 76px; }
+      [data-composition-id="02-add-once"] .f02-more { left: 60px; right: 120px; top: 1080px; }
+      [data-composition-id="02-add-once"] .f02-chip { height: 96px; font-size: 40px; }
     }
   </style>
 
@@ -143,17 +145,17 @@
     <div id="f02-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f02-cam" class="k-cam">
-      <div id="f02-grid" class="f02-grid">
-        <div id="f02-c0" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/openai.svg" alt="" /><span class="k-title">OpenAI</span></div>
-          <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k0" class="f02-key">sk-••••••••••••</span></div></div>
-        <div id="f02-c1" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="k-title">Anthropic</span></div>
-          <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k1" class="f02-key">sk-ant-••••••••••</span></div></div>
-        <div id="f02-c2" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/google.svg" alt="" /><span class="k-title">Google AI Studio</span></div>
-          <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k2" class="f02-key">AIza••••••••••••</span></div></div>
-        <div id="f02-c3" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/openrouter.svg" alt="" /><span class="k-title">OpenRouter</span></div>
-          <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k3" class="f02-key">sk-or-v1-••••••••</span></div></div>
-      </div>
-      <div class="f02-more"><span id="f02-more" class="k-chip is-more">and many more</span></div>
+<div id="f02-grid" class="f02-grid">
+  <div id="f02-c0" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/openai.svg" alt="" /><span class="k-title">OpenAI</span></div>
+    <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k0" class="f02-key">sk-••••••••••••</span></div></div>
+  <div id="f02-c1" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="k-title">Anthropic</span></div>
+    <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k1" class="f02-key">sk-ant-••••••••••</span></div></div>
+  <div id="f02-c2" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/google.svg" alt="" /><span class="k-title">Google AI Studio</span></div>
+    <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k2" class="f02-key">AIza••••••••••••</span></div></div>
+  <div id="f02-c3" class="k-card f02-card"><div class="f02-head"><img class="k-mark" src="assets/providers/openrouter.svg" alt="" /><span class="k-title">OpenRouter</span></div>
+    <div class="f02-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="k-muted f02-icon"><circle cx="8" cy="15" r="4"/><path d="m10.8 12.2 8.7-8.7M16 7l3 3M14 9l2 2"/></svg><span id="f02-k3" class="f02-key">sk-or-v1-••••••••</span></div></div>
+</div>
+<div class="f02-more"><span id="f02-more" class="k-chip is-more f02-chip">and many more</span></div>
       </div>
     </div>
   </div>

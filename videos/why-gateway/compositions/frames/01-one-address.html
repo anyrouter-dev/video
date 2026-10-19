@@ -120,18 +120,21 @@
   [data-composition-id="01-one-address"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="01-one-address"] .f01-col { position: absolute; left: 216px; right: 216px; top: 176px; display: flex; flex-direction: column; align-items: center; gap: 56px; }
-    [data-composition-id="01-one-address"] .f01-card { align-self: stretch; padding: 56px 64px; display: flex; flex-direction: column; gap: 20px; }
-    [data-composition-id="01-one-address"] .f01-url { font-family: var(--mono); font-size: 72px; font-weight: 400; line-height: 1.2; letter-spacing: -0.03em; white-space: nowrap; }
-    [data-composition-id="01-one-address"] .f01-key { font-family: var(--mono); font-size: 56px; font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; white-space: nowrap; }
+    [data-composition-id="01-one-address"] .f01-col { position: absolute; left: 216px; right: 216px; top: 88px; height: 792px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; }
+    [data-composition-id="01-one-address"] .f01-card { align-self: stretch; padding: 64px; display: flex; flex-direction: column; gap: 24px; }
+    [data-composition-id="01-one-address"] .f01-url { font-family: var(--mono); font-size: 80px; font-weight: 400; line-height: 1.2; letter-spacing: -0.03em; white-space: nowrap; }
+    [data-composition-id="01-one-address"] .f01-key { font-family: var(--mono); font-size: 60px; font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; white-space: nowrap; }
     [data-composition-id="01-one-address"] .f01-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+    [data-composition-id="01-one-address"] .f01-chips .k-chip { height: 104px; font-size: 44px; padding: 0 36px 0 28px; }
+    [data-composition-id="01-one-address"] .f01-chips .k-chip img { width: 52px; height: 52px; }
 
     @media (orientation: portrait) {
-      [data-composition-id="01-one-address"] .f01-col { left: 60px; right: 120px; top: 300px; gap: 48px; }
+      [data-composition-id="01-one-address"] .f01-col { left: 60px; right: 120px; top: 200px; height: 1020px; gap: 48px; }
       [data-composition-id="01-one-address"] .f01-card { padding: 44px 40px; gap: 16px; }
-      [data-composition-id="01-one-address"] .f01-url { font-size: 44px; }
+      [data-composition-id="01-one-address"] .f01-url { font-size: 48px; }
       [data-composition-id="01-one-address"] .f01-key { font-size: 44px; }
       [data-composition-id="01-one-address"] .f01-chips { gap: 20px; }
+      [data-composition-id="01-one-address"] .f01-chips .k-chip { height: 96px; font-size: 40px; }
     }
   </style>
 
@@ -140,20 +143,20 @@
     <div id="f01-stage" class="k-stage clip" data-start="0" data-duration="3.559" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f01-cam" class="k-cam">
-      <div class="f01-col">
-        <div id="f01-card" class="k-card is-ink f01-card">
-          <span id="f01-url" class="f01-url">https://anyrouter.dev/api/v1</span>
-          <span id="f01-key" class="f01-key k-muted">sk-ar-v1-••••••••••••</span>
-        </div>
-        <div id="f01-chips" class="f01-chips">
-          <span class="k-chip"><img class="k-mark" src="assets/providers/deepseek.svg" alt="" />DeepSeek</span>
-          <span class="k-chip"><img class="k-mark" src="assets/providers/moonshotai.svg" alt="" />Moonshot AI</span>
-          <span class="k-chip"><img class="k-mark" src="assets/providers/google.svg" alt="" />Google</span>
-          <span class="k-chip"><img class="k-mark" src="assets/providers/openai.svg" alt="" />OpenAI</span>
-          <span class="k-chip"><img class="k-mark" src="assets/providers/nvidia.svg" alt="" />NVIDIA</span>
-          <span class="k-chip"><img class="k-mark" src="assets/providers/minimax.svg" alt="" />MiniMax</span>
-        </div>
-      </div>
+<div class="f01-col">
+  <div id="f01-card" class="k-card is-ink f01-card">
+    <span id="f01-url" class="f01-url">https://anyrouter.dev/api/v1</span>
+    <span id="f01-key" class="f01-key k-muted">sk-ar-v1-••••••••••••</span>
+  </div>
+  <div id="f01-chips" class="f01-chips">
+    <span class="k-chip"><img class="k-mark" src="assets/providers/deepseek.svg" alt="" />DeepSeek</span>
+    <span class="k-chip"><img class="k-mark" src="assets/providers/moonshotai.svg" alt="" />Moonshot AI</span>
+    <span class="k-chip"><img class="k-mark" src="assets/providers/google.svg" alt="" />Google</span>
+    <span class="k-chip"><img class="k-mark" src="assets/providers/openai.svg" alt="" />OpenAI</span>
+    <span class="k-chip"><img class="k-mark" src="assets/providers/nvidia.svg" alt="" />NVIDIA</span>
+    <span class="k-chip"><img class="k-mark" src="assets/providers/minimax.svg" alt="" />MiniMax</span>
+  </div>
+</div>
       </div>
     </div>
   </div>

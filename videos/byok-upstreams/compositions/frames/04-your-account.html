@@ -120,13 +120,13 @@
   [data-composition-id="04-your-account"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="04-your-account"] .f04-row { position: absolute; left: 96px; right: 96px; top: 200px; height: 400px; display: flex; align-items: center; }
-    [data-composition-id="04-your-account"] .f04-card { flex: 0 0 440px; height: 400px; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
+    [data-composition-id="04-your-account"] .f04-row { position: absolute; left: 96px; right: 96px; top: 220px; height: 400px; display: flex; align-items: center; }
+    [data-composition-id="04-your-account"] .f04-card { flex: 0 0 440px; height: 400px; padding: 48px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 28px; }
     [data-composition-id="04-your-account"] .f04-card img { width: 72px; height: 72px; }
     [data-composition-id="04-your-account"] .f04-wire { position: relative; flex: 1 1 auto; height: 4px; background: var(--hair); }
     [data-composition-id="04-your-account"] .f04-dot { position: absolute; left: 0; top: -12px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); opacity: 0; }
     [data-composition-id="04-your-account"] #f04-acct { flex-basis: 600px; }
-    [data-composition-id="04-your-account"] .f04-bill { position: absolute; right: 96px; top: 648px; width: 600px; display: flex; justify-content: center; }
+    [data-composition-id="04-your-account"] .f04-bill { position: absolute; right: 96px; top: 668px; width: 600px; display: flex; justify-content: center; }
 
     @media (orientation: portrait) {
       [data-composition-id="04-your-account"] .f04-row { left: 60px; right: 120px; top: 220px; height: 860px; flex-direction: column; }
@@ -144,14 +144,14 @@
     <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="4" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f04-cam" class="k-cam">
-      <div class="f04-row">
-        <div id="f04-app" class="k-card f04-card"><span class="k-title">Your app</span></div>
-        <div id="f04-w1" class="f04-wire"><i id="f04-d1" class="f04-dot"></i></div>
-        <div id="f04-ar" class="k-card f04-card"><img class="k-mark" src="assets/anyrouter-logo-black.svg" alt="" /><span class="k-title">AnyRouter</span></div>
-        <div id="f04-w2" class="f04-wire"><i id="f04-d2" class="f04-dot"></i></div>
-        <div id="f04-acct" class="k-card f04-card"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="k-title">Your Anthropic account</span></div>
-      </div>
-      <div class="f04-bill"><span id="f04-bill" class="k-badge is-ink is-big">Billed by Anthropic</span></div>
+<div class="f04-row">
+  <div id="f04-app" class="k-card f04-card"><span class="k-title">Your app</span></div>
+  <div id="f04-w1" class="f04-wire"><i id="f04-d1" class="f04-dot"></i></div>
+  <div id="f04-ar" class="k-card f04-card"><img class="k-mark" src="assets/anyrouter-logo-black.svg" alt="" /><span class="k-title">AnyRouter</span></div>
+  <div id="f04-w2" class="f04-wire"><i id="f04-d2" class="f04-dot"></i></div>
+  <div id="f04-acct" class="k-card f04-card"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="k-title">Your Anthropic account</span></div>
+</div>
+<div class="f04-bill"><span id="f04-bill" class="k-badge is-ink is-big">Billed by Anthropic</span></div>
       </div>
     </div>
   </div>

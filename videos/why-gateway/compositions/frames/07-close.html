@@ -139,16 +139,16 @@
     <div id="f07-bg" class="k-bg clip" data-start="0" data-duration="6.447" data-track-index="0"></div>
     <div id="f07-stage" class="k-stage clip" data-start="0" data-duration="6.447" data-track-index="1">
       <div id="f07-cam" class="k-cam">
-      <div id="f07-line" class="f07-line">
-        <h2 class="k-display"><span id="f07-l1" class="k-line">One address.</span><span id="f07-l2" class="k-line">One key.</span><span id="f07-l3" class="k-line">Many models.</span></h2>
-      </div>
-      <div id="f07-lockup" class="f07-lockup">
-        <div id="f07-brand" class="f07-brand">
-          <img id="f07-mark" class="k-mark f07-mark" src="assets/anyrouter-logo-black.svg" alt="AnyRouter" />
-          <span id="f07-word" class="k-display f07-word">AnyRouter</span>
-        </div>
-        <span id="f07-url" class="k-btn f07-url">anyrouter.dev</span>
-      </div>
+<div id="f07-line" class="f07-line">
+  <h2 class="k-display"><span id="f07-l1" class="k-line">One address.</span><span id="f07-l2" class="k-line">One key.</span><span id="f07-l3" class="k-line">Many models.</span></h2>
+</div>
+<div id="f07-lockup" class="f07-lockup">
+  <div id="f07-brand" class="f07-brand">
+    <img id="f07-mark" class="k-mark f07-mark" src="assets/anyrouter-logo-black.svg" alt="AnyRouter" />
+    <span id="f07-word" class="k-display f07-word">AnyRouter</span>
+  </div>
+  <span id="f07-url" class="k-btn f07-url">anyrouter.dev</span>
+</div>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@ const K = {
         }
         tl.fromTo($("line"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, 0);
         K.push(tl, $("cam"), START, { to: 1.03, ease: "none" });
-        K.exit(tl, $("line"), START - 0.55, { d: 0.7 });
+        K.exit(tl, $("line"), START - 0.4, { d: 0.5 });
         // "Start at anyrouter.dev.": the lockup settles from a push, and the address arrives on its word
         tl.fromTo($("lockup"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, START);
         tl.fromTo($("brand"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out" }, START);

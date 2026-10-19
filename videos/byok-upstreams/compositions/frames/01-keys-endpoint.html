@@ -121,19 +121,20 @@
 }
     /* /kit:css */
     [data-composition-id="01-keys-endpoint"] .f01-keys { position: absolute; left: 96px; top: 200px; width: 700px; height: 640px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
-    [data-composition-id="01-keys-endpoint"] .f01-pill { height: 112px; padding: 0 40px 0 32px; gap: 24px; }
-    [data-composition-id="01-keys-endpoint"] .f01-pill img { width: 56px; height: 56px; }
-    [data-composition-id="01-keys-endpoint"] .f01-key { font-family: var(--mono); font-size: 44px; font-weight: 400; letter-spacing: -0.02em; }
+    [data-composition-id="01-keys-endpoint"] .f01-pill { height: 128px; padding: 0 44px 0 36px; gap: 28px; }
+    [data-composition-id="01-keys-endpoint"] .f01-pill img { width: 64px; height: 64px; }
+    [data-composition-id="01-keys-endpoint"] .f01-key { font-family: var(--mono); font-size: 52px; font-weight: 400; letter-spacing: -0.02em; }
     [data-composition-id="01-keys-endpoint"] .f01-wires { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
     [data-composition-id="01-keys-endpoint"] .f01-wires path { fill: none; stroke: var(--hair); stroke-width: 4; }
-    [data-composition-id="01-keys-endpoint"] .f01-end { position: absolute; left: 1032px; right: 96px; top: 400px; height: 240px; padding: 0 44px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
-    [data-composition-id="01-keys-endpoint"] .f01-url { font-family: var(--mono); font-size: 42px; font-weight: 400; letter-spacing: -0.03em; white-space: nowrap; }
+    [data-composition-id="01-keys-endpoint"] .f01-end { position: absolute; left: 1064px; right: 96px; top: 340px; height: 360px; padding: 0 52px; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+    [data-composition-id="01-keys-endpoint"] .f01-url { font-family: var(--mono); font-size: 56px; font-weight: 400; line-height: 1.25; letter-spacing: -0.03em; white-space: nowrap; }
 
     @media (orientation: portrait) {
       [data-composition-id="01-keys-endpoint"] .f01-keys { left: 60px; top: 220px; width: 900px; height: 560px; align-items: center; }
-      [data-composition-id="01-keys-endpoint"] .f01-pill { height: 104px; }
-      [data-composition-id="01-keys-endpoint"] .f01-end { left: 60px; right: 120px; top: 960px; height: 240px; align-items: center; }
-      [data-composition-id="01-keys-endpoint"] .f01-url { font-size: 44px; }
+      [data-composition-id="01-keys-endpoint"] .f01-pill { height: 112px; }
+      [data-composition-id="01-keys-endpoint"] .f01-key { font-size: 48px; }
+      [data-composition-id="01-keys-endpoint"] .f01-end { left: 60px; right: 120px; top: 900px; height: 300px; align-items: center; text-align: center; }
+      [data-composition-id="01-keys-endpoint"] .f01-url { font-size: 52px; }
     }
   </style>
 
@@ -142,14 +143,14 @@
     <div id="f01-stage" class="k-stage clip" data-start="0" data-duration="4.059" data-track-index="1">
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f01-cam" class="k-cam">
-      <svg class="f01-wires" aria-hidden="true"><path id="f01-w0" d="" /><path id="f01-w1" d="" /><path id="f01-w2" d="" /><path id="f01-w3" d="" /></svg>
-      <div id="f01-keys" class="f01-keys">
-        <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/openai.svg" alt="" /><span class="f01-key">sk-••••••••••••</span></span>
-        <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="f01-key">sk-ant-••••••••••</span></span>
-        <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/google.svg" alt="" /><span class="f01-key">AIza••••••••••••</span></span>
-        <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/openrouter.svg" alt="" /><span class="f01-key">sk-or-v1-••••••••</span></span>
-      </div>
-      <div id="f01-end" class="k-card is-ink f01-end"><span class="k-small k-muted">One endpoint</span><span class="f01-url">https://anyrouter.dev/api/v1</span></div>
+<svg class="f01-wires" aria-hidden="true"><path id="f01-w0" d="" /><path id="f01-w1" d="" /><path id="f01-w2" d="" /><path id="f01-w3" d="" /></svg>
+<div id="f01-keys" class="f01-keys">
+  <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/openai.svg" alt="" /><span class="f01-key">sk-••••••••••••</span></span>
+  <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" /><span class="f01-key">sk-ant-••••••••••</span></span>
+  <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/google.svg" alt="" /><span class="f01-key">AIza••••••••••••</span></span>
+  <span class="k-chip f01-pill"><img class="k-mark" src="assets/providers/openrouter.svg" alt="" /><span class="f01-key">sk-or-v1-••••••••</span></span>
+</div>
+<div id="f01-end" class="k-card is-ink f01-end"><span class="k-small k-muted">One endpoint</span><span class="f01-url">https://anyrouter.dev<br />/api/v1</span></div>
       </div>
     </div>
   </div>
