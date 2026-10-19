@@ -47,43 +47,46 @@
     opacity: 0;
   }
 
+  /* A shadcn toast, inverted: the one dark chip on a white film. */
   .caption-pill {
-    max-width: 78%;
-    padding: 14px 34px 18px;
+    max-width: 86%;
+    padding: 16px 36px 20px;
     background: #0A0A0A;
-    border-radius: 16px;
+    border-radius: 20px;
   }
   .caption-line {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.1em 0.34em;
+    /* one normal word space; padding on the words would double it */
+    gap: 0.08em 0.26em;
     font-family: var(--font-body, "Geist"), ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
-    font-size: 40px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    font-size: 56px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
   }
 
   /* upcoming — grey on ink, 7.1:1 */
   .caption-word {
     display: inline-block;
-    padding: 0 0.12em;
     color: #9A9AA3;
     background-image: linear-gradient(#BB4D00, #BB4D00);
     background-repeat: no-repeat;
     background-position: 50% 100%;
-    background-size: 0 3px;
+    background-size: 0 4px;
   }
   /* current word — white, with the film's one accent as a short underline */
   .caption-word.is-active {
     color: #FFFFFF;
-    background-size: 70% 3px;
+    background-size: 100% 4px;
   }
   /* already spoken — white */
   .caption-word.is-spoken {
     color: #FFFFFF;
-    background-size: 0 3px;
+    background-size: 0 4px;
   }
 
   @media (max-aspect-ratio: 9/16) {
