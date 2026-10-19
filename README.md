@@ -36,13 +36,20 @@ hand; the engine renders and releases it.
 
 ```
 collect  →  .build/<kind>/data.json     the facts, from a public endpoint
-gen      →  .build/<kind>/film/          a HyperFrames project
-check    →  lint + runtime + layout + motion + contrast — a hard gate
-render   →  renders/<kind>-<id>.mp4      + a cover, + the generated source
-publish  →  a GitHub Release tagged <kind>-<id>
+gen      →  .build/<kind>/film/          a HyperFrames project, 1920x1080
+check    →  lint + runtime + layout + motion + contrast — a hard gate, per rendition
+render   →  renders/<kind>-<id>.mp4      + -portrait.mp4, a cover each, + the generated source
+publish  →  a GitHub Release tagged <kind>-<id>, and a YouTube video per rendition
 ```
 
 No step needs an LLM. The same facts give the same mp4.
+
+Every film has two renditions: **landscape** 1920×1080 for YouTube, and
+**portrait** 1080×1920 for YouTube Shorts, Instagram Reels and TikTok. The
+portrait project is written from the landscape one by
+`shared/authoring/portrait.mjs`. A kind whose frames have no portrait layout yet
+says `renditions: ['landscape']` in its `kind.mjs`, and every run warns about it.
+Today that is every kind; see `AGENTS.md`.
 
 ## Renders exactly once
 
@@ -81,7 +88,8 @@ npm run regen -- changelog <id> --plan=my-plan.json  # re-plan it, then re-rende
 ```
 
 A regen never uploads to YouTube: a video there cannot be replaced, only
-duplicated.
+duplicated. A regen renders every rendition the kind makes, so it is also how a
+past film gets its portrait one; that film waits for `youtube.yml`.
 
 ## Plans
 
@@ -103,10 +111,12 @@ plan never fails a build. `"limit": 0` declines a release. The contract is
 
 ## Where the videos are stored
 
-On **GitHub Releases**. Each film is a release tagged `<kind>-<id>` with three
+On **GitHub Releases**. Each film is a release tagged `<kind>-<id>` with its
 assets named after what the film is about — `anyrouter-release-v1.6.0.mp4`,
 `anyrouter-model-drop-2026-09-30.mp4` — with the same stem for the cover
-(`.png`) and the generated composition (`-source.tar.gz`). Nothing rendered is committed to git.
+(`.png`), the portrait film (`-portrait.mp4`, `-portrait.png`) and the generated
+composition (`-source.tar.gz`). Nothing rendered is committed to git. Reels and
+TikTok have no upload here: post the portrait mp4 from the Release by hand.
 
 ```bash
 GH_TOKEN=$(gh auth token) GITHUB_REPOSITORY=anyrouter-dev/video npm run publish -- intro
@@ -114,8 +124,9 @@ GH_TOKEN=$(gh auth token) GITHUB_REPOSITORY=anyrouter-dev/video npm run publish 
 
 YouTube is an optional mirror. It needs `YOUTUBE_CLIENT_ID`,
 `YOUTUBE_CLIENT_SECRET` and `YOUTUBE_REFRESH_TOKEN`; without them it says so and
-skips. Optional: `YT_PRIVACY` (default `unlisted`), `YT_TITLE_TEMPLATE`
-(`{id}` and `{title}` are substituted).
+skips. Each rendition is its own video, uploaded once; the portrait one is a
+Short, its title ending in `#Shorts`. Optional: `YT_PRIVACY` (default
+`unlisted`), `YT_TITLE_TEMPLATE` (`{id}` and `{title}` are substituted).
 
 ### One-time YouTube setup
 
@@ -143,8 +154,8 @@ gitignored; CI uses repository secrets.
 | `npm run pending` | which nightly kinds have something unreleased |
 | `npm run collect -- <kind>` | fetch the facts, print what they are |
 | `npm run gen -- <kind>` | facts → HyperFrames project |
-| `npm run check -- <kind>` | the gate |
-| `npm run dev -- <kind>` | browser preview while adjusting |
+| `npm run check -- <kind>` | the gate, for every rendition; `--rendition=portrait` for one |
+| `npm run dev -- <kind>` | browser preview while adjusting; `--rendition=portrait` previews the portrait copy |
 | `npm run publish -- <kind> [id]` | GitHub Release (+ YouTube); `--replace` swaps the assets of one that exists |
 | `npm run plan -- <kind> [id]` | the brief for a plan: facts, item ids, schema |
 | `npm run regen -- <kind> <id>\|--all` | re-render released films from their records; `--publish`, `--plan=FILE`, `--dry-run` |
@@ -156,7 +167,8 @@ Flags after the kind go to the kind: `--limit=N`, `--seconds=N`, `--from=FILE`
 (build from a saved response instead of the network). `model-drop` adds `--all`,
 `--first=N`, `--baseline=FILE`; `release` adds `--version=X.Y.Z`; `changelog`
 adds `--date=YYYY-MM-DD`. `run` adds `--quality=draft|looks|delivery` and
-`--workers=N`.
+`--workers=N`. `run` and `regen` take `--rendition=landscape|portrait` for a dev
+run: that one film is rendered, and nothing is recorded or published.
 
 ## model-drop
 
@@ -201,6 +213,10 @@ the mp4 as a workflow artifact.
 
 By hand, the `regen` input (a release id, or `all`, with a kind) re-renders
 released films instead and replaces their Release assets.
+
+**`youtube.yml`** — by hand, with a kind and a release id: uploads each film of
+that release that is not on YouTube yet (an upload that failed, or a portrait
+film a regen added) and commits the links.
 
 **`ci.yml`** — on pull requests and pushes that touch the code: the unit tests,
 then the HyperFrames checker on each kind built from its committed fixture.

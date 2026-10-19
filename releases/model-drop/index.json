@@ -9,9 +9,13 @@
       "createdAt": "2026-09-27T13:05:32.406Z",
       "seconds": 18,
       "renderedAt": "2026-09-30T18:25:26.690Z",
-      "artifact": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.mp4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.mp4",
+          "cover": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.png"
+        }
+      },
       "commit": "a44a251",
-      "cover": "renders/model-drop-001-20260927-models+pricing-1bc39f938b.png",
       "source": "renders/model-drop-001-20260927-models+pricing-1bc39f938b-source.tar.gz",
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-001-20260927-models%2Bpricing-1bc39f938b"
@@ -26,9 +30,13 @@
       "createdAt": "2026-09-28T15:32:29.670Z",
       "seconds": 20,
       "renderedAt": "2026-09-30T18:25:28.346Z",
-      "artifact": "renders/model-drop-002-20260928-models+pricing-b1c367a861.mp4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-002-20260928-models+pricing-b1c367a861.mp4",
+          "cover": "renders/model-drop-002-20260928-models+pricing-b1c367a861.png"
+        }
+      },
       "commit": "a44a251",
-      "cover": "renders/model-drop-002-20260928-models+pricing-b1c367a861.png",
       "source": "renders/model-drop-002-20260928-models+pricing-b1c367a861-source.tar.gz",
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-002-20260928-models%2Bpricing-b1c367a861"
@@ -43,9 +51,13 @@
       "createdAt": "2026-09-29T14:07:35.442Z",
       "seconds": 16,
       "renderedAt": "2026-09-30T18:26:04.919Z",
-      "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
+          "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png"
+        }
+      },
       "commit": "a44a251",
-      "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png",
       "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz",
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-003-20260929-models%2Bpricing-388c7ba751"
@@ -60,9 +72,13 @@
       "createdAt": "2026-09-30T13:47:52.390Z",
       "seconds": 40,
       "renderedAt": "2026-09-30T18:32:22.733Z",
-      "artifact": "renders/model-drop-004-20260930-models+pricing-24f646933f.mp4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-004-20260930-models+pricing-24f646933f.mp4",
+          "cover": "renders/model-drop-004-20260930-models+pricing-24f646933f.png"
+        }
+      },
       "commit": "7017714",
-      "cover": "renders/model-drop-004-20260930-models+pricing-24f646933f.png",
       "source": "renders/model-drop-004-20260930-models+pricing-24f646933f-source.tar.gz",
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-004-20260930-models%2Bpricing-24f646933f"
@@ -77,8 +93,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-01T14:31:09.580Z",
       "commit": "ed2be3c",
-      "artifact": "renders/model-drop-005-20261001-models-pricing-92beafcc01.mp4",
-      "cover": "renders/model-drop-005-20261001-models-pricing-92beafcc01.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-005-20261001-models-pricing-92beafcc01.mp4",
+          "cover": "renders/model-drop-005-20261001-models-pricing-92beafcc01.png"
+        }
+      },
       "source": "renders/model-drop-005-20261001-models-pricing-92beafcc01-source.tar.gz",
       "createdAt": "2026-10-01T14:31:09.584Z",
       "published": {
@@ -94,8 +114,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-02T13:56:30.810Z",
       "commit": "9e93833",
-      "artifact": "renders/model-drop-006-20261002-new-models-a1e0ee917c.mp4",
-      "cover": "renders/model-drop-006-20261002-new-models-a1e0ee917c.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-006-20261002-new-models-a1e0ee917c.mp4",
+          "cover": "renders/model-drop-006-20261002-new-models-a1e0ee917c.png"
+        }
+      },
       "source": "renders/model-drop-006-20261002-new-models-a1e0ee917c-source.tar.gz",
       "createdAt": "2026-10-02T13:56:30.815Z",
       "published": {
@@ -111,8 +135,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-03T12:37:58.646Z",
       "commit": "88c9338",
-      "artifact": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.mp4",
-      "cover": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.mp4",
+          "cover": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0.png"
+        }
+      },
       "source": "renders/model-drop-007-20261003-models-pricing-d8cf029ef0-source.tar.gz",
       "createdAt": "2026-10-03T12:37:58.650Z",
       "published": {
@@ -128,8 +156,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-04T13:14:50.501Z",
       "commit": "087e73d",
-      "artifact": "renders/model-drop-008-20261004-models-pricing-0bb5413219.mp4",
-      "cover": "renders/model-drop-008-20261004-models-pricing-0bb5413219.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-008-20261004-models-pricing-0bb5413219.mp4",
+          "cover": "renders/model-drop-008-20261004-models-pricing-0bb5413219.png"
+        }
+      },
       "source": "renders/model-drop-008-20261004-models-pricing-0bb5413219-source.tar.gz",
       "createdAt": "2026-10-04T13:14:50.506Z",
       "published": {
@@ -145,8 +177,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-06T14:13:31.560Z",
       "commit": "60bb7f3",
-      "artifact": "renders/model-drop-009-20261006-context-change-2838560a4c.mp4",
-      "cover": "renders/model-drop-009-20261006-context-change-2838560a4c.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-009-20261006-context-change-2838560a4c.mp4",
+          "cover": "renders/model-drop-009-20261006-context-change-2838560a4c.png"
+        }
+      },
       "source": "renders/model-drop-009-20261006-context-change-2838560a4c-source.tar.gz",
       "createdAt": "2026-10-06T14:13:31.564Z",
       "published": {
@@ -162,8 +198,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-08T14:37:22.626Z",
       "commit": "e2c0753",
-      "artifact": "renders/model-drop-010-20261008-new-model-5f7d97c71d.mp4",
-      "cover": "renders/model-drop-010-20261008-new-model-5f7d97c71d.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-010-20261008-new-model-5f7d97c71d.mp4",
+          "cover": "renders/model-drop-010-20261008-new-model-5f7d97c71d.png"
+        }
+      },
       "source": "renders/model-drop-010-20261008-new-model-5f7d97c71d-source.tar.gz",
       "createdAt": "2026-10-08T14:37:22.631Z",
       "published": {
@@ -179,8 +219,12 @@
       "seconds": 20,
       "renderedAt": "2026-10-09T14:24:07.317Z",
       "commit": "a2cf4d2",
-      "artifact": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.mp4",
-      "cover": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.mp4",
+          "cover": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b.png"
+        }
+      },
       "source": "renders/model-drop-011-20261009-models-pricing-5f363bbc1b-source.tar.gz",
       "createdAt": "2026-10-09T14:24:07.321Z",
       "published": {

@@ -1,9 +1,10 @@
 name: youtube
 
-# Uploads a film that is already a GitHub Release to YouTube, for when the
-# render-video upload failed (an expired token). It renders nothing: it puts the
-# release's assets back where the ledger expects them and runs `publish`, which
-# leaves the release as it is and skips a film the ledger says is uploaded.
+# Uploads the films of a GitHub Release that are not on YouTube yet: after the
+# render-video upload failed (an expired token), or after a regen added a
+# rendition (regen never uploads). It renders nothing: it fetches each film the
+# ledger row has no YouTube link for, runs `publish`, which uploads those and
+# skips the rest, and fails unless every rendition then has its link.
 
 on:
   workflow_dispatch:
@@ -42,21 +43,21 @@ jobs:
         with:
           node-version: '22'
 
-      # The cover too: publish refreshes the release notes, and they show the
-      # cover only when its file is there.
-      - name: Fetch the release assets
+      # The asset names come from lib/publish.mjs, the code that attached them.
+      - name: Fetch the films that are not on YouTube yet
         run: |
           set -euo pipefail
-          node -e '
-            const { releases } = JSON.parse(require("fs").readFileSync(`releases/${process.env.KIND}/index.json`, "utf8"));
-            const e = releases.find(r => r.id === process.env.ID);
+          node --input-type=module -e '
+            import { find } from "./lib/ledger.mjs";
+            import { releaseFiles } from "./lib/publish.mjs";
+            const e = find(process.env.KIND, process.env.ID);
             if (!e) { console.error(`no ${process.env.KIND} release "${process.env.ID}"`); process.exit(1); }
-            console.log("mp4", e.artifact);
-            if (e.cover) console.log("png", e.cover);
+            for (const f of releaseFiles(process.env.KIND, e)) if (!f.youtube) console.log(f.name, f.artifact);
           ' > want.txt
-          while read -r ext dest; do
+          cat want.txt
+          while read -r name dest; do
             mkdir -p "$(dirname "$dest")"
-            gh release download "$KIND-$ID" -p "*.$ext" -O "$dest"
+            gh release download "$KIND-$ID" -p "$name" -O "$dest"
           done < want.txt
 
       - name: Upload to YouTube
@@ -69,7 +70,14 @@ jobs:
         run: |
           set -euo pipefail
           node lib/cli.mjs publish "$KIND" "$ID" | tee publish.log
-          grep -q '── youtube: uploaded\|already uploaded' publish.log || { echo '::error::YouTube upload did not happen'; exit 1; }
+          grep '── youtube: uploaded' publish.log >> "$GITHUB_STEP_SUMMARY" || true
+          # publish records each link on its film the moment the upload lands.
+          node --input-type=module -e '
+            import { find } from "./lib/ledger.mjs";
+            const e = find(process.env.KIND, process.env.ID);
+            const left = Object.entries(e.renditions).filter(([, f]) => !f.youtube).map(([r]) => r);
+            if (left.length) { console.log(`::error::not on YouTube: ${left.join(", ")}`); process.exit(1); }
+          '
 
       - name: Commit the ledger
         run: |

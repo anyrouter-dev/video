@@ -18,6 +18,8 @@ export default {
   id: 'intro',
   title: 'Introduction',
   scheduled: false,
+  // index.html draws its camera and two SVG layers at 1920x1080; portrait.mjs refuses it.
+  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 

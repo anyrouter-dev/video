@@ -16,6 +16,8 @@ export default {
   id: 'teaser',
   title: 'Teaser',
   scheduled: false,
+  // its generator lays out 1920x1080 only (s11-pool's viewBox); portrait.mjs refuses it.
+  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 

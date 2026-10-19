@@ -7,8 +7,12 @@
   "seconds": 99.097,
   "renderedAt": "2026-10-18T19:28:34.055Z",
   "commit": "276af33",
-  "artifact": "renders/openrouter-unblock-002-20261018-v1-6b751fed35.mp4",
-  "cover": "renders/openrouter-unblock-002-20261018-v1-6b751fed35.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/openrouter-unblock-002-20261018-v1-6b751fed35.mp4",
+      "cover": "renders/openrouter-unblock-002-20261018-v1-6b751fed35.png"
+    }
+  },
   "source": null,
   "createdAt": "2026-10-18T19:28:34.058Z",
   "published": {

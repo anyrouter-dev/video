@@ -349,6 +349,8 @@ export default {
   id: 'release',
   title: 'Release',
   scheduled: true,
+  // lib/film.mjs has no portrait layout yet: its backdrop and frame chrome are drawn at 1920x1080.
+  renditions: ['landscape'],
 
   async collect({ flags }) {
     let xml;

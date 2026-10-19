@@ -7,9 +7,13 @@
   "createdAt": "2026-09-29T14:07:35.442Z",
   "seconds": 16,
   "renderedAt": "2026-09-30T18:26:04.919Z",
-  "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-003-20260929-models+pricing-388c7ba751.mp4",
+      "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png"
+    }
+  },
   "commit": "a44a251",
-  "cover": "renders/model-drop-003-20260929-models+pricing-388c7ba751.png",
   "source": "renders/model-drop-003-20260929-models+pricing-388c7ba751-source.tar.gz",
   "published": {
     "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-003-20260929-models%2Bpricing-388c7ba751"

@@ -9,10 +9,10 @@ AnyRouter repo, and every fact on screen comes from a public AnyRouter endpoint.
 
 ```
 collect  →  .build/<kind>/data.json     (the facts, from a live public source)
-gen      →  .build/<kind>/film/          (a HyperFrames project)
-check    →  lint + runtime + layout + motion + contrast
-render   →  renders/<kind>-<id>.mp4      (+ cover, + source tarball)
-publish  →  a GitHub Release tagged <kind>-<id>
+gen      →  .build/<kind>/film/          (a HyperFrames project, 1920x1080)
+check    →  lint + runtime + layout + motion + contrast, for every rendition
+render   →  renders/<kind>-<id>.mp4      (+ -portrait.mp4, a cover each, + source tarball)
+publish  →  a GitHub Release tagged <kind>-<id>, and one YouTube video per rendition
 ```
 
 Same inputs, same mp4, every time. `npm run video -- <kind>` is the whole
@@ -34,6 +34,7 @@ lib/               the engine — no kind knows about another
   marks.mjs        provider name / model id / sentence → the provider's logo
   plan.mjs         the plan contract and its honesty gate
   ledger.mjs       what has been released, per kind
+  renditions.mjs   the shapes a film ships in: landscape and portrait
   hyperframes.mjs  check / render / cover
   publish.mjs      GitHub Release + YouTube
 shared/            fonts, brand marks, provider marks
@@ -63,6 +64,33 @@ To add a kind: create `videos/<name>/kind.mjs` following the contract in
 `lib/kinds.mjs`, add a fixture and a `kind.test.mjs`, and add it to the `check`
 matrix in `.github/workflows/ci.yml`. Nothing in `lib/` changes.
 
+## Renditions
+
+Every film ships twice, from one source. `lib/renditions.mjs` is the table:
+
+| Rendition | Size | For | File |
+|-----------|------|-----|------|
+| `landscape` | 1920×1080 | YouTube and the web | `<stem>.mp4` |
+| `portrait` | 1080×1920 | YouTube Shorts; posted by hand on Instagram Reels and TikTok | `<stem>-portrait.mp4` |
+
+A film is authored at 1920×1080. Its frames carry their portrait layout under
+`@media (orientation: portrait)`, and `shared/authoring/portrait.mjs` writes the
+portrait project from the landscape one, failing on any 1920 or 1080 the frames
+left behind. A vertical upload under three minutes becomes a YouTube Short (its
+title ends in `#Shorts`). Reels and TikTok have no upload here: the portrait mp4
+on the GitHub Release is the file to post, and the release notes say so.
+
+A kind ships every rendition unless its `kind.mjs` says `renditions: ['landscape']`.
+The CLI prints a warning for each such kind on every run, so the gap stays in
+view. Today every kind says it:
+
+| Kind | Why it is landscape only |
+|------|--------------------------|
+| `model-drop`, `release`, `changelog` | `lib/film.mjs` has no portrait layout yet: its backdrop and frame chrome are drawn at 1920×1080 |
+| `intro` | `index.html` draws its camera and two SVG layers at 1920×1080 |
+| `teaser` | its generator lays out 1920×1080 only |
+| `explainer`, `openrouter-unblock` | their portrait layouts are in progress; delete the line once `check <kind>` passes without it |
+
 ## Commands
 
 ```bash
@@ -74,8 +102,10 @@ npm run pending                        # which nightly kinds have something unre
 
 npm run collect -- <kind>              # the facts only
 npm run gen -- <kind> --limit=1        # facts → HyperFrames project (flags go to the kind)
-npm run check -- <kind>                # the gate — must pass before a render is worth anything
-npm run dev -- <kind>                  # browser preview while adjusting
+npm run check -- <kind>                # the gate, for every rendition — must pass before a render is worth anything
+npm run check -- <kind> --rendition=portrait   # one rendition, also for a kind that does not ship it yet
+npm run dev -- <kind>                  # browser preview while adjusting (--rendition=portrait previews a copy)
+npm run video -- <kind> --rendition=portrait   # a dev run: render that one film, record and publish nothing
 npm run publish -- <kind> [id]         # GitHub Release (+ YouTube when configured)
 npm run plan -- <kind> [id]            # the brief for a plan: facts path, item ids, schema
 npm run regen -- <kind> <id>|--all     # re-render released films from their frozen facts
@@ -149,28 +179,40 @@ them for every kind — do not work around it.
 - A release is identified by **what it is about** (a hash of its facts), not by
   when it ran. A hash already in `releases/<kind>/index.json` is never rendered
   twice — that is what lets the workflow run every night.
-- The mp4, the cover and the generated source are **GitHub Release assets**, not
-  git objects. Git holds only the ledger row and the inputs.
+- Renditions are not part of a release's identity. A ledger row lists its films
+  under `renditions`: `{ landscape: { artifact, cover, youtube? }, portrait: {…} }`.
+  A release is rendered whole, so its films come from one build. `run` on a
+  release that lacks a rendition its kind now makes renders it again, keeping its
+  id and its YouTube links.
+- An mp4 and a cover per rendition, and the generated source, are **GitHub
+  Release assets**, not git objects. Git holds only the ledger row and the inputs.
+- `publish` uploads each film that has no YouTube link yet, and records the link
+  on that film as soon as it lands, so a re-run never uploads a second copy.
 - A **plan** (`.build/<kind>/plan.json`) is the only judgment in a film: which
   items, in what order, and a little copy. One schema for every kind;
   `lib/plan.mjs` drops anything that breaks the contract in `ci/AGENT.md` (an
   unknown id, a number not in the facts, hype) and warns — it never fails a
   build. The cleaned plan is what gets frozen.
 - **`regen`** re-renders a release that is out from `releases/<kind>/<id>/`
-  (`data.json` + `plan.json`), keeping its id, hash, tag and `createdAt`, and
-  with `--publish` replaces its Release assets and refreshes title and notes.
-  It never uploads to YouTube — a video there cannot be replaced, only
-  duplicated. It builds in `.build/<kind>/regen-<id>/`, so regens run side by
-  side. This is how every past film picks up a new look.
+  (`data.json` + `plan.json`), keeping its id, hash, tag and `createdAt`, in
+  every rendition the kind makes, and with `--publish` replaces its Release
+  assets and refreshes title and notes. It never uploads to YouTube — a video
+  there cannot be replaced, only duplicated — and keeps the links it has. A
+  rendition it adds stays without one until `youtube.yml` uploads it. It builds
+  in `.build/<kind>/regen-<id>/`, so regens run side by side. This is how every
+  past film picks up a new look, and how a past film gets its portrait one.
 - The score is generated at the film's length by `lib/sound.mjs`; there is no
   fixed-length score to outlast.
 - `render-video.yml` is one job: decide (Node only) → plan (optional agent, one
   prompt per kind in `ci/prompts/`) → render → publish → one commit. On a quiet
   night it stops after the decide step. Its `regen` input re-renders released
-  films of one kind (an id, or `all`).
-- `youtube.yml` uploads a release that is already out to YouTube, when the
-  render-video upload failed (an expired token). Dispatch it with the kind and the
-  release id; it fetches the release's assets, runs `publish` and records the link.
+  films of one kind (an id, or `all`). Its timeout is 90 minutes: a release
+  renders once per rendition, and a portrait frame costs what a landscape one does.
+- `youtube.yml` uploads the films of a release that are already out but not on
+  YouTube: after the render-video upload failed (an expired token), or after a
+  regen added a rendition. Dispatch it with the kind and the release id; it
+  fetches each film without a link from the Release, runs `publish`, commits the
+  links, and fails unless every rendition has one.
 - `ci.yml` runs `npm test` (including: every recorded release can be rebuilt
   from its record) and `check` on each kind's fixture for every change to
   `lib/`, `videos/`, `shared/` or `releases/`.
