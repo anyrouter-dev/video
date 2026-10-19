@@ -124,6 +124,27 @@ says one thing in at most 12 on-screen words besides the caption. If a detail
 cannot be read at 640px wide, enlarge it, crop to it, or cut it; the caption
 already carries the words.
 
+## Two renditions: landscape and portrait
+
+Every film ships twice from one source: **landscape** 1920×1080 (YouTube) and
+**portrait** 1080×1920 (Reels, Shorts, TikTok). Same timeline, same voice, same
+captions; only layout changes.
+
+- Author at 1920×1080. Put each frame's portrait layout under
+  `@media (orientation: portrait) { … }` in the same file. Tweens animate
+  transforms and opacity, so one timeline drives both layouts.
+- Never hard-code the stage size outside the root declarations. Sizes that follow
+  the stage use `%`, `vw/vh`, `xPercent/yPercent`, or a value read from the root's
+  box at runtime. `shared/authoring/portrait.mjs` writes the portrait project and
+  fails on any leftover literal 1920/1080 (an SVG `viewBox="0 0 1920 1080"`, a
+  point computed in landscape px).
+- Portrait safe area: content between y 200 and y 1220, x 60 to 960 (the
+  platforms draw buttons on the right and over the bottom quarter). Captions sit in
+  the band 1240–1480. Stack what landscape puts side by side; the focal element
+  takes the full 960px width. The type floor is the same in px, which reads larger
+  on a phone held upright.
+- Check both: `type-audit.mjs` and a phone sheet on the portrait project too.
+
 ## Colors
 
 - `bg` white is the ground for every frame. Never a gradient, never a tint field.
