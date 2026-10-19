@@ -113,6 +113,11 @@
     [data-composition-id="09-pick-model"] .f09-line { white-space: pre; }
     [data-composition-id="09-pick-model"] .f09-check { display: inline-block; width: 0.6em; height: 1em; vertical-align: -0.16em; }
     [data-composition-id="09-pick-model"] .k-caret { margin-left: 2px; }
+    /* The model id rolls: one slot, each id stacked in it, the slot as wide as the id on show.
+       The id that just rolled in is washed orange, then the wash fades. */
+    [data-composition-id="09-pick-model"] .f09-roll { position: relative; display: inline-block; height: 1.45em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+    [data-composition-id="09-pick-model"] .f09-item { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+    [data-composition-id="09-pick-model"] .f09-item:first-child { opacity: 1; }
 
     [data-composition-id="09-pick-model"] .f09-cards { position: absolute; left: 96px; right: 96px; top: 352px; display: flex; gap: 32px; }
     [data-composition-id="09-pick-model"] .f09-card {
@@ -165,7 +170,7 @@
             <div class="f09-line f09-old"><span class="p">$ </span>anyr login</div>
             <div class="f09-line f09-old dim">Opening browser to sign in…</div>
             <div class="f09-line f09-old ok"><svg class="f09-check" viewBox="0 0 24 40" aria-hidden="true"><path d="M3 22 L9.5 28.5 L21 14" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Signed in</div>
-            <div id="f09-l6" class="f09-line"><span class="p">$ </span>anyr claude --model <span class="id">anyrouter/<span id="f09-word"></span></span><span id="f09-caret" class="k-caret"></span></div>
+            <div id="f09-l6" class="f09-line"><span class="p">$ </span>anyr claude --model <span id="f09-roll" class="id f09-roll" data-layout-allow-overlap><span class="f09-item">anyrouter/free</span><span class="f09-item">anyrouter/auto</span><span class="f09-item">anyrouter/coding</span><span class="f09-item">deepseek/deepseek-v4.1-flash</span><span class="f09-item">moonshotai/kimi-k3</span><span class="f09-item">z-ai/glm-5.3</span></span><span id="f09-caret" class="k-caret"></span></div>
           </div>
         </div>
       </div>
@@ -198,8 +203,12 @@
       const BLINK_HALF = 0.5;
       // A card the voice has moved past goes muted, not faded: faded text would drop under 4.5:1.
       const QUIET = "#636363";
-      // Word starts from 09-pick-model.words.json ("Free", "Auto", "Coding"); retypes on the typing cues in sfx-cues.json.
+      // Word starts from 09-pick-model.words.json ("Free", "Auto", "Coding").
       const CARD_AT = [1.95, 3.75, 6.14];
+      // When the id rolls to each .f09-item after the first, on the click cues in sfx-cues.json: auto and
+      // coding just before the voice names them, then three ids from the live catalog while it says
+      // "from the keys you added".
+      const ROLL_AT = [3.6, 6.0, 7.3, 8.0, 8.7];
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
@@ -208,23 +217,10 @@
         const l1 = $("l1");
         const l6 = $("l6");
 
-        // Per-character sets for the model id; seek() suppresses onUpdate drivers.
-        const chars = (text, visible) => [...text].map((ch) => {
-          const span = document.createElement("span");
-          span.textContent = ch;
-          span.style.display = visible ? "inline" : "none";
-          $("word").appendChild(span);
-          return span;
-        });
-        const free = chars("free", true);
-        const auto = chars("auto", false);
-        const coding = chars("coding", false);
-        function retype(from, to, t) {
-          from.slice().reverse().forEach((span, i) => tl.set(span, { display: "none" }, t + i * 0.035));
-          const typeAt = t + from.length * 0.035 + 0.02;
-          to.forEach((span, i) => tl.set(span, { display: "inline" }, typeAt + i * 0.05));
-          return typeAt + to.length * 0.05;
-        }
+        // The roll slot starts as wide as the first id, so 08's last frame cuts in pixel for pixel.
+        const roll = $("roll");
+        const items = [...roll.children];
+        roll.style.width = items[0].offsetWidth + "px";
 
         // Measured after the id is in place: in portrait "anyrouter/free" wraps the command onto a second line.
         // The terminal settles into the title's place and shrinks to its last line. Its height, not a
@@ -245,12 +241,24 @@
           toggles.forEach((t, i) => tl.set(el, { opacity: i % 2 ? 0 : 1 }, t));
         }
 
-        const caret = $("caret");
-        blink(caret, 0, 3.6);
-        const autoEnd = retype(free, auto, 3.6);
-        blink(caret, autoEnd, 6.04);
-        const codingEnd = retype(auto, coding, 6.04);
-        blink(caret, codingEnd, DURATION);
+        blink($("caret"), 0, DURATION);
+
+        const HL = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+        const HL_OFF = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+        // 0.6s in all: shorter than the 0.7s between rolls, so one wash never fades over the next.
+        function wash(t) {
+          tl.set(roll, HL, t);
+          tl.fromTo(roll, HL, { ...HL_OFF, duration: 0.35, ease: "power2.out", immediateRender: false }, t + 0.25);
+        }
+        // "Free uses free models only": the id already on screen is the one meant.
+        wash(CARD_AT[0]);
+        ROLL_AT.forEach((t, i) => {
+          const out = items[i], into = items[i + 1];
+          tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+          tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+          tl.to(roll, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+          wash(t + 0.1);
+        });
 
         // One focus ring, sized to the first card, moves to each card as the voice names it.
         const cards = ["free", "auto", "coding"].map((k) => $("card-" + k));
