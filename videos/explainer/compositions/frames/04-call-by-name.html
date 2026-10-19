@@ -105,8 +105,8 @@
     /* the prompt bubble is neutral: the ring and the wash on the id are the moment's one accent */
     [data-composition-id="04-call-by-name"] .f04-ask { position: absolute; left: 200px; right: 200px; top: 432px; display: flex; justify-content: flex-end; }
     [data-composition-id="04-call-by-name"] .f04-bubble { margin: 0; padding: 10px 24px; border-radius: 24px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1.2; white-space: nowrap; }
-    [data-composition-id="04-call-by-name"] .f04-cards { position: absolute; left: 200px; right: 200px; top: 506px; display: flex; flex-direction: column; gap: 8px; }
-    [data-composition-id="04-call-by-name"] .f04-card { padding: 12px 28px; display: flex; flex-direction: column; gap: 2px; }
+    [data-composition-id="04-call-by-name"] .f04-cards { position: absolute; left: 200px; right: 200px; top: 504px; display: flex; flex-direction: column; gap: 6px; }
+    [data-composition-id="04-call-by-name"] .f04-card { padding: 10px 28px; display: flex; flex-direction: column; gap: 2px; }
     [data-composition-id="04-call-by-name"] .f04-row { display: flex; align-items: center; gap: 16px; }
     [data-composition-id="04-call-by-name"] .f04-row img { width: 40px; height: 40px; flex: none; }
     [data-composition-id="04-call-by-name"] .f04-name { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--ink-2); }
@@ -244,7 +244,8 @@ const K = {
         gsap.set($("code"), { clearProps: "transform" });
 
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.05, y: 10 });
+        // a gentler push than its neighbours, so the last answer card stays above the caption band
+        K.push(tl, $("cam"), DURATION, { to: 1.035 });
 
         K.rise(tl, $("code"), 0.02, { y: 60, d: 0.7 });
         chips.forEach((c, i) => K.rise(tl, c, 0.15 + i * 0.07, { y: 24, d: 0.5 }));
