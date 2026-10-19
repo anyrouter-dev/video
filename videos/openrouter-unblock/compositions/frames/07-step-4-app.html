@@ -3,642 +3,220 @@
     @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
     @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
-    #root {
+    #root[data-composition-id="07-step-4-app"] {
       position: absolute;
       inset: 0;
-      width: 1920px;
-      height: 1080px;
-      overflow: hidden;
-      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-      color: #0A0A0A;
-    }
-
-    [data-composition-id="07-step-4-app"] .bg {
-      position: absolute;
-      inset: 0;
-      background: #FFFFFF;
-    }
-    [data-composition-id="07-step-4-app"] .stage {
-      position: absolute;
-      inset: 0;
-    }
-    [data-composition-id="07-step-4-app"] .mono {
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-    }
-
-    /* Step rail (four steps: gap 40, hairline 48) */
-    [data-composition-id="07-step-4-app"] .rail {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 72px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-    }
-    [data-composition-id="07-step-4-app"] .rail-step {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    [data-composition-id="07-step-4-app"] .rail-circle {
-      position: relative;
-      width: 40px;
-      height: 40px;
-      flex: none;
-    }
-    [data-composition-id="07-step-4-app"] .rail-dot {
-      position: absolute;
-      inset: 0;
-      box-sizing: border-box;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 20px;
-      font-weight: 500;
-    }
-    [data-composition-id="07-step-4-app"] .rail-dot.todo {
-      background: #FFFFFF;
-      border: 2px solid #D4D4D8;
-      color: #636363;
-    }
-    [data-composition-id="07-step-4-app"] .rail-dot.active {
-      background: #BB4D00;
-      color: #FFFFFF;
-    }
-    [data-composition-id="07-step-4-app"] .rail-dot.done {
-      background: #007E55;
-    }
-    [data-composition-id="07-step-4-app"] .rail-dot.done svg {
-      width: 22px;
-      height: 22px;
-    }
-    [data-composition-id="07-step-4-app"] .rail-label {
-      position: relative;
-      font-size: 26px;
-      font-weight: 500;
-      line-height: 1;
-      white-space: nowrap;
-    }
-    [data-composition-id="07-step-4-app"] .rail-label .over {
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    [data-composition-id="07-step-4-app"] .c-done { color: #3F3F46; }
-    [data-composition-id="07-step-4-app"] .c-active { color: #0A0A0A; }
-    [data-composition-id="07-step-4-app"] .c-todo { color: #636363; }
-    [data-composition-id="07-step-4-app"] .rail-line {
-      width: 48px;
-      height: 2px;
-      background: #D4D4D8;
-      flex: none;
-    }
-
-    /* Terminal card */
-    [data-composition-id="07-step-4-app"] .term {
-      position: absolute;
-      left: 290px;
-      top: 200px;
-      width: 1340px;
-      height: 540px;
-      border-radius: 20px;
-      background: #0A0A0A;
-      box-shadow: 0 30px 80px rgba(10,10,10,.18);
       overflow: hidden;
     }
-    [data-composition-id="07-step-4-app"] .t-bar {
-      position: relative;
-      height: 56px;
-      background: #18181B;
-    }
-    [data-composition-id="07-step-4-app"] .t-dots {
-      position: absolute;
-      left: 22px;
-      top: 21.5px;
-      display: flex;
-      gap: 8px;
-    }
-    [data-composition-id="07-step-4-app"] .t-dots i {
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      background: #3F3F46;
-    }
-    [data-composition-id="07-step-4-app"] .t-title {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 24px;
-      color: #A1A1AA;
-      white-space: nowrap;
-    }
-    [data-composition-id="07-step-4-app"] .t-mark {
-      position: absolute;
-      right: 22px;
-      top: 16px;
-      width: 24px;
-      height: 24px;
-      background: #A1A1AA;
-      -webkit-mask: url("assets/anyrouter-logo-black.svg") center / contain no-repeat;
-      mask: url("assets/anyrouter-logo-black.svg") center / contain no-repeat;
-    }
-    [data-composition-id="07-step-4-app"] .t-body {
-      position: absolute;
-      left: 52px;
-      right: 52px;
-      top: 100px;
-      bottom: 44px;
-    }
-    /* Line tops: 54px code rows, 32px note rows, at least 16px between text blocks */
-    [data-composition-id="07-step-4-app"] .line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 54px;
-    }
-    [data-composition-id="07-step-4-app"] .code {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      height: 54px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 34px;
-      line-height: 54px;
-      white-space: nowrap;
-    }
-    [data-composition-id="07-step-4-app"] .code.old { color: #A1A1AA; }
-    [data-composition-id="07-step-4-app"] .code.new { color: #F4F4F5; }
-    [data-composition-id="07-step-4-app"] .model { color: #F0915A; }
-    [data-composition-id="07-step-4-app"] .ok {
-      width: 32px;
-      height: 32px;
-      flex: none;
-    }
-    [data-composition-id="07-step-4-app"] .note {
-      position: absolute;
-      left: 0;
-      height: 36px;
-      font-size: 28px;
-      line-height: 36px;
-      color: #A1A1AA;
-      white-space: nowrap;
-    }
+    [data-composition-id="07-step-4-app"] {
+      .bg { position: absolute; inset: 0; background: #FFFFFF; }
+      .stage {
+        position: absolute;
+        inset: 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #0A0A0A;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+      .safe { position: absolute; left: 96px; right: 96px; top: 88px; bottom: 200px; }
+      .mono { font-family: "Geist Mono", ui-monospace, Menlo, monospace; }
 
-    [data-composition-id="07-step-4-app"] .under {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 760px;
-      text-align: center;
-      font-size: 30px;
-      font-weight: 500;
-      line-height: 38px;
-      color: #0A0A0A;
-      white-space: nowrap;
-    }
+      .step { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .badge { display: inline-flex; align-items: center; box-sizing: border-box; height: 56px; padding: 0 20px; border-radius: 12px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+      .h2 { margin: 0; font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+      .body { position: absolute; left: 0; right: 0; top: 200px; bottom: 0; display: flex; }
+      .layer { position: absolute; inset: 0; display: flex; }
+      .ring { position: absolute; inset: -10px; border: 2px solid #BB4D00; border-radius: 26px; box-shadow: 0 0 0 6px rgba(187, 77, 0, .35); pointer-events: none; }
 
-    /* Phase A: the AnyRouter API Keys page, in the shared browser frame geometry */
-    [data-composition-id="07-step-4-app"] .browser {
-      position: absolute;
-      left: 384px;
-      top: 164px;
-      width: 1152px;
-      height: 700px;
-      box-sizing: border-box;
-      background: #FFFFFF;
-      border: 1.5px solid #E5E5E5;
-      border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
-      overflow: hidden;
-    }
-    [data-composition-id="07-step-4-app"] .bar {
-      position: relative;
-      height: 52px;
-      box-sizing: border-box;
-      background: #FAFAFA;
-      border-bottom: 1.5px solid #E5E5E5;
-    }
-    [data-composition-id="07-step-4-app"] .dots {
-      position: absolute;
-      left: 22px;
-      top: 20px;
-      display: flex;
-      gap: 8px;
-    }
-    [data-composition-id="07-step-4-app"] .dots i {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #D4D4D8;
-    }
-    [data-composition-id="07-step-4-app"] .url-wrap {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-    }
-    [data-composition-id="07-step-4-app"] .url {
-      height: 32px;
-      box-sizing: border-box;
-      padding: 0 18px;
-      border-radius: 999px;
-      background: #FFFFFF;
-      border: 1.5px solid #E5E5E5;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 20px;
-      line-height: 29px;
-      color: #636363;
-      white-space: nowrap;
-    }
-    [data-composition-id="07-step-4-app"] .viewport {
-      position: relative;
-      width: 1149px;
-      height: 645px;
-      overflow: hidden;
-      background: #FFFFFF;
-    }
-    [data-composition-id="07-step-4-app"] .k-h1 {
-      position: absolute;
-      left: 56px;
-      top: 44px;
-      font-size: 48px;
-      font-weight: 600;
-      line-height: 60px;
-      letter-spacing: -0.02em;
-    }
-    [data-composition-id="07-step-4-app"] .k-ul {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -2px;
-      height: 4px;
-      border-radius: 2px;
-      background: #BB4D00;
-      transform-origin: 0% 50%;
-    }
-    [data-composition-id="07-step-4-app"] .btn {
-      position: absolute;
-      height: 60px;
-      box-sizing: border-box;
-      padding: 0 26px;
-      border-radius: 12px;
-      background: #0A0A0A;
-      color: #FFFFFF;
-      font-size: 26px;
-      font-weight: 500;
-      line-height: 60px;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    [data-composition-id="07-step-4-app"] .btn svg {
-      width: 26px;
-      height: 26px;
-      flex: none;
-    }
-    [data-composition-id="07-step-4-app"] .k-create {
-      right: 56px;
-      top: 44px;
-      width: 214px;
-    }
-    [data-composition-id="07-step-4-app"] .k-card {
-      position: absolute;
-      left: 56px;
-      right: 56px;
-      top: 150px;
-      height: 330px;
-      box-sizing: border-box;
-      padding: 36px 40px;
-      border: 1.5px solid #E5E5E5;
-      border-radius: 16px;
-      background: #FFFFFF;
-    }
-    [data-composition-id="07-step-4-app"] .k-label {
-      font-size: 30px;
-      font-weight: 600;
-      line-height: 38px;
-    }
-    [data-composition-id="07-step-4-app"] .k-desc {
-      margin-top: 10px;
-      font-size: 26px;
-      line-height: 34px;
-      color: #636363;
-    }
-    [data-composition-id="07-step-4-app"] .k-input {
-      position: relative;
-      margin-top: 22px;
-      height: 70px;
-      box-sizing: border-box;
-      padding: 0 24px;
-      border: 1.5px solid #D4D4D8;
-      border-radius: 12px;
-      font-size: 32px;
-      line-height: 67px;
-    }
-    [data-composition-id="07-step-4-app"] .k-typed {
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      vertical-align: top;
-    }
-    [data-composition-id="07-step-4-app"] .k-submit {
-      left: 40px;
-      top: 250px;
-      width: 214px;
-    }
-    [data-composition-id="07-step-4-app"] .k-secret {
-      position: absolute;
-      left: 40px;
-      right: 40px;
-      top: 176px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    [data-composition-id="07-step-4-app"] .k-code {
-      flex: 1;
-      height: 84px;
-      box-sizing: border-box;
-      padding: 0 28px;
-      border-radius: 14px;
-      background: #F4F4F5;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 36px;
-      line-height: 84px;
-      white-space: nowrap;
-    }
-    [data-composition-id="07-step-4-app"] .k-copy {
-      position: relative;
-      width: 170px;
-    }
-    [data-composition-id="07-step-4-app"] .k-copy .face {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-    [data-composition-id="07-step-4-app"] .layer {
-      position: absolute;
-      inset: 0;
-      padding: 36px 40px;
-    }
-    [data-composition-id="07-step-4-app"] .ripple {
-      position: absolute;
-      width: 56px;
-      height: 56px;
-      box-sizing: border-box;
-      border-radius: 50%;
-      border: 2.5px solid #BB4D00;
-      pointer-events: none;
-    }
-    [data-composition-id="07-step-4-app"] .cursor {
-      position: absolute;
-      left: 0;
-      top: 0;
-      filter: drop-shadow(0 2px 4px rgba(10,10,10,.25));
-      pointer-events: none;
-    }
-    [data-composition-id="07-step-4-app"] .eyebrow {
-      position: absolute;
-      left: 290px;
-      top: 150px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 26px;
-      font-weight: 500;
-      line-height: 32px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #636363;
+      /* anyrouter.dev/dashboard/keys */
+      .browser { position: relative; flex: 1; display: flex; flex-direction: column; background: #FFFFFF; border: 2px solid #E5E5E5; border-radius: 24px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); overflow: hidden; }
+      .bar { position: relative; flex: none; height: 60px; background: #FAFAFA; border-bottom: 2px solid #E5E5E5; display: grid; place-items: center; }
+      .dots { position: absolute; left: 24px; top: 23px; display: flex; gap: 10px; }
+      .dots i { width: 14px; height: 14px; border-radius: 50%; background: #D4D4D8; }
+      .url { padding: 4px 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 32px; line-height: 1.2; color: #636363; white-space: nowrap; }
+      .view { position: relative; flex: 1; box-sizing: border-box; padding: 40px 56px; display: flex; flex-direction: column; gap: 32px; }
+      .kh { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .kt { margin: 0; font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+      .kw { position: relative; display: inline-block; }
+      .ul { position: absolute; left: 0; right: 0; bottom: -6px; height: 5px; border-radius: 3px; background: #BB4D00; transform-origin: 0% 50%; }
+      .btn { position: relative; display: inline-grid; box-sizing: border-box; height: 88px; padding: 0 40px; border-radius: 16px; background: #0A0A0A; color: #FFFFFF; font-size: 40px; font-weight: 500; white-space: nowrap; }
+      .btn > span { grid-area: 1 / 1; display: flex; align-items: center; justify-content: center; gap: 14px; }
+      .btn.outline { background: #FFFFFF; color: #0A0A0A; border: 2px solid #E5E5E5; }
+      .btn svg { width: 34px; height: 34px; flex: none; }
+      .copied { color: #007E55; }
+      .newkey { box-sizing: border-box; padding: 36px 40px; border: 2px solid #E5E5E5; border-radius: 24px; }
+      .nk-title { font-size: 44px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+      .nk-row { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 24px; }
+      .key { display: inline-flex; align-items: center; gap: 16px; box-sizing: border-box; height: 88px; padding: 0 28px; background: #FAFAFA; border: 2px dashed #D4D4D8; border-radius: 12px; font-size: 40px; white-space: nowrap; }
+      .key svg { width: 36px; height: 36px; flex: none; }
+
+      /* the app's settings: the one dark surface */
+      .app { flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
+      .term { box-sizing: border-box; width: 1500px; background: #0A0A0A; border-radius: 24px; overflow: hidden; }
+      .term-bar { position: relative; height: 64px; background: #18181B; display: grid; place-items: center; }
+      .term-dots { position: absolute; left: 26px; top: 25px; display: flex; gap: 10px; }
+      .term-dots i { width: 14px; height: 14px; border-radius: 50%; background: #3F3F46; }
+      .term-title { font-size: 32px; line-height: 1; color: #A1A1AA; }
+      .term-body { padding: 28px 28px 32px; font-size: 56px; line-height: 80px; color: #F4F4F5; }
+      .set { position: relative; display: flex; flex-wrap: wrap; align-items: center; padding: 0 24px; border-radius: 14px; white-space: nowrap; }
+      .hl { position: absolute; inset: 0; border-radius: 14px; background: #27272A; }
+      .k, .v, .ok { position: relative; }
+      .k { color: #A1A1AA; }
+      .v { display: grid; }
+      .v > span { grid-area: 1 / 1; }
+      .old { color: #A1A1AA; }
+      .model { color: #F0915A; }
+      .ok { display: inline-flex; margin-left: 24px; }
+      .ok svg { width: 40px; height: 40px; }
+      .note { display: flex; align-items: center; gap: 24px; box-sizing: border-box; max-width: 1500px; padding: 32px 40px; background: #FFFFFF; border: 2px solid #E5E5E5; border-radius: 24px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); font-size: 40px; font-weight: 500; line-height: 1.3; }
+      .note svg { width: 44px; height: 44px; flex: none; }
+
+      @media (orientation: portrait) {
+        .safe { left: 60px; right: 120px; top: 200px; bottom: 700px; }
+        .layer { align-items: flex-start; }
+        .browser { flex: none; width: 100%; }
+        .view { flex: none; height: 640px; padding: 36px 32px; }
+        .kh { flex-direction: column; align-items: flex-start; }
+        .app { justify-content: flex-start; gap: 32px; }
+        .term { width: 100%; }
+        .term-body { padding: 24px 12px 28px; font-size: 44px; line-height: 64px; }
+        .k { flex-basis: 100%; }
+        .note { padding: 28px 32px; }
+      }
     }
   </style>
 
-  <div id="root" data-composition-id="07-step-4-app" data-width="1920" data-height="1080" data-duration="15.248">
-    <div class="bg clip" data-start="0" data-duration="15.248" data-track-index="0"></div>
+  <div id="root" data-composition-id="07-step-4-app" data-width="1920" data-height="1080" data-duration="17.258">
+    <div class="bg clip" data-start="0" data-duration="17.258" data-track-index="0"></div>
+    <div class="stage clip" data-start="0" data-duration="17.258" data-track-index="1">
+      <div class="safe">
+        <div class="step" id="t7-step">
+          <span class="badge">Step 4 of 4</span>
+          <h2 class="h2">Use it in your app</h2>
+        </div>
 
-    <div class="stage clip" data-start="0" data-duration="15.248" data-track-index="1">
-      <div class="rail">
-        <div class="rail-step">
-          <div class="rail-circle">
-            <div class="rail-dot done"><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
-          </div>
-          <div class="rail-label c-done">Create a key</div>
-        </div>
-        <div class="rail-line"></div>
-        <div class="rail-step">
-          <div class="rail-circle">
-            <div class="rail-dot done"><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
-          </div>
-          <div class="rail-label c-done">Add it to AnyRouter</div>
-        </div>
-        <div class="rail-line"></div>
-        <div class="rail-step">
-          <div class="rail-circle">
-            <div class="rail-dot done"><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
-          </div>
-          <div class="rail-label c-done">Share with the pool</div>
-        </div>
-        <div class="rail-line"></div>
-        <div class="rail-step">
-          <div class="rail-circle">
-            <div class="rail-dot todo" id="07-step-4-app-c4-todo">4</div>
-            <div class="rail-dot active" id="07-step-4-app-c4-on" data-layout-allow-overlap>4</div>
-            <div class="rail-dot done" id="07-step-4-app-c4-done" data-layout-allow-overlap><svg viewBox="0 0 22 22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11.5l4 4 8-9"/></svg></div>
-          </div>
-          <div class="rail-label c-todo">Use it in your app<span class="over c-active" id="07-step-4-app-l4-on" data-layout-allow-overlap style="background:#FFFFFF">Use it in your app</span><span class="over c-done" id="07-step-4-app-l4-done" data-layout-allow-overlap style="background:#FFFFFF">Use it in your app</span></div>
-        </div>
-      </div>
-
-      <div class="browser" id="07-step-4-app-browser">
-        <div class="bar">
-          <div class="dots"><i></i><i></i><i></i></div>
-          <div class="url-wrap"><div class="url">anyrouter.dev/dashboard/keys</div></div>
-        </div>
-        <div class="viewport">
-          <div class="k-h1"><span style="position:relative">API Keys<i class="k-ul" id="07-step-4-app-ul"></i></span></div>
-          <div class="btn k-create" id="07-step-4-app-create"><svg viewBox="0 0 26 26" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M13 5.5v15M5.5 13h15"/></svg>Create key</div>
-          <div class="k-card" id="07-step-4-app-card">
-            <div class="layer" id="07-step-4-app-form">
-              <div class="k-label">Key name</div>
-              <div class="k-input"><span class="k-typed" id="07-step-4-app-typed">my-app</span></div>
-              <div class="btn k-submit" id="07-step-4-app-submit">Create key</div>
-            </div>
-            <div class="layer" id="07-step-4-app-made">
-              <div class="k-label">Your new API key</div>
-              <div class="k-desc">Store it in a secret manager. This is the only time the full value is shown.</div>
-              <div class="k-secret">
-                <div class="k-code" id="07-step-4-app-code">sk-ar-v1-••••••••</div>
-                <div class="btn k-copy" id="07-step-4-app-copy">
-                  <div class="face" id="07-step-4-app-copy-idle"><svg viewBox="0 0 26 26" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round"><rect x="8.5" y="8.5" width="13" height="13" rx="2.5"/><path d="M17.5 8.5V6.5a2 2 0 0 0-2-2h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/></svg>Copy</div>
-                  <div class="face" id="07-step-4-app-copy-done"><svg viewBox="0 0 26 26" fill="none" stroke="#4ADE80" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 13.5l5 5 10-11"/></svg>Copied</div>
+        <div class="body">
+          <div class="layer" id="t7-keys">
+            <div class="browser">
+              <div class="bar">
+                <div class="dots"><i></i><i></i><i></i></div>
+                <span class="url mono">anyrouter.dev/dashboard/keys</span>
+              </div>
+              <div class="view">
+                <div class="kh">
+                  <h3 class="kt"><span class="kw">API Keys<i class="ul" id="t7-ul"></i></span></h3>
+                  <span class="btn" id="t7-create"><span>
+                    <svg viewBox="0 0 20 20" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
+                    Create key</span><i class="ring" id="t7-ring-create"></i></span>
+                </div>
+                <div class="newkey" id="t7-newkey">
+                  <div class="nk-title">Your new API key</div>
+                  <div class="nk-row">
+                    <span class="key mono">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+                      <span>sk-ar-v1-••••••••</span>
+                    </span>
+                    <span class="btn outline" id="t7-copy">
+                      <span id="t7-copy-a">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="#0A0A0A" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M13 4.5V4a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 4v7a1.5 1.5 0 0 0 1.5 1.5H5"/></svg>
+                        Copy</span>
+                      <span class="copied" id="t7-copy-b">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="#007E55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg>
+                        Copied</span>
+                      <i class="ring" id="t7-ring-copy"></i>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="layer app" id="t7-app">
+            <div class="term">
+              <div class="term-bar">
+                <div class="term-dots"><i></i><i></i><i></i></div>
+                <span class="term-title mono">my-app/.env</span>
+              </div>
+              <div class="term-body mono">
+                <div class="set">
+                  <i class="hl" id="t7-hl1"></i>
+                  <span class="k">API_KEY=</span>
+                  <span class="v"><span class="old" id="t7-o1">sk-or-v1-••••••••</span><span id="t7-n1">sk-ar-v1-••••••••</span></span>
+                  <span class="ok" id="t7-c1"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#4ADE80"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#0A0A0A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+                <div class="set">
+                  <i class="hl" id="t7-hl2"></i>
+                  <span class="k">BASE_URL=</span>
+                  <span class="v"><span class="old" id="t7-o2">https://openrouter.ai/api/v1</span><span id="t7-n2">https://anyrouter.dev/api/v1</span></span>
+                  <span class="ok" id="t7-c2"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#4ADE80"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#0A0A0A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+                <div class="set">
+                  <i class="hl" id="t7-hl3"></i>
+                  <span class="k">MODEL=</span>
+                  <span class="v"><span class="model">openrouter/free</span></span>
+                  <span class="ok" id="t7-c3"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#4ADE80"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#0A0A0A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </div>
+              </div>
+            </div>
+            <div class="note" id="t7-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>
+              <span>AnyRouter runs openrouter/free on your OpenRouter key</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="eyebrow" id="07-step-4-app-eyebrow">Your app's settings</div>
-      <div class="term" id="07-step-4-app-term">
-        <div class="t-bar">
-          <div class="t-dots"><i></i><i></i><i></i></div>
-          <div class="t-title">my-app/.env</div>
-          <div class="t-mark"></div>
-        </div>
-        <div class="t-body">
-          <div class="line" id="07-step-4-app-line1" style="top:12px">
-            <div class="code old" id="07-step-4-app-old1">API_KEY=sk-or-v1-••••••••••••</div>
-            <div class="code new" id="07-step-4-app-new1" data-layout-allow-overlap>
-              <span>API_KEY=sk-ar-v1-••••••••</span>
-              <svg class="ok" id="07-step-4-app-ok1" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#007E55"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-          <div class="note" id="07-step-4-app-note1" style="top:78px">the AnyRouter key you just created</div>
-
-          <div class="line" id="07-step-4-app-line2" style="top:150px">
-            <div class="code old" id="07-step-4-app-old2">BASE_URL=https://openrouter.ai/api/v1</div>
-            <div class="code new" id="07-step-4-app-new2" data-layout-allow-overlap>
-              <span>BASE_URL=https://anyrouter.dev/api/v1</span>
-              <svg class="ok" id="07-step-4-app-ok2" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#007E55"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-          <div class="note" id="07-step-4-app-note2" style="top:216px">the AnyRouter address</div>
-
-          <div class="line" id="07-step-4-app-line3" style="top:288px">
-            <div class="code old" id="07-step-4-app-old3">MODEL=openrouter/free</div>
-            <div class="code new" id="07-step-4-app-new3" data-layout-allow-overlap>
-              <span>MODEL=<span class="model">openrouter/free</span></span>
-              <svg class="ok" id="07-step-4-app-ok3" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" fill="#007E55"/><path d="M9.5 16.5l4.5 4.5 8.5-9.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-          <div class="note" id="07-step-4-app-note3" style="top:354px">unchanged · now runs on your OpenRouter key in BYOK</div>
-        </div>
-      </div>
-
-      <div class="under" id="07-step-4-app-under">Your AnyRouter key goes in your app. Your OpenRouter key stays in BYOK.</div>
-
-      <div class="ripple" id="07-step-4-app-ripple-create"></div>
-      <div class="ripple" id="07-step-4-app-ripple-submit"></div>
-      <div class="ripple" id="07-step-4-app-ripple-copy"></div>
-      <svg class="cursor" id="07-step-4-app-cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
     (function () {
-      const $ = (id) => document.getElementById("07-step-4-app-" + id);
+      const $ = (id) => document.getElementById("t7-" + id);
+      // Word starts from 07-step-4-app.words.json (seconds from frame start).
+      const API = 2.48, CREATE = 3.73, APP = 4.91, THEN = 5.58, THAT = 7.91, ADDRESS = 9.83, KEEP = 10.75, ANYROUTER = 13.79;
       const tl = gsap.timeline({ paused: true });
-
-      // Word starts (frame-local seconds) from 07-step-4-app.words.json
-      const API = 2.19;
-      const CREATE = 3.16;
-      const APP = 4.11;
-      const THEN = 4.85;
-      const THAT_KEY = 6.88;
-      const ADDRESS = 8.45;
-      const KEEP = 9.42;
-      const OPENROUTER_FREE = 10.37;
-      const ANYROUTER_NOW = 12.32;
-      const RUNS = 13.03;
-      const LAST_WORD_DONE = 14.1;
-
-      // Canvas hot spots. Viewport origin is (385.5, 217.5): card 384,164 + 1.5 border, + 52 bar.
-      const START = { x: 1180, y: 520 };
-      const CREATE_BTN = { x: 1371.5, y: 291.5 };
-      const SUBMIT = { x: 590, y: 649 };
-      const COPY = { x: 1352, y: 587 };
-
-      const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
-      const click = (target, ripple, p, t) => {
-        tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, t);
-        tl.to($("cursor"), { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
-        tl.to(target, { scale: 0.96, duration: 0.06, ease: "power2.in" }, t);
-        tl.to(target, { scale: 1, duration: 0.06, ease: "power2.out" }, t + 0.06);
-        gsap.set($(ripple), { left: p.x - 28, top: p.y - 28 });
-        tl.fromTo($(ripple), { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
+      const show = (id, t, d = 0.2) => tl.fromTo($(id), { opacity: 0 }, { opacity: 1, duration: d, ease: "power2.out" }, t);
+      const hide = (id, t, d = 0.2) => tl.to($(id), { opacity: 0, duration: d, ease: "power2.out" }, t);
+      const press = (id, t) => {
+        tl.to($(id), { scale: 0.95, duration: 0.07, ease: "power2.in" }, t);
+        tl.to($(id), { scale: 1, duration: 0.12, ease: "power2.out" }, t + 0.07);
       };
+      gsap.set([$("copy-b"), $("n1"), $("n2"), $("hl1"), $("hl2"), $("hl3"), $("c1"), $("c2"), $("c3"), $("note")], { opacity: 0 });
 
-      // Hidden states held from t=0
-      gsap.set($("cursor"), { transformOrigin: "2px 2px" });
-      tl.set([$("c4-on"), $("l4-on"), $("c4-done"), $("l4-done")], { opacity: 0 }, 0);
-      tl.set([$("new1"), $("new2"), $("new3"), $("note1"), $("note2"), $("note3"), $("under")], { opacity: 0 }, 0);
-      tl.set([$("old1"), $("old2"), $("old3"), $("term"), $("eyebrow")], { opacity: 0 }, 0);
-      tl.set([$("card"), $("made"), $("copy-done"), $("ripple-create"), $("ripple-submit"), $("ripple-copy")], { opacity: 0 }, 0);
-      tl.set($("ul"), { scaleX: 0 }, 0);
+      tl.fromTo($("step"), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.05);
+      tl.fromTo($("keys"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.12);
 
-      // Rail: step 4 active
-      tl.fromTo($("c4-on"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0.2);
-      tl.set($("c4-todo"), { opacity: 0 }, 0.55);
-      tl.to($("l4-on"), { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
+      // "open API Keys and create a key for your app"
+      tl.fromTo($("ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, API);
+      show("ring-create", CREATE - 0.2);
+      press("create", CREATE);
+      hide("ring-create", CREATE + 0.35);
+      tl.fromTo($("newkey"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, CREATE + 0.2);
+      show("ring-copy", APP - 0.25);
+      press("copy", APP);
+      hide("copy-a", APP + 0.08, 0.1);
+      show("copy-b", APP + 0.1);
 
-      // Scene 1: AnyRouter's API Keys page; "API Keys" underlines; Create key on "create"
-      tl.fromTo($("browser"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.05);
-      tl.fromTo($("cursor"), { ...at(START), opacity: 0 }, { ...at(START), opacity: 1, duration: 0.25, ease: "power2.out" }, 0.6);
-      tl.to($("ul"), { scaleX: 1, duration: 0.45, ease: "power3.out" }, API);
-      tl.to($("cursor"), { ...at(CREATE_BTN), duration: 0.6, ease: "power2.inOut" }, CREATE - 0.65);
-      click($("create"), "ripple-create", CREATE_BTN, CREATE);
-
-      // Scene 2: name it, create it, copy the new sk-ar key (shown once)
-      tl.fromTo($("card"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, CREATE + 0.12);
-      tl.fromTo($("typed"), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "steps(6)" }, CREATE + 0.3);
-      tl.to($("cursor"), { ...at(SUBMIT), duration: 0.4, ease: "power2.inOut" }, CREATE + 0.35);
-      click($("submit"), "ripple-submit", SUBMIT, APP - 0.15);
-      tl.to($("form"), { opacity: 0, duration: 0.12, ease: "power2.in" }, APP - 0.05);
-      tl.fromTo($("made"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, APP + 0.08);
-      tl.fromTo($("code"), { backgroundColor: "#FFF4EC" }, { backgroundColor: "#F4F4F5", duration: 0.6, ease: "power2.out" }, APP + 0.08);
-      tl.to($("cursor"), { ...at(COPY), duration: 0.35, ease: "power2.inOut" }, APP + 0.15);
-      click($("copy"), "ripple-copy", COPY, APP + 0.55);
-      tl.to($("copy-idle"), { opacity: 0, duration: 0.08, ease: "power2.out" }, APP + 0.58);
-      tl.to($("copy-done"), { opacity: 1, duration: 0.12, ease: "power2.out" }, APP + 0.6);
-
-      // Scene 3: on "Then" the page gives way to the app's .env; old OpenRouter values, dim
-      tl.to([$("browser"), $("cursor")], { opacity: 0, duration: 0.25, ease: "power2.in" }, THEN - 0.1);
-      tl.fromTo($("eyebrow"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, THEN + 0.2);
-      tl.fromTo($("term"), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, THEN + 0.15);
-      [1, 2, 3].forEach((n, i) => {
-        tl.fromTo($("old" + n), { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, THEN + 0.4 + i * 0.08);
-      });
-
-      // Swap in place: old text is fully gone before the new text starts, so they never overlap
+      // "Then, in your app's settings, swap in that key and the AnyRouter address. Keep the model."
+      hide("keys", THEN - 0.25, 0.25);
+      tl.fromTo($("app"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, THEN);
       const swap = (n, t) => {
-        tl.to($("old" + n), { opacity: 0, duration: 0.1, ease: "power2.in" }, t);
-        tl.fromTo($("new" + n), { x: -8, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, t + 0.1);
-        tl.fromTo($("ok" + n), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out", transformOrigin: "50% 50%" }, t + 0.3);
+        show("hl" + n, t - 0.3);
+        hide("o" + n, t, 0.12);
+        show("n" + n, t + 0.08, 0.15);
+        tl.fromTo($("c" + n), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, t + 0.3);
+        hide("hl" + n, t + 0.9, 0.3);
       };
-      const noteIn = (id, t) => tl.fromTo($(id), { y: -6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, t);
-
-      swap(1, THAT_KEY);
-      noteIn("note1", THAT_KEY + 0.4);
+      swap(1, THAT);
       swap(2, ADDRESS);
-      noteIn("note2", ADDRESS + 0.4);
+      show("hl3", KEEP - 0.1);
+      tl.fromTo($("c3"), { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, KEEP + 0.3);
+      hide("hl3", KEEP + 1.4, 0.3);
 
-      // The model stays: same id, it lights on "Keep" and is checked
-      swap(3, KEEP);
-      tl.fromTo($("new3"), { scale: 1 }, { scale: 1.04, duration: 0.25, ease: "power2.out", transformOrigin: "0% 50%", immediateRender: false }, OPENROUTER_FREE);
-      tl.to($("new3"), { scale: 1, duration: 0.3, ease: "power2.inOut" }, OPENROUTER_FREE + 0.25);
-      tl.fromTo($("under"), { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, ANYROUTER_NOW);
-      noteIn("note3", RUNS);
+      // "AnyRouter now runs it on your OpenRouter key."
+      tl.fromTo($("note"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, ANYROUTER);
+      tl.set({}, {}, 17.258);
 
-      // Rail: step 4 done inside the last word, then hold
-      tl.fromTo($("c4-done"), { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, LAST_WORD_DONE);
-      tl.to($("l4-done"), { opacity: 1, duration: 0.3, ease: "power2.out" }, LAST_WORD_DONE);
-      tl.set($("c4-on"), { opacity: 0 }, LAST_WORD_DONE + 0.35);
-      tl.set($("l4-on"), { opacity: 0 }, LAST_WORD_DONE + 0.3);
-
-      window.__timelines = window.__timelines || {};
       window.__timelines["07-step-4-app"] = tl;
     })();
   </script>
