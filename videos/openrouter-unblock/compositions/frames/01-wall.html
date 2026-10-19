@@ -152,7 +152,7 @@
         <div class="f01-col">
           <div id="f01-head" class="f01-head"><img class="k-mark" src="assets/provider-openrouter.svg" alt="" /><span class="k-title">OpenRouter free models</span></div>
           <div class="f01-row">
-            <div id="f01-count" class="f01-count"><span id="f01-stat" class="k-stat f01-stat">0</span><span class="k-title">requests a day</span></div>
+            <div id="f01-count" class="f01-count"><span id="f01-stat" class="k-stat f01-stat">50</span><span class="k-title">requests a day</span></div>
             <div id="f01-meter" class="f01-meter"><div id="f01-fill" class="f01-fill"></div></div>
             <span id="f01-badge" class="k-badge is-ink is-big f01-badge"><span class="f01-code">429</span>Too Many Requests</span>
           </div>
@@ -246,12 +246,12 @@ const K = {
       const $ = (s) => document.getElementById("f01-" + s);
       const DURATION = 6.059;
       // Word starts from audio_meta.json frame 1: "stop" 1.451, "50" 2.113, "day," 2.984, "until" 3.68, "credits." 4.934.
-      // The count lands on 50 as the voice says it; on "day" the spent meter goes muted and the 429 is inked.
+      // The meter is full as the voice says 50; on "day" the spent meter goes muted and the 429 is inked.
       const COUNT_FROM = 1.2, COUNT_TO = 2.1, DAY = 2.93, UNTIL = 3.63;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.03 });
+        K.push(tl, $("cam"), DURATION, { to: 1.04, ease: "none" });
 
         K.rise(tl, $("head"), 0.02);
         K.rise(tl, $("count"), 0.3, { y: 60, d: 1.3 });
@@ -259,9 +259,9 @@ const K = {
         tl.set($("badge"), { opacity: 0 }, 0);
         tl.set($("note"), { opacity: 0 }, 0);
 
-        const stat = $("stat"), n = { v: 0 };
+        // the day's requests fill the meter, and it is full as the voice says 50
+        const stat = $("stat");
         tl.set($("fill"), { scaleX: 0 }, 0);
-        tl.fromTo(n, { v: 0 }, { v: 50, duration: COUNT_TO - COUNT_FROM, ease: "power2.in", onUpdate: () => { stat.textContent = String(Math.round(n.v)); } }, COUNT_FROM);
         tl.fromTo($("fill"), { scaleX: 0 }, { scaleX: 1, duration: COUNT_TO - COUNT_FROM, ease: "power2.in", immediateRender: false }, COUNT_FROM);
 
         // the limit: what is spent goes quiet, the 429 is the one thing in ink
@@ -269,6 +269,8 @@ const K = {
         tl.to(stat, { color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, DAY);
         K.rise(tl, $("badge"), DAY + 0.05, { y: 40 });
 
+        // "until you buy credits": the exception is the focus, and the 429 steps back
+        tl.to($("badge"), { backgroundColor: "#F5F5F5", borderColor: "#F5F5F5", color: K.MUTED, duration: 0.6, ease: "power2.inOut" }, UNTIL);
         K.rise(tl, $("note"), UNTIL, { y: 40 });
 
         window.__timelines = window.__timelines || {};
