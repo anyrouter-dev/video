@@ -10,8 +10,8 @@ music: none
 
 ## Video direction
 
-- **Palette system** (from `frame.md`, shared with the explainer v2). White `bg` on every frame. `ink` for headlines and marks. `primary` burnt orange is the one accent per moment: your key, the value that just rolled in, the row the voice names. `free` green only means works / unchanged. `danger` only on the 429 and the spent quota.
-- **Type.** Geist for spoken words, Geist Mono for anything typed (ids, URLs, keys). Nothing a viewer must read below 36px (URL pills 34px). Kit: `tools/kit/` (the explainer's, linked) pasted into each frame by `tools/kit.mjs`.
+- **Palette system** (from `frame.md` v3 "Monolith", shared with the explainer). White `bg` on every frame, `ink` and `muted` only. The `accent` burnt orange goes only on what just changed: the key that rolls in, the value that just rolled, the moving request, "Not shared". One ink card per moment for the focused thing. No green, no red: "Limit reached" and 429 are said in words, the spent thing turns muted and the 429 is inked.
+- **Type.** Geist for spoken words, Geist Mono for anything typed (ids, URLs, keys). Nothing a viewer must read below 36px (URL pills 34px). Kit: `tools/kit/` (the explainer's, linked) pasted into each frame by the explainer's `tools/kit.mjs` (`node ../explainer/tools/kit.mjs .`).
 - **Camera.** Every frame sits in a `.k-cam` that pushes in slowly, so no frame holds still for more than 1.5s. 
 - **Cuts.** Every cut lands on a beat of the music (120 bpm, first beat 0.059s): `pad-voices.mjs --beat=0.5 --phase=0.059`. Reveals land on the spoken word (ElevenLabs alignment in `audio_meta.json`).
 - **Continuity.** The redacted OpenRouter key pill `sk-or-v1-••••••••` is the recurring object (Frames 2, 3, 5). Frame 4 is the explainer's code card with its orange roll.
@@ -23,7 +23,7 @@ music: none
 ## Frame 1 — The wall
 - src: compositions/frames/01-wall.html
 
-- scene: The OpenRouter mark and "Free models"; a daily meter counts requests up to 50, fills, turns red, and a "429 Too Many Requests" badge lands; "1,000 a day with $10 of credits" sits under it
+- scene: The OpenRouter mark and "Free models"; a daily meter counts requests up to 50 and fills; on "day" the count and the meter go muted and an ink "429 Too Many Requests" badge lands; "1,000 a day once you buy $10 of credits" sits under it
 - duration: 6.059s
 - transition_in: cut
 - type: problem
@@ -55,7 +55,7 @@ music: none
 ## Frame 3 — What it does
 - src: compositions/frames/03-reroute.html
 
-- scene: A request goes to your account's key, which shows "Limit reached"; the same request goes to one key another member shares and comes back "200 OK"
+- scene: Your app and AnyRouter on top, your account and the keys members share below, joined by wires. The request travels on the wires, under the cards, to your account, which goes muted and says "Limit reached"; AnyRouter is inked and sends it to a key another member shares, which is inked; it comes back to your app, "200 OK"
 - duration: 5.5s
 - transition_in: cut
 - type: how_it_works
@@ -87,7 +87,7 @@ music: none
 ## Frame 5 — What sharing means
 - src: compositions/frames/05-sharing.html
 
-- scene: Your OpenRouter account's daily quota; your requests and members' requests fill it side by side; the terms note lands; the "Share with pool" switch turns off, reads "Not shared", and members' share stops growing
+- scene: Three beats. Your OpenRouter account's daily quota, filled by your requests (muted) and members' requests (ink); then "Check that OpenRouter's terms allow sharing." on its own, with the Free plan note; then the "Share with pool" switch, large, turns off and reads "Not shared"
 - duration: 9s
 - transition_in: cut
 - type: key_feature
@@ -103,7 +103,7 @@ music: none
 ## Frame 6 — Close
 - src: compositions/frames/06-close.html
 
-- scene: "Past 50 a day" and "when shared keys have room", then the AnyRouter lockup and anyrouter.dev
+- scene: "Free models", "Past 50 a day" in display type and "when shared keys have room", alone; then the AnyRouter lockup and anyrouter.dev
 - duration: 7.655s
 - transition_in: cut
 - type: cta
