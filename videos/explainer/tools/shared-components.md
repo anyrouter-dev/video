@@ -122,9 +122,18 @@ F .k-cursor { position: absolute; left: 0; top: 0; width: 44px; height: 54px; fi
 @media (orientation: portrait) {
   F .k-step { left: 60px; top: 200px; }
   F .k-demo { right: 120px; top: 200px; }
-  F .k-term-body { font-size: 40px; white-space: pre-wrap; word-break: break-all; padding: 32px 36px; }
+  F .k-term-body { font-size: 40px; white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; padding: 32px 36px; }
 }
 ```
+
+A long command wraps in portrait. With `word-break: normal; overflow-wrap: anywhere` a
+line breaks at a space, so a model id stays whole on its own line. A URL has no space and
+the browser never starts a line with `/`, so put a zero-width space (`&#8203;`, or `\u200b`
+in typed text) after the host: `https://anyrouter.dev&#8203;/setup.sh`. Landscape lines
+are `pre`, so the mark changes nothing there.
+
+Measure with `box()` after the script has built all of its own text (typed characters
+split into spans, a model id written in), or a wrapped line comes out one row short.
 
 ## Markup
 
