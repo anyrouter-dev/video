@@ -324,10 +324,14 @@ const wrapped = text => {
   return [...text].map((ch, i) => `${esc(ch)}${breakAfter(i) ? '<wbr>' : ''}`).join('');
 };
 
-/** The window: a terminal for shell commands, an editor for a line of code. */
+/**
+ * The window: a terminal for shell commands, an editor for a line of code. An
+ * answer waits under the last row, hidden, until the code scrolls up to it, so
+ * the window is sized by its code alone.
+ */
 function windowHtml(win) {
-  const { shell, title, lines, roll, code } = win;
-  const cls = [shell ? 'sh' : 'ed', code.breaks.landscape && 'brk-l', code.breaks.portrait && 'brk-p'].filter(Boolean).join(' ');
+  const { shell, title, lines, roll, answer, code } = win;
+  const cls = [shell ? 'sh' : 'ed', answer && 'ans', code.breaks.landscape && 'brk-l', code.breaks.portrait && 'brk-p'].filter(Boolean).join(' ');
   const body = lines.map((l, k) => {
     const typed = shell || l.focus;
     const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
@@ -336,9 +340,12 @@ function windowHtml(win) {
       ? `<div class="ln keep" style="--in:${indentOf(l.text)}">${wrapped(l.text)}</div>`
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
   }).join('');
+  // the value the header reads is the id that answered, so it takes the accent
+  const value = answer && answer.indexOf(': ') + 2;
+  const out = answer ? `<div class="ln out" data-layout-allow-overflow>${esc(answer.slice(0, value))}<span class="m">${esc(answer.slice(value))}</span></div>` : '';
   return `<div class="win"><div class="push"><div class="term ${shell ? 'is-ink' : 'card'}">
       <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl" data-layout-allow-overflow>${esc(title)}</span>` : ''}</div>
-      <div class="code ${cls}" style="${fsVars(code, 'cs')}">${body}</div></div></div></div>`;
+      <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows">${body}${out}</div></div></div></div></div>`;
 }
 
 // ── the shot ───────────────────────────────────────────────────────────────
@@ -363,7 +370,7 @@ export function filmScene({ copy, beats, duration, timing }) {
       <div class="url mono"><span>${esc(shown.slice(0, cut))}</span><wbr><span>${esc(shown.slice(cut))}</span></div></div></div>`;
   const inner = `
     const T1 = ${doing.start}, T2 = ${lockup.start};
-    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls};
+    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
     const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean");
     const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
@@ -409,7 +416,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 
     // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
     tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
-    if (has(".ln:not(.typed)")) tl.fromTo(Q(".ln:not(.typed)"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
+    if (has(".ln.ctx, .ln.keep")) tl.fromTo(Q(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
     let t = TYPE_AT;
     $$(".typed").forEach((ln, k) => {
       // a later line, prompt and all, shows only once it starts
@@ -417,9 +424,20 @@ export function filmScene({ copy, beats, duration, timing }) {
       // the rolled-in ids are not typed: only the characters of the line and its first id
       ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
     });
-    // the caret sits after the last line, blinking until the window leaves
-    const caret = $$(".caret").at(-1);
-    for (let b = t + 0.05, on = 1; b < T2; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
+    // the caret sits after the last line, blinking until the window leaves or the answer comes
+    const caret = $$(".caret").at(-1), still = ANSWER_AT ?? T2;
+    for (let b = t + 0.05, on = 1; b < still; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
+    if (ANSWER_AT) tl.set(caret, { opacity: 0 }, still);
+
+    // The request is answered through the fallback: the code scrolls up and the header the page's curl prints arrives under it.
+    if (ANSWER_AT) {
+      // it scrolls by the top padding and whole rows, so the window's top edge never cuts a row in half
+      const out = $(".out"), cs = getComputedStyle($(".code")), row = parseFloat(cs.fontSize) * ${CODE_LH};
+      let by = parseFloat(cs.paddingTop);
+      while (by < out.offsetHeight - parseFloat(cs.paddingBottom)) by += row;
+      tl.to(Q(".rows"), { y: -by, duration: 0.6, ease: "power4.inOut" }, ANSWER_AT);
+      tl.fromTo(out, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "expo.out" }, ANSWER_AT + 0.25);
+    }
 
     // The preset rolls through real ids one key runs, then comes back to the page's own.
     if (ROLLS) {
@@ -449,6 +467,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     { at: doing.start, kind: 'cut', gain: 0.4 },
     { at: timing.typeAt, kind: 'type', dur: timing.typing, gain: 0.45 },
     ...Array.from({ length: rolls }, (_, i) => ({ at: +(timing.rollAt + i * ROLL_EVERY + 0.1).toFixed(2), kind: 'tick', gain: 0.4 })),
+    ...(timing.answerAt ? [{ at: +(timing.answerAt + 0.25).toFixed(2), kind: 'tick', gain: 0.45 }] : []),
     { at: +(lockup.start + 0.35).toFixed(2), kind: 'end', gain: 0.55 },
   ];
   return { cls: 'film', body, inner, cues, duration };
@@ -504,6 +523,11 @@ export const CSS = `
   .film .brk-l .brk{display:block}
   /* an id on its own row hangs two characters in, not past the line's indent: the longest id needs the width */
   .film .brk-l .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
+  /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
+  .film .ans{overflow:hidden}
+  .film .rows{position:relative}
+  .film .ln.out{position:absolute;left:0;right:0;top:100%;padding-top:.3em;border-top:2px solid ${C.line};opacity:0}
+  .film .is-ink .ln.out{border-top-color:${C.ink2}}
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}
   .film .is-ink .caret{background:${C.onInk}}
 

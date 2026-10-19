@@ -55,6 +55,8 @@ function parseUseCase(u, i) {
     logos: list(u.logos ?? [], `${at}.logos`),
     command: u.command?.text ? { text: str(u.command.text, `${at}.command.text`), shell: !!u.command.shell } : null,
     snippets: list(u.snippets ?? [], `${at}.snippets`).map(s => ({ code: String(s.code ?? ''), title: s.title ?? null })),
+    // what the page's diagram says answers when the model asked for cannot
+    fallbacks: list(u.diagram?.nodes ?? [], `${at}.diagram.nodes`).filter(n => n?.kind === 'fallback').map(n => String(n.note ?? '')),
   };
 }
 
@@ -102,6 +104,20 @@ export function rollOf(u, pools) {
   const focus = windowOf(u).lines.find(l => l.focus);
   const ids = (free ? pools.free : pools.credit).filter(id => idFitsRow(focus, preset, id, u.command.shell));
   return ids.length >= 2 ? { preset, ids } : null;
+}
+
+// ── the fallback: what answers when the model asked for cannot ─────────────
+// The response header that names the fallback, as the page's curl greps for it.
+const FALLBACK_HEADER = /x-anyrouter-fallback/i;
+/**
+ * The line a page's curl prints when the request is answered through its
+ * fallback: the header it greps for, reading the preset its diagram falls back
+ * to ("x-anyrouter-fallback: anyrouter/free"). Null unless the page has both.
+ */
+export function fallbackOf(u) {
+  const to = u.fallbacks.map(n => n.match(PRESET)?.[0]).find(Boolean);
+  const header = u.snippets.map(s => s.code.match(FALLBACK_HEADER)?.[0]).find(Boolean);
+  return to && header ? `${header}: ${to}` : null;
 }
 
 // ── copy: what of the facts reaches the screen ─────────────────────────────
@@ -168,7 +184,7 @@ export function copyOf(u, pools) {
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    window: { shell: win.shell, title: win.title && redact(win.title), lines: shown, roll, code },
+    window: { shell: win.shell, title: win.title && redact(win.title), lines: shown, roll, answer: fallbackOf(u), code },
     type: { title: code.title, breaks: { landscape: titleSet(title, 'landscape', code.title.landscape).breaks, portrait: titleSet(title, 'portrait', code.title.portrait).breaks } },
   };
 }
@@ -180,26 +196,31 @@ const tenths = s => Math.round(s * 10) / 10;
 const TYPE_EACH = 0.05, TYPE_MAX = 2.2, LINE_PAUSE = 0.3;
 // The headline is up and read, the code typed and read, the URL found.
 const MOVE = 0.7, TYPE_AT = 0.95, END_HOLD = 2.4;
+// The typed line is read before its answer arrives.
+const ANSWER_AFTER = 0.6;
 
 /**
  * When everything happens. Beat 1 holds the headline for its reading time,
- * beat 2 types the code, rolls the id and holds for reading it, beat 3 lands
- * the lockup. A short film reads slower, in proportion, up to FILM.min.
+ * beat 2 types the code, rolls the id or shows the fallback answering, and
+ * holds for reading it, beat 3 lands the lockup. A short film reads slower, in
+ * proportion, up to FILM.min.
  */
 export function storyOf(u, pools) {
   const copy = copyOf(u, pools);
-  const { lines, roll, shell } = copy.window;
+  const { lines, roll, answer, shell } = copy.window;
   const typed = lines.filter(l => shell || l.focus);
   const chars = typed.reduce((n, l) => n + [...l.text].length, 0);
   const each = Math.min(TYPE_EACH, TYPE_MAX / chars);
   const typing = chars * each + (typed.length - 1) * LINE_PAUSE;
   const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
+  // the answer scrolls in once the line is typed, and holds for its own read
+  const answering = answer ? ANSWER_AFTER + read(answer) : 0;
   // typing and the roll are time to read the line, so the hold after them is what is left
   const reading = { outcome: read(`${copy.kicker} ${copy.title}`) - 0.4, code: Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - typing - rolling) };
-  const fixed = MOVE + TYPE_AT + typing + rolling + MOVE + END_HOLD;
+  const fixed = MOVE + TYPE_AT + typing + rolling + answering + MOVE + END_HOLD;
   const stretch = Math.max(1, (FILM.min - fixed) / (reading.outcome + reading.code));
   const outcome = tenths(Math.max(2.4, reading.outcome * stretch));
-  const doing = tenths(MOVE + TYPE_AT + typing + rolling + reading.code * stretch);
+  const doing = tenths(MOVE + TYPE_AT + typing + rolling + answering + reading.code * stretch);
   const duration = tenths(outcome + doing + MOVE + END_HOLD);
   if (duration > FILM.max) fail(u.slug, `the film needs ${duration}s (max ${FILM.max})`);
   const beats = [
@@ -208,7 +229,7 @@ export function storyOf(u, pools) {
     { key: 'lockup', start: tenths(outcome + doing), dur: tenths(duration - outcome - doing) },
   ];
   const typeAt = tenths(outcome + TYPE_AT);
-  return { copy, beats, duration, timing: { each: +each.toFixed(4), typeAt, typing: +typing.toFixed(2), rollAt: +(typeAt + typing + 0.5).toFixed(2), linePause: LINE_PAUSE } };
+  return { copy, beats, duration, timing: { each: +each.toFixed(4), typeAt, typing: +typing.toFixed(2), rollAt: +(typeAt + typing + 0.5).toFixed(2), answerAt: answer ? +(typeAt + typing + rolling + ANSWER_AFTER).toFixed(2) : null, linePause: LINE_PAUSE } };
 }
 
 // ── identity ───────────────────────────────────────────────────────────────
@@ -219,6 +240,8 @@ const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
 const filmed = (u, pools) => ({
   slug: u.slug, url: u.url, kicker: u.kicker, title: u.title, summary: u.summary, logos: u.logos,
   window: u.command && windowOf(u), roll: rollOf(u, pools),
+  // only a film that shows a fallback carries one, so the others keep their identity
+  ...(fallbackOf(u) && { answer: fallbackOf(u) }),
 });
 const partsOf = (u, pools) => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u, pools))).digest('hex')}`];
 

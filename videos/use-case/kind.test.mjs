@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, rollPools } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, rollPools, fallbackOf } from './kind.mjs';
 import { linesOf, TYPE, windowSpan } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
@@ -41,10 +41,10 @@ const shown = h => h
 // The ids that roll into the preset's place, in order.
 const rolled = h => [...h.matchAll(/<em class="ri[^"]*"[^>]*>([^<]*)<\/em>/g)].map(m => m[1]);
 
-// The strings a use case states, redacted the way the film redacts them, and the ids the catalog gave,
-// with runs of spaces read as one, as `shown` reads them.
+// The strings a use case states, redacted the way the film redacts them, the ids the catalog gave, and
+// the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
 const factsOf = u => [u.kicker, u.title, u.url, u.command?.text, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
-  ...pools.credit, ...pools.free].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
+  ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
 // Chrome, not copy: the brand.
 const CHROME = s => s === 'AnyRouter';
 
@@ -350,4 +350,20 @@ test('the caret follows the command\'s last character, and a blank line keeps it
   assert.match(h, /<span class="c">,<\/span><span class="caret"><\/span><\/span><\/div>/, 'the caret is inside the last token');
   // an empty context line collapsed to nothing, so the window drew one row less than it was sized for
   assert.match(filmOf(doc(), 'openai-sdk').css, /\.film \.ln\{min-height:1\.45em;/);
+});
+
+test('a page about a fallback shows its request answered through it, as the page\'s curl prints it', () => {
+  // "OpenRouter free models, with fallback to another free model" typed the request and never showed the fallback
+  const u = doc().useCases.find(x => x.slug === 'openrouter-free-fallback');
+  assert.ok(u.steps.some(t => /X-AnyRouter-Fallback header\. When the header reads anyrouter\/free/.test(t)), 'the page says what the header reads');
+  assert.ok(u.snippets[0].code.includes('grep -i -e x-anyrouter-fallback'), 'and its curl greps for it');
+  const f = filmOf(doc(), 'openrouter-free-fallback'), h = html(f);
+  const out = h.match(/<div class="ln out"[^>]*>([\s\S]*?)<\/div>/);
+  assert.ok(out, 'the window holds the answer');
+  assert.deepEqual(shown(out[1]), ['x-anyrouter-fallback: anyrouter/free']);
+  assert.match(out[1], /<span class="m">anyrouter\/free<\/span>/, 'the fallback that answered takes the accent');
+  // it arrives inside beat 2, with time to read it before the window leaves
+  const at = Number(f.scenes[0].inner.match(/ANSWER_AT = ([\d.]+)/)[1]);
+  assert.ok(at > f.beats[1].start && at + 1.5 <= f.beats[2].start, `the answer at ${at}s, beat 3 at ${f.beats[2].start}s`);
+  for (const [v, g] of films()) if (v.slug !== u.slug) assert.ok(!html(g).includes('class="ln out"'), `${v.slug} shows no fallback`);
 });
