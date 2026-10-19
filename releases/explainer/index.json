@@ -64,6 +64,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/explainer-003-20261019-v1-ae8e0ec183"
       }
+    },
+    {
+      "id": "004-20261019-v2-1b05a636b0",
+      "hash": "1b05a636b0",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 46.996,
+      "renderedAt": "2026-10-19T15:35:35.962Z",
+      "commit": "05e4697",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-004-20261019-v2-1b05a636b0.mp4",
+          "cover": "renders/explainer-004-20261019-v2-1b05a636b0.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-004-20261019-v2-1b05a636b0-portrait.mp4",
+          "cover": "renders/explainer-004-20261019-v2-1b05a636b0-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T15:35:35.986Z"
     }
   ]
 }
