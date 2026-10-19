@@ -27,7 +27,7 @@
 
 **Delivery:** Instructional, clear.
 
-    Step one. On open router dot A. I., create a new key for AnyRouter, and copy it.
+    Step one. On OpenRouter, create a new key for AnyRouter, and copy it.
 
 ## Line 5 — Step two (Frame 5)
 

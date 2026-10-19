@@ -451,85 +451,85 @@
     {
       "frame": 4,
       "path": "assets/voice/04.wav",
-      "duration_s": 5.541,
+      "duration_s": 4.667,
       "words": [
         {
           "id": "w0-0",
           "text": "Step",
-          "start": 0.19,
-          "end": 0.93
+          "start": 0.038,
+          "end": 0.402
         },
         {
           "id": "w0-1",
-          "text": "one,",
-          "start": 0.93,
-          "end": 1.952
+          "text": "one.",
+          "start": 0.402,
+          "end": 0.629
         },
         {
           "id": "w2",
-          "text": "on",
-          "start": 2.231,
-          "end": 2.291
+          "text": "On",
+          "start": 0.941,
+          "end": 1.001
         },
         {
-          "id": "w3",
-          "text": "OpenRouter.ai,",
-          "start": 2.291,
-          "end": 2.563
-        },
-        {
-          "id": "w4",
-          "text": "create",
-          "start": 2.949,
-          "end": 3.067
+          "id": "w3-0",
+          "text": "OpenRouter,",
+          "start": 1.001,
+          "end": 1.821
         },
         {
           "id": "w5",
-          "text": "a",
-          "start": 3.067,
-          "end": 3.127
+          "text": "create",
+          "start": 2.05,
+          "end": 2.231
         },
         {
           "id": "w6",
-          "text": "new",
-          "start": 3.127,
-          "end": 3.275
+          "text": "a",
+          "start": 2.308,
+          "end": 2.368
         },
         {
           "id": "w7",
-          "text": "key",
-          "start": 3.275,
-          "end": 3.439
+          "text": "new",
+          "start": 2.368,
+          "end": 2.512
         },
         {
           "id": "w8",
+          "text": "key",
+          "start": 2.512,
+          "end": 2.686
+        },
+        {
+          "id": "w9",
           "text": "for",
-          "start": 3.548,
-          "end": 3.668
+          "start": 2.686,
+          "end": 2.812
         },
         {
-          "id": "w9-0",
+          "id": "w10-0",
           "text": "AnyRouter",
-          "start": 3.668,
-          "end": 3.876
-        },
-        {
-          "id": "w11",
-          "text": "and",
-          "start": 3.876,
-          "end": 4.531
+          "start": 2.812,
+          "end": 3.431
         },
         {
           "id": "w12",
-          "text": "copy",
-          "start": 4.531,
-          "end": 4.848
+          "text": "and",
+          "start": 3.431,
+          "end": 3.615
         },
         {
           "id": "w13",
+          "text": "copy",
+          "start": 3.615,
+          "end": 3.857
+        },
+        {
+          "id": "w14",
           "text": "it.",
-          "start": 4.848,
-          "end": 5.077
+          "start": 3.857,
+          "end": 4.196
         }
       ],
       "padded_s": 0.4,
@@ -1795,7 +1795,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/whoosh-short.mp3",
-      "offset_s": 2.401,
+      "offset_s": 1.401,
       "duration_s": 0.575,
       "volume": 0.2,
       "source": "bundled"
@@ -1803,7 +1803,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 2.949,
+      "offset_s": 2.05,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -1811,7 +1811,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 4.531,
+      "offset_s": 3.615,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"

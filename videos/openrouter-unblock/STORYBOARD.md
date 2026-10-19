@@ -91,11 +91,11 @@ handoff_out: four-step rail at its shared position, all four todo, opacity 1, st
 - src: compositions/frames/04-step-1-key.html
 
 - scene: openrouter.ai, then the Keys page with the viewer's existing key; Create Key, name it AnyRouter, the new redacted key appears, Copy
-- duration: 5.541s
+- duration: 4.667s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
-- voiceover: "Step one. On open router dot A. I., create a new key for AnyRouter, and copy it."
+- voiceover: "Step one. On OpenRouter, create a new key for AnyRouter, and copy it."
 - asset_candidates: assets/openrouter-home.png — real openrouter.ai home; assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the Create Key button, then the new key row

@@ -10,7 +10,7 @@
   {"frame": 3, "sound": "error", "word": "limit", "volume": 0.25},
   {"frame": 3, "sound": "ping", "word": "member", "volume": 0.2},
   {"frame": 3, "sound": "pop", "word": "their", "volume": 0.2},
-  {"frame": 4, "sound": "whoosh-short", "word": "openrouter.ai", "offset": 0.11, "volume": 0.2},
+  {"frame": 4, "sound": "whoosh-short", "word": "openrouter", "offset": 0.4, "volume": 0.2},
   {"frame": 4, "sound": "click", "word": "create", "volume": 0.3},
   {"frame": 4, "sound": "click", "word": "copy", "volume": 0.3},
   {"frame": 5, "sound": "click", "word": "sign", "offset": 0.8, "volume": 0.3},
