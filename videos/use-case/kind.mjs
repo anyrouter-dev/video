@@ -29,7 +29,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
-import { CSS, read, setIn, codeSizes, idFitsRow, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
@@ -158,7 +158,7 @@ export function copyOf(u, pools) {
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
     window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code },
-    type: { title: code.title },
+    type: { title: code.title, breaks: { landscape: titleSet(title, 'landscape', code.title.landscape).breaks, portrait: titleSet(title, 'portrait', code.title.portrait).breaks } },
   };
 }
 

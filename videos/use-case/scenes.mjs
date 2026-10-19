@@ -45,9 +45,12 @@ const em = (ch, weight) => {
   return weight === 500 ? (at(400) + at(600)) / 2 : at(weight);
 };
 
+/** How wide `text` is set at `px`, in px. */
+const widthOf = (text, { px, weight = 400, tracking = 0 }) => [...text].reduce((sum, ch) => sum + em(ch, weight) + tracking, 0) * px;
+
 /** How many lines `text` takes at `px` in a box `width` wide, breaking at spaces as the browser does. */
 export function linesOf(text, { px, width, weight = 400, tracking = 0, breakWords = true }) {
-  const wide = w => [...w].reduce((sum, ch) => sum + em(ch, weight) + tracking, 0) * px;
+  const wide = w => widthOf(w, { px, weight, tracking });
   const space = (em(' ', weight) + tracking) * px;
   let lines = 1, x = 0;
   for (const w of String(text).split(/\s+/).filter(Boolean)) {
@@ -61,9 +64,10 @@ export function linesOf(text, { px, width, weight = 400, tracking = 0, breakWord
   return lines;
 }
 
-// The boxes text is set in, in px of each frame. Kept a few percent under the
-// CSS widths below so rounding in the browser can never add a line.
-const SAFE = { landscape: 1728 * 0.96, portrait: 900 * 0.96 };
+// The boxes text is set in, in px of each frame: the safe area across, a hair
+// under, since kerning can set a line a little wider than its advances. The
+// headline breaks where titleSet says and nowhere else.
+const SAFE = { landscape: 1728 * 0.99, portrait: 900 * 0.99 };
 
 /** Type for each text role: sizes to try, the box, the line budget, per orientation. */
 export const TYPE = {
@@ -75,20 +79,46 @@ export const TYPE = {
 // The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, kicker.
 const HERO = { landscape: 160 + 40 + 80, portrait: 144 + 40 + 80 };
 
+// A word that is part of a name. Past the first word, any capitalised word; the first word only
+// with a capital past its first letter, since "Run" opens a sentence and "NVIDIA" names a company.
+const named = (w, i) => (i > 0 ? /^[A-Z0-9]/ : /^[A-Z0-9].*[A-Z]/).test(w);
+
 /**
- * The lines the headline takes at `px`, or null when it cannot be set there: a
- * word wider than the line (a word sits in its own mask, which never breaks),
- * more lines than the budget, or a beat 1 taller than the safe area once the
- * camera has leaned in.
+ * How the headline is set at `px` in frame `o`: { lines, breaks }, where breaks
+ * are the word indices that start a line. Its fewest lines, as even as they
+ * come, and never between two words of a name ("Claude Code", "OpenAI SDK")
+ * when another set of breaks fits, taking one more line if it has to. The
+ * browser's balancing knows no names, and takes extra lines to even them out.
+ * Null when it cannot be set there: a word wider than the line (a word sits in
+ * its own mask, which never breaks), more lines than the budget, or a beat 1
+ * taller than the safe area once the camera has leaned in.
  */
-export function titleLines(text, o, px) {
-  const t = TYPE.title, w = WIN[o];
-  const n = linesOf(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, breakWords: false });
-  return n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean ? n : null;
+export function titleSet(text, o, px) {
+  const t = TYPE.title, w = WIN[o], words = text.split(/\s+/).filter(Boolean);
+  const fewest = linesOf(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, breakWords: false });
+  const room = n => n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean;
+  const wide = (a, b) => widthOf(words.slice(a, b).join(' '), { px, weight: t.weight, tracking: t.tracking });
+  const splits = k => (named(words[k - 1], k - 1) && named(words[k], k) && !/[,.:;]$/.test(words[k - 1]) ? 1 : 0);
+  // a split name costs more than an extra line, and an extra line more than any unevenness
+  let best = null;
+  const walk = (from, left, starts) => {
+    if (left === 1) {
+      const cuts = [0, ...starts, words.length], widths = cuts.slice(1).map((b, i) => wide(cuts[i], b));
+      if (widths.some(x => x > t[o].width)) return;
+      const most = Math.max(...widths);
+      const cost = starts.reduce((c, k) => c + splits(k), 0) * 1e12 + (starts.length + 1 - fewest) * 1e9
+        + widths.reduce((c, x) => c + (most - x) ** 2, 0);
+      if (!best || cost < best.cost) best = { cost, starts };
+      return;
+    }
+    for (let k = from + 1; k <= words.length - left + 1; k++) walk(k, left - 1, [...starts, k]);
+  };
+  for (const n of [fewest, fewest + 1].filter(room)) walk(0, n, []);
+  return best && { lines: best.starts.length + 1, breaks: best.starts };
 }
 
 /** Whether the headline can be set at some size in both frames. */
-export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].sizes.some(px => titleLines(text, o, px)));
+export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].sizes.some(px => titleSet(text, o, px)));
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
 // The code window: as wide as the safe area, its text inside the padding. In
@@ -183,7 +213,7 @@ export function codeSizes(lines, roll, shell, title) {
   };
   // the code reads first: the largest code size, then the largest headline that leaves it its room
   const pick = o => TYPE.title[o].sizes.map(px => {
-    const tLines = titleLines(title, o, px);
+    const tLines = titleSet(title, o, px)?.lines;
     return { title: px, code: tLines && codeFor(o, tLines) };
   }).filter(c => c.code).reduce((best, c) => (!best || c.code > best.code ? c : best), null);
   const l = pick('landscape'), p = pick('portrait');
@@ -196,8 +226,9 @@ export function codeSizes(lines, roll, shell, title) {
 // ── pieces ─────────────────────────────────────────────────────────────────
 /** Each word in its own mask, so it can rise into place. Escaped here. */
 // The mask clips its word on purpose while the word rises, so the layout audit is told so.
-const masked = s => String(s).split(/\s+/).filter(Boolean)
-  .map(w => `<span class="w" data-layout-allow-overflow><span>${esc(w)}</span></span>`).join(' ');
+// A line of the headline starts at each of `breaks` (word indices per frame, see titleSet).
+const masked = (s, breaks = { landscape: [], portrait: [] }) => String(s).split(/\s+/).filter(Boolean)
+  .map((w, i) => `${breaks.landscape.includes(i) ? '<br class="bl">' : ''}${breaks.portrait.includes(i) ? '<br class="bp">' : ''}<span class="w" data-layout-allow-overflow><span>${esc(w)}</span></span>`).join(' ');
 const mark = (f, cls = 'mk') => `<span class="${cls}" style="background-image:url('assets/providers/${esc(f)}')"></span>`;
 const LOGO = fs.readFileSync(path.join(SHARED, 'assets/brand/anyrouter-logo-currentcolor.svg'), 'utf8')
   .replace(/<\?xml[^>]*>/, '').replace(/\s*\n\s*/g, ' ').trim();
@@ -275,7 +306,7 @@ export function filmScene({ copy, beats, duration, timing }) {
   const body = `<div class="cam" data-layout-allow-overflow>
     <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
       <div class="badge kick">${esc(copy.kicker)}</div></div>
-    <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title)}</h1>
+    <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1>
     ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
       <div class="url mono"><span>${esc(shown.slice(0, cut))}</span><wbr><span>${esc(shown.slice(cut))}</span></div></div></div>`;
@@ -388,7 +419,8 @@ export const CSS = `
   /* frame.md's badge a quarter larger: at 36px the kicker is a smudge on a phone */
   .film .kick{height:80px;padding:0 32px;font-size:45px}
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
-  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;text-wrap:balance;transform-origin:50% 0}
+  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;white-space:nowrap;transform-origin:50% 0}
+  .film .h .bp{display:none}
 
   .film .win{position:absolute;top:0;left:${winLeft('landscape')}px;width:var(--tw)}
   .film .term{overflow:hidden;border-radius:32px}
@@ -437,6 +469,8 @@ export const CSS = `
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
+    .film .h .bl{display:none}
+    .film .h .bp{display:inline}
     .film .win{left:${winLeft('portrait')}px}
     .film .term{border-radius:28px}
     .film .code{font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}

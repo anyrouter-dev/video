@@ -29,9 +29,11 @@ const html = film => film.scenes.map(s => s.body).join('\n');
 
 // What a viewer can read: tags dropped, inline spans joined (word masks, typed
 // characters, the URL halves), every block its own string. A rolled-in id is
-// its own element, so it reads as its own string.
+// its own element, so it reads as its own string. A headline read across its
+// line breaks is one string.
 const shown = h => h
   .replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, '\n')
+  .replace(/<br[^>]*>/g, ' ')
   .replace(/<\/?span[^>]*>|<wbr>/g, '')
   .replace(/<[^>]+>/g, '\n')
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -306,4 +308,24 @@ test('a portrait window pushed in all the way stays inside the safe area across'
   // the safe area grows past x 960, which a phone shows as a card cut by the edge
   const { left, right } = windowSpan('portrait');
   assert.ok(left >= PORTRAIT_SAFE.left && right <= PORTRAIT_SAFE.right, `the window spans x ${left.toFixed(1)} to ${right.toFixed(1)}`);
+});
+
+// The headline's lines in one frame, as the film breaks them.
+const headline = (h, o) => h.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1]
+  .split(`<br class="b${o[0]}">`).map(part => shown(part).join(' '));
+
+test('a headline breaks in even lines across the safe width, never inside a name when it need not', () => {
+  // the browser's balancing gave "Run Claude / Code through / AnyRouter" and "Keep the / OpenAI / SDK, change / two fields"
+  assert.deepEqual(headline(html(filmOf(doc(), 'claude-code')), 'portrait'), ['Run', 'Claude Code', 'through', 'AnyRouter']);
+  assert.deepEqual(headline(html(filmOf(doc(), 'openai-sdk')), 'portrait'), ['Keep the', 'OpenAI SDK,', 'change', 'two fields']);
+  assert.deepEqual(headline(html(filmOf(doc(), 'openai-sdk')), 'landscape'), ['Keep the OpenAI SDK,', 'change two fields']);
+  for (const [u, f] of films()) {
+    const h = html(f), [, l, p] = h.match(/--fs:(\d+)px;--fs-p:(\d+)px/);
+    for (const [o, px] of [['landscape', +l], ['portrait', +p]]) {
+      for (const line of headline(h, o)) {
+        const n = linesOf(line, { px, width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking, breakWords: false });
+        assert.equal(n, 1, `${u.slug}: "${line}" at ${px}px is wider than the ${o} safe area`);
+      }
+    }
+  }
 });
