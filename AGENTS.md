@@ -94,7 +94,7 @@ view. Today every kind says it:
 | `model-drop`, `release`, `changelog` | `lib/film.mjs` has no portrait layout yet: its backdrop and frame chrome are drawn at 1920×1080 |
 | `intro` | `index.html` draws its camera and two SVG layers at 1920×1080 |
 | `teaser` | its generator lays out 1920×1080 only |
-| `explainer`, `openrouter-unblock` | their portrait layouts are in progress; delete the line once `check <kind>` passes without it |
+| `openrouter-unblock` | its portrait layout is in progress; delete the line once `check openrouter-unblock` passes without it |
 
 ## Commands
 

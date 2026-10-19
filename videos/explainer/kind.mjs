@@ -16,18 +16,14 @@ export default {
   id: 'explainer',
   title: 'Explainer',
   scheduled: false,
-  // The portrait cut fails shared/authoring/stage-audit.mjs in 05-step-1-key (44.5s: text past the right edge, the zoomed
-  // screen leaves the stage bare) and 06-step-2-donate (52s, same zoom).
-  // Captions also need data-outside-safe-area. Delete this once `check explainer` passes without it.
-  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
-  headline: () => 'What is AnyRouter, and how do you get its free models?',
+  headline: () => 'What is AnyRouter? One API for every AI model',
 
   notes: data => [
     `This ${Math.round(data.seconds)}-second narrated film explains AnyRouter to people who have never used it.`,
-    'It shows what AnyRouter is, how to unlock the shared pool\'s free models by sharing an OpenRouter or NVIDIA key, and how to use AnyRouter with Claude Code through `anyr`.',
+    'It shows what AnyRouter is: more than 270 models behind one API, a two-line change to existing code, models called by name, your own Claude or OpenAI key at no markup, automatic retries when a provider goes down, free models on every plan with no daily cap, and Claude Code with any model through `anyr`.',
     `This is version ${data.version} of the film.`,
   ],
 
