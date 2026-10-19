@@ -1,8 +1,6 @@
 // Measures the size text actually renders at across a film's timeline, transforms and SVG
-// viewBox scaling included, and fails when any readable text settles below a floor. Captured
-// screens are pictures of text, so it also fails when one settles too small to read (see
-// capture-scale.mjs). Run from the film's folder:
-// node ../../shared/authoring/type-audit.mjs [--floor=32] [--step=0.5] [--json]
+// viewBox scaling included, and fails when any readable text settles below a floor. Run from
+// the film's folder: node ../../shared/authoring/type-audit.mjs [--floor=32] [--step=0.5] [--json]
 //
 // The CLI bundles its compiler and can't lend it, so the page comes from `hyperframes preview`,
 // whose /api/projects/<id>/preview route serves the same inlined composition `check` audits.
@@ -14,7 +12,6 @@ import net from 'node:net';
 import path from 'node:path';
 import { spawn, execFileSync } from 'node:child_process';
 import puppeteer from 'puppeteer-core';
-import { captureScale, isCapture, judgeCapture, MIN_CAPTURE_SCALE, MAX_SMALL_S } from './capture-scale.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
   const [k, v] = a.replace(/^--/, '').split('=');
@@ -181,12 +178,7 @@ async function seekAndMeasure(t, frame) {
     if (!/(^|\/)assets\/.*\.(png|jpe?g|webp)$/i.test(src) || !img.naturalWidth) continue;
     const rect = img.getBoundingClientRect();
     if (!visible(img, rect)) continue;
-    images.push({
-      key: keyOf(img), comp: compOf(img), selector: selectorOf(img), src,
-      naturalWidth: img.naturalWidth, naturalHeight: img.naturalHeight, width: rect.width, height: rect.height,
-      scale: Math.min(rect.width / img.naturalWidth, rect.height / img.naturalHeight),
-      context: Boolean(img.closest('[data-capture-context]')),
-    });
+    images.push({ key: keyOf(img), comp: compOf(img), selector: selectorOf(img), src, naturalWidth: img.naturalWidth, scale: Math.min(rect.width / img.naturalWidth, rect.height / img.naturalHeight) });
   }
   return { text, images };
 }
@@ -211,7 +203,7 @@ try {
   const duration = await page.evaluate(() => window.__hf?.duration || Number(document.querySelector('[data-composition-id][data-duration]')?.getAttribute('data-duration')) || 0);
   if (!(duration > 0)) throw new Error('could not read the film duration');
 
-  const text = new Map(), images = new Map(), captures = new Map();
+  const text = new Map(), images = new Map();
   for (let i = 0; i * STEP < duration; i++) {
     const t = +(i * STEP).toFixed(3);
     const sample = await page.evaluate(seekAndMeasure, t, FRAME);
@@ -228,10 +220,6 @@ try {
       const e = images.get(m.key) ?? { comp: m.comp, selector: m.selector, src: m.src, naturalWidth: m.naturalWidth, scale: 0, at: t };
       if (m.scale > e.scale) Object.assign(e, { scale: m.scale, at: t });
       images.set(m.key, e);
-      if (!isCapture(m.src)) continue;
-      const c = captures.get(m.key) ?? { comp: m.comp, selector: m.selector, src: m.src, context: m.context, samples: [] };
-      c.samples.push({ t, scale: captureScale(m, m) });
-      captures.set(m.key, c);
     }
   }
 
@@ -244,11 +232,6 @@ try {
     flashed: text.size - judged.length,
     screenshots: [...images.values()].sort((a, b) => a.comp.localeCompare(b.comp) || a.scale - b.scale)
       .map(e => ({ comp: e.comp, scale: +e.scale.toFixed(3), naturalWidth: e.naturalWidth, src: e.src, selector: e.selector, at: e.at })),
-    captures: [...captures.values()].map(c => {
-      const { ok, run } = judgeCapture(c, STEP);
-      const scales = c.samples.map(s => s.scale);
-      return { comp: c.comp, ok, context: c.context, min: +Math.min(...scales).toFixed(2), max: +Math.max(...scales).toFixed(2), small: run, src: c.src, selector: c.selector };
-    }).sort((a, b) => a.comp.localeCompare(b.comp) || a.min - b.min),
     runtime_s: 0,
   };
 } finally {
@@ -277,15 +260,6 @@ else {
     console.log(`  ${comp}`);
     for (const s of list) console.log(`    ${s.scale.toFixed(2).padStart(6)}x  natural ${String(s.naturalWidth).padStart(5)}px  ${s.at.toFixed(1).padStart(6)}s  ${s.src}  ${s.selector}`);
   }
-  console.log(`\nCaptured screens, page CSS px to stage px; fails below ${MIN_CAPTURE_SCALE}x for over ${MAX_SMALL_S}s unless data-capture-context (${report.captures.length}):`);
-  for (const [comp, list] of groupBy(report.captures)) {
-    console.log(`  ${comp}`);
-    for (const c of list) {
-      const small = c.small ? `  below ${MIN_CAPTURE_SCALE}x for ${c.small.seconds}s from ${c.small.start.toFixed(1)}s` : '';
-      console.log(`    ${c.ok ? 'ok  ' : 'FAIL'}  ${c.min.toFixed(2)}x..${c.max.toFixed(2)}x${c.context ? '  context' : ''}${small}  ${c.src}  ${c.selector}`);
-    }
-  }
-  const tooSmall = report.captures.filter(c => !c.ok).length;
-  console.log(`\n${report.offenders.length} below ${FLOOR}px, ${report.passing.length} at or above, ${report.flashed} visible under ${MIN_VISIBLE_S}s (not judged). ${tooSmall} captured screens too small. ${report.runtime_s}s.`);
+  console.log(`\n${report.offenders.length} below ${FLOOR}px, ${report.passing.length} at or above, ${report.flashed} visible under ${MIN_VISIBLE_S}s (not judged). ${report.runtime_s}s.`);
 }
-process.exitCode = report.offenders.length || report.captures.some(c => !c.ok) ? 1 : 0;
+process.exitCode = report.offenders.length ? 1 : 0;

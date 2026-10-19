@@ -13,8 +13,7 @@ Run each from the film's own folder: they read and write that folder's
 | `regroup-captions.mjs` | Regroups captions into readable phrases (captions.mjs caps groups at 2–4 words). Idempotent. |
 | `finish.mjs` | One command after any change: captions build + regroup, sound cues, assemble, transitions, voice group, music carve. |
 | `frame-words.mjs` | Writes each frame's spoken word times next to its worker packet, so reveals land on the word. |
-| `type-audit.mjs` | Seeks the film every `--step` seconds (0.5) in headless Chrome and measures the size each piece of text renders at, transforms and SVG scaling included. Fails when text visible for 0.8s or more never reaches `--floor` px (32). Also lists each screenshot's largest scale, and fails when a captured screen (`assets/captures/`) settles for over 0.8s below 2x page CSS px, where 14 px page text renders under 28 px; mark an establishing wide shot with `data-capture-context`. `--json` for machines. |
-| `capture-scale.mjs` | The pure capture-scale rule `type-audit.mjs` applies: a capture's stage scale per page CSS px, and the longest run it spends too small. |
+| `type-audit.mjs` | Seeks the film every `--step` seconds (0.5) in headless Chrome and measures the size each piece of text renders at, transforms and SVG scaling included. Fails when text visible for 0.8s or more never reaches `--floor` px (32). Also lists each screenshot's largest scale. `--json` for machines. |
 | `portrait.mjs` | Writes the 1080×1920 project from the 1920×1080 one and fails on any landscape size left in a frame. The pipeline runs it for every kind that ships portrait; run it by hand, or `npm run check -- <kind> --rendition=portrait`, while adding portrait layouts. |
 
 Order after `audio.mjs` generates the voice:
