@@ -1,15 +1,18 @@
 /**
- * scenes: one builder per kind of scene in a use-case film, and the type
- * measurements that decide how each fact is set.
+ * scenes: the one shot a use-case film is, and the type measurements that
+ * decide how each fact is set.
  *
- * A builder takes the film's copy (see kind.mjs) and returns
- * { cls, body, inner, cues, seconds }. `seconds` is the scene's own length:
- * the time to read it at READ_WPS plus a beat, plus whatever has to draw first.
+ * A film is one sub-composition in three beats (see kind.mjs). The headline is
+ * the shared element: set large for the outcome, it shrinks into the caption
+ * over the code, then settles above the lockup. Each beat has one camera move, at an even speed: an eased one comes to rest, and
+ * a frame at rest reads as dead air.
  *
  * Every size has a landscape value and a portrait value (CSS vars --fs and
  * --fs-p); the portrait one applies under `@media (orientation: portrait)`.
  * Sizes are picked by measuring the text against the frame with Geist's own
- * advance widths, so a step that is "two lines" is two lines.
+ * advance widths, so a headline that is "two lines" is two lines. Where things
+ * sit is worked out in the page once the fonts are in, from the boxes the
+ * layout gives them, so one timeline drives both renditions.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -64,276 +67,263 @@ const SAFE = { landscape: 1728 * 0.96, portrait: 900 * 0.96 };
 /** Type for each text role: sizes to try, the box, the line budget, per orientation. */
 export const TYPE = {
   title: { weight: 600, tracking: -0.035,
-    landscape: { sizes: [140, 124, 112, 96, 80], width: SAFE.landscape, lines: 2 },
-    portrait: { sizes: [112, 96, 84, 72, 64], width: SAFE.portrait, lines: 4 } },
-  problem: { weight: 500, tracking: -0.02,
-    landscape: { sizes: [72, 64, 56], width: (1728 - 128 - 112) * 0.96, lines: 3 },
-    portrait: { sizes: [64, 56, 48, 44], width: (900 - 96) * 0.96, lines: 7 } },
-  step: { weight: 500, tracking: -0.01,
-    landscape: { sizes: [64, 56, 48, 44], width: SAFE.landscape, lines: 2 },
-    portrait: { sizes: [64, 56, 48, 44], width: SAFE.portrait, lines: 5 } },
-  // a short command is set large on one line; a long one wraps at the frame's code size
-  code: { weight: 'mono', tracking: 0,
-    landscape: { sizes: [64, 56, 48], width: (1400 - 96) * 0.98, lines: 1, wrap: 48 },
-    portrait: { sizes: [60, 48], width: (900 - 96) * 0.98, lines: 1, wrap: 48 } },
-  label: { weight: 600, tracking: 0,
-    landscape: { sizes: [44], width: (500 - 56) * 0.96, lines: 2 },
-    portrait: { sizes: [44], width: (430 - 56) * 0.96, lines: 2 } },
-  note: { weight: 400, tracking: 0,
-    landscape: { sizes: [36], width: (500 - 56) * 0.96, lines: 2 },
-    portrait: { sizes: [36], width: (430 - 56) * 0.96, lines: 2 } },
+    landscape: { sizes: [140, 132, 124, 120], width: SAFE.landscape, lines: 3 },
+    portrait: { sizes: [112, 108, 104], width: SAFE.portrait, lines: 5 } },
 };
 
 /** `--fs` and `--fs-p` for a text in a role, or null when no size fits either frame. */
 export function setIn(role, text) {
   const t = TYPE[role];
-  const at = o => sizeFor(text, t[o].sizes, { width: t[o].width, weight: t.weight, tracking: t.tracking }, t[o].lines) ?? t[o].wrap ?? null;
+  const at = o => sizeFor(text, t[o].sizes, { width: t[o].width, weight: t.weight, tracking: t.tracking }, t[o].lines);
   const landscape = at('landscape'), portrait = at('portrait');
   return landscape && portrait ? { landscape, portrait } : null;
 }
-const fsVars = fs_ => `--fs:${fs_.landscape}px;--fs-p:${fs_.portrait}px`;
+const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
+
+// The code window: as wide as the safe area, its text inside the padding.
+const CODE = {
+  landscape: { sizes: [56, 48, 44, 40], width: (1728 - 96) * 0.98 },
+  portrait: { sizes: [40, 36], width: (900 - 72) * 0.98 },
+};
+const monoWidth = (text, px) => [...text].length * 0.6 * px;
+
+/**
+ * The code size per orientation: the largest at which every line that is typed
+ * fits on one line, each roll id in place, with its prompt and caret. A line of
+ * context may run past the window; it is clipped with a fade. When the longest
+ * roll id still does not fit, the id moves to a line of its own, for every id,
+ * so the line never reflows mid-roll.
+ */
+export function codeSizes(lines, roll, shell) {
+  const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
+  const typed = lines.filter(l => shell || l.focus).flatMap(variants).map(t => `${shell ? '$ ' : ''}${t}█`);
+  const pick = o => CODE[o].sizes.find(px => typed.every(t => monoWidth(t, px) <= CODE[o].width)) ?? CODE[o].sizes.at(-1);
+  const landscape = pick('landscape'), portrait = pick('portrait');
+  const longest = roll ? lines.filter(l => l.focus).flatMap(variants).map(t => `${shell ? '$ ' : ''}${t}█`) : [];
+  const breaks = o => longest.some(t => monoWidth(t, o === 'landscape' ? landscape : portrait) > CODE[o].width);
+  const clipped = o => lines.map(l => !(shell || l.focus) && monoWidth(l.text, o === 'landscape' ? landscape : portrait) > CODE[o].width);
+  return { landscape, portrait, breaks: { landscape: breaks('landscape'), portrait: breaks('portrait') }, clipped: { landscape: clipped('landscape'), portrait: clipped('portrait') } };
+}
 
 // ── pieces ─────────────────────────────────────────────────────────────────
-/** Each word in its own mask, so `rise` can lift it into place. Escaped here. */
+/** Each word in its own mask, so it can rise into place. Escaped here. */
 // The mask clips its word on purpose while the word rises, so the layout audit is told so.
 const masked = s => String(s).split(/\s+/).filter(Boolean)
   .map(w => `<span class="w" data-layout-allow-overflow><span>${esc(w)}</span></span>`).join(' ');
 const mark = (f, cls = 'mk') => `<span class="${cls}" style="background-image:url('assets/providers/${esc(f)}')"></span>`;
 const LOGO = fs.readFileSync(path.join(SHARED, 'assets/brand/anyrouter-logo-currentcolor.svg'), 'utf8')
   .replace(/<\?xml[^>]*>/, '').replace(/\s*\n\s*/g, ' ').trim();
-const icon = d => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
-const ICONS = {
-  tool: icon('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>'),
-  provider: icon('<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'),
-  gateway: icon('<circle cx="12" cy="12" r="3"/><path d="M3 12h6M15 12h6M12 3v6M12 15v6"/>'),
-  alert: icon('<circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5M12 16.5h.01"/>'),
-  plus: '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
-};
-ICONS.fallback = ICONS.provider;
+const PLUS = '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
 
-// ── the scenes ─────────────────────────────────────────────────────────────
-/** 1. What it is: the provider marks with AnyRouter's, the kicker, the title. */
-export function titleScene(copy) {
-  const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
-  return {
-    cls: 'title',
-    body: `<div class="tiles">${tiles}${tiles ? ICONS.plus : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
-      <div class="badge accent">${esc(copy.kicker)}</div>
-      <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title)}</h1>`,
-    // The first frame is the composed title card: it is what a page shows when autoplay
-    // is blocked, and a near-blank frame 0 makes the renderer fall back to one worker.
-    inner: `pop(".plus, .tile:last-child", 0.3, 0.1);`,
-    cues: [{ at: 0.3, kind: 'tick', gain: 0.5 }],
-    seconds: read(`${copy.kicker} ${copy.title}`, copy.wps),
-  };
-}
-
-/** 2. Why: the problem's first sentence, as an alert. */
-export function problemScene(copy) {
-  return {
-    cls: 'problem',
-    body: `<div class="alert card">${ICONS.alert}<p class="pt" style="${fsVars(copy.type.problem)}">${masked(copy.problem)}</p></div>`,
-    inner: `pop(".alert", 0.05); rise(".pt", 0.3);`,
-    cues: [{ at: 0.3, kind: 'tick', gain: 0.4 }],
-    seconds: read(copy.problem, copy.wps),
-  };
-}
-
-// A model id inside a command (anyrouter/free, "google/gemini-2.5-pro") is the
-// one accent in the terminal. Not a path or a URL: nothing word-like before it.
+// A model id inside a line of code (anyrouter/free, "google/gemma-4-31b:free") is
+// the one accent in the window. Not a path or a URL: nothing word-like before it.
 const MODEL_ID = /(?<![\w/.:~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:[\]-]*/gi;
-const TYPE_AT = 0.5;
-const typing = text => Math.min(0.045, 1.2 / [...text].length);
 
-/** 3. The one command, typed into a terminal. A `$` prompt only when it runs in a shell. */
-export function commandScene(copy) {
-  const { text, shell, title } = copy.command;
+/** Characters as spans a typist reveals one by one; model ids in the accent. */
+function typedChars(text) {
   const accents = new Set();
   for (const m of text.matchAll(MODEL_ID)) for (let i = m.index; i < m.index + m[0].length; i++) accents.add(i);
-  // A token breaks only when it is wider than the whole line, never at its own
-  // hyphens: a model id split at "gemma-4-" reads as two things.
-  let i = 0;
-  const chars = text.split(/( +)/).map(part => {
-    const spans = [...part].map(ch => `<span class="c${accents.has(i++) ? ' m' : ''}">${esc(ch)}</span>`).join('');
-    return part.trim() ? `<span class="tok">${spans}</span>` : spans;
-  }).join('');
-  // the caret is measured as one more character, so it never wraps onto a line of its own
-  const size = setIn('code', `${shell ? '$ ' : ''}${text}█`);
-  // One terminal width for every film: the same 1400px slab, whatever the command.
-  const width = 1400;
-  const each = typing(text), typed = TYPE_AT + each * [...text].length;
-  const blink = Array.from({ length: 6 }, (_, k) => `tl.set(Q(".caret"), { opacity: ${k % 2 ? 1 : 0} }, ${(typed + 0.4 + k * 0.45).toFixed(2)});`).join(' ');
-  return {
-    cls: 'command',
-    body: `<div class="term" style="--tw:${width}px"><div class="bar"><i></i><i></i><i></i>${title ? `<span class="ttl">${esc(title)}</span>` : ''}</div>
-      <div class="code${shell ? ' sh' : ''}" style="${fsVars(size)}">${chars}<span class="caret"></span></div></div>`,
-    inner: `pop(".term", 0.05); type(".code .c", ${TYPE_AT}, ${each.toFixed(4)}); ${blink}`,
-    cues: [{ at: TYPE_AT, kind: 'type', dur: +(typed - TYPE_AT).toFixed(2), gain: 0.45 }],
-    seconds: typed + read(text, copy.wps),
-  };
+  return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>`).join('');
 }
 
-/** 4. One step, with where it sits among the others. */
-export function stepScene(copy, i) {
-  const n = copy.steps.length, step = copy.steps[i];
-  return {
-    cls: 'step',
-    body: `<div class="badge line stepno">Step ${i + 1} of ${n}</div>
-      <p class="st" style="${fsVars(step.type)}">${masked(step.text)}</p>`,
-    inner: `up(".stepno", 0.02); rise(".st", 0.25);`,
-    cues: [{ at: 0.12, kind: 'tick', gain: 0.45 }],
-    seconds: read(step.text, copy.wps),
-  };
-}
-
-const LEVEL_EVERY = 0.85, DASHED_AFTER = 0.75, DRAW = 0.45;
 /**
- * When each node lands: a level after the one before it. A node reached only by
- * dashed edges (the fallback path) lands once its level's solid edges are drawn,
- * so the dashed edge is drawn after them.
+ * One typed line, split at spaces into tokens that never break inside: a model
+ * id cut at "gemma-4-" reads as two things. In the focus line of a roll, the
+ * preset is a slot holding every id, stacked, the first typed with the line.
  */
-export function landings(levels, edges) {
-  const at = new Map();
-  let t = 0.1;
-  levels.forEach((lvl, d) => {
-    if (d > 0) t += LEVEL_EVERY;
-    const fallback = n => d > 0 && edges.filter(e => e.to === n.id).every(e => e.dashed);
-    for (const n of lvl.filter(n => !fallback(n))) at.set(n.id, t);
-    if (lvl.some(fallback)) {
-      t += DASHED_AFTER;
-      for (const n of lvl.filter(fallback)) at.set(n.id, t);
-    }
-  });
-  return at;
+function typedLine(line, roll) {
+  const chars = typedChars(line.text);
+  const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
+  let i = 0;
+  return line.text.split(/( +)/).map(part => {
+    const at = i;
+    i += part.length;
+    if (!part.trim()) return chars(part, at);
+    if (slotAt < at || slotAt >= at + part.length) return `<span class="tok">${chars(part, at)}</span>`;
+    const k = slotAt - at, ids = [...roll.ids, roll.preset];
+    // the rolled-in ids are their own elements: each is read as a whole id, never typed
+    const slot = `<span class="roll" data-layout-allow-overlap><span class="ri" data-layout-allow-overlap>${chars(roll.preset, slotAt)}</span>${ids.map(id => `<em class="ri m" data-layout-allow-overlap>${esc(id)}</em>`).join('')}</span>`;
+    return `<span class="brk"></span><span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}</span>`;
+  }).join('');
 }
 
-/** 5. How a request flows: the diagram's nodes as cards, level by level, edges drawn between. */
-export function flowScene(copy, id) {
-  const { levels, edges } = copy.diagram;
-  const at = landings(levels, edges);
-  const t = nodeId => at.get(nodeId).toFixed(2);
-  const node = n => `<div class="node card ${n.kind}" data-id="${esc(n.id)}" data-t="${t(n.id)}">
-        ${n.mark ? mark(n.mark) : ICONS[n.kind]}<b>${esc(n.label)}</b>${n.note ? `<i>${esc(n.note)}</i>` : ''}</div>`;
-  const svg = edges.map((e, k) => `<g data-from="${esc(e.from)}" data-to="${esc(e.to)}" data-t="${t(e.to)}">
-        <mask id="${id}-m${k}" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%"><path class="km"/></mask>
-        <path class="e${e.dashed ? ' dash' : ''}" mask="url(#${id}-m${k})"/><path class="ah"/></g>`).join('');
-  const lastAt = Math.max(...at.values());
-  const lastWords = levels.flat().filter(n => at.get(n.id) === lastAt).map(n => `${n.label} ${n.note ?? ''}`).join(' ');
-  return {
-    cls: 'flow',
-    body: `<div class="fl"><svg class="edges" aria-hidden="true">${svg}</svg>
-      ${levels.map((lvl, d) => `<div class="lvl" data-d="${d}">${lvl.map(node).join('')}</div>`).join('\n      ')}</div>`,
-    inner: `
-    // Edges are drawn between the cards where the layout put them, so one
-    // timeline serves the landscape row and the portrait column.
-    const portrait = matchMedia("(orientation: portrait)").matches, GAP = 14, AH = 16, DRAW = ${DRAW};
-    const box = id => { const el = $('.node[data-id="' + id + '"]');
-      return { x: el.offsetLeft, y: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight }; };
-    $$(".edges g").forEach(g => {
-      const a = box(g.dataset.from), b = box(g.dataset.to);
-      let d, head;
-      if (portrait) {
-        const x1 = a.x + a.w / 2, y1 = a.y + a.h + GAP, x2 = b.x + b.w / 2, y2 = b.y - GAP - AH, m = (y1 + y2) / 2;
-        d = "M" + x1 + " " + y1 + " C" + x1 + " " + m + " " + x2 + " " + m + " " + x2 + " " + y2;
-        head = "M" + (x2 - 11) + " " + y2 + " L" + x2 + " " + (y2 + AH) + " L" + (x2 + 11) + " " + y2 + " Z";
-      } else {
-        const x1 = a.x + a.w + GAP, y1 = a.y + a.h / 2, x2 = b.x - GAP - AH, y2 = b.y + b.h / 2, m = (x1 + x2) / 2;
-        d = "M" + x1 + " " + y1 + " C" + m + " " + y1 + " " + m + " " + y2 + " " + x2 + " " + y2;
-        head = "M" + x2 + " " + (y2 - 11) + " L" + (x2 + AH) + " " + y2 + " L" + x2 + " " + (y2 + 11) + " Z";
-      }
-      g.querySelector(".e").setAttribute("d", d);
-      const km = g.querySelector(".km"), len = (km.setAttribute("d", d), km.getTotalLength()), t = +g.dataset.t;
-      g.querySelector(".ah").setAttribute("d", head);
-      // drawn into its target, which lands as the line arrives
-      tl.fromTo(km, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: DRAW, ease: "power2.inOut" }, t - DRAW - 0.05);
-      tl.fromTo(g.querySelector(".ah"), { opacity: 0 }, { opacity: 1, duration: 0.1 }, t - 0.1);
-    });
-    $$(".node").forEach(el => tl.fromTo(el, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)" }, +el.dataset.t));`,
-    cues: [...new Set(at.values())].map(t => ({ at: +t.toFixed(2), kind: 'tick', gain: 0.4 })),
-    seconds: lastAt + DRAW + read(lastWords, copy.wps),
-  };
+/** The window: a terminal for shell commands, an editor for a line of code. */
+function windowHtml(win) {
+  const { shell, title, lines, roll, code } = win;
+  const cls = [shell ? 'sh' : 'ed', code.breaks.landscape && 'brk-l', code.breaks.portrait && 'brk-p'].filter(Boolean).join(' ');
+  const body = lines.map((l, k) => {
+    const typed = shell || l.focus;
+    const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
+    return typed
+      ? `<div class="ln typed${l.focus ? ' focus' : ''}">${typedLine(l, roll)}<span class="caret"></span></div>`
+      : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
+  }).join('');
+  return `<div class="win"><div class="push"><div class="term">
+      <div class="bar"><i></i><i></i><i></i>${title ? `<span class="ttl">${esc(title)}</span>` : ''}</div>
+      <div class="code ${cls}" style="${fsVars(code, 'cs')}">${body}</div></div></div></div>`;
 }
 
-/** 6. Where to go: the AnyRouter mark and the use case's page, held `copy.endHold` seconds. */
-export function endScene(copy) {
+// ── the shot ───────────────────────────────────────────────────────────────
+// How long each id holds in a roll. Each wash is shorter, so one never fades over the next.
+export const ROLL_EVERY = 0.75;
+
+/** The film's one sub-composition: { cls, body, inner, cues }. */
+export function filmScene({ copy, beats, duration, timing }) {
+  const [, doing, lockup] = beats;
   const shown = copy.url.replace(/^https:\/\//, '');
   const cut = shown.lastIndexOf('/') + 1;
-  return {
-    cls: 'end',
-    body: `<div class="lock">${LOGO}<b>AnyRouter</b></div>
-      <div class="url mono"><span>${esc(shown.slice(0, cut))}</span><wbr><span>${esc(shown.slice(cut))}</span></div>`,
-    inner: `pop(".lock", 0.08); up(".url", 0.35);`,
-    cues: [{ at: 0.08, kind: 'end', gain: 0.55 }],
-    seconds: Math.max(copy.endHold, read(`AnyRouter ${shown}`, copy.wps)),
-  };
+  const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
+  const { roll } = copy.window;
+  const rolls = roll ? roll.ids.length + 1 : 0;
+  // The camera scales the whole frame a few percent on purpose, so the layout audit is told so.
+  const body = `<div class="cam" data-layout-allow-overflow>
+    <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
+      <div class="badge accent kick">${esc(copy.kicker)}</div></div>
+    <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title)}</h1>
+    ${windowHtml(copy.window)}
+    <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
+      <div class="url mono"><span>${esc(shown.slice(0, cut))}</span><wbr><span>${esc(shown.slice(cut))}</span></div></div></div>`;
+  const inner = `
+    const T1 = ${doing.start}, T2 = ${lockup.start};
+    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls};
+    const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
+    const SY = v("--sy"), SH = v("--sh"), G = v("--gap");
+    const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
+
+    // Where the headline sits in each beat. It scales from its top edge, so a
+    // beat's column is centred in the safe area from the boxes the layout gave.
+    const fs = parseFloat(getComputedStyle(h).fontSize);
+    const heroH = hero.offsetHeight, hH = h.offsetHeight;
+    const top1 = SY + (SH - heroH - G - hH) / 2;
+    hero.style.top = top1 + "px";
+    h.style.top = top1 + heroH + G + "px";
+    const s2 = v("--cap2") / fs, s3 = v("--cap3") / fs;
+    const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
+    win.style.top = cap2 + hH * s2 + G + "px";
+    const cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
+    end.style.top = cap3 + hH * s3 + G + "px";
+    const at1 = top1 + heroH + G;
+
+    // 1 · the outcome. The marks close in, the words rise, the camera leans in.
+    const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
+    tl.fromTo(tiles, { x: i => (i - mid) * 36 }, { x: 0, duration: 1.1, ease: "expo.out" }, 0);
+    tl.fromTo(Q(".kick"), { scale: 0.92 }, { scale: 1, duration: 0.8, ease: "back.out(2)" }, 0.05);
+    // every word is up within half a second, however long the headline: a word still under its
+    // mask sits a line low, and on a long headline that line is past the safe area
+    const words = $$(".h .w > span");
+    tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
+    tl.fromTo(Q(".cam"), { scale: 1 }, { scale: v("--lean"), duration: T1, ease: "none" }, 0);
+
+    // 1 → 2 · the headline shrinks into the caption as the window rises under it.
+    tl.to(hero, { y: -48, opacity: 0, duration: 0.35, ease: "power2.in" }, T1);
+    tl.to(h, { y: cap2 - at1, scale: s2, duration: 0.75, ease: "power3.inOut" }, T1);
+    // it rises once the headline has cleared its place, so the two never cross
+    // A dark slab half faded reads as grey, so it fades fast and slides slow.
+    tl.fromTo(win, { y: 260 }, { y: 0, duration: 0.8, ease: "expo.out" }, T1 + 0.4);
+    tl.fromTo(win, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, T1 + 0.4);
+
+    // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
+    tl.fromTo(Q(".push"), { scale: 1 }, { scale: v("--push"), duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
+    if (has(".ctx")) tl.fromTo(Q(".ctx"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
+    let t = TYPE_AT;
+    $$(".typed").forEach((ln, k) => {
+      if (k > 0) t += LINE_PAUSE;
+      // the rolled-in ids are not typed: only the characters of the line and its first id
+      ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
+    });
+    if (has(".focus")) tl.fromTo(Q(".focus"), { backgroundColor: "rgba(240,145,90,0)" }, { backgroundColor: "rgba(240,145,90,0.14)", duration: 0.4, ease: "power2.out" }, TYPE_AT);
+    // the caret sits after the last line, blinking until the window leaves
+    const caret = $$(".caret").at(-1);
+    for (let b = t + 0.05, on = 1; b < T2; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
+
+    // The preset rolls through real ids one key runs, then comes back to the page's own.
+    if (ROLLS) {
+      const slot = $(".roll"), items = Array.from(slot.children);
+      slot.style.width = items[0].offsetWidth + "px";
+      const HL = { backgroundColor: "rgba(240,145,90,0.34)", boxShadow: "0 0 0 6px rgba(240,145,90,0.34)" };
+      const HL_OFF = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 6px rgba(240,145,90,0)" };
+      for (let i = 0; i < ROLLS; i++) {
+        const at = ROLL_AT + i * ROLL_EVERY, out = items[i], into = items[i + 1];
+        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.28, ease: "power2.in", immediateRender: false }, at);
+        tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "power3.out", immediateRender: false }, at + 0.1);
+        tl.to(slot, { width: into.offsetWidth, duration: 0.36, ease: "power2.inOut" }, at + 0.05);
+        tl.set(slot, HL, at + 0.1);
+        tl.fromTo(slot, HL, { ...HL_OFF, duration: 0.3, ease: "power2.out", immediateRender: false }, at + 0.4);
+      }
+    }
+
+    // 2 → 3 · the window drops away; the headline settles above the lockup.
+    tl.to(win, { y: 140, duration: 0.4, ease: "power2.in" }, T2);
+    tl.to(win, { opacity: 0, duration: 0.15, ease: "none" }, T2 + 0.25);
+    tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power3.inOut" }, T2 + 0.05);
+    tl.fromTo(Q(".lock svg"), { scale: 0.5, rotation: -40, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, T2 + 0.35);
+    tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, T2 + 0.45);
+    tl.fromTo(Q(".url"), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, T2 + 0.6);
+
+    // 3 · the lockup holds while the camera keeps leaning in.
+    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "power1.out", immediateRender: false }, T2);`;
+  const cues = [
+    { at: 0.15, kind: 'tick', gain: 0.45 },
+    { at: doing.start, kind: 'cut', gain: 0.4 },
+    { at: timing.typeAt, kind: 'type', dur: timing.typing, gain: 0.45 },
+    ...Array.from({ length: rolls }, (_, i) => ({ at: +(timing.rollAt + i * ROLL_EVERY + 0.1).toFixed(2), kind: 'tick', gain: 0.4 })),
+    { at: +(lockup.start + 0.35).toFixed(2), kind: 'end', gain: 0.55 },
+  ];
+  return { cls: 'film', body, inner, cues, duration };
 }
 
-// ── the look of the scenes, in frame.md's tokens ───────────────────────────
+// ── the look, in frame.md's tokens ─────────────────────────────────────────
 export const CSS = `
-  .badge.line{background:${C.bg};border:2px solid ${C.line};color:${C.ink}}
-  .title .safe{align-items:center;text-align:center}
-  .title .tiles{display:flex;align-items:center;gap:24px}
-  .title .tile{width:152px;height:152px;display:grid;place-items:center;border-radius:30px}
-  .title .tile .mk{width:92px;height:92px}
-  .title .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
-  .title .h{font-size:var(--fs);font-weight:600;line-height:1.05;letter-spacing:-.035em;text-wrap:balance}
+  .film{--sy:96px;--sh:888px;--sl:96px;--sr:96px;--gap:56px;--cap2:76px;--cap3:84px;--tw:1728px;--push:1.05;--lean:1.03}
+  /* the camera leans in about the safe area's centre, so nothing drifts out of it */
+  .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
+  .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
+  .film .hero{display:flex;flex-direction:column;align-items:center;gap:40px}
+  .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px}
+  .film .tile{width:152px;height:152px;display:grid;place-items:center;border-radius:30px}
+  .film .tile .mk{width:92px;height:92px}
+  .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
+  .film .h{font-size:var(--fs);font-weight:600;line-height:1.05;letter-spacing:-.035em;text-wrap:balance;transform-origin:50% 0}
 
-  .problem .alert{display:flex;align-items:flex-start;gap:40px;width:100%;padding:56px 64px}
-  .problem .ic{width:72px;height:72px;flex:none;margin-top:.1em;fill:none;stroke:${C.primary};stroke-width:2;stroke-linecap:round}
-  .problem .pt{font-size:var(--fs);font-weight:500;line-height:1.2;letter-spacing:-.02em}
+  .film .win{position:absolute;top:0;left:var(--sl);width:var(--tw)}
+  .film .term{background:${C.termBg};border-radius:24px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.05)}
+  .film .bar{height:76px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
+  .film .bar i{width:18px;height:18px;border-radius:50%;background:#3F3F46;flex:none}
+  .film .ttl{margin-left:18px;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap}
+  .film .code{padding:36px 48px 44px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:1.45;color:${C.termInk}}
+  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px}
+  .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.termDim}}
+  .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
+  .film .sh .ln::before{content:"$ ";color:${C.termDim}}
+  .film .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;vertical-align:top}
+  .film .c{opacity:0}
+  .film .m{color:${C.model}}
+  .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top;border-radius:8px}
+  .film .ri{position:absolute;left:0;top:0;white-space:pre;font-style:normal}
+  .film em.ri{opacity:0}
+  .film .brk{display:none}
+  .film .brk-l .brk{display:block}
+  .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.termInk};opacity:0}
 
-  .command .safe{align-items:center}
-  .command .term{width:var(--tw);max-width:100%;background:${C.termBg};border-radius:24px;overflow:hidden;
-    box-shadow:0 2px 4px rgba(0,0,0,.05)}
-  .command .bar{height:76px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
-  .command .bar i{width:18px;height:18px;border-radius:50%;background:#3F3F46}
-  .command .ttl{margin-left:18px;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap}
-  .command .code{padding:44px 48px 52px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--fs);line-height:1.45;
-    color:${C.termInk};white-space:pre-wrap;overflow-wrap:anywhere}
-  .command .code.sh::before{content:"$ ";color:${C.termDim}}
-  .command .code .m{color:${C.model}}
-  .command .code .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap}
-  .command .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.termInk};opacity:0}
-
-  .step .st{font-size:var(--fs);font-weight:500;line-height:1.22;letter-spacing:-.01em}
-
-  .flow .safe{align-items:stretch}
-  .flow .fl{position:relative;display:flex;align-items:center;justify-content:space-between}
-  .flow .lvl{display:flex;flex-direction:column;gap:44px}
-  .flow .node{width:500px;height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:12px;padding:24px 28px;text-align:center}
-  .flow .node .mk,.flow .node .ic{width:88px;height:88px;margin-bottom:8px}
-  .flow .node .ic{fill:none;stroke:${C.muted};stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-  .flow .node b{font-size:44px;font-weight:600;line-height:1.15}
-  .flow .node i{font-style:normal;font-size:36px;line-height:1.2;color:${C.muted}}
-  .flow .node.gateway{border-color:${C.primary};box-shadow:0 0 0 6px rgba(187,77,0,.16)}
-  .flow .node.fallback{border-style:dashed;border-color:${C.lineStrong}}
-  .flow .edges{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
-  .flow .edges .e{fill:none;stroke:${C.muted};stroke-width:4;stroke-linecap:round}
-  .flow .edges .e.dash{stroke-dasharray:14 12}
-  .flow .edges .km{fill:none;stroke:#FFFFFF;stroke-width:16}
-  .flow .edges .ah{fill:${C.muted};opacity:0}
-
-  .end .safe{align-items:center;text-align:center;gap:64px}
-  .end .lock{display:flex;align-items:center;gap:30px}
-  .end .lock svg{width:140px;height:140px;display:block}
-  .end .lock b{font-size:140px;font-weight:600;letter-spacing:-.04em;line-height:1}
-  .end .url{font-size:48px;color:${C.primary};padding:22px 40px;border:2px solid ${C.line};border-radius:16px;background:${C.surface}}
-  .end .url span{white-space:nowrap}
+  .film .end{display:flex;flex-direction:column;align-items:center;gap:48px}
+  .film .lock{display:flex;align-items:center;gap:28px}
+  .film .lock svg{width:120px;height:120px;display:block}
+  .film .lock b{font-size:120px;font-weight:600;letter-spacing:-.04em;line-height:1}
+  .film .url{font-size:48px;color:${C.primary};padding:22px 40px;border:2px solid ${C.line};border-radius:16px;background:${C.surface}}
+  .film .url span{white-space:nowrap}
 
   @media (orientation: portrait){
-    .title .tile{width:136px;height:136px;border-radius:28px}
-    .title .tile .mk{width:84px;height:84px}
-    .title .h{font-size:var(--fs-p)}
-    .problem .alert{flex-direction:column;gap:32px;padding:48px}
-    .problem .pt{font-size:var(--fs-p)}
-    .command .term{width:100%}
-    .command .code{font-size:var(--fs-p)}
-    .step .st{font-size:var(--fs-p)}
-    .flow .fl{flex-direction:column;align-items:stretch;gap:100px}
-    .flow .lvl{flex-direction:row;gap:40px}
-    .flow .node{width:auto;flex:1;height:270px;max-width:560px;margin-left:auto;margin-right:auto}
-    .end .lock svg{width:112px;height:112px}
-    .end .lock b{font-size:112px}
-    .end .url{font-size:44px;padding:22px 32px}
+    .film{--sy:200px;--sh:1020px;--sl:60px;--sr:120px;--gap:48px;--cap2:64px;--cap3:72px;--tw:900px;--push:1.04;--lean:1.04}
+    .film .cam{transform-origin:510px 710px}
+    .film .tile{width:136px;height:136px;border-radius:28px}
+    .film .tile .mk{width:84px;height:84px}
+    .film .h{font-size:var(--fs-p)}
+    .film .code{font-size:var(--cs-p);padding:32px 36px 40px}
+    .film .ln.clip-l{-webkit-mask-image:none;mask-image:none}
+    .film .ln.clip-p{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent)}
+    .film .brk-l .brk{display:none}
+    .film .brk-p .brk{display:block}
+    .film .lock svg{width:104px;height:104px}
+    .film .lock b{font-size:104px}
+    .film .url{font-size:44px;padding:22px 32px}
   }`;

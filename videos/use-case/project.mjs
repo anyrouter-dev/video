@@ -14,8 +14,8 @@
  *   fonts/  assets/providers/  audio/mix.wav
  *
  * A scene is { id, start, dur, cls, body, inner, cues }: `body` is HTML, `inner`
- * is GSAP code run with tl, D, Q, $, $$ and the helpers below in scope, `cues`
- * are sound effects at seconds into the scene.
+ * is GSAP code run with tl, D, Q, $, $$ and has in scope once the fonts are in,
+ * `cues` are sound effects at seconds into the scene.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -42,7 +42,6 @@ const BASE_CSS = `
     font-family:'Geist',ui-sans-serif,system-ui,sans-serif;font-weight:400;
     -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
   .uc *{margin:0;padding:0;box-sizing:border-box}
-  .safe{position:absolute;inset:96px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:44px}
   .mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
   .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
   .w>span{display:inline-block}
@@ -50,11 +49,7 @@ const BASE_CSS = `
   .badge{display:inline-flex;align-items:center;height:64px;padding:0 24px;border-radius:12px;
     font-size:36px;font-weight:500;line-height:1;white-space:nowrap}
   .badge.accent{background:${C.primaryTint};color:${C.primary}}
-  .mk{display:block;flex:none;background-position:center;background-size:contain;background-repeat:no-repeat}
-  @media (orientation: portrait){
-    /* the platforms draw their buttons over the right edge and the bottom quarter */
-    .safe{inset:200px 120px 700px 60px;gap:40px}
-  }`;
+  .mk{display:block;flex:none;background-position:center;background-size:contain;background-repeat:no-repeat}`;
 
 // Run inside every scene. Selectors are scoped to the scene: sub-compositions
 // share one document, so a bare class would reach into another scene.
@@ -62,35 +57,28 @@ const HELPERS = `
     const Q = s => s.split(",").map(x => '[data-composition-id="' + ID + '"] ' + x.trim()).join(",");
     const $ = s => document.querySelector(Q(s));
     const $$ = s => Array.from(document.querySelectorAll(Q(s)));
-    const has = s => $$(s).length > 0;
-    const rise = (s, t = 0, d = 0.6) => { const n = $$(s + " .w > span").length;
-      return n && tl.fromTo(Q(s + " .w > span"), { yPercent: 110 }, { yPercent: 0, duration: d, stagger: Math.min(0.05, 0.6 / n), ease: "expo.out" }, t); };
-    const up = (s, t = 0, st = 0.08) => has(s) &&
-      tl.fromTo(Q(s), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, stagger: st, ease: "expo.out" }, t);
-    const pop = (s, t = 0, st = 0.08) => has(s) &&
-      tl.fromTo(Q(s), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.45, stagger: st, ease: "back.out(1.7)" }, t);
-    const type = (s, t = 0, each = 0.03) => has(s) &&
-      tl.fromTo(Q(s), { opacity: 0 }, { opacity: 1, duration: 0.001, stagger: each, ease: "none" }, t);`;
+    const has = s => $$(s).length > 0;`;
 
 const sceneFile = (s, css) => `<!doctype html>
 <html lang="en"><head><meta charset="UTF-8" /><title>${s.id}</title></head>
 <body><template>
 <style>${BASE_CSS}${css}</style>
 <div id="root" data-composition-id="${s.id}" data-width="1920" data-height="1080" data-duration="${s.dur}">
-  <div class="uc ${s.cls ?? ''}"><div class="safe">${s.body}</div></div>
+  <div class="uc ${s.cls ?? ''}">${s.body}</div>
 </div>
 <script src="${GSAP}"></script>
 <script>
-  (() => {
+  // Built once the fonts are in, because it places things by the boxes the
+  // layout gives the text; registered only once it is whole. fonts.ready alone
+  // resolves before a face is first asked for, so each face is loaded by name.
+  Promise.all(["600 100px Geist", "400 100px Geist", "400 48px 'Geist Mono'"].map(f => document.fonts.load(f))).then(() => {
     const ID = "${s.id}", D = ${s.dur};
     // Animate children, never the clip host: the framework owns clip visibility.
     const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
     ${HELPERS}
-    tl.fromTo(Q(".safe"), { scale: 1 }, { scale: 1.015, duration: D, ease: "none" }, 0);
     ${s.inner}
-    ${s.last ? '' : 'tl.to(Q(".safe"), { opacity: 0, y: -18, duration: 0.2, ease: "power2.in" }, D - 0.2);'}
     window.__timelines[ID] = tl;
-  })();
+  });
 </script>
 </template></body></html>
 `;
@@ -150,8 +138,7 @@ export function writeProject(dir, id, spec) {
 
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(path.join(dir, 'compositions'), { recursive: true });
-  scenes.forEach((s, i) => fs.writeFileSync(path.join(dir, 'compositions', `${s.id}.html`),
-    sceneFile({ ...s, last: i === scenes.length - 1 }, film.css)));
+  for (const s of scenes) fs.writeFileSync(path.join(dir, 'compositions', `${s.id}.html`), sceneFile(s, film.css));
   fs.writeFileSync(path.join(dir, 'index.html'), rootFile(film, scenes));
 
   fs.mkdirSync(path.join(dir, 'fonts'), { recursive: true });

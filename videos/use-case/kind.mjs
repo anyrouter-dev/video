@@ -1,34 +1,39 @@
 /**
  * use-case: one short silent film per use case on anyrouter.dev/use-cases,
- * embedded on that page above the steps. A viewer gets, in seconds: what the
- * use case does, the one command, the steps, and how a request flows.
+ * embedded on that page above the steps. The page carries the steps; the film
+ * shows the outcome and how little it takes, in three beats on one shot:
  *
- * Facts come only from https://anyrouter.dev/use-cases.json. Every word on
- * screen is a fact taken verbatim (a field, or its first sentence), with API
- * keys redacted. The film is built in the Clear look of frame.md v2 by
- * project.mjs, not by lib/film.mjs, and carries its portrait layout so
- * shared/authoring/portrait.mjs can cut the 1080x1920 rendition.
+ *   outcome  the page's title as a headline, with the tool's mark and AnyRouter's
+ *   doing it the page's own command or code, typed into a terminal or an editor
+ *   lockup   the headline again, the AnyRouter lockup and the page's URL
+ *
+ * The headline is the one element on screen the whole time: it shrinks into the
+ * caption over the code, then settles above the lockup.
+ *
+ * Facts come from https://anyrouter.dev/use-cases.json, and the model ids a film
+ * rolls through from https://anyrouter.dev/api/v1/models. Every word on screen is
+ * a fact taken verbatim, with API keys redacted. Where the page's command names an
+ * `anyrouter/*` preset, the id rolls through a few real ids the same key runs and
+ * comes back to the preset, so the film never implies the presets are all there is.
  *
  * One collect holds every use case; `split` makes each its own release, whose
  * identity is the hash of the facts its film shows. Editing one use case
  * re-renders that film only.
  *
- *   --slug=SLUG   collect just this use case
- *   --from=FILE   build from a saved use-cases.json instead of the live site
+ *   --slug=SLUG          collect just this use case
+ *   --from=FILE          build from a saved use-cases.json instead of the live site
+ *   --models-from=FILE   read the catalog from a saved /api/v1/models response
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
-import { CSS, READ_WPS, setIn, titleScene, problemScene, commandScene, stepScene, flowScene, endScene } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, filmScene, ROLL_EVERY } from './scenes.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
-export const FILM = { min: 15, max: 25 };
-const MAX_STEPS = 3;
-// The fastest a film may ask a viewer to read when its facts do not fit at READ_WPS.
-// The page under the film carries every word, so the film may be brisk, never unreadable.
-export const MAX_WPS = 5;
+export const MODELS_API = 'https://anyrouter.dev/api/v1/models';
+export const FILM = { min: 12, max: 18 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -39,28 +44,15 @@ function parseUseCase(u, i) {
   const at = `useCases[${i}]${u?.slug ? ` (${u.slug})` : ''}`;
   const slug = str(u?.slug, `${at}.slug`);
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) fail(`${at}.slug`, `"${slug}" is not a page slug`);
-  const diagram = u.diagram && {
-    nodes: list(u.diagram.nodes, `${at}.diagram.nodes`).map((n, k) => ({
-      id: str(n.id, `${at}.diagram.nodes[${k}].id`),
-      kind: ['tool', 'gateway', 'provider', 'fallback'].includes(n.kind) ? n.kind : fail(`${at}.diagram.nodes[${k}].kind`, `unknown kind "${n.kind}"`),
-      label: str(n.label, `${at}.diagram.nodes[${k}].label`),
-      note: n.note ?? null,
-      provider: n.provider ?? null,
-    })),
-    edges: list(u.diagram.edges, `${at}.diagram.edges`).map(e => ({ from: e.from, to: e.to, dashed: !!e.dashed })),
-  };
   return {
     slug,
     url: str(u.url, `${at}.url`),
     kicker: str(u.kicker, `${at}.kicker`),
     title: str(u.title, `${at}.title`),
     summary: str(u.summary, `${at}.summary`),
-    problem: typeof u.problem === 'string' ? u.problem : '',
     logos: list(u.logos ?? [], `${at}.logos`),
     command: u.command?.text ? { text: str(u.command.text, `${at}.command.text`), shell: !!u.command.shell } : null,
     snippets: list(u.snippets ?? [], `${at}.snippets`).map(s => ({ code: String(s.code ?? ''), title: s.title ?? null })),
-    steps: list(u.steps, `${at}.steps`).map((s, k) => str(s, `${at}.steps[${k}]`)),
-    diagram,
   };
 }
 
@@ -72,166 +64,156 @@ export function parseDoc(doc) {
   return useCases;
 }
 
+// ── the roll: real ids one AnyRouter key runs ──────────────────────────────
+// The model makers whose newest id a film rolls through. Only the owners are
+// chosen here; each id is read from the catalog. Anthropic, OpenAI and Google
+// are never in a roll: their ids run on the user's own key, and a roll must not
+// suggest they run on AnyRouter credits. A page about anyrouter/free rolls
+// through free ids only, so "free" on screen stays true.
+export const ROLL_OWNERS = { credit: ['deepseek', 'moonshotai', 'x-ai', 'z-ai'], free: ['z-ai', 'liquid', 'reflection'] };
+
+/** The roll pools from a /api/v1/models response: per pool, each owner's newest chat model. */
+export function rollPools(doc) {
+  const models = list(doc?.data, 'models.data');
+  const chat = models.filter(m => typeof m?.id === 'string'
+    && ['text', 'multimodal'].includes(m.category) && (m.capabilities ?? []).includes('chat')
+    // an alias or a dated snapshot is a second name for a model already in the pool
+    && !/-latest$/.test(m.id) && !/-\d{4}$/.test(m.id));
+  const free = m => Number(m.pricing?.input_per_1m) === 0 && Number(m.pricing?.output_per_1m) === 0;
+  const newest = (owner, pick) => chat.filter(m => m.id.startsWith(`${owner}/`) && pick(m))
+    .sort((a, b) => b.created - a.created)[0]?.id;
+  const pool = (owners, pick) => owners.map(o => newest(o, pick)).filter(Boolean);
+  return { credit: pool(ROLL_OWNERS.credit, () => true), free: pool(ROLL_OWNERS.free, free) };
+}
+
+// An anyrouter/* preset inside a line of the page's code.
+const PRESET = /anyrouter\/[a-z0-9-]+/;
+/** The ids a use case's film rolls through, or null when its command names no preset. */
+export function rollOf(u, pools) {
+  const preset = u.command?.text.match(PRESET)?.[0];
+  if (!preset || !pools) return null;
+  const ids = preset === 'anyrouter/free' ? pools.free : pools.credit;
+  return ids.length >= 2 ? { preset, ids } : null;
+}
+
 // ── copy: what of the facts reaches the screen ─────────────────────────────
 // API keys are the one thing on screen that is not verbatim: past its prefix a
 // key is bullets. The site's copy only ever shows prefixes; this guards the day it doesn't.
 const KEY = /\b(sk-ar-v1-|sk-ar-|sk-or-v1-|sk-ant-|sk-proj-|sk-|nvapi-|xai-|gsk_|ghp_|AIza)[A-Za-z0-9_-]{8,}/g;
 export const redact = s => String(s).replace(KEY, (_, prefix) => `${prefix}••••••••`);
 
-/** The first sentence, cut at a stop followed by a space. Never rewritten. */
-export const firstSentence = s => String(s).match(/^.*?[.!?](?=\s)/s)?.[0] ?? String(s);
+// A shell snippet up to this many lines is typed whole; a longer one up to the command.
+const SHELL_LINES = 3;
+// Lines of code shown around the command line in an editor.
+const CONTEXT = 2;
 
-/** The command's snippet title: the snippet whose code holds the command line, if it is titled. */
-const commandTitle = u => u.snippets.find(s => s.title && s.code.split('\n').some(l => l.trim() === u.command.text.trim()))?.title ?? null;
-
-/** Diagram nodes by longest-path depth from the nodes nothing points at, as on the site. */
-export function levelsOf(diagram) {
-  const ids = new Set(diagram.nodes.map(n => n.id));
-  for (const e of diagram.edges) if (!ids.has(e.from) || !ids.has(e.to)) fail('diagram', `edge ${e.from} -> ${e.to} names a missing node`);
-  const depth = new Map();
-  const visit = (id, d, seen) => {
-    if (seen.has(id)) fail('diagram', `cycle at "${id}"`);
-    if ((depth.get(id) ?? -1) >= d) return;
-    depth.set(id, d);
-    for (const e of diagram.edges) if (e.from === id) visit(e.to, d + 1, new Set(seen).add(id));
+/**
+ * The code a film types: the page's command, inside the snippet that holds it.
+ * A shell command is typed with the snippet's other commands (install, then run).
+ * A line of code is typed into its snippet, between the lines around it.
+ */
+export function windowOf(u) {
+  if (!u.command) fail(u.slug, 'a use-case film needs the page\'s command');
+  const cmd = u.command.text.trim();
+  const snip = u.snippets.find(s => s.code.split('\n').some(l => l.includes(cmd)));
+  if (!snip) return { shell: u.command.shell, title: null, lines: [{ text: cmd, focus: true }] };
+  const all = snip.code.split('\n');
+  const at = all.findIndex(l => l.includes(cmd));
+  let from, to;
+  if (u.command.shell) [from, to] = all.length <= SHELL_LINES ? [0, all.length] : [Math.max(0, at - SHELL_LINES + 1), at + 1];
+  else [from, to] = [Math.max(0, at - CONTEXT), Math.min(all.length, at + CONTEXT + 1)];
+  const shown = all.slice(from, to);
+  const indent = Math.min(...shown.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
+  return {
+    shell: u.command.shell,
+    title: snip.title,
+    lines: shown.map((l, k) => ({ text: l.slice(indent), focus: from + k === at })),
   };
-  const targets = new Set(diagram.edges.map(e => e.to));
-  for (const n of diagram.nodes) if (!targets.has(n.id)) visit(n.id, 0, new Set());
-  const levels = [];
-  for (const n of diagram.nodes) {
-    if (!depth.has(n.id)) fail('diagram', `node "${n.id}" is unreachable`);
-    (levels[depth.get(n.id)] ??= []).push(n);
-  }
-  return levels;
 }
 
-/** Every string the film can show, before pacing picks how much of each. Throws when one cannot be set legibly. */
-export function copyOf(u) {
-  const set = (role, text, where) => setIn(role, text) ?? fail(`${u.slug}.${where}`, `"${text}" does not fit the ${role} type in either frame`);
-  const steps = u.steps.slice(0, MAX_STEPS).map(redact).map((full, i) => {
-    const short = firstSentence(full);
-    // a step that cannot be set in two lines is cut to its first sentence
-    const text = setIn('step', full) ? full : short;
-    return { full, short, text, type: set('step', text, `steps[${i}]`) };
-  });
-  const levels = u.diagram && levelsOf(u.diagram);
-  if (levels && (levels.length > 3 || levels.some(l => l.length > 2))) {
-    fail(`${u.slug}.diagram`, 'the film draws at most three levels of at most two nodes');
-  }
+/** Every string the film can show, and how each is set. Throws when one cannot be set legibly. */
+export function copyOf(u, pools) {
   const title = redact(u.title);
-  // the problem is optional, so one too long to set legibly is left out rather than failing the film
-  const problem = u.problem && redact(firstSentence(u.problem));
-  const problemType = problem ? setIn('problem', problem) : null;
+  const type = setIn('title', title) ?? fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
+  const win = windowOf(u);
+  const lines = win.lines.map(l => ({ ...l, text: redact(l.text) }));
+  const roll = rollOf(u, pools);
   return {
     slug: u.slug,
     url: u.url,
     kicker: redact(u.kicker),
     title,
-    problem: problemType ? problem : null,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    command: u.command && { text: redact(u.command.text), shell: u.command.shell, title: commandTitle(u) && redact(commandTitle(u)) },
-    steps,
-    diagram: levels && {
-      levels: levels.map((lvl, d) => lvl.map(n => {
-        set('label', n.label, `diagram.${n.id}.label`);
-        if (n.note) set('note', n.note, `diagram.${n.id}.note`);
-        return { ...n, label: redact(n.label), note: n.note && redact(n.note), mark: markFor(n.provider), depth: d };
-      })),
-      edges: u.diagram.edges,
-    },
-    type: { title: set('title', title, 'title'), problem: problemType },
-    wps: READ_WPS,
-    endHold: 3,
+    window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code: codeSizes(lines, roll, win.shell) },
+    type: { title: type },
   };
 }
 
-// ── the film: a table of scenes, keyed by which facts are present ──────────
-const SCENES = [
-  { key: 'title', has: () => true, build: c => [titleScene(c)] },
-  { key: 'problem', has: c => !!c.problem, build: c => [problemScene(c)] },
-  { key: 'command', has: c => !!c.command, build: c => [commandScene(c)] },
-  { key: 'step', has: c => c.steps.length > 0, build: c => c.steps.map((_, i) => stepScene(c, i)) },
-  { key: 'flow', has: c => !!c.diagram, build: (c, id) => [flowScene(c, id)] },
-  { key: 'end', has: () => true, build: c => [endScene(c)] },
-];
+// ── timing ─────────────────────────────────────────────────────────────────
+// Times are kept in tenths of a second: three frames, so every beat lands on a frame.
+const tenths = s => Math.round(s * 10) / 10;
+// Typing reads as typing at this pace, never slower than a comfortable typist.
+const TYPE_EACH = 0.05, TYPE_MAX = 2.2, LINE_PAUSE = 0.3;
+// The headline is up and read, the code typed and read, the URL found.
+const MOVE = 0.7, TYPE_AT = 0.95, END_HOLD = 2.4;
 
-/** The scenes these copy facts make, in order, each with its own reading length. */
-function scenesOf(copy) {
-  const out = [];
-  for (const s of SCENES.filter(s => s.has(copy))) {
-    // the flow needs its id up front: its SVG masks are named after it
-    const first = out.length + 1;
-    const id = n => `s${String(first + n).padStart(2, '0')}-${s.key}`;
-    s.build(copy, id(0)).forEach((scene, n) => out.push({ ...scene, id: id(n), key: s.key }));
-  }
-  return out;
-}
-
-// Scene lengths are kept in tenths of a second: three frames, so every cut
-// lands on a frame and scenes sit exactly back to back.
-const tenths = seconds => Math.round(seconds * 10);
-const total = scenes => scenes.reduce((sum, s) => sum + tenths(s.seconds), 0) / 10;
-
-// What gives way when a film runs past FILM.max, in order. Each returns a
-// lighter copy, or null when it has nothing left to give. A viewer must get
-// what the use case does, the command, the steps and the flow; the problem is
-// why, so it goes first.
-const SQUEEZE = [
-  copy => (copy.problem ? { ...copy, problem: null } : null),
-  // then the longest step still shown in full is cut to its first sentence
-  copy => {
-    const long = copy.steps.filter(s => s.text !== s.short).sort((a, b) => b.text.length - a.text.length)[0];
-    if (!long) return null;
-    return { ...copy, steps: copy.steps.map(s => (s === long ? { ...s, text: s.short, type: setIn('step', s.short) } : s)) };
-  },
-  // then everything reads a little faster, up to MAX_WPS
-  copy => (copy.wps < MAX_WPS ? { ...copy, wps: Math.min(MAX_WPS, copy.wps + 0.25) } : null),
-  // last, the end card holds two seconds instead of three
-  copy => (copy.endHold > 2 ? { ...copy, endHold: 2 } : null),
-];
-
-/** Copy and scenes that fit FILM: squeezed when long, held longer when short. */
-export function storyOf(u) {
-  let copy = copyOf(u);
-  let scenes = scenesOf(copy);
-  for (const squeeze of SQUEEZE) {
-    for (let next; total(scenes) > FILM.max && (next = squeeze(copy));) { copy = next; scenes = scenesOf(copy); }
-  }
-  const seconds = total(scenes);
-  if (seconds > FILM.max) fail(u.slug, `the film needs ${seconds.toFixed(1)}s even squeezed (max ${FILM.max})`);
-  // a short film holds every scene a little longer, in proportion
-  const stretch = Math.max(1, FILM.min / seconds);
-  let at = 0;
-  const timed = scenes.map(s => {
-    const dur = tenths(s.seconds * stretch);
-    const scene = { ...s, start: at / 10, dur: dur / 10 };
-    at += dur;
-    return scene;
-  });
-  return { copy: { ...copy, steps: copy.steps.map(s => s.text) }, scenes: timed, duration: at / 10 };
+/**
+ * When everything happens. Beat 1 holds the headline for its reading time,
+ * beat 2 types the code, rolls the id and holds for reading it, beat 3 lands
+ * the lockup. A short film reads slower, in proportion, up to FILM.min.
+ */
+export function storyOf(u, pools) {
+  const copy = copyOf(u, pools);
+  const { lines, roll, shell } = copy.window;
+  const typed = lines.filter(l => shell || l.focus);
+  const chars = typed.reduce((n, l) => n + [...l.text].length, 0);
+  const each = Math.min(TYPE_EACH, TYPE_MAX / chars);
+  const typing = chars * each + (typed.length - 1) * LINE_PAUSE;
+  const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
+  // the id rolling is time to read the line it sits in, so the hold after it is shorter
+  const reading = { outcome: read(`${copy.kicker} ${copy.title}`) - 0.4, code: Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - rolling) };
+  const fixed = MOVE + TYPE_AT + typing + rolling + MOVE + END_HOLD;
+  const stretch = Math.max(1, (FILM.min - fixed) / (reading.outcome + reading.code));
+  const outcome = tenths(Math.max(2.4, reading.outcome * stretch));
+  const doing = tenths(MOVE + TYPE_AT + typing + rolling + reading.code * stretch);
+  const duration = tenths(outcome + doing + MOVE + END_HOLD);
+  if (duration > FILM.max) fail(u.slug, `the film needs ${duration}s (max ${FILM.max})`);
+  const beats = [
+    { key: 'outcome', start: 0, dur: outcome },
+    { key: 'doing', start: outcome, dur: doing },
+    { key: 'lockup', start: tenths(outcome + doing), dur: tenths(duration - outcome - doing) },
+  ];
+  const typeAt = tenths(outcome + TYPE_AT);
+  return { copy, beats, duration, timing: { each: +each.toFixed(4), typeAt, typing: +typing.toFixed(2), rollAt: +(typeAt + typing + 0.5).toFixed(2), linePause: LINE_PAUSE } };
 }
 
 // ── identity ───────────────────────────────────────────────────────────────
 const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
   : v && typeof v === 'object' ? `{${Object.keys(v).sort().map(k => `${JSON.stringify(k)}:${stable(v[k])}`).join(',')}}`
   : JSON.stringify(v ?? null));
-/** The facts a film and its release notes are cut from. Fields the film never shows (hook, notes, limits) are left out. */
-const filmed = u => ({
-  slug: u.slug, url: u.url, kicker: u.kicker, title: u.title, summary: u.summary, logos: u.logos, problem: u.problem,
-  command: u.command && { ...u.command, title: commandTitle(u) }, steps: u.steps, diagram: u.diagram,
+/** The facts a film and its release notes are cut from. Fields the film never shows (steps, hook, notes) are left out. */
+const filmed = (u, pools) => ({
+  slug: u.slug, url: u.url, kicker: u.kicker, title: u.title, summary: u.summary, logos: u.logos,
+  window: u.command && windowOf(u), roll: rollOf(u, pools),
 });
-const partsOf = u => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u))).digest('hex')}`];
+const partsOf = (u, pools) => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u, pools))).digest('hex')}`];
 
 /** Collected facts in the shape every release has, for one use case or many. */
-const releaseOf = useCases => ({
+const releaseOf = (useCases, pools) => ({
   notable: useCases.length > 0,
   label: useCases.length === 1 ? useCases[0].slug : 'use-cases',
-  parts: useCases.flatMap(partsOf),
+  parts: useCases.flatMap(u => partsOf(u, pools)),
   useCases,
+  pools,
 });
 const one = data => data.useCases[0];
 
 const readJson = f => JSON.parse(fs.readFileSync(f, 'utf8'));
+async function fetchJson(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url} answered HTTP ${r.status}`);
+  return r.json();
+}
 
 export default {
   id: 'use-case',
@@ -239,33 +221,30 @@ export default {
   scheduled: false,
 
   async collect({ flags }) {
-    let doc;
-    if (flags.from) doc = readJson(path.resolve(flags.from));
-    else {
-      const r = await fetch(API);
-      if (!r.ok) throw new Error(`${API} answered HTTP ${r.status}`);
-      doc = await r.json();
-    }
+    const doc = flags.from ? readJson(path.resolve(flags.from)) : await fetchJson(API);
     const all = parseDoc(doc);
     const useCases = flags.slug ? all.filter(u => u.slug === flags.slug) : all;
     if (flags.slug && !useCases.length) throw new Error(`no use case "${flags.slug}". The use cases are: ${all.map(u => u.slug).join(', ')}`);
+    const pools = rollPools(flags['models-from'] ? readJson(path.resolve(flags['models-from'])) : await fetchJson(MODELS_API));
     for (const u of useCases) console.log(`  ${u.slug.padEnd(32)} ${u.title}`);
-    return releaseOf(useCases);
+    console.log(`  roll: ${pools.credit.join(', ')} · free: ${pools.free.join(', ')}`);
+    return releaseOf(useCases, pools);
   },
 
-  split: data => data.useCases.map(u => releaseOf([u])),
+  split: data => data.useCases.map(u => releaseOf([u], data.pools)),
 
   film(data) {
     const u = one(data);
-    const { scenes, duration } = storyOf(u);
+    const story = storyOf(u, data.pools);
     return {
       title: u.title,
-      duration,
+      duration: story.duration,
       palette: 'intro',
       volume: 0.5,
       css: CSS,
-      scenes,
-      summary: `${u.slug}: ${scenes.map(s => `${s.key} ${s.dur}s`).join(' · ')}`,
+      beats: story.beats,
+      scenes: [{ ...filmScene(story), id: 's01-film', key: 'film', start: 0, dur: story.duration }],
+      summary: `${u.slug}: ${story.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,
     };
   },
 
@@ -280,9 +259,6 @@ export default {
   // Several use cases ship on one day, so each film is named by its page.
   asset: entry => entry.label,
 
-  /** The title card once its words have risen: the marks, the kicker and the title. */
-  coverAt: film => {
-    const t = film.scenes[0];
-    return t.start + Math.max(1.4, t.dur - 0.5);
-  },
+  /** The headline once its words have risen and before it moves. */
+  coverAt: film => film.beats[1].start - 0.3,
 };
