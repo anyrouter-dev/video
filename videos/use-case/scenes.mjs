@@ -94,11 +94,13 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // The code window: as wide as the safe area, its text inside the padding. In
 // beat 2 the caption and the window share the safe area's height (`sh`); the
 // caption is the headline scaled down, never below `capMin`. The camera leans in
-// over beat 1 (`lean`) and the window pushes in over beat 2 (`push`), both about
-// the middle, so a beat's column is sized to stay in the safe area at full scale.
+// over beat 1 (`lean`) and the window pushes in over beat 2, both about the
+// middle, so a beat's column is sized to stay in the safe area at full scale.
+// The push is at least `push`, which the code's room allows for, and as far as
+// `pushMax` where the column leaves room: a slow push on a short window reads as a still.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02 },
-  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02 },
+  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.05 },
+  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.05 },
 };
 // the window's 2px border, both sides
 const BAR = 72, EDGE = 4, CODE_LH = 1.45, TITLE_LH = 0.98;
@@ -271,7 +273,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     const T1 = ${doing.start}, T2 = ${lockup.start};
     const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
-    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean"), PUSH = v("--push");
+    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean");
     const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
 
     // Where the headline sits in each beat. It scales from its top edge, so a
@@ -283,7 +285,9 @@ export function filmScene({ copy, beats, duration, timing }) {
     h.style.top = top1 + heroH + G + "px";
     // the caption is as large as fits above the window, up to the headline itself, so the two fill the safe area as one block
     // leaned and pushed in, it still sits in the safe area (see codeSizes)
-    const s2 = Math.min(v("--cap2") / fs, (SH / LEAN - G - win.offsetHeight * PUSH) / hH), s3 = v("--cap3") / fs;
+    const winH = win.offsetHeight;
+    const s2 = Math.min(v("--cap2") / fs, (SH / LEAN - G - winH * v("--push")) / hH), s3 = v("--cap3") / fs;
+    const PUSH = Math.min(v("--push-max"), (SH / LEAN - G - hH * s2) / winH);
     const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
     win.style.top = cap2 + hH * s2 + G + "px";
     const cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
@@ -313,7 +317,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     tl.fromTo(win, { y: below }, { y: 0, duration: 0.9, ease: "expo.out" }, T1 + 0.35);
 
     // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
-    tl.fromTo(Q(".push"), { scale: 1 }, { scale: v("--push"), duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
+    tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
     if (has(".ctx")) tl.fromTo(Q(".ctx"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
     let t = TYPE_AT;
     $$(".typed").forEach((ln, k) => {
@@ -364,7 +368,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 // the line in focus: on the ink it is white, its other lines muted; in the
 // editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--lean:${WIN.landscape.lean}}
+  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--push-max:${WIN.landscape.pushMax};--lean:${WIN.landscape.lean}}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
@@ -417,7 +421,7 @@ export const CSS = `
   .film .url span{white-space:nowrap}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--lean:${WIN.portrait.lean}}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--push-max:${WIN.portrait.pushMax};--lean:${WIN.portrait.lean}}
     .film .cam{transform-origin:510px 710px}
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
