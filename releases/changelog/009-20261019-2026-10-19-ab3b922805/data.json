@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-19",
+  "parts": [
+    "2026-10-19-minimax-m3-1-flash"
+  ],
+  "date": "2026-10-19",
+  "entries": [
+    {
+      "slug": "2026-10-19-minimax-m3-1-flash",
+      "date": "2026-10-19",
+      "title": "MiniMax M3.1 Flash",
+      "summary": "MiniMax's multimodal agent and coding model joins the catalog, free to call.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-19-minimax-m3-1-flash",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}

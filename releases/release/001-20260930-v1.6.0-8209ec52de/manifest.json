@@ -3,14 +3,20 @@
   "hash": "8209ec52de",
   "kind": "release",
   "label": "v1.6.0",
-  "title": "Ask for a model family, get its newest live model",
-  "seconds": 40,
-  "renderedAt": "2026-09-30T18:27:31.446Z",
-  "commit": "a44a251",
+  "title": "AnyRouter 1.6: name a model family, always get a live model",
+  "seconds": 30,
+  "renderedAt": "2026-10-19T14:47:08.892Z",
+  "commit": "2371fb3",
   "renditions": {
     "landscape": {
       "artifact": "renders/release-001-20260930-v1.6.0-8209ec52de.mp4",
-      "cover": "renders/release-001-20260930-v1.6.0-8209ec52de.png"
+      "cover": "renders/release-001-20260930-v1.6.0-8209ec52de.png",
+      "youtube": "https://youtu.be/udvbvFM-GHQ"
+    },
+    "portrait": {
+      "artifact": "renders/release-001-20260930-v1.6.0-8209ec52de-portrait.mp4",
+      "cover": "renders/release-001-20260930-v1.6.0-8209ec52de-portrait.png",
+      "youtube": "https://youtu.be/dlZR6dgaHsA"
     }
   },
   "source": "renders/release-001-20260930-v1.6.0-8209ec52de-source.tar.gz",

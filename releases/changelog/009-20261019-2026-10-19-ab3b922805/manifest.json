@@ -1,0 +1,27 @@
+{
+  "id": "009-20261019-2026-10-19-ab3b922805",
+  "hash": "ab3b922805",
+  "kind": "changelog",
+  "label": "2026-10-19",
+  "title": "MiniMax M3.1 Flash",
+  "seconds": 13,
+  "renderedAt": "2026-10-19T14:43:21.591Z",
+  "commit": "2371fb3",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-009-20261019-2026-10-19-ab3b922805.mp4",
+      "cover": "renders/changelog-009-20261019-2026-10-19-ab3b922805.png",
+      "youtube": "https://youtu.be/13bAkrcRuU8"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-009-20261019-2026-10-19-ab3b922805-portrait.mp4",
+      "cover": "renders/changelog-009-20261019-2026-10-19-ab3b922805-portrait.png",
+      "youtube": "https://youtu.be/infzCjbLLRE"
+    }
+  },
+  "source": "renders/changelog-009-20261019-2026-10-19-ab3b922805-source.tar.gz",
+  "createdAt": "2026-10-19T14:43:21.594Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-009-20261019-2026-10-19-ab3b922805"
+  }
+}

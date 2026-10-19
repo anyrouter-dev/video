@@ -230,6 +230,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-011-20261009-models-pricing-5f363bbc1b"
       }
+    },
+    {
+      "id": "012-20261019-models-pricing-b65244dd7d",
+      "hash": "b65244dd7d",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "60 new models: minimax-m3.1-flash, deepseek-v4.1-flash-1017, muse-spark-open +57 more",
+      "seconds": 20,
+      "renderedAt": "2026-10-19T14:44:30.047Z",
+      "commit": "2371fb3",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-012-20261019-models-pricing-b65244dd7d.mp4",
+          "cover": "renders/model-drop-012-20261019-models-pricing-b65244dd7d.png",
+          "youtube": "https://youtu.be/9ttH-vm3Wjw"
+        }
+      },
+      "source": "renders/model-drop-012-20261019-models-pricing-b65244dd7d-source.tar.gz",
+      "createdAt": "2026-10-19T14:44:30.051Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-012-20261019-models-pricing-b65244dd7d"
+      }
     }
   ]
 }
