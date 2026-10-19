@@ -120,16 +120,17 @@
     [data-composition-id="05-your-keys"] .f05-lock svg { width: 34px; height: 34px; }
     [data-composition-id="05-your-keys"] .f05-foot { position: absolute; left: 0; right: 0; bottom: 0; height: 132px; border-top: 2px solid var(--line); display: flex; align-items: center; justify-content: flex-end; gap: 40px; padding: 0 44px; }
     [data-composition-id="05-your-keys"] .f05-cancel { font-size: 40px; font-weight: 500; }
-    [data-composition-id="05-your-keys"] .f05-add { position: relative; height: 84px; padding: 0 36px; background: var(--primary); font-size: 40px; }
+    /* Add key is disabled, a tint, until a provider is chosen, as on the site */
+    [data-composition-id="05-your-keys"] .f05-add { position: relative; height: 84px; padding: 0 36px; background: var(--primary-tint); color: var(--primary); font-size: 40px; }
     [data-composition-id="05-your-keys"] .f05-add svg { width: 36px; height: 36px; }
     [data-composition-id="05-your-keys"] .f05-add .k-ring { inset: -14px; border-radius: 28px; }
     [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 760px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-your-keys"] .f05-dialog { left: 60px; right: 120px; top: 260px; }
+      [data-composition-id="05-your-keys"] .f05-dialog { left: 60px; right: 120px; top: 360px; }
       [data-composition-id="05-your-keys"] .f05-pane { padding: 36px 36px 0; }
       [data-composition-id="05-your-keys"] .f05-foot { padding: 0 36px; }
-      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 1000px; }
+      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 1100px; }
     }
   </style>
 
@@ -223,7 +224,8 @@ const K = {
       const DURATION = 5;
       // Word starts from audio_meta.json frame 5: "Claude" 0.662, "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
       const CLAUDE = 0.62, OPENAI = 1.0, ADD = 1.9, MARKUP = 3.75;
-      const ROW_OFF = "rgba(245,245,245,0)", ROW_ON = "rgba(245,245,245,1)";
+      // a chosen row takes the primary tint, as the site marks its focused row
+      const ROW_OFF = "rgba(255,244,236,0)", ROW_ON = "rgba(255,244,236,1)";
 
       document.fonts.ready.then(() => {
         const dialog = $("dialog"), foot = dialog.lastElementChild;
@@ -245,9 +247,11 @@ const K = {
         tl.fromTo($("openai"), { backgroundColor: ROW_OFF }, { backgroundColor: ROW_ON, duration: 0.25, immediateRender: false }, OPENAI + 0.6);
 
         // "Add your own key": OpenAI's key form, and the ring on Add key
-        tl.to($("pick"), { opacity: 0, duration: 0.2 }, ADD);
+        // one pane at a time: the list leaves before the key form comes in
+        tl.to($("pick"), { opacity: 0, duration: 0.15, ease: "power2.in" }, ADD);
         tl.to(dialog, { height: tall($("key")), duration: 0.5, ease: "power3.inOut" }, ADD);
-        tl.fromTo($("key"), { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, ADD + 0.1);
+        tl.fromTo($("key"), { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, ADD + 0.18);
+        tl.to($("add"), { backgroundColor: "#BB4D00", color: "#FFFFFF", duration: 0.25 }, ADD + 0.5);
         tl.fromTo($("ring"), { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, ADD + 0.55);
 
         // "at no markup"
