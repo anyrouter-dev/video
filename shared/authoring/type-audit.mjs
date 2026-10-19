@@ -20,12 +20,16 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 const FLOOR = Number(args.floor ?? 32);
 const STEP = Number(args.step ?? 0.5);
 const MIN_VISIBLE_S = 0.8;
-const FRAME = { w: 1920, h: 1080 };
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const CLI = path.join(HERE, '../../node_modules/hyperframes/bin/hyperframes.mjs');
 const filmDir = fs.realpathSync('.');
 if (!fs.existsSync('index.html')) throw new Error('run from a film folder (no index.html here)');
+// The stage size comes from the film, so a portrait rendition (1080x1920) is measured in
+// its portrait layout: `@media (orientation: portrait)` follows the viewport.
+const root = /<[^>]*data-composition-id[^>]*>/.exec(fs.readFileSync('index.html', 'utf8'))?.[0] ?? '';
+const FRAME = { w: Number(/data-width="(\d+)"/.exec(root)?.[1]), h: Number(/data-height="(\d+)"/.exec(root)?.[1]) };
+if (!FRAME.w || !FRAME.h) throw new Error('index.html: the root composition has no data-width/data-height');
 
 const freePort = () => new Promise((resolve, reject) => {
   const srv = net.createServer().listen(0, '127.0.0.1', () => {
