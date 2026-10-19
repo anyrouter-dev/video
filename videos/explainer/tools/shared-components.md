@@ -11,7 +11,7 @@ with its layout under `@media (orientation: portrait)`.
 - **Safe areas.** Landscape: x 96…1824, y 88…880 (captions own 900…1080).
   Portrait: x 60…960, y 200…1220 (captions own 1240…1480; platform buttons cover the
   right edge and the bottom quarter).
-- **Type floor.** 36px for any word a viewer reads; badges 34px and URL pills 34px (the type audit gates at 32px and reads an exact 32px as just under it). Use the
+- **Type floor.** 36px for any word a viewer reads, badges included; URL pills 34px (the type audit gates at 32px by default and reads an exact 32px as just under it; `--floor=36` flags only the URL pills). Use the
   `k-` text classes; never set a smaller `font-size`.
 - **No stage literals.** Never write 1920 or 1080 outside the root's `width: 1920px;
   height: 1080px`. `shared/authoring/portrait.mjs` refuses them. Positions that must be
@@ -64,7 +64,7 @@ F .k-mono { font-family: var(--mono); }
 F .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 48px; }
 
 /* badge: shadcn Badge */
-F .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 34px; font-weight: 500; line-height: 1; white-space: nowrap; }
+F .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
 F .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line); }
 F .k-badge.is-free { background: var(--free-tint); color: var(--free); }
 F .k-badge.is-accent { background: var(--primary-tint); color: var(--primary); }
