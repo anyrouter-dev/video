@@ -1,0 +1,16 @@
+[
+  {"frame": 1, "sound": "pop", "word": "AI", "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "every", "volume": 0.2},
+  {"frame": 2, "sound": "whoosh-short", "word": "Sign", "offset": -0.2, "volume": 0.22},
+  {"frame": 2, "sound": "click", "word": "button.", "offset": 0.3, "volume": 0.28},
+  {"frame": 3, "sound": "pop", "word": "approve", "volume": 0.2},
+  {"frame": 3, "sound": "click-soft", "word": "billed", "volume": 0.2},
+  {"frame": 3, "sound": "click", "word": "tier.", "offset": 0.45, "volume": 0.28},
+  {"frame": 4, "sound": "pop", "word": "temporary", "volume": 0.2},
+  {"frame": 4, "sound": "click-soft", "word": "limited", "volume": 0.2},
+  {"frame": 5, "sound": "whoosh-short", "at": 0.04, "volume": 0.2},
+  {"frame": 5, "sound": "click", "word": "AnyRouter", "volume": 0.3},
+  {"frame": 6, "sound": "click", "word": "revoke", "offset": 0.2, "volume": 0.3},
+  {"frame": 7, "sound": "chime", "word": "Their", "volume": 0.16},
+  {"frame": 7, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]

@@ -1,0 +1,569 @@
+{
+  "bgm": {
+    "path": "assets/bgm/track.mp3",
+    "source": "host",
+    "volume": 0.12,
+    "duration_s": 68
+  },
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.059,
+      "raw_s": 3.251,
+      "text": "Want AI in your app, without paying for every user's requests?",
+      "say": "Want AI in your app, without paying for every user's requests?",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Want",
+          "start": 0,
+          "end": 0.29
+        },
+        {
+          "id": "w1",
+          "text": "AI",
+          "start": 0.36,
+          "end": 0.65
+        },
+        {
+          "id": "w2",
+          "text": "in",
+          "start": 0.673,
+          "end": 0.731
+        },
+        {
+          "id": "w3",
+          "text": "your",
+          "start": 0.778,
+          "end": 0.894
+        },
+        {
+          "id": "w4",
+          "text": "app,",
+          "start": 0.94,
+          "end": 1.115
+        },
+        {
+          "id": "w5",
+          "text": "without",
+          "start": 1.138,
+          "end": 1.382
+        },
+        {
+          "id": "w6",
+          "text": "paying",
+          "start": 1.428,
+          "end": 1.649
+        },
+        {
+          "id": "w7",
+          "text": "for",
+          "start": 1.707,
+          "end": 1.8
+        },
+        {
+          "id": "w8",
+          "text": "every",
+          "start": 1.846,
+          "end": 2.02
+        },
+        {
+          "id": "w9",
+          "text": "user's",
+          "start": 2.067,
+          "end": 2.368
+        },
+        {
+          "id": "w10",
+          "text": "requests?",
+          "start": 2.426,
+          "end": 3.251
+        }
+      ],
+      "padded_s": 0.808
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 3.5,
+      "raw_s": 2.043,
+      "text": "Add a Sign in with AnyRouter button.",
+      "say": "Add a Sign in with AnyRouter button.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Add",
+          "start": 0,
+          "end": 0.221
+        },
+        {
+          "id": "w1",
+          "text": "a",
+          "start": 0.255,
+          "end": 0.279
+        },
+        {
+          "id": "w2",
+          "text": "Sign",
+          "start": 0.348,
+          "end": 0.627
+        },
+        {
+          "id": "w3",
+          "text": "in",
+          "start": 0.662,
+          "end": 0.731
+        },
+        {
+          "id": "w4",
+          "text": "with",
+          "start": 0.778,
+          "end": 0.906
+        },
+        {
+          "id": "w5",
+          "text": "AnyRouter",
+          "start": 0.975,
+          "end": 1.416
+        },
+        {
+          "id": "w6",
+          "text": "button.",
+          "start": 1.463,
+          "end": 2.043
+        }
+      ],
+      "padded_s": 1.457
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 6.5,
+      "raw_s": 5.248,
+      "text": "Users approve on AnyRouter, and their usage is billed to their own credits or free tier.",
+      "say": "Users approve on AnyRouter, and their usage is billed to their own credits or free tier.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Users",
+          "start": 0,
+          "end": 0.43
+        },
+        {
+          "id": "w1",
+          "text": "approve",
+          "start": 0.476,
+          "end": 0.813
+        },
+        {
+          "id": "w2",
+          "text": "on",
+          "start": 0.848,
+          "end": 0.929
+        },
+        {
+          "id": "w3",
+          "text": "AnyRouter,",
+          "start": 0.998,
+          "end": 1.625
+        },
+        {
+          "id": "w4",
+          "text": "and",
+          "start": 1.904,
+          "end": 2.125
+        },
+        {
+          "id": "w5",
+          "text": "their",
+          "start": 2.183,
+          "end": 2.334
+        },
+        {
+          "id": "w6",
+          "text": "usage",
+          "start": 2.403,
+          "end": 2.786
+        },
+        {
+          "id": "w7",
+          "text": "is",
+          "start": 2.81,
+          "end": 2.891
+        },
+        {
+          "id": "w8",
+          "text": "billed",
+          "start": 2.949,
+          "end": 3.193
+        },
+        {
+          "id": "w9",
+          "text": "to",
+          "start": 3.216,
+          "end": 3.274
+        },
+        {
+          "id": "w10",
+          "text": "their",
+          "start": 3.332,
+          "end": 3.483
+        },
+        {
+          "id": "w11",
+          "text": "own",
+          "start": 3.541,
+          "end": 3.68
+        },
+        {
+          "id": "w12",
+          "text": "credits",
+          "start": 3.75,
+          "end": 4.145
+        },
+        {
+          "id": "w13",
+          "text": "or",
+          "start": 4.226,
+          "end": 4.331
+        },
+        {
+          "id": "w14",
+          "text": "free",
+          "start": 4.4,
+          "end": 4.609
+        },
+        {
+          "id": "w15",
+          "text": "tier.",
+          "start": 4.644,
+          "end": 5.248
+        }
+      ],
+      "padded_s": 1.252
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 5.5,
+      "raw_s": 4.133,
+      "text": "Your app gets a temporary key, limited to AI requests and their profile.",
+      "say": "Your app gets a temporary key, limited to AI requests and their profile.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Your",
+          "start": 0,
+          "end": 0.209
+        },
+        {
+          "id": "w1",
+          "text": "app",
+          "start": 0.244,
+          "end": 0.348
+        },
+        {
+          "id": "w2",
+          "text": "gets",
+          "start": 0.406,
+          "end": 0.569
+        },
+        {
+          "id": "w3",
+          "text": "a",
+          "start": 0.604,
+          "end": 0.639
+        },
+        {
+          "id": "w4",
+          "text": "temporary",
+          "start": 0.685,
+          "end": 1.126
+        },
+        {
+          "id": "w5",
+          "text": "key,",
+          "start": 1.207,
+          "end": 1.66
+        },
+        {
+          "id": "w6",
+          "text": "limited",
+          "start": 1.904,
+          "end": 2.218
+        },
+        {
+          "id": "w7",
+          "text": "to",
+          "start": 2.252,
+          "end": 2.31
+        },
+        {
+          "id": "w8",
+          "text": "AI",
+          "start": 2.368,
+          "end": 2.601
+        },
+        {
+          "id": "w9",
+          "text": "requests",
+          "start": 2.682,
+          "end": 3.042
+        },
+        {
+          "id": "w10",
+          "text": "and",
+          "start": 3.077,
+          "end": 3.146
+        },
+        {
+          "id": "w11",
+          "text": "their",
+          "start": 3.17,
+          "end": 3.297
+        },
+        {
+          "id": "w12",
+          "text": "profile.",
+          "start": 3.344,
+          "end": 4.133
+        }
+      ],
+      "padded_s": 1.367
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 4,
+      "raw_s": 2.09,
+      "text": "Use it like any AnyRouter API key.",
+      "say": "Use it like any AnyRouter API key.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Use",
+          "start": 0,
+          "end": 0.186
+        },
+        {
+          "id": "w1",
+          "text": "it",
+          "start": 0.221,
+          "end": 0.279
+        },
+        {
+          "id": "w2",
+          "text": "like",
+          "start": 0.302,
+          "end": 0.464
+        },
+        {
+          "id": "w3",
+          "text": "any",
+          "start": 0.511,
+          "end": 0.673
+        },
+        {
+          "id": "w4",
+          "text": "AnyRouter",
+          "start": 0.72,
+          "end": 1.184
+        },
+        {
+          "id": "w5",
+          "text": "API",
+          "start": 1.242,
+          "end": 1.567
+        },
+        {
+          "id": "w6",
+          "text": "key.",
+          "start": 1.683,
+          "end": 2.09
+        }
+      ],
+      "padded_s": 1.91
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 4,
+      "raw_s": 3.065,
+      "text": "Users can revoke your app any time, from Connected apps.",
+      "say": "Users can revoke your app any time, from Connected apps.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Users",
+          "start": 0,
+          "end": 0.395
+        },
+        {
+          "id": "w1",
+          "text": "can",
+          "start": 0.453,
+          "end": 0.569
+        },
+        {
+          "id": "w2",
+          "text": "revoke",
+          "start": 0.627,
+          "end": 0.917
+        },
+        {
+          "id": "w3",
+          "text": "your",
+          "start": 0.952,
+          "end": 1.057
+        },
+        {
+          "id": "w4",
+          "text": "app",
+          "start": 1.103,
+          "end": 1.254
+        },
+        {
+          "id": "w5",
+          "text": "any",
+          "start": 1.324,
+          "end": 1.486
+        },
+        {
+          "id": "w6",
+          "text": "time,",
+          "start": 1.544,
+          "end": 1.846
+        },
+        {
+          "id": "w7",
+          "text": "from",
+          "start": 1.881,
+          "end": 2.032
+        },
+        {
+          "id": "w8",
+          "text": "Connected",
+          "start": 2.09,
+          "end": 2.461
+        },
+        {
+          "id": "w9",
+          "text": "apps.",
+          "start": 2.508,
+          "end": 3.065
+        }
+      ],
+      "padded_s": 0.935
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 5.797,
+      "raw_s": 3.297,
+      "text": "Their usage, their bill. Start at anyrouter.dev.",
+      "say": "Their usage, their bill. Start at any router dot dev.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Their",
+          "start": 0,
+          "end": 0.232
+        },
+        {
+          "id": "w1",
+          "text": "usage,",
+          "start": 0.302,
+          "end": 0.673
+        },
+        {
+          "id": "w2",
+          "text": "their",
+          "start": 0.697,
+          "end": 0.848
+        },
+        {
+          "id": "w3",
+          "text": "bill.",
+          "start": 0.882,
+          "end": 1.184
+        },
+        {
+          "id": "w4",
+          "text": "Start",
+          "start": 1.428,
+          "end": 1.707
+        },
+        {
+          "id": "w5",
+          "text": "at",
+          "start": 1.741,
+          "end": 1.811
+        },
+        {
+          "id": "w6",
+          "text": "anyrouter.dev.",
+          "start": 1.881,
+          "end": 3.297
+        }
+      ],
+      "padded_s": 2.5
+    }
+  ]
+}
