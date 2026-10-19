@@ -156,7 +156,8 @@ function typedLine(line, roll) {
   const chars = typedChars(line.text);
   const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
   let i = 0;
-  return line.text.split(/( +)/).map(part => {
+  // a pipe stays with the command it feeds, so "| bash" never starts a line alone or ends one
+  return line.text.split(/(?<!(?:^| )\|)( +)/).map(part => {
     const at = i;
     i += part.length;
     if (!part.trim()) return chars(part, at);
