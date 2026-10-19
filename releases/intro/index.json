@@ -33,7 +33,8 @@
       "renditions": {
         "landscape": {
           "artifact": "renders/intro-002-20260930-v4-19e6ae2034.mp4",
-          "cover": "renders/intro-002-20260930-v4-19e6ae2034.png"
+          "cover": "renders/intro-002-20260930-v4-19e6ae2034.png",
+          "youtube": "https://youtu.be/l77rajPVRZA"
         }
       },
       "source": null,

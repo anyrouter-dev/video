@@ -10,11 +10,13 @@
   "renditions": {
     "landscape": {
       "artifact": "renders/use-case-001-20261019-claude-code-8b52221894.mp4",
-      "cover": "renders/use-case-001-20261019-claude-code-8b52221894.png"
+      "cover": "renders/use-case-001-20261019-claude-code-8b52221894.png",
+      "youtube": "https://youtu.be/5hHxoIGutdw"
     },
     "portrait": {
       "artifact": "renders/use-case-001-20261019-claude-code-8b52221894-portrait.mp4",
-      "cover": "renders/use-case-001-20261019-claude-code-8b52221894-portrait.png"
+      "cover": "renders/use-case-001-20261019-claude-code-8b52221894-portrait.png",
+      "youtube": "https://youtu.be/QyvhwSWPPXY"
     }
   },
   "source": "renders/use-case-001-20261019-claude-code-8b52221894-source.tar.gz",
