@@ -223,7 +223,7 @@ const K = {
       const DURATION = 5;
       // Word starts from audio_meta.json frame 5: "Claude" 0.662, "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
       const CLAUDE = 0.62, OPENAI = 1.0, ADD = 1.9, MARKUP = 3.75;
-      const ROW_ON = "#F5F5F5";
+      const ROW_OFF = "rgba(245,245,245,0)", ROW_ON = "rgba(245,245,245,1)";
 
       document.fonts.ready.then(() => {
         const dialog = $("dialog"), foot = dialog.lastElementChild;
@@ -236,13 +236,13 @@ const K = {
         K.rise(tl, dialog, 0.02, { y: 60, d: 0.7 });
 
         // "Claude": its company's row lights; "OpenAI?": the search finds it
-        tl.to($("anthropic"), { backgroundColor: ROW_ON, duration: 0.25 }, CLAUDE);
+        tl.fromTo($("anthropic"), { backgroundColor: ROW_OFF }, { backgroundColor: ROW_ON, duration: 0.25, immediateRender: false }, CLAUDE);
         const typed = [...$("typed").children];
         tl.set($("hint"), { opacity: 0 }, OPENAI);
         typed.forEach((c, i) => tl.set(c, { opacity: 1 }, OPENAI + i * 0.06));
         tl.to($("all"), { opacity: 0, duration: 0.2 }, OPENAI + 0.3);
         tl.fromTo($("found"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, OPENAI + 0.35);
-        tl.to($("openai"), { backgroundColor: ROW_ON, duration: 0.25 }, OPENAI + 0.6);
+        tl.fromTo($("openai"), { backgroundColor: ROW_OFF }, { backgroundColor: ROW_ON, duration: 0.25, immediateRender: false }, OPENAI + 0.6);
 
         // "Add your own key": OpenAI's key form, and the ring on Add key
         tl.to($("pick"), { opacity: 0, duration: 0.2 }, ADD);
