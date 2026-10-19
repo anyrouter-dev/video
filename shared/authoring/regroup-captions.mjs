@@ -9,8 +9,10 @@
 // captions.html and caption_groups.json; reads only the words, so it is idempotent.
 import fs from 'node:fs';
 
-const MAX_WORDS = 7;
-const MAX_CHARS = 42;
+// one line of the 48px caption chip holds about 60 characters
+const MAX_WORDS = 10;
+const MAX_CHARS = 56;
+const ORPHAN_WORDS = 2;
 const PAUSE_S = 0.35;
 const MIN_WORDS = 3;
 const SENT_END = /[.?!]$/;
@@ -46,7 +48,19 @@ for (const w of words) {
   if (SENT_END.test(w.text)) cur = null;
 }
 
-const out = groups.filter(Boolean).map((g, gi) => ({
+// A one- or two-word phrase on its own ("into AnyRouter.") flashes by; it joins the phrase
+// before it when they share a frame, run on without a real pause, and still fit one line.
+const merged = [];
+for (const g of groups.filter(x => x.words.length)) {
+  const prev = merged.at(-1);
+  const joins = prev && g.words.length <= ORPHAN_WORDS && g.frame === prev.frame
+    && g.words[0].start - prev.words.at(-1).end < 0.6
+    && textOf([...prev.words, ...g.words]).length <= MAX_CHARS + 10;
+  if (joins) prev.words.push(...g.words);
+  else merged.push(g);
+}
+
+const out = merged.map((g, gi) => ({
   id: `caption-group-${gi}`,
   frame: g.frame,
   start: g.words[0].start,

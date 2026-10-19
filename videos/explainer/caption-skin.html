@@ -1,9 +1,8 @@
 <!--
-  AnyRouter explainer series — caption skin. Built on the frame-preset skin contract
-  (blue-professional's skin: same holes, hooks and seek-safe className sets); only the
-  look changes. A solid ink pill on the white film, Geist, upcoming words in a grey that
-  clears 4.5:1 on the pill, the current word white with a short burnt-orange underline
-  (the film's one accent), spoken words white.
+  AnyRouter film series caption skin. Built on the frame-preset skin contract (same
+  holes and hooks); only the look changes. TV subtitles: each phrase appears whole,
+  white Geist on a soft translucent chip, with a short fade between phrases. No
+  word-by-word highlight; it pulled the eye off the picture.
 -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 
@@ -37,8 +36,6 @@
     justify-content: center;
   }
   .caption-group {
-    /* every group is absolutely stacked over the SAME band — exactly one shown at a
-       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
     position: absolute;
     inset: 0;
     display: flex;
@@ -46,56 +43,28 @@
     justify-content: center;
     opacity: 0;
   }
-
-  /* A shadcn toast, inverted: the one dark chip on a white film. */
-  .caption-pill {
-    max-width: 86%;
-    padding: 16px 36px 20px;
-    background: #0A0A0A;
-    border-radius: 20px;
-  }
-  .caption-line {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* one normal word space; padding on the words would double it */
-    gap: 0.08em 0.26em;
+  .caption-chip {
+    max-width: 84%;
+    padding: 12px 28px 14px;
+    border-radius: 14px;
+    background: rgba(10, 10, 10, 0.84);
+    color: #FFFFFF;
     font-family: var(--font-body, "Geist"), ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
-    font-size: 56px;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
+    font-size: 48px;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    text-align: center;
+    text-wrap: balance;
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
 
-  /* upcoming — grey on ink, 7.1:1 */
-  .caption-word {
-    display: inline-block;
-    color: #9A9AA3;
-    background-image: linear-gradient(#BB4D00, #BB4D00);
-    background-repeat: no-repeat;
-    background-position: 50% 100%;
-    background-size: 0 4px;
-  }
-  /* current word — white, with the film's one accent as a short underline */
-  .caption-word.is-active {
-    color: #FFFFFF;
-    background-size: 100% 4px;
-  }
-  /* already spoken — white */
-  .caption-word.is-spoken {
-    color: #FFFFFF;
-    background-size: 0 4px;
-  }
-
-  /* portrait rendition: two lines at most inside the 900px safe width */
+  /* portrait rendition: at most two lines inside the 900px safe width */
   @media (orientation: portrait) {
-    .caption-pill {
+    .caption-chip {
       max-width: 900px;
-    }
-    .caption-line {
-      font-size: 60px;
+      font-size: 56px;
     }
   }
 </style>
@@ -123,61 +92,34 @@
   (function () {
     var stage = document.getElementById("caption-stage");
 
-    // build DOM: one .caption-group per group, .caption-word per word
     GROUPS.forEach(function (group, g) {
       var groupEl = document.createElement("div");
       groupEl.className = "caption-group";
       groupEl.id = "caption-group-" + g;
-      var pill = document.createElement("div");
-      pill.className = "caption-pill";
-      var line = document.createElement("div");
-      line.className = "caption-line";
-      (group.words || []).forEach(function (w, i) {
-        var span = document.createElement("span");
-        span.className = "caption-word";
-        span.id = "caption-word-" + g + "-" + i;
-        span.textContent = String(w.text);
-        line.appendChild(span);
-      });
-      pill.appendChild(line);
-      groupEl.appendChild(pill);
+      var chip = document.createElement("div");
+      chip.className = "caption-chip";
+      chip.textContent = (group.words || []).map(function (w) { return String(w.text); }).join(" ");
+      groupEl.appendChild(chip);
       stage.appendChild(groupEl);
     });
 
     window.__timelines = window.__timelines || {};
     var tl = gsap.timeline({ paused: true });
+    var FADE = 0.12;
 
+    // exactly one phrase on screen at a time; back-to-back phrases swap without a gap
     GROUPS.forEach(function (group, g) {
       var groupEl = document.getElementById("caption-group-" + g);
-      var words = group.words || [];
       var next = GROUPS[g + 1];
       var isLast = g === GROUPS.length - 1;
       var start = Math.max(0, Number(group.start));
-      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.4);
       if (end <= start) end = start + 0.01;
+      var joined = next && Number(next.start) - end < 0.05;
 
-      // group on/off — exactly one group visible at a time
-      tl.set(groupEl, { opacity: 1 }, start);
-      tl.set(groupEl, { opacity: 0 }, end);
-
-      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
-      // engine's frame-by-frame seek; .call callbacks would NOT fire).
-      words.forEach(function (w, i) {
-        var el = document.getElementById("caption-word-" + g + "-" + i);
-        var at = Math.max(start, Number(w.start));
-        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
-        tl.set(el, { className: "caption-word is-active" }, at); // current
-        tl.fromTo(el, { scale: 0.985 }, { scale: 1, duration: 0.18, ease: "power1.out" }, at);
-        if (i + 1 < words.length) {
-          var nextAt = Math.max(start, Number(words[i + 1].start));
-          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
-        }
-      });
-      if (words.length) {
-        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
-        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
-        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
-      }
+      tl.fromTo(groupEl, { opacity: 0 }, { opacity: 1, duration: FADE, ease: "none" }, start);
+      if (joined) tl.set(groupEl, { opacity: 0 }, end);
+      else tl.to(groupEl, { opacity: 0, duration: FADE, ease: "none" }, Math.max(start + FADE, end - FADE));
     });
 
     // full-span anchor so the sub-comp timeline spans the whole video
