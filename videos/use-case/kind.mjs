@@ -151,13 +151,14 @@ export function copyOf(u, pools) {
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text) }));
   const roll = rollOf(u, pools);
+  const code = codeSizes(lines, roll, win.shell, { text: title, px: type }) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
   return {
     slug: u.slug,
     url: u.url,
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code: codeSizes(lines, roll, win.shell) },
+    window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code },
     type: { title: type },
   };
 }

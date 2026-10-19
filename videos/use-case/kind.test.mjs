@@ -207,14 +207,27 @@ test('every film is 12 to 18 seconds, its three beats back to back on whole fram
   }
 });
 
-test('the headline fills the frame and no code is set below the 36px floor', () => {
+test('the headline fills the frame and the code reads from across the room', () => {
+  // A 1920 frame holding a thin strip of 40px code reads as an empty white frame, and a phone screen as a smudge.
+  let large = 0;
   for (const [u, f] of films()) {
     const h = html(f);
     const [, l, p] = h.match(/--fs:(\d+)px;--fs-p:(\d+)px/);
     assert.ok(+l >= 120 && +l <= 140, `${u.slug}: landscape headline ${l}px`);
     assert.ok(+p >= 104 && +p <= 112, `${u.slug}: portrait headline ${p}px`);
-    for (const [, px] of h.matchAll(/--cs(?:-p)?:(\d+)px/g)) assert.ok(+px >= 36, `${u.slug}: code ${px}px`);
+    const [, cl, cp] = h.match(/--cs:(\d+)px;--cs-p:(\d+)px/);
+    assert.ok(+cl >= 48 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
+    assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
+    if (+cl >= 52) large++;
   }
+  assert.ok(large >= films().length - 2, 'only a tall editor under a three-line headline steps down to 48px');
+});
+
+test('code too tall to sit under the caption fails the build, never a caption too small to read', () => {
+  const d = doc();
+  const u = d.useCases.find(x => x.slug === 'openrouter-free-fallback');
+  u.snippets = u.snippets.map(s => ({ ...s, code: s.code.split('\n').map(l => (l.includes(u.command.text) ? l : `${l} ${'x'.repeat(30)} ${'y'.repeat(30)}`)).join('\n').replace(u.command.text, `${u.command.text} ${'z '.repeat(120)}`) }));
+  assert.throws(() => filmOf(d, 'openrouter-free-fallback'), /too tall to sit under the caption/);
 });
 
 test('the release copy is the page: its title, its summary and a link back', async () => {

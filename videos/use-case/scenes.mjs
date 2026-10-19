@@ -80,29 +80,50 @@ export function setIn(role, text) {
 }
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
-// The code window: as wide as the safe area, its text inside the padding.
-const CODE = {
-  landscape: { sizes: [56, 48, 44, 40], width: (1728 - 96) * 0.98 },
-  portrait: { sizes: [40, 36], width: (900 - 72) * 0.98 },
+// The code window: as wide as the safe area, its text inside the padding. In
+// beat 2 the caption and the window share the safe area's height (`sh`); the
+// caption is the headline scaled down, never below `capMin`.
+const WIN = {
+  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64 },
+  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56 },
 };
+const BAR = 84, CODE_LH = 1.45, TITLE_LH = 1.05;
+const textWidth = o => (WIN[o].width - 2 * WIN[o].padX) * 0.99;
 const monoWidth = (text, px) => [...text].length * 0.6 * px;
 
 /**
- * The code size per orientation: the largest at which every line that is typed
- * fits on one line, each roll id in place, with its prompt and caret. A line of
+ * The code size per orientation. The largest at which every typed line fits on
+ * one line, each roll id in place, with its prompt and caret, and the window
+ * still leaves room for the caption at its smallest. A line too long for every
+ * size is wrapped between tokens, at the `wrap` size or smaller. A line of
  * context may run past the window; it is clipped with a fade. When the longest
- * roll id still does not fit, the id moves to a line of its own, for every id,
- * so the line never reflows mid-roll.
+ * roll id does not fit, the id moves to a line of its own, for every id, so the
+ * line never reflows mid-roll. Null when no size leaves the caption its room.
  */
-export function codeSizes(lines, roll, shell) {
+export function codeSizes(lines, roll, shell, title) {
+  const prompt = shell ? '$ ' : '';
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
-  const typed = lines.filter(l => shell || l.focus).flatMap(variants).map(t => `${shell ? '$ ' : ''}${t}█`);
-  const pick = o => CODE[o].sizes.find(px => typed.every(t => monoWidth(t, px) <= CODE[o].width)) ?? CODE[o].sizes.at(-1);
+  const isTyped = l => shell || l.focus;
+  const fits = (t, px, o) => monoWidth(`${prompt}${t}█`, px) <= textWidth(o);
+  // a wrapped row hangs past the prompt, so it is measured two characters short
+  const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - 1.2 * px, weight: 'mono' }));
+  const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => !fits(t, px, o)));
+  const rows = (px, o) => lines.reduce((n, l) => {
+    if (!isTyped(l)) return n + 1;
+    if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsOf(t, px, o)));
+    const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length);
+    return n + rowsOf(l.text.slice(0, at), px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(id + after, px, o)));
+  }, 0);
+  const pick = o => {
+    const w = WIN[o], tLines = linesOf(title.text, { px: title.px[o], width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
+    const room = px => BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
+    const oneLine = px => lines.filter(isTyped).every(l => variants(l).every(t => fits(t, px, o)));
+    return w.sizes.find(px => (oneLine(px) || px <= w.wrap) && room(px)) ?? null;
+  };
   const landscape = pick('landscape'), portrait = pick('portrait');
-  const longest = roll ? lines.filter(l => l.focus).flatMap(variants).map(t => `${shell ? '$ ' : ''}${t}█`) : [];
-  const breaks = o => longest.some(t => monoWidth(t, o === 'landscape' ? landscape : portrait) > CODE[o].width);
-  const clipped = o => lines.map(l => !(shell || l.focus) && monoWidth(l.text, o === 'landscape' ? landscape : portrait) > CODE[o].width);
-  return { landscape, portrait, breaks: { landscape: breaks('landscape'), portrait: breaks('portrait') }, clipped: { landscape: clipped('landscape'), portrait: clipped('portrait') } };
+  if (!landscape || !portrait) return null;
+  const clipped = (px, o) => lines.map(l => !isTyped(l) && monoWidth(l.text, px) > textWidth(o));
+  return { landscape, portrait, breaks: { landscape: breaks(landscape, 'landscape'), portrait: breaks(portrait, 'portrait') }, clipped: { landscape: clipped(landscape, 'landscape'), portrait: clipped(portrait, 'portrait') } };
 }
 
 // ── pieces ─────────────────────────────────────────────────────────────────
@@ -197,7 +218,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     const top1 = SY + (SH - heroH - G - hH) / 2;
     hero.style.top = top1 + "px";
     h.style.top = top1 + heroH + G + "px";
-    const s2 = v("--cap2") / fs, s3 = v("--cap3") / fs;
+    // the caption is as large as fits above the window, so the two fill the safe area as one block
+    const s2 = Math.min(v("--cap2") / fs, (SH - G - win.offsetHeight) / hH), s3 = v("--cap3") / fs;
     const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
     win.style.top = cap2 + hH * s2 + G + "px";
     const cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
@@ -278,7 +300,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 
 // ── the look, in frame.md's tokens ─────────────────────────────────────────
 export const CSS = `
-  .film{--sy:96px;--sh:888px;--sl:96px;--sr:96px;--gap:56px;--cap2:76px;--cap3:84px;--tw:1728px;--push:1.05;--lean:1.03}
+  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:104px;--cap3:84px;--tw:${WIN.landscape.width}px;--push:1.05;--lean:1.03}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
@@ -287,15 +309,15 @@ export const CSS = `
   .film .tile{width:152px;height:152px;display:grid;place-items:center;border-radius:30px}
   .film .tile .mk{width:92px;height:92px}
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
-  .film .h{font-size:var(--fs);font-weight:600;line-height:1.05;letter-spacing:-.035em;text-wrap:balance;transform-origin:50% 0}
+  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.035em;text-wrap:balance;transform-origin:50% 0}
 
   .film .win{position:absolute;top:0;left:var(--sl);width:var(--tw)}
   .film .term{background:${C.termBg};border-radius:24px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.05)}
-  .film .bar{height:76px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
+  .film .bar{height:${BAR}px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
   .film .bar i{width:18px;height:18px;border-radius:50%;background:#3F3F46;flex:none}
   .film .ttl{margin-left:18px;min-width:0;flex:1;overflow:hidden;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap;
     -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
-  .film .code{padding:36px 48px 44px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:1.45;color:${C.termInk}}
+  .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH};color:${C.termInk}}
   /* a wrapped line hangs under its first character, past the prompt, so it reads as one command */
   .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px 0 calc(16px + 2ch);text-indent:-2ch}
   .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.termDim}}
@@ -319,12 +341,12 @@ export const CSS = `
   .film .url span{white-space:nowrap}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:1020px;--sl:60px;--sr:120px;--gap:48px;--cap2:64px;--cap3:72px;--tw:900px;--push:1.04;--lean:1.04}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:88px;--cap3:72px;--tw:${WIN.portrait.width}px;--push:1.04;--lean:1.04}
     .film .cam{transform-origin:510px 710px}
     .film .tile{width:136px;height:136px;border-radius:28px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
-    .film .code{font-size:var(--cs-p);padding:32px 36px 40px}
+    .film .code{font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
     .film .ln.clip-l{-webkit-mask-image:none;mask-image:none}
     .film .ln.clip-p{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent)}
     .film .brk-l .brk{display:none}
