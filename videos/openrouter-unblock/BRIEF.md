@@ -18,7 +18,7 @@ A short narrated film for a developer whose app or agent keeps hitting OpenRoute
 free-model limit (HTTP 429). v2 shows the benefit and how little changes, not the
 setup clicks: the wall, add and share the key, what the pool does, the two values
 that change in the app, what sharing costs you, and a close. White, calm, the same
-look as the explainer v2.
+look as the explainer (frame.md v3, "Monolith").
 
 The user's words: "I have OpenRouter but free. OpenRouter has :free models but with
 rate limit. By adding the OpenRouter key as a BYOK key and enabling the pool, the
@@ -29,8 +29,8 @@ The owner on v1 (106.6s): too slow, too much step-by-step and internal mechanics
 ## Customizations
 
 - Shares the explainer's design truth (`frame.md` is a symlink to
-  `../explainer/frame.md`, v2) and its kit (`tools/kit` links the explainer's;
-  `tools/kit.mjs` pastes it into this film's frames).
+  `../explainer/frame.md`, v3) and its kit (`tools/kit` links the explainer's;
+  `node ../explainer/tools/kit.mjs .` pastes it into this film's frames).
 - Ships landscape (1920x1080) and portrait (1080x1920) from the same frames; each
   frame's portrait layout sits under `@media (orientation: portrait)`.
 - No anyrouter.dev screenshot is embedded (owner direction: some site UI is being
