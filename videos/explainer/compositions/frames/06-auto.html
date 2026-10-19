@@ -50,8 +50,9 @@
 [data-composition-id="06-auto"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="06-auto"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="06-auto"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="06-auto"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="06-auto"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="06-auto"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="06-auto"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -120,14 +121,14 @@
           <span class="k-chip f06-chip"><img src="assets/providers/moonshotai.svg" alt="" />Kimi</span>
           <span class="k-chip f06-chip"><img src="assets/providers/xai.svg" alt="" />Grok</span>
           <span class="k-chip f06-chip"><img src="assets/providers/z-ai.svg" alt="" />GLM</span>
-          <span id="f06-auto" class="k-chip"><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter picks</span>
+          <span class="k-chip is-more">+ hundreds more</span>
         </div>
         <div id="f06-code" class="k-code f06-code">
           <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">app.ts</span></div>
 <div class="k-code-body"><span class="k-ln f06-quiet"><span class="kw">await</span> client.chat.completions<span class="k-pbr">
   </span>.create({</span><span class="k-ln">  model:<span class="k-lbr"> </span><span class="k-pbr">
     </span><span id="f06-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"z-ai/glm-5.3"</span><span data-layout-allow-overlap>"anyrouter/auto"</span></span>,<span class="k-pbr">
-</span><span id="f06-badge" class="k-badge is-outline f06-badge">Optional</span></span><span class="k-ln f06-quiet">  messages,</span><span class="k-ln f06-quiet">});</span></div>
+</span><span id="f06-badge" class="k-badge is-outline f06-badge">One more option</span></span><span class="k-ln f06-quiet">  messages,</span><span class="k-ln f06-quiet">});</span></div>
         </div>
         <div id="f06-ring" class="k-ring f06-ring"></div>
       </div>
@@ -158,8 +159,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -191,24 +193,25 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f06-" + s);
       const DURATION = 2.5;
-      // Word starts from audio_meta.json frame 6: "AnyRouter" 0.383, "pick" 0.848, "for" 1.219.
-      const ANYROUTER = 0.35, PICK = 0.8, FOR = 1.15;
+      // Word starts from audio_meta.json frame 6: "pick" 0.848, "for" 1.219.
+      const PICK = 0.8, FOR = 1.15;
 
       document.fonts.ready.then(() => {
         const ring = $("ring");
         const slot = $("id");
         slot.style.width = slot.children[0].offsetWidth + "px";
         const onId = { ...K.box(ring, slot, 10), borderRadius: 14 };
-        const onChip = { ...K.box(ring, $("auto"), 10), borderRadius: 999 };
+        slot.style.width = slot.children[1].offsetWidth + "px";
+        const onAuto = K.box(ring, slot, 10);
+        slot.style.width = slot.children[0].offsetWidth + "px";
 
         const tl = gsap.timeline({ paused: true });
         // frame 4's camera ends at scale 1.05, y 10: carry on from there
         K.push(tl, $("cam"), DURATION, { from: 1.05, to: 1.07, y0: 10, y: 16, ease: "sine.out" });
         tl.set(ring, { ...onId, opacity: 1 }, 0);
 
-        K.rise(tl, $("auto"), ANYROUTER, { y: 24, d: 0.45 });
         K.roll(tl, slot, [PICK]);
-        tl.to(ring, { ...onChip, duration: 0.45, ease: "power3.inOut" }, PICK);
+        tl.to(ring, { ...onAuto, duration: 0.35, ease: "power2.inOut" }, PICK + 0.05);
         tl.fromTo($("badge"), { opacity: 0, x: -16, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, FOR);
 
         window.__timelines = window.__timelines || {};

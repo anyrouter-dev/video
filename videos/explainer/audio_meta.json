@@ -1090,14 +1090,6 @@
     },
     {
       "frame": 6,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 0.383,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
       "file": "assets/sfx/click-soft.mp3",
       "offset_s": 0.848,
       "duration_s": 0.366,

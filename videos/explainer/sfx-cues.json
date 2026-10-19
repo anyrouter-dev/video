@@ -18,7 +18,6 @@
   {"frame": 5, "sound": "whoosh-short", "word": "OpenAI", "offset": -0.05, "volume": 0.22},
   {"frame": 5, "sound": "click", "word": "Add", "offset": 0.55, "volume": 0.32},
   {"frame": 5, "sound": "pop", "word": "markup", "volume": 0.22},
-  {"frame": 6, "sound": "pop", "word": "AnyRouter", "volume": 0.2},
   {"frame": 6, "sound": "click-soft", "word": "pick", "volume": 0.22},
   {"frame": 7, "sound": "error", "word": "down", "volume": 0.15},
   {"frame": 7, "sound": "ping", "word": "another", "volume": 0.18},

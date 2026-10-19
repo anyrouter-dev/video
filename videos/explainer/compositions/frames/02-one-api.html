@@ -50,8 +50,9 @@
 [data-composition-id="02-one-api"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="02-one-api"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="02-one-api"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="02-one-api"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="02-one-api"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="02-one-api"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="02-one-api"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -104,9 +105,12 @@
     [data-composition-id="02-one-api"] .f02-models { margin-top: 4px; color: var(--ink-2); }
     [data-composition-id="02-one-api"] .f02-pill { position: relative; margin-top: 56px; display: inline-flex; align-items: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 32px; border-radius: 16px; background: var(--surface); border: 2px solid var(--line); font-family: var(--mono); font-size: 44px; white-space: nowrap; }
     [data-composition-id="02-one-api"] .f02-pill .k-ring { inset: -12px; border-radius: 26px; }
-    [data-composition-id="02-one-api"] .f02-browser { left: 900px; right: 96px; top: 120px; bottom: 220px; }
-    [data-composition-id="02-one-api"] .f02-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-    [data-composition-id="02-one-api"] .f02-shot img { display: block; max-width: none; }
+    [data-composition-id="02-one-api"] .f02-browser { position: absolute; left: 900px; right: 96px; top: 120px; bottom: 220px; overflow: hidden; }
+    [data-composition-id="02-one-api"] .f02-head { height: 80px; box-sizing: border-box; display: flex; align-items: center; padding: 0 32px; background: var(--surface); border-bottom: 2px solid var(--line); }
+    [data-composition-id="02-one-api"] .f02-view { position: absolute; left: 0; right: 0; top: 80px; bottom: 0; overflow: hidden; }
+    [data-composition-id="02-one-api"] .f02-list { list-style: none; margin: 0; padding: 8px 36px; }
+    [data-composition-id="02-one-api"] .f02-id { height: 72px; display: flex; align-items: center; border-bottom: 2px solid var(--surface-2); font-family: var(--mono); font-size: 38px; white-space: nowrap; color: var(--ink); }
+    [data-composition-id="02-one-api"] .f02-org { color: var(--muted); }
 
     @media (orientation: portrait) {
       [data-composition-id="02-one-api"] .f02-col { left: 60px; top: 200px; width: 900px; }
@@ -132,11 +136,9 @@
           <div id="f02-pill" class="f02-pill">anyrouter.dev/api/v1<div id="f02-ring" class="k-ring"></div></div>
         </div>
 
-        <div id="f02-browser" class="k-browser f02-browser">
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/models</span></div>
-          <div class="k-view">
-            <div id="f02-shot" class="f02-shot"><img src="assets/captures/models.png" alt="" /></div>
-          </div>
+        <div id="f02-browser" class="k-card f02-browser">
+          <div class="f02-head"><span class="k-url">GET /api/v1/models</span></div>
+          <div class="f02-view"><ul id="f02-list" class="f02-list"><li class="f02-id"><span class="f02-org">deepseek/</span>deepseek-v4.1-flash</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k3</li><li class="f02-id"><span class="f02-org">x-ai/</span>grok-4.7</li><li class="f02-id"><span class="f02-org">z-ai/</span>glm-5.3</li><li class="f02-id"><span class="f02-org">minimax/</span>minimax-m3.1-flash</li><li class="f02-id"><span class="f02-org">google/</span>gemma-4-31b</li><li class="f02-id"><span class="f02-org">openai/</span>gpt-oss-20b</li><li class="f02-id"><span class="f02-org">meta/</span>muse-glimmer-30b</li><li class="f02-id"><span class="f02-org">poolside/</span>laguna-s-2.1</li><li class="f02-id"><span class="f02-org">stepfun/</span>step-5-preview</li><li class="f02-id"><span class="f02-org">reflection/</span>beam-1.0</li><li class="f02-id"><span class="f02-org">inclusionai/</span>ling-3.1-flash</li><li class="f02-id"><span class="f02-org">liquid/</span>lfm-2.5-2.6b</li><li class="f02-id"><span class="f02-org">scira/</span>amos-1-large</li><li class="f02-id"><span class="f02-org">thinkingmachines/</span>inkling</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k2.6</li><li class="f02-id"><span class="f02-org">z-ai/</span>glm-4.7-flash</li><li class="f02-id"><span class="f02-org">x-ai/</span>grok-latest</li><li class="f02-id"><span class="f02-org">deepseek/</span>deepseek-v4-flash</li><li class="f02-id"><span class="f02-org">meituan/</span>longcat-2.5-preview</li><li class="f02-id"><span class="f02-org">anyrouter/</span>auto</li><li class="f02-id"><span class="f02-org">anyrouter/</span>free</li></ul></div>
         </div>
       </div>
     </div>
@@ -166,8 +168,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -200,10 +203,10 @@ const K = {
       const $ = (s) => document.getElementById("f02-" + s);
       const DURATION = 4.5;
       // Word starts from audio_meta.json frame 2: "270" 1.312 (spoken to 2.2), "models" 2.241, "one" 2.972.
-      const COUNT_FROM = 0.9, COUNT_TO = 2.15, MODELS = 2.2, ONE = 2.9;
-      // The 2x capture of /models from its first row down (the tab bar and its counts stay out of
-      // view), scrolled the way a visitor would: 11 rows, most of the page below the header.
-      const LIST = { x: 40, y: 630 }, SCROLL = 700, SCALE = 0.9;
+      // The count lands on 270 as the voice starts saying it; the "+" waits for the count.
+      const COUNT_FROM = 0.5, COUNT_TO = 1.3, MODELS = 2.2, ONE = 2.9;
+      // Real ids from GET /api/v1/models (what one AnyRouter key runs on credit), scrolled like a list.
+      const SCROLL = 10 * 72;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
@@ -211,13 +214,12 @@ const K = {
 
         K.rise(tl, $("brand"), 0.04);
         tl.fromTo($("browser"), { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.1);
-        const at = (dy) => ({ scale: SCALE, x: -LIST.x * SCALE, y: -(LIST.y + dy) * SCALE });
-        tl.fromTo($("shot"), at(0), { ...at(SCROLL), duration: DURATION, ease: "power1.inOut" }, 0);
+        tl.fromTo($("list"), { y: 0 }, { y: -SCROLL, duration: DURATION, ease: "power1.inOut" }, 0);
 
         // the stat counts up to the claim, "more than 270"; it is "270+" before and after
         const stat = $("stat"), n = { v: 0 };
         tl.fromTo(stat, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, COUNT_FROM - 0.1);
-        tl.fromTo(n, { v: 0 }, { v: 270, duration: COUNT_TO - COUNT_FROM, ease: "power2.out", onUpdate: () => { stat.textContent = Math.round(n.v) + "+"; } }, COUNT_FROM);
+        tl.fromTo(n, { v: 0 }, { v: 270, duration: COUNT_TO - COUNT_FROM, ease: "power2.out", onUpdate: () => { stat.textContent = Math.round(n.v) + (n.v >= 270 ? "+" : ""); } }, COUNT_FROM);
         K.rise(tl, $("models"), MODELS);
 
         K.rise(tl, $("pill"), ONE);

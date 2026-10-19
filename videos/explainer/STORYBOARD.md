@@ -23,7 +23,7 @@ music: none
 ## Frame 1 — Every company bills you
 - src: compositions/frames/01-every-bill.html
 
-- scene: Four AI company cards; each grows an account row, a key row and a bill row as the voice names them
+- scene: Four AI company cards (DeepSeek, Kimi, Grok, GLM, each with its company); each grows an account row, a key row and a bill row as the voice names them
 - duration: 4.559s
 - transition_in: cut
 - type: problem
@@ -37,25 +37,25 @@ music: none
 - status: animated
 
 Scene 1 (0.0–1.4s): "Every AI company" — four cards rise in a stagger (landscape one row, portrait 2x2), marks and names only.
-Scene 2 (1.4–4.5s): "account", "key", "bill" — each word drops its row into all four cards in a quick stagger; on "bill" the cards nudge off-axis a little. The camera pushes in the whole time.
+Scene 2 (1.4–4.5s): "account", "key", "bill" — each word drops its row into all four cards in a quick stagger. The camera pushes in the whole time.
 
 ## Frame 2 — One API
 - src: compositions/frames/02-one-api.html
 
-- scene: "270+" counts up beside the real /models catalog, scrolling in a browser frame; the API base URL lands as one pill
+- scene: "270+" counts up beside a scrolling list of real model ids from GET /api/v1/models; the API base URL lands as one pill
 - duration: 4.5s
 - transition_in: cut
 - type: product_intro
 - beat: relief
 - voiceover: "AnyRouter puts more than 270 models behind one API."
-- asset_candidates: assets/captures/models.png — the real /models catalog, cropped below the tab bar
+- asset_candidates: real ids from GET /api/v1/models, as a list
 - blueprint: stat-hit (Adapt)
 - focal: the 270+ stat
-- roles: catalog scroll = proof; URL pill = "one API"
+- roles: id list = proof; URL pill = "one API"
 - sfx: whoosh-short, ping on 270
 - status: animated
 
-Scene 1 (0.0–1.2s): the AnyRouter lockup and the browser frame slide in; the catalog scrolls by its crop.
+Scene 1 (0.0–1.2s): the AnyRouter lockup and the id list slide in; the list scrolls.
 Scene 2 (1.2–2.4s): "more than 270" — the stat counts up to 270+, "models" under it.
 Scene 3 (2.4–4.5s): "behind one API" — the pill `anyrouter.dev/api/v1` rises with a focus ring.
 
@@ -122,20 +122,20 @@ Scene 3 (3.4–5.0s): "no markup" — the camera fits "AnyRouter adds no fee."; 
 ## Frame 6 — Or let AnyRouter pick
 - src: compositions/frames/06-auto.html
 
-- scene: Back on the code card; the id rolls to anyrouter/auto with an "Optional" badge
+- scene: Back on the code card; the id rolls to anyrouter/auto with a "One more option" badge
 - duration: 2.5s
 - transition_in: cut
 - type: key_feature
 - beat: aside
 - voiceover: "Or let AnyRouter pick one for you."
-- asset_candidates: assets/providers/anyrouter.svg — AnyRouter mark
+- asset_candidates: none — typed code only
 - blueprint: kinetic-type-beats (Adapt)
 - focal: anyrouter/auto
 - roles: badge = it is a choice, not a must
-- sfx: pop on pick
+- sfx: click-soft on pick
 - status: animated
 
-Scene 1 (0.0–2.5s): Frame 4's last state; on "pick" the id rolls to `anyrouter/auto`, an AnyRouter chip joins the row and an outline "Optional" badge appears.
+Scene 1 (0.0–2.5s): Frame 4's last state; on "pick" the id rolls to `anyrouter/auto`, the ring follows it, and an outline "One more option" badge appears.
 
 ## Frame 7 — It keeps answering
 - src: compositions/frames/07-failover.html
@@ -198,7 +198,7 @@ Scene 3 (3.5–6.0s): "still gets its answer" — the answer bubble lands with a
 - type: cta
 - beat: resolve
 - voiceover: "One API for every model. Start free at anyrouter.dev."
-- asset_candidates: assets/providers/anyrouter.svg — AnyRouter mark
+- asset_candidates: none — the AnyRouter mark is inline SVG
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: AnyRouter lockup
 - roles: mark = hero

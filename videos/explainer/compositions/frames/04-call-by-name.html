@@ -50,8 +50,9 @@
 [data-composition-id="04-call-by-name"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="04-call-by-name"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="04-call-by-name"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="04-call-by-name"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="04-call-by-name"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="04-call-by-name"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="04-call-by-name"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -117,6 +118,7 @@
           <span class="k-chip f04-chip"><img src="assets/providers/moonshotai.svg" alt="" />Kimi</span>
           <span class="k-chip f04-chip"><img src="assets/providers/xai.svg" alt="" />Grok</span>
           <span class="k-chip f04-chip"><img src="assets/providers/z-ai.svg" alt="" />GLM</span>
+          <span id="f04-more" class="k-chip is-more">+ hundreds more</span>
         </div>
         <div id="f04-code" class="k-code f04-code">
           <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">app.ts</span></div>
@@ -153,8 +155,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -206,6 +209,7 @@ const K = {
 
         K.rise(tl, $("code"), 0.02, { y: 60, d: 0.7 });
         chips.forEach((c, i) => K.rise(tl, c, 0.15 + i * 0.07, { y: 24, d: 0.5 }));
+        K.rise(tl, $("more"), 0.45, { y: 24, d: 0.5 });
 
         // the id rolls to each company as the voice names it, and the ring walks the chips
         K.roll(tl, slot, NAMES.slice(1));

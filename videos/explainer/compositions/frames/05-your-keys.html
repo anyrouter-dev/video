@@ -50,8 +50,9 @@
 [data-composition-id="05-your-keys"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="05-your-keys"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="05-your-keys"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="05-your-keys"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="05-your-keys"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="05-your-keys"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -96,17 +97,17 @@
   [data-composition-id="05-your-keys"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="05-your-keys"] .f05-browser { left: 160px; right: 160px; top: 104px; bottom: 236px; }
+    [data-composition-id="05-your-keys"] .f05-browser { left: 160px; right: 160px; top: 200px; height: 420px; }
     [data-composition-id="05-your-keys"] .f05-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
     [data-composition-id="05-your-keys"] .f05-shot img { display: block; max-width: none; }
     /* "AnyRouter adds no fee." on the GPT-5.5 page, in capture px */
     [data-composition-id="05-your-keys"] .f05-mark { position: absolute; left: 2092px; top: 604px; width: 318px; height: 52px; border-radius: 10px; background: rgba(240,145,90,0); }
     [data-composition-id="05-your-keys"] .f05-ring { border-radius: 22px; }
-    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 806px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
+    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 668px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-your-keys"] .f05-browser { left: 60px; right: 120px; top: 300px; bottom: 960px; }
-      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 916px; }
+      [data-composition-id="05-your-keys"] .f05-browser { left: 60px; right: 120px; top: 380px; height: 420px; }
+      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 848px; }
     }
   </style>
 
@@ -125,7 +126,7 @@
             <div id="f05-ring" class="k-ring f05-ring"></div>
           </div>
         </div>
-        <span id="f05-badge" class="k-badge is-free is-big f05-badge">$0 markup</span>
+        <span id="f05-badge" class="k-badge is-free is-big f05-badge">Your own key, $0 markup</span>
       </div>
     </div>
   </div>
@@ -154,8 +155,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -191,17 +193,18 @@ const K = {
       const OPENAI = 1.0, ADD = 1.85, NO = 3.45, MARKUP = 3.75;
       const portrait = matchMedia("(orientation: portrait)").matches;
       // Rectangles of the 2x captures (3840 px wide), measured on the GPT-5.5 page; the Claude page has the same layout.
-      const HEAD = portrait ? { x: 780, y: 230, w: 1000, h: 420 } : { x: 780, y: 180, w: 1700, h: 520 };
+      // The title row and its "Add your key" button, stopping above the model blurb.
+      const HEAD = portrait ? { x: 780, y: 130, w: 900, h: 280 } : { x: 780, y: 130, w: 1630, h: 280 };
       const BUTTON = { x: 2584, y: 250, w: 227, h: 71 };
       const NO_FEE = { x: 2092, y: 604, w: 318, h: 52 };
 
       document.fonts.ready.then(() => {
         const view = $("view-gpt");
         const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, 1));
-        // landscape keeps the model's name in view beside its button; portrait has room for the button alone
-        const ADD_AREA = portrait ? { x: BUTTON.x - 260, y: BUTTON.y - 40, w: BUTTON.w + 520, h: BUTTON.h + 80 } : { x: 780, y: 200, w: 2080, h: 200 };
-        const button = K.fit(view, ADD_AREA, K.scaleFor(view, ADD_AREA, 0.95));
-        const noFee = K.fit(view, NO_FEE, 1.15);
+        // the button at the middle of the view, at the title row's height
+        const button = K.fit(view, { x: BUTTON.x, y: 160, w: BUTTON.w, h: 280 }, 0.95);
+        // a little above the sentence, so the price tiles under it stay out of view
+        const noFee = K.fit(view, { ...NO_FEE, y: NO_FEE.y - 24 }, 1.25);
 
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.03 });
@@ -210,7 +213,8 @@ const K = {
         tl.set([$("shot-claude"), $("shot-gpt")], head, 0);
         K.rise(tl, $("claude"), 0.02, { y: 70, d: 0.7 });
         tl.fromTo($("gpt"), { x: 220, y: 40, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, OPENAI);
-        tl.to($("claude"), { x: -48, y: -44, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
+        // Claude's page steps back until only its address bar shows above GPT-5.5's
+        tl.to($("claude"), { x: -40, y: -84, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
 
         // "Add your own key": the camera fits the button, the ring lands on it
         tl.to($("shot-gpt"), { ...button, duration: 0.7, ease: "power3.inOut" }, ADD);
@@ -227,7 +231,8 @@ const K = {
         tl.to($("mark"), { backgroundColor: "rgba(240,145,90,0.32)", duration: 0.3, ease: "power2.out" }, NO + 0.45);
         tl.set($("badge"), { xPercent: -50 }, 0);
         tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, MARKUP);
-        tl.to($("shot-gpt"), { scale: noFee.scale * 1.04, x: noFee.x - NO_FEE.x * noFee.scale * 0.04 - NO_FEE.w * noFee.scale * 0.02, y: noFee.y - NO_FEE.y * noFee.scale * 0.04 - NO_FEE.h * noFee.scale * 0.02, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
+        const drift = K.fit(view, { ...NO_FEE, y: NO_FEE.y - 24 }, 1.3);
+        tl.to($("shot-gpt"), { ...drift, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-your-keys"] = tl;

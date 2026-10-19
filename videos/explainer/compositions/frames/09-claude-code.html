@@ -50,8 +50,9 @@
 [data-composition-id="09-claude-code"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="09-claude-code"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="09-claude-code"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="09-claude-code"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="09-claude-code"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="09-claude-code"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="09-claude-code"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -118,7 +119,7 @@
         <div id="f09-term" class="k-term f09-term">
           <div class="k-term-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div>~/my-project</div>
 <div class="k-term-body"><span class="p">$ </span><span id="f09-cmd">anyr claude<span class="k-lbr f09-hold"> </span><span class="k-pbr f09-hold">
-  </span>--model </span><span id="f09-id" class="id k-roll" data-layout-allow-overlap><span data-layout-allow-overlap id="f09-first">moonshotai/kimi-k3</span><span data-layout-allow-overlap>x-ai/grok-4.7</span><span data-layout-allow-overlap>z-ai/glm-5.3</span><span data-layout-allow-overlap>anyrouter/free</span></span><span id="f09-caret" class="k-caret"></span></div>
+  </span>--model </span><span id="f09-id" class="id k-roll" data-layout-allow-overlap><span data-layout-allow-overlap id="f09-first">moonshotai/kimi-k3</span><span data-layout-allow-overlap>x-ai/grok-4.7</span><span data-layout-allow-overlap>z-ai/glm-5.3</span></span><span id="f09-caret" class="k-caret"></span></div>
         </div>
       </div>
     </div>
@@ -148,8 +149,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -183,7 +185,7 @@ const K = {
       const DURATION = 4.5;
       // Word starts from audio_meta.json frame 9: "Run" 1.44, "any" 2.577, "you" 3.077.
       // The command and ids are from the real `anyr --help` and `anyr models`.
-      const TYPE_FROM = 1.4, TYPE_TO = 2.35, ROLL_AT = [2.6, 3.05, 3.5];
+      const TYPE_FROM = 1.4, TYPE_TO = 2.0, ROLL_AT = [2.65, 3.25];
       const BLINK = 0.5;
 
       // Split typed text into one span per character, so each can appear on its own beat.
@@ -209,17 +211,17 @@ const K = {
         K.rise(tl, $("title"), 0.02);
         K.rise(tl, $("term"), 0.1, { y: 60, d: 0.7 });
 
-        // The first id is typed with the command, so its slot grows with it until typing ends;
-        // only then does the slot hold a fixed width for the roll.
+        // The command is typed; the id lands whole once it is, then rolls through other real ids.
+        // The slot stays out of the line until then, so the caret follows the typed text.
         const slot = $("id");
-        $("first").style.position = "relative";
         K.roll(tl, slot, ROLL_AT);
-        const width = slot.style.width;
-        slot.style.width = "";
-        tl.set(slot, { width }, TYPE_TO);
+        slot.classList.add("f09-hold");
+        tl.set(slot, { attr: { class: "id k-roll" } }, TYPE_TO);
+        tl.fromTo($("first"), { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, TYPE_TO);
+        K.wash(tl, slot, TYPE_TO, 0.5);
 
         // a line break is typed too: it takes its orientation's display once typing reaches it
-        const typed = [...chars($("cmd")), ...chars($("first"))];
+        const typed = chars($("cmd"));
         const step = (TYPE_TO - TYPE_FROM) / typed.length;
         typed.forEach((n, i) => tl.set(n, { attr: { class: n.className.replace(/\s*\bf09-(ch|hold)\b/, "") } }, TYPE_FROM + i * step));
         const caret = $("caret");

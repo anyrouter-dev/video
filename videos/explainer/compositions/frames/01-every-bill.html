@@ -50,8 +50,9 @@
 [data-composition-id="01-every-bill"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="01-every-bill"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="01-every-bill"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="01-every-bill"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="01-every-bill"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="01-every-bill"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="01-every-bill"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -99,7 +100,8 @@
     [data-composition-id="01-every-bill"] .f01-grid { position: absolute; left: 120px; right: 120px; top: 190px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
     [data-composition-id="01-every-bill"] .f01-card { display: flex; flex-direction: column; gap: 16px; padding: 36px 32px; }
     [data-composition-id="01-every-bill"] .f01-mark { width: 64px; height: 64px; }
-    [data-composition-id="01-every-bill"] .f01-name { font-size: 52px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 8px; white-space: nowrap; }
+    [data-composition-id="01-every-bill"] .f01-name { font-size: 52px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; white-space: nowrap; }
+    [data-composition-id="01-every-bill"] .f01-co { margin: -10px 0 8px; white-space: nowrap; }
     [data-composition-id="01-every-bill"] .f01-row { display: flex; align-items: center; gap: 14px; height: 84px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); font-size: 44px; font-weight: 500; white-space: nowrap; }
     [data-composition-id="01-every-bill"] .f01-row svg { width: 36px; height: 36px; flex: none; color: var(--ink-2); }
     [data-composition-id="01-every-bill"] .f01-row.is-key { background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); letter-spacing: 0.04em; }
@@ -107,7 +109,9 @@
     @media (orientation: portrait) {
       [data-composition-id="01-every-bill"] .f01-grid { left: 60px; right: 120px; top: 212px; grid-template-columns: repeat(2, 1fr); gap: 24px; }
       [data-composition-id="01-every-bill"] .f01-card { padding: 32px 28px; gap: 14px; }
-      [data-composition-id="01-every-bill"] .f01-row { height: 68px; font-size: 40px; }
+      [data-composition-id="01-every-bill"] .f01-row { height: 60px; font-size: 40px; }
+      [data-composition-id="01-every-bill"] .f01-card { gap: 12px; }
+      [data-composition-id="01-every-bill"] .f01-mark { width: 56px; height: 56px; }
       [data-composition-id="01-every-bill"] .f01-name { font-size: 48px; }
     }
   </style>
@@ -119,28 +123,28 @@
         <div class="f01-grid">
           <div class="k-card f01-card">
             <img class="f01-mark" src="assets/providers/deepseek.svg" alt="" />
-            <p class="f01-name">DeepSeek</p>
+            <p class="f01-name">DeepSeek</p><p class="k-small f01-co">DeepSeek</p>
             <div class="f01-row f01-acct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</div>
             <div class="f01-row is-key f01-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>••••••</div>
             <div class="f01-row f01-bill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Bill</div>
           </div>
           <div class="k-card f01-card">
             <img class="f01-mark" src="assets/providers/moonshotai.svg" alt="" />
-            <p class="f01-name">Moonshot AI</p>
+            <p class="f01-name">Kimi</p><p class="k-small f01-co">Moonshot AI</p>
             <div class="f01-row f01-acct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</div>
             <div class="f01-row is-key f01-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>••••••</div>
             <div class="f01-row f01-bill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Bill</div>
           </div>
           <div class="k-card f01-card">
             <img class="f01-mark" src="assets/providers/xai.svg" alt="" />
-            <p class="f01-name">xAI</p>
+            <p class="f01-name">Grok</p><p class="k-small f01-co">xAI</p>
             <div class="f01-row f01-acct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</div>
             <div class="f01-row is-key f01-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>••••••</div>
             <div class="f01-row f01-bill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Bill</div>
           </div>
           <div class="k-card f01-card">
             <img class="f01-mark" src="assets/providers/z-ai.svg" alt="" />
-            <p class="f01-name">Z.ai</p>
+            <p class="f01-name">GLM</p><p class="k-small f01-co">Z.ai</p>
             <div class="f01-row f01-acct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</div>
             <div class="f01-row is-key f01-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>••••••</div>
             <div class="f01-row f01-bill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Bill</div>
@@ -174,8 +178,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
@@ -219,9 +224,6 @@ const K = {
         [["f01-acct", ACCOUNT], ["f01-key", KEY], ["f01-bill", BILL]].forEach(([cls, t]) => {
           all(cls).forEach((el, i) => tl.fromTo(el, { y: 20, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, t + i * 0.06));
         });
-        // three of everything, four times over: the cards jostle out of line
-        const tilt = [-1.6, 1.2, -0.8, 1.8], drop = [10, -6, 14, -10];
-        all("f01-card").forEach((c, i) => tl.to(c, { rotation: tilt[i], y: drop[i], duration: 0.7, ease: "power2.out" }, BILL + 0.3 + i * 0.04));
 
         window.__timelines = window.__timelines || {};
         window.__timelines["01-every-bill"] = tl;

@@ -50,8 +50,9 @@
 [data-composition-id="07-failover"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="07-failover"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="07-failover"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="07-failover"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="07-failover"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
 
 /* browser frame around a real screen; .k-shot is the capture, moved by the camera */
 [data-composition-id="07-failover"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
@@ -99,6 +100,7 @@
     [data-composition-id="07-failover"] .f07-app { position: absolute; left: 120px; top: 120px; width: 940px; height: 740px; overflow: hidden; }
     [data-composition-id="07-failover"] .f07-app-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; position: relative; }
     [data-composition-id="07-failover"] .f07-app-title { font-size: 36px; font-weight: 500; color: var(--ink-2); }
+    [data-composition-id="07-failover"] .f07-illus { position: absolute; right: 12px; top: 6px; height: 50px; padding: 0 14px; color: var(--muted); font-size: 34px; }
     [data-composition-id="07-failover"] .f07-chat { display: flex; flex-direction: column; gap: 28px; padding: 36px 40px; }
     [data-composition-id="07-failover"] .f07-model { align-self: flex-start; font-family: var(--mono); }
     [data-composition-id="07-failover"] .f07-ask { align-self: flex-end; max-width: 80%; padding: 24px 32px; border-radius: 28px 28px 8px 28px; background: var(--ink); color: #FFFFFF; font-size: 48px; line-height: 1.25; }
@@ -134,7 +136,7 @@
     <div id="f07-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
       <div id="f07-cam" class="k-cam">
         <div id="f07-app" class="k-card f07-app">
-          <div class="f07-app-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="f07-app-title">Your app</span></div>
+          <div class="f07-app-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="f07-app-title">Your app</span><span class="k-badge is-outline f07-illus">Illustration</span></div>
           <div class="f07-chat">
             <span id="f07-model" class="k-badge is-outline f07-model">deepseek/deepseek-v4.1-flash</span>
             <p id="f07-ask" class="f07-ask">Say hi in 3 words.</p>
@@ -155,7 +157,7 @@
           <div id="f07-t2" class="k-card f07-tile">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
             <span class="f07-name">Provider 2</span>
-            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-free f07-up">Answering</span></span>
+            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-free f07-up">Up</span></span>
           </div>
           <div id="f07-t3" class="k-card f07-tile">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
@@ -191,8 +193,9 @@ const K = {
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
       tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
