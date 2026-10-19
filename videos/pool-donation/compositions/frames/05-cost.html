@@ -266,7 +266,7 @@ const K = {
         K.rise(tl, $("l-you"), FILL, { y: 30 });
         K.rise(tl, $("l-them"), FILL + 0.14, { y: 30 });
         // only the quota card is drawn: the badge leaves with it
-        K.exit(tl, [$("card"), $("illus")], CHECK - 0.5);
+        K.exit(tl, [$("card"), $("illus")], CHECK - 0.8, { d: 0.7 });
 
         // "Check that your provider's terms allow sharing.": the line, alone
         tl.set($("say"), { opacity: 1 }, CHECK - 0.05);
