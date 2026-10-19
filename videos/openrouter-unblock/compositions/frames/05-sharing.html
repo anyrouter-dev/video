@@ -140,6 +140,8 @@
     [data-composition-id="05-sharing"] .f05-name { flex: 1; }
     /* a share that stopped goes quiet: muted, not the accent */
     [data-composition-id="05-sharing"] .f05-state > span + span { color: var(--muted); }
+    /* the slot is one line tall, so the waiting value sits wholly below it */
+    [data-composition-id="05-sharing"] .f05-state { height: 1.1em; line-height: 1.1; }
     [data-composition-id="05-sharing"] .f05-switch { position: relative; width: 240px; height: 136px; border-radius: 999px; background: var(--ink); flex: none; }
     [data-composition-id="05-sharing"] .f05-knob { position: absolute; left: 112px; top: 8px; width: 120px; height: 120px; border-radius: 50%; background: #FFFFFF; }
 
