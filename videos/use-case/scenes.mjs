@@ -159,13 +159,13 @@ function windowHtml(win) {
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
   }).join('');
   return `<div class="win"><div class="push"><div class="term">
-      <div class="bar"><i></i><i></i><i></i>${title ? `<span class="ttl">${esc(title)}</span>` : ''}</div>
+      <div class="bar"><i></i><i></i><i></i>${title ? `<span class="ttl" data-layout-allow-overflow>${esc(title)}</span>` : ''}</div>
       <div class="code ${cls}" style="${fsVars(code, 'cs')}">${body}</div></div></div></div>`;
 }
 
 // ── the shot ───────────────────────────────────────────────────────────────
 // How long each id holds in a roll. Each wash is shorter, so one never fades over the next.
-export const ROLL_EVERY = 0.75;
+export const ROLL_EVERY = 0.9;
 
 /** The film's one sub-composition: { cls, body, inner, cues }. */
 export function filmScene({ copy, beats, duration, timing }) {
@@ -218,9 +218,12 @@ export function filmScene({ copy, beats, duration, timing }) {
     tl.to(hero, { y: -48, opacity: 0, duration: 0.35, ease: "power2.in" }, T1);
     tl.to(h, { y: cap2 - at1, scale: s2, duration: 0.75, ease: "power3.inOut" }, T1);
     // it rises once the headline has cleared its place, so the two never cross
-    // A dark slab half faded reads as grey, so it fades fast and slides slow.
-    tl.fromTo(win, { y: 260 }, { y: 0, duration: 0.8, ease: "expo.out" }, T1 + 0.4);
-    tl.fromTo(win, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, T1 + 0.4);
+    // A dark slab half faded reads as grey, so it never fades: it slides in from below the frame.
+    const below = uc.offsetHeight - win.offsetTop;
+    // off the stage it is hidden, so it never counts as text outside the frame
+    tl.set(win, { autoAlpha: 0 }, 0);
+    tl.set(win, { autoAlpha: 1 }, T1 + 0.35);
+    tl.fromTo(win, { y: below }, { y: 0, duration: 0.9, ease: "expo.out" }, T1 + 0.35);
 
     // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
     tl.fromTo(Q(".push"), { scale: 1 }, { scale: v("--push"), duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
@@ -244,8 +247,9 @@ export function filmScene({ copy, beats, duration, timing }) {
       const HL_OFF = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 6px rgba(240,145,90,0)" };
       for (let i = 0; i < ROLLS; i++) {
         const at = ROLL_AT + i * ROLL_EVERY, out = items[i], into = items[i + 1];
-        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.28, ease: "power2.in", immediateRender: false }, at);
-        tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "power3.out", immediateRender: false }, at + 0.1);
+        // the old id is gone before the new one shows, so two ids are never drawn over each other
+        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power2.in", immediateRender: false }, at);
+        tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "power3.out", immediateRender: false }, at + 0.2);
         tl.to(slot, { width: into.offsetWidth, duration: 0.36, ease: "power2.inOut" }, at + 0.05);
         tl.set(slot, HL, at + 0.1);
         tl.fromTo(slot, HL, { ...HL_OFF, duration: 0.3, ease: "power2.out", immediateRender: false }, at + 0.4);
@@ -253,8 +257,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     }
 
     // 2 → 3 · the window drops away; the headline settles above the lockup.
-    tl.to(win, { y: 140, duration: 0.4, ease: "power2.in" }, T2);
-    tl.to(win, { opacity: 0, duration: 0.15, ease: "none" }, T2 + 0.25);
+    tl.to(win, { y: below, duration: 0.5, ease: "power2.in" }, T2);
+    tl.set(win, { autoAlpha: 0 }, T2 + 0.5);
     tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power3.inOut" }, T2 + 0.05);
     tl.fromTo(Q(".lock svg"), { scale: 0.5, rotation: -40, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, T2 + 0.35);
     tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, T2 + 0.45);
@@ -289,13 +293,15 @@ export const CSS = `
   .film .term{background:${C.termBg};border-radius:24px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.05)}
   .film .bar{height:76px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
   .film .bar i{width:18px;height:18px;border-radius:50%;background:#3F3F46;flex:none}
-  .film .ttl{margin-left:18px;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap}
+  .film .ttl{margin-left:18px;min-width:0;flex:1;overflow:hidden;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap;
+    -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
   .film .code{padding:36px 48px 44px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:1.45;color:${C.termInk}}
-  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px}
+  /* a wrapped line hangs under its first character, past the prompt, so it reads as one command */
+  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px 0 calc(16px + 2ch);text-indent:-2ch}
   .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.termDim}}
   .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
   .film .sh .ln::before{content:"$ ";color:${C.termDim}}
-  .film .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;vertical-align:top}
+  .film .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;vertical-align:top;text-indent:0}
   .film .c{opacity:0}
   .film .m{color:${C.model}}
   .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top;border-radius:8px}
