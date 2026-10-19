@@ -33,9 +33,12 @@ The owner on v1 (106.6s): too slow, too much step-by-step and internal mechanics
   `tools/kit.mjs` pastes it into this film's frames).
 - Ships landscape (1920x1080) and portrait (1080x1920) from the same frames; each
   frame's portrait layout sits under `@media (orientation: portrait)`.
-- No signed-in screen is shown: none was captured, and none is rebuilt. The one
-  drawn app surface (Frame 5, your key's card) carries the "Illustration" badge.
-  The pool table is the real capture `assets/anyrouter-pool.png`.
+- No anyrouter.dev screenshot is embedded (owner direction: some site UI is being
+  redesigned, duyet/anyrouter #5800-#5803). The Add key dialog in Frame 2 is redrawn in
+  the kit from the real one, with its real labels (`shared/captures/2026-10-19/screens/signed-in/`
+  `byok-add-openrouter-key.png`, `byok-openrouter-key-routing.png`, reference only). The one
+  surface that is not real UI (Frame 5, your account's quota card) carries the "Illustration" badge.
+- "32 routed" and "198 routed" are on-screen labels of that dialog, not narration claims.
 - Keys are always redacted.
 
 ## Claims ledger
@@ -54,7 +57,7 @@ Every number or claim on screen is one of these. Sources were read 2026-10-18.
 | C8 | Create the key: openrouter.ai → Keys → Create Key → copy. Keys start `sk-or-`. | docs/guides/unblock-free-model-rate-limits-openrouter-key.md |
 | C9 | Add it: Dashboard → BYOK → OpenRouter → paste into "API key". AnyRouter makes one live call to OpenRouter before it stores the key; encrypted at rest, never shown again. Base URL `https://openrouter.ai/api/v1` is the default. | same guide + docs/features/byok-providers/openrouter.md |
 | C10 | Donating: per-key switch; AnyRouter verifies the key ("Key verified"); your own requests always come first; turn it off any time; earn 5% (Go or no plan) / 8% (Pro, Max) of the token cost of requests it serves, capped at $1 per key per UTC day. On the Free plan, donating an eligible key unlocks the shared pool's free models. | docs/features/shared-pool.md + the guide |
-| C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | `assets/anyrouter-pool.png` (real screenshot) |
+| C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | the real /pool screenshot `assets/anyrouter-pool.png`, used by v1 only; v2 shows no site screenshot |
 | C13 | The limit belongs to the account: more keys on one account do not raise it ("One account. One limit."). | openrouter.ai/docs/api-reference/limits.md (live 2026-10-19: "Making additional accounts or API keys will not affect your rate limits") |
 | C14 | Shared-pool traffic on your donated key runs on your OpenRouter account and uses its quota (its 20/min and 50/day). Your own requests are tried first. | anyrouter.dev/docs/features/shared-pool.md (live 2026-10-19: "route other users' matching requests through your provider account, exactly as if you'd made the call yourself"; "You always keep first call on your own key") + the dashboard consent line "the usage appears on your OpenRouter account" (`tools/ui-labels.md`) + C13 (limit per account) |
 | C15 | Check that OpenRouter's terms allow sharing before you donate; the dialog calls sharing "donating". | docs/guides/unblock-free-model-rate-limits-openrouter-key.md (live 2026-10-19: "Check that OpenRouter's terms allow sharing your key before you donate") + shared-pool.md ("You're responsible for confirming that before you donate") |

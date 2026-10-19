@@ -97,30 +97,34 @@
   [data-composition-id="02-add-share"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="02-add-share"] .f02-add { position: absolute; left: 200px; right: 200px; top: 170px; display: flex; flex-direction: column; align-items: center; gap: 36px; }
-    [data-composition-id="02-add-share"] .f02-key { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 24px; height: 132px; box-sizing: border-box; padding: 0 44px; border-radius: 20px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 56px; white-space: nowrap; }
-    [data-composition-id="02-add-share"] .f02-key img { width: 64px; height: 64px; }
-    [data-composition-id="02-add-share"] .f02-arrow { width: 4px; height: 96px; border-radius: 2px; background: var(--line-strong); transform-origin: 50% 0; }
-    [data-composition-id="02-add-share"] .f02-card { width: 900px; box-sizing: border-box; padding: 48px 56px; display: flex; flex-direction: column; gap: 36px; }
-    [data-composition-id="02-add-share"] .f02-brand { display: flex; align-items: center; gap: 24px; }
-    [data-composition-id="02-add-share"] .f02-brand svg { width: 88px; height: 88px; }
-    [data-composition-id="02-add-share"] .f02-slot { height: 132px; border-radius: 20px; border: 2px dashed var(--line); }
-
-    [data-composition-id="02-add-share"] .f02-browser .k-url { font-size: 38px; height: 50px; }
-    [data-composition-id="02-add-share"] .f02-browser { left: 96px; right: 96px; top: 110px; height: 650px; }
-    [data-composition-id="02-add-share"] .f02-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-    [data-composition-id="02-add-share"] .f02-shot img { display: block; max-width: none; }
-    [data-composition-id="02-add-share"] .f02-row-ring { border-radius: 14px; }
-    /* the spotlight: the page dims around the OpenRouter row; it moves in capture px */
-    [data-composition-id="02-add-share"] .f02-spot { position: absolute; border-radius: 14px; box-shadow: 0 0 0 4000px rgba(255,255,255,0); pointer-events: none; }
-    [data-composition-id="02-add-share"] .f02-badge { position: absolute; left: 50%; top: 700px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
+    /* The Add key dialog, redrawn at 2x from the signed-in capture byok-add-openrouter-key.png and the
+       routing panel byok-openrouter-key-routing.png (shared/captures/2026-10-19); labels are the real ones. */
+    [data-composition-id="02-add-share"] .f02-dialog { position: absolute; left: 260px; right: 260px; top: 84px; padding: 40px 48px; display: flex; flex-direction: column; gap: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.14); }
+    [data-composition-id="02-add-share"] .f02-head { display: flex; align-items: center; gap: 24px; }
+    [data-composition-id="02-add-share"] .f02-head img { width: 64px; height: 64px; }
+    [data-composition-id="02-add-share"] .f02-field { position: relative; display: flex; align-items: center; height: 100px; box-sizing: border-box; padding: 0 32px; border-radius: 16px; border: 2px solid var(--line-strong); font-family: var(--mono); font-size: 44px; }
+    [data-composition-id="02-add-share"] .f02-field .k-roll > span:first-child { color: var(--muted); }
+    [data-composition-id="02-add-share"] .f02-lock { display: inline-flex; align-items: center; gap: 14px; margin-top: -8px; }
+    [data-composition-id="02-add-share"] .f02-lock svg { width: 36px; height: 36px; flex: none; }
+    [data-composition-id="02-add-share"] .f02-routes { display: flex; gap: 24px; }
+    [data-composition-id="02-add-share"] .f02-route { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 24px 28px; border-radius: 16px; border: 2px solid var(--line-strong); background: var(--bg); }
+    [data-composition-id="02-add-share"] .f02-route-top { display: flex; align-items: center; gap: 16px; }
+    [data-composition-id="02-add-share"] .f02-route-top .k-label { white-space: nowrap; }
+    [data-composition-id="02-add-share"] .f02-radio { position: relative; width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--line-strong); box-sizing: border-box; flex: none; }
+    [data-composition-id="02-add-share"] .f02-radio i { position: absolute; left: 6px; top: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--primary); opacity: 0; }
+    [data-composition-id="02-add-share"] .f02-row { display: flex; align-items: center; gap: 28px; padding-top: 4px; }
+    [data-composition-id="02-add-share"] .f02-row .k-label { flex: 1; }
+    [data-composition-id="02-add-share"] .f02-switch { position: relative; width: 144px; height: 80px; border-radius: 999px; background: var(--line-strong); flex: none; }
+    [data-composition-id="02-add-share"] .f02-knob { position: absolute; left: 8px; top: 8px; width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+    [data-composition-id="02-add-share"] .f02-foot { display: flex; justify-content: flex-end; padding-top: 24px; border-top: 2px solid var(--line); }
+    [data-composition-id="02-add-share"] .f02-add { background: var(--primary); }
+    [data-composition-id="02-add-share"] .f02-add svg { width: 40px; height: 40px; }
+    [data-composition-id="02-add-share"] .f02-ring { border-radius: 22px; }
 
     @media (orientation: portrait) {
-      [data-composition-id="02-add-share"] .f02-add { left: 60px; right: 120px; top: 300px; }
-      [data-composition-id="02-add-share"] .f02-key { font-size: 48px; height: 116px; padding: 0 32px; }
-      [data-composition-id="02-add-share"] .f02-card { width: 100%; padding: 40px; }
-      [data-composition-id="02-add-share"] .f02-browser { left: 60px; right: 120px; top: 300px; height: 560px; }
-      [data-composition-id="02-add-share"] .f02-badge { left: 510px; top: 920px; }
+      [data-composition-id="02-add-share"] .f02-dialog { left: 60px; right: 120px; top: 230px; padding: 36px 32px; }
+      [data-composition-id="02-add-share"] .f02-routes { flex-direction: column; gap: 16px; }
+      [data-composition-id="02-add-share"] .f02-field { font-size: 40px; }
     }
   </style>
 
@@ -128,26 +132,27 @@
     <div id="f02-bg" class="k-bg clip" data-start="0" data-duration="4" data-track-index="0"></div>
     <div id="f02-stage" class="k-stage clip" data-start="0" data-duration="4" data-track-index="1">
       <div id="f02-cam" class="k-cam">
-        <div id="f02-add" class="f02-add">
-          <span id="f02-key" class="f02-key"><img src="assets/provider-openrouter.svg" alt="" />sk-or-v1-••••••••</span>
-          <div id="f02-arrow" class="f02-arrow"></div>
-          <div id="f02-card" class="k-card f02-card">
-            <div class="f02-brand">
-              <svg viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
-              <span class="k-h2">AnyRouter</span>
+        <div id="f02-dialog" class="k-card f02-dialog">
+          <div class="f02-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-title">OpenRouter</span></div>
+          <div id="f02-field" class="f02-field"><span id="f02-key" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>sk-or-...</span><span data-layout-allow-overlap>sk-or-v1-••••••••</span></span></div>
+          <span class="k-small f02-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Keys are encrypted at rest</span>
+          <div class="f02-routes">
+            <div id="f02-free" class="f02-route">
+              <div class="f02-route-top"><span class="f02-radio"><i id="f02-dot"></i></span><span class="k-label">Free models only</span><span class="k-badge">32 routed</span></div>
+              <span class="k-small">Paid SKUs never use it.</span>
             </div>
-            <div id="f02-slot" class="f02-slot"></div>
+            <div class="f02-route">
+              <div class="f02-route-top"><span class="f02-radio"></span><span class="k-label">All models</span><span class="k-badge">198 routed</span></div>
+              <span class="k-small">Paid SKUs bill your OpenRouter account.</span>
+            </div>
           </div>
-        </div>
-
-        <div id="f02-browser" class="k-browser f02-browser">
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/pool</span></div>
-          <div id="f02-view" class="k-view">
-            <div id="f02-shot" class="f02-shot"><img src="assets/anyrouter-pool.png" alt="" /><div id="f02-spot" class="f02-spot"></div></div>
-            <div id="f02-ring" class="k-ring f02-row-ring"></div>
+          <div class="f02-row">
+            <span class="k-label">Donate to the shared pool</span>
+            <span id="f02-switch" class="f02-switch"><span id="f02-knob" class="f02-knob"></span></span>
           </div>
+          <div class="f02-foot"><span id="f02-add" class="k-btn f02-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 8.65-8.65M18 5l2 2M15 8l2 2"/></svg>Add key</span></div>
         </div>
-        <span id="f02-badge" class="k-badge is-big f02-badge">74 OpenRouter keys, Oct 18, 2026</span>
+        <div id="f02-ring" class="k-ring f02-ring"></div>
       </div>
     </div>
   </div>
@@ -210,49 +215,30 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f02-" + s);
       const DURATION = 4;
-      // Word starts from audio_meta.json frame 2: "key" 0.998, "AnyRouter," 1.335, "share" 2.299, "pool." 2.879.
-      const KEY = 0.1, INTO = 0.85, SHARE = 2.0, POOL = 2.8;
-      const portrait = matchMedia("(orientation: portrait)").matches;
-      // Rectangles of the 2x capture of anyrouter.dev/pool (3840 px wide): the table's header and
-      // first three rows, and the OpenRouter row. Portrait keeps the provider column readable.
-      const TABLE = portrait ? { x: 790, y: 590, w: 780, h: 350 } : { x: 790, y: 590, w: 1470, h: 350 };
-      const ROW = portrait ? { x: 790, y: 674, w: 780, h: 86 } : { x: 790, y: 674, w: 1470, h: 86 };
+      // Word starts from audio_meta.json frame 2: "OpenRouter" 0.441, "key" 0.998, "AnyRouter," 1.335, "share" 2.299, "pool." 2.879.
+      const KEY = 0.85, FREE = 1.35, SHARE = 2.2, ADD = 2.85;
 
       document.fonts.ready.then(() => {
-        const view = $("view");
-        const near = K.fit(view, TABLE, K.scaleFor(view, TABLE, 1.2));
-        const wide = K.fit(view, TABLE, near.scale * 0.88);
-        // the key flies into the card's empty slot
-        const a = $("key").getBoundingClientRect(), b = $("slot").getBoundingClientRect();
-        const k = $("cam").offsetWidth / $("cam").getBoundingClientRect().width;
-        const into = { x: (b.left + b.width / 2 - a.left - a.width / 2) * k, y: (b.top + b.height / 2 - a.top - a.height / 2) * k };
-
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.04 });
+        K.push(tl, $("cam"), DURATION, { to: 1.05, y: -10 });
 
-        K.rise(tl, $("card"), 0.02, { y: 48, d: 0.6 });
-        tl.fromTo($("key"), { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, KEY);
-        tl.fromTo($("arrow"), { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power2.out" }, KEY + 0.3);
-        tl.to($("arrow"), { opacity: 0, duration: 0.25 }, INTO);
-        tl.to($("key"), { ...into, borderColor: "#BB4D00", backgroundColor: "#FFF4EC", duration: 0.55, ease: "power3.inOut" }, INTO);
-        tl.to($("card"), { borderColor: "#BB4D00", duration: 0.3, ease: "power2.out" }, INTO + 0.4);
-
-        // "share it with the pool": the real pool page takes over, punched in to the OpenRouter row
-        tl.to($("add"), { y: -80, opacity: 0, duration: 0.35, ease: "power2.in" }, SHARE);
-        tl.set($("shot"), wide, 0);
-        tl.fromTo($("browser"), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, SHARE + 0.1);
-        tl.to($("shot"), { ...near, duration: 1.2, ease: "power2.inOut" }, SHARE + 0.2);
-
+        K.rise(tl, $("dialog"), 0.02, { y: 70, d: 0.7 });
+        // the key is pasted: the placeholder rolls to a redacted key, and the field takes the focus ring
         const ring = $("ring");
-        tl.set(ring, {
-          left: near.x + ROW.x * near.scale - 8, top: near.y + ROW.y * near.scale - 4,
-          width: ROW.w * near.scale + 16, height: ROW.h * near.scale + 8,
-        }, 0);
-        tl.fromTo(ring, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, POOL);
-        tl.set($("spot"), { left: ROW.x, top: ROW.y, width: ROW.w, height: ROW.h }, 0);
-        tl.to($("spot"), { boxShadow: "0 0 0 4000px rgba(255,255,255,0.8)", duration: 0.4, ease: "power2.out" }, POOL);
-        tl.set($("badge"), { xPercent: -50 }, 0);
-        tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, POOL + 0.2);
+        tl.set(ring, K.box(ring, $("field"), 8), 0);
+        tl.fromTo(ring, { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, KEY - 0.25);
+        K.roll(tl, $("key"), [KEY]);
+        tl.to(ring, { opacity: 0, duration: 0.25 }, FREE - 0.1);
+
+        // Free models only
+        tl.to($("free"), { borderColor: "#BB4D00", backgroundColor: "#FFF4EC", duration: 0.3, ease: "power2.out" }, FREE);
+        tl.to($("dot"), { opacity: 1, duration: 0.2 }, FREE);
+
+        // "share it with the pool"
+        tl.to($("knob"), { x: 64, duration: 0.3, ease: "power2.inOut" }, SHARE);
+        tl.to($("switch"), { backgroundColor: "#0A0A0A", duration: 0.3, ease: "power2.inOut" }, SHARE);
+
+        tl.fromTo($("add"), { scale: 1 }, { keyframes: [{ scale: 0.94, duration: 0.1 }, { scale: 1, duration: 0.2 }], immediateRender: false }, ADD);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["02-add-share"] = tl;

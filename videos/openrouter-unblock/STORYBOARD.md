@@ -12,10 +12,10 @@ music: none
 
 - **Palette system** (from `frame.md`, shared with the explainer v2). White `bg` on every frame. `ink` for headlines and marks. `primary` burnt orange is the one accent per moment: your key, the value that just rolled in, the row the voice names. `free` green only means works / unchanged. `danger` only on the 429 and the spent quota.
 - **Type.** Geist for spoken words, Geist Mono for anything typed (ids, URLs, keys). Nothing a viewer must read below 36px (URL pills 34px). Kit: `tools/kit/` (the explainer's, linked) pasted into each frame by `tools/kit.mjs`.
-- **Camera.** Every frame sits in a `.k-cam` that pushes in slowly, so no frame holds still for more than 1.5s. The real pool page is punched in to its OpenRouter row, about 800 CSS px of page across the frame.
+- **Camera.** Every frame sits in a `.k-cam` that pushes in slowly, so no frame holds still for more than 1.5s. 
 - **Cuts.** Every cut lands on a beat of the music (120 bpm, first beat 0.059s): `pad-voices.mjs --beat=0.5 --phase=0.059`. Reveals land on the spoken word (ElevenLabs alignment in `audio_meta.json`).
 - **Continuity.** The redacted OpenRouter key pill `sk-or-v1-••••••••` is the recurring object (Frames 2, 3, 5). Frame 4 is the explainer's code card with its orange roll.
-- **Honesty.** Only claims from BRIEF.md. No dashboard screen is faked: signed-in screens were never captured, so drawn app UI carries the "Illustration" badge. The pool table is the real capture of anyrouter.dev/pool. Never "unlimited", never "keeps going".
+- **Honesty.** Only claims from BRIEF.md. No dashboard screen is faked: signed-in screens were never captured, so drawn app UI carries the "Illustration" badge. anyrouter.dev UI is redrawn in the kit from real values (the signed-in captures are reference only); no site screenshot is embedded. Never "unlimited", never "keeps going".
 - **Negative list.** No gradients, glows, blur, noise, emoji, step-by-step setup. No `repeat` / `yoyo`, no randomness.
 - **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080x1920): content in y 200 to 1220 and x 60 to 960; captions own 1240 to 1480.
 - **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`; `shared/authoring/portrait.mjs` writes the 1080x1920 project.
@@ -39,17 +39,17 @@ music: none
 ## Frame 2 — Add and share
 - src: compositions/frames/02-add-share.html
 
-- scene: The redacted OpenRouter key pill drops into an AnyRouter card; then the real anyrouter.dev/pool page, punched in to the OpenRouter row (74 keys), with a focus ring
+- scene: The Add key dialog redrawn from the real one: OpenRouter, the sk-or-... field takes a redacted key, "Keys are encrypted at rest", key routing "Free models only" (32 routed) picked over "All models" (198 routed, paid SKUs bill your OpenRouter account), "Donate to the shared pool" turns on, Add key
 - duration: 4s
 - transition_in: cut
 - type: how_it_works
 - beat: relief
 - voiceover: "Add your OpenRouter key to AnyRouter, and share it with the pool."
-- asset_candidates: assets/anyrouter-pool.png — the real /pool page, captured 2026-10-18
+- asset_candidates: assets/provider-openrouter.svg; reference only: shared/captures/2026-10-19/screens/signed-in/byok-add-openrouter-key.png, byok-openrouter-key-routing.png
 - blueprint: ui-callout (Adapt)
-- focal: the key, then the OpenRouter pool row
-- roles: pool page = proof that members share keys
-- sfx: pop on key, whoosh-short on share
+- focal: the key field, then the share switch
+- roles: dialog = the real form, redrawn in the kit
+- sfx: pop on key, click on AnyRouter, whoosh-short on share, click-soft on pool
 - status: animated
 
 ## Frame 3 — What it does
