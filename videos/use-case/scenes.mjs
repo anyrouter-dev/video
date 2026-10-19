@@ -92,6 +92,8 @@ export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
 // The code window: as wide as the safe area, its text inside the padding. In
+// portrait it is narrower, so leaned and pushed in all the way it still fits
+// across the safe area: on a phone an edge past it reads as cropped. In
 // beat 2 the caption and the window share the safe area's height (`sh`); the
 // caption is the headline scaled down, never below `capMin`. The camera leans in
 // over beat 1 (`lean`) and the window pushes in over beat 2, both about the
@@ -100,8 +102,16 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
 const WIN = {
   landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02 },
-  portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.05 },
+  portrait: { sizes: [44, 40], wrap: 40, width: 840, padX: 28, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.04 },
 };
+// The safe area across each frame. The camera leans and the window pushes in about its centre.
+const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
+/** The window's left and right edges at its fullest, leaned and pushed in all the way. */
+export function windowSpan(o) {
+  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = w.width * w.lean * w.pushMax / 2;
+  return { left: mid - half, right: mid + half };
+}
+const winLeft = o => ACROSS[o].left + (ACROSS[o].width - WIN[o].width) / 2;
 // the window's 2px border, both sides
 const BAR = 72, EDGE = 4, CODE_LH = 1.45, TITLE_LH = 0.98;
 // a couple of px short of the box, so rounding in the browser can never add a row
@@ -380,7 +390,7 @@ export const CSS = `
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
   .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;text-wrap:balance;transform-origin:50% 0}
 
-  .film .win{position:absolute;top:0;left:var(--sl);width:var(--tw)}
+  .film .win{position:absolute;top:0;left:${winLeft('landscape')}px;width:var(--tw)}
   .film .term{overflow:hidden;border-radius:32px}
   .film .term.is-ink{background:${C.ink};border:2px solid ${C.ink};color:${C.onInk}}
   .film .term.card{color:${C.ink}}
@@ -427,6 +437,7 @@ export const CSS = `
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
+    .film .win{left:${winLeft('portrait')}px}
     .film .term{border-radius:28px}
     .film .code{font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
     .film .ln.clip-l{-webkit-mask-image:none;mask-image:none}

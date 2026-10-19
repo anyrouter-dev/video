@@ -6,9 +6,9 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import kind, { FILM, parseDoc, redact, rollPools } from './kind.mjs';
-import { linesOf, TYPE } from './scenes.mjs';
+import { linesOf, TYPE, windowSpan } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
-import { writePortrait } from '../../shared/authoring/portrait.mjs';
+import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const FIXTURE = path.join(dir, 'fixtures/use-cases.json');
@@ -299,4 +299,11 @@ test('the kicker is a quarter larger than frame.md\'s badge, so it reads on a ph
   const px = rule => Number(film.css.match(new RegExp(`\\.film \\.kick\\{[^}]*${rule}:(\\d+)px`))?.[1]);
   assert.ok(px('font-size') >= 36 * 1.25, `kicker at ${px('font-size')}px`);
   assert.ok(px('height') >= 64 * 1.25, `kicker pill ${px('height')}px tall`);
+});
+
+test('a portrait window pushed in all the way stays inside the safe area across', () => {
+  // the camera leans in and the window pushes in about the safe area's centre, so a window as wide as
+  // the safe area grows past x 960, which a phone shows as a card cut by the edge
+  const { left, right } = windowSpan('portrait');
+  assert.ok(left >= PORTRAIT_SAFE.left && right <= PORTRAIT_SAFE.right, `the window spans x ${left.toFixed(1)} to ${right.toFixed(1)}`);
 });
