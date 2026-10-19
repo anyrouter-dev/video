@@ -20,6 +20,8 @@ Output lands in `renders/`.
 | `teaser` | the 20-second brand film, dark and light from one source | `videos/teaser/` | on demand |
 | `explainer` | the narrated newcomer explainer: what AnyRouter is, free models via the shared pool, coding with `anyr claude` | `videos/explainer/` | on demand |
 | `openrouter-unblock` | narrated tutorial: get past OpenRouter's free-model rate limit with your key as BYOK plus the pool | `videos/openrouter-unblock/` | on demand |
+| `sign-in-with-anyrouter` | narrated guide: add a Sign in with AnyRouter button, each user's usage billed to them | `videos/sign-in-with-anyrouter/` | on demand |
+| `pool-donation` | narrated guide: donate an idle provider key to the shared pool | `videos/pool-donation/` | on demand |
 | `release` | one product release, e.g. "AnyRouter 1.6" | [`/changelog/rss.xml`](https://anyrouter.dev/changelog/rss.xml) | nightly |
 | `model-drop` | models added to the catalog, and price moves | [`/api/v1/models`](https://anyrouter.dev/api/v1/models?all=1), diffed against a baseline | nightly |
 | `changelog` | one day of changelog entries | the *Model releases* section of [`/llms.txt`](https://anyrouter.dev/llms.txt) | nightly |

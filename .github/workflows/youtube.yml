@@ -12,7 +12,7 @@ on:
       kind:
         description: 'The film kind'
         type: choice
-        options: [explainer, openrouter-unblock, teaser, intro, model-drop, release, changelog]
+        options: [explainer, openrouter-unblock, sign-in-with-anyrouter, pool-donation, teaser, intro, model-drop, release, changelog]
       id:
         description: 'The release id from releases/<kind>/index.json, e.g. 001-20261018-v1-1cbd1f149e'
         required: true
