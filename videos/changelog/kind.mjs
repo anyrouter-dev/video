@@ -62,6 +62,19 @@ export const clip = (text, max) => {
   return `${s.slice(0, max - 1).replace(/\s+\S*$/, '').replace(/[,;:\s—–-]+$/, '')}…`;
 };
 
+/**
+ * A typed line cut to fit each shape: `wide` characters in landscape, `tall` in the narrower
+ * portrait row. A line short enough for both is set once; a longer one carries both cuts, and
+ * the stylesheet shows the one that fits the orientation.
+ */
+const cut = (text, wide, tall) => {
+  const [w, t] = [clip(text, wide), clip(text, tall)];
+  return w === t ? chars(w) : `<span class="cut l">${chars(w)}</span><span class="cut p">${chars(t)}</span>`;
+};
+/** Type a cut line: each cut from `at`, so the landscape one keeps its timing. */
+const typeCut = (sel, at, each) => `type("${sel} > .c, ${sel} > .cut.l .c", ${at}, ${each});
+    type("${sel} > .cut.p .c", ${at}, ${each});`;
+
 const count = s => String(s).split(/\s+/).filter(Boolean).length;
 const up = t => Math.ceil(t / BEAT - 1e-9) * BEAT;           // up to the next beat
 const r3 = t => +t.toFixed(3);
@@ -114,14 +127,14 @@ const logScene = (data, start, { rows, step, dur }) => {
 
   const row = (e, i) => {
     const t = clip(e.title, 46);
-    return `<div class="row r${i}${off(e) ? ' off' : ''}" style="height:${lineH}px">
+    return `<div class="row r${i}${off(e) ? ' off' : ''}" style="--lh:${lineH}px">
       <span class="sg mono">${off(e) ? '−' : '+'}</span><span class="ix mono">${pad2(i + 1)}</span>
       <span class="lmk">${markImg(leadMark(e))}</span>
-      <div class="tx"><div class="tt ${rows <= 2 ? fit(t, [[24, 'xl'], [38, 'l']], 's') : fit(t, [[34, 'l']], 's')}">${chars(t)}</div>
-        ${slugs ? `<div class="sl mono">${chars(`/blog/releases/${e.slug}`)}</div>` : ''}</div>
+      <div class="tx"><div class="tt ${rows <= 2 ? fit(t, [[24, 'xl'], [38, 'l']], 's') : fit(t, [[34, 'l']], 's')}">${cut(e.title, 46, 30)}</div>
+        ${slugs ? `<div class="sl mono">${cut(`/blog/releases/${e.slug}`, Infinity, 46)}</div>` : ''}</div>
       <span class="pill ${off(e) ? 'off' : 'new'}">${TYPE(e)}</span></div>`;
   };
-  const moreRow = more ? `<div class="row r${rows - 1} more" style="height:${lineH}px">
+  const moreRow = more ? `<div class="row r${rows - 1} more" style="--lh:${lineH}px">
       <span class="sg mono">…</span><span class="ix mono"></span><span class="lmk"></span>
       <div class="tx"><div class="tt s">${chars(`+${n - shown.length} more on anyrouter.dev/blog/releases`)}</div></div></div>` : '';
 
@@ -142,30 +155,36 @@ const logScene = (data, start, { rows, step, dur }) => {
       <div class="rf"><span class="label">Source</span><span class="label dk">anyrouter.dev/llms.txt</span></div>
     </div></div>
     <div class="side">
-      <div class="label">Date</div>
-      <div class="day num">${esc(d)}</div>
-      <div class="mon mono">${esc(MONTHS[+m - 1] ?? m)} ${esc(y)}</div>
+      <div class="when">
+        <div class="label">Date</div>
+        <div class="day num">${esc(d)}</div>
+        <div class="mon mono">${esc(MONTHS[+m - 1] ?? m)} ${esc(y)}</div>
+      </div>
       <div class="rule"></div>
-      <div class="tal"><span>Entries</span><i class="lead"></i><b class="num n-all">${n}</b></div>
-      <div class="tal"><span>New</span><i class="lead"></i><b class="num n-add hl">${added}</b></div>
-      <div class="tal${retired ? '' : ' zero'}"><span>Retired</span><i class="lead"></i><b class="num n-off">${retired}</b></div>
-      <div class="track"><div class="bar dots" style="width:${bar}%"></div>${retired
-        ? `<div class="bar dots-grey ret" style="left:${bar}%;width:${r3(100 - bar)}%"></div>` : ''}</div>
+      <div class="tally">
+        <div class="tal"><span>Entries</span><i class="lead"></i><b class="num n-all">${n}</b></div>
+        <div class="tal"><span>New</span><i class="lead"></i><b class="num n-add hl">${added}</b></div>
+        <div class="tal${retired ? '' : ' zero'}"><span>Retired</span><i class="lead"></i><b class="num n-off">${retired}</b></div>
+        <div class="track"><div class="bar dots" style="width:${bar}%"></div>${retired
+          ? `<div class="bar dots-grey ret" style="left:${bar}%;width:${r3(100 - bar)}%"></div>` : ''}</div>
+      </div>
     </div></div>`,
     inner: `
     type(".rh .c", 0.05, 0.01);
     tl.fromTo(Q(".perf"), { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "steps(12)" }, 0.1);
-    slide(".side > .label, .mon", 0.1, { x: 40 });
+    slide(".when > .label, .mon", 0.1, { x: 40 });
     count(".day", ${+d || 1}, 0.1, 0.5, v => String(Math.max(1, Math.round(v))).padStart(2, "0"));
     tl.fromTo(Q(".side .rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "expo.out" }, 0.3);
     slide(".tal", 0.35, { x: 40 }, 0.08);
+    // A row is --lh tall times the orientation's --lk, and the print head steps by the same.
+    const LK = parseFloat(getComputedStyle($(".rl")).getPropertyValue("--lk"));
     ${shown.map((e, i) => `
     tl.fromTo(Q(".r${i}"), { opacity: 0 }, { opacity: 1, duration: 0.001 }, ${at(i)});
-    tl.fromTo(Q(".head"), { y: ${i * lineH} }, { y: ${(i + 1) * lineH - 4}, duration: ${Math.min(step, 0.3)}, ease: "steps(6)" }, ${at(i)});
+    tl.fromTo(Q(".head"), { y: ${i * lineH} * LK }, { y: ${(i + 1) * lineH} * LK - 4, duration: ${Math.min(step, 0.3)}, ease: "steps(6)" }, ${at(i)});
     stamp(".r${i} .sg", ${at(i)});
     stamp(".r${i} .lmk", ${r3(at(i) + 0.05)});
-    type(".r${i} .tt .c", ${at(i)}, ${TYPE_EACH});
-    type(".r${i} .sl .c", ${r3(at(i) + 0.1)}, 0.006);
+    ${typeCut(`.r${i} .tt`, at(i), TYPE_EACH)}
+    ${typeCut(`.r${i} .sl`, r3(at(i) + 0.1), 0.006)}
     stamp(".r${i} .pill", ${r3(at(i) + 0.3)});`).join('')}
     ${more ? `type(".r${rows - 1} .tt .c", ${at(rows - 1)}, ${TYPE_EACH});
     tl.fromTo(Q(".r${rows - 1}"), { opacity: 0 }, { opacity: 1, duration: 0.001 }, ${at(rows - 1)});` : ''}
@@ -227,7 +246,7 @@ const spotScene = (e, i, k, entries, line, start, dur, date) => {
     <div class="sp-main">
       <div class="sp-l">
         <div class="kicker"><i>${pad2(i + 1)} / ${pad2(k)}</i>${esc(date)}</div>
-        <div class="meta"><span class="pill ${off(e) ? 'off' : 'new'}">${TYPE(e)}</span><span class="sl mono">${chars(path)}</span></div>
+        <div class="meta"><span class="pill ${off(e) ? 'off' : 'new'}">${TYPE(e)}</span><span class="sl mono">${cut(path, Infinity, 46)}</span></div>
         <div class="ttl ${titleClass(e.title)}">${words(e.title)}</div>
         <div class="lede ${ledeClass(line)}">${words(line)}</div>
       </div>
@@ -238,7 +257,7 @@ const spotScene = (e, i, k, entries, line, start, dur, date) => {
     inner: `
     slide(".kicker", 0.05);
     stamp(".meta .pill", 0.15);
-    type(".meta .sl .c", 0.2, 0.008);
+    ${typeCut('.meta .sl', 0.2, 0.008)}
     rise(".ttl", 0.35);
     rise(".lede", ${lede}, 0.02);
     stamp(".glyph", 0.5);
@@ -266,9 +285,9 @@ const CSS = `
   .perf{height:10px;transform-origin:0 50%;
     background-image:radial-gradient(circle,var(--ink) 2px,transparent 2.6px);background-size:14px 10px}
   .rows{padding:6px 0}
-  .rl{position:relative}
+  .rl{position:relative;--lk:1}
   .head{position:absolute;left:-40px;right:-40px;top:0;height:4px;z-index:2}
-  .row{display:flex;align-items:center;gap:22px;border-top:2px dotted var(--ink2)}
+  .row{display:flex;align-items:center;gap:22px;border-top:2px dotted var(--ink2);height:calc(var(--lh) * var(--lk))}
   .row:first-child{border-top:0}
   .sg{flex:none;width:46px;height:46px;display:grid;place-items:center;border:2px solid var(--tone);
     background:var(--tone);color:#FFFFFF;font-size:32px;font-weight:800;border-radius:4px}
@@ -332,14 +351,54 @@ const CSS = `
   .spot.off .kicker{color:var(--ink2)}
 
   /* the end card: a long headline steps down */
-  .end .big .bm{font-size:68px}.end .big .bs{font-size:54px}`;
+  .end .big .bm{font-size:68px}.end .big .bs{font-size:54px}
+
+  /* a typed line in two cuts (cut()): the wide one in landscape */
+  .cut.p{display:none}
+
+  /* portrait: the date over the receipt; a spotlight's glyph beside its kicker, the day as cells */
+  @media (orientation: portrait){
+    .cut.l{display:none}.cut.p{display:inline}
+
+    .log{flex-direction:column;align-items:stretch;gap:36px;min-height:0}
+    .side{order:-1;flex:none;flex-direction:row;align-items:flex-end;gap:56px}
+    .side .when{flex:none}
+    .side .day{font-size:180px}
+    .side .mon{font-size:34px}
+    .side .rule{display:none}
+    .side .tally{flex:1;padding-bottom:6px}
+    .tal{height:48px;font-size:22px}
+    .tal b{font-size:36px}
+    .rcpt{flex:none}
+    .rcpt .face{padding:0 28px}
+    .rh{height:60px}.rf{height:54px}
+    .rl{--lk:.86}
+    .row{gap:16px}
+    .tt.xl{font-size:40px}.tt.l{font-size:32px}.tt.s{font-size:28px}
+    .row .pill{width:128px;height:44px;font-size:18px}
+
+    .spot{height:auto;gap:56px;justify-content:flex-start}
+    .sp-main{display:grid;grid-template-columns:minmax(0,1fr) 260px;column-gap:40px;align-items:start}
+    .sp-l{display:contents}
+    .spot .kicker{grid-column:1;grid-row:1;align-self:end}
+    .spot .meta{grid-column:1;grid-row:2;align-self:start;flex-wrap:wrap;gap:16px 24px}
+    .spot .meta .sl{font-size:20px}
+    .glyph{grid-column:2;grid-row:1 / 3;width:260px;height:260px}
+    .gm{width:150px;height:150px}
+    .gg.g2,.gg.g3,.gg.g4{padding:34px;gap:18px}
+    .gg.g2 .gm,.gg.g3 .gm,.gg.g4 .gm{width:76px;height:76px}
+    .spot .ttl{grid-column:1 / -1;margin-top:44px}
+    .spot .ttl.h1{font-size:128px}.spot .ttl.h2{font-size:88px}.spot .ttl.h3{font-size:60px}.spot .ttl.h4{font-size:46px}
+    .spot .lede{grid-column:1 / -1}
+    .strip{height:64px;gap:10px}
+    .cell{align-items:center;padding:0}
+    .cell .ct{display:none}
+  }`;
 
 export default {
   id: 'changelog',
   title: 'Changelog',
   scheduled: true,
-  // lib/film.mjs has no portrait layout yet: its backdrop and frame chrome are drawn at 1920x1080.
-  renditions: ['landscape'],
   items,
 
   async collect({ flags }) {
