@@ -147,7 +147,7 @@ test('the film opens on the page title and closes on its URL', () => {
 test('the page\'s own command is typed, in a terminal when it runs in a shell', () => {
   for (const [u, film] of films()) {
     const h = html(film);
-    const typed = [...h.matchAll(/<div class="ln typed focus">([\s\S]*?)<span class="caret">/g)]
+    const typed = [...h.matchAll(/<div class="ln typed focus"[^>]*>([\s\S]*?)<span class="caret">/g)]
       .map(m => shown(m[1].replace(/<em[^>]*>[^<]*<\/em>/g, '')).join(''));
     assert.equal(typed.length, 1, `${u.slug}: one line is the command`);
     assert.ok(typed[0].includes(redact(u.command.text.trim())), `${u.slug}: "${typed[0]}" holds the page's command`);

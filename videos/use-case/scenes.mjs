@@ -91,6 +91,7 @@ const BAR = 84, CODE_LH = 1.45, TITLE_LH = 1.05;
 // a couple of px short of the box, so rounding in the browser can never add a row
 const textWidth = o => WIN[o].width - 2 * WIN[o].padX - 2;
 const monoWidth = (text, px) => [...text].length * 0.6 * px;
+const indentOf = text => text.match(/^ */)[0].length;
 // the caret, as .caret draws it
 const caretWidth = px => 0.56 * px + 4;
 
@@ -108,8 +109,8 @@ export function codeSizes(lines, roll, shell, title) {
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
   const fits = (t, px, o) => monoWidth(`${prompt}${t}`, px) + caretWidth(px) <= textWidth(o);
-  // a wrapped row hangs past the prompt, so it is measured two characters short
-  const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - 1.2 * px, weight: 'mono' }));
+  // a wrapped row hangs two characters past the line's indent, so it is measured that much short
+  const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - (indentOf(t) + 2) * 0.6 * px, weight: 'mono' }));
   const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => !fits(t, px, o)));
   const rows = (px, o) => lines.reduce((n, l) => {
     if (!isTyped(l)) return n + 1;
@@ -187,7 +188,7 @@ function windowHtml(win) {
     const typed = shell || l.focus;
     const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
     return typed
-      ? `<div class="ln typed${l.focus ? ' focus' : ''}">${typedLine(l, roll)}<span class="caret"></span></div>`
+      ? `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}<span class="caret"></span></div>`
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
   }).join('');
   return `<div class="win"><div class="push"><div class="term">
@@ -330,8 +331,8 @@ export const CSS = `
   .film .ttl{margin-left:18px;min-width:0;flex:1;overflow:hidden;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap;
     -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
   .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH};color:${C.termInk}}
-  /* a wrapped line hangs under its first character, past the prompt, so it reads as one command */
-  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px 0 calc(16px + 2ch);text-indent:-2ch}
+  /* a wrapped line hangs past its prompt and its own indent, so it reads as one command */
+  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px 0 calc(16px + (var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
   .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.termDim}}
   .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
   .film .sh .ln::before{content:"$ ";color:${C.termDim}}
