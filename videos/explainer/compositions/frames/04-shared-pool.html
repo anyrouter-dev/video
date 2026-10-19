@@ -3,340 +3,386 @@
     id="root"
     data-composition-id="04-shared-pool"
     data-start="0"
-    data-duration="13.857"
+    data-duration="12.138"
     data-width="1920"
     data-height="1080"
   >
     <style>
-      @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
-      @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
-
       #root {
         position: relative;
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-        color: #0a0a0a;
-      }
-      [class~="04-shared-pool-bg"] {
-        position: absolute;
-        inset: 0;
-        background: #ffffff;
-      }
-      [class~="04-shared-pool-stage"] {
-        position: absolute;
-        inset: 0;
-        transform-origin: 50% 45%;
       }
 
-      [class~="04-shared-pool-eyebrow"] {
-        position: absolute;
-        left: 120px;
-        top: 100px;
-        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-        font-size: 24px;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #636363;
+      @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+      [data-composition-id="04-shared-pool"] {
+        --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+        --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+        --line: #E5E5E5; --line-strong: #D4D4D8;
+        --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+        --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A; --term-ok: #4ADE80;
+        --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+        --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+        font-family: var(--sans);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
       }
-      [class~="04-shared-pool-h1"] {
+      [data-composition-id="04-shared-pool"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+      [data-composition-id="04-shared-pool"] .k-stage { position: absolute; inset: 0; }
+
+      /* type scale (frame.md typography) */
+      [data-composition-id="04-shared-pool"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+      [data-composition-id="04-shared-pool"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+      [data-composition-id="04-shared-pool"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+      [data-composition-id="04-shared-pool"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+      [data-composition-id="04-shared-pool"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+      [data-composition-id="04-shared-pool"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+      [data-composition-id="04-shared-pool"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+      [data-composition-id="04-shared-pool"] .k-code { font-family: var(--mono); font-size: 48px; line-height: 1.45; }
+      [data-composition-id="04-shared-pool"] .k-code-sm { font-family: var(--mono); font-size: 40px; line-height: 1.45; }
+      [data-composition-id="04-shared-pool"] .k-stat { font-size: 200px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+      [data-composition-id="04-shared-pool"] .k-mono { font-family: var(--mono); }
+
+      /* card: shadcn Card at 2x */
+      [data-composition-id="04-shared-pool"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 48px; }
+
+      /* badge: shadcn Badge */
+      [data-composition-id="04-shared-pool"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+      [data-composition-id="04-shared-pool"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line); }
+      [data-composition-id="04-shared-pool"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+      [data-composition-id="04-shared-pool"] .k-badge.is-accent { background: var(--primary-tint); color: var(--primary); }
+      [data-composition-id="04-shared-pool"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+      [data-composition-id="04-shared-pool"] .k-badge svg { width: 32px; height: 32px; flex: none; }
+
+      /* button: shadcn Button */
+      [data-composition-id="04-shared-pool"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 40px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 40px; font-weight: 500; line-height: 1; white-space: nowrap; }
+      [data-composition-id="04-shared-pool"] .k-btn.is-outline { background: var(--bg); color: var(--ink); border: 2px solid var(--line); }
+      [data-composition-id="04-shared-pool"] .k-btn.is-primary { background: var(--primary); }  /* only where it mirrors a real orange button on anyrouter.dev */
+      [data-composition-id="04-shared-pool"] .k-btn svg { width: 36px; height: 36px; flex: none; }
+
+      /* focus ring: wrap the named control; animate the ring's opacity */
+      [data-composition-id="04-shared-pool"] .k-ring { position: absolute; inset: -10px; border-radius: inherit; border: 2px solid var(--primary); box-shadow: 0 0 0 6px rgba(187,77,0,.35); pointer-events: none; opacity: 0; }
+
+      /* step header: replaces the old four-dot rail */
+      [data-composition-id="04-shared-pool"] .k-step { position: absolute; left: 96px; top: 88px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+
+      /* demo badge: every frame that shows a third-party site */
+      [data-composition-id="04-shared-pool"] .k-demo { position: absolute; right: 96px; top: 88px; }
+
+      /* callout: shadcn Alert, one side note at a time */
+      [data-composition-id="04-shared-pool"] .k-callout { display: flex; align-items: flex-start; gap: 28px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 36px 44px; }
+      [data-composition-id="04-shared-pool"] .k-callout > svg, [data-composition-id="04-shared-pool"] .k-callout > img { width: 40px; height: 40px; flex: none; margin-top: 4px; }
+      [data-composition-id="04-shared-pool"] .k-callout-text { display: flex; flex-direction: column; gap: 8px; }
+
+      /* browser frame: wraps a real screenshot, cropped to what the voice names */
+      [data-composition-id="04-shared-pool"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); overflow: hidden; }
+      [data-composition-id="04-shared-pool"] .k-browser-bar { position: relative; height: 56px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+      [data-composition-id="04-shared-pool"] .k-browser-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
+      [data-composition-id="04-shared-pool"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+      [data-composition-id="04-shared-pool"] .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+      [data-composition-id="04-shared-pool"] .k-view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
+      [data-composition-id="04-shared-pool"] .k-view > img { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+      /* key pill: an API key, always redacted (prefix + bullets) */
+      [data-composition-id="04-shared-pool"] .k-key { display: inline-flex; align-items: center; gap: 16px; height: 72px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 40px; line-height: 1; color: var(--ink); white-space: nowrap; }
+      [data-composition-id="04-shared-pool"] .k-key svg { width: 36px; height: 36px; flex: none; }
+
+      /* terminal: the one dark surface */
+      [data-composition-id="04-shared-pool"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+      [data-composition-id="04-shared-pool"] .k-term-bar { position: relative; height: 56px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+      [data-composition-id="04-shared-pool"] .k-term-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
+      [data-composition-id="04-shared-pool"] .k-term-dots i { width: 12px; height: 12px; border-radius: 50%; background: #3F3F46; }
+      [data-composition-id="04-shared-pool"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.45; color: var(--term-ink); white-space: pre; }
+      [data-composition-id="04-shared-pool"] .k-term-body .p { color: var(--term-dim); }     /* the $ prompt */
+      [data-composition-id="04-shared-pool"] .k-term-body .dim { color: var(--term-dim); }   /* output */
+      [data-composition-id="04-shared-pool"] .k-term-body .id { color: var(--term-id); }     /* a model id */
+      [data-composition-id="04-shared-pool"] .k-term-body .ok { color: var(--term-ok); }     /* success */
+      [data-composition-id="04-shared-pool"] .k-caret { display: inline-block; width: 26px; height: 52px; vertical-align: -8px; background: var(--term-ink); }
+
+      /* cursor: macOS arrow at 2x so it reads on a phone */
+      [data-composition-id="04-shared-pool"] .k-cursor { position: absolute; left: 0; top: 0; width: 44px; height: 54px; filter: drop-shadow(0 2px 4px rgba(10,10,10,.25)); pointer-events: none; transform-origin: 3px 3px; }
+
+      @media (orientation: portrait) {
+        [data-composition-id="04-shared-pool"] .k-step { left: 60px; top: 200px; }
+        [data-composition-id="04-shared-pool"] .k-demo { right: 120px; top: 200px; }
+        [data-composition-id="04-shared-pool"] .k-term-body { font-size: 40px; white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; padding: 32px 36px; }
+      }
+
+      [data-composition-id="04-shared-pool"] .k-key img { width: 36px; height: 36px; flex: none; display: block; }
+
+      /* Crop of assets/anyrouter-pool.png in captured px: the table's Provider column
+         from x 786 (--pw wide) and its Keys column x 2110-2270, rows y 586-944
+         (header, OpenRouter, NVIDIA NIM, Google AI Studio). --s is film px per captured px. */
+      [data-composition-id="04-shared-pool"] {
+        --s: 1.7;
+        --pw: 404;
+        --view-top: 268px;
+      }
+
+      [data-composition-id="04-shared-pool"] .f04-head {
         position: absolute;
-        left: 120px;
-        top: 146px;
-        font-size: 84px;
-        font-weight: 600;
-        line-height: 1.04;
-        letter-spacing: -0.03em;
+        left: 96px;
+        right: 96px;
+        top: 88px;
         margin: 0;
-        color: #0a0a0a;
+        text-wrap: balance;
       }
-      [class~="04-shared-pool-line"] { display: block; white-space: nowrap; }
-      [class~="04-shared-pool-word"] { display: inline-block; }
 
-      [class~="04-shared-pool-def"] {
+      [data-composition-id="04-shared-pool"] .f04-analogy {
         position: absolute;
-        top: 440px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        width: fit-content;
+        left: 96px;
+        right: 96px;
+        top: 200px;
+        bottom: 200px;
         display: flex;
         align-items: center;
-        gap: 32px;
-        padding: 36px 48px;
-        background: #ffffff;
-        border: 1.5px solid #e5e5e5;
+        justify-content: center;
+        gap: 64px;
+      }
+      [data-composition-id="04-shared-pool"] .f04-field {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      [data-composition-id="04-shared-pool"] .f04-field > .k-title { font-weight: 500; }
+      [data-composition-id="04-shared-pool"] .k-key.f04-big {
+        height: 144px;
+        padding: 0 44px;
+        gap: 24px;
         border-radius: 20px;
-        box-shadow: 0 1px 2px rgba(10, 10, 10, 0.04), 0 12px 40px rgba(10, 10, 10, 0.06);
+        font-size: 72px;
       }
-      [class~="04-shared-pool-approx"] {
-        font-size: 56px;
-        font-weight: 500;
-        line-height: 1;
-        color: #636363;
+      [data-composition-id="04-shared-pool"] .k-key.f04-big svg { width: 60px; height: 60px; }
+      /* sits level with the pill and the input, below their 56px labels */
+      [data-composition-id="04-shared-pool"] .f04-eq {
+        margin-top: 82px;
+        height: 144px;
+        line-height: 144px;
+        color: var(--muted);
       }
-      [class~="04-shared-pool-meaning"] {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        font-size: 40px;
-        line-height: 1.35;
-        color: #3f3f46;
-      }
-
-      [class~="04-shared-pool-key"] {
+      [data-composition-id="04-shared-pool"] .f04-input {
+        position: relative;
         display: inline-flex;
         align-items: center;
-        gap: 12px;
-        height: 52px;
-        padding: 0 20px;
-        border-radius: 10px;
-        background: #fafafa;
-        border: 1.5px dashed #d4d4d8;
-        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-        font-size: 26px;
-        color: #0a0a0a;
-        white-space: nowrap;
-      }
-      [class~="04-shared-pool-key"] img { width: 22px; height: 22px; display: block; }
-      [class~="04-shared-pool-flow"] {
-        position: absolute;
-        left: 1104px;
-        width: 336px;
-        justify-content: center;
-        padding: 0 16px;
-        font-size: 21px;
-        box-shadow: 0 1px 2px rgba(10, 10, 10, 0.04), 0 8px 24px rgba(10, 10, 10, 0.08);
-      }
-
-      [class~="04-shared-pool-browser"] {
-        position: absolute;
-        left: 120px;
-        top: 372px;
-        width: 960px;
-        height: 466px;
-        background: #ffffff;
-        border: 1.5px solid #e5e5e5;
+        gap: 28px;
+        width: 600px;
+        height: 144px;
+        box-sizing: border-box;
+        padding: 0 44px;
         border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 1px 2px rgba(10, 10, 10, 0.04), 0 24px 60px rgba(10, 10, 10, 0.08);
+        background: var(--bg);
+        border: 2px solid var(--line);
+        box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        font-size: 72px;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        color: var(--ink);
       }
-      [class~="04-shared-pool-bar"] {
+      [data-composition-id="04-shared-pool"] .f04-input svg { width: 60px; height: 60px; flex: none; }
+
+      [data-composition-id="04-shared-pool"] .f04-browser {
+        left: 96px;
+        top: 210px;
+        width: calc((var(--pw) + 160) * var(--s) * 1px + 4px);
+        height: calc(358px * var(--s) + 60px);
+      }
+      [data-composition-id="04-shared-pool"] .f04-slice {
         position: absolute;
-        left: 0;
-        right: 0;
         top: 0;
-        height: 52px;
-        background: #fafafa;
-        border-bottom: 1.5px solid #e5e5e5;
-      }
-      [class~="04-shared-pool-dots"] {
-        position: absolute;
-        left: 22px;
-        top: 20px;
-        display: flex;
-        gap: 8px;
-      }
-      [class~="04-shared-pool-dots"] span { width: 12px; height: 12px; border-radius: 50%; background: #d4d4d8; }
-      [class~="04-shared-pool-url"] {
-        position: absolute;
-        top: 9px;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        width: fit-content;
-        height: 32px;
-        line-height: 29px;
-        padding: 0 18px;
-        border-radius: 999px;
-        background: #ffffff;
-        border: 1.5px solid #e5e5e5;
-        font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-        font-size: 20px;
-        color: #636363;
-      }
-      [class~="04-shared-pool-viewport"] {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 52px;
         bottom: 0;
         overflow: hidden;
       }
-      /* Screenshot at 1.2× of its 3840×2160 size, image y 600–945 (table header to Google row).
-         Three abutting column slices (Provider x 780–1200, Keys 2090–2260, Donate 2830–3040)
-         drop Status and Tokens so the rows read large; the row rules line up across the seams. */
-      [class~="04-shared-pool-slice"] {
+      [data-composition-id="04-shared-pool"] .f04-slice.is-provider { left: 0; width: calc(var(--pw) * var(--s) * 1px); }
+      [data-composition-id="04-shared-pool"] .f04-slice.is-keys { left: calc(var(--pw) * var(--s) * 1px); width: calc(160px * var(--s)); }
+      [data-composition-id="04-shared-pool"] .f04-slice > img {
         position: absolute;
-        top: 0;
-        height: 414px;
-        overflow: hidden;
+        top: calc(-586px * var(--s));
+        width: calc(3840px * var(--s));
+        display: block;
+        max-width: none;
       }
-      [class~="04-shared-pool-shot"] {
+      [data-composition-id="04-shared-pool"] .f04-slice.is-provider > img { left: calc(-786px * var(--s)); }
+      [data-composition-id="04-shared-pool"] .f04-slice.is-keys > img { left: calc(-2110px * var(--s)); }
+
+      /* --row is a row's centre in captured px */
+      [data-composition-id="04-shared-pool"] .f04-flash {
         position: absolute;
-        top: -720px;
-        width: 4608px;
-        height: 2592px;
-      }
-      [class~="04-shared-pool-row"] {
-        position: absolute;
-        left: 6px;
-        width: 937px;
-        height: 107px;
-        background: #fff4ec;
+        left: 0;
+        right: 0;
+        top: calc((var(--row) - 631) * var(--s) * 1px);
+        height: calc(88px * var(--s));
+        background: var(--primary-tint);
         mix-blend-mode: multiply;
+        opacity: 0;
+      }
+      [data-composition-id="04-shared-pool"] .f04-cell {
+        position: absolute;
+        left: calc((var(--pw) + 108) * var(--s) * 1px);
+        top: calc((var(--row) - 586) * var(--s) * 1px);
+        width: 0;
+        height: 0;
+      }
+      /* --fx/--fy/--fw/--fh: the green "Free" label's box in captured px */
+      [data-composition-id="04-shared-pool"] .f04-free {
+        position: absolute;
+        left: calc((var(--fx) - 786 - 8) * var(--s) * 1px);
+        top: calc((var(--fy) - 586 - 8) * var(--s) * 1px);
+        width: calc((var(--fw) + 16) * var(--s) * 1px);
+        height: calc((var(--fh) + 16) * var(--s) * 1px);
+        border-radius: 12px;
       }
 
-      [class~="04-shared-pool-basin"] {
+      /* where the table settles once the keys are in: the centre of the content area */
+      [data-composition-id="04-shared-pool"] .f04-settle {
         position: absolute;
-        left: 1440px;
-        top: 620px;
-        width: 360px;
-        height: 220px;
-        background: #fafafa;
-        border: 1.5px solid #e5e5e5;
-        border-radius: 20px 20px 72px 72px / 20px 20px 56px 56px;
-        overflow: hidden;
+        left: 96px;
+        right: 96px;
+        top: 200px;
+        bottom: 200px;
+        pointer-events: none;
       }
-      [class~="04-shared-pool-fill"] {
+
+      [data-composition-id="04-shared-pool"] .f04-pills {
         position: absolute;
-        inset: 0;
-        background: #fff4ec;
-        transform-origin: 50% 100%;
+        left: calc(96px + (var(--pw) + 160) * var(--s) * 1px + 4px + 96px);
+        top: 0;
       }
-      [class~="04-shared-pool-level"] {
+      [data-composition-id="04-shared-pool"] .f04-pill {
         position: absolute;
         left: 0;
-        right: 0;
-        bottom: 0;
-        height: 2px;
-        background: #bb4d00;
+        top: calc(var(--view-top) + (var(--row) - 586) * var(--s) * 1px - 36px);
       }
-      [class~="04-shared-pool-label"] {
-        position: absolute;
-        left: 1440px;
-        top: 556px;
-        width: 360px;
-        text-align: center;
-        font-size: 36px;
-        font-weight: 500;
-        line-height: 1.2;
-        color: #0a0a0a;
+
+      @media (orientation: portrait) {
+        [data-composition-id="04-shared-pool"] {
+          --s: 1.38;
+          --pw: 488;
+        }
+        [data-composition-id="04-shared-pool"] .f04-head { left: 60px; right: 120px; top: 200px; }
+        [data-composition-id="04-shared-pool"] .f04-analogy {
+          left: 60px;
+          right: 120px;
+          top: 400px;
+          bottom: 700px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 40px;
+        }
+        [data-composition-id="04-shared-pool"] .f04-eq { margin-top: 0; }
+        [data-composition-id="04-shared-pool"] .f04-browser { left: 60px; top: 664px; }
+        [data-composition-id="04-shared-pool"] .f04-settle { left: 60px; right: 120px; top: 400px; bottom: 700px; }
+        [data-composition-id="04-shared-pool"] .f04-pills {
+          left: 60px;
+          top: 396px;
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        [data-composition-id="04-shared-pool"] .f04-pill { position: relative; top: 0; }
       }
     </style>
 
-    <div class="04-shared-pool-bg clip" data-start="0" data-duration="13.857" data-track-index="0"></div>
+    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="12.138" data-track-index="0"></div>
 
-    <div class="04-shared-pool-stage" id="04-shared-pool-stage">
-      <div class="04-shared-pool-eyebrow" id="04-shared-pool-eyebrow">Shared pool</div>
-      <h1 class="04-shared-pool-h1">
-        <span class="04-shared-pool-line"><span class="04-shared-pool-word">One</span> <span class="04-shared-pool-word">shared</span> <span class="04-shared-pool-word">pool,</span></span>
-        <span class="04-shared-pool-line"><span class="04-shared-pool-word">powered</span> <span class="04-shared-pool-word">by</span> <span class="04-shared-pool-word">members.</span></span>
-      </h1>
+    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="12.138" data-track-index="1">
+      <h2 class="k-h2 f04-head" id="f04-head">A shared pool of free AI usage</h2>
 
-      <div class="04-shared-pool-def" id="04-shared-pool-def">
-        <span class="04-shared-pool-key">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3"/><path d="M16 7l3 3"/><path d="M18.5 4.5l2 2"/></svg>
-          sk-••••••••
-        </span>
-        <span class="04-shared-pool-approx" id="04-shared-pool-approx">≈</span>
-        <span class="04-shared-pool-meaning" id="04-shared-pool-meaning">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3F3F46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>
-          a password for software
-        </span>
-      </div>
-
-      <div class="04-shared-pool-browser" id="04-shared-pool-browser">
-        <div class="04-shared-pool-bar">
-          <div class="04-shared-pool-dots"><span></span><span></span><span></span></div>
-          <div class="04-shared-pool-url">anyrouter.dev/pool</div>
+      <div class="f04-analogy" id="f04-analogy">
+        <div class="f04-field" id="f04-field-key">
+          <span class="k-title">API key</span>
+          <span class="k-key f04-big"><svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>sk-••••••••</span>
         </div>
-        <div class="04-shared-pool-viewport">
-          <div class="04-shared-pool-slice" style="left: 0; width: 504px">
-            <img class="04-shared-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -936px" />
-          </div>
-          <div class="04-shared-pool-slice" style="left: 504px; width: 204px">
-            <img class="04-shared-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -2508px" />
-          </div>
-          <div class="04-shared-pool-slice" style="left: 708px; width: 252px">
-            <img class="04-shared-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -3396px" />
-          </div>
-          <div class="04-shared-pool-row" id="04-shared-pool-row-openrouter" style="top: 86px"></div>
-          <div class="04-shared-pool-row" id="04-shared-pool-row-nvidia" style="top: 194px"></div>
-          <div class="04-shared-pool-row" id="04-shared-pool-row-google" style="top: 302px"></div>
+        <span class="k-h1 f04-eq" id="f04-eq">=</span>
+        <div class="f04-field" id="f04-field-pw">
+          <span class="k-title">Password</span>
+          <span class="f04-input"><svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>••••••••<i class="k-ring" id="f04-pw-ring"></i></span>
         </div>
       </div>
 
-      <div class="04-shared-pool-basin" id="04-shared-pool-basin">
-        <div class="04-shared-pool-fill" id="04-shared-pool-fill"></div>
-        <div class="04-shared-pool-level" id="04-shared-pool-level"></div>
+      <div class="k-browser f04-browser" id="f04-browser">
+        <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/pool</span></div>
+        <div class="k-view">
+          <div class="f04-slice is-provider"><img src="assets/anyrouter-pool.png" alt="" data-layout-allow-overflow /></div>
+          <div class="f04-slice is-keys"><img src="assets/anyrouter-pool.png" alt="" data-layout-allow-overflow /></div>
+          <div class="f04-flash" id="f04-flash-0" style="--row: 716"></div>
+          <div class="f04-flash" id="f04-flash-1" style="--row: 806"></div>
+          <div class="f04-flash" id="f04-flash-2" style="--row: 896"></div>
+          <div class="f04-cell" id="f04-cell-0" style="--row: 716"></div>
+          <div class="f04-cell" id="f04-cell-1" style="--row: 806"></div>
+          <div class="f04-cell" id="f04-cell-2" style="--row: 896"></div>
+          <div class="f04-free" style="--fx: 1049; --fy: 707; --fw: 46; --fh: 16"><i class="k-ring" id="f04-free-0"></i></div>
+          <div class="f04-free" style="--fx: 1043; --fy: 797; --fw: 46; --fh: 16"><i class="k-ring" id="f04-free-1"></i></div>
+          <div class="f04-free" style="--fx: 1109; --fy: 887; --fw: 46; --fh: 16"><i class="k-ring" id="f04-free-2"></i></div>
+        </div>
       </div>
-      <div class="04-shared-pool-label" id="04-shared-pool-label">free AI usage</div>
 
-      <span class="04-shared-pool-key 04-shared-pool-flow" id="04-shared-pool-key-openrouter" style="top: 538px">
-        <img src="assets/provider-openrouter.svg" alt="" />sk-or-v1-••••••••••••
-      </span>
-      <span class="04-shared-pool-key 04-shared-pool-flow" id="04-shared-pool-key-nvidia" style="top: 646px">
-        <img src="assets/provider-nvidia.svg" alt="" />nvapi-••••••••
-      </span>
-      <span class="04-shared-pool-key 04-shared-pool-flow" id="04-shared-pool-key-google" style="top: 754px">
-        <img src="assets/provider-google.svg" alt="" />AIza••••••••
-      </span>
+      <div class="f04-settle" id="f04-settle"></div>
+
+      <div class="f04-pills">
+        <span class="k-key f04-pill" id="f04-pill-0" style="--row: 716"><img src="assets/provider-openrouter.svg" alt="" />sk-or-v1-••••••••</span>
+        <span class="k-key f04-pill" id="f04-pill-1" style="--row: 806"><img src="assets/provider-nvidia.svg" alt="" />nvapi-••••••••</span>
+        <span class="k-key f04-pill" id="f04-pill-2" style="--row: 896"><img src="assets/provider-google.svg" alt="" />AIza••••••••</span>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script>
-      (function () {
-        const el = (name) => document.getElementById("04-shared-pool-" + name);
-        const words = document.querySelectorAll('[data-composition-id="04-shared-pool"] [class~="04-shared-pool-word"]');
-        const tl = gsap.timeline({ paused: true });
+      (() => {
+        const ID = "04-shared-pool";
+        const root = document.querySelector('[data-composition-id="04-shared-pool"]');
+        const el = (name) => document.getElementById(`f04-${name}`);
+        const box = (node) => {
+          let x = 0, y = 0;
+          for (let n = node; n && n !== root; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+          return { x, y, w: node.offsetWidth, h: node.offsetHeight, cx: x + node.offsetWidth / 2, cy: y + node.offsetHeight / 2 };
+        };
 
-        tl.fromTo(el("stage"), { scale: 1 }, { scale: 1.02, duration: 13.276, ease: "sine.inOut" }, 0);
+        document.fonts.ready.then(() => {
+          const tl = gsap.timeline({ paused: true });
+          const enter = (target, from, at, duration = 0.6) =>
+            tl.fromTo(target, { opacity: 0, ...from }, { opacity: 1, x: 0, y: 0, duration, ease: "power3.out" }, at);
 
-        tl.fromTo(el("eyebrow"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.04);
-        tl.fromTo(words, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.11 }, 0.17);
+          enter(el("head"), { y: 24 }, 0.72);
 
-        tl.fromTo(el("def"), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.96);
-        tl.fromTo(el("approx"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 2.64);
-        tl.fromTo(el("meaning"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 3.12);
+          enter(el("field-key"), { y: 32 }, 1.78, 0.55);
+          tl.fromTo(el("eq"), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power3.out" }, 2.52);
+          enter(el("field-pw"), { y: 32 }, 2.6, 0.55);
+          tl.fromTo(el("pw-ring"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.9);
 
-        // The definition yields to the real page well before the frame ends, so this is a within-shot swap, not an exit.
-        // It is fully gone 0.15s before the browser starts, so the two never double-expose.
-        tl.to(el("def"), { opacity: 0, y: -24, scale: 0.96, duration: 0.35, ease: "power2.in" }, 5.41);
-        tl.fromTo(el("browser"), { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 5.91);
+          tl.to(el("analogy"), { opacity: 0, y: -24, duration: 0.3, ease: "power2.in" }, 6.05);
+          enter(el("browser"), { y: 80 }, 6.36, 0.7);
 
-        const donors = [
-          { name: "openrouter", at: 7.03, toPool: 9.54, dy: 112 },
-          { name: "nvidia", at: 7.28, toPool: 9.95, dy: 66 },
-          { name: "google", at: 7.67, toPool: 10.26, dy: 20 },
-        ];
-        donors.forEach((d) => {
-          tl.fromTo(el("row-" + d.name), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, d.at);
-          tl.fromTo(
-            el("key-" + d.name),
-            { opacity: 0, x: -110, scale: 0.92 },
-            { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "power3.out" },
-            d.at + 0.09,
+          const lands = [8.31, 8.67, 8.95];
+          lands.forEach((at, i) => {
+            const pill = el(`pill-${i}`);
+            enter(pill, { x: 120 }, 6.72 + i * 0.12, 0.55);
+
+            const from = box(pill);
+            const to = box(el(`cell-${i}`));
+            tl.to(pill, { x: to.cx - from.cx, y: to.cy - from.cy, scale: 0.4, duration: 0.42, ease: "power2.inOut" }, at - 0.42);
+            tl.to(pill, { opacity: 0, duration: 0.24, ease: "power1.in" }, at - 0.24);
+
+            tl.fromTo(el(`flash-${i}`), { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, at);
+            tl.to(el(`flash-${i}`), { opacity: 0, duration: 0.8, ease: "power2.inOut" }, at + 0.12);
+          });
+
+          const table = box(el("browser"));
+          const settle = box(el("settle"));
+          tl.to(el("browser"), { x: settle.cx - table.cx, y: settle.cy - table.cy, duration: 0.6, ease: "power2.inOut" }, 9.1);
+
+          [0, 1, 2].forEach((i) =>
+            tl.fromTo(el(`free-${i}`), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 9.85 + i * 0.12),
           );
+
+          window.__timelines[ID] = tl;
         });
-
-        tl.fromTo(el("basin"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 9.48);
-        donors.forEach((d) => {
-          tl.to(el("key-" + d.name), { x: 348, duration: 0.8, ease: "power2.inOut" }, d.toPool);
-          tl.to(el("key-" + d.name), { y: d.dy, duration: 0.8, ease: "power2.in" }, d.toPool);
-        });
-
-        const LEVEL = 0.72;
-        const BASIN_INNER = 217;
-        tl.fromTo(el("fill"), { scaleY: 0 }, { scaleY: LEVEL, duration: 1.4, ease: "power2.out" }, 10.53);
-        tl.fromTo(el("level"), { opacity: 0, y: 0 }, { opacity: 1, y: -LEVEL * BASIN_INNER, duration: 1.4, ease: "power2.out" }, 10.53);
-
-        tl.fromTo(el("label"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 11.88);
-
-        window.__timelines = window.__timelines || {};
-        window.__timelines["04-shared-pool"] = tl;
       })();
     </script>
   </div>
