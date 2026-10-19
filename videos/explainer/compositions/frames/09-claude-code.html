@@ -152,7 +152,7 @@ const K = {
       // the old value is gone before the new one is readable, so no frame shows both
       tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
       tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
     });
@@ -183,9 +183,9 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f09-" + s);
       const DURATION = 4.5;
-      // Word starts from audio_meta.json frame 9: "Run" 1.44, "any" 2.577, "you" 3.077.
+      // Word starts from audio_meta.json frame 9: "Code?" 0.604, "Run" 1.44, "any" 2.577, "you" 3.077.
       // The command and ids are from the real `anyr --help` and `anyr models`.
-      const TYPE_FROM = 1.4, TYPE_TO = 2.0, ROLL_AT = [2.65, 3.25];
+      const TYPE_FROM = 0.7, TYPE_TO = 1.6, ROLL_AT = [2.65, 3.25];
       const BLINK = 0.5;
 
       // Split typed text into one span per character, so each can appear on its own beat.

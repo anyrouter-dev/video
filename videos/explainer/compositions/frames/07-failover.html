@@ -196,7 +196,7 @@ const K = {
       // the old value is gone before the new one is readable, so no frame shows both
       tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
       tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
     });
@@ -228,8 +228,8 @@ const K = {
       const $ = (s) => document.getElementById("f07-" + s);
       const DURATION = 6;
       // Word starts from audio_meta.json frame 7: "provider" 0.302, "down," 1.01, "retries" 2.171,
-      // "another," 2.821, "answer." 4.725.
-      const ASK = 0.2, DOWN = 0.98, RETRY = 2.12, ANOTHER = 2.8, ANSWER = 4.6;
+      // "another," 2.821, "still" 4.075.
+      const ASK = 0.2, DOWN = 0.98, RETRY = 2.12, ANOTHER = 2.8, ANSWER = 4.05;
       const one = (tile, cls) => tile.querySelector('[class~="' + cls + '"]');
 
       document.fonts.ready.then(() => {

@@ -21,10 +21,10 @@
   {"frame": 6, "sound": "click-soft", "word": "pick", "volume": 0.22},
   {"frame": 7, "sound": "error", "word": "down", "volume": 0.15},
   {"frame": 7, "sound": "ping", "word": "another", "volume": 0.18},
-  {"frame": 7, "sound": "chime", "word": "answer", "offset": -0.1, "volume": 0.2},
+  {"frame": 7, "sound": "chime", "word": "still", "volume": 0.2},
   {"frame": 8, "sound": "chime", "word": "every", "volume": 0.18},
   {"frame": 8, "sound": "pop", "word": "no", "volume": 0.2},
-  {"frame": 9, "sound": "typing", "word": "Run", "volume": 0.18},
+  {"frame": 9, "sound": "typing", "word": "Code", "offset": 0.1, "volume": 0.18},
   {"frame": 9, "sound": "click-soft", "word": "any", "volume": 0.18},
   {"frame": 9, "sound": "click-soft", "word": "you", "volume": 0.18},
   {"frame": 10, "sound": "sparkle", "word": "Start", "volume": 0.2}

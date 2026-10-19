@@ -1115,7 +1115,7 @@
     {
       "frame": 7,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 4.625,
+      "offset_s": 4.075,
       "duration_s": 2.5,
       "volume": 0.2,
       "source": "bundled"
@@ -1139,7 +1139,7 @@
     {
       "frame": 9,
       "file": "assets/sfx/typing.mp3",
-      "offset_s": 1.44,
+      "offset_s": 0.704,
       "duration_s": 1.5,
       "volume": 0.18,
       "source": "bundled"

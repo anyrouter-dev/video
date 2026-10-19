@@ -103,6 +103,7 @@
     [data-composition-id="06-auto"] .f06-ring { border-radius: 14px; }
     [data-composition-id="06-auto"] .f06-badge { vertical-align: 6px; margin-left: 16px; font-family: var(--sans); }
     [data-composition-id="06-auto"] .f06-quiet { color: #636363; }
+    [data-composition-id="06-auto"] .f06-chip { border-color: var(--ink); }
 
     @media (orientation: portrait) {
       [data-composition-id="06-auto"] .f06-chips { left: 60px; right: 120px; top: 240px; gap: 16px; }
@@ -128,7 +129,7 @@
 <div class="k-code-body"><span class="k-ln f06-quiet"><span class="kw">await</span> client.chat.completions<span class="k-pbr">
   </span>.create({</span><span class="k-ln">  model:<span class="k-lbr"> </span><span class="k-pbr">
     </span><span id="f06-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"z-ai/glm-5.3"</span><span data-layout-allow-overlap>"anyrouter/auto"</span></span>,<span class="k-pbr">
-</span><span id="f06-badge" class="k-badge is-outline f06-badge">One more option</span></span><span class="k-ln f06-quiet">  messages,</span><span class="k-ln f06-quiet">});</span></div>
+</span><span id="f06-badge" class="k-badge is-outline f06-badge">Or AnyRouter picks</span></span><span class="k-ln f06-quiet">  messages,</span><span class="k-ln f06-quiet">});</span></div>
         </div>
         <div id="f06-ring" class="k-ring f06-ring"></div>
       </div>
@@ -162,7 +163,7 @@ const K = {
       // the old value is gone before the new one is readable, so no frame shows both
       tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
       tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
       const gap = (at[i + 1] ?? Infinity) - t;
       K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
     });
