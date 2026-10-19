@@ -144,11 +144,16 @@ const PLUS = '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="
 // the one accent in the window. Not a path or a URL: nothing word-like before it.
 const MODEL_ID = /(?<![\w/.:~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:[\]-]*/gi;
 
-/** Characters as spans a typist reveals one by one; model ids in the accent. */
+/**
+ * Characters as spans a typist reveals one by one; model ids in the accent. A
+ * token too long for its line breaks after an "=" or a path's "/", never inside
+ * a model id.
+ */
 function typedChars(text) {
   const accents = new Set();
   for (const m of text.matchAll(MODEL_ID)) for (let i = m.index; i < m.index + m[0].length; i++) accents.add(i);
-  return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>`).join('');
+  const breakAfter = i => !accents.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/'));
+  return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>${breakAfter(at + k) ? '<wbr>' : ''}`).join('');
 }
 
 /**
@@ -160,8 +165,9 @@ function typedLine(line, roll) {
   const chars = typedChars(line.text);
   const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
   let i = 0;
-  // a pipe stays with the command it feeds, so "| bash" never starts a line alone or ends one
-  return line.text.split(/(?<!(?:^| )\|)( +)/).map(part => {
+  // a pipe stays with the command it feeds, and a closing "\" with the word before it,
+  // so neither sits on a row alone
+  return line.text.split(/(?<!(?:^| )\|)( +)(?!\\$)/).map(part => {
     const at = i;
     i += part.length;
     if (!part.trim()) return chars(part, at);
