@@ -1,6 +1,6 @@
 # SCRIPT — Unblock OpenRouter free models
 
-**Voice:** Kokoro `af_heart` (the explainer's narrator)
+**Voice:** ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), `eleven_multilingual_v2`, stability 0.5, similarity 0.8, style 0.15, speaker boost on
 **Voice direction:** Calm, clear, friendly. A person showing a friend a fix. No hype, short pauses between sentences.
 
 ---

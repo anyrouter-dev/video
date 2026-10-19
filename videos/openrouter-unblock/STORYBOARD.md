@@ -26,7 +26,7 @@ music: none
 - src: compositions/frames/01-wall.html
 
 - scene: A request log to an OpenRouter free model: 200 OK lines, then 429 Too Many Requests stacks up; the definition of rate limit; OpenRouter's 20 a minute, 50 a day, per account
-- duration: 13.499s
+- duration: 13.217s
 - transition_in: cut
 - type: problem
 - beat: frustration
@@ -48,7 +48,7 @@ r4: the log numbers each request (`#45`…); `#45`–`#50` answer 200, `#51` on 
 - src: compositions/frames/02-one-account.html
 
 - scene: One OpenRouter account card holding two keys; both feed one shared meter that is full; headline "One account. One limit."
-- duration: 4.368s
+- duration: 4.022s
 - transition_in: crossfade
 - type: problem
 - beat: understanding
@@ -68,7 +68,7 @@ handoff_out: the first key pill (primary glyph) at its card position; the card f
 - src: compositions/frames/03-the-fix.html
 
 - scene: Your key moves into AnyRouter; a request hits your limited key, then goes through a key another member shared; "Their quota, not yours."; the real pool page shows 74 OpenRouter keys; the four-step rail appears
-- duration: 7.76s
+- duration: 8.248s
 - transition_in: cut
 - type: product_intro
 - beat: relief
@@ -91,7 +91,7 @@ handoff_out: four-step rail at its shared position, all four todo, opacity 1, st
 - src: compositions/frames/04-step-1-key.html
 
 - scene: openrouter.ai, then the Keys page with the viewer's existing key; Create Key, name it AnyRouter, the new redacted key appears, Copy
-- duration: 4.667s
+- duration: 5.973s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
@@ -113,7 +113,7 @@ handoff_out: rail with step 1 active; browser frame at shared geometry; key pill
 - src: compositions/frames/05-step-2-add.html
 
 - scene: Sign in to AnyRouter (real capture), BYOK = Bring Your Own Key, Add a provider → OpenRouter → paste → Test key (its own click) → Key valid → Add key (its own click) → Key verified and saved
-- duration: 8.848s
+- duration: 9.456s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
@@ -142,7 +142,7 @@ r4: BYOK is spoken as "Bring Your Own Key"; the underline lands on "Bring" and t
 - src: compositions/frames/06-step-3-share.html
 
 - scene: The OpenRouter key panel: the Share with pool switch is ringed, then clicked → consent dialog with all four "In short" lines → checkbox ticked → Donate key → Key verified
-- duration: 21.157s
+- duration: 22.413s
 - transition_in: cut
 - type: tutorial_step
 - beat: payoff
@@ -172,7 +172,7 @@ r4: a box and the note `Leave these as they are` mark Use my key / Only my key o
 - src: compositions/frames/07-step-4-app.html
 
 - scene: A code/config card for the viewer's app: the AnyRouter key (a different key, from anyrouter.dev/dashboard/keys), base URL https://anyrouter.dev/api/v1, and model openrouter/free
-- duration: 15.248s
+- duration: 17.258s
 - transition_in: cut
 - type: tutorial_step
 - beat: doing
@@ -197,7 +197,7 @@ r4: two phases. On anyrouter.dev/dashboard/keys: `API Keys` underlines, `Create 
 - src: compositions/frames/08-how-it-works.html
 
 - scene: Requests flow one at a time: your key first → 200 OK; your key is limited → 429 → rests; the next requests each go to one shared key (one request per key, over time) → 200 OK; requests keep going; your key comes back
-- duration: 10.555s
+- duration: 11.592s
 - transition_in: cut
 - type: key_feature
 - beat: understanding
@@ -221,7 +221,7 @@ r4: `resting` is now `short break`; the `each request → a different shared key
 - src: compositions/frames/09-close.html
 
 - scene: The honest summary: your key counts toward OpenRouter's limit; past it, the pool keeps you going; AnyRouter lockup and anyrouter.dev
-- duration: 12.121s
+- duration: 11.834s
 - transition_in: crossfade
 - type: cta
 - beat: resolve
