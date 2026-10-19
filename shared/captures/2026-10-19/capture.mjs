@@ -80,7 +80,6 @@ async function shots(browser, list = SHOTS) {
     const page = await ctx.newPage();
     for (const s of list) {
       await settle(page, SITE + s.path, s.settle);
-      if (s.before) await s.before(page);
       const replaced = await page.evaluate(redact);
       const file = `screens/${s.name}-${orientation}.png`;
       await page.screenshot({ path: join(OUT, file) });
