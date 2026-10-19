@@ -284,6 +284,72 @@
       },
       "source": null,
       "createdAt": "2026-10-19T17:10:38.257Z"
+    },
+    {
+      "id": "014-20261019-v2-eba4c6ad09",
+      "hash": "eba4c6ad09",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 47.496,
+      "renderedAt": "2026-10-19T17:29:48.568Z",
+      "commit": "0f7ceba",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-014-20261019-v2-eba4c6ad09.mp4",
+          "cover": "renders/explainer-014-20261019-v2-eba4c6ad09.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-014-20261019-v2-eba4c6ad09-portrait.mp4",
+          "cover": "renders/explainer-014-20261019-v2-eba4c6ad09-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:29:48.590Z"
+    },
+    {
+      "id": "015-20261019-v2-d4a60f5393",
+      "hash": "d4a60f5393",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 47.496,
+      "renderedAt": "2026-10-19T17:43:54.485Z",
+      "commit": "e271493",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-015-20261019-v2-d4a60f5393.mp4",
+          "cover": "renders/explainer-015-20261019-v2-d4a60f5393.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-015-20261019-v2-d4a60f5393-portrait.mp4",
+          "cover": "renders/explainer-015-20261019-v2-d4a60f5393-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:43:54.516Z"
+    },
+    {
+      "id": "016-20261019-v2-2ed782cf09",
+      "hash": "2ed782cf09",
+      "kind": "explainer",
+      "label": "v2",
+      "title": "What is AnyRouter? One API for every AI model",
+      "seconds": 47.496,
+      "renderedAt": "2026-10-19T17:48:20.596Z",
+      "commit": "f574602",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/explainer-016-20261019-v2-2ed782cf09.mp4",
+          "cover": "renders/explainer-016-20261019-v2-2ed782cf09.png"
+        },
+        "portrait": {
+          "artifact": "renders/explainer-016-20261019-v2-2ed782cf09-portrait.mp4",
+          "cover": "renders/explainer-016-20261019-v2-2ed782cf09-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:48:20.620Z"
     }
   ]
 }
