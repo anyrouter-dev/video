@@ -146,11 +146,11 @@ export function windowOf(u) {
 /** Every string the film can show, and how each is set. Throws when one cannot be set legibly. */
 export function copyOf(u, pools) {
   const title = redact(u.title);
-  const type = setIn('title', title) ?? fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
+  if (!setIn('title', title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text) }));
   const roll = rollOf(u, pools);
-  const code = codeSizes(lines, roll, win.shell, { text: title, px: type }) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
+  const code = codeSizes(lines, roll, win.shell, title) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
   return {
     slug: u.slug,
     url: u.url,
@@ -158,7 +158,7 @@ export function copyOf(u, pools) {
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
     window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code },
-    type: { title: type },
+    type: { title: code.title },
   };
 }
 

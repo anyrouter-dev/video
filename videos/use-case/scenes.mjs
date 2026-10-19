@@ -4,8 +4,11 @@
  *
  * A film is one sub-composition in three beats (see kind.mjs). The headline is
  * the shared element: set large for the outcome, it shrinks into the caption
- * over the code, then settles above the lockup. Each beat has one camera move, at an even speed: an eased one comes to rest, and
- * a frame at rest reads as dead air.
+ * over the code, then settles above the lockup. The look is frame.md v3,
+ * Monolith: one object fills each beat, entrances ease out (expo.out), exits
+ * and the moves between beats are weighty (power4.inOut). Within a beat the
+ * camera drifts at an even speed: an eased drift comes to rest, and a frame at
+ * rest reads as dead air.
  *
  * Every size has a landscape value and a portrait value (CSS vars --fs and
  * --fs-p); the portrait one applies under `@media (orientation: portrait)`.
@@ -66,9 +69,9 @@ const SAFE = { landscape: 1728 * 0.96, portrait: 900 * 0.96 };
 
 /** Type for each text role: sizes to try, the box, the line budget, per orientation. */
 export const TYPE = {
-  title: { weight: 600, tracking: -0.035,
-    landscape: { sizes: [140, 132, 124, 120], width: SAFE.landscape, lines: 3 },
-    portrait: { sizes: [112, 108, 104], width: SAFE.portrait, lines: 5 } },
+  title: { weight: 600, tracking: -0.055,
+    landscape: { sizes: [184, 176, 168, 160, 152, 144], width: SAFE.landscape, lines: 3 },
+    portrait: { sizes: [148, 140, 132, 124, 120], width: SAFE.portrait, lines: 5 } },
 };
 
 /** `--fs` and `--fs-p` for a text in a role, or null when no size fits either frame. */
@@ -87,9 +90,10 @@ const WIN = {
   landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64 },
   portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56 },
 };
-const BAR = 84, CODE_LH = 1.45, TITLE_LH = 1.05;
+// the window's 2px border, both sides
+const BAR = 72, EDGE = 4, CODE_LH = 1.45, TITLE_LH = 0.98;
 // a couple of px short of the box, so rounding in the browser can never add a row
-const textWidth = o => WIN[o].width - 2 * WIN[o].padX - 2;
+const textWidth = o => WIN[o].width - EDGE - 2 * WIN[o].padX - 2;
 const monoWidth = (text, px) => [...text].length * 0.6 * px;
 const indentOf = text => text.match(/^ */)[0].length;
 // the caret, as .caret draws it
@@ -107,15 +111,19 @@ export function idFitsRow(line, preset, id, shell) {
 }
 
 /**
- * The code size per orientation. The largest at which every typed line fits on
- * one line, each roll id in place, with its prompt and caret, and the window
- * still leaves room for the caption at its smallest. A line too long for every
+ * The headline and code sizes per orientation. The headline is the largest that
+ * fits its line budget and still leaves the window its room under the caption,
+ * since the caption keeps the headline's lines. The code is the largest at
+ * which every typed line fits on one line, each roll id in place, with its
+ * prompt and caret, and the window still leaves room for the caption at its
+ * smallest. A line too long for every
  * size is wrapped between tokens, at the `wrap` size or smaller. A line of
  * context may run past the window; it is clipped with a fade. When the longest
  * roll id does not fit, the id moves to a line of its own, for every id, so the
  * line never reflows mid-roll. Null when no size leaves the caption its room.
  */
 export function codeSizes(lines, roll, shell, title) {
+  const t = TYPE.title;
   const prompt = shell ? '$ ' : '';
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
@@ -131,9 +139,9 @@ export function codeSizes(lines, roll, shell, title) {
     const lead = shell ? '' : '  ';
     return n + rowsOf(l.text.slice(0, at), px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(lead + id + after, px, o)));
   }, 0);
-  const pick = o => {
-    const w = WIN[o], tLines = linesOf(title.text, { px: title.px[o], width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
-    const room = px => BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
+  const codeFor = (o, tLines) => {
+    const w = WIN[o];
+    const room = px => EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH + w.gap + tLines * TITLE_LH * w.capMin <= w.sh;
     // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
     const clean = (l, px) => variants(l).every(t => fits(t, px, o)) || (l.focus && !!roll && (() => {
       const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length), lead = shell ? '' : '  ';
@@ -142,10 +150,19 @@ export function codeSizes(lines, roll, shell, title) {
     // a clean line at a smaller size reads better than a wrapped one at a larger
     return w.sizes.find(px => lines.filter(isTyped).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
   };
-  const landscape = pick('landscape'), portrait = pick('portrait');
-  if (!landscape || !portrait) return null;
+  const pick = o => {
+    for (const px of t[o].sizes) {
+      const tLines = linesOf(title, { px, width: t[o].width, weight: t.weight, tracking: t.tracking });
+      const code = tLines <= t[o].lines && codeFor(o, tLines);
+      if (code) return { title: px, code };
+    }
+    return null;
+  };
+  const l = pick('landscape'), p = pick('portrait');
+  if (!l || !p) return null;
+  const landscape = l.code, portrait = p.code;
   const clipped = (px, o) => lines.map(l => !isTyped(l) && monoWidth(l.text, px) > textWidth(o));
-  return { landscape, portrait, breaks: { landscape: breaks(landscape, 'landscape'), portrait: breaks(portrait, 'portrait') }, clipped: { landscape: clipped(landscape, 'landscape'), portrait: clipped(portrait, 'portrait') } };
+  return { title: { landscape: l.title, portrait: p.title }, landscape, portrait, breaks: { landscape: breaks(landscape, 'landscape'), portrait: breaks(portrait, 'portrait') }, clipped: { landscape: clipped(landscape, 'landscape'), portrait: clipped(portrait, 'portrait') } };
 }
 
 // ── pieces ─────────────────────────────────────────────────────────────────
@@ -163,14 +180,15 @@ const PLUS = '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="
 const MODEL_ID = /(?<![\w/.:~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:[\]-]*/gi;
 
 /**
- * Characters as spans a typist reveals one by one; model ids in the accent. A
- * token too long for its line breaks after an "=" or a path's "/", never inside
- * a model id.
+ * Characters as spans a typist reveals one by one; in the command, model ids in
+ * the accent, since the id is what arrives there. A token too long for its line
+ * breaks after an "=" or a path's "/", never inside a model id.
  */
-function typedChars(text) {
-  const accents = new Set();
-  for (const m of text.matchAll(MODEL_ID)) for (let i = m.index; i < m.index + m[0].length; i++) accents.add(i);
-  const breakAfter = i => !accents.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/'));
+function typedChars(text, focus) {
+  const ids = new Set(), accents = new Set();
+  for (const m of text.matchAll(MODEL_ID)) for (let i = m.index; i < m.index + m[0].length; i++) ids.add(i);
+  if (focus) for (const i of ids) accents.add(i);
+  const breakAfter = i => !ids.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/'));
   return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>${breakAfter(at + k) ? '<wbr>' : ''}`).join('');
 }
 
@@ -180,7 +198,7 @@ function typedChars(text) {
  * preset is a slot holding every id, stacked, the first typed with the line.
  */
 function typedLine(line, roll) {
-  const chars = typedChars(line.text);
+  const chars = typedChars(line.text, line.focus);
   const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
   let i = 0;
   // a pipe stays with the command it feeds, and a closing "\" with the word before it,
@@ -208,8 +226,8 @@ function windowHtml(win) {
       ? `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}<span class="caret"></span></div>`
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
   }).join('');
-  return `<div class="win"><div class="push"><div class="term">
-      <div class="bar"><i></i><i></i><i></i>${title ? `<span class="ttl" data-layout-allow-overflow>${esc(title)}</span>` : ''}</div>
+  return `<div class="win"><div class="push"><div class="term ${shell ? 'is-ink' : 'card'}">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl" data-layout-allow-overflow>${esc(title)}</span>` : ''}</div>
       <div class="code ${cls}" style="${fsVars(code, 'cs')}">${body}</div></div></div></div>`;
 }
 
@@ -228,7 +246,7 @@ export function filmScene({ copy, beats, duration, timing }) {
   // The camera scales the whole frame a few percent on purpose, so the layout audit is told so.
   const body = `<div class="cam" data-layout-allow-overflow>
     <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
-      <div class="badge accent kick">${esc(copy.kicker)}</div></div>
+      <div class="badge kick">${esc(copy.kicker)}</div></div>
     <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title)}</h1>
     ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
@@ -247,7 +265,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     const top1 = SY + (SH - heroH - G - hH) / 2;
     hero.style.top = top1 + "px";
     h.style.top = top1 + heroH + G + "px";
-    // the caption is as large as fits above the window, so the two fill the safe area as one block
+    // the caption is as large as fits above the window, up to the headline itself, so the two fill the safe area as one block
     const s2 = Math.min(v("--cap2") / fs, (SH - G - win.offsetHeight) / hH), s3 = v("--cap3") / fs;
     const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
     win.style.top = cap2 + hH * s2 + G + "px";
@@ -255,19 +273,20 @@ export function filmScene({ copy, beats, duration, timing }) {
     end.style.top = cap3 + hH * s3 + G + "px";
     const at1 = top1 + heroH + G;
 
-    // 1 · the outcome. The marks close in, the words rise, the camera leans in.
+    // 1 · the outcome. The marks close in, the words rise, the headline settles, the camera leans in.
     const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
-    tl.fromTo(tiles, { x: i => (i - mid) * 36 }, { x: 0, duration: 1.1, ease: "expo.out" }, 0);
-    tl.fromTo(Q(".kick"), { scale: 0.92 }, { scale: 1, duration: 0.8, ease: "back.out(2)" }, 0.05);
+    tl.fromTo(tiles, { x: i => (i - mid) * 48 }, { x: 0, duration: 1.4, ease: "expo.out" }, 0);
+    tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.1);
     // every word is up within half a second, however long the headline: a word still under its
     // mask sits a line low, and on a long headline that line is past the safe area
     const words = $$(".h .w > span");
     tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
+    tl.fromTo(h, { scale: 1.06 }, { scale: 1, duration: Math.min(2.2, T1 - 0.1), ease: "expo.out" }, 0);
     tl.fromTo(Q(".cam"), { scale: 1 }, { scale: v("--lean"), duration: T1, ease: "none" }, 0);
 
     // 1 → 2 · the headline shrinks into the caption as the window rises under it.
-    tl.to(hero, { y: -48, opacity: 0, duration: 0.35, ease: "power2.in" }, T1);
-    tl.to(h, { y: cap2 - at1, scale: s2, duration: 0.75, ease: "power3.inOut" }, T1);
+    tl.to(hero, { y: -80, opacity: 0, duration: 0.45, ease: "power4.inOut" }, T1);
+    tl.to(h, { y: cap2 - at1, scale: s2, duration: 0.8, ease: "power4.inOut" }, T1);
     // it rises once the headline has cleared its place, so the two never cross
     // A dark slab half faded reads as grey, so it never fades: it slides in from below the frame.
     const below = uc.offsetHeight - win.offsetTop;
@@ -286,7 +305,6 @@ export function filmScene({ copy, beats, duration, timing }) {
       // the rolled-in ids are not typed: only the characters of the line and its first id
       ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
     });
-    if (has(".focus")) tl.fromTo(Q(".focus"), { backgroundColor: "rgba(240,145,90,0)" }, { backgroundColor: "rgba(240,145,90,0.14)", duration: 0.4, ease: "power2.out" }, TYPE_AT);
     // the caret sits after the last line, blinking until the window leaves
     const caret = $$(".caret").at(-1);
     for (let b = t + 0.05, on = 1; b < T2; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
@@ -295,26 +313,22 @@ export function filmScene({ copy, beats, duration, timing }) {
     if (ROLLS) {
       const slot = $(".roll"), items = Array.from(slot.children);
       slot.style.width = items[0].offsetWidth + "px";
-      const HL = { backgroundColor: "rgba(240,145,90,0.34)", boxShadow: "0 0 0 6px rgba(240,145,90,0.34)" };
-      const HL_OFF = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 6px rgba(240,145,90,0)" };
       for (let i = 0; i < ROLLS; i++) {
         const at = ROLL_AT + i * ROLL_EVERY, out = items[i], into = items[i + 1];
         // the old id is gone before the new one shows, so two ids are never drawn over each other
-        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power2.in", immediateRender: false }, at);
-        tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.36, ease: "power3.out", immediateRender: false }, at + 0.2);
-        tl.to(slot, { width: into.offsetWidth, duration: 0.36, ease: "power2.inOut" }, at + 0.05);
-        tl.set(slot, HL, at + 0.1);
-        tl.fromTo(slot, HL, { ...HL_OFF, duration: 0.3, ease: "power2.out", immediateRender: false }, at + 0.4);
+        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, at);
+        tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, at + 0.2);
+        tl.to(slot, { width: into.offsetWidth, duration: 0.45, ease: "power4.inOut" }, at + 0.05);
       }
     }
 
     // 2 → 3 · the window drops away; the headline settles above the lockup.
-    tl.to(win, { y: below, duration: 0.5, ease: "power2.in" }, T2);
-    tl.set(win, { autoAlpha: 0 }, T2 + 0.5);
-    tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power3.inOut" }, T2 + 0.05);
-    tl.fromTo(Q(".lock svg"), { scale: 0.5, rotation: -40, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, T2 + 0.35);
-    tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, T2 + 0.45);
-    tl.fromTo(Q(".url"), { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, T2 + 0.6);
+    tl.to(win, { y: below, duration: 0.55, ease: "power4.inOut" }, T2);
+    tl.set(win, { autoAlpha: 0 }, T2 + 0.55);
+    tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power4.inOut" }, T2 + 0.05);
+    tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.35);
+    tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.45);
+    tl.fromTo(Q(".url"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.6);
 
     // 3 · the lockup holds while the camera keeps leaning in.
     tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "power1.out", immediateRender: false }, T2);`;
@@ -329,55 +343,69 @@ export function filmScene({ copy, beats, duration, timing }) {
 }
 
 // ── the look, in frame.md's tokens ─────────────────────────────────────────
+// The terminal is the ink surface; an editor is a hairline card. The command is
+// the line in focus: on the ink it is white, its other lines muted; in the
+// editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:104px;--cap3:84px;--tw:${WIN.landscape.width}px;--push:1.05;--lean:1.03}
+  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:1.05;--lean:1.03}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
   .film .hero{display:flex;flex-direction:column;align-items:center;gap:40px}
   .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px}
-  .film .tile{width:152px;height:152px;display:grid;place-items:center;border-radius:30px}
+  .film .tile{width:160px;height:160px;display:grid;place-items:center}
   .film .tile .mk{width:92px;height:92px}
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
-  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.035em;text-wrap:balance;transform-origin:50% 0}
+  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;text-wrap:balance;transform-origin:50% 0}
 
   .film .win{position:absolute;top:0;left:var(--sl);width:var(--tw)}
-  .film .term{background:${C.termBg};border-radius:24px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.05)}
-  .film .bar{height:${BAR}px;display:flex;align-items:center;gap:14px;padding:0 30px;background:${C.termBar}}
-  .film .bar i{width:18px;height:18px;border-radius:50%;background:#3F3F46;flex:none}
-  .film .ttl{margin-left:18px;min-width:0;flex:1;overflow:hidden;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.termDim};white-space:nowrap;
+  .film .term{overflow:hidden;border-radius:32px}
+  .film .term.is-ink{background:${C.ink};border:2px solid ${C.ink};color:${C.onInk}}
+  .film .term.card{color:${C.ink}}
+  .film .bar{position:relative;height:${BAR}px;display:flex;align-items:center;justify-content:center;padding:0 140px;border-bottom:2px solid ${C.line}}
+  .film .is-ink .bar{border-bottom-color:${C.ink2}}
+  .film .dots{position:absolute;left:30px;top:50%;margin-top:-7px;display:flex;gap:10px}
+  .film .dots i{width:14px;height:14px;border-radius:50%;background:${C.line};flex:none}
+  .film .is-ink .dots i{background:${C.ink2}}
+  .film .ttl{flex:1;min-width:0;overflow:hidden;text-align:center;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.muted};white-space:nowrap;
     -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
-  .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH};color:${C.termInk}}
+  .film .is-ink .ttl{color:${C.onInkMuted}}
+  .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
   /* a wrapped line hangs past its prompt and its own indent, so it reads as one command */
-  .film .ln{white-space:pre-wrap;border-radius:10px;margin:0 -16px;padding:0 16px 0 calc(16px + (var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
-  .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.termDim}}
+  .film .ln{white-space:pre-wrap;padding:0 0 0 calc((var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
+  .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.muted}}
+  .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}
   .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
-  .film .sh .ln::before{content:"$ ";color:${C.termDim}}
+  .film .sh .ln::before{content:"$ ";color:${C.onInkMuted}}
   .film .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;vertical-align:top;text-indent:0}
   .film .c{opacity:0}
-  .film .m{color:${C.model}}
-  .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top;border-radius:8px}
+  .film .m{color:${C.accent}}
+  .film .is-ink .m{color:${C.accentOnInk}}
+  .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top}
   .film .ri{position:absolute;left:0;top:0;white-space:pre;font-style:normal}
   .film em.ri{opacity:0}
   .film .brk{display:none}
   .film .brk-l .brk{display:block}
   /* an id on its own row hangs two characters in, not past the line's indent: the longest id needs the width */
   .film .brk-l .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
-  .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.termInk};opacity:0}
+  .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}
+  .film .is-ink .caret{background:${C.onInk}}
 
-  .film .end{display:flex;flex-direction:column;align-items:center;gap:48px}
-  .film .lock{display:flex;align-items:center;gap:28px}
-  .film .lock svg{width:120px;height:120px;display:block}
-  .film .lock b{font-size:120px;font-weight:600;letter-spacing:-.04em;line-height:1}
-  .film .url{font-size:48px;color:${C.primary};padding:22px 40px;border:2px solid ${C.line};border-radius:16px;background:${C.surface}}
+  .film .end{display:flex;flex-direction:column;align-items:center;gap:56px}
+  .film .lock{display:flex;align-items:center;gap:32px}
+  .film .lock svg{width:144px;height:144px;display:block}
+  .film .lock b{font-size:144px;font-weight:600;letter-spacing:-.055em;line-height:1}
+  /* the one thing to do next, so it is the ink card */
+  .film .url{font-size:48px;color:${C.onInk};background:${C.ink};padding:24px 44px;border-radius:32px}
   .film .url span{white-space:nowrap}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:88px;--cap3:72px;--tw:${WIN.portrait.width}px;--push:1.04;--lean:1.04}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:1.04;--lean:1.04}
     .film .cam{transform-origin:510px 710px}
-    .film .tile{width:136px;height:136px;border-radius:28px}
+    .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
+    .film .term{border-radius:28px}
     .film .code{font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
     .film .ln.clip-l{-webkit-mask-image:none;mask-image:none}
     .film .ln.clip-p{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent)}
@@ -385,7 +413,7 @@ export const CSS = `
     .film .brk-p .brk{display:block}
     .film .brk-l .brk + .tok{margin-left:0;max-width:100%}
     .film .brk-p .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
-    .film .lock svg{width:104px;height:104px}
-    .film .lock b{font-size:104px}
-    .film .url{font-size:44px;padding:22px 32px}
+    .film .lock svg{width:120px;height:120px}
+    .film .lock b{font-size:120px}
+    .film .url{font-size:44px;padding:24px 36px;border-radius:28px}
   }`;

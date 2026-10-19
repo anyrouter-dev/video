@@ -231,17 +231,20 @@ test('every film is 12 to 18 seconds, its three beats back to back on whole fram
 
 test('the headline fills the frame and the code reads from across the room', () => {
   // A 1920 frame holding a thin strip of 40px code reads as an empty white frame, and a phone screen as a smudge.
-  let large = 0;
+  let large = 0, display = 0;
   for (const [u, f] of films()) {
     const h = html(f);
     const [, l, p] = h.match(/--fs:(\d+)px;--fs-p:(\d+)px/);
-    assert.ok(+l >= 120 && +l <= 140, `${u.slug}: landscape headline ${l}px`);
-    assert.ok(+p >= 104 && +p <= 112, `${u.slug}: portrait headline ${p}px`);
+    // frame.md v3 display type is 184px, 148px in portrait; a long headline steps down to leave the code its room
+    assert.ok(+l >= 144 && +l <= 184, `${u.slug}: landscape headline ${l}px`);
+    assert.ok(+p >= 120 && +p <= 148, `${u.slug}: portrait headline ${p}px`);
     const [, cl, cp] = h.match(/--cs:(\d+)px;--cs-p:(\d+)px/);
     assert.ok(+cl >= 48 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
     assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
+    if (+l === 184 && +p === 148) display++;
   }
+  assert.ok(display >= films().length * 0.75, `${display} of ${films().length} headlines at display size in both frames`);
   assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
 });
 

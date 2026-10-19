@@ -1,7 +1,8 @@
 /**
- * project: scenes to a HyperFrames project in the Clear look of
- * videos/explainer/frame.md (v2): a white page, Geist, shadcn surfaces at 2x,
- * one accent per moment. It shares nothing with lib/film.mjs's print look.
+ * project: scenes to a HyperFrames project in the Monolith look of
+ * videos/explainer/frame.md (v3): a white page, near-black ink, oversized Geist,
+ * flat hairline cards, one object in focus and one accent, on the id that just
+ * rolled in. It shares nothing with lib/film.mjs's print look.
  *
  * The project is authored at 1920x1080. Every scene carries its portrait layout
  * under `@media (orientation: portrait)`, and the stage size appears only in the
@@ -30,9 +31,8 @@ const FONTS = ['geist.woff2', 'geist-mono.woff2'];
 
 // frame.md tokens
 export const C = {
-  bg: '#FFFFFF', surface: '#FAFAFA', surface2: '#F5F5F5', ink: '#0A0A0A', ink2: '#3F3F46', muted: '#636363',
-  line: '#E5E5E5', lineStrong: '#D4D4D8', primary: '#BB4D00', primaryTint: '#FFF4EC',
-  termBg: '#0A0A0A', termBar: '#18181B', termInk: '#F4F4F5', termDim: '#A1A1AA', model: '#F0915A',
+  bg: '#FFFFFF', ink: '#0A0A0A', ink2: '#27272A', muted: '#6B6B6B', line: '#E7E7E7', surface: '#F5F5F5',
+  accent: '#BB4D00', onInk: '#FFFFFF', onInkMuted: '#A3A3A3', accentOnInk: '#F0915A',
 };
 
 const BASE_CSS = `
@@ -45,11 +45,12 @@ const BASE_CSS = `
   .mono{font-family:'Geist Mono',ui-monospace,Menlo,monospace}
   .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
   .w>span{display:inline-block}
-  .card{background:${C.bg};border:2px solid ${C.line};border-radius:24px;box-shadow:0 2px 4px rgba(0,0,0,.05)}
-  .badge{display:inline-flex;align-items:center;height:64px;padding:0 24px;border-radius:12px;
-    font-size:36px;font-weight:500;line-height:1;white-space:nowrap}
-  .badge.accent{background:${C.primaryTint};color:${C.primary}}
-  .mk{display:block;flex:none;background-position:center;background-size:contain;background-repeat:no-repeat}`;
+  .card{background:${C.bg};border:2px solid ${C.line};border-radius:32px}
+  .badge{display:inline-flex;align-items:center;height:64px;padding:0 26px;border-radius:999px;border:2px solid ${C.line};
+    background:${C.bg};color:${C.ink2};font-size:36px;font-weight:500;line-height:1;white-space:nowrap}
+  /* Monolith has one colour, so a mark that ships its own is drawn as an ink silhouette */
+  .mk{display:block;flex:none;background-position:center;background-size:contain;background-repeat:no-repeat;filter:brightness(0)}
+  @media (orientation: portrait){.card{border-radius:28px}}`;
 
 // Run inside every scene. Selectors are scoped to the scene: sub-compositions
 // share one document, so a bare class would reach into another scene.
