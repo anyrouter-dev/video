@@ -11,14 +11,15 @@ music: none
 ## Video direction
 
 - **Palette system** (from `frame.md`). White `bg` on every frame. `ink` for headlines and provider marks. `primary` burnt orange is the one accent per moment: the AnyRouter node, the active step number, the button being pressed. `free` green only means free / works. `danger` only on the provider that goes down in Frame 3. The terminal (Frames 8–9) is the one dark surface.
-- **Type.** Geist display / h1 / h2 for spoken words, Geist Mono for anything typed (ids, URLs, keys, commands, step numbers). Sentence case. Nothing below 24px.
+- **Type.** Geist display / h1 / h2 for spoken words, Geist Mono for anything typed (ids, URLs, keys, commands). Sentence case. Phone first: nothing a viewer reads below 36px (badges and URL pills 34px), one focal element filling the frame. Components and sizes: `tools/shared-components.md`.
 - **Motion grammar.** Long-tail `power3` settles, never bouncy. Every piece reveals on its spoken cue; nothing is on screen before the voice reaches it. Internal seams are velocity-matched cuts. Holds stay still; subtle jitter at most.
 - **Continuity spine.** The AnyRouter mark is the one recurring object. It is born at the centre of Frame 2, becomes the strip in Frame 3, the pool's drain in Frame 4, and the closing lockup in Frame 10.
-- **Step chrome.** Frames 5–7 share one step rail at the top: three numbered dots (1 · 2 · 3) with labels "Create a key", "Donate it", "Use free models". The active dot is `primary`, done dots are `free` with a check.
+- **Step chrome.** Frames 5–7 open with the kit's step header, top-left: an outline badge "Step N of 3" over an h2 naming the step ("Create an OpenRouter key", "Donate it to the pool", "Use the free models"). Third-party screens carry the Demo badge, top-right.
 - **Rhythm.** Busy: 1, 3, 6. Held / breather: 7 (payoff) and 10 (close). Everything else reveals at a steady walk.
 - **Redaction.** Every API key on screen is a `key-pill` with bullets. No real key ever appears.
 - **Negative list.** No gradients, glows, bokeh, noise, dither, halftone, neon, emoji, stock 3D blobs. No front-load-then-freeze slides. No screensaver float. No lazy breathing, no back-half pans. No `repeat` / `yoyo`, no randomness.
-- **Caption band.** Bottom 180px stays clear in every frame.
+- **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080×1920): content sits in y 200–1220 and x 60–960; captions own 1240–1480.
+- **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`; `shared/authoring/portrait.mjs` writes the 1080×1920 project. The scene notes below describe the landscape layout and predate design v2.
 
 ## Frame 1 — The mess
 - src: compositions/frames/01-mess.html
