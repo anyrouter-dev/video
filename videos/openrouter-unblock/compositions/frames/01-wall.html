@@ -146,8 +146,8 @@
       });
 
       // "That's a rate limit": the log clears first, then the definition and the account's limits.
-      tl.to($("term"), { y: -32, opacity: 0, duration: 0.3, ease: "power2.in" }, THATS - 0.55);
-      tl.fromTo($("h1"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, THATS);
+      tl.to($("term"), { y: -32, opacity: 0, duration: 0.3, ease: "power2.in" }, THATS - 0.45);
+      tl.fromTo($("h1"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, THATS - 0.1);
       tl.fromTo($("lede"), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, LIMIT);
       tl.fromTo($("acct"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, ACCOUNT);
       const stat = (n, t) => {
