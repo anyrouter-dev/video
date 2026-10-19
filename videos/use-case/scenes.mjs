@@ -99,7 +99,7 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // The push is at least `push`, which the code's room allows for, and as far as
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.05 },
+  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02 },
   portrait: { sizes: [44, 40], wrap: 40, width: 900, padX: 36, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.05 },
 };
 // the window's 2px border, both sides
@@ -382,7 +382,7 @@ export const CSS = `
   .film .term{overflow:hidden;border-radius:32px}
   .film .term.is-ink{background:${C.ink};border:2px solid ${C.ink};color:${C.onInk}}
   .film .term.card{color:${C.ink}}
-  .film .bar{position:relative;height:${BAR}px;display:flex;align-items:center;justify-content:center;padding:0 140px;border-bottom:2px solid ${C.line}}
+  .film .bar{position:relative;height:${BAR}px;display:flex;align-items:center;justify-content:center;padding:0 110px;border-bottom:2px solid ${C.line}}
   .film .is-ink .bar{border-bottom-color:${C.ink2}}
   .film .dots{position:absolute;left:30px;top:50%;margin-top:-7px;display:flex;gap:10px}
   .film .dots i{width:14px;height:14px;border-radius:50%;background:${C.line};flex:none}
