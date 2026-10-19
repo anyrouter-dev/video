@@ -287,6 +287,7 @@ const K = {
         K.rise(tl, $("app"), 0.02, { y: 40, d: 1.0, scale: 1 });
         K.rise(tl, $("ask"), ASK, { y: 30, d: 1.0 });
         K.cards(tl, $("tiles"), [$("t1"), $("t2"), $("t3")], 0.05);
+        K.push(tl, $("cam"), 6, { to: 1.03 });
 
         // the app waits: three dots light in turn, stepped so the timeline stays seekable
         const dots = [...$("dots").children];

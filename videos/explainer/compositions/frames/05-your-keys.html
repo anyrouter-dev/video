@@ -287,6 +287,8 @@ const K = {
         const row = (el, t) => K.ink(tl, el, t, true, 0.4);
         row($("anthropic"), CLAUDE);
         const typed = [...$("typed").children];
+        // the search moves the focus off Anthropic as soon as it starts
+        K.ink(tl, $("anthropic"), OPENAI - 0.05, false, 0.3);
         tl.set($("hint"), { opacity: 0 }, OPENAI);
         typed.forEach((c, i) => tl.set(c, { opacity: 1 }, OPENAI + i * 0.06));
         tl.to($("all"), { opacity: 0, duration: 0.25, ease: "power2.in" }, OPENAI + 0.3);
