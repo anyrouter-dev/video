@@ -1,0 +1,1237 @@
+{
+ "object": "list",
+ "data": [
+  {
+   "id": "anyrouter/hermes",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "anyrouter/cowork",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "vision"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "anyrouter/free",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "anyrouter/auto",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "vision"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "anyrouter/decision",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.04,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "anyrouter/latest",
+   "owned_by": "anyrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "vision"
+   ],
+   "created": 1780876800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "baai/bge-base-en-v1.5",
+   "owned_by": "baai",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1694390400,
+   "pricing": {
+    "input_per_1m": 0.005,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "cohere/rerank-multilingual-v3.0",
+   "owned_by": "cohere",
+   "category": "rerank",
+   "capabilities": [
+    "rerank"
+   ],
+   "created": 1712793600,
+   "pricing": {
+    "input_per_1m": 2,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "cohere/rerank-v3.5",
+   "owned_by": "cohere",
+   "category": "rerank",
+   "capabilities": [
+    "rerank"
+   ],
+   "created": 1733097600,
+   "pricing": {
+    "input_per_1m": 2,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "cohere/rerank-v4.0-fast",
+   "owned_by": "cohere",
+   "category": "rerank",
+   "capabilities": [
+    "rerank"
+   ],
+   "created": 1765411200,
+   "pricing": {
+    "input_per_1m": 2,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "cohere/rerank-v4.0-pro",
+   "owned_by": "cohere",
+   "category": "rerank",
+   "capabilities": [
+    "rerank"
+   ],
+   "created": 1765411200,
+   "pricing": {
+    "input_per_1m": 2.5,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4-flash",
+   "owned_by": "deepseek",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision",
+    "agentic"
+   ],
+   "created": 1783468800,
+   "pricing": {
+    "input_per_1m": 0.042448,
+    "output_per_1m": 0.084896
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash-1017",
+   "owned_by": "deepseek",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision"
+   ],
+   "created": 1792195200,
+   "pricing": {
+    "input_per_1m": 0.075,
+    "output_per_1m": 0.3
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash",
+   "owned_by": "deepseek",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision"
+   ],
+   "created": 1788998400,
+   "pricing": {
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.144
+   }
+  },
+  {
+   "id": "dots-studio/dots-3-note-preview",
+   "owned_by": "dots-studio",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "vision",
+    "reasoning"
+   ],
+   "created": 1786665600,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "fastino/gliner2.5-multi-v1",
+   "owned_by": "fastino",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790035200,
+   "pricing": {
+    "input_per_1m": 0.042,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "google/gemma-4-26b-a4b-it",
+   "owned_by": "google",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "coding"
+   ],
+   "created": 1775174400,
+   "pricing": {
+    "input_per_1m": 0.042,
+    "output_per_1m": 0.22
+   }
+  },
+  {
+   "id": "google/gemma-4-31b",
+   "owned_by": "google",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "thinking"
+   ],
+   "created": 1780444800,
+   "pricing": {
+    "input_per_1m": 0.1,
+    "output_per_1m": 0.34
+   }
+  },
+  {
+   "id": "hal-x/thx-01",
+   "owned_by": "hal-x",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791676800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "inception/mercury-decide",
+   "owned_by": "inception",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790726400,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "inclusionai/ling-3.1-flash",
+   "owned_by": "inclusionai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "agentic"
+   ],
+   "created": 1790899200,
+   "pricing": {
+    "input_per_1m": 0.075,
+    "output_per_1m": 0.225
+   }
+  },
+  {
+   "id": "intfloat/e5-base-v2",
+   "owned_by": "intfloat",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1684454400,
+   "pricing": {
+    "input_per_1m": 0.005,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "jaredpalmer/kev-4b",
+   "owned_by": "jaredpalmer",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790294400,
+   "pricing": {
+    "input_per_1m": 0.042,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "liquid/d1",
+   "owned_by": "liquid",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790640000,
+   "pricing": {
+    "input_per_1m": 0.04,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "liquid/lfm-2.5-2.6b",
+   "owned_by": "liquid",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "coding",
+    "function-calling"
+   ],
+   "created": 1785542400,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "meituan/longcat-2.5-preview",
+   "owned_by": "meituan",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "coding",
+    "agentic",
+    "function-calling",
+    "vision"
+   ],
+   "created": 1790294400,
+   "pricing": {
+    "input_per_1m": 0.3,
+    "output_per_1m": 1.2
+   }
+  },
+  {
+   "id": "meta/muse-glimmer-30b",
+   "owned_by": "meta",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "reasoning",
+    "vision",
+    "coding",
+    "agentic"
+   ],
+   "created": 1785542400,
+   "pricing": {
+    "input_per_1m": 0.3,
+    "output_per_1m": 1.2
+   }
+  },
+  {
+   "id": "meta/muse-spark-1.2-contributor",
+   "owned_by": "meta",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision"
+   ],
+   "created": 1785888000,
+   "pricing": {
+    "input_per_1m": 0.1,
+    "output_per_1m": 0.2
+   }
+  },
+  {
+   "id": "microsoft/microsoft-decision-1",
+   "owned_by": "microsoft",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791504000,
+   "pricing": {
+    "input_per_1m": 0.042,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "minimax/minimax-m3.1-flash",
+   "owned_by": "minimax",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "coding",
+    "reasoning",
+    "agentic",
+    "vision",
+    "function-calling",
+    "structured-output",
+    "streaming"
+   ],
+   "created": 1792368000,
+   "pricing": {
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.6
+   }
+  },
+  {
+   "id": "moonshotai/kimi-k2.6",
+   "owned_by": "moonshot ai",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision"
+   ],
+   "created": 1783468800,
+   "pricing": {
+    "input_per_1m": 0.4323,
+    "output_per_1m": 1.82
+   }
+  },
+  {
+   "id": "moonshotai/kimi-k3",
+   "owned_by": "moonshot ai",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "coding",
+    "agentic"
+   ],
+   "created": 1784160000,
+   "pricing": {
+    "input_per_1m": 3,
+    "output_per_1m": 15
+   }
+  },
+  {
+   "id": "nace-ai/drex-v1.5",
+   "owned_by": "nace-ai",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791504000,
+   "pricing": {
+    "input_per_1m": 0.05,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nace-ai/drex-v2.0",
+   "owned_by": "nace-ai",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791244800,
+   "pricing": {
+    "input_per_1m": 0.06,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3-embed-1b",
+   "owned_by": "nvidia",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1784160000,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3-super-120b-a12b",
+   "owned_by": "nvidia",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling"
+   ],
+   "created": 1704067200,
+   "pricing": {
+    "input_per_1m": 0.085,
+    "output_per_1m": 0.4
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3-ultra-550b-a55b",
+   "owned_by": "nvidia",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "function-calling",
+    "thinking"
+   ],
+   "created": 1780531200,
+   "pricing": {
+    "input_per_1m": 0.5,
+    "output_per_1m": 2.2
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3.5-content-safety",
+   "owned_by": "nvidia",
+   "category": "multimodal",
+   "capabilities": [
+    "moderation",
+    "chat",
+    "streaming",
+    "vision"
+   ],
+   "created": 1780531200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "owned_by": "nvidia",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding"
+   ],
+   "created": 1785542400,
+   "pricing": {
+    "input_per_1m": 0.025,
+    "output_per_1m": 0.12
+   }
+  },
+  {
+   "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "owned_by": "nvidia",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "vision",
+    "reasoning",
+    "coding"
+   ],
+   "created": 1792022400,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nvidia/nemotron-parse-2.0",
+   "owned_by": "nvidia",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "vision"
+   ],
+   "created": 1785715200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "nvidia/riva-translate-4b-instruct-v2",
+   "owned_by": "nvidia",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "translation"
+   ],
+   "created": 1778803200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "openai/gpt-oss-20b",
+   "owned_by": "openai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "function-calling",
+    "streaming",
+    "coding"
+   ],
+   "created": 1744070400,
+   "pricing": {
+    "input_per_1m": 0.018,
+    "output_per_1m": 0.09
+   }
+  },
+  {
+   "id": "openrouter/bodybuilder",
+   "owned_by": "openrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming"
+   ],
+   "created": 1764892800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "openrouter/pareto-code",
+   "owned_by": "openrouter",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "reasoning",
+    "coding"
+   ],
+   "created": 1776729600,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "perplexity/pplx-decider-v1-27b",
+   "owned_by": "perplexity",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790812800,
+   "pricing": {
+    "input_per_1m": 0.04,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "perplexity/pplx-decider-v1.1-27b",
+   "owned_by": "perplexity",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791244800,
+   "pricing": {
+    "input_per_1m": 0.02,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "perplexity/pplx-embed-v1-0.6b",
+   "owned_by": "perplexity",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1768348800,
+   "pricing": {
+    "input_per_1m": 0.004,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "poolside/laguna-s-2.1",
+   "owned_by": "poolside",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "coding",
+    "reasoning",
+    "function-calling"
+   ],
+   "created": 1784592000,
+   "pricing": {
+    "input_per_1m": 0.1,
+    "output_per_1m": 0.2
+   }
+  },
+  {
+   "id": "poolside/laguna-xs-2.1",
+   "owned_by": "poolside",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "coding",
+    "reasoning",
+    "function-calling"
+   ],
+   "created": 1783555200,
+   "pricing": {
+    "input_per_1m": 0.1,
+    "output_per_1m": 0.2
+   }
+  },
+  {
+   "id": "reflection/beam-1.0",
+   "owned_by": "reflection",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "coding",
+    "function-calling",
+    "structured-output"
+   ],
+   "created": 1791158400,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "respan/span-01-lite",
+   "owned_by": "respan",
+   "category": "text",
+   "capabilities": [
+    "systemone",
+    "noul-only"
+   ],
+   "created": 1790380800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "respan/span-01",
+   "owned_by": "respan",
+   "category": "text",
+   "capabilities": [
+    "systemone",
+    "noul-only"
+   ],
+   "created": 1790380800,
+   "pricing": {
+    "input_per_1m": 0.02,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "scira/amos-1-large",
+   "owned_by": "scira",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791763200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "scira/amos-1-mini",
+   "owned_by": "scira",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790899200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "scira/amos-1-small",
+   "owned_by": "scira",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791763200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "sentence-transformers/all-minilm-l6-v2",
+   "owned_by": "sentence-transformers",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1646179200,
+   "pricing": {
+    "input_per_1m": 0.005,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "stealth/glyph-cluster",
+   "owned_by": "stealth",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "reasoning"
+   ],
+   "created": 1791331200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "stepfun/step-5-preview",
+   "owned_by": "stepfun",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "coding",
+    "vision",
+    "function-calling",
+    "structured-output"
+   ],
+   "created": 1789862400,
+   "pricing": {
+    "input_per_1m": 1,
+    "output_per_1m": 2.7
+   }
+  },
+  {
+   "id": "strandsagents/strands-decider-2b",
+   "owned_by": "strandsagents",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790812800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "subquadratic/subq-preview",
+   "owned_by": "subquadratic",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "function-calling",
+    "structured-output",
+    "streaming"
+   ],
+   "created": 1777939200,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "subquadratic/subq-snap-preview",
+   "owned_by": "subquadratic",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791590400,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "thenlper/gte-base",
+   "owned_by": "thenlper",
+   "category": "embedding",
+   "capabilities": [
+    "embedding"
+   ],
+   "created": 1690416000,
+   "pricing": {
+    "input_per_1m": 0.005,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "thinkingmachines/inkling-small",
+   "owned_by": "thinkingmachines",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "vision",
+    "function-calling"
+   ],
+   "created": 1785369600,
+   "pricing": {
+    "input_per_1m": 0.45,
+    "output_per_1m": 1.2
+   }
+  },
+  {
+   "id": "thinkingmachines/inkling",
+   "owned_by": "thinkingmachines",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "vision",
+    "function-calling"
+   ],
+   "created": 1784073600,
+   "pricing": {
+    "input_per_1m": 0.95,
+    "output_per_1m": 4.05
+   }
+  },
+  {
+   "id": "typesafe/jev",
+   "owned_by": "typesafe",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1789516800,
+   "pricing": {
+    "input_per_1m": 0.042,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "upstage/solar-decide-flash",
+   "owned_by": "upstage",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791417600,
+   "pricing": {
+    "input_per_1m": 0.05,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "upstage/solar-decide",
+   "owned_by": "upstage",
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1790553600,
+   "pricing": {
+    "input_per_1m": 0.05,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "x-ai/grok-4.7",
+   "owned_by": "xai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "vision",
+    "reasoning"
+   ],
+   "created": 1789516800,
+   "pricing": {
+    "input_per_1m": 1.6,
+    "output_per_1m": 4.8
+   }
+  },
+  {
+   "id": "xingchen-agi/xing4.0-29b-a4b",
+   "owned_by": "xingchen-agi",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "reasoning",
+    "function-calling",
+    "coding"
+   ],
+   "created": 1789516800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "z-ai/glm-4.5-flash",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "reasoning",
+    "coding",
+    "agentic"
+   ],
+   "created": 1753660800,
+   "pricing": {
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   }
+  },
+  {
+   "id": "z-ai/glm-4.7-flash",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "coding"
+   ],
+   "created": 1744243200,
+   "pricing": {
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.4
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "thinking",
+    "coding"
+   ],
+   "created": 1786665600,
+   "pricing": {
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.22
+   }
+  },
+  {
+   "id": "google/gemma-latest",
+   "owned_by": "google",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "thinking"
+   ],
+   "created": 1780444800,
+   "pricing": {
+    "input_per_1m": 0.1,
+    "output_per_1m": 0.34
+   }
+  },
+  {
+   "id": "deepseek/deepseek-flash-latest",
+   "owned_by": "deepseek",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision"
+   ],
+   "created": 1792195200,
+   "pricing": {
+    "input_per_1m": 0.075,
+    "output_per_1m": 0.3
+   }
+  },
+  {
+   "id": "z-ai/glm-latest",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "thinking",
+    "coding"
+   ],
+   "created": 1786665600,
+   "pricing": {
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.22
+   }
+  },
+  {
+   "id": "z-ai/glm-flash-latest",
+   "owned_by": "zhipu ai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "coding"
+   ],
+   "created": 1744243200,
+   "pricing": {
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.4
+   }
+  },
+  {
+   "id": "moonshotai/kimi-latest",
+   "owned_by": "moonshot ai",
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "coding",
+    "agentic"
+   ],
+   "created": 1784160000,
+   "pricing": {
+    "input_per_1m": 3,
+    "output_per_1m": 15
+   }
+  },
+  {
+   "id": "x-ai/grok-latest",
+   "owned_by": "xai",
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "vision",
+    "reasoning"
+   ],
+   "created": 1789516800,
+   "pricing": {
+    "input_per_1m": 1.6,
+    "output_per_1m": 4.8
+   }
+  }
+ ]
+}
