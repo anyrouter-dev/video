@@ -9,435 +9,321 @@
       width: 1920px;
       height: 1080px;
       overflow: hidden;
-      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-      color: #0A0A0A;
-    }
-    .\30 6-step-2-donate-bg { position: absolute; inset: 0; background: #FFFFFF; }
-    .\30 6-step-2-donate-mono { font-family: "Geist Mono", ui-monospace, Menlo, monospace; }
-
-    .\30 6-step-2-donate-logo { position: absolute; left: 120px; top: 82px; width: 36px; height: 36px; }
-
-    .\30 6-step-2-donate-rail {
-      position: absolute; left: 0; right: 0; top: 72px; height: 56px;
-      display: flex; align-items: center; justify-content: center; gap: 64px;
-    }
-    .\30 6-step-2-donate-step { display: flex; align-items: center; gap: 14px; }
-    .\30 6-step-2-donate-dot { position: relative; width: 40px; height: 40px; flex: none; }
-    .\30 6-step-2-donate-disc {
-      position: absolute; inset: 0; box-sizing: border-box; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .\30 6-step-2-donate-disc.is-done { background: #007E55; }
-    .\30 6-step-2-donate-disc.is-active { background: #BB4D00; }
-    .\30 6-step-2-donate-disc.is-todo { background: #FFFFFF; border: 2px solid #D4D4D8; }
-    .\30 6-step-2-donate-num { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 20px; font-weight: 500; color: #FFFFFF; }
-    .\30 6-step-2-donate-disc.is-todo .\30 6-step-2-donate-num { color: #636363; }
-    .\30 6-step-2-donate-label-wrap { position: relative; }
-    .\30 6-step-2-donate-label { font-size: 26px; font-weight: 500; line-height: 1; white-space: nowrap; color: #3F3F46; }
-    .\30 6-step-2-donate-label.is-active { color: #0A0A0A; }
-    .\30 6-step-2-donate-label.is-todo { color: #636363; }
-    .\30 6-step-2-donate-label.is-overlay { position: absolute; left: 0; top: 0; }
-    .\30 6-step-2-donate-hair { width: 72px; height: 2px; background: #D4D4D8; flex: none; }
-
-    .\30 6-step-2-donate-card {
-      position: absolute; box-sizing: border-box; background: #FFFFFF; border: 1.5px solid #E5E5E5; border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 24px 60px rgba(10,10,10,.08);
-      overflow: hidden;
-    }
-    .\30 6-step-2-donate-card-signin { left: 220px; top: 160px; width: 1050px; height: 710px; }
-    .\30 6-step-2-donate-card-pool { left: 480px; top: 220px; width: 960px; height: 466px; }
-    .\30 6-step-2-donate-bar {
-      position: absolute; left: 0; top: 0; right: 0; height: 52px; box-sizing: border-box;
-      background: #FAFAFA; border-bottom: 1.5px solid #E5E5E5;
-    }
-    .\30 6-step-2-donate-dots { position: absolute; left: 22px; top: 20px; display: flex; gap: 8px; }
-    .\30 6-step-2-donate-dots span { width: 12px; height: 12px; border-radius: 50%; background: #D4D4D8; }
-    .\30 6-step-2-donate-url {
-      position: absolute; left: 50%; top: 10px; height: 32px; margin-left: -150px; width: 300px;
-      box-sizing: border-box; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E5E5E5;
-      padding: 0 18px; display: flex; align-items: center; justify-content: center;
-      font-size: 20px; color: #636363; white-space: pre;
-    }
-    .\30 6-step-2-donate-view { position: absolute; left: 0; top: 52px; right: 0; bottom: 0; overflow: hidden; }
-    .\30 6-step-2-donate-signin-shot { position: absolute; left: 0; top: 0; width: 3840px; height: 2160px; display: block; transform-origin: 0 0; }
-    /* The 3840x2160 capture at 1.2, image y 600..945 (header + top three rows), as in Frame 04:
-       abutting column slices Provider x 780..1200, Keys 2090..2260, Donate 2830..3040 drop Status and Tokens. */
-    .\30 6-step-2-donate-slice { position: absolute; top: 0; height: 414px; overflow: hidden; }
-    .\30 6-step-2-donate-pool-shot { position: absolute; top: -720px; width: 4608px; height: 2592px; display: block; }
-    .\30 6-step-2-donate-row-tint {
-      position: absolute; left: 4px; top: 85px; width: 952px; height: 107px; box-sizing: border-box;
-      background: #FFF4EC; mix-blend-mode: multiply; border: 1.5px solid #BB4D00; border-radius: 8px;
-    }
-    .\30 6-step-2-donate-veil { position: absolute; inset: 0; background: #0A0A0A; }
-
-    .\30 6-step-2-donate-dlg-outer { position: absolute; left: 480px; top: 290px; width: 640px; height: 280px; transform-origin: 0 0; }
-    .\30 6-step-2-donate-dlg {
-      position: absolute; inset: 0; box-sizing: border-box; background: #FFFFFF; border-radius: 16px;
-      border: 1px solid #E5E5E5;
-      box-shadow: 0 1px 2px rgba(10,10,10,.06), 0 16px 48px rgba(10,10,10,.22);
-      overflow: hidden;
-    }
-    .\30 6-step-2-donate-form, .\30 6-step-2-donate-done { position: absolute; inset: 0; }
-    .\30 6-step-2-donate-head { position: absolute; left: 28px; top: 28px; height: 34px; display: flex; align-items: center; gap: 12px; }
-    .\30 6-step-2-donate-head img { width: 30px; height: 30px; }
-    .\30 6-step-2-donate-title { font-size: 24px; font-weight: 600; letter-spacing: -0.015em; line-height: 1; white-space: nowrap; }
-    .\30 6-step-2-donate-input {
-      position: absolute; left: 28px; top: 86px; width: 584px; height: 54px; box-sizing: border-box;
-      border: 1.5px solid #D4D4D8; border-radius: 12px; background: #FFFFFF;
-    }
-    .\30 6-step-2-donate-input-focus {
-      position: absolute; inset: -1.5px; border: 2px solid #BB4D00; border-radius: 12px;
-      box-shadow: 0 0 0 4px #FFF4EC;
-    }
-    .\30 6-step-2-donate-input-text {
-      position: absolute; left: 14.5px; top: 0; height: 51px; display: flex; align-items: center;
-      font-size: 20px; color: #0A0A0A; white-space: nowrap;
-    }
-    .\30 6-step-2-donate-eye {
-      position: absolute; right: 9px; top: 7.5px; width: 36px; height: 36px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .\30 6-step-2-donate-link {
-      position: absolute; left: 28px; top: 156px; height: 24px; display: flex; align-items: center; gap: 4px;
-      font-size: 19px; font-weight: 500; color: #BB4D00; white-space: nowrap;
-    }
-    .\30 6-step-2-donate-btn {
-      position: absolute; top: 208px; height: 44px; box-sizing: border-box; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      font-size: 19px; font-weight: 500; white-space: nowrap;
-    }
-    .\30 6-step-2-donate-btn-ghost { left: 18px; padding: 0 12px; color: #3F3F46; }
-    .\30 6-step-2-donate-btn-primary { left: 444px; width: 168px; background: #BB4D00; color: #FFFFFF; }
-    .\30 6-step-2-donate-btn-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-
-    .\30 6-step-2-donate-ok {
-      position: absolute; left: 28px; top: 68px; width: 52px; height: 52px; border-radius: 50%;
-      background: #007E55; display: flex; align-items: center; justify-content: center;
-    }
-    .\30 6-step-2-donate-done-title {
-      position: absolute; left: 28px; top: 144px; width: 584px;
-      font-size: 24px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25;
-    }
-    .\30 6-step-2-donate-done-desc {
-      position: absolute; left: 28px; top: 186px; width: 584px;
-      font-size: 19px; line-height: 1.4; color: #636363;
     }
 
-    .\30 6-step-2-donate-safe {
-      position: absolute; left: 0; top: 300px; width: 640px; height: 28px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      font-size: 20px; line-height: 1; color: #636363; white-space: nowrap;
+    /* ── kit (tools/shared-components.md) ───────────────────────────── */
+    [data-composition-id="06-step-2-donate"] {
+      --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+      --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+      --line: #E5E5E5; --line-strong: #D4D4D8;
+      --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+      --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+      --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+      font-family: var(--sans);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
     }
-    .\30 6-step-2-donate-safe svg { flex: none; }
-    .\30 6-step-2-donate-safe2 { top: 336px; }
+    [data-composition-id="06-step-2-donate"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+    [data-composition-id="06-step-2-donate"] .k-stage { position: absolute; inset: 0; }
+    [data-composition-id="06-step-2-donate"] .k-h2 { margin: 0; font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+    [data-composition-id="06-step-2-donate"] .k-title { margin: 0; font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+    [data-composition-id="06-step-2-donate"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+    [data-composition-id="06-step-2-donate"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+    [data-composition-id="06-step-2-donate"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 48px; }
+    [data-composition-id="06-step-2-donate"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line); }
+    [data-composition-id="06-step-2-donate"] .k-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 40px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 40px; font-weight: 500; line-height: 1; white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .k-btn.is-primary { background: var(--primary); }
+    [data-composition-id="06-step-2-donate"] .k-ring { position: absolute; inset: -10px; border-radius: 26px; border: 2px solid var(--primary); box-shadow: 0 0 0 6px rgba(187,77,0,.35); pointer-events: none; opacity: 0; }
+    [data-composition-id="06-step-2-donate"] .k-step { position: absolute; left: 96px; top: 88px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+    [data-composition-id="06-step-2-donate"] .k-callout { display: flex; align-items: flex-start; gap: 28px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 36px 44px; }
+    [data-composition-id="06-step-2-donate"] .k-callout > svg, [data-composition-id="06-step-2-donate"] .k-callout > img { width: 40px; height: 40px; flex: none; margin-top: 4px; }
+    [data-composition-id="06-step-2-donate"] .k-callout-text { display: flex; flex-direction: column; gap: 8px; }
+    [data-composition-id="06-step-2-donate"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); overflow: hidden; }
+    [data-composition-id="06-step-2-donate"] .k-browser-bar { position: relative; height: 56px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+    [data-composition-id="06-step-2-donate"] .k-browser-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
+    [data-composition-id="06-step-2-donate"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+    [data-composition-id="06-step-2-donate"] .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .k-view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
+    [data-composition-id="06-step-2-donate"] .k-view > img { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+    [data-composition-id="06-step-2-donate"] .k-key { display: inline-flex; align-items: center; gap: 16px; height: 72px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 40px; line-height: 1; color: var(--ink); white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .k-key svg { width: 36px; height: 36px; flex: none; }
+    [data-composition-id="06-step-2-donate"] .k-cursor { position: absolute; left: 0; top: 0; width: 44px; height: 54px; filter: drop-shadow(0 2px 4px rgba(10,10,10,.25)); pointer-events: none; transform-origin: 3px 3px; }
 
-    .\30 6-step-2-donate-pill {
-      position: absolute; left: 0; top: 0; height: 52px; box-sizing: border-box;
-      display: inline-flex; align-items: center; gap: 12px; padding: 0 20px;
-      border-radius: 10px; background: #FAFAFA; border: 1.5px dashed #D4D4D8;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 26px; color: #0A0A0A; white-space: nowrap;
-    }
-    .\30 6-step-2-donate-pill-static { position: static; }
+    /* ── frame 06 ──────────────────────────────────────────────────── */
+    /* same browser placement as frame 05, so the push between them keeps it in place */
+    [data-composition-id="06-step-2-donate"] .browser { left: 96px; right: 96px; top: 300px; bottom: 200px; }
+    [data-composition-id="06-step-2-donate"] .url-swap { display: grid; place-items: center; }
+    [data-composition-id="06-step-2-donate"] .url-swap > .k-url { grid-area: 1 / 1; }
 
-    .\30 6-step-2-donate-nv {
-      position: absolute; left: 1096px; top: 318px; width: 600px; height: 364px; box-sizing: border-box;
-      padding: 0 44px; background: #FFFFFF; border: 1.5px solid #E5E5E5; border-radius: 20px;
-      box-shadow: 0 1px 2px rgba(10,10,10,.04), 0 12px 40px rgba(10,10,10,.06);
-      display: flex; flex-direction: column; justify-content: center; gap: 30px;
-    }
-    .\30 6-step-2-donate-nv-head { display: flex; align-items: center; gap: 18px; }
-    .\30 6-step-2-donate-nv-head img { width: 52px; height: 52px; }
-    .\30 6-step-2-donate-nv-name { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; }
-    .\30 6-step-2-donate-nv-path { display: flex; align-items: center; gap: 12px; font-size: 24px; color: #636363; white-space: nowrap; }
-    .\30 6-step-2-donate-nv-row { display: flex; align-items: center; gap: 16px; }
-    .\30 6-step-2-donate-nv-btn {
-      height: 52px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: #BB4D00;
-      display: flex; align-items: center; font-size: 24px; font-weight: 500; color: #FFFFFF; white-space: nowrap;
-    }
-    .\30 6-step-2-donate-nv-path b { font-family: "Geist", ui-sans-serif, system-ui, sans-serif; font-weight: 500; color: #3F3F46; }
+    /* real captures (3840 wide); hotspots are placed over their buttons in script */
+    [data-composition-id="06-step-2-donate"] .hot { position: absolute; }
+    [data-composition-id="06-step-2-donate"] .pool-view { display: flex; align-items: center; justify-content: center; }
+    [data-composition-id="06-step-2-donate"] .table { position: relative; display: flex; flex: none; }
+    [data-composition-id="06-step-2-donate"] .slice { position: relative; flex: none; overflow: hidden; }
+    [data-composition-id="06-step-2-donate"] .slice > img { position: absolute; left: 0; top: 0; display: block; max-width: none; }
+    [data-composition-id="06-step-2-donate"] .row-tint { position: absolute; left: 0; right: 0; background: var(--primary-tint); mix-blend-mode: multiply; opacity: 0; }
 
-    .\30 6-step-2-donate-cursor-wrap { position: absolute; left: 0; top: 0; width: 28px; height: 34px; transform-origin: 2px 2px; }
-    .\30 6-step-2-donate-cursor-wrap svg { display: block; filter: drop-shadow(0 2px 4px rgba(10,10,10,.25)); }
-    .\30 6-step-2-donate-ripple {
-      position: absolute; width: 56px; height: 56px; box-sizing: border-box;
-      border: 2.5px solid #BB4D00; border-radius: 50%;
+    /* the donate dialog, rebuilt (it needs a signed-in account to capture) */
+    [data-composition-id="06-step-2-donate"] .modal { display: flex; align-items: center; justify-content: center; }
+    [data-composition-id="06-step-2-donate"] .scrim { position: absolute; inset: 0; background: rgba(10,10,10,.45); }
+    [data-composition-id="06-step-2-donate"] .dialog { position: relative; display: grid; width: 1000px; }
+    [data-composition-id="06-step-2-donate"] .dialog > .phase { grid-area: 1 / 1; display: flex; flex-direction: column; }
+    [data-composition-id="06-step-2-donate"] .dialog-head { display: flex; align-items: center; gap: 24px; }
+    [data-composition-id="06-step-2-donate"] .dialog-head img { width: 56px; height: 56px; flex: none; }
+    [data-composition-id="06-step-2-donate"] .field { position: relative; display: flex; align-items: center; justify-content: space-between; height: 88px; box-sizing: border-box; margin-top: 40px; padding: 0 24px 0 6px; border: 2px solid var(--line-strong); border-radius: 16px; }
+    [data-composition-id="06-step-2-donate"] .field > svg { width: 40px; height: 40px; flex: none; }
+    [data-composition-id="06-step-2-donate"] .dialog-foot { display: flex; justify-content: flex-end; margin-top: 40px; }
+    [data-composition-id="06-step-2-donate"] .donate { display: inline-grid; place-items: center; }
+    [data-composition-id="06-step-2-donate"] .donate > span:not(.k-ring) { grid-area: 1 / 1; }
+    [data-composition-id="06-step-2-donate"] .done { justify-content: center; align-items: center; gap: 32px; text-align: center; }
+    [data-composition-id="06-step-2-donate"] .ok { display: grid; place-items: center; width: 88px; height: 88px; border-radius: 50%; background: var(--free); }
+    [data-composition-id="06-step-2-donate"] .ok svg { width: 52px; height: 52px; }
+    [data-composition-id="06-step-2-donate"] .done .k-title { text-wrap: balance; }
+
+    /* one side note at a time, top right beside the step header */
+    [data-composition-id="06-step-2-donate"] .notes { position: absolute; right: 96px; top: 88px; }
+    [data-composition-id="06-step-2-donate"] .notes .k-callout { position: absolute; right: 0; top: 0; padding: 28px 44px; }
+    [data-composition-id="06-step-2-donate"] .notes .k-label { white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .notes .k-body { white-space: nowrap; }
+    [data-composition-id="06-step-2-donate"] .notes .k-key { align-self: flex-start; }
+
+    [data-composition-id="06-step-2-donate"] .ripple { position: absolute; left: 0; top: 0; width: 72px; height: 72px; margin: -36px 0 0 -36px; box-sizing: border-box; border-radius: 50%; border: 3px solid var(--primary); pointer-events: none; opacity: 0; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="06-step-2-donate"] .k-step { left: 60px; top: 200px; right: 120px; }
+      [data-composition-id="06-step-2-donate"] .k-step .k-h2 { text-wrap: balance; }
+      [data-composition-id="06-step-2-donate"] .browser { left: 60px; right: 120px; top: 394px; bottom: auto; height: 614px; }
+      /* the Keys column does not fit a phone width at a readable scale */
+      [data-composition-id="06-step-2-donate"] .slice.keys { display: none; }
+      [data-composition-id="06-step-2-donate"] .dialog { width: calc(100% - 60px); }
+      [data-composition-id="06-step-2-donate"] .dialog-head .k-title { text-wrap: balance; }
+      [data-composition-id="06-step-2-donate"] .notes { left: 60px; right: 120px; top: 1032px; }
+      [data-composition-id="06-step-2-donate"] .notes .k-callout { left: 0; right: 0; }
     }
   </style>
 
-  <div id="root" data-composition-id="06-step-2-donate" data-width="1920" data-height="1080" data-duration="16.196">
-    <div class="06-step-2-donate-bg clip" data-start="0" data-duration="16.196" data-track-index="0"></div>
+  <div id="root" data-composition-id="06-step-2-donate" data-width="1920" data-height="1080" data-duration="18.036">
+    <div class="k-bg clip" id="f06-bg" data-start="0" data-duration="18.036" data-track-index="0"></div>
 
-    <img class="06-step-2-donate-logo" src="assets/anyrouter-logo-black.svg" alt="AnyRouter" />
+    <div class="k-stage clip" id="f06-stage" data-start="0" data-duration="18.036" data-track-index="1">
+      <div class="k-step">
+        <span class="k-badge is-outline" id="f06-step">Step 2 of 3</span>
+        <h2 class="k-h2" id="f06-step-name">Donate it to the pool</h2>
+      </div>
 
-    <div class="06-step-2-donate-rail">
-      <div class="06-step-2-donate-step">
-        <div class="06-step-2-donate-dot">
-          <div class="06-step-2-donate-disc is-done">
-            <svg width="20" height="20" viewBox="0 0 20 20"><path d="M4.5 10.5 L8.5 14.5 L15.5 6" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="k-browser browser" id="f06-browser">
+        <div class="k-browser-bar">
+          <div class="k-browser-dots"><i></i><i></i><i></i></div>
+          <div class="url-swap">
+            <span class="k-url" id="f06-url-signin">anyrouter.dev</span>
+            <span class="k-url" id="f06-url-pool">anyrouter.dev/pool</span>
           </div>
         </div>
-        <div class="06-step-2-donate-label">Create a key</div>
-      </div>
-      <div class="06-step-2-donate-hair"></div>
-      <div class="06-step-2-donate-step">
-        <div class="06-step-2-donate-dot" id="06-step-2-donate-dot2">
-          <div class="06-step-2-donate-disc is-active"><span class="06-step-2-donate-num" id="06-step-2-donate-num2">2</span></div>
-          <div class="06-step-2-donate-disc is-done" id="06-step-2-donate-done2">
-            <svg id="06-step-2-donate-check2" width="20" height="20" viewBox="0 0 20 20"><path d="M4.5 10.5 L8.5 14.5 L15.5 6" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <div class="k-view" id="f06-signin">
+          <img id="f06-signin-img" src="assets/anyrouter-signin.png" alt="Continue to AnyRouter" data-layout-allow-overflow />
+          <div class="hot" id="f06-github"><div class="k-ring" id="f06-github-ring"></div></div>
+        </div>
+
+        <div class="k-view pool-view" id="f06-pool">
+          <div class="table" id="f06-table">
+            <div class="slice" data-x0="790" data-x1="1230"><img src="assets/anyrouter-pool.png" alt="Shared pool providers" data-layout-allow-overflow /></div>
+            <div class="slice keys" data-x0="2100" data-x1="2260"><img src="assets/anyrouter-pool.png" alt="" data-layout-allow-overflow /></div>
+            <div class="slice" data-x0="2820" data-x1="3040">
+              <img src="assets/anyrouter-pool.png" alt="" data-layout-allow-overflow />
+              <div class="hot" id="f06-row-donate"><div class="k-ring" id="f06-row-ring"></div></div>
+            </div>
+            <div class="row-tint" id="f06-row-tint"></div>
           </div>
         </div>
-        <div class="06-step-2-donate-label-wrap">
-          <div class="06-step-2-donate-label is-active" id="06-step-2-donate-label2-active">Donate it</div>
-          <div class="06-step-2-donate-label is-overlay" id="06-step-2-donate-label2-done">Donate it</div>
-        </div>
-      </div>
-      <div class="06-step-2-donate-hair"></div>
-      <div class="06-step-2-donate-step">
-        <div class="06-step-2-donate-dot" id="06-step-2-donate-dot3">
-          <div class="06-step-2-donate-disc is-todo" id="06-step-2-donate-todo3"><span class="06-step-2-donate-num">3</span></div>
-          <div class="06-step-2-donate-disc is-active" id="06-step-2-donate-active3"><span class="06-step-2-donate-num">3</span></div>
-        </div>
-        <div class="06-step-2-donate-label-wrap">
-          <div class="06-step-2-donate-label is-todo" id="06-step-2-donate-label3-todo">Use free models</div>
-          <div class="06-step-2-donate-label is-active is-overlay" id="06-step-2-donate-label3-active">Use free models</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="06-step-2-donate-card 06-step-2-donate-card-signin" id="06-step-2-donate-signin">
-      <div class="06-step-2-donate-bar">
-        <div class="06-step-2-donate-dots"><span></span><span></span><span></span></div>
-        <div class="06-step-2-donate-url 06-step-2-donate-mono">anyrouter.dev</div>
-      </div>
-      <div class="06-step-2-donate-view">
-        <img class="06-step-2-donate-signin-shot" id="06-step-2-donate-signin-shot" src="assets/anyrouter-signin.png" alt="anyrouter.dev sign-in" />
-      </div>
-    </div>
-
-    <div class="06-step-2-donate-card 06-step-2-donate-card-pool" id="06-step-2-donate-card">
-      <div class="06-step-2-donate-bar">
-        <div class="06-step-2-donate-dots"><span></span><span></span><span></span></div>
-        <div class="06-step-2-donate-url 06-step-2-donate-mono">anyrouter.dev/pool</div>
-      </div>
-      <div class="06-step-2-donate-view">
-        <div class="06-step-2-donate-slice" style="left: 0; width: 504px">
-          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="anyrouter.dev/pool" style="left: -936px" />
-        </div>
-        <div class="06-step-2-donate-slice" style="left: 504px; width: 204px">
-          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -2508px" />
-        </div>
-        <div class="06-step-2-donate-slice" style="left: 708px; width: 252px">
-          <img class="06-step-2-donate-pool-shot" src="assets/anyrouter-pool.png" alt="" style="left: -3396px" />
-        </div>
-        <div class="06-step-2-donate-row-tint" id="06-step-2-donate-row-tint"></div>
-      </div>
-      <div class="06-step-2-donate-veil" id="06-step-2-donate-veil"></div>
-    </div>
-
-    <div class="06-step-2-donate-dlg-outer" id="06-step-2-donate-dlg-outer">
-      <div class="06-step-2-donate-dlg" id="06-step-2-donate-dlg" role="dialog">
-        <div class="06-step-2-donate-form" id="06-step-2-donate-form">
-          <div class="06-step-2-donate-head">
-            <img src="assets/provider-openrouter.svg" alt="" />
-            <div class="06-step-2-donate-title">Donate your OpenRouter key</div>
-          </div>
-          <div class="06-step-2-donate-input" aria-label="API key">
-            <div class="06-step-2-donate-input-focus" id="06-step-2-donate-input-focus"></div>
-            <div class="06-step-2-donate-input-text 06-step-2-donate-mono" id="06-step-2-donate-input-text">sk-or-v1-••••••••••••</div>
-            <div class="06-step-2-donate-eye">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="k-view modal">
+          <div class="scrim" id="f06-scrim"></div>
+          <div class="k-card dialog" id="f06-dialog">
+            <div class="phase" id="f06-form">
+              <div class="dialog-head">
+                <img src="assets/provider-openrouter.svg" alt="" />
+                <h3 class="k-title">Donate your OpenRouter key</h3>
+              </div>
+              <div class="field" id="f06-field">
+                <span class="k-key" id="f06-key"><svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>sk-or-v1-••••••••</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <div class="k-ring" id="f06-field-ring"></div>
+              </div>
+              <div class="dialog-foot">
+                <span class="k-btn is-primary donate" id="f06-donate">
+                  <span id="f06-donate-label">Donate</span>
+                  <span id="f06-checking">Checking key…</span>
+                  <span class="k-ring" id="f06-donate-ring"></span>
+                </span>
+              </div>
+            </div>
+            <div class="phase done" id="f06-done">
+              <span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+              <p class="k-title">Thanks, your key joins the pool within a minute</p>
             </div>
           </div>
-          <div class="06-step-2-donate-link">
-            <span>Where to find it</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div class="06-step-2-donate-btn 06-step-2-donate-btn-ghost">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3F3F46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            <span>Providers</span>
-          </div>
-          <div class="06-step-2-donate-btn 06-step-2-donate-btn-primary" id="06-step-2-donate-donate">
-            <span class="06-step-2-donate-btn-label" id="06-step-2-donate-donate-label">Donate</span>
-            <span class="06-step-2-donate-btn-label" id="06-step-2-donate-checking-label">Checking key…</span>
-          </div>
-        </div>
-        <div class="06-step-2-donate-done" id="06-step-2-donate-done">
-          <div class="06-step-2-donate-ok">
-            <svg width="28" height="28" viewBox="0 0 20 20"><path d="M4.5 10.5 L8.5 14.5 L15.5 6" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="06-step-2-donate-done-title">Thanks, your key joins the pool within a minute</div>
-          <div class="06-step-2-donate-done-desc">You get Go free, $4 credit a month and 5% back</div>
         </div>
       </div>
-      <div class="06-step-2-donate-safe" id="06-step-2-donate-safe">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span>Encrypted · stop sharing any time</span>
-      </div>
-      <div class="06-step-2-donate-safe 06-step-2-donate-safe2" id="06-step-2-donate-safe2">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
-        <span>Members' requests run on your key · yours always come first</span>
-      </div>
-    </div>
 
-    <div class="06-step-2-donate-nv" id="06-step-2-donate-nv">
-      <div class="06-step-2-donate-nv-head" id="06-step-2-donate-nv-head">
-        <img src="assets/provider-nvidia.svg" alt="" />
-        <div class="06-step-2-donate-nv-name">NVIDIA NIM</div>
-      </div>
-      <div class="06-step-2-donate-nv-path 06-step-2-donate-mono" id="06-step-2-donate-nv-path">
-        <span>build.nvidia.com</span>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        <b>Get API Key</b>
-      </div>
-      <div class="06-step-2-donate-nv-row">
-        <div class="06-step-2-donate-pill 06-step-2-donate-pill-static" id="06-step-2-donate-nv-pill">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M16 7l3 3M14 9l2 2"/></svg>
-          <span>nvapi-••••••••</span>
+      <div class="notes">
+        <div class="k-callout" id="f06-safe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <div class="k-callout-text">
+            <span class="k-label">AnyRouter encrypts your key</span>
+            <span class="k-body" id="f06-stop">You can stop sharing any time</span>
+          </div>
         </div>
-        <div class="06-step-2-donate-nv-btn" id="06-step-2-donate-nv-btn">Donate</div>
+        <div class="k-callout" id="f06-nvidia">
+          <img src="assets/provider-nvidia.svg" alt="NVIDIA" />
+          <div class="k-callout-text">
+            <span class="k-label">NVIDIA NIM works the same way</span>
+            <span class="k-key" id="f06-nv-key"><svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L20 3M16 7l3 3M18.5 4.5l2 2"/></svg>nvapi-••••••••</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="06-step-2-donate-pill" id="06-step-2-donate-pill">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BB4D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M16 7l3 3M14 9l2 2"/></svg>
-      <span>sk-or-v1-••••••••••••</span>
-    </div>
-
-    <div class="06-step-2-donate-ripple" id="06-step-2-donate-ripple0"></div>
-    <div class="06-step-2-donate-ripple" id="06-step-2-donate-ripple1"></div>
-    <div class="06-step-2-donate-ripple" id="06-step-2-donate-ripple2"></div>
-
-    <div class="06-step-2-donate-cursor-wrap" id="06-step-2-donate-cursor">
-      <svg class="cursor" width="28" height="34" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
+      <div class="ripple" id="f06-ripple-a"></div>
+      <div class="ripple" id="f06-ripple-b"></div>
+      <div class="ripple" id="f06-ripple-c"></div>
+      <div class="ripple" id="f06-ripple-d"></div>
+      <svg class="k-cursor" id="f06-cursor" viewBox="0 0 28 34"><path d="M2 2 L2 27 L8.5 21 L13 31.5 L17.5 29.5 L13 19.5 L22 19.5 Z" fill="#0A0A0A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
     (function () {
-      const q = (id) => document.getElementById("06-step-2-donate-" + id);
-      const IN = "power3.out";
-      const MOVE = "power2.inOut";
-      const tl = gsap.timeline({ paused: true });
+      const $ = (s) => document.getElementById("f06-" + s);
+      const stage = $("stage");
 
-      // Cue times are the spoken words' starts (06-step-2-donate.words.json).
-      const T_SIGN = 0.96, T_ANYROUTER = 1.44, T_OPEN = 2.96;
-      const T_CLICK = 4.85, T_NEXT = 5.56, T_OPENROUTER = 5.82;
-      const T_PASTE = 6.89, T_YOUR = 7.52;
-      const T_PRESS = 9.15, T_DONATE_BTN = 9.68, T_SUCCESS = 10.5;
-      const T_ENCRYPTED = 11.29, T_TIME_END = 12.55;
-      const T_NVIDIA = 13.38, T_WORKS = 13.97, T_SAME = 14.42, T_WAY = 14.72;
-      const DURATION = 15.696;
-
-      // Sign-in capture: push in from the page onto the "Continue to AnyRouter" dialog.
-      // Image offset = view centre - scale * source point, so the source point sits at the centre.
-      const SIGNIN_VIEW = { x: 220, y: 212, cx: 525, cy: 329 };
-      const SIGNIN_FROM = { s: 0.5, x: 1918, y: 658 };
-      const SIGNIN_TO = { s: 0.68, x: 1918, y: 580 };
-      const signinPose = (p) => ({ scale: p.s, x: SIGNIN_VIEW.cx - p.s * p.x, y: SIGNIN_VIEW.cy - p.s * p.y });
-      const signinPoint = (sx, sy) => ({
-        x: SIGNIN_VIEW.x + SIGNIN_VIEW.cx + SIGNIN_TO.s * (sx - SIGNIN_TO.x),
-        y: SIGNIN_VIEW.y + SIGNIN_VIEW.cy + SIGNIN_TO.s * (sy - SIGNIN_TO.y),
-      });
-      const GITHUB_BTN = signinPoint(1920, 462);
-
-      // Donate slice at 1.2 from source (2830, 600), placed at x 708 of the card's view, which starts at (480, 272).
-      const donatePoint = (sx, sy) => ({ x: 480 + 708 + 1.2 * (sx - 2830), y: 272 + 1.2 * (sy - 600) });
-      const ROW_DONATE = donatePoint(2925, 716);
-
-      // Dialog is authored at 640px and shown at 1.5x from its top-left (480, 290).
-      const DLG_SCALE = 1.5;
-      const dlg = (lx, ly) => ({ x: 480 + DLG_SCALE * lx, y: 290 + DLG_SCALE * ly });
-      const INPUT_TEXT = dlg(44 + 126, 113);
-      const DONATE_BTN = dlg(528, 230);
-
-      // Parked clear of both browser cards (sign-in ends at x 1270, the pool card at x 1440).
-      const PARK = { x: 1640, y: 240 };
-
-      gsap.set(q("dlg-outer"), { scale: DLG_SCALE });
-      gsap.set(q("pill"), { xPercent: -50, yPercent: -50 });
-      gsap.set([q("ripple1"), q("ripple2"), q("ripple0")], { xPercent: -50, yPercent: -50 });
-      gsap.set(q("input-text"), { transformOrigin: "0% 50%" });
-
-      // Handoff from Frame 5: key pill at (1500, 470), drifting left, then parks top-right.
-      tl.fromTo(q("pill"), { x: 1500, y: 470, scale: 1, opacity: 1 }, { x: 1480, duration: 0.3, ease: "power2.out" }, 0);
-      tl.to(q("pill"), { y: PARK.y, scale: 0.72, duration: 0.75, ease: "power2.out" }, 0.3);
-      tl.to(q("pill"), { x: PARK.x, duration: 0.85, ease: MOVE }, 0.35);
-
-      tl.fromTo(q("signin"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: IN }, 0.1);
-      tl.fromTo(q("signin-shot"), signinPose(SIGNIN_FROM), { ...signinPose(SIGNIN_TO), duration: 1.2, ease: "power3.inOut" }, T_SIGN);
-
-      // Cursor: hot spot is the path tip at (2, 2).
-      const at = (p) => ({ x: p.x - 2, y: p.y - 2 });
-      const click = (t, p, ring) => {
-        tl.to(q("cursor"), { scale: 0.88, duration: 0.12, ease: "power2.in" }, t);
-        tl.to(q("cursor"), { scale: 1, duration: 0.12, ease: "power2.out" }, t + 0.12);
-        tl.fromTo(q(ring), { x: p.x, y: p.y, scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
+      // Layout box relative to the stage, ignoring transforms (tools/shared-components.md).
+      const box = (el) => {
+        let x = 0, y = 0;
+        for (let n = el; n && n !== stage; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+        return { x, y, w: el.offsetWidth, h: el.offsetHeight, cx: x + el.offsetWidth / 2, cy: y + el.offsetHeight / 2 };
       };
-      tl.fromTo(q("cursor"), { x: 1150, y: 800, opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, T_ANYROUTER);
-      tl.to(q("cursor"), { ...at(GITHUB_BTN), duration: 0.6, ease: IN }, T_ANYROUTER + 0.05);
-      click(2.2, GITHUB_BTN, "ripple0");
 
-      // Hard cut to the pool page on "open".
-      tl.set(q("signin"), { opacity: 0 }, T_OPEN);
-      tl.fromTo(q("card"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: IN }, T_OPEN);
+      // Word starts from .hyperframes/frame-packets/06-step-2-donate.words.json.
+      const W = {
+        step: 0.03, two: 0.38, sign: 1.13, anyrouter: 1.66, shared: 3.97, click: 5.46, next: 5.97,
+        openrouter: 6.57, paste: 7.5, your: 7.76, press: 8.57, donate: 8.97, encrypts: 10.93,
+        stop: 12.76, nvidia: 15.06, works: 15.69,
+      };
+      // sfx-cues.json: the sign-in click is anyrouter.dev + 0.76, the success chime is Donate + 0.82
+      const CLICK_GITHUB = W.anyrouter + 0.76;
+      const SUCCESS = W.donate + 0.82;
 
-      tl.to(q("cursor"), { ...at(ROW_DONATE), duration: 0.6, ease: MOVE }, T_CLICK);
-      tl.fromTo(q("row-tint"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, T_NEXT);
-      click(T_OPENROUTER, ROW_DONATE, "ripple1");
+      // Captured px in the 3840x2160 screenshots.
+      const GITHUB = { x0: 1596, y0: 428, x1: 2244, y1: 496, r: 12 };   // "Continue with GitHub"
+      const SIGNIN_FOCUS = { y0: 160, y1: 520 };                       // the dialog's close button down past the GitHub button
+      const POOL = { y0: 590, y1: 944 };                               // table header to the Google AI Studio row
+      const OPENROUTER_ROW = { y0: 672, y1: 759 };
+      const ROW_DONATE = { x0: 2854, y0: 688, x1: 3002, y1: 744, r: 12 };
 
-      tl.fromTo(q("veil"), { opacity: 0 }, { opacity: 0.4, duration: 0.4, ease: "none" }, T_OPENROUTER + 0.15);
-      tl.to(q("row-tint"), { opacity: 0, duration: 0.3, ease: "none" }, T_OPENROUTER + 0.15);
-      tl.fromTo(q("dlg"), { y: 50, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.6, ease: IN }, T_OPENROUTER + 0.2);
-      tl.to(q("cursor"), { x: 1440, y: 770, duration: 0.7, ease: MOVE }, T_OPENROUTER + 0.4);
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
 
-      // Paste: the parked key flies into the input and becomes its value.
-      tl.fromTo(q("input-focus"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, T_PASTE);
-      tl.to(q("pill"), { x: INPUT_TEXT.x, y: INPUT_TEXT.y, scale: 1.05, duration: T_YOUR - T_PASTE, ease: "power3.inOut" }, T_PASTE);
-      tl.to(q("pill"), { opacity: 0, duration: 0.15, ease: "none" }, T_YOUR);
-      tl.fromTo(q("input-text"), { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.25, ease: IN }, T_YOUR);
+        // Sign-in capture: the GitHub button centred, as large as the view allows (at most 1.5).
+        const sv = box($("signin"));
+        const ss = Math.min(1.5, sv.w / (GITHUB.x1 - GITHUB.x0 + 40), sv.h / (SIGNIN_FOCUS.y1 - SIGNIN_FOCUS.y0));
+        const sx = (GITHUB.x0 + GITHUB.x1) / 2 - sv.w / 2 / ss;
+        const sy = (SIGNIN_FOCUS.y0 + SIGNIN_FOCUS.y1) / 2 - sv.h / 2 / ss;
+        gsap.set($("signin-img"), { width: 3840 * ss, x: -sx * ss, y: -sy * ss });
+        gsap.set($("github"), { left: (GITHUB.x0 - sx) * ss, top: (GITHUB.y0 - sy) * ss, width: (GITHUB.x1 - GITHUB.x0) * ss, height: (GITHUB.y1 - GITHUB.y0) * ss, borderRadius: GITHUB.r * ss });
+        gsap.set($("github-ring"), { borderRadius: GITHUB.r * ss + 10 });
 
-      tl.to(q("cursor"), { ...at(DONATE_BTN), duration: 0.45, ease: IN }, T_PRESS);
-      click(T_DONATE_BTN, DONATE_BTN, "ripple2");
-      tl.fromTo(q("donate"), { scale: 1 }, { scale: 0.96, duration: 0.12, ease: "power2.in" }, T_DONATE_BTN);
-      tl.to(q("donate"), { scale: 1, duration: 0.12, ease: "power2.out" }, T_DONATE_BTN + 0.12);
-      tl.fromTo(q("checking-label"), { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none" }, T_DONATE_BTN + 0.06);
-      tl.fromTo(q("donate-label"), { opacity: 1 }, { opacity: 0, duration: 0.01, ease: "none" }, T_DONATE_BTN + 0.06);
+        // Pool capture: abutting column slices (Provider, Keys, Donate; Keys is hidden in portrait).
+        const slices = [...$("table").querySelectorAll(".slice")].filter((el) => getComputedStyle(el).display !== "none");
+        const span = (el) => el.dataset.x1 - el.dataset.x0;
+        const pv = box($("pool"));
+        const ps = Math.min(1.5, pv.h / (POOL.y1 - POOL.y0), pv.w / slices.reduce((sum, el) => sum + span(el), 0));
+        for (const el of slices) {
+          gsap.set(el, { width: span(el) * ps, height: (POOL.y1 - POOL.y0) * ps });
+          gsap.set(el.querySelector("img"), { width: 3840 * ps, x: -el.dataset.x0 * ps, y: -POOL.y0 * ps });
+        }
+        const donateSlice = $("row-donate").parentElement;
+        gsap.set($("row-donate"), { left: (ROW_DONATE.x0 - donateSlice.dataset.x0) * ps, top: (ROW_DONATE.y0 - POOL.y0) * ps, width: (ROW_DONATE.x1 - ROW_DONATE.x0) * ps, height: (ROW_DONATE.y1 - ROW_DONATE.y0) * ps, borderRadius: ROW_DONATE.r * ps });
+        gsap.set($("row-ring"), { borderRadius: ROW_DONATE.r * ps + 10 });
+        gsap.set($("row-tint"), { top: (OPENROUTER_ROW.y0 - POOL.y0) * ps, height: (OPENROUTER_ROW.y1 - OPENROUTER_ROW.y0) * ps });
 
-      tl.to(q("form"), { opacity: 0, y: -10, duration: 0.2, ease: "power2.in" }, T_SUCCESS - 0.06);
-      tl.fromTo(q("done"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: IN }, T_SUCCESS + 0.08);
-      tl.to(q("cursor"), { x: 1500, y: 790, opacity: 0, duration: 0.5, ease: MOVE }, T_SUCCESS);
+        // Cursor targets (the arrow's hot spot is 3px into its box).
+        const hot = (el, fx, fy) => { const b = box(el); return { x: b.x + b.w * fx - 3, y: b.y + b.h * fy - 3 }; };
+        const atGithub = hot($("github"), 0.82, 0.55);
+        const atRow = hot($("row-donate"), 0.74, 0.7);
+        const atField = hot($("field"), 0.86, 0.6);
+        const atDonate = hot($("donate"), 0.9, 0.72);
+        const enter = { x: sv.x + sv.w * 0.78, y: sv.y + sv.h + 40 };
 
-      tl.fromTo(q("dot2"), { scale: 1 }, { scale: 1.12, duration: 0.2, ease: "power2.out" }, T_SUCCESS);
-      tl.to(q("dot2"), { scale: 1, duration: 0.3, ease: MOVE }, T_SUCCESS + 0.2);
-      tl.fromTo(q("done2"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: IN }, T_SUCCESS);
-      tl.fromTo(q("num2"), { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "none" }, T_SUCCESS);
-      tl.fromTo(q("label2-active"), { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "none" }, T_SUCCESS);
-      tl.fromTo(q("label2-done"), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, T_SUCCESS);
+        const press = (ripple, p, t) => {
+          tl.to($("cursor"), { scale: 0.88, duration: 0.06, ease: "power2.in" }, t);
+          tl.to($("cursor"), { scale: 1, duration: 0.08, ease: "power2.out" }, t + 0.06);
+          tl.set(ripple, { x: p.x + 3, y: p.y + 3 }, t);
+          tl.fromTo(ripple, { scale: 0, opacity: 0.5 }, { scale: 1, opacity: 0, duration: 0.45, ease: "power2.out" }, t);
+        };
+        const ringOn = (ring, t) => tl.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, t);
 
-      tl.fromTo(q("safe"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: IN }, T_ENCRYPTED);
-      tl.fromTo(q("safe2"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: IN }, T_ENCRYPTED + 0.4);
+        // Step 2 of 3
+        tl.fromTo($("step"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, W.step);
+        tl.fromTo($("step-name"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, W.two);
 
-      // NVIDIA aside: the success card settles left in the pause after "time" (ends right edge x 1056),
-      // then NVIDIA's card enters with its heading, so no empty shell ever shows, and holds to the end.
-      tl.to(q("veil"), { opacity: 0, duration: 0.5, ease: "none" }, T_TIME_END);
-      tl.to(q("card"), { opacity: 0, duration: 0.5, ease: "none" }, T_TIME_END);
-      tl.fromTo(q("dlg-outer"), { x: 0, y: 0, scale: DLG_SCALE }, { x: -256, y: 28, scale: 1.3, duration: 0.7, ease: MOVE, immediateRender: false }, T_TIME_END);
-      tl.fromTo(q("nv"), { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: IN }, T_TIME_END + 0.7);
-      tl.fromTo(q("nv-head"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: IN }, T_TIME_END + 0.7);
-      tl.fromTo(q("nv-path"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: IN }, T_NVIDIA + 0.25);
-      tl.fromTo(q("nv-pill"), { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: IN }, T_WORKS);
-      tl.fromTo(q("nv-btn"), { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: IN }, T_SAME);
+        // Sign in at anyrouter.dev
+        tl.fromTo($("browser"), { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, W.sign);
+        tl.fromTo($("cursor"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, W.anyrouter);
+        tl.fromTo($("cursor"), { ...enter }, { ...atGithub, duration: 0.65, ease: "power2.inOut" }, W.anyrouter);
+        ringOn($("github-ring"), CLICK_GITHUB);
+        press($("ripple-a"), atGithub, CLICK_GITHUB);
 
-      tl.fromTo(q("active3"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: IN }, T_WAY);
-      tl.set(q("todo3"), { opacity: 0 }, T_WAY + 0.3);
-      tl.fromTo(q("label3-todo"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "none" }, T_WAY);
-      tl.fromTo(q("label3-active"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, T_WAY);
+        // …and open the Shared pool
+        tl.fromTo($("pool"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W.shared);
+        tl.to([$("signin"), $("cursor")], { opacity: 0, duration: 0.3, ease: "power2.out" }, W.shared);
+        tl.fromTo($("url-pool"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, W.shared);
+        tl.to($("url-signin"), { opacity: 0, duration: 0.2, ease: "power2.out" }, W.shared);
 
-      tl.set({}, {}, DURATION);
+        // Click Donate next to OpenRouter
+        tl.to($("cursor"), { opacity: 1, duration: 0.25, ease: "power2.out" }, W.click);
+        tl.fromTo($("cursor"), { ...enter }, { ...atRow, duration: 0.75, ease: "power2.inOut", immediateRender: false }, W.click);
+        tl.fromTo($("row-tint"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W.next);
+        ringOn($("row-ring"), W.openrouter);
+        press($("ripple-b"), atRow, W.openrouter);
+        tl.fromTo($("scrim"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, W.openrouter + 0.15);
+        tl.to([$("row-ring"), $("row-tint")], { opacity: 0, duration: 0.3, ease: "power2.out" }, W.openrouter + 0.15);
+        tl.fromTo($("dialog"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, W.openrouter + 0.2);
 
-      window.__timelines = window.__timelines || {};
-      window.__timelines["06-step-2-donate"] = tl;
+        // paste your key
+        tl.to($("cursor"), { ...atField, duration: 0.5, ease: "power2.inOut" }, W.paste - 0.25);
+        press($("ripple-c"), atField, W.your);
+        ringOn($("field-ring"), W.your);
+        tl.fromTo($("key"), { x: -16, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, W.your);
+
+        // …and press Donate
+        tl.to($("cursor"), { ...atDonate, duration: 0.36, ease: "power2.inOut" }, W.press);
+        tl.to($("field-ring"), { opacity: 0, duration: 0.2, ease: "power2.out" }, W.donate);
+        ringOn($("donate-ring"), W.donate);
+        press($("ripple-d"), atDonate, W.donate);
+        tl.to($("donate"), { scale: 0.96, duration: 0.06, ease: "power2.in" }, W.donate);
+        tl.to($("donate"), { scale: 1, duration: 0.08, ease: "power2.out" }, W.donate + 0.06);
+        tl.to($("donate-label"), { opacity: 0, duration: 0.1, ease: "power2.out" }, W.donate + 0.08);
+        tl.fromTo($("checking"), { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.out" }, W.donate + 0.12);
+
+        // Donated
+        tl.to($("form"), { opacity: 0, duration: 0.2, ease: "power2.out" }, SUCCESS);
+        tl.fromTo($("done"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, SUCCESS + 0.05);
+        tl.to($("cursor"), { x: "+=60", y: "+=70", opacity: 0, duration: 0.5, ease: "power2.inOut" }, SUCCESS);
+
+        // AnyRouter encrypts your key; you can stop sharing any time
+        tl.fromTo($("safe"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, W.encrypts);
+        tl.fromTo($("stop"), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, W.stop);
+
+        // A key from NVIDIA works the same way
+        tl.to($("safe"), { opacity: 0, duration: 0.25, ease: "power2.out" }, W.nvidia);
+        tl.fromTo($("nvidia"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, W.nvidia + 0.05);
+        tl.fromTo($("nv-key"), { x: -16, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, W.works);
+
+        window.__timelines["06-step-2-donate"] = tl;
+      });
     })();
   </script>
 </template>
