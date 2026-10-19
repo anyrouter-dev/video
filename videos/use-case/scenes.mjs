@@ -289,6 +289,8 @@ function typedChars(text, focus) {
   return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>${breakAfter(at + k) ? '<wbr>' : ''}`).join('');
 }
 
+const CARET = '<span class="caret"></span>';
+
 /**
  * One typed line, split at spaces into tokens that never break inside: a model
  * id cut at "gemma-4-" reads as two things. In the focus line of a roll, the
@@ -297,18 +299,22 @@ function typedChars(text, focus) {
 function typedLine(line, roll) {
   const chars = typedChars(line.text, line.focus);
   const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
-  let i = 0;
   // a pipe stays with the command it feeds, and a closing "\" with the word before it,
   // so neither sits on a row alone
-  return line.text.split(/(?<!(?:^| )\|)( +)(?!\\$)/).map(part => {
-    const at = i;
+  const parts = line.text.split(/(?<!(?:^| )\|)( +)(?!\\$)/);
+  // the caret sits in the last token, after its last character: after the token, it takes a row of its own once the token wraps
+  const last = parts.findLastIndex(p => p.trim());
+  if (last < 0) return `${chars(line.text, 0)}${CARET}`;
+  let i = 0;
+  return parts.map((part, n) => {
+    const at = i, caret = n === last ? CARET : '';
     i += part.length;
     if (!part.trim()) return chars(part, at);
-    if (slotAt < at || slotAt >= at + part.length) return `<span class="tok">${chars(part, at)}</span>`;
+    if (slotAt < at || slotAt >= at + part.length) return `<span class="tok">${chars(part, at)}${caret}</span>`;
     const k = slotAt - at, ids = [...roll.ids, roll.preset];
     // the rolled-in ids are their own elements: each is read as a whole id, never typed
     const slot = `<span class="roll" data-layout-allow-overlap><span class="ri" data-layout-allow-overlap>${chars(roll.preset, slotAt)}</span>${ids.map(id => `<em class="ri m" data-layout-allow-overlap>${esc(id)}</em>`).join('')}</span>`;
-    return `<span class="brk"></span><span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}</span>`;
+    return `<span class="brk"></span><span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}${caret}</span>`;
   }).join('');
 }
 
@@ -325,7 +331,7 @@ function windowHtml(win) {
   const body = lines.map((l, k) => {
     const typed = shell || l.focus;
     const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
-    if (typed) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}<span class="caret"></span></div>`;
+    if (typed) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}</div>`;
     return l.keep
       ? `<div class="ln keep" style="--in:${indentOf(l.text)}">${wrapped(l.text)}</div>`
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
@@ -480,8 +486,8 @@ export const CSS = `
     -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
   .film .is-ink .ttl{color:${C.onInkMuted}}
   .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
-  /* a wrapped line hangs past its prompt and its own indent, so it reads as one command */
-  .film .ln{white-space:pre-wrap;padding:0 0 0 calc((var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
+  /* a wrapped line hangs past its prompt and its own indent, so it reads as one command; a blank line keeps its row */
+  .film .ln{min-height:${CODE_LH}em;white-space:pre-wrap;padding:0 0 0 calc((var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
   .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.muted}}
   .film .ln.keep{overflow-wrap:anywhere}
   .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}

@@ -343,3 +343,11 @@ test('a line that sets what the page changes, its base URL, key or model, is sho
     }
   }
 });
+
+test('the caret follows the command\'s last character, and a blank line keeps its row', () => {
+  // after a wrapped token the caret took a row of its own, which read as a blank line between the two fields
+  const h = html(filmOf(doc(), 'openai-sdk'));
+  assert.match(h, /<span class="c">,<\/span><span class="caret"><\/span><\/span><\/div>/, 'the caret is inside the last token');
+  // an empty context line collapsed to nothing, so the window drew one row less than it was sized for
+  assert.match(filmOf(doc(), 'openai-sdk').css, /\.film \.ln\{min-height:1\.45em;/);
+});
