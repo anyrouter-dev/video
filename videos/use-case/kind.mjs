@@ -33,7 +33,8 @@ import { CSS, read, setIn, codeSizes, filmScene, ROLL_EVERY } from './scenes.mjs
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 export const MODELS_API = 'https://anyrouter.dev/api/v1/models';
-export const FILM = { min: 12, max: 18 };
+// A page with little to show runs short rather than holding a still frame.
+export const FILM = { min: 10, max: 18 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -88,11 +89,19 @@ export function rollPools(doc) {
 
 // An anyrouter/* preset inside a line of the page's code.
 const PRESET = /anyrouter\/[a-z0-9-]+/;
-/** The ids a use case's film rolls through, or null when its command names no preset. */
+// A page that names a price ("$0 markup", "free") is read as saying it of every id on screen.
+const PRICE = /\$0\b|\bfree\b/i;
+/**
+ * The ids a use case's film rolls through, or null when its command names no
+ * preset. Ids billed to credits never roll under a page that promises "$0" or
+ * "free": a viewer would read the promise as covering them.
+ */
 export function rollOf(u, pools) {
   const preset = u.command?.text.match(PRESET)?.[0];
   if (!preset || !pools) return null;
-  const ids = preset === 'anyrouter/free' ? pools.free : pools.credit;
+  const free = preset === 'anyrouter/free';
+  if (!free && PRICE.test(`${u.kicker} ${u.title} ${u.summary}`)) return null;
+  const ids = free ? pools.free : pools.credit;
   return ids.length >= 2 ? { preset, ids } : null;
 }
 
@@ -104,8 +113,8 @@ export const redact = s => String(s).replace(KEY, (_, prefix) => `${prefix}•�
 
 // A shell snippet up to this many lines is typed whole; a longer one up to the command.
 const SHELL_LINES = 3;
-// Lines of code shown around the command line in an editor.
-const CONTEXT = 2;
+// Lines of code an editor shows: from the snippet's top, so a call keeps its URL and its key header.
+const EDITOR_LINES = 6;
 
 /**
  * The code a film types: the page's command, inside the snippet that holds it.
@@ -121,7 +130,11 @@ export function windowOf(u) {
   const at = all.findIndex(l => l.includes(cmd));
   let from, to;
   if (u.command.shell) [from, to] = all.length <= SHELL_LINES ? [0, all.length] : [Math.max(0, at - SHELL_LINES + 1), at + 1];
-  else [from, to] = [Math.max(0, at - CONTEXT), Math.min(all.length, at + CONTEXT + 1)];
+  else {
+    // the line after the command too, when there is one: the command is not the last thing in a file
+    from = Math.max(0, Math.min(at, at + 2 - EDITOR_LINES));
+    to = Math.min(all.length, from + EDITOR_LINES);
+  }
   const shown = all.slice(from, to);
   const indent = Math.min(...shown.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
   return {
@@ -170,8 +183,8 @@ export function storyOf(u, pools) {
   const each = Math.min(TYPE_EACH, TYPE_MAX / chars);
   const typing = chars * each + (typed.length - 1) * LINE_PAUSE;
   const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
-  // the id rolling is time to read the line it sits in, so the hold after it is shorter
-  const reading = { outcome: read(`${copy.kicker} ${copy.title}`) - 0.4, code: Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - rolling) };
+  // typing and the roll are time to read the line, so the hold after them is what is left
+  const reading = { outcome: read(`${copy.kicker} ${copy.title}`) - 0.4, code: Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - typing - rolling) };
   const fixed = MOVE + TYPE_AT + typing + rolling + MOVE + END_HOLD;
   const stretch = Math.max(1, (FILM.min - fixed) / (reading.outcome + reading.code));
   const outcome = tenths(Math.max(2.4, reading.outcome * stretch));

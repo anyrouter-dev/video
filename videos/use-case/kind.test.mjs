@@ -81,7 +81,7 @@ test('a new id in the catalog makes a new release only for films that roll it', 
   fs.writeFileSync(file, JSON.stringify(models));
   const after = byLabel(kind.split(await collect(doc(), { 'models-from': file })));
   const changed = Object.keys(before).filter(slug => before[slug] !== after[slug]);
-  assert.ok(changed.includes('byok'), 'byok rolls anyrouter/auto through the credit ids');
+  assert.ok(changed.includes('cheapest-llm-api'), 'cheapest-llm-api rolls anyrouter/auto through the credit ids');
   assert.ok(!changed.includes('claude-code'), 'claude-code names no preset, so it rolls nothing');
   assert.ok(!changed.includes('claude-code-free-models'), 'a free roll never shows a paid id');
 });
@@ -162,13 +162,22 @@ test('a preset rolls through real ids one key runs, then comes back to the page\
     const preset = u.command.text.match(/anyrouter\/[a-z0-9-]+/)?.[0];
     const ids = rolled(html(film));
     if (!preset) { assert.deepEqual(ids, [], `${u.slug} names no preset, so nothing rolls`); continue; }
+    if (!ids.length) continue;
     seen++;
     assert.equal(ids.at(-1), preset, `${u.slug}: the roll ends on the page's own id`);
     const real = ids.slice(0, -1);
     assert.ok(real.length >= 2, `${u.slug}: more than one other id`);
     assert.ok(real.every(id => (preset === 'anyrouter/free' ? free : credit).has(id)), `${u.slug}: every id from the catalog's ${preset === 'anyrouter/free' ? 'free' : 'credit'} pool`);
   }
-  assert.ok(seen >= 10, 'most pages name a preset');
+  assert.ok(seen >= 8, 'most pages that name a preset roll it');
+});
+
+test('a page that promises $0 or free never rolls an id billed to credits', () => {
+  // "Bring your own keys, $0 markup" over grok and kimi reads as "these are free"
+  assert.deepEqual(rolled(html(filmOf(doc(), 'byok'))), []);
+  assert.ok(rolled(html(filmOf(doc(), 'cheapest-llm-api'))).length > 2, 'the same preset rolls where the page names no price');
+  const free = rolled(html(filmOf(doc(), 'free-llm-api')));
+  assert.ok(free.length > 2 && free.slice(0, -1).every(id => pools.free.includes(id)), 'a free preset rolls free ids');
 });
 
 test('a roll never shows an id that needs the user\'s own key, and a free roll never a paid one', () => {
