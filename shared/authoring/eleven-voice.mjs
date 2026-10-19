@@ -24,6 +24,8 @@ export const SAY = {
   'anyrouter.dev': 'any router dot dev',
   anyr: 'any R',
   '270': 'two hundred and seventy',
+  '50': 'fifty',
+  'openrouter/free': 'open router slash free',
 };
 
 /** SCRIPT.md → [{ frame, text }]: a `## … (Frame N)` heading, then its indented spoken block. */
