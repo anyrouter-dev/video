@@ -2,7 +2,7 @@
 workflow: product-launch-video
 flow: automation
 storyboard: no
-message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you get more room past that limit."
+message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you can send more requests than that limit allows."
 destination: youtube
 aspect: 1920x1080
 language: en

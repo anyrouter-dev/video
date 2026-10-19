@@ -1,7 +1,7 @@
 ---
 format: 1920x1080
-duration: 99s
-message: "Your OpenRouter free models stop at your account's limit. Add your key to AnyRouter and share it with the pool, and when you hit the limit your requests keep going through keys other members shared."
+duration: 106.6s
+message: "Your OpenRouter free models stop at your account's limit. Add your key to AnyRouter and share it with the pool, and when your key hits the limit, AnyRouter sends requests through keys other members shared."
 arc: The wall → Why → The fix → Step 1 → Step 2 → Step 3 → Step 4 → How it works → Close
 audience: someone already using OpenRouter's free models, technical or not
 mode: autonomous
