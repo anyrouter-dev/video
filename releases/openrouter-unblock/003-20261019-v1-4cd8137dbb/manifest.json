@@ -1,0 +1,22 @@
+{
+  "id": "003-20261019-v1-4cd8137dbb",
+  "hash": "4cd8137dbb",
+  "kind": "openrouter-unblock",
+  "label": "v1",
+  "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+  "seconds": 106.614,
+  "renderedAt": "2026-10-19T13:24:28.987Z",
+  "commit": "634fae8",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/openrouter-unblock-003-20261019-v1-4cd8137dbb.mp4",
+      "cover": "renders/openrouter-unblock-003-20261019-v1-4cd8137dbb.png",
+      "youtube": "https://youtu.be/7uR-o_h4d0g"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T13:24:29.026Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/openrouter-unblock-003-20261019-v1-4cd8137dbb"
+  }
+}
