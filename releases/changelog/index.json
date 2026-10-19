@@ -9,8 +9,12 @@
       "seconds": 34,
       "renderedAt": "2026-09-30T18:27:30.895Z",
       "commit": "a44a251",
-      "artifact": "renders/changelog-001-20260930-2026-09-30-7fb8483027.mp4",
-      "cover": "renders/changelog-001-20260930-2026-09-30-7fb8483027.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-001-20260930-2026-09-30-7fb8483027.mp4",
+          "cover": "renders/changelog-001-20260930-2026-09-30-7fb8483027.png"
+        }
+      },
       "source": "renders/changelog-001-20260930-2026-09-30-7fb8483027-source.tar.gz",
       "createdAt": "2026-09-30T15:20:45.055Z",
       "published": {
@@ -26,8 +30,12 @@
       "seconds": 15.5,
       "renderedAt": "2026-10-01T14:30:02.759Z",
       "commit": "ed2be3c",
-      "artifact": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.mp4",
-      "cover": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.mp4",
+          "cover": "renders/changelog-002-20261001-2026-10-01-ce741c25d0.png"
+        }
+      },
       "source": "renders/changelog-002-20261001-2026-10-01-ce741c25d0-source.tar.gz",
       "createdAt": "2026-10-01T14:30:02.762Z",
       "published": {
@@ -43,8 +51,12 @@
       "seconds": 28.5,
       "renderedAt": "2026-10-02T13:55:06.397Z",
       "commit": "9e93833",
-      "artifact": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.mp4",
-      "cover": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.mp4",
+          "cover": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7.png"
+        }
+      },
       "source": "renders/changelog-003-20261002-2026-10-02-7ec44e74e7-source.tar.gz",
       "createdAt": "2026-10-02T13:55:06.401Z",
       "published": {
@@ -60,8 +72,12 @@
       "seconds": 22,
       "renderedAt": "2026-10-03T12:36:37.430Z",
       "commit": "88c9338",
-      "artifact": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.mp4",
-      "cover": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.mp4",
+          "cover": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff.png"
+        }
+      },
       "source": "renders/changelog-004-20261003-2026-10-03-b5635cd1ff-source.tar.gz",
       "createdAt": "2026-10-03T12:36:37.434Z",
       "published": {
@@ -77,8 +93,12 @@
       "seconds": 13.5,
       "renderedAt": "2026-10-04T13:13:32.997Z",
       "commit": "087e73d",
-      "artifact": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.mp4",
-      "cover": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.mp4",
+          "cover": "renders/changelog-005-20261004-2026-10-04-3549c46a3b.png"
+        }
+      },
       "source": "renders/changelog-005-20261004-2026-10-04-3549c46a3b-source.tar.gz",
       "createdAt": "2026-10-04T13:13:33.001Z",
       "published": {
@@ -94,8 +114,12 @@
       "seconds": 15.5,
       "renderedAt": "2026-10-13T15:05:34.493Z",
       "commit": "c4cb3f7",
-      "artifact": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.mp4",
-      "cover": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.mp4",
+          "cover": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7.png"
+        }
+      },
       "source": "renders/changelog-006-20261013-2026-10-12-4d55a6f3c7-source.tar.gz",
       "createdAt": "2026-10-13T15:05:34.497Z",
       "published": {
@@ -111,8 +135,12 @@
       "seconds": 15,
       "renderedAt": "2026-10-14T12:54:49.164Z",
       "commit": "9e7fd28",
-      "artifact": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.mp4",
-      "cover": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.mp4",
+          "cover": "renders/changelog-007-20261014-2026-10-13-98a0cb9379.png"
+        }
+      },
       "source": "renders/changelog-007-20261014-2026-10-13-98a0cb9379-source.tar.gz",
       "createdAt": "2026-10-14T12:54:49.168Z",
       "published": {
@@ -128,8 +156,12 @@
       "seconds": 16,
       "renderedAt": "2026-10-16T12:27:39.315Z",
       "commit": "4c7d322",
-      "artifact": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.mp4",
-      "cover": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.png",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.mp4",
+          "cover": "renders/changelog-008-20261016-2026-10-16-c77ec7d496.png"
+        }
+      },
       "source": "renders/changelog-008-20261016-2026-10-16-c77ec7d496-source.tar.gz",
       "createdAt": "2026-10-16T12:27:39.318Z",
       "published": {

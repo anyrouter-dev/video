@@ -7,8 +7,12 @@
   "seconds": 111.401,
   "renderedAt": "2026-10-18T18:32:16.385Z",
   "commit": "378f7de",
-  "artifact": "renders/explainer-001-20261018-v1-1cbd1f149e.mp4",
-  "cover": "renders/explainer-001-20261018-v1-1cbd1f149e.png",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/explainer-001-20261018-v1-1cbd1f149e.mp4",
+      "cover": "renders/explainer-001-20261018-v1-1cbd1f149e.png"
+    }
+  },
   "source": null,
   "createdAt": "2026-10-18T18:32:16.389Z",
   "published": {

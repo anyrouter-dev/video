@@ -51,8 +51,8 @@ jobs:
             const { releases } = JSON.parse(require("fs").readFileSync(`releases/${process.env.KIND}/index.json`, "utf8"));
             const e = releases.find(r => r.id === process.env.ID);
             if (!e) { console.error(`no ${process.env.KIND} release "${process.env.ID}"`); process.exit(1); }
-            console.log("mp4", e.artifact);
-            if (e.cover) console.log("png", e.cover);
+            console.log("mp4", e.renditions.landscape.artifact);
+            console.log("png", e.renditions.landscape.cover);
           ' > want.txt
           while read -r ext dest; do
             mkdir -p "$(dirname "$dest")"
