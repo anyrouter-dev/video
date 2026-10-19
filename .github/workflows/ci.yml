@@ -53,7 +53,7 @@ jobs:
           - kind: changelog
             args: --from=videos/changelog/fixtures/llms.txt
           - kind: use-case
-            args: --from=videos/use-case/fixtures/use-cases.json --slug=openrouter-free-fallback
+            args: --from=videos/use-case/fixtures/use-cases.json --models-from=videos/use-case/fixtures/models.json --slug=openrouter-free-fallback
           - kind: intro
             args: ''
           - kind: teaser
