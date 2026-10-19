@@ -28,7 +28,7 @@
       .term-bar { position: relative; height: 64px; background: #18181B; display: flex; align-items: center; justify-content: center; }
       .term-dots { position: absolute; left: 26px; top: 25px; display: flex; gap: 10px; }
       .term-dots i { width: 14px; height: 14px; border-radius: 50%; background: #3F3F46; }
-      .term-title { font-size: 32px; line-height: 1; color: #A1A1AA; }
+      .term-title { font-size: 34px; line-height: 1; color: #A1A1AA; }
       .term-mark { position: absolute; right: 26px; top: 18px; width: 28px; height: 28px; }
       .term-body { padding: 32px 52px 40px; }
       .line { height: 80px; font-size: 56px; line-height: 80px; white-space: pre; color: #F4F4F5; }
@@ -70,8 +70,8 @@
   </style>
 
   <div id="root" data-composition-id="01-wall" data-width="1920" data-height="1080" data-duration="13.717">
-    <div class="bg clip" data-start="0" data-duration="13.717" data-track-index="0"></div>
-    <div class="stage clip" data-start="0" data-duration="13.717" data-track-index="1">
+    <div id="t1-bg" class="bg clip" data-start="0" data-duration="13.717" data-track-index="0"></div>
+    <div id="t1-stage" class="stage clip" data-start="0" data-duration="13.717" data-track-index="1">
       <div class="safe">
         <div class="scene wall">
           <div class="term" id="t1-term">
@@ -146,7 +146,7 @@
       });
 
       // "That's a rate limit": the log clears first, then the definition and the account's limits.
-      tl.to($("term"), { y: -32, opacity: 0, duration: 0.35, ease: "power2.in" }, THATS - 0.4);
+      tl.to($("term"), { y: -32, opacity: 0, duration: 0.3, ease: "power2.in" }, THATS - 0.55);
       tl.fromTo($("h1"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, THATS);
       tl.fromTo($("lede"), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, LIMIT);
       tl.fromTo($("acct"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, ACCOUNT);

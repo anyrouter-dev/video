@@ -31,7 +31,7 @@
       .bar { position: relative; flex: none; height: 60px; background: #FAFAFA; border-bottom: 2px solid #E5E5E5; display: grid; place-items: center; }
       .dots { position: absolute; left: 24px; top: 23px; display: flex; gap: 10px; }
       .dots i { width: 14px; height: 14px; border-radius: 50%; background: #D4D4D8; }
-      .url { padding: 4px 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 32px; line-height: 1.2; color: #636363; white-space: nowrap; }
+      .url { padding: 4px 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 34px; line-height: 1.2; color: #636363; white-space: nowrap; }
       .view { position: relative; flex: 1; display: flex; justify-content: center; align-items: flex-start; padding-top: 36px; }
       .ring { position: absolute; inset: -8px; border: 2px solid #BB4D00; border-radius: 22px; box-shadow: 0 0 0 6px rgba(187, 77, 0, .35); pointer-events: none; }
 
@@ -99,16 +99,16 @@
   </style>
 
   <div id="root" data-composition-id="06-step-3-share" data-width="1920" data-height="1080" data-duration="23.527">
-    <div class="bg clip" data-start="0" data-duration="23.527" data-track-index="0"></div>
-    <div class="stage clip" data-start="0" data-duration="23.527" data-track-index="1">
+    <div id="t6-bg" class="bg clip" data-start="0" data-duration="23.527" data-track-index="0"></div>
+    <div id="t6-stage" class="stage clip" data-start="0" data-duration="23.527" data-track-index="1">
       <div class="safe">
-        <div class="step" id="t6-step">
+        <div class="step" id="t6-step" data-layout-allow-overlap>
           <span class="badge">Step 3 of 4</span>
           <h2 class="h2">Share with the pool</h2>
         </div>
 
         <div class="body">
-          <div class="browser" id="t6-browser">
+          <div class="browser" id="t6-browser" data-layout-allow-overlap>
             <div class="bar">
               <div class="dots"><i></i><i></i><i></i></div>
               <span class="url mono">anyrouter.dev/dashboard/byok</span>
@@ -250,7 +250,7 @@
       show("scrim", THE - 0.15, 0.3);
       tl.fromTo($("consent"), { y: 32, scale: 0.98, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, THE);
       // Once the dialog is up, the page under the scrim goes, so no text shows through or beside it.
-      tl.to([$("browser"), $("step")], { opacity: 0, duration: 0.3, ease: "power2.out" }, THE + 0.45);
+      tl.to([$("browser"), $("step")], { opacity: 0, duration: 0.25, ease: "power2.out" }, THE + 0.2);
       tl.fromTo($("ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, DONATING);
 
       // One side note at a time; the ring sits on the line being spoken.

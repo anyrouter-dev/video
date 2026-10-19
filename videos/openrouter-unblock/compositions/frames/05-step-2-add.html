@@ -33,7 +33,7 @@
       .bar { position: relative; flex: none; height: 60px; background: #FAFAFA; border-bottom: 2px solid #E5E5E5; display: grid; place-items: center; }
       .dots { position: absolute; left: 24px; top: 23px; display: flex; gap: 10px; }
       .dots i { width: 14px; height: 14px; border-radius: 50%; background: #D4D4D8; }
-      .url { grid-area: 1 / 1; padding: 4px 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 32px; line-height: 1.2; color: #636363; white-space: nowrap; }
+      .url { grid-area: 1 / 1; padding: 4px 20px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E5E5E5; font-size: 34px; line-height: 1.2; color: #636363; white-space: nowrap; }
       .view { position: relative; flex: 1; overflow: hidden; }
       .page { position: absolute; inset: 0; }
       .ring { position: absolute; inset: -10px; border: 2px solid #BB4D00; border-radius: 26px; box-shadow: 0 0 0 6px rgba(187, 77, 0, .35); pointer-events: none; }
@@ -98,8 +98,8 @@
   </style>
 
   <div id="root" data-composition-id="05-step-2-add" data-width="1920" data-height="1080" data-duration="9.456">
-    <div class="bg clip" data-start="0" data-duration="9.456" data-track-index="0"></div>
-    <div class="stage clip" data-start="0" data-duration="9.456" data-track-index="1">
+    <div id="t5-bg" class="bg clip" data-start="0" data-duration="9.456" data-track-index="0"></div>
+    <div id="t5-stage" class="stage clip" data-start="0" data-duration="9.456" data-track-index="1">
       <div class="safe">
         <div class="step" id="t5-step">
           <span class="badge">Step 2 of 4</span>
@@ -143,7 +143,7 @@
                 </div>
               </div>
 
-              <div class="page form" id="t5-form">
+              <div class="page form" id="t5-form" data-layout-allow-overlap>
                 <div class="fh">
                   <svg viewBox="0 0 24 24" fill="#0A0A0A" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
                   <span>OpenRouter</span>
@@ -249,6 +249,8 @@
       show("scrim", ADD + 0.15, 0.3);
       hide("ring-add", ADD + 0.15, 0.15);
       tl.fromTo($("dialog"), { y: 28, scale: 0.97, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, ADD + 0.15);
+      // The form under the dialog goes once the dialog is up, so no text shows through the scrim.
+      hide("form", ADD + 0.45, 0.2);
       tl.set({}, {}, 9.456);
 
       window.__timelines["05-step-2-add"] = tl;
