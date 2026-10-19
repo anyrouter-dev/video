@@ -1,60 +1,42 @@
-# SCRIPT — Unblock OpenRouter free models
+# SCRIPT — Unblock OpenRouter free models (v2)
 
-**Voice:** ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), `eleven_multilingual_v2`, stability 0.5, similarity 0.8, style 0.15, speaker boost on
-**Voice direction:** Calm, clear, friendly. A person showing a friend a fix. No hype, short pauses between sentences.
+**Voice:** ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), `eleven_multilingual_v2`, stability 0.5, similarity 0.8, style 0.15, speaker boost on. Voiced by `shared/authoring/eleven-voice.mjs`.
+**Voice direction:** Calm, clear, friendly. A person showing a friend a fix.
 
 ---
 
 ## Line 1 — The wall (Frame 1)
 
-**Delivery:** Matter of fact. A small drop on "too many requests".
+Claim C1: 50 a day holds only until you have bought $10 of credits, so the line says so.
 
-    You're using OpenRouter's free models. Then the errors start. Too many requests. That's a rate limit. Your account gets twenty requests a minute, and fifty a day. A thousand, once you've bought ten dollars of credits.
+    OpenRouter's free models stop you at 50 requests a day, until you buy ten dollars of credits.
 
-## Line 2 — Why (Frame 2)
+## Line 2 — The fix (Frame 2)
 
-**Delivery:** Plain, slower.
+Claims C9, C10.
 
-    The limit belongs to your OpenRouter account, so another key won't help.
+    Add your OpenRouter key to AnyRouter, and share it with the pool.
 
-## Line 3 — The fix (Frame 3)
+## Line 3 — What it does (Frame 3)
 
-**Delivery:** The answer. Warm, confident.
+Claims C3, C4, C18: shared keys have their own limits, so the line says "can", never "keeps going".
 
-    AnyRouter keeps your key. When your key hits the limit, AnyRouter sends the request through a key another member shared, and that request uses their quota.
+    When your key hits its limit, AnyRouter can send your requests through keys other members share.
 
-## Line 4 — Step one (Frame 4)
+## Line 4 — Your app (Frame 4)
 
-**Delivery:** Instructional, clear.
+Claims C16, C17: the app uses an AnyRouter key, and `openrouter/free` is the same id on both.
 
-    Step one. On OpenRouter, create a new key for AnyRouter, and copy it.
+    In your app, switch the address and the key to AnyRouter's. Keep the model, openrouter/free.
 
-## Line 5 — Step two (Frame 5)
+## Line 5 — What sharing means (Frame 5)
 
-**Delivery:** Instructional, same pace, slower on "Bring Your Own Key".
+Claims C10, C14.
 
-    Step two. Sign in to AnyRouter and open the Bring Your Own Key page. Pick OpenRouter, paste the key, click Test key, then Add key.
+    Sharing lets other members use your OpenRouter quota too, and you can stop any time.
 
-## Line 6 — Step three (Frame 6)
+## Line 6 — Close (Frame 6)
 
-**Delivery:** Instructional, honest, even.
+Claim C18: "more room", never "unlimited" or "no daily wall".
 
-    Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. AnyRouter tries your own requests first. Check that OpenRouter's terms allow sharing. You can turn it off any time.
-
-## Line 7 — Step four (Frame 7)
-
-**Delivery:** Instructional, clear on the key and the model id.
-
-    Step four. In AnyRouter, open API Keys and create a key for your app. Then, in your app's settings, swap in that key and the AnyRouter address. Keep the model, open router slash free. AnyRouter now runs it on your OpenRouter key.
-
-## Line 8 — How it works (Frame 8)
-
-**Delivery:** Explaining, steady, a lift on the last sentence.
-
-    For each request, AnyRouter tries your key first. When your key hits the limit, AnyRouter stops using it for a short time and sends the next requests to keys other members shared. Then it uses your key again.
-
-## Line 9 — Close (Frame 9)
-
-**Delivery:** Settled, warm sign-off.
-
-    With the pool on, you can send more requests than OpenRouter's limit allows. Shared keys have their own limits, so how many more can vary. Start at any router dot dev.
+    Free models, with more room than 50 a day. Start at anyrouter.dev.
