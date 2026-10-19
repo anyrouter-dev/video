@@ -47,7 +47,7 @@ typography:
   body:     { fontFamily: "Geist", px: 44, weight: 400, lineHeight: 1.3, color: "muted" }
   label:    { fontFamily: "Geist", px: 40, weight: 500, lineHeight: 1.2, color: "ink" }
   small:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.2, color: "muted" }
-  badge:    { fontFamily: "Geist", px: 34, weight: 500, lineHeight: 1.0, color: "ink" }
+  badge:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.0, color: "ink" }
   code:     { fontFamily: "Geist Mono", px: 48, weight: 400, lineHeight: 1.45, color: "terminal-ink" }
   code-sm:  { fontFamily: "Geist Mono", px: 40, weight: 400, lineHeight: 1.45, color: "ink" }
   stat:     { fontFamily: "Geist", px: 200, weight: 600, lineHeight: 1.0, tracking: "-0.05em", color: "ink", numeric: "tabular-nums" }
