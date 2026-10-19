@@ -24,7 +24,7 @@ music: none
 - src: compositions/frames/01-mess.html
 
 - scene: Provider logos pile up, each dragging its own key and its own bill, until the frame is cluttered
-- duration: 9.232s
+- duration: 9.316s
 - transition_in: cut
 - type: problem
 - beat: frustration
@@ -45,7 +45,7 @@ Scene 3 (5.6–8.0s): "messy, fast" — the attachments jostle and overlap as th
 - src: compositions/frames/02-one-door.html
 
 - scene: All the clutter is swept into a single AnyRouter node; one key, one account, 260+ models
-- duration: 7.184s
+- duration: 6.623s
 - transition_in: cut
 - type: product_intro
 - beat: relief
@@ -67,7 +67,7 @@ Scene 3 (4.6–7.0s): "260+ models" — the number counts up 0 → 260 with a `+
 - src: compositions/frames/03-power-strip.html
 
 - scene: An isometric power strip: apps plug in on the left, the strip is AnyRouter, providers sit on its outlets; a request travels, one provider fails, the request reroutes
-- duration: 13.264s
+- duration: 13.125s
 - transition_in: crossfade
 - type: key_feature
 - beat: understanding
@@ -89,7 +89,7 @@ Scene 4 (8.0–12.0s): "if one goes down" — the first outlet's LED turns `dang
 - src: compositions/frames/04-shared-pool.html
 
 - scene: A plain definition of an API key, then the real Shared pool page, then donated keys filling one pool of tokens
-- duration: 13.776s
+- duration: 13.357s
 - transition_in: crossfade
 - type: key_feature
 - beat: discovery
@@ -110,7 +110,7 @@ Scene 4 (9.0–13.0s): "a big pool of tokens" — the key-pills stream down into
 - src: compositions/frames/05-step-1-key.html
 
 - scene: Real openrouter.ai, then the Keys page: cursor clicks Create Key, a redacted sk-or- key appears and is copied
-- duration: 11.749s
+- duration: 13.032s
 - transition_in: push-slide LEFT
 - type: tutorial_step
 - beat: doing
@@ -133,7 +133,7 @@ handoff_out: key-pill `sk-or-v1-••••` at right-centre, scale 1, opacity 
 - src: compositions/frames/06-step-2-donate.html
 
 - scene: Real anyrouter.dev/pool, Donate on OpenRouter, the real donate dialog rebuilt from product source, paste the redacted key, Donate, success
-- duration: 15.696s
+- duration: 16.375s
 - transition_in: push-slide LEFT
 - type: tutorial_step
 - beat: doing
@@ -156,7 +156,7 @@ Scene 4 (8.4–12.0s): "A key from NVIDIA works the same way" — the dialog sli
 - src: compositions/frames/07-step-3-free.html
 
 - scene: The payoff — three plain benefit cards: free models with no daily cap, Go plan free, $4 credit a month
-- duration: 10.469s
+- duration: 12.103s
 - transition_in: crossfade
 - type: benefits
 - beat: payoff
@@ -176,7 +176,7 @@ Scene 2 (2.0–8.0s): three equal cards reveal left to right, each on its spoken
 - src: compositions/frames/08-code-terminal.html
 
 - scene: A clean terminal types the install, then anyr login (browser sign-in confirms), then anyr claude --model
-- duration: 10.192s
+- duration: 10.942s
 - transition_in: zoom-through
 - type: key_feature
 - beat: doing
@@ -199,7 +199,7 @@ handoff_out: terminal at centre, ~70% width, still; the line `anyr claude --mode
 - src: compositions/frames/09-pick-model.html
 
 - scene: The same terminal line; the model id rotates free → auto → coding, each with a one-line meaning beside it, then Claude Code starts
-- duration: 10.64s
+- duration: 10.338s
 - transition_in: cut
 - type: key_feature
 - beat: choice
@@ -222,7 +222,7 @@ Scene 4 (6.8–10.0s): "coding" — retype to `anyrouter/coding`; row 3 lights: 
 - src: compositions/frames/10-close.html
 
 - scene: AnyRouter lockup; three short lines; anyrouter.dev
-- duration: 7.919s
+- duration: 7.469s
 - transition_in: crossfade
 - type: cta
 - beat: resolve

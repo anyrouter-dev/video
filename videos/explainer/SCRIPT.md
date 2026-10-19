@@ -1,6 +1,6 @@
 # SCRIPT — AnyRouter explainer
 
-**Voice:** Jonah, Clear & Professional (HeyGen starfish `7e48c8d406b04a8089c5eb3cd057cb2e`)
+**Voice:** Eric, Smooth & Trustworthy (ElevenLabs `cjVigY5qzO86Huf0OWal`, `eleven_multilingual_v2`, stability 0.5, similarity boost 0.8, style 0.15, speaker boost on; the same settings on every line)
 **Voice direction:** Calm, clear, friendly. A person showing a friend something useful. No hype, unhurried, short pauses between sentences.
 
 ---
