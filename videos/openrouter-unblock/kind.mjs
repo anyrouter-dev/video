@@ -16,9 +16,6 @@ export default {
   id: 'openrouter-unblock',
   title: 'Unblock OpenRouter free models',
   scheduled: false,
-  // Until its frames get their portrait layouts: portrait.mjs still finds 1920x1080 in
-  // 08-how-it-works. Delete this line once `check openrouter-unblock` passes without it.
-  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
