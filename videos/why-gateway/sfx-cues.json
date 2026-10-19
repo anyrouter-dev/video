@@ -1,0 +1,18 @@
+[
+  {"frame": 1, "sound": "pop", "word": "address", "offset": -0.05, "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "key", "volume": 0.22},
+  {"frame": 1, "sound": "whoosh-short", "word": "models", "offset": -0.1, "volume": 0.2},
+  {"frame": 2, "sound": "click-soft", "word": "key,", "volume": 0.22},
+  {"frame": 2, "sound": "click-soft", "word": "bill,", "volume": 0.22},
+  {"frame": 2, "sound": "click-soft", "word": "SDK", "volume": 0.22},
+  {"frame": 3, "sound": "error", "word": "down,", "offset": -0.05, "volume": 0.18},
+  {"frame": 4, "sound": "click", "word": "OpenAI", "volume": 0.28},
+  {"frame": 4, "sound": "click", "word": "Anthropic", "volume": 0.28},
+  {"frame": 4, "sound": "pop", "word": "SDK", "volume": 0.2},
+  {"frame": 5, "sound": "click", "word": "change", "volume": 0.3},
+  {"frame": 5, "sound": "click", "word": "Nothing", "volume": 0.3},
+  {"frame": 6, "sound": "pop", "word": "backup", "volume": 0.2},
+  {"frame": 6, "sound": "error", "word": "fails,", "offset": -0.05, "volume": 0.16},
+  {"frame": 6, "sound": "chime", "word": "answers.", "offset": -0.1, "volume": 0.16},
+  {"frame": 7, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]
