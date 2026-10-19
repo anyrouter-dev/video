@@ -27,12 +27,13 @@ test('the cover is taken from the settled end card', async () => {
   assert.ok(at > seconds - 2.5 && at < seconds - 0.6, `cover at ${at}s of ${seconds}s`);
 });
 
-test('no real API key is on screen: every key prefix in a frame is followed by redaction bullets', () => {
+test('no real API key is on screen: every key prefix in a frame is followed by redaction bullets or the field placeholder', () => {
   const frames = path.join(dir, 'compositions/frames');
   for (const f of fs.readdirSync(frames)) {
     const html = fs.readFileSync(path.join(frames, f), 'utf8');
     for (const m of html.matchAll(/\b(sk-(?:ar|or)-(?:v1-)?|nvapi-)([^\s<"'`]*)/g)) {
-      assert.match(m[2], /^•/, `${f}: ${m[0]} is not redacted`);
+      // "sk-or-..." is the Add key field's own placeholder: three dots, no key
+      assert.match(m[2], /^(•|\.\.\.$)/, `${f}: ${m[0]} is not redacted`);
     }
   }
 });
