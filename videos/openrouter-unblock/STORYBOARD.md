@@ -68,11 +68,11 @@ handoff_out: the first key pill (primary glyph) at its card position; the card f
 - src: compositions/frames/03-the-fix.html
 
 - scene: Your key moves into AnyRouter; a request hits your limited key, then goes through a key another member shared; "Their quota, not yours."; the real pool page shows 74 OpenRouter keys; the four-step rail appears
-- duration: 8.248s
+- duration: 8.945s
 - transition_in: cut
 - type: product_intro
 - beat: relief
-- voiceover: "AnyRouter keeps your key. When it hits the limit, the request goes through a key another member shared. Their quota, not yours."
+- voiceover: "AnyRouter keeps your key. When your key hits the limit, AnyRouter sends the request through a key another member shared, and that request uses their quota."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter mark; assets/anyrouter-pool.png — real anyrouter.dev/pool page (crop to the OpenRouter row only: 74 keys); assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: constellation-hub (Adapt)
 - focal: your key inside AnyRouter, a shared key answering
@@ -142,11 +142,11 @@ r4: BYOK is spoken as "Bring Your Own Key"; the underline lands on "Bring" and t
 - src: compositions/frames/06-step-3-share.html
 
 - scene: The OpenRouter key panel: the Share with pool switch is ringed, then clicked → consent dialog with all four "In short" lines → checkbox ticked → Donate key → Key verified
-- duration: 22.413s
+- duration: 23.527s
 - transition_in: cut
 - type: tutorial_step
 - beat: payoff
-- voiceover: "Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. Yours are tried first. Check that OpenRouter's terms allow sharing. You can turn it off any time."
+- voiceover: "Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. AnyRouter tries your own requests first. Check that OpenRouter's terms allow sharing. You can turn it off any time."
 - asset_candidates: assets/provider-openrouter.svg — OpenRouter mark
 - blueprint: cursor-ui-demo (Adapt)
 - focal: the Share with pool switch, then the consent dialog, then Key verified
@@ -197,11 +197,11 @@ r4: two phases. On anyrouter.dev/dashboard/keys: `API Keys` underlines, `Create 
 - src: compositions/frames/08-how-it-works.html
 
 - scene: Requests flow one at a time: your key first → 200 OK; your key is limited → 429 → rests; the next requests each go to one shared key (one request per key, over time) → 200 OK; requests keep going; your key comes back
-- duration: 11.592s
+- duration: 12.01s
 - transition_in: cut
 - type: key_feature
 - beat: understanding
-- voiceover: "Now each request tries your key first. When it hits the limit, your key takes a short break, and the next requests go to keys other members shared. Then your key comes back."
+- voiceover: "For each request, AnyRouter tries your key first. When your key hits the limit, AnyRouter stops using it for a short time and sends the next requests to keys other members shared. Then it uses your key again."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter monogram for the hub; assets/provider-openrouter.svg — OpenRouter mark on the key pills
 - blueprint: constellation-hub (Adapt)
 - focal: the request path
@@ -221,11 +221,11 @@ r4: `resting` is now `short break`; the `each request → a different shared key
 - src: compositions/frames/09-close.html
 
 - scene: The honest summary: your key counts toward OpenRouter's limit; past it, the pool keeps you going; AnyRouter lockup and anyrouter.dev
-- duration: 11.834s
+- duration: 12.206s
 - transition_in: crossfade
 - type: cta
 - beat: resolve
-- voiceover: "With the pool on, you get more room past OpenRouter's limit. Shared keys have their own limits too, so the extra room can vary. Start at any router dot dev."
+- voiceover: "With the pool on, you can send more requests than OpenRouter's limit allows. Shared keys have their own limits, so how many more can vary. Start at any router dot dev."
 - asset_candidates: assets/anyrouter-logo-black.svg — AnyRouter wordmark and monogram
 - blueprint: logo-assemble-lockup (Adapt)
 - focal: the AnyRouter lockup

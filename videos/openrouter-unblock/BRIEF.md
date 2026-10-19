@@ -74,9 +74,9 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 - Voice: ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), model
   `eleven_multilingual_v2`, stability 0.5, similarity_boost 0.8, style 0.15, speaker
   boost on, the same for every line. Each mp3 is converted to 24 kHz mono wav.
-- Music bed: `assets/bgm/track-105s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 104.0s film.
+- Music bed: `assets/bgm/track-108s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 106.6s film.
   A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
-  instead jumps back twice on the bar, each with a 3s crossfade: 16s (4 bars), then 20s
-  (5 bars). 0–40s, then 21–56s, then 33s to the real outro, 104s of music, then 1s of
-  silence so the bed outlasts the film:
-  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=33:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri,apad=pad_dur=1" -b:a 192k track-105s.mp3`
+  instead jumps back twice on the bar, each with a 3s crossfade: 16s (4 bars), then 24s
+  (6 bars). 0–40s, then 21–56s, then 29s to the real outro, 108s in all, so the bed runs
+  1.4s past the film's end and the film closes inside the real outro:
+  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=29:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-108s.mp3`
