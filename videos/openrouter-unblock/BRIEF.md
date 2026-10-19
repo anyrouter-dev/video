@@ -26,10 +26,12 @@ user can unblock the rate limit by using the keys pool."
 ## Customizations
 
 - Shares the explainer's design truth (`frame.md` is a symlink to
-  `../explainer/frame.md`) and its components (browser frame, cursor, key pill,
-  terminal, step rail; `../explainer/tools/shared-components.md`). The step rail
-  carries this film's own labels: `Create a key`, `Add it to AnyRouter`,
-  `Share with the pool`.
+  `../explainer/frame.md`, v2) and its components (step header, browser frame,
+  focus ring, callout, key pill, terminal, Demo badge). The step header carries
+  this film's own steps: `Create a key`, `Add it to AnyRouter`,
+  `Share with the pool`, `Use it in your app`.
+- Ships landscape (1920x1080) and portrait (1080x1920) from the same frames; each
+  frame's portrait layout sits under `@media (orientation: portrait)`.
 - Dashboard screens are rebuilt in HTML from the product's UI source, labels
   exact (`tools/ui-labels.md`). Keys are always redacted.
 - Does not reuse or open the repo's older films (intro, teaser, `lib/film.mjs`).

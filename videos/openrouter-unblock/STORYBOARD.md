@@ -22,6 +22,27 @@ music: none
 - **Negative list.** No gradients, glows, bokeh, noise, dither, halftone, neon, emoji. No front-load-then-freeze. Do not imitate the repo's older films.
 - **Caption band.** Nothing below y 880.
 
+## Design v2 (r5): phone first, two renditions
+
+`frame.md` v2 replaces the geometry above where they differ: type floor 36px (32px for
+URL pills), the step header (`Step N of 4` badge + h2) instead of the step rail, browser
+frames that fill the area under the header, no cursor (a focus ring marks the control the
+voice names, then it presses), one side note at a time as a callout card, and the `Demo`
+badge on every openrouter.ai screen. Every frame also carries a portrait layout under
+`@media (orientation: portrait)`; positions come from CSS layout, so one timeline drives
+both. The narration is ElevenLabs Eric (see BRIEF.md) and every reveal is anchored to its
+words in `.hyperframes/frame-packets/*.words.json`.
+
+- Frame 1: the log is a 56px terminal with the model on a fixed first line and five request lines that scroll; then `Rate limit`, its one-line definition, the account and the three limits at 200px.
+- Frame 2: headline `All your keys share one limit.` over one account card: two key pills and a full `Rate limit` meter.
+- Frame 3: one AnyRouter card: `Your key` answers 429 and dims, `Shared key` gets the ring and 200 OK on "member"; `That request uses their quota.` on "that request".
+- Frame 4: `Step 1 of 4`, `Create a key`, `Demo`. The real openrouter.ai hero (cropped above its numbers), then the Keys page: Create Key on "create", the AnyRouter row on "AnyRouter", Copy → Copied on "copy".
+- Frame 5: `Step 2 of 4`. The real sign-in cropped to its dialog (ring on Continue with GitHub), the BYOK page (`BYOK` underline, `BYOK = Bring Your Own Key`), the OpenRouter form (paste, Test key → Key valid, Add key) and `Key verified and saved`.
+- Frame 6: `Step 3 of 4`. The key panel (ring on the two switches to leave, then on Share with pool, which turns on at "pool"); the consent dialog with its two "In short" lines, the ring on the line being spoken, checkbox, Donate key, `Key verified`. Side notes, one at a time: Free plan, quota, tried first, turn off.
+- Frame 7: `Step 4 of 4`. API Keys → Create key → `Your new API key` → Copied; then `my-app/.env` at 56px: API_KEY on "that key", BASE_URL on "address", MODEL checked on "Keep"; note `AnyRouter runs openrouter/free on your OpenRouter key`.
+- Frame 8: headline `AnyRouter tries your key first`; Your app → AnyRouter → a keys card. Each request lights the wires and rings the key that answers: 200 OK, 429, `Paused for a moment`, three shared keys one by one, then your key again.
+- Frame 9: `More requests than OpenRouter's limit allows`, the callout `Shared keys have their own limits, so the number can vary.`, then the lockup.
+
 ## Frame 1 — The wall
 - src: compositions/frames/01-wall.html
 
