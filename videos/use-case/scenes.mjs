@@ -294,7 +294,7 @@ export function filmScene({ copy, beats, duration, timing }) {
     end.style.top = cap3 + hH * s3 + G + "px";
     const at1 = top1 + heroH + G;
 
-    // 1 · the outcome. The marks close in, the words rise, the headline settles, the camera leans in.
+    // 1 · the outcome. The marks close in, the words rise, the camera leans in.
     const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
     tl.fromTo(tiles, { x: i => (i - mid) * 48 }, { x: 0, duration: 1.4, ease: "expo.out" }, 0);
     tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.1);
@@ -302,7 +302,6 @@ export function filmScene({ copy, beats, duration, timing }) {
     // mask sits a line low, and on a long headline that line is past the safe area
     const words = $$(".h .w > span");
     tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
-    tl.fromTo(h, { scale: 1.06 }, { scale: 1, duration: Math.min(2.2, T1 - 0.1), ease: "expo.out" }, 0);
     tl.fromTo(Q(".cam"), { scale: 1 }, { scale: v("--lean"), duration: T1, ease: "none" }, 0);
 
     // 1 → 2 · the headline shrinks into the caption as the window rises under it.
