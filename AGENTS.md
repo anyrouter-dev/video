@@ -55,7 +55,7 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
-| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page. Each use case is its own release | `/use-cases.json` | on demand |
+| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup. Each use case is its own release | `/use-cases.json`, and the ids a preset rolls through from `/api/v1/models` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
@@ -124,7 +124,8 @@ npm test                               # unit tests — Node builtins only, no i
 Kind flags: `--limit=N`, `--seconds=N`, `--from=FILE` (build from a saved
 response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 `--baseline=FILE`; `release` takes `--version=X.Y.Z`; `changelog` takes
-`--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG`.
+`--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG` and `--models-from=FILE`
+(a saved `/api/v1/models` response, so a fixture build needs no network).
 
 ## model-drop layouts
 
@@ -149,8 +150,13 @@ never a borrowed logo.
 
 `use-case` is the exception. It brings its own `write` (`videos/use-case/project.mjs`)
 in the Clear look of `videos/explainer/frame.md`: white, Geist, shadcn surfaces,
-one accent per moment. Its scenes carry their portrait layout, so
+one accent per moment. A film is one sub-composition in three beats, its
+headline carried through all three; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
+Where the page's command names an `anyrouter/*` preset, the id rolls through the
+newest id of a few model makers from the catalog (`ROLL_OWNERS` in its `kind.mjs`;
+free ids only for `anyrouter/free`) and comes back to the preset. Anthropic, OpenAI
+and Google ids never roll: they run on the user's own key, not AnyRouter credits.
 
 ## Rules every generated film obeys
 
