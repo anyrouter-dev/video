@@ -110,6 +110,10 @@ export function rollOf(u, pools) {
 const KEY = /\b(sk-ar-v1-|sk-ar-|sk-or-v1-|sk-ant-|sk-proj-|sk-|nvapi-|xai-|gsk_|ghp_|AIza)[A-Za-z0-9_-]{8,}/g;
 export const redact = s => String(s).replace(KEY, (_, prefix) => `${prefix}••••••••`);
 
+// A line that sets what a page changes: the AnyRouter base URL, the key, the model.
+// Around the command it is shown whole; only the other lines are context that may fade.
+const CHANGED = /https:\/\/anyrouter\.dev\/api|ANYROUTER_API_KEY|sk-ar-|\bmodels?\b"?\s*[:=]/;
+
 // A shell snippet up to this many lines is typed whole; a longer one up to the command.
 const SHELL_LINES = 3;
 // Lines of code an editor shows: from the snippet's top, so a call keeps its URL and its key header.
@@ -148,16 +152,23 @@ export function copyOf(u, pools) {
   const title = redact(u.title);
   if (!setIn(title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
   const win = windowOf(u);
-  const lines = win.lines.map(l => ({ ...l, text: redact(l.text) }));
+  const lines = win.lines.map(l => ({ ...l, text: redact(l.text), keep: !l.focus && CHANGED.test(l.text) }));
   const roll = rollOf(u, pools);
-  const code = codeSizes(lines, roll, win.shell, title) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
+  // a window too tall for the frame drops its last lines of context, never the command or a line
+  // it changes, and only then steps its code down to the last-resort size
+  const fit = least => {
+    let shown = lines, code;
+    while (!(code = codeSizes(shown, roll, win.shell, title, least)) && !(win.shell || shown.at(-1).focus || shown.at(-1).keep)) shown = shown.slice(0, -1);
+    return code && { shown, code };
+  };
+  const { shown, code } = fit(false) ?? fit(true) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
   return {
     slug: u.slug,
     url: u.url,
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    window: { shell: win.shell, title: win.title && redact(win.title), lines, roll, code },
+    window: { shell: win.shell, title: win.title && redact(win.title), lines: shown, roll, code },
     type: { title: code.title, breaks: { landscape: titleSet(title, 'landscape', code.title.landscape).breaks, portrait: titleSet(title, 'portrait', code.title.portrait).breaks } },
   };
 }

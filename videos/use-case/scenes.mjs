@@ -130,9 +130,10 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // middle, so a beat's column is sized to stay in the safe area at full scale.
 // The push is at least `push`, which the code's room allows for, and as far as
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
+// Portrait steps down to `least` only when nothing larger has room for the lines the page changes.
 const WIN = {
   landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02 },
-  portrait: { sizes: [44, 40], wrap: 40, width: 840, padX: 28, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.04 },
+  portrait: { sizes: [44, 40], wrap: 40, least: 36, width: 840, padX: 28, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.04 },
 };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
@@ -178,21 +179,42 @@ export function idFitsRow(line, preset, id, shell) {
  * which every typed line fits on one line, each roll id in place, with its
  * prompt and caret, and the window still leaves room for the caption at its
  * smallest. A line too long for every
- * size is wrapped between tokens, at the `wrap` size or smaller. A line of
+ * size is wrapped between tokens, at the `wrap` size or smaller. So is a line
+ * that sets what the page changes (`keep`): it is shown whole. Only a line of
  * context may run past the window; it is clipped with a fade. When the longest
  * roll id does not fit, the id moves to a line of its own, for every id, so the
- * line never reflows mid-roll. Null when no size leaves the caption its room.
+ * line never reflows mid-roll. With `least`, portrait may step down to its
+ * last-resort size. Null when no size leaves the caption its room.
  */
-export function codeSizes(lines, roll, shell, title) {
+export function codeSizes(lines, roll, shell, title, least = false) {
   const prompt = shell ? '$ ' : '';
   const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
+  // a line that sets what the page changes is shown whole, as a typed line is
+  const isWhole = l => isTyped(l) || l.keep;
   const fits = (t, px, o) => monoWidth(`${prompt}${t}`, px) + caretWidth(px) <= textWidth(o);
   // a wrapped row hangs two characters past the line's indent, so it is measured that much short
   const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - (indentOf(t) + 2) * 0.6 * px, weight: 'mono' }));
+  // a whole line of context is plain text: it breaks after a space or where breaksIn says, and a
+  // piece too long for a row anywhere; past the first row it hangs past its indent
+  const plainRows = (t, px, o) => {
+    const full = Math.floor(textWidth(o) / (0.6 * px)), hang = full - indentOf(t) - 2, after = breaksIn(t);
+    const pieces = [];
+    for (let i = 0, from = 0; i < t.length; i++) if (t[i] === ' ' || after(i) || i === t.length - 1) { pieces.push(t.slice(from, i + 1)); from = i + 1; }
+    let n = 1, x = 0, width = full;
+    for (const p of pieces) {
+      // a space at the end of a row hangs past it
+      const ink = p.trimEnd().length;
+      if (x > 0 && x + ink > width) { n++; x = 0; width = hang; }
+      x += p.length;
+      while (x - (p.length - ink) > width) { n++; x -= width; width = hang; }
+    }
+    return n;
+  };
   const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => !fits(t, px, o)));
   const rows = (px, o) => lines.reduce((n, l) => {
-    if (!isTyped(l)) return n + 1;
+    if (!isWhole(l)) return n + 1;
+    if (!isTyped(l)) return n + plainRows(l.text, px, o);
     if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsOf(t, px, o)));
     const slot = slotOf(l.text, roll.preset);
     // the id's own row starts two characters in, where a shell line's prompt ends
@@ -204,12 +226,14 @@ export function codeSizes(lines, roll, shell, title) {
     // the window pushes in about its own middle, so its bottom edge drops by half its growth
     const room = px => (EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
     // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
-    const clean = (l, px) => variants(l).every(t => fits(t, px, o)) || (l.focus && !!roll && (() => {
+    // a whole line of context has no caret after it
+    const clean = (l, px) => (l.keep && !isTyped(l) ? monoWidth(l.text, px) <= textWidth(o) : variants(l).every(t => fits(t, px, o))) || (l.focus && !!roll && (() => {
       const slot = slotOf(l.text, roll.preset), lead = shell ? '' : '  ';
       return fits(slot.before, px, o) && [roll.preset, ...roll.ids].every(id => fits(lead + slot.row(id), px, o));
     })());
     // a clean line at a smaller size reads better than a wrapped one at a larger
-    return w.sizes.find(px => lines.filter(isTyped).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;
+    return w.sizes.find(px => lines.filter(isWhole).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px))
+      ?? (least && w.least && room(w.least) ? w.least : null);
   };
   // the code reads first: the largest code size, then the largest headline that leaves it its room
   const pick = o => TYPE.title[o].sizes.map(px => {
@@ -219,7 +243,7 @@ export function codeSizes(lines, roll, shell, title) {
   const l = pick('landscape'), p = pick('portrait');
   if (!l || !p) return null;
   const landscape = l.code, portrait = p.code;
-  const clipped = (px, o) => lines.map(l => !isTyped(l) && monoWidth(l.text, px) > textWidth(o));
+  const clipped = (px, o) => lines.map(l => !isWhole(l) && monoWidth(l.text, px) > textWidth(o));
   return { title: { landscape: l.title, portrait: p.title }, landscape, portrait, breaks: { landscape: breaks(landscape, 'landscape'), portrait: breaks(portrait, 'portrait') }, clipped: { landscape: clipped(landscape, 'landscape'), portrait: clipped(portrait, 'portrait') } };
 }
 
@@ -238,16 +262,30 @@ const PLUS = '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="
 // the one accent in the window. Not a path or a URL: nothing word-like before it.
 const MODEL_ID = /(?<![\w/.:~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:[\]-]*/gi;
 
+const URL_AT = /https?:\/\/\S+/g;
+const spans = (text, re) => {
+  const at = new Set();
+  for (const m of text.matchAll(re)) for (let i = m.index; i < m.index + m[0].length; i++) at.add(i);
+  return at;
+};
+/**
+ * The characters of `text` a row may break after: an "=", a path's "/", or the
+ * "." of a property chain outside a URL (process.env.|ANYROUTER_API_KEY), never
+ * inside a model id.
+ */
+function breaksIn(text) {
+  const ids = spans(text, MODEL_ID), urls = spans(text, URL_AT);
+  return i => !ids.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/')
+    || (text[i] === '.' && !urls.has(i) && /\w/.test(text[i - 1] ?? '') && /[A-Za-z_$]/.test(text[i + 1] ?? '')));
+}
+
 /**
  * Characters as spans a typist reveals one by one; in the command, model ids in
  * the accent, since the id is what arrives there. A token too long for its line
- * breaks after an "=" or a path's "/", never inside a model id.
+ * breaks where breaksIn says.
  */
 function typedChars(text, focus) {
-  const ids = new Set(), accents = new Set();
-  for (const m of text.matchAll(MODEL_ID)) for (let i = m.index; i < m.index + m[0].length; i++) ids.add(i);
-  if (focus) for (const i of ids) accents.add(i);
-  const breakAfter = i => !ids.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/'));
+  const accents = focus ? spans(text, MODEL_ID) : new Set(), breakAfter = breaksIn(text);
   return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>${breakAfter(at + k) ? '<wbr>' : ''}`).join('');
 }
 
@@ -274,6 +312,12 @@ function typedLine(line, roll) {
   }).join('');
 }
 
+/** A line set whole as it is, wrapping where breaksIn says. */
+const wrapped = text => {
+  const breakAfter = breaksIn(text);
+  return [...text].map((ch, i) => `${esc(ch)}${breakAfter(i) ? '<wbr>' : ''}`).join('');
+};
+
 /** The window: a terminal for shell commands, an editor for a line of code. */
 function windowHtml(win) {
   const { shell, title, lines, roll, code } = win;
@@ -281,8 +325,9 @@ function windowHtml(win) {
   const body = lines.map((l, k) => {
     const typed = shell || l.focus;
     const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
-    return typed
-      ? `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}<span class="caret"></span></div>`
+    if (typed) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}<span class="caret"></span></div>`;
+    return l.keep
+      ? `<div class="ln keep" style="--in:${indentOf(l.text)}">${wrapped(l.text)}</div>`
       : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
   }).join('');
   return `<div class="win"><div class="push"><div class="term ${shell ? 'is-ink' : 'card'}">
@@ -358,7 +403,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 
     // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
     tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
-    if (has(".ctx")) tl.fromTo(Q(".ctx"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
+    if (has(".ln:not(.typed)")) tl.fromTo(Q(".ln:not(.typed)"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
     let t = TYPE_AT;
     $$(".typed").forEach((ln, k) => {
       // a later line, prompt and all, shows only once it starts
@@ -438,6 +483,7 @@ export const CSS = `
   /* a wrapped line hangs past its prompt and its own indent, so it reads as one command */
   .film .ln{white-space:pre-wrap;padding:0 0 0 calc((var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
   .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.muted}}
+  .film .ln.keep{overflow-wrap:anywhere}
   .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}
   .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
   .film .sh .ln::before{content:"$ ";color:${C.onInkMuted}}

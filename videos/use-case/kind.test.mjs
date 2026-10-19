@@ -250,7 +250,8 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+p >= 120 && +p <= 148, `${u.slug}: portrait headline ${p}px`);
     const [, cl, cp] = h.match(/--cs:(\d+)px;--cs-p:(\d+)px/);
     assert.ok(+cl >= 48 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
-    assert.ok(+cp >= 40 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
+    // 36px only where a line the page changes, shown whole, leaves nothing larger room
+    assert.ok(+cp >= (/class="ln keep"/.test(h) ? 36 : 40) && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
   }
   assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
@@ -326,6 +327,19 @@ test('a headline breaks in even lines across the safe width, never inside a name
         const n = linesOf(line, { px, width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking, breakWords: false });
         assert.equal(n, 1, `${u.slug}: "${line}" at ${px}px is wider than the ${o} safe area`);
       }
+    }
+  }
+});
+
+test('a line that sets what the page changes, its base URL, key or model, is shown whole', () => {
+  // "Keep the OpenAI SDK, change two fields" showed its second field, apiKey, as a faded context line cut to "process.env.ANYROUTER_AP"
+  const changes = /anyrouter\.dev\/api|ANYROUTER_API_KEY|sk-ar-|\bmodels?\b"?\s*[:=]/;
+  const lines = h => [...h.matchAll(/<div class="ln ([^"]*)"[^>]*>([\s\S]*?)<\/div>/g)].map(m => ({ cls: m[1], text: shown(m[2].replace(/<em[^>]*>[^<]*<\/em>/g, '')).join('') }));
+  const key = lines(html(filmOf(doc(), 'openai-sdk'))).find(l => l.text.includes('apiKey'));
+  assert.ok(key && !/ctx|clip/.test(key.cls), `openai-sdk sets apiKey whole: ${JSON.stringify(key)}`);
+  for (const [u, f] of films()) {
+    for (const l of lines(html(f)).filter(x => changes.test(x.text))) {
+      assert.ok(!/ctx|clip/.test(l.cls), `${u.slug}: "${l.text}" sets what the page changes, so it is not faded or cut`);
     }
   }
 });
