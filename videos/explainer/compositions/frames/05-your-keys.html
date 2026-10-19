@@ -1,0 +1,237 @@
+<template>
+  <style>
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="05-your-keys"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="05-your-keys"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="05-your-keys"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="05-your-keys"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+[data-composition-id="05-your-keys"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="05-your-keys"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="05-your-keys"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="05-your-keys"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="05-your-keys"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="05-your-keys"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="05-your-keys"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="05-your-keys"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="05-your-keys"] p, [data-composition-id="05-your-keys"] h1, [data-composition-id="05-your-keys"] h2 { margin: 0; }
+
+[data-composition-id="05-your-keys"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+[data-composition-id="05-your-keys"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="05-your-keys"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="05-your-keys"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="05-your-keys"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="05-your-keys"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="05-your-keys"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="05-your-keys"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="05-your-keys"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-chip img { width: 44px; height: 44px; flex: none; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="05-your-keys"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="05-your-keys"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="05-your-keys"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="05-your-keys"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+[data-composition-id="05-your-keys"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="05-your-keys"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="05-your-keys"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="05-your-keys"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="05-your-keys"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="05-your-keys"] .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+[data-composition-id="05-your-keys"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="05-your-keys"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="05-your-keys"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="05-your-keys"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="05-your-keys"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="05-your-keys"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="05-your-keys"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="05-your-keys"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="05-your-keys"] .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+[data-composition-id="05-your-keys"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="05-your-keys"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="05-your-keys"] .k-code-body, [data-composition-id="05-your-keys"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="05-your-keys"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="05-your-keys"] .k-pbr { display: inline; }
+  [data-composition-id="05-your-keys"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="05-your-keys"] .f05-browser { left: 160px; right: 160px; top: 104px; bottom: 236px; }
+    [data-composition-id="05-your-keys"] .f05-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+    [data-composition-id="05-your-keys"] .f05-shot img { display: block; max-width: none; }
+    /* "AnyRouter adds no fee." on the GPT-5.5 page, in capture px */
+    [data-composition-id="05-your-keys"] .f05-mark { position: absolute; left: 2092px; top: 604px; width: 318px; height: 52px; border-radius: 10px; background: rgba(240,145,90,0); }
+    [data-composition-id="05-your-keys"] .f05-ring { border-radius: 22px; }
+    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 806px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
+
+    @media (orientation: portrait) {
+      [data-composition-id="05-your-keys"] .f05-browser { left: 60px; right: 120px; top: 300px; bottom: 960px; }
+      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 916px; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-your-keys" data-width="1920" data-height="1080" data-duration="5">
+    <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
+    <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
+      <div id="f05-cam" class="k-cam">
+        <div id="f05-claude" class="k-browser f05-browser" data-layout-allow-overlap>
+          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url" data-layout-allow-overlap>anyrouter.dev<span class="k-lbr" data-layout-allow-overlap>/model/anthropic/claude-opus-5-5</span></span></div>
+          <div id="f05-view-claude" class="k-view"><div id="f05-shot-claude" class="f05-shot"><img src="assets/captures/model-claude-opus-5-5.png" alt="" /></div></div>
+        </div>
+        <div id="f05-gpt" class="k-browser f05-browser">
+          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev<span class="k-lbr">/model/openai/gpt-5.5</span></span></div>
+          <div id="f05-view-gpt" class="k-view">
+            <div id="f05-shot-gpt" class="f05-shot"><img src="assets/captures/model-gpt-5-5.png" alt="" /><div id="f05-mark" class="f05-mark"></div></div>
+            <div id="f05-ring" class="k-ring f05-ring"></div>
+          </div>
+        </div>
+        <span id="f05-badge" class="k-badge is-free is-big f05-badge">$0 markup</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f05-" + s);
+      const DURATION = 5;
+      // Word starts from audio_meta.json frame 5: "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
+      const OPENAI = 1.0, ADD = 1.85, NO = 3.45, MARKUP = 3.75;
+      const portrait = matchMedia("(orientation: portrait)").matches;
+      // Rectangles of the 2x captures (3840 px wide), measured on the GPT-5.5 page; the Claude page has the same layout.
+      const HEAD = portrait ? { x: 780, y: 230, w: 1000, h: 420 } : { x: 780, y: 180, w: 1700, h: 520 };
+      const BUTTON = { x: 2584, y: 250, w: 227, h: 71 };
+      const NO_FEE = { x: 2092, y: 604, w: 318, h: 52 };
+
+      document.fonts.ready.then(() => {
+        const view = $("view-gpt");
+        const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, 1));
+        // landscape keeps the model's name in view beside its button; portrait has room for the button alone
+        const ADD_AREA = portrait ? { x: BUTTON.x - 260, y: BUTTON.y - 40, w: BUTTON.w + 520, h: BUTTON.h + 80 } : { x: 780, y: 200, w: 2080, h: 200 };
+        const button = K.fit(view, ADD_AREA, K.scaleFor(view, ADD_AREA, 0.95));
+        const noFee = K.fit(view, NO_FEE, 1.15);
+
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.03 });
+
+        // Claude's page, then GPT-5.5's deals in front of it
+        tl.set([$("shot-claude"), $("shot-gpt")], head, 0);
+        K.rise(tl, $("claude"), 0.02, { y: 70, d: 0.7 });
+        tl.fromTo($("gpt"), { x: 220, y: 40, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, OPENAI);
+        tl.to($("claude"), { x: -48, y: -44, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
+
+        // "Add your own key": the camera fits the button, the ring lands on it
+        tl.to($("shot-gpt"), { ...button, duration: 0.7, ease: "power3.inOut" }, ADD);
+        const ring = $("ring");
+        tl.set(ring, {
+          left: button.x + BUTTON.x * button.scale - 12, top: button.y + BUTTON.y * button.scale - 12,
+          width: BUTTON.w * button.scale + 24, height: BUTTON.h * button.scale + 24,
+        }, 0);
+        tl.fromTo(ring, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, ADD + 0.55);
+        tl.to(ring, { opacity: 0, duration: 0.25, ease: "power2.in" }, NO - 0.2);
+
+        // "at no markup": the page's own sentence, then the badge
+        tl.to($("shot-gpt"), { ...noFee, duration: 0.65, ease: "power3.inOut" }, NO - 0.15);
+        tl.to($("mark"), { backgroundColor: "rgba(240,145,90,0.32)", duration: 0.3, ease: "power2.out" }, NO + 0.45);
+        tl.set($("badge"), { xPercent: -50 }, 0);
+        tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, MARKUP);
+        tl.to($("shot-gpt"), { scale: noFee.scale * 1.04, x: noFee.x - NO_FEE.x * noFee.scale * 0.04 - NO_FEE.w * noFee.scale * 0.02, y: noFee.y - NO_FEE.y * noFee.scale * 0.04 - NO_FEE.h * noFee.scale * 0.02, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["05-your-keys"] = tl;
+      });
+    })();
+  </script>
+</template>

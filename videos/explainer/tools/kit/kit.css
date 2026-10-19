@@ -1,0 +1,94 @@
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+%F {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+%F .k-bg { position: absolute; inset: 0; background: var(--bg); }
+%F .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+%F .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+%F .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+%F .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+%F .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+%F .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+%F .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+%F .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+%F .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+%F .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+%F p, %F h1, %F h2 { margin: 0; }
+
+%F .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+%F .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+%F .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+%F .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+%F .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+%F .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+%F .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+%F .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+%F .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+%F .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+%F .k-chip img { width: 44px; height: 44px; flex: none; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+%F .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+%F .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+%F .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+%F .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+%F .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+%F .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+%F .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+%F .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+%F .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+%F .k-code-bar .k-url { height: 44px; }
+%F .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+%F .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+%F .k-code-body .cm { color: var(--muted); }
+%F .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+%F .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+%F .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+%F .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+%F .k-term-body .p { color: var(--term-dim); }
+%F .k-term-body .id { color: var(--term-id); }
+%F .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+%F .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+%F .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+%F .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+%F .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  %F .k-cam { transform-origin: 510px 710px; }
+  %F .k-code-body, %F .k-term-body { font-size: 40px; padding: 32px 36px; }
+  %F .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  %F .k-pbr { display: inline; }
+  %F .k-lbr { display: none; }
+}

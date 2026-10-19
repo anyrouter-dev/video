@@ -1,0 +1,235 @@
+<template>
+  <style>
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="09-claude-code"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="09-claude-code"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="09-claude-code"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="09-claude-code"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+[data-composition-id="09-claude-code"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="09-claude-code"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="09-claude-code"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="09-claude-code"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="09-claude-code"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="09-claude-code"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="09-claude-code"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="09-claude-code"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="09-claude-code"] p, [data-composition-id="09-claude-code"] h1, [data-composition-id="09-claude-code"] h2 { margin: 0; }
+
+[data-composition-id="09-claude-code"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+[data-composition-id="09-claude-code"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="09-claude-code"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="09-claude-code"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="09-claude-code"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="09-claude-code"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="09-claude-code"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="09-claude-code"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="09-claude-code"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="09-claude-code"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="09-claude-code"] .k-chip img { width: 44px; height: 44px; flex: none; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="09-claude-code"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="09-claude-code"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="09-claude-code"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="09-claude-code"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="09-claude-code"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="09-claude-code"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="09-claude-code"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+[data-composition-id="09-claude-code"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="09-claude-code"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="09-claude-code"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="09-claude-code"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="09-claude-code"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="09-claude-code"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="09-claude-code"] .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+[data-composition-id="09-claude-code"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="09-claude-code"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="09-claude-code"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="09-claude-code"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="09-claude-code"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="09-claude-code"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="09-claude-code"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="09-claude-code"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="09-claude-code"] .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+[data-composition-id="09-claude-code"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="09-claude-code"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="09-claude-code"] .k-code-body, [data-composition-id="09-claude-code"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="09-claude-code"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="09-claude-code"] .k-pbr { display: inline; }
+  [data-composition-id="09-claude-code"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="09-claude-code"] .f09-title { position: absolute; left: 160px; right: 160px; top: 176px; }
+    [data-composition-id="09-claude-code"] .f09-term { left: 160px; right: 160px; top: 340px; }
+    [data-composition-id="09-claude-code"] .f09-term .k-term-body { padding: 56px 56px 64px; font-size: 56px; }
+    [data-composition-id="09-claude-code"] .f09-ch, [data-composition-id="09-claude-code"] .f09-hold { display: none !important; }
+    [data-composition-id="09-claude-code"] .k-caret { margin-left: 4px; height: 64px; vertical-align: -12px; width: 30px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="09-claude-code"] .f09-title { left: 60px; right: 120px; top: 220px; text-wrap: balance; }
+      [data-composition-id="09-claude-code"] .f09-term { left: 60px; right: 120px; top: 520px; }
+      [data-composition-id="09-claude-code"] .f09-term .k-term-body { padding: 40px 36px 48px; font-size: 44px; }
+      [data-composition-id="09-claude-code"] .k-caret { height: 52px; width: 24px; vertical-align: -9px; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="09-claude-code" data-width="1920" data-height="1080" data-duration="5">
+    <div id="f09-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
+    <div id="f09-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
+      <div id="f09-cam" class="k-cam">
+        <h2 id="f09-title" class="k-h2 f09-title">Use any model in Claude Code</h2>
+        <div id="f09-term" class="k-term f09-term">
+          <div class="k-term-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div>~/my-project</div>
+<div class="k-term-body"><span class="p">$ </span><span id="f09-cmd">anyr claude<span class="k-lbr f09-hold"> </span><span class="k-pbr f09-hold">
+  </span>--model </span><span id="f09-id" class="id k-roll" data-layout-allow-overlap><span data-layout-allow-overlap id="f09-first">moonshotai/kimi-k3</span><span data-layout-allow-overlap>x-ai/grok-4.7</span><span data-layout-allow-overlap>z-ai/glm-5.3</span><span data-layout-allow-overlap>anyrouter/free</span></span><span id="f09-caret" class="k-caret"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f09-" + s);
+      const DURATION = 4.5;
+      // Word starts from audio_meta.json frame 9: "Run" 1.44, "any" 2.577, "you" 3.077.
+      // The command and ids are from the real `anyr --help` and `anyr models`.
+      const TYPE_FROM = 1.4, TYPE_TO = 2.35, ROLL_AT = [2.6, 3.05, 3.5];
+      const BLINK = 0.5;
+
+      // Split typed text into one span per character, so each can appear on its own beat.
+      function chars(el) {
+        const out = [];
+        for (const node of [...el.childNodes]) {
+          if (node.nodeType !== 3) { out.push(node); continue; }
+          for (const c of node.textContent) {
+            const s = document.createElement("span");
+            s.className = "f09-ch";
+            s.textContent = c;
+            el.insertBefore(s, node);
+            out.push(s);
+          }
+          node.remove();
+        }
+        return out;
+      }
+
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.06 });
+        K.rise(tl, $("title"), 0.02);
+        K.rise(tl, $("term"), 0.1, { y: 60, d: 0.7 });
+
+        // The first id is typed with the command, so its slot grows with it until typing ends;
+        // only then does the slot hold a fixed width for the roll.
+        const slot = $("id");
+        $("first").style.position = "relative";
+        K.roll(tl, slot, ROLL_AT);
+        const width = slot.style.width;
+        slot.style.width = "";
+        tl.set(slot, { width }, TYPE_TO);
+
+        // a line break is typed too: it takes its orientation's display once typing reaches it
+        const typed = [...chars($("cmd")), ...chars($("first"))];
+        const step = (TYPE_TO - TYPE_FROM) / typed.length;
+        typed.forEach((n, i) => tl.set(n, { attr: { class: n.className.replace(/\s*\bf09-(ch|hold)\b/, "") } }, TYPE_FROM + i * step));
+        const caret = $("caret");
+        for (let t = BLINK; t < TYPE_FROM - 0.1; t += BLINK) tl.set(caret, { opacity: Math.round(t / BLINK) % 2 ? 0 : 1 }, t);
+        tl.set(caret, { opacity: 1 }, TYPE_FROM - 0.05);
+        for (let t = TYPE_TO + BLINK; t < DURATION; t += BLINK) tl.set(caret, { opacity: Math.round((t - TYPE_TO) / BLINK) % 2 ? 0 : 1 }, t);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["09-claude-code"] = tl;
+      });
+    })();
+  </script>
+</template>

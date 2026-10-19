@@ -1,0 +1,212 @@
+<template>
+  <style>
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="08-free"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="08-free"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="08-free"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="08-free"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+[data-composition-id="08-free"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="08-free"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="08-free"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="08-free"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="08-free"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="08-free"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="08-free"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="08-free"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="08-free"] p, [data-composition-id="08-free"] h1, [data-composition-id="08-free"] h2 { margin: 0; }
+
+[data-composition-id="08-free"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+[data-composition-id="08-free"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="08-free"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="08-free"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="08-free"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="08-free"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="08-free"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="08-free"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="08-free"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="08-free"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="08-free"] .k-chip img { width: 44px; height: 44px; flex: none; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="08-free"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="08-free"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="08-free"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="08-free"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="08-free"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="08-free"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="08-free"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+[data-composition-id="08-free"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="08-free"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="08-free"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="08-free"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="08-free"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="08-free"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="08-free"] .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+[data-composition-id="08-free"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="08-free"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="08-free"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="08-free"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="08-free"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="08-free"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="08-free"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="08-free"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="08-free"] .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+[data-composition-id="08-free"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="08-free"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="08-free"] .k-code-body, [data-composition-id="08-free"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="08-free"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="08-free"] .k-pbr { display: inline; }
+  [data-composition-id="08-free"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="08-free"] .f08-browser { left: 120px; width: 1100px; top: 120px; bottom: 220px; }
+    [data-composition-id="08-free"] .f08-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+    [data-composition-id="08-free"] .f08-shot img { display: block; max-width: none; }
+    [data-composition-id="08-free"] .f08-side { position: absolute; left: 1300px; right: 96px; top: 230px; display: flex; flex-direction: column; align-items: flex-start; gap: 32px; }
+    [data-composition-id="08-free"] .f08-badges { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="08-free"] .f08-side { left: 60px; right: 120px; top: 210px; gap: 28px; }
+      [data-composition-id="08-free"] .f08-badges { flex-direction: row; flex-wrap: wrap; gap: 20px; }
+      [data-composition-id="08-free"] .f08-browser { left: 60px; width: auto; right: 120px; top: 520px; bottom: 700px; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="08-free" data-width="1920" data-height="1080" data-duration="3.5">
+    <div id="f08-bg" class="k-bg clip" data-start="0" data-duration="3.5" data-track-index="0"></div>
+    <div id="f08-stage" class="k-stage clip" data-start="0" data-duration="3.5" data-track-index="1">
+      <div id="f08-cam" class="k-cam">
+        <div id="f08-browser" class="k-browser f08-browser">
+          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev/models?free=true</span></div>
+          <div id="f08-view" class="k-view"><div id="f08-shot" class="f08-shot"><img src="assets/captures/models-free.png" alt="" /></div></div>
+        </div>
+        <div class="f08-side">
+          <h2 id="f08-title" class="k-h2">Free models</h2>
+          <div class="f08-badges">
+            <span id="f08-plan" class="k-badge is-free is-big">Every plan</span>
+            <span id="f08-cap" class="k-badge is-free is-big">No daily cap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f08-" + s);
+      const DURATION = 3.5;
+      // Word starts from audio_meta.json frame 8: "every" 1.057, "no" 1.881.
+      const EVERY = 1.0, NO = 1.82;
+      // The model column of the 2x capture, from the first row down: the tab bar and its counts stay out of view.
+      const TOP = { x: 50, y: 630 };
+
+      document.fonts.ready.then(() => {
+        // the list scrolls 420 capture px, its left edge pinned to the view's
+        const scale = 0.9;
+        const from = { scale, x: -TOP.x * scale, y: -TOP.y * scale };
+        const to = { ...from, y: -(TOP.y + 420) * scale };
+
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.05 });
+        K.rise(tl, $("browser"), 0.02, { y: 60, d: 0.7 });
+        tl.fromTo($("shot"), from, { ...to, duration: DURATION, ease: "sine.inOut" }, 0);
+        K.rise(tl, $("title"), 0.1);
+        tl.fromTo($("plan"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, EVERY);
+        tl.fromTo($("cap"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, NO);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["08-free"] = tl;
+      });
+    })();
+  </script>
+</template>

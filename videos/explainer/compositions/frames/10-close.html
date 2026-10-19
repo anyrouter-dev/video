@@ -1,170 +1,208 @@
 <template>
   <style>
-    @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
-    @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
-    [data-composition-id="10-close"] {
-      --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-      --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-      --line: #E5E5E5; --line-strong: #D4D4D8;
-      --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-      --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A; --term-ok: #4ADE80;
-      --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-      --mono: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-family: var(--sans);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-    [data-composition-id="10-close"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
-    [data-composition-id="10-close"] .k-stage { position: absolute; inset: 0; }
+[data-composition-id="10-close"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="10-close"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="10-close"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="10-close"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
 
-    /* type scale (frame.md typography) */
-    [data-composition-id="10-close"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-    [data-composition-id="10-close"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-    [data-composition-id="10-close"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-    [data-composition-id="10-close"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-    [data-composition-id="10-close"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-    [data-composition-id="10-close"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-    [data-composition-id="10-close"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-    [data-composition-id="10-close"] .k-code { font-family: var(--mono); font-size: 48px; line-height: 1.45; }
-    [data-composition-id="10-close"] .k-code-sm { font-family: var(--mono); font-size: 40px; line-height: 1.45; }
-    [data-composition-id="10-close"] .k-stat { font-size: 200px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
-    [data-composition-id="10-close"] .k-mono { font-family: var(--mono); }
+[data-composition-id="10-close"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="10-close"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="10-close"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="10-close"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="10-close"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="10-close"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="10-close"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="10-close"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="10-close"] p, [data-composition-id="10-close"] h1, [data-composition-id="10-close"] h2 { margin: 0; }
 
-    /* card: shadcn Card at 2x */
-    [data-composition-id="10-close"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 48px; }
+[data-composition-id="10-close"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
 
-    /* badge: shadcn Badge */
-    [data-composition-id="10-close"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-    [data-composition-id="10-close"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line); }
-    [data-composition-id="10-close"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-    [data-composition-id="10-close"] .k-badge.is-accent { background: var(--primary-tint); color: var(--primary); }
-    [data-composition-id="10-close"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-    [data-composition-id="10-close"] .k-badge svg { width: 32px; height: 32px; flex: none; }
+[data-composition-id="10-close"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="10-close"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="10-close"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="10-close"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="10-close"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="10-close"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-    /* button: shadcn Button */
-    [data-composition-id="10-close"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 40px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 40px; font-weight: 500; line-height: 1; white-space: nowrap; }
-    [data-composition-id="10-close"] .k-btn.is-outline { background: var(--bg); color: var(--ink); border: 2px solid var(--line); }
-    [data-composition-id="10-close"] .k-btn.is-primary { background: var(--primary); }  /* only where it mirrors a real orange button on anyrouter.dev */
-    [data-composition-id="10-close"] .k-btn svg { width: 36px; height: 36px; flex: none; }
+[data-composition-id="10-close"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-    /* focus ring: wrap the named control; animate the ring's opacity */
-    [data-composition-id="10-close"] .k-ring { position: absolute; inset: -10px; border-radius: inherit; border: 2px solid var(--primary); box-shadow: 0 0 0 6px rgba(187,77,0,.35); pointer-events: none; opacity: 0; }
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="10-close"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
 
-    /* step header: replaces the old four-dot rail */
-    [data-composition-id="10-close"] .k-step { position: absolute; left: 96px; top: 88px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+/* a company: its mark and its name */
+[data-composition-id="10-close"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="10-close"] .k-chip img { width: 44px; height: 44px; flex: none; }
 
-    /* demo badge: every frame that shows a third-party site */
-    [data-composition-id="10-close"] .k-demo { position: absolute; right: 96px; top: 88px; }
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="10-close"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="10-close"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="10-close"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="10-close"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="10-close"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="10-close"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="10-close"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-    /* callout: shadcn Alert, one side note at a time */
-    [data-composition-id="10-close"] .k-callout { display: flex; align-items: flex-start; gap: 28px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); padding: 36px 44px; }
-    [data-composition-id="10-close"] .k-callout > svg, [data-composition-id="10-close"] .k-callout > img { width: 40px; height: 40px; flex: none; margin-top: 4px; }
-    [data-composition-id="10-close"] .k-callout-text { display: flex; flex-direction: column; gap: 8px; }
+/* code card: a light editor with a file tab */
+[data-composition-id="10-close"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="10-close"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="10-close"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="10-close"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="10-close"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="10-close"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="10-close"] .k-ln { display: block; }
 
-    /* browser frame: wraps a real screenshot, cropped to what the voice names */
-    [data-composition-id="10-close"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); overflow: hidden; }
-    [data-composition-id="10-close"] .k-browser-bar { position: relative; height: 56px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-    [data-composition-id="10-close"] .k-browser-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
-    [data-composition-id="10-close"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-    [data-composition-id="10-close"] .k-url { display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-    [data-composition-id="10-close"] .k-view { position: absolute; left: 0; right: 0; top: 56px; bottom: 0; overflow: hidden; }
-    [data-composition-id="10-close"] .k-view > img { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+/* terminal: the one dark surface */
+[data-composition-id="10-close"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="10-close"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="10-close"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="10-close"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="10-close"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="10-close"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
 
-    /* key pill: an API key, always redacted (prefix + bullets) */
-    [data-composition-id="10-close"] .k-key { display: inline-flex; align-items: center; gap: 16px; height: 72px; box-sizing: border-box; padding: 0 24px; border-radius: 12px; background: var(--surface); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 40px; line-height: 1; color: var(--ink); white-space: nowrap; }
-    [data-composition-id="10-close"] .k-key svg { width: 36px; height: 36px; flex: none; }
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="10-close"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="10-close"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="10-close"] .k-roll > span:first-child { opacity: 1; }
 
-    /* terminal: the one dark surface */
-    [data-composition-id="10-close"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
-    [data-composition-id="10-close"] .k-term-bar { position: relative; height: 56px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-    [data-composition-id="10-close"] .k-term-dots { position: absolute; left: 24px; top: 22px; display: flex; gap: 10px; }
-    [data-composition-id="10-close"] .k-term-dots i { width: 12px; height: 12px; border-radius: 50%; background: #3F3F46; }
-    [data-composition-id="10-close"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.45; color: var(--term-ink); white-space: pre; }
-    [data-composition-id="10-close"] .k-term-body .p { color: var(--term-dim); }     /* the $ prompt */
-    [data-composition-id="10-close"] .k-term-body .dim { color: var(--term-dim); }   /* output */
-    [data-composition-id="10-close"] .k-term-body .id { color: var(--term-id); }     /* a model id */
-    [data-composition-id="10-close"] .k-term-body .ok { color: var(--term-ok); }     /* success */
-    [data-composition-id="10-close"] .k-caret { display: inline-block; width: 26px; height: 52px; vertical-align: -8px; background: var(--term-ink); }
+/* portrait-only line break inside code */
+[data-composition-id="10-close"] .k-pbr { display: none; }
 
-    /* cursor: macOS arrow at 2x so it reads on a phone */
-    [data-composition-id="10-close"] .k-cursor { position: absolute; left: 0; top: 0; width: 44px; height: 54px; filter: drop-shadow(0 2px 4px rgba(10,10,10,.25)); pointer-events: none; transform-origin: 3px 3px; }
-
-    @media (orientation: portrait) {
-      [data-composition-id="10-close"] .k-step { left: 60px; top: 200px; }
-      [data-composition-id="10-close"] .k-demo { right: 120px; top: 200px; }
-      [data-composition-id="10-close"] .k-term-body { font-size: 40px; white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; padding: 32px 36px; }
-    }
-
-    #root {
-      position: absolute;
-      inset: 0;
-      width: 1920px;
-      height: 1080px;
-      overflow: hidden;
-      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-      color: #0A0A0A;
-    }
-    [data-composition-id="10-close"] .f10-safe { position: absolute; left: 96px; right: 96px; top: 88px; height: 792px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    [data-composition-id="10-close"] .f10-line { margin: 0; text-wrap: balance; }
-    [data-composition-id="10-close"] .f10-line + .f10-line { margin-top: 16px; }
-    [data-composition-id="10-close"] .f10-free { color: var(--free); }
-
-    [data-composition-id="10-close"] .f10-brand { display: flex; align-items: center; gap: 36px; }
-    [data-composition-id="10-close"] .f10-mark { width: 128px; height: 128px; display: block; fill: var(--ink); }
-    [data-composition-id="10-close"] .f10-word { margin: 0; }
-    [data-composition-id="10-close"] .f10-url { margin-top: 64px; height: 136px; padding: 0 64px; border-radius: 24px; font-family: var(--mono); font-size: 64px; font-weight: 400; }
+@media (orientation: portrait) {
+  [data-composition-id="10-close"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="10-close"] .k-code-body, [data-composition-id="10-close"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="10-close"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="10-close"] .k-pbr { display: inline; }
+  [data-composition-id="10-close"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="10-close"] .f10-col { position: absolute; left: 96px; right: 96px; top: 190px; display: flex; flex-direction: column; align-items: center; gap: 56px; text-align: center; }
+    [data-composition-id="10-close"] .f10-brand { display: flex; align-items: center; gap: 32px; }
+    [data-composition-id="10-close"] .f10-mark { width: 132px; height: 132px; }
+    [data-composition-id="10-close"] .f10-cta { display: flex; align-items: center; gap: 28px; }
+    [data-composition-id="10-close"] .f10-url { font-family: var(--mono); font-size: 48px; }
 
     @media (orientation: portrait) {
-      [data-composition-id="10-close"] .f10-safe { left: 60px; right: 120px; top: 200px; height: 1020px; }
+      [data-composition-id="10-close"] .f10-col { left: 60px; right: 120px; top: 300px; gap: 64px; }
+      [data-composition-id="10-close"] .f10-mark { width: 104px; height: 104px; }
+      [data-composition-id="10-close"] .f10-word { font-size: 112px; }
+      [data-composition-id="10-close"] .f10-line { text-wrap: balance; }
+      [data-composition-id="10-close"] .f10-cta { flex-direction: column; gap: 24px; }
     }
   </style>
 
-  <div id="root" data-composition-id="10-close" data-width="1920" data-height="1080" data-duration="7.933">
-    <div id="f10-bg" class="k-bg clip" data-start="0" data-duration="7.933" data-track-index="0"></div>
-
-    <div id="f10-stage" class="k-stage clip" data-start="0" data-duration="7.933" data-track-index="1">
-      <div id="f10-lines" class="f10-safe">
-        <p id="f10-l1" class="k-h1 f10-line">One key for every model,</p>
-        <p id="f10-l2" class="k-h1 f10-line">and a shared pool for <span class="f10-free">free</span> models.</p>
-      </div>
-
-      <div class="f10-safe">
-        <div class="f10-brand">
-          <svg id="f10-mark" class="f10-mark" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter">
-            <g transform="translate(0,1254) scale(0.1,-0.1)">
-              <path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
-              <path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
-            </g>
-          </svg>
-          <p id="f10-word" class="k-display f10-word">AnyRouter</p>
+  <div id="root" data-composition-id="10-close" data-width="1920" data-height="1080" data-duration="5.937">
+    <div id="f10-bg" class="k-bg clip" data-start="0" data-duration="5.937" data-track-index="0"></div>
+    <div id="f10-stage" class="k-stage clip" data-start="0" data-duration="5.937" data-track-index="1">
+      <div id="f10-cam" class="k-cam">
+        <div class="f10-col">
+          <div id="f10-brand" class="f10-brand">
+            <svg id="f10-mark" class="f10-mark" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
+            <span id="f10-word" class="k-display f10-word">AnyRouter</span>
+          </div>
+          <p id="f10-line" class="k-h1 f10-line">One API for every model.</p>
+          <div class="f10-cta">
+            <span id="f10-free" class="k-badge is-free is-big">Start free</span>
+            <span id="f10-url" class="k-btn f10-url">anyrouter.dev</span>
+          </div>
         </div>
-        <span id="f10-url" class="k-btn f10-url">anyrouter.dev</span>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
   <script>
     (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
       const $ = (s) => document.getElementById("f10-" + s);
-      // Word starts from 10-close.words.json; the mark lands on the sparkle cue ("Start" + 0.1s).
-      const ONE = 0.01, POOL = 1.5, START = 3.48, SPARKLE = 3.575, URL = 3.87;
+      // Word starts from audio_meta.json frame 10: "Start" 1.416, "free" 1.718, "anyrouter.dev." 2.02.
+      // The lockup settles by 3.2s; the closing card may then hold still (pace-audit's end allowance).
+      const LINE = 0.02, START = 1.36, FREE = 1.68, URL = 1.98, SETTLE = 3.2;
 
-      const tl = gsap.timeline({ paused: true });
-      const rise = (el, t) => tl.fromTo(el, { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, t);
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), SETTLE, { from: 0.97, to: 1, ease: "power2.out" });
 
-      rise($("l1"), ONE);
-      rise($("l2"), POOL);
-      tl.to($("lines"), { y: -24, opacity: 0, duration: 0.25, ease: "power2.out" }, START);
+        K.rise(tl, $("line"), LINE, { y: 48, d: 0.7 });
+        tl.fromTo($("mark"), { scale: 0.7, rotation: -8, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "back.out(1.5)" }, START);
+        K.rise(tl, $("word"), START + 0.08, { y: 32 });
+        tl.fromTo($("free"), { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, FREE);
+        K.rise(tl, $("url"), URL, { y: 32 });
 
-      tl.fromTo($("mark"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, SPARKLE);
-      rise($("word"), SPARKLE + 0.08);
-      rise($("url"), URL);
-
-      window.__timelines = window.__timelines || {};
-      window.__timelines["10-close"] = tl;
+        window.__timelines = window.__timelines || {};
+        window.__timelines["10-close"] = tl;
+      });
     })();
   </script>
 </template>

@@ -1,0 +1,279 @@
+<template>
+  <style>
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="07-failover"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="07-failover"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="07-failover"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="07-failover"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+[data-composition-id="07-failover"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="07-failover"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="07-failover"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="07-failover"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="07-failover"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="07-failover"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="07-failover"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="07-failover"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="07-failover"] p, [data-composition-id="07-failover"] h1, [data-composition-id="07-failover"] h2 { margin: 0; }
+
+[data-composition-id="07-failover"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+[data-composition-id="07-failover"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="07-failover"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="07-failover"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="07-failover"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="07-failover"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="07-failover"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="07-failover"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="07-failover"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 28px 0 22px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="07-failover"] .k-chip img { width: 44px; height: 44px; flex: none; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="07-failover"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="07-failover"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="07-failover"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="07-failover"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="07-failover"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="07-failover"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="07-failover"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+[data-composition-id="07-failover"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="07-failover"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="07-failover"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="07-failover"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="07-failover"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="07-failover"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="07-failover"] .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+[data-composition-id="07-failover"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="07-failover"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="07-failover"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="07-failover"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="07-failover"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="07-failover"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="07-failover"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="07-failover"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="07-failover"] .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+[data-composition-id="07-failover"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="07-failover"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="07-failover"] .k-code-body, [data-composition-id="07-failover"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="07-failover"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="07-failover"] .k-pbr { display: inline; }
+  [data-composition-id="07-failover"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="07-failover"] .f07-app { position: absolute; left: 120px; top: 120px; width: 940px; height: 740px; overflow: hidden; }
+    [data-composition-id="07-failover"] .f07-app-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; position: relative; }
+    [data-composition-id="07-failover"] .f07-app-title { font-size: 36px; font-weight: 500; color: var(--ink-2); }
+    [data-composition-id="07-failover"] .f07-chat { display: flex; flex-direction: column; gap: 28px; padding: 36px 40px; }
+    [data-composition-id="07-failover"] .f07-model { align-self: flex-start; font-family: var(--mono); }
+    [data-composition-id="07-failover"] .f07-ask { align-self: flex-end; max-width: 80%; padding: 24px 32px; border-radius: 28px 28px 8px 28px; background: var(--ink); color: #FFFFFF; font-size: 48px; line-height: 1.25; }
+    [data-composition-id="07-failover"] .f07-reply { position: relative; align-self: flex-start; min-height: 104px; }
+    [data-composition-id="07-failover"] .f07-dots, [data-composition-id="07-failover"] .f07-answer { position: absolute; left: 0; top: 0; padding: 24px 32px; border-radius: 28px 28px 28px 8px; background: var(--surface-2); white-space: nowrap; }
+    [data-composition-id="07-failover"] .f07-dots { display: flex; gap: 14px; height: 104px; box-sizing: border-box; align-items: center; }
+    [data-composition-id="07-failover"] .f07-dots i { width: 18px; height: 18px; border-radius: 50%; background: var(--muted); }
+    [data-composition-id="07-failover"] .f07-answer { font-size: 48px; line-height: 1.25; }
+    [data-composition-id="07-failover"] .f07-done { margin-top: 148px; }
+
+    [data-composition-id="07-failover"] .f07-tiles { position: absolute; left: 1140px; right: 120px; top: 120px; display: flex; flex-direction: column; gap: 28px; }
+    [data-composition-id="07-failover"] .f07-tile { position: relative; display: flex; align-items: center; gap: 24px; height: 228px; padding: 0 36px; transition: none; }
+    [data-composition-id="07-failover"] .f07-tile > svg { width: 64px; height: 64px; flex: none; color: var(--ink-2); }
+    [data-composition-id="07-failover"] .f07-name { font-size: 48px; font-weight: 600; letter-spacing: -0.02em; flex: 1; white-space: nowrap; }
+    [data-composition-id="07-failover"] .f07-status { position: relative; width: 236px; height: 60px; }
+    [data-composition-id="07-failover"] .f07-status .k-badge { position: absolute; right: 0; top: 0; opacity: 0; }
+    [data-composition-id="07-failover"] .f07-ring { border-radius: 30px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="07-failover"] .f07-app { left: 60px; top: 200px; width: 900px; height: 640px; }
+      [data-composition-id="07-failover"] .f07-chat { gap: 24px; padding: 32px 36px; }
+      [data-composition-id="07-failover"] .f07-tiles { left: 60px; right: 120px; top: 876px; flex-direction: row; gap: 20px; }
+      [data-composition-id="07-failover"] .f07-tile { flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px; height: 330px; padding: 0 24px; }
+      [data-composition-id="07-failover"] .f07-tile > svg { width: 56px; height: 56px; }
+      [data-composition-id="07-failover"] .f07-name { flex: none; font-size: 40px; }
+      [data-composition-id="07-failover"] .f07-status { width: 100%; }
+      [data-composition-id="07-failover"] .f07-status .k-badge { left: 0; right: auto; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-failover" data-width="1920" data-height="1080" data-duration="6">
+    <div id="f07-bg" class="k-bg clip" data-start="0" data-duration="6" data-track-index="0"></div>
+    <div id="f07-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
+      <div id="f07-cam" class="k-cam">
+        <div id="f07-app" class="k-card f07-app">
+          <div class="f07-app-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="f07-app-title">Your app</span></div>
+          <div class="f07-chat">
+            <span id="f07-model" class="k-badge is-outline f07-model">deepseek/deepseek-v4.1-flash</span>
+            <p id="f07-ask" class="f07-ask">Say hi in 3 words.</p>
+            <div class="f07-reply">
+              <div id="f07-dots" class="f07-dots"><i></i><i></i><i></i></div>
+              <p id="f07-answer" class="f07-answer">Hello there, friend.</p>
+              <span id="f07-done" class="k-badge is-free f07-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 7"/></svg>Answered</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="f07-tiles">
+          <div id="f07-t1" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="f07-name">Provider 1</span>
+            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-danger f07-down">Down</span></span>
+          </div>
+          <div id="f07-t2" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="f07-name">Provider 2</span>
+            <span class="f07-status"><span class="k-badge is-outline f07-trying">Trying</span><span class="k-badge is-free f07-up">Answering</span></span>
+          </div>
+          <div id="f07-t3" class="k-card f07-tile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <span class="f07-name">Provider 3</span>
+          </div>
+          <div id="f07-ring" class="k-ring f07-ring"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, t + 0.1);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.35, ease: "power2.inOut" }, t + 0.05);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f07-" + s);
+      const DURATION = 6;
+      // Word starts from audio_meta.json frame 7: "provider" 0.302, "down," 1.01, "retries" 2.171,
+      // "another," 2.821, "answer." 4.725.
+      const ASK = 0.2, DOWN = 0.98, RETRY = 2.12, ANOTHER = 2.8, ANSWER = 4.6;
+      const one = (tile, cls) => tile.querySelector('[class~="' + cls + '"]');
+
+      document.fonts.ready.then(() => {
+        const ring = $("ring");
+        const onT1 = K.box(ring, $("t1"), 10), onT2 = K.box(ring, $("t2"), 10);
+
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.06, x: 30 });
+
+        K.rise(tl, $("app"), 0.02, { y: 60, d: 0.7 });
+        K.rise(tl, $("model"), 0.15, { y: 20, d: 0.45 });
+        K.rise(tl, $("ask"), ASK, { y: 30, d: 0.5 });
+        ["t1", "t2", "t3"].forEach((t, i) => K.rise(tl, $(t), 0.12 + i * 0.08, { y: 40, d: 0.6 }));
+
+        // the app waits: three dots, stepped by hand so the timeline stays seekable
+        K.rise(tl, $("dots"), ASK + 0.35, { y: 16, d: 0.35 });
+        const dots = [...$("dots").children];
+        for (let t = ASK + 0.5, k = 0; t < ANSWER - 0.1; t += 0.16, k++) {
+          tl.to(dots[k % 3], { y: -10, duration: 0.16, ease: "sine.out" }, t);
+          tl.to(dots[k % 3], { y: 0, duration: 0.2, ease: "sine.in" }, t + 0.16);
+        }
+
+        // provider 1 is tried and goes down; AnyRouter tries provider 2, which answers
+        tl.set(ring, { ...onT1 }, 0);
+        tl.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
+        tl.to(one($("t1"), "f07-trying"), { opacity: 1, duration: 0.2 }, 0.5);
+        tl.to(one($("t1"), "f07-trying"), { opacity: 0, duration: 0.15 }, DOWN);
+        tl.to(one($("t1"), "f07-down"), { opacity: 1, duration: 0.2 }, DOWN + 0.05);
+        tl.to($("t1"), { backgroundColor: "#F5F5F5", duration: 0.35, ease: "power2.out" }, DOWN);
+        tl.to($("t1").querySelectorAll('svg, [class~="f07-name"]'), { color: "#636363", duration: 0.35 }, DOWN);
+        tl.to(ring, { opacity: 0, duration: 0.25 }, DOWN + 0.1);
+
+        tl.to(ring, { ...onT2, duration: 0.01 }, RETRY - 0.05);
+        tl.to(ring, { opacity: 1, duration: 0.3, ease: "power2.out" }, RETRY);
+        tl.to(one($("t2"), "f07-trying"), { opacity: 1, duration: 0.2 }, RETRY);
+        tl.to(one($("t2"), "f07-trying"), { opacity: 0, duration: 0.15 }, ANOTHER);
+        tl.to(one($("t2"), "f07-up"), { opacity: 1, duration: 0.2 }, ANOTHER + 0.05);
+        tl.to(ring, { borderColor: "#007E55", boxShadow: "0 0 0 8px rgba(0,126,85,.22)", duration: 0.3 }, ANOTHER);
+
+        // the benefit: the answer lands
+        tl.to($("dots"), { opacity: 0, duration: 0.2 }, ANSWER - 0.1);
+        tl.fromTo($("answer"), { opacity: 0, y: 24, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, ANSWER);
+        tl.fromTo($("done"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, ANSWER + 0.35);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["07-failover"] = tl;
+      });
+    })();
+  </script>
+</template>
