@@ -15,6 +15,9 @@ export const PORTRAIT = { width: 1080, height: 1920 };
 // Reels, Shorts and TikTok draw their own buttons over the bottom ~25% and the
 // right edge, so captions sit higher than in the landscape film.
 export const PORTRAIT_CAPTION_BAND = { top: 1240, height: 240 };
+// Where a frame's content sits. stage-audit.mjs holds every readable line inside it, except
+// what carries data-outside-safe-area (frame chrome, captions), which only has to stay on stage.
+export const PORTRAIT_SAFE = { left: 60, top: 200, right: 960, bottom: 1220 };
 
 const SKIP = new Set(['renders', 'snapshots', 'capture', 'capture-extra', 'tools', 'node_modules', '.git']);
 
