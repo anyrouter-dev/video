@@ -55,7 +55,7 @@ music: none
 ## Frame 3 — What it does
 - src: compositions/frames/03-reroute.html
 
-- scene: A request goes to your key, which shows "Limit reached"; the same request takes another path to one of the keys other members share and comes back "200 OK"
+- scene: A request goes to your account's key, which shows "Limit reached"; the same request goes to one key another member shares and comes back "200 OK"
 - duration: 5.5s
 - transition_in: cut
 - type: how_it_works

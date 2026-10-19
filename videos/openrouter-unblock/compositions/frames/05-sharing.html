@@ -131,7 +131,7 @@
       <div id="f05-cam" class="k-cam">
         <div id="f05-card" class="k-card f05-card">
           <div class="f05-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-h2">Your OpenRouter account</span><span class="k-badge is-outline f05-illus">Illustration</span></div>
-          <div class="f05-meter"><div id="f05-you" class="f05-seg f05-you"></div><div id="f05-them" class="f05-seg f05-them"></div></div>
+          <div id="f05-meter" class="f05-meter"><div id="f05-you" class="f05-seg f05-you"></div><div id="f05-them" class="f05-seg f05-them"></div></div>
           <div class="f05-legend">
             <span id="f05-l-you" class="k-label"><i style="background:#0A0A0A"></i>Your requests</span>
             <span id="f05-l-them" class="k-label"><i style="background:#BB4D00"></i>Members' requests</span>
@@ -211,28 +211,27 @@ const K = {
       const DURATION = 9;
       // Word starts from audio_meta.json frame 5: "members'" 0.673, "run" 1.428, "account" 2.461, "quota." 3.68,
       // "Check" 4.656, "stop" 7.268, "time." 7.767.
-      const FILL = 0.6, CHECK = 4.6, STOP = 7.2;
+      const FILL = 0.6, QUOTA = 3.7, CHECK = 4.6, FREE = 5.9, STOP = 7.2;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.05 });
 
         K.rise(tl, $("card"), 0.02, { y: 70, d: 0.7 });
-        // one daily quota: your requests and members' requests fill it side by side
-        tl.to($("you"), { width: "22%", duration: 3.2, ease: "none" }, FILL);
-        tl.to($("them"), { width: "26%", duration: 3.2, ease: "none" }, FILL);
-        tl.to($("you"), { width: "34%", duration: DURATION - FILL - 3.2, ease: "none" }, FILL + 3.2);
-        tl.to($("them"), { width: "36%", duration: STOP - FILL - 3.2, ease: "none" }, FILL + 3.2);
+        // one daily quota: your requests and members' requests fill it side by side, until it is used up
+        tl.to($("you"), { width: "42%", duration: QUOTA - FILL, ease: "none" }, FILL);
+        tl.to($("them"), { width: "58%", duration: QUOTA - FILL, ease: "none" }, FILL);
+        tl.to($("meter"), { borderColor: "#C0262D", duration: 0.25, ease: "power2.out" }, QUOTA);
         K.rise(tl, $("l-you"), FILL, { y: 20, d: 0.4 });
         K.rise(tl, $("l-them"), FILL + 0.15, { y: 20, d: 0.4 });
 
         K.rise(tl, $("terms"), CHECK, { y: 24 });
+        K.rise(tl, $("free"), FREE, { y: 24 });
 
-        // "you can stop any time": the switch goes off, and members' share stops growing
+        // "you can stop any time": the switch goes off
         tl.to($("knob"), { x: -64, duration: 0.3, ease: "power2.inOut" }, STOP);
         tl.to($("switch"), { backgroundColor: "#D4D4D8", duration: 0.3, ease: "power2.inOut" }, STOP);
         K.roll(tl, $("state"), [STOP]);
-        K.rise(tl, $("free"), STOP + 0.3, { y: 24 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-sharing"] = tl;
