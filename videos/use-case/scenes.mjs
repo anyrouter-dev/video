@@ -116,7 +116,9 @@ export function codeSizes(lines, roll, shell, title) {
     if (!isTyped(l)) return n + 1;
     if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsOf(t, px, o)));
     const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length);
-    return n + rowsOf(l.text.slice(0, at), px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(id + after, px, o)));
+    // the id's own row starts two characters in, where a shell line's prompt ends
+    const lead = shell ? '' : '  ';
+    return n + rowsOf(l.text.slice(0, at), px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(lead + id + after, px, o)));
   }, 0);
   const pick = o => {
     const w = WIN[o], tLines = linesOf(title.text, { px: title.px[o], width: TYPE.title[o].width, weight: TYPE.title.weight, tracking: TYPE.title.tracking });
@@ -344,6 +346,8 @@ export const CSS = `
   .film em.ri{opacity:0}
   .film .brk{display:none}
   .film .brk-l .brk{display:block}
+  /* an id on its own row hangs two characters in, not past the line's indent: the longest id needs the width */
+  .film .brk-l .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.termInk};opacity:0}
 
   .film .end{display:flex;flex-direction:column;align-items:center;gap:48px}
@@ -364,6 +368,8 @@ export const CSS = `
     .film .ln.clip-p{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent)}
     .film .brk-l .brk{display:none}
     .film .brk-p .brk{display:block}
+    .film .brk-l .brk + .tok{margin-left:0;max-width:100%}
+    .film .brk-p .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
     .film .lock svg{width:104px;height:104px}
     .film .lock b{font-size:104px}
     .film .url{font-size:44px;padding:22px 32px}
