@@ -1,0 +1,233 @@
+<template>
+  <style>
+    /* kit:css */
+/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
+   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="05-sharing"] {
+  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
+  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
+  --line: #E5E5E5; --line-strong: #D4D4D8;
+  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
+  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="05-sharing"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="05-sharing"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it, and it never stops moving */
+[data-composition-id="05-sharing"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+
+[data-composition-id="05-sharing"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
+[data-composition-id="05-sharing"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
+[data-composition-id="05-sharing"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
+[data-composition-id="05-sharing"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
+[data-composition-id="05-sharing"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
+[data-composition-id="05-sharing"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
+[data-composition-id="05-sharing"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
+[data-composition-id="05-sharing"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+[data-composition-id="05-sharing"] p, [data-composition-id="05-sharing"] h1, [data-composition-id="05-sharing"] h2 { margin: 0; }
+
+[data-composition-id="05-sharing"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+
+[data-composition-id="05-sharing"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="05-sharing"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
+[data-composition-id="05-sharing"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
+[data-composition-id="05-sharing"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
+[data-composition-id="05-sharing"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+[data-composition-id="05-sharing"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="05-sharing"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* focus ring: placed over the named thing; animate its opacity and transform */
+[data-composition-id="05-sharing"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="05-sharing"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="05-sharing"] .k-chip img { width: 40px; height: 40px; flex: none; }
+[data-composition-id="05-sharing"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+
+/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
+[data-composition-id="05-sharing"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="05-sharing"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="05-sharing"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
+[data-composition-id="05-sharing"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
+[data-composition-id="05-sharing"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="05-sharing"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+[data-composition-id="05-sharing"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a light editor with a file tab */
+[data-composition-id="05-sharing"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
+[data-composition-id="05-sharing"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
+[data-composition-id="05-sharing"] .k-code-bar .k-url { height: 44px; }
+[data-composition-id="05-sharing"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
+[data-composition-id="05-sharing"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+[data-composition-id="05-sharing"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="05-sharing"] .k-ln { display: block; }
+
+/* terminal: the one dark surface */
+[data-composition-id="05-sharing"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
+[data-composition-id="05-sharing"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
+[data-composition-id="05-sharing"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
+[data-composition-id="05-sharing"] .k-term-body .p { color: var(--term-dim); }
+[data-composition-id="05-sharing"] .k-term-body .id { color: var(--term-id); }
+[data-composition-id="05-sharing"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
+[data-composition-id="05-sharing"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+[data-composition-id="05-sharing"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="05-sharing"] .k-roll > span:first-child { opacity: 1; }
+
+/* portrait-only line break inside code */
+[data-composition-id="05-sharing"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="05-sharing"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="05-sharing"] .k-code-body, [data-composition-id="05-sharing"] .k-term-body { font-size: 40px; padding: 32px 36px; }
+  [data-composition-id="05-sharing"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="05-sharing"] .k-pbr { display: inline; }
+  [data-composition-id="05-sharing"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    [data-composition-id="05-sharing"] .f05-card { position: absolute; left: 240px; right: 240px; top: 110px; padding: 48px 56px; display: flex; flex-direction: column; gap: 44px; }
+    [data-composition-id="05-sharing"] .f05-head { display: flex; align-items: center; gap: 20px; }
+    [data-composition-id="05-sharing"] .f05-head img { width: 72px; height: 72px; }
+    [data-composition-id="05-sharing"] .f05-head .k-h2 { flex: 1; }
+    [data-composition-id="05-sharing"] .f05-illus { color: var(--muted); }
+    [data-composition-id="05-sharing"] .f05-meter { position: relative; height: 80px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); overflow: hidden; }
+    [data-composition-id="05-sharing"] .f05-seg { position: absolute; top: 0; bottom: 0; transform-origin: 0 50%; }
+    [data-composition-id="05-sharing"] .f05-you { left: 0; width: 34%; background: var(--ink); }
+    [data-composition-id="05-sharing"] .f05-them { left: 34%; width: 32%; background: var(--primary); }
+    [data-composition-id="05-sharing"] .f05-legend { display: flex; gap: 48px; flex-wrap: wrap; }
+    [data-composition-id="05-sharing"] .f05-legend span { display: inline-flex; align-items: center; gap: 14px; }
+    [data-composition-id="05-sharing"] .f05-legend i { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+    [data-composition-id="05-sharing"] .f05-rule { height: 2px; background: var(--line); }
+    [data-composition-id="05-sharing"] .f05-row { display: flex; align-items: center; gap: 28px; }
+    [data-composition-id="05-sharing"] .f05-row .k-title { flex: 1; }
+    [data-composition-id="05-sharing"] .f05-switch { position: relative; width: 144px; height: 80px; border-radius: 999px; background: var(--ink); flex: none; }
+    [data-composition-id="05-sharing"] .f05-knob { position: absolute; left: 72px; top: 8px; width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+    [data-composition-id="05-sharing"] .f05-terms { position: absolute; left: 240px; right: 240px; top: 740px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="05-sharing"] .f05-card { left: 60px; right: 120px; top: 260px; padding: 36px 32px; }
+      [data-composition-id="05-sharing"] .f05-head { flex-wrap: wrap; }
+      [data-composition-id="05-sharing"] .f05-head .k-h2 { font-size: 56px; }
+      [data-composition-id="05-sharing"] .f05-legend { flex-direction: column; gap: 16px; }
+      [data-composition-id="05-sharing"] .f05-terms { left: 60px; right: 120px; top: 1120px; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-sharing" data-width="1920" data-height="1080" data-duration="5.5">
+    <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
+    <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
+      <div id="f05-cam" class="k-cam">
+        <div id="f05-card" class="k-card f05-card">
+          <div class="f05-head"><img src="assets/provider-openrouter.svg" alt="" /><span class="k-h2">Your OpenRouter key</span><span class="k-badge is-outline f05-illus">Illustration</span></div>
+          <div class="f05-meter"><div id="f05-you" class="f05-seg f05-you"></div><div id="f05-them" class="f05-seg f05-them"></div></div>
+          <div class="f05-legend">
+            <span id="f05-l-you" class="k-label"><i style="background:#0A0A0A"></i>Your requests, tried first</span>
+            <span id="f05-l-them" class="k-label"><i style="background:#BB4D00"></i>Members' requests</span>
+          </div>
+          <div class="f05-rule"></div>
+          <div class="f05-row">
+            <span class="k-title">Share with pool</span>
+            <span id="f05-state" class="k-roll k-label" data-layout-allow-overlap><span data-layout-allow-overlap>Shared</span><span data-layout-allow-overlap>Not shared</span></span>
+            <span id="f05-switch" class="f05-switch"><span id="f05-knob" class="f05-knob"></span></span>
+          </div>
+        </div>
+        <p id="f05-terms" class="k-body f05-terms">Check that OpenRouter's terms allow sharing.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  /** An element rises into place. */
+  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
+    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  },
+  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  wash(tl, el, t, span = 0.6) {
+    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
+    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
+    const hold = Math.min(0.25, span * 0.4);
+    tl.set(el, on, t);
+    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      // the old value is gone before the new one is readable, so no frame shows both
+      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
+      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
+      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
+      const gap = (at[i + 1] ?? Infinity) - t;
+      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
+      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
+  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f05-" + s);
+      const DURATION = 5.5;
+      // Word starts from audio_meta.json frame 5: "members" 0.871, "quota" 2.241, "stop" 3.68, "time." 4.238.
+      const YOU = 0.3, THEM = 0.85, STOP = 3.6, TIME = 4.2;
+
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.05 });
+
+        K.rise(tl, $("card"), 0.02, { y: 70, d: 0.7 });
+        tl.fromTo($("you"), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, YOU);
+        K.rise(tl, $("l-you"), YOU + 0.1, { y: 20, d: 0.4 });
+        tl.fromTo($("them"), { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power1.inOut" }, THEM);
+        K.rise(tl, $("l-them"), THEM, { y: 20, d: 0.4 });
+
+        // "you can stop any time": the switch goes off
+        tl.to($("knob"), { x: -64, duration: 0.3, ease: "power2.inOut" }, STOP);
+        tl.to($("switch"), { backgroundColor: "#D4D4D8", duration: 0.3, ease: "power2.inOut" }, STOP);
+        K.roll(tl, $("state"), [STOP]);
+        K.rise(tl, $("terms"), TIME, { y: 24 });
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["05-sharing"] = tl;
+      });
+    })();
+  </script>
+</template>

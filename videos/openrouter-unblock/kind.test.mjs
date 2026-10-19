@@ -13,7 +13,7 @@ test('collect is deterministic: an unedited film keeps the same identity', async
   const b = await kind.collect({ dir });
   assert.deepEqual(a.parts, b.parts);
   assert.ok(a.parts.some(p => p.startsWith('assets/voice/01.wav:')), 'the narration is part of the identity');
-  assert.ok(a.parts.some(p => p.startsWith('compositions/frames/09-close.html:')), 'the scenes are part of the identity');
+  assert.ok(a.parts.some(p => p.startsWith('compositions/frames/06-close.html:')), 'the scenes are part of the identity');
 });
 
 test('planning files and the raw capture are not part of the identity', async () => {
@@ -31,7 +31,7 @@ test('no real API key is on screen: every key prefix in a frame is followed by r
   const frames = path.join(dir, 'compositions/frames');
   for (const f of fs.readdirSync(frames)) {
     const html = fs.readFileSync(path.join(frames, f), 'utf8');
-    for (const m of html.matchAll(/\b(sk-or-v1-|sk-ar-v1-|nvapi-)([^\s<"'`]*)/g)) {
+    for (const m of html.matchAll(/\b(sk-(?:ar|or)-(?:v1-)?|nvapi-)([^\s<"'`]*)/g)) {
       assert.match(m[2], /^•/, `${f}: ${m[0]} is not redacted`);
     }
   }

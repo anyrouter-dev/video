@@ -87,14 +87,13 @@ on the GitHub Release is the file to post, and the release notes say so.
 
 A kind ships every rendition unless its `kind.mjs` says `renditions: ['landscape']`.
 The CLI prints a warning for each such kind on every run, so the gap stays in
-view. Today every kind says it:
+view. Today every kind but `explainer`, `openrouter-unblock` and `use-case` says it:
 
 | Kind | Why it is landscape only |
 |------|--------------------------|
 | `model-drop`, `release`, `changelog` | `lib/film.mjs` has no portrait layout yet: its backdrop and frame chrome are drawn at 1920×1080 |
 | `intro` | `index.html` draws its camera and two SVG layers at 1920×1080 |
 | `teaser` | its generator lays out 1920×1080 only |
-| `openrouter-unblock` | its portrait layout is in progress; delete the line once `check openrouter-unblock` passes without it |
 
 ## Commands
 

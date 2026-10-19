@@ -11,7 +11,6 @@ The sound effects this film uses, copied from the HyperFrames media-use library 
 - `chime.mp3`
 - `click.mp3` / `click-soft.mp3`
 - `error.mp3`
-- `key-press.mp3`
 - `ping.mp3`
 - `pop.mp3`
 - `sparkle.mp3`
