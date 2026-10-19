@@ -19,3 +19,11 @@ test('with a beat each next line starts on the grid, after at least a short brea
   }
   assert.equal(p.at(-1), 2.5);
 });
+
+test('a held frame stays at least its hold after its line, and the next line still starts on a beat', () => {
+  const grid = { beat: 0.5, phase: 0.059 };
+  const p = pads([4.737, 3], { ...grid, holds: [1] });
+  assert.ok(p[0] >= 1 && p[0] < 1.5, `pad ${p[0]}`);
+  const k = (4.737 + p[0] - grid.phase) / grid.beat;
+  assert.ok(Math.abs(k - Math.round(k)) < 1e-6);
+});

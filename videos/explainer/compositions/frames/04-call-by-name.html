@@ -1,18 +1,15 @@
 <template>
   <style>
     /* kit:css */
-/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
-   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
    No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
 @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
 [data-composition-id="04-call-by-name"] {
-  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-  --line: #E5E5E5; --line-strong: #D4D4D8;
-  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   font-family: var(--sans);
@@ -22,111 +19,181 @@
 }
 [data-composition-id="04-call-by-name"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
 [data-composition-id="04-call-by-name"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
-/* the camera: everything in a frame sits in it, and it never stops moving */
+/* the camera: everything in a frame sits in it */
 [data-composition-id="04-call-by-name"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
-
-[data-composition-id="04-call-by-name"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-[data-composition-id="04-call-by-name"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-[data-composition-id="04-call-by-name"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-[data-composition-id="04-call-by-name"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-[data-composition-id="04-call-by-name"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-[data-composition-id="04-call-by-name"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-[data-composition-id="04-call-by-name"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-[data-composition-id="04-call-by-name"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 [data-composition-id="04-call-by-name"] p, [data-composition-id="04-call-by-name"] h1, [data-composition-id="04-call-by-name"] h2 { margin: 0; }
 
-[data-composition-id="04-call-by-name"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+/* the brand, top-left frame chrome */
+[data-composition-id="04-call-by-name"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="04-call-by-name"] .k-brand img { width: 40px; height: 40px; display: block; }
 
-[data-composition-id="04-call-by-name"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-[data-composition-id="04-call-by-name"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
-[data-composition-id="04-call-by-name"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-[data-composition-id="04-call-by-name"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-[data-composition-id="04-call-by-name"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+/* type */
+[data-composition-id="04-call-by-name"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="04-call-by-name"] .k-headline, [data-composition-id="04-call-by-name"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="04-call-by-name"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="04-call-by-name"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="04-call-by-name"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="04-call-by-name"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="04-call-by-name"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="04-call-by-name"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="04-call-by-name"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="04-call-by-name"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="04-call-by-name"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="04-call-by-name"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="04-call-by-name"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="04-call-by-name"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="04-call-by-name"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="04-call-by-name"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="04-call-by-name"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="04-call-by-name"] .k-badge.is-ink, [data-composition-id="04-call-by-name"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="04-call-by-name"] .k-badge.is-muted, [data-composition-id="04-call-by-name"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="04-call-by-name"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="04-call-by-name"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
 [data-composition-id="04-call-by-name"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-[data-composition-id="04-call-by-name"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="04-call-by-name"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-/* focus ring: placed over the named thing; animate its opacity and transform */
-[data-composition-id="04-call-by-name"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="04-call-by-name"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="04-call-by-name"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="04-call-by-name"] .k-chip img { width: 40px; height: 40px; flex: none; }
-[data-composition-id="04-call-by-name"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+[data-composition-id="04-call-by-name"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="04-call-by-name"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="04-call-by-name"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
 
-/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
-[data-composition-id="04-call-by-name"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="04-call-by-name"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-[data-composition-id="04-call-by-name"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
-[data-composition-id="04-call-by-name"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-[data-composition-id="04-call-by-name"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-[data-composition-id="04-call-by-name"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+/* a window around redrawn product UI */
+[data-composition-id="04-call-by-name"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-call-by-name"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="04-call-by-name"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="04-call-by-name"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="04-call-by-name"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="04-call-by-name"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
 [data-composition-id="04-call-by-name"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-/* code card: a light editor with a file tab */
-[data-composition-id="04-call-by-name"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="04-call-by-name"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
-[data-composition-id="04-call-by-name"] .k-code-bar .k-url { height: 44px; }
-[data-composition-id="04-call-by-name"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
-[data-composition-id="04-call-by-name"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+/* code card: a hairline editor with a file tab */
+[data-composition-id="04-call-by-name"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-call-by-name"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="04-call-by-name"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="04-call-by-name"] .k-code-body .kw { color: inherit; }
 [data-composition-id="04-call-by-name"] .k-code-body .cm { color: var(--muted); }
 [data-composition-id="04-call-by-name"] .k-ln { display: block; }
 
-/* terminal: the one dark surface */
-[data-composition-id="04-call-by-name"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
-[data-composition-id="04-call-by-name"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-[data-composition-id="04-call-by-name"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
-[data-composition-id="04-call-by-name"] .k-term-body .p { color: var(--term-dim); }
-[data-composition-id="04-call-by-name"] .k-term-body .id { color: var(--term-id); }
-[data-composition-id="04-call-by-name"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+/* terminal: an ink card */
+[data-composition-id="04-call-by-name"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-call-by-name"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="04-call-by-name"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="04-call-by-name"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="04-call-by-name"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="04-call-by-name"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="04-call-by-name"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
 
 /* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
-   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
-[data-composition-id="04-call-by-name"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="04-call-by-name"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
 [data-composition-id="04-call-by-name"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
 [data-composition-id="04-call-by-name"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="04-call-by-name"] .k-roll > span + span, [data-composition-id="04-call-by-name"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="04-call-by-name"] .k-term .k-roll > span { color: var(--accent-on-ink); }
 
 /* portrait-only line break inside code */
 [data-composition-id="04-call-by-name"] .k-pbr { display: none; }
 
 @media (orientation: portrait) {
   [data-composition-id="04-call-by-name"] .k-cam { transform-origin: 510px 710px; }
-  [data-composition-id="04-call-by-name"] .k-code-body, [data-composition-id="04-call-by-name"] .k-term-body { font-size: 40px; padding: 32px 36px; }
-  [data-composition-id="04-call-by-name"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="04-call-by-name"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="04-call-by-name"] .k-display { font-size: 148px; }
+  [data-composition-id="04-call-by-name"] .k-headline, [data-composition-id="04-call-by-name"] .k-h1 { font-size: 104px; }
+  [data-composition-id="04-call-by-name"] .k-h2 { font-size: 76px; }
+  [data-composition-id="04-call-by-name"] .k-title { font-size: 56px; }
+  [data-composition-id="04-call-by-name"] .k-body { font-size: 48px; }
+  [data-composition-id="04-call-by-name"] .k-stat { font-size: 280px; }
+  [data-composition-id="04-call-by-name"] .k-card { border-radius: 28px; }
+  [data-composition-id="04-call-by-name"] .k-code-body, [data-composition-id="04-call-by-name"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="04-call-by-name"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
   [data-composition-id="04-call-by-name"] .k-pbr { display: inline; }
   [data-composition-id="04-call-by-name"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    /* .f04-code matches .f03-code and .f06-code: frames 3, 4 and 6 are one code card */
-    [data-composition-id="04-call-by-name"] .f04-code { left: 200px; right: 200px; top: 300px; }
-    [data-composition-id="04-call-by-name"] .f04-chips { position: absolute; left: 200px; right: 200px; top: 152px; display: flex; flex-wrap: wrap; gap: 20px; }
-    [data-composition-id="04-call-by-name"] .f04-ring { border-radius: 999px; }
+    /* the call, alone: the company the voice names, and its id in the model line */
+    [data-composition-id="04-call-by-name"] .f04-call { position: absolute; left: 96px; right: 96px; top: 88px; height: 792px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; }
+    [data-composition-id="04-call-by-name"] .f04-names { height: 1.1em; }
+    [data-composition-id="04-call-by-name"] .f04-names.k-roll > span { display: inline-flex; align-items: center; gap: 32px; color: var(--ink); }
+    [data-composition-id="04-call-by-name"] .f04-names img { width: 104px; height: 104px; }
+    /* .f04-line matches .f06-line, which this frame cuts back to after frame 5 */
+    [data-composition-id="04-call-by-name"] .f04-line { font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; white-space: pre; color: var(--muted); }
+    [data-composition-id="04-call-by-name"] .f04-line .k-roll { vertical-align: top; }
+
+    /* the result: one prompt, answered by three models in the real playground run (2026-10-19) */
+    [data-composition-id="04-call-by-name"] .f04-ask { position: absolute; left: 96px; right: 96px; top: 150px; text-align: center; opacity: 0; }
+    [data-composition-id="04-call-by-name"] .f04-cards { position: absolute; left: 96px; right: 96px; top: 250px; bottom: 236px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; transform-origin: 50% 50%; }
+    [data-composition-id="04-call-by-name"] .f04-card { display: flex; flex-direction: column; padding: 48px 44px; }
+    [data-composition-id="04-call-by-name"] .f04-name { display: flex; align-items: center; gap: 14px; font-size: 38px; white-space: nowrap; }
+    [data-composition-id="04-call-by-name"] .f04-name img { width: 44px; height: 44px; }
+    [data-composition-id="04-call-by-name"] .f04-answer { margin-top: 36px; color: inherit; }
+    [data-composition-id="04-call-by-name"] .f04-stats { margin-top: auto; display: flex; gap: 40px; }
+    [data-composition-id="04-call-by-name"] .f04-stat span { display: block; margin-top: 12px; font-size: 40px; }
 
     @media (orientation: portrait) {
-      [data-composition-id="04-call-by-name"] .f04-chips { left: 60px; right: 120px; top: 240px; gap: 16px; }
-      [data-composition-id="04-call-by-name"] .f04-code { left: 60px; right: 120px; top: 520px; }
-      [data-composition-id="04-call-by-name"] .k-code-body { font-size: 38px; }
+      [data-composition-id="04-call-by-name"] .f04-call { left: 60px; right: 120px; top: 200px; height: 1020px; gap: 48px; }
+      [data-composition-id="04-call-by-name"] .f04-names img { width: 88px; height: 88px; }
+      [data-composition-id="04-call-by-name"] .f04-names.k-roll > span { gap: 24px; }
+      [data-composition-id="04-call-by-name"] .f04-line { font-size: 42px; text-align: center; }
+      [data-composition-id="04-call-by-name"] .f04-ask { left: 60px; right: 120px; top: 200px; }
+      [data-composition-id="04-call-by-name"] .f04-cards { left: 60px; right: 120px; top: 300px; bottom: 700px; grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); gap: 28px; }
+      [data-composition-id="04-call-by-name"] .f04-card { padding: 36px 44px; }
+      [data-composition-id="04-call-by-name"] .f04-answer { margin-top: 18px; }
+      [data-composition-id="04-call-by-name"] .f04-stat { display: flex; align-items: baseline; gap: 12px; }
+      [data-composition-id="04-call-by-name"] .f04-stat span { margin-top: 0; }
     }
   </style>
 
-  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="5.5">
-    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
-    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
+  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="6">
+    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="6" data-track-index="0"></div>
+    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="6" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter</div>
       <div id="f04-cam" class="k-cam">
-        <div id="f04-chips" class="f04-chips">
-          <span class="k-chip f04-chip"><img src="assets/providers/deepseek.svg" alt="" />DeepSeek</span>
-          <span class="k-chip f04-chip"><img src="assets/providers/moonshotai.svg" alt="" />Kimi</span>
-          <span class="k-chip f04-chip"><img src="assets/providers/xai.svg" alt="" />Grok</span>
-          <span class="k-chip f04-chip"><img src="assets/providers/z-ai.svg" alt="" />GLM</span>
-          <span id="f04-more" class="k-chip is-more">+ hundreds more</span>
+        <div id="f04-call" class="f04-call">
+          <div class="k-headline"><span id="f04-names" class="k-roll f04-names" data-layout-allow-overlap><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/deepseek.svg" alt="" />DeepSeek</span><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/moonshotai.svg" alt="" />Kimi</span><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/minimax.svg" alt="" />MiniMax</span><span data-layout-allow-overlap><img class="k-mark" src="assets/providers/nvidia.svg" alt="" />Nemotron</span></span></div>
+          <div id="f04-line" class="f04-line">model:<span class="k-lbr"> </span><span class="k-pbr">
+</span><span id="f04-id" class="k-roll is-arriving" data-layout-allow-overlap><span data-layout-allow-overlap>"deepseek/deepseek-v4-flash"</span><span data-layout-allow-overlap>"moonshotai/kimi-k3"</span><span data-layout-allow-overlap>"minimax/minimax-m3.1-flash"</span><span data-layout-allow-overlap>"nvidia/nemotron-3-super-120b-a12b"</span></span></div>
         </div>
-        <div id="f04-code" class="k-code f04-code">
-          <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">app.ts</span></div>
-<div class="k-code-body"><span class="k-ln f04-quiet"><span class="kw">await</span> client.chat.completions<span class="k-pbr">
-  </span>.create({</span><span class="k-ln">  model:<span class="k-lbr"> </span><span class="k-pbr">
-    </span><span id="f04-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"deepseek/deepseek-v4.1-flash"</span><span data-layout-allow-overlap>"moonshotai/kimi-k3"</span><span data-layout-allow-overlap>"x-ai/grok-4.7"</span><span data-layout-allow-overlap>"z-ai/glm-5.3"</span></span>,</span><span class="k-ln f04-quiet">  messages,</span><span class="k-ln f04-quiet">});</span></div>
+
+        <p id="f04-ask" class="k-body k-muted f04-ask">Say hello in five words.</p>
+        <div id="f04-cards" class="f04-cards">
+          <div class="k-card f04-card">
+            <div class="k-label f04-name"><img class="k-mark" src="assets/providers/deepseek.svg" alt="" />DeepSeek-V4-Flash</div>
+            <p class="k-body f04-answer">Hello! How can I help you today?</p>
+            <div class="f04-stats">
+              <div class="f04-stat"><b class="k-num">5.81s</b><span class="k-small k-muted">TTFT</span></div>
+              <div class="f04-stat"><b class="k-num">96.9</b><span class="k-small k-muted">t/s</span></div>
+              <div class="f04-stat"><b class="k-num">$0</b><span class="k-small k-muted">cost</span></div>
+            </div>
+          </div>
+          <div id="f04-fastest" class="k-card f04-card">
+            <div class="k-label f04-name"><img class="k-mark" src="assets/providers/minimax.svg" alt="" />MiniMax M3.1 Flash</div>
+            <p class="k-body f04-answer">Hello! How are you today?</p>
+            <div class="f04-stats">
+              <div class="f04-stat"><b class="k-num">4.35s</b><span class="k-small k-muted">TTFT</span></div>
+              <div class="f04-stat"><b class="k-num">142.9</b><span class="k-small k-muted">t/s</span></div>
+              <div class="f04-stat"><b class="k-num">$0</b><span class="k-small k-muted">cost</span></div>
+            </div>
+          </div>
+          <div class="k-card f04-card">
+            <div class="k-label f04-name"><img class="k-mark" src="assets/providers/nvidia.svg" alt="" />Nemotron-3 Super 120B</div>
+            <p class="k-body f04-answer">Hello, how are you today?</p>
+            <div class="f04-stats">
+              <div class="f04-stat"><b class="k-num">13.95s</b><span class="k-small k-muted">TTFT</span></div>
+              <div class="f04-stat"><b class="k-num">42.4</b><span class="k-small k-muted">t/s</span></div>
+              <div class="f04-stat"><b class="k-num">$0</b><span class="k-small k-muted">cost</span></div>
+            </div>
+          </div>
         </div>
-        <div id="f04-ring" class="k-ring f04-ring"></div>
       </div>
     </div>
   </div>
@@ -135,32 +202,57 @@
   <script>
     (function () {
       // kit:js
-// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
 const K = {
-  /** An element rises into place. */
-  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
-    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
   },
-  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
   wash(tl, el, t, span = 0.6) {
-    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
-    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
-    const hold = Math.min(0.25, span * 0.4);
-    tl.set(el, on, t);
-    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
-  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
+    slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      // the old value is gone before the new one is readable, so no frame shows both
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
-      const gap = (at[i + 1] ?? Infinity) - t;
-      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
     });
   },
   /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
@@ -178,52 +270,38 @@ const K = {
   scaleFor(view, r, max, margin = 48) {
     return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
   },
-  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
-      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
-  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
     const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
     const s = (v) => 1 + (v - 1) * k;
-    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
   },
 };
       // /kit:js
       const $ = (s) => document.getElementById("f04-" + s);
-      const root = $("code").closest('[data-composition-id="04-call-by-name"]');
-      const DURATION = 5.5;
-      // Word starts from audio_meta.json frame 4: "DeepSeek," 1.335, "Kimi," 2.009, "Grok," 2.473, "GLM." 3.007,
-      // "Switching" 3.831, "one" 4.435. The ids are credit-routed ids from GET /api/v1/models.
-      const NAMES = [1.3, 1.97, 2.43, 2.96], SWITCHING = 3.8, ONE = 4.4;
-      const QUIET = "#636363";
+      // Word starts from audio_meta.json frame 4: "DeepSeek," 1.126, "Kimi," 1.695, "MiniMax," 2.078, "Nemotron." 2.659,
+      // "Switching" 3.39, "one" 3.971. The ids are ones AnyRouter routes itself (model-billing.json, not "byok").
+      // Kimi is not shown answering: its platform route failed in the playground run. No token counts (anyrouter #5802).
+      const NAMES = [1.08, 1.65, 2.03, 2.61], SWITCHING = 3.35, ONE = 3.92;
 
       document.fonts.ready.then(() => {
-        const chips = [...root.querySelectorAll('[class~="f04-chip"]')];
-        const ring = $("ring");
-        const at = chips.map((c) => K.box(ring, c, 10));
-        const slot = $("id");
-        const items = [...slot.children];
-        slot.style.width = items.at(-1).offsetWidth + "px";
-        const idBox = { ...K.box(ring, slot, 10), borderRadius: 14 };
-
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.05, y: 10 });
 
-        K.rise(tl, $("code"), 0.02, { y: 60, d: 0.7 });
-        chips.forEach((c, i) => K.rise(tl, c, 0.15 + i * 0.07, { y: 24, d: 0.5 }));
-        K.rise(tl, $("more"), 0.45, { y: 24, d: 0.5 });
+        // "Call a model by its name": the model line, then each name the voice says, with its id
+        K.rise(tl, $("line"), 0.05, { y: 50, d: 1.0 });
+        tl.fromTo($("call"), { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, 0);
+        K.rise(tl, $("names"), NAMES[0] - 0.05, { y: 60, d: 1.2, scale: 1 });
+        K.roll(tl, $("names"), NAMES.slice(1));
+        K.roll(tl, $("id"), NAMES.slice(1));
 
-        // the id rolls to each company as the voice names it, and the ring walks the chips
-        K.roll(tl, slot, NAMES.slice(1));
-        K.wash(tl, slot, NAMES[0] + 0.1, 0.55);
-        tl.set(ring, at[0], 0);
-        tl.fromTo(ring, { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, NAMES[0]);
-        NAMES.slice(1).forEach((t, i) => tl.to(ring, { ...at[i + 1], duration: 0.3, ease: "power2.inOut" }, t));
-        // a chip the voice has named keeps an ink border, so all four stay marked once said
-        chips.forEach((c, i) => tl.to(c, { borderColor: "#0A0A0A", duration: 0.25 }, NAMES[i] + 0.1));
-
-        // "one word": everything else goes quiet, and the ring lands on the id
-        tl.to(root.querySelectorAll('[class~="f04-quiet"]'), { color: QUIET, duration: 0.4, ease: "power2.inOut" }, SWITCHING);
-        tl.to(ring, { ...idBox, duration: 0.45, ease: "power3.inOut" }, ONE - 0.1);
-        K.wash(tl, slot, ONE + 0.05, 0.9);
+        // "Switching is one word": the call leaves, and three models answer the same prompt
+        K.exit(tl, $("call"), SWITCHING - 0.2, { d: 0.7 });
+        K.rise(tl, $("ask"), SWITCHING + 0.1, { y: 30, d: 1.0, scale: 1 });
+        K.cards(tl, $("cards"), [...$("cards").children], SWITCHING);
+        // "one": the fastest answer (4.35s to the first token, 142.9 t/s) is the one in focus
+        K.ink(tl, $("fastest"), ONE);
+        K.push(tl, $("cam"), 6 - ONE, { to: 1.025, at: ONE });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["04-call-by-name"] = tl;

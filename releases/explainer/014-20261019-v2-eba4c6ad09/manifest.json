@@ -1,0 +1,22 @@
+{
+  "id": "014-20261019-v2-eba4c6ad09",
+  "hash": "eba4c6ad09",
+  "kind": "explainer",
+  "label": "v2",
+  "title": "What is AnyRouter? One API for every AI model",
+  "seconds": 47.496,
+  "renderedAt": "2026-10-19T17:29:48.568Z",
+  "commit": "0f7ceba",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/explainer-014-20261019-v2-eba4c6ad09.mp4",
+      "cover": "renders/explainer-014-20261019-v2-eba4c6ad09.png"
+    },
+    "portrait": {
+      "artifact": "renders/explainer-014-20261019-v2-eba4c6ad09-portrait.mp4",
+      "cover": "renders/explainer-014-20261019-v2-eba4c6ad09-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T17:29:48.590Z"
+}

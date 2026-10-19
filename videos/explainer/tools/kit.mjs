@@ -2,12 +2,15 @@
 //   /* kit:css */ … /* /kit:css */   in the frame's <style>, %F scoped to the frame
 //   // kit:js … // /kit:js           in the frame's <script>
 // A sub-composition keeps only what is inside its <template>, so each frame carries its own
-// copy. Run from videos/explainer after editing the kit: node tools/kit.mjs
+// copy. Run after editing the kit, for this film or for another film that shares it:
+//   node tools/kit.mjs [film-dir]        film-dir defaults to the film this script sits in
+// tools/shared-components.md lists what the kit holds and how another film reuses it.
 import fs from 'node:fs';
 import path from 'node:path';
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
-const FRAMES = path.join(HERE, '../compositions/frames');
+const FILM = path.resolve(process.argv[2] ?? path.join(HERE, '..'));
+const FRAMES = path.join(FILM, 'compositions/frames');
 const css = fs.readFileSync(path.join(HERE, 'kit/kit.css'), 'utf8').trim();
 const js = fs.readFileSync(path.join(HERE, 'kit/kit.js'), 'utf8').trim();
 

@@ -1,18 +1,15 @@
 <template>
   <style>
     /* kit:css */
-/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
-   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
    No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
 @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
 [data-composition-id="05-your-keys"] {
-  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-  --line: #E5E5E5; --line-strong: #D4D4D8;
-  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   font-family: var(--sans);
@@ -22,113 +19,171 @@
 }
 [data-composition-id="05-your-keys"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
 [data-composition-id="05-your-keys"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
-/* the camera: everything in a frame sits in it, and it never stops moving */
+/* the camera: everything in a frame sits in it */
 [data-composition-id="05-your-keys"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
-
-[data-composition-id="05-your-keys"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-[data-composition-id="05-your-keys"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-[data-composition-id="05-your-keys"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-[data-composition-id="05-your-keys"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-[data-composition-id="05-your-keys"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-[data-composition-id="05-your-keys"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-[data-composition-id="05-your-keys"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-[data-composition-id="05-your-keys"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 [data-composition-id="05-your-keys"] p, [data-composition-id="05-your-keys"] h1, [data-composition-id="05-your-keys"] h2 { margin: 0; }
 
-[data-composition-id="05-your-keys"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+/* the brand, top-left frame chrome */
+[data-composition-id="05-your-keys"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="05-your-keys"] .k-brand img { width: 40px; height: 40px; display: block; }
 
-[data-composition-id="05-your-keys"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-[data-composition-id="05-your-keys"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
-[data-composition-id="05-your-keys"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-[data-composition-id="05-your-keys"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-[data-composition-id="05-your-keys"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+/* type */
+[data-composition-id="05-your-keys"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="05-your-keys"] .k-headline, [data-composition-id="05-your-keys"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="05-your-keys"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="05-your-keys"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="05-your-keys"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="05-your-keys"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="05-your-keys"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="05-your-keys"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="05-your-keys"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="05-your-keys"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="05-your-keys"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="05-your-keys"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="05-your-keys"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="05-your-keys"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="05-your-keys"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="05-your-keys"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="05-your-keys"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-badge.is-ink, [data-composition-id="05-your-keys"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="05-your-keys"] .k-badge.is-muted, [data-composition-id="05-your-keys"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="05-your-keys"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="05-your-keys"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
 [data-composition-id="05-your-keys"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-[data-composition-id="05-your-keys"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-/* focus ring: placed over the named thing; animate its opacity and transform */
-[data-composition-id="05-your-keys"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="05-your-keys"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="05-your-keys"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="05-your-keys"] .k-chip img { width: 40px; height: 40px; flex: none; }
-[data-composition-id="05-your-keys"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+[data-composition-id="05-your-keys"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="05-your-keys"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
 
-/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
-[data-composition-id="05-your-keys"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="05-your-keys"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-[data-composition-id="05-your-keys"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
-[data-composition-id="05-your-keys"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-[data-composition-id="05-your-keys"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-[data-composition-id="05-your-keys"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+/* a window around redrawn product UI */
+[data-composition-id="05-your-keys"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="05-your-keys"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="05-your-keys"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="05-your-keys"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="05-your-keys"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
 [data-composition-id="05-your-keys"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-/* code card: a light editor with a file tab */
-[data-composition-id="05-your-keys"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="05-your-keys"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
-[data-composition-id="05-your-keys"] .k-code-bar .k-url { height: 44px; }
-[data-composition-id="05-your-keys"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
-[data-composition-id="05-your-keys"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+/* code card: a hairline editor with a file tab */
+[data-composition-id="05-your-keys"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="05-your-keys"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="05-your-keys"] .k-code-body .kw { color: inherit; }
 [data-composition-id="05-your-keys"] .k-code-body .cm { color: var(--muted); }
 [data-composition-id="05-your-keys"] .k-ln { display: block; }
 
-/* terminal: the one dark surface */
-[data-composition-id="05-your-keys"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
-[data-composition-id="05-your-keys"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-[data-composition-id="05-your-keys"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
-[data-composition-id="05-your-keys"] .k-term-body .p { color: var(--term-dim); }
-[data-composition-id="05-your-keys"] .k-term-body .id { color: var(--term-id); }
-[data-composition-id="05-your-keys"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+/* terminal: an ink card */
+[data-composition-id="05-your-keys"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="05-your-keys"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="05-your-keys"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="05-your-keys"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="05-your-keys"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="05-your-keys"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="05-your-keys"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
 
 /* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
-   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
-[data-composition-id="05-your-keys"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="05-your-keys"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
 [data-composition-id="05-your-keys"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
 [data-composition-id="05-your-keys"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="05-your-keys"] .k-roll > span + span, [data-composition-id="05-your-keys"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="05-your-keys"] .k-term .k-roll > span { color: var(--accent-on-ink); }
 
 /* portrait-only line break inside code */
 [data-composition-id="05-your-keys"] .k-pbr { display: none; }
 
 @media (orientation: portrait) {
   [data-composition-id="05-your-keys"] .k-cam { transform-origin: 510px 710px; }
-  [data-composition-id="05-your-keys"] .k-code-body, [data-composition-id="05-your-keys"] .k-term-body { font-size: 40px; padding: 32px 36px; }
-  [data-composition-id="05-your-keys"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="05-your-keys"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="05-your-keys"] .k-display { font-size: 148px; }
+  [data-composition-id="05-your-keys"] .k-headline, [data-composition-id="05-your-keys"] .k-h1 { font-size: 104px; }
+  [data-composition-id="05-your-keys"] .k-h2 { font-size: 76px; }
+  [data-composition-id="05-your-keys"] .k-title { font-size: 56px; }
+  [data-composition-id="05-your-keys"] .k-body { font-size: 48px; }
+  [data-composition-id="05-your-keys"] .k-stat { font-size: 280px; }
+  [data-composition-id="05-your-keys"] .k-card { border-radius: 28px; }
+  [data-composition-id="05-your-keys"] .k-code-body, [data-composition-id="05-your-keys"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="05-your-keys"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
   [data-composition-id="05-your-keys"] .k-pbr { display: inline; }
   [data-composition-id="05-your-keys"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="05-your-keys"] .f05-browser { left: 160px; right: 160px; top: 200px; height: 420px; }
-    [data-composition-id="05-your-keys"] .f05-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-    [data-composition-id="05-your-keys"] .f05-shot img { display: block; max-width: none; }
-    /* "AnyRouter adds no fee." on the GPT-5.5 page, in capture px */
-    [data-composition-id="05-your-keys"] .f05-mark { position: absolute; left: 2092px; top: 604px; width: 318px; height: 52px; border-radius: 10px; background: rgba(240,145,90,0); }
-    /* the spotlight: the page dims around the part the voice names; it moves in capture px */
-    [data-composition-id="05-your-keys"] .f05-spot { position: absolute; border-radius: 14px; box-shadow: 0 0 0 4000px rgba(255,255,255,0); pointer-events: none; }
-    [data-composition-id="05-your-keys"] .f05-ring { border-radius: 22px; }
-    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 668px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
+    /* the Add a provider key dialog, redrawn from anyrouter.dev/dashboard/byok (2026-10-19), large and centred */
+    [data-composition-id="05-your-keys"] .f05-dialog { position: absolute; left: 380px; right: 380px; top: 110px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+    [data-composition-id="05-your-keys"] .f05-pane { position: absolute; left: 0; right: 0; top: 0; padding: 44px 48px 0; }
+    [data-composition-id="05-your-keys"] .f05-pane.is-key { opacity: 0; }
+    [data-composition-id="05-your-keys"] .f05-head { display: flex; align-items: center; gap: 24px; height: 80px; }
+    [data-composition-id="05-your-keys"] .f05-head svg, [data-composition-id="05-your-keys"] .f05-head img { width: 60px; height: 60px; flex: none; }
+    [data-composition-id="05-your-keys"] .f05-close { margin-left: auto; width: 72px; height: 72px; border-radius: 20px; border: 2px solid var(--hair); display: grid; place-items: center; color: var(--ink-2); box-sizing: border-box; }
+    [data-composition-id="05-your-keys"] .f05-close svg { width: 36px; height: 36px; }
+    [data-composition-id="05-your-keys"] .f05-field { position: relative; margin-top: 28px; height: 104px; box-sizing: border-box; border: 2px solid var(--hair); border-radius: 20px; display: flex; align-items: center; padding: 0 32px; font-size: 48px; font-weight: 500; letter-spacing: -0.02em; color: var(--muted); white-space: nowrap; }
+    [data-composition-id="05-your-keys"] .f05-field.is-mono { font-family: var(--mono); font-weight: 400; }
+    [data-composition-id="05-your-keys"] .f05-typed { position: absolute; left: 32px; color: var(--ink); }
+    [data-composition-id="05-your-keys"] .f05-typed span { opacity: 0; }
+    [data-composition-id="05-your-keys"] .f05-list { position: relative; margin-top: 20px; height: 300px; }
+    [data-composition-id="05-your-keys"] .f05-rows { position: absolute; inset: 0; }
+    [data-composition-id="05-your-keys"] .f05-row { display: flex; align-items: center; gap: 28px; height: 96px; margin-bottom: 4px; padding: 0 32px; border-radius: 20px; font-size: 48px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); }
+    [data-composition-id="05-your-keys"] .f05-row img, [data-composition-id="05-your-keys"] .f05-row svg { width: 48px; height: 48px; flex: none; }
+    [data-composition-id="05-your-keys"] .f05-sub { display: flex; align-items: center; gap: 32px; margin-top: 16px; }
+    [data-composition-id="05-your-keys"] .f05-link { color: var(--ink); text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+    [data-composition-id="05-your-keys"] .f05-lock { display: flex; align-items: center; gap: 16px; margin-top: 24px; }
+    [data-composition-id="05-your-keys"] .f05-lock svg { width: 38px; height: 38px; }
+    [data-composition-id="05-your-keys"] .f05-foot { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; border-top: 2px solid var(--hair); display: flex; align-items: center; justify-content: flex-end; gap: 48px; padding: 0 48px; }
+    [data-composition-id="05-your-keys"] .f05-cancel { font-size: 44px; font-weight: 500; }
+    /* Add key is disabled until a provider is chosen, as on the site; then it takes the site's orange */
+    [data-composition-id="05-your-keys"] .f05-add { height: 96px; padding: 0 40px; background: var(--bg); border: 2px solid var(--hair); color: var(--muted); font-size: 44px; }
+    [data-composition-id="05-your-keys"] .f05-add svg { width: 40px; height: 40px; }
+    /* "at no markup": the point, on its own */
+    [data-composition-id="05-your-keys"] .f05-say { position: absolute; left: 0; right: 0; top: 0; height: 880px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-your-keys"] .f05-browser { left: 60px; right: 120px; top: 380px; height: 420px; }
-      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 848px; }
+      [data-composition-id="05-your-keys"] .f05-dialog { left: 60px; right: 120px; top: 260px; }
+      [data-composition-id="05-your-keys"] .f05-pane { padding: 40px 36px 0; }
+      [data-composition-id="05-your-keys"] .f05-row { padding: 0 24px; }
+      [data-composition-id="05-your-keys"] .f05-foot { padding: 0 36px; gap: 40px; }
+      [data-composition-id="05-your-keys"] .f05-say { left: 60px; right: 120px; top: 200px; height: 1020px; }
     }
   </style>
 
   <div id="root" data-composition-id="05-your-keys" data-width="1920" data-height="1080" data-duration="5">
     <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
     <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter</div>
       <div id="f05-cam" class="k-cam">
-        <div id="f05-claude" class="k-browser f05-browser" data-layout-allow-overlap>
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url" data-layout-allow-overlap>anyrouter.dev<span class="k-lbr" data-layout-allow-overlap>/model/anthropic/claude-opus-5-5</span></span></div>
-          <div id="f05-view-claude" class="k-view"><div id="f05-shot-claude" class="f05-shot"><img src="assets/captures/model-claude-opus-5-5.png" alt="" /></div></div>
-        </div>
-        <div id="f05-gpt" class="k-browser f05-browser">
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev<span class="k-lbr">/model/openai/gpt-5.5</span></span></div>
-          <div id="f05-view-gpt" class="k-view">
-            <div id="f05-shot-gpt" class="f05-shot"><img src="assets/captures/model-gpt-5-5.png" alt="" /><div id="f05-mark" class="f05-mark"></div><div id="f05-spot" class="f05-spot"></div></div>
-            <div id="f05-ring" class="k-ring f05-ring"></div>
+        <div id="f05-dialog" class="f05-dialog">
+          <div id="f05-pick" class="f05-pane">
+            <div class="f05-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg><span class="k-title">Add a provider key</span><span class="f05-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></div>
+            <div class="f05-field"><span id="f05-hint">Search 68 providers…</span><span id="f05-typed" class="f05-typed"><span>O</span><span>p</span><span>e</span><span>n</span><span>A</span><span>I</span></span></div>
+            <div class="f05-list">
+              <div id="f05-all" class="f05-rows">
+                <div class="f05-row"><img class="k-mark" src="assets/providers/aimlapi.svg" alt="" />AI/ML API</div>
+                <div class="f05-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Amazon Bedrock</div>
+                <div id="f05-anthropic" class="f05-row"><img class="k-mark" src="assets/providers/anthropic.svg" alt="" />Anthropic</div>
+              </div>
+              <div id="f05-found" class="f05-rows"><div id="f05-openai" class="f05-row"><img class="k-mark" src="assets/providers/openai.svg" alt="" />OpenAI</div></div>
+            </div>
           </div>
+          <div id="f05-key" class="f05-pane is-key">
+            <div class="f05-head"><img src="assets/providers/openai.svg" alt="" /><span class="k-title">OpenAI</span><span class="f05-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></div>
+            <div class="k-small f05-sub"><span>Get an API key</span><span class="f05-link">Change provider</span></div>
+            <div class="f05-field is-mono">sk-...</div>
+            <div class="k-small f05-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Keys are encrypted at rest</div>
+          </div>
+          <div class="f05-foot"><span class="f05-cancel">Cancel</span><span id="f05-add" class="k-btn f05-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>Add key</span></div>
         </div>
-        <span id="f05-badge" class="k-badge is-free is-big f05-badge">Your own API key, $0 markup</span>
+        <h2 id="f05-say" class="k-display f05-say"><span class="k-line">Your own key,</span><span class="k-line">$0 markup.</span></h2>
       </div>
     </div>
   </div>
@@ -137,32 +192,57 @@
   <script>
     (function () {
       // kit:js
-// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
 const K = {
-  /** An element rises into place. */
-  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
-    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
   },
-  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
   wash(tl, el, t, span = 0.6) {
-    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
-    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
-    const hold = Math.min(0.25, span * 0.4);
-    tl.set(el, on, t);
-    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
-  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
+    slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      // the old value is gone before the new one is readable, so no frame shows both
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
-      const gap = (at[i + 1] ?? Infinity) - t;
-      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
     });
   },
   /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
@@ -180,68 +260,51 @@ const K = {
   scaleFor(view, r, max, margin = 48) {
     return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
   },
-  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
-      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
-  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
     const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
     const s = (v) => 1 + (v - 1) * k;
-    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
   },
 };
       // /kit:js
       const $ = (s) => document.getElementById("f05-" + s);
-      const DURATION = 5;
-      // Word starts from audio_meta.json frame 5: "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
-      const OPENAI = 1.0, ADD = 1.85, NO = 3.45, MARKUP = 3.75;
-      const portrait = matchMedia("(orientation: portrait)").matches;
-      // Rectangles of the 2x captures (3840 px wide), measured on the GPT-5.5 page; the Claude page has the same layout.
-      // The title row and its "Add your key" button, stopping above the model blurb.
-      const HEAD = portrait ? { x: 780, y: 130, w: 900, h: 280 } : { x: 780, y: 130, w: 1630, h: 280 };
-      const BUTTON = { x: 2584, y: 250, w: 227, h: 71 };
-      const NO_FEE = { x: 2092, y: 604, w: 318, h: 52 };
-      // "Requests use your key and bill your provider account. AnyRouter adds no fee." on the GPT-5.5 page
-      const SENTENCES = { x: 1405, y: 600, w: 1005, h: 60 };
+      // Word starts from audio_meta.json frame 5: "Claude" 0.662, "OpenAI?" 1.08, "Add" 1.95, "here" 3.053, "at" 3.483, "markup." 3.808.
+      const CLAUDE = 0.62, OPENAI = 1.0, ADD = 1.9, LEAVE = 3.0, MARKUP = 3.6;
 
       document.fonts.ready.then(() => {
-        const view = $("view-gpt");
-        const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, 1));
-        // the button at the middle of the view, at the title row's height
-        const button = K.fit(view, { x: BUTTON.x, y: 160, w: BUTTON.w, h: 280 }, 0.95);
-        const noFee = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, 1.2));
+        const dialog = $("dialog"), foot = dialog.lastElementChild;
+        const tall = (pane) => pane.offsetHeight + foot.offsetHeight + 44;
+        const pick = tall($("pick")), key = tall($("key"));
 
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.03 });
+        tl.set(dialog, { height: pick }, 0);
+        tl.set($("found"), { opacity: 0 }, 0);
+        K.cards(tl, dialog, [dialog], 0);
 
-        // Claude's page, then GPT-5.5's deals in front of it
-        tl.set([$("shot-claude"), $("shot-gpt")], head, 0);
-        K.rise(tl, $("claude"), 0.02, { y: 70, d: 0.7 });
-        tl.fromTo($("gpt"), { x: 220, y: 40, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, OPENAI);
-        // Claude's page steps back until only its address bar shows above GPT-5.5's
-        tl.to($("claude"), { x: -40, y: -84, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
+        // "Claude": its company's row is the one in focus; "OpenAI?": the search finds it
+        const row = (el, t) => K.ink(tl, el, t, true, 0.4);
+        K.ink(tl, $("anthropic"), CLAUDE - 0.05, true, 0.25);
+        const typed = [...$("typed").children];
+        // the search moves the focus off Anthropic as soon as it starts
+        K.ink(tl, $("anthropic"), OPENAI + 0.05, false, 0.3);
+        tl.set($("hint"), { opacity: 0 }, OPENAI);
+        typed.forEach((c, i) => tl.set(c, { opacity: 1 }, OPENAI + i * 0.06));
+        tl.to($("all"), { opacity: 0, duration: 0.25, ease: "power2.in" }, OPENAI + 0.3);
+        tl.fromTo($("found"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, OPENAI + 0.55);
+        row($("openai"), OPENAI + 0.65);
 
-        // "Add your own key": the camera fits the button, the ring lands on it
-        tl.to($("shot-gpt"), { ...button, duration: 0.7, ease: "power3.inOut" }, ADD);
-        const ring = $("ring");
-        tl.set(ring, {
-          left: button.x + BUTTON.x * button.scale - 12, top: button.y + BUTTON.y * button.scale - 12,
-          width: BUTTON.w * button.scale + 24, height: BUTTON.h * button.scale + 24,
-        }, 0);
-        tl.fromTo(ring, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, ADD + 0.55);
-        // the page dims around the button, then around the two sentences that say what it costs
-        const spot = $("spot"), pad = 14;
-        const around = (r) => ({ left: r.x - pad, top: r.y - pad, width: r.w + 2 * pad, height: r.h + 2 * pad });
-        tl.set(spot, around(BUTTON), 0);
-        tl.to(spot, { boxShadow: "0 0 0 4000px rgba(255,255,255,0.84)", duration: 0.4, ease: "power2.out" }, ADD + 0.5);
-        tl.to(spot, { ...around(SENTENCES), duration: 0.65, ease: "power3.inOut" }, NO - 0.15);
-        tl.to(ring, { opacity: 0, duration: 0.25, ease: "power2.in" }, NO - 0.2);
+        // "Add your own key": the list leaves, OpenAI's key form comes in, and Add key turns on
+        tl.to($("pick"), { opacity: 0, duration: 0.2, ease: "power2.in" }, ADD);
+        tl.to(dialog, { height: key, y: (pick - key) / 2, duration: 0.8, ease: "power4.inOut" }, ADD);
+        tl.fromTo($("key"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", immediateRender: false }, ADD + 0.25);
+        tl.to($("add"), { backgroundColor: K.ACCENT, borderColor: K.ACCENT, color: "#FFFFFF", duration: 0.5, ease: "power2.inOut" }, ADD + 0.5);
+        K.push(tl, $("cam"), LEAVE - ADD, { to: 1.03, at: ADD });
 
-        // "at no markup": the page's own sentence, then the badge
-        tl.to($("shot-gpt"), { ...noFee, duration: 0.65, ease: "power3.inOut" }, NO - 0.15);
-        tl.to($("mark"), { backgroundColor: "rgba(240,145,90,0.32)", duration: 0.3, ease: "power2.out" }, NO + 0.45);
-        tl.set($("badge"), { xPercent: -50 }, 0);
-        tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, MARKUP);
-        const drift = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, 1.2) * 1.04);
-        tl.to($("shot-gpt"), { ...drift, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
+        // "at no markup": the dialog leaves, and the point is said on its own
+        K.exit(tl, dialog, LEAVE, { d: 0.6 });
+        K.headline(tl, $("say"), MARKUP);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-your-keys"] = tl;

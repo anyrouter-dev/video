@@ -1,18 +1,15 @@
 <template>
   <style>
     /* kit:css */
-/* The explainer kit (frame.md v2), pasted into every frame by tools/kit.mjs and scoped to it.
-   Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
    No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
 @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
 [data-composition-id="02-one-api"] {
-  --bg: #FFFFFF; --surface: #FAFAFA; --surface-2: #F5F5F5;
-  --ink: #0A0A0A; --ink-2: #3F3F46; --muted: #636363;
-  --line: #E5E5E5; --line-strong: #D4D4D8;
-  --primary: #BB4D00; --primary-tint: #FFF4EC; --free: #007E55; --free-tint: #ECFDF5; --danger: #C0262D;
-  --term-bg: #0A0A0A; --term-bar: #18181B; --term-ink: #F4F4F5; --term-dim: #A1A1AA; --term-id: #F0915A;
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
   --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --mono: "Geist Mono", ui-monospace, Menlo, monospace;
   font-family: var(--sans);
@@ -22,123 +19,153 @@
 }
 [data-composition-id="02-one-api"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
 [data-composition-id="02-one-api"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
-/* the camera: everything in a frame sits in it, and it never stops moving */
+/* the camera: everything in a frame sits in it */
 [data-composition-id="02-one-api"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
-
-[data-composition-id="02-one-api"] .k-display { font-size: 140px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
-[data-composition-id="02-one-api"] .k-h1 { font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.035em; }
-[data-composition-id="02-one-api"] .k-h2 { font-size: 76px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; }
-[data-composition-id="02-one-api"] .k-title { font-size: 56px; font-weight: 600; line-height: 1.1; letter-spacing: -0.025em; }
-[data-composition-id="02-one-api"] .k-body { font-size: 44px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-[data-composition-id="02-one-api"] .k-label { font-size: 40px; font-weight: 500; line-height: 1.2; }
-[data-composition-id="02-one-api"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); }
-[data-composition-id="02-one-api"] .k-stat { font-size: 240px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
 [data-composition-id="02-one-api"] p, [data-composition-id="02-one-api"] h1, [data-composition-id="02-one-api"] h2 { margin: 0; }
 
-[data-composition-id="02-one-api"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05); }
+/* the brand, top-left frame chrome */
+[data-composition-id="02-one-api"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="02-one-api"] .k-brand img { width: 40px; height: 40px; display: block; }
 
-[data-composition-id="02-one-api"] .k-badge { display: inline-flex; align-items: center; gap: 12px; height: 60px; box-sizing: border-box; padding: 0 22px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
-[data-composition-id="02-one-api"] .k-badge.is-outline { background: var(--bg); border: 2px solid var(--line-strong); }
-[data-composition-id="02-one-api"] .k-badge.is-free { background: var(--free-tint); color: var(--free); }
-[data-composition-id="02-one-api"] .k-badge.is-danger { background: #FEF2F2; color: var(--danger); }
-[data-composition-id="02-one-api"] .k-badge.is-big { height: 88px; padding: 0 32px; font-size: 48px; border-radius: 16px; gap: 16px; }
+/* type */
+[data-composition-id="02-one-api"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="02-one-api"] .k-headline, [data-composition-id="02-one-api"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="02-one-api"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="02-one-api"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="02-one-api"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="02-one-api"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="02-one-api"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="02-one-api"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="02-one-api"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="02-one-api"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="02-one-api"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="02-one-api"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="02-one-api"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="02-one-api"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="02-one-api"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="02-one-api"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="02-one-api"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="02-one-api"] .k-badge.is-ink, [data-composition-id="02-one-api"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="02-one-api"] .k-badge.is-muted, [data-composition-id="02-one-api"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="02-one-api"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="02-one-api"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
 [data-composition-id="02-one-api"] .k-badge svg { width: 1em; height: 1em; flex: none; }
 
-[data-composition-id="02-one-api"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 44px; border-radius: 16px; background: var(--ink); color: #FFFFFF; font-size: 44px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="02-one-api"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
 
-/* focus ring: placed over the named thing; animate its opacity and transform */
-[data-composition-id="02-one-api"] .k-ring { position: absolute; border-radius: 20px; border: 3px solid var(--primary); box-shadow: 0 0 0 8px rgba(187,77,0,.28); pointer-events: none; opacity: 0; }
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="02-one-api"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
 
 /* a company: its mark and its name */
-[data-composition-id="02-one-api"] .k-chip { display: inline-flex; align-items: center; gap: 14px; height: 76px; box-sizing: border-box; padding: 0 26px 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-size: 36px; font-weight: 500; white-space: nowrap; }
-[data-composition-id="02-one-api"] .k-chip img { width: 40px; height: 40px; flex: none; }
-[data-composition-id="02-one-api"] .k-chip.is-more { border-style: dashed; border-color: var(--line-strong); color: var(--muted); padding-left: 26px; }
+[data-composition-id="02-one-api"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="02-one-api"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="02-one-api"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
 
-/* browser frame around a real screen; .k-shot is the capture, moved by the camera */
-[data-composition-id="02-one-api"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="02-one-api"] .k-browser-bar { position: relative; height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; justify-content: center; }
-[data-composition-id="02-one-api"] .k-browser-dots { position: absolute; left: 24px; top: 26px; display: flex; gap: 10px; }
-[data-composition-id="02-one-api"] .k-browser-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line-strong); }
-[data-composition-id="02-one-api"] .k-url { display: inline-flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 20px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); font-family: var(--mono); font-size: 34px; line-height: 1; color: var(--muted); white-space: nowrap; }
-[data-composition-id="02-one-api"] .k-view { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; overflow: hidden; }
+/* a window around redrawn product UI */
+[data-composition-id="02-one-api"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="02-one-api"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="02-one-api"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="02-one-api"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="02-one-api"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="02-one-api"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
 [data-composition-id="02-one-api"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
 
-/* code card: a light editor with a file tab */
-[data-composition-id="02-one-api"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 24px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 24px 48px -24px rgba(0,0,0,.12); overflow: hidden; }
-[data-composition-id="02-one-api"] .k-code-bar { height: 64px; box-sizing: border-box; background: var(--surface); border-bottom: 2px solid var(--line); display: flex; align-items: center; padding-left: 96px; position: relative; }
-[data-composition-id="02-one-api"] .k-code-bar .k-url { height: 44px; }
-[data-composition-id="02-one-api"] .k-code-body { padding: 36px 48px 40px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--ink); white-space: pre; }
-[data-composition-id="02-one-api"] .k-code-body .kw { color: var(--ink-2); font-weight: 600; }
+/* code card: a hairline editor with a file tab */
+[data-composition-id="02-one-api"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="02-one-api"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="02-one-api"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="02-one-api"] .k-code-body .kw { color: inherit; }
 [data-composition-id="02-one-api"] .k-code-body .cm { color: var(--muted); }
 [data-composition-id="02-one-api"] .k-ln { display: block; }
 
-/* terminal: the one dark surface */
-[data-composition-id="02-one-api"] .k-term { position: absolute; box-sizing: border-box; background: var(--term-bg); border-radius: 24px; overflow: hidden; box-shadow: 0 24px 48px -24px rgba(0,0,0,.35); }
-[data-composition-id="02-one-api"] .k-term-bar { position: relative; height: 64px; background: var(--term-bar); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 34px; color: var(--term-dim); }
-[data-composition-id="02-one-api"] .k-term-body { padding: 40px 48px; font-family: var(--mono); font-size: 48px; line-height: 1.5; color: var(--term-ink); white-space: pre; }
-[data-composition-id="02-one-api"] .k-term-body .p { color: var(--term-dim); }
-[data-composition-id="02-one-api"] .k-term-body .id { color: var(--term-id); }
-[data-composition-id="02-one-api"] .k-caret { display: inline-block; width: 26px; height: 56px; vertical-align: -10px; background: var(--term-ink); }
+/* terminal: an ink card */
+[data-composition-id="02-one-api"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="02-one-api"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="02-one-api"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="02-one-api"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="02-one-api"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="02-one-api"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="02-one-api"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
 
 /* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
-   The value that just rolled in is washed orange, then the wash fades (v1 frame 09). */
-[data-composition-id="02-one-api"] .k-roll { position: relative; display: inline-block; height: 1.5em; vertical-align: top; border-radius: 8px; background-color: rgba(240,145,90,0); box-shadow: 0 0 0 4px rgba(240,145,90,0); }
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="02-one-api"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
 [data-composition-id="02-one-api"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
 [data-composition-id="02-one-api"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="02-one-api"] .k-roll > span + span, [data-composition-id="02-one-api"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="02-one-api"] .k-term .k-roll > span { color: var(--accent-on-ink); }
 
 /* portrait-only line break inside code */
 [data-composition-id="02-one-api"] .k-pbr { display: none; }
 
 @media (orientation: portrait) {
   [data-composition-id="02-one-api"] .k-cam { transform-origin: 510px 710px; }
-  [data-composition-id="02-one-api"] .k-code-body, [data-composition-id="02-one-api"] .k-term-body { font-size: 40px; padding: 32px 36px; }
-  [data-composition-id="02-one-api"] .k-caret { width: 22px; height: 46px; vertical-align: -8px; }
+  [data-composition-id="02-one-api"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="02-one-api"] .k-display { font-size: 148px; }
+  [data-composition-id="02-one-api"] .k-headline, [data-composition-id="02-one-api"] .k-h1 { font-size: 104px; }
+  [data-composition-id="02-one-api"] .k-h2 { font-size: 76px; }
+  [data-composition-id="02-one-api"] .k-title { font-size: 56px; }
+  [data-composition-id="02-one-api"] .k-body { font-size: 48px; }
+  [data-composition-id="02-one-api"] .k-stat { font-size: 280px; }
+  [data-composition-id="02-one-api"] .k-card { border-radius: 28px; }
+  [data-composition-id="02-one-api"] .k-code-body, [data-composition-id="02-one-api"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="02-one-api"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
   [data-composition-id="02-one-api"] .k-pbr { display: inline; }
   [data-composition-id="02-one-api"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="02-one-api"] .f02-col { position: absolute; left: 120px; top: 150px; width: 720px; display: flex; flex-direction: column; align-items: flex-start; }
-    [data-composition-id="02-one-api"] .f02-brand { display: flex; align-items: center; gap: 20px; }
-    [data-composition-id="02-one-api"] .f02-brand svg { width: 72px; height: 72px; }
-    [data-composition-id="02-one-api"] .f02-word { font-size: 64px; font-weight: 600; letter-spacing: -0.03em; }
-    [data-composition-id="02-one-api"] .f02-stat-row { display: flex; flex-direction: column; margin-top: 40px; }
-    [data-composition-id="02-one-api"] .f02-models { margin-top: 4px; color: var(--ink-2); }
-    [data-composition-id="02-one-api"] .f02-pill { position: relative; margin-top: 56px; display: inline-flex; align-items: center; gap: 16px; height: 96px; box-sizing: border-box; padding: 0 32px; border-radius: 16px; background: var(--surface); border: 2px solid var(--line); font-family: var(--mono); font-size: 44px; white-space: nowrap; }
-    [data-composition-id="02-one-api"] .f02-pill .k-ring { inset: -12px; border-radius: 26px; }
-    [data-composition-id="02-one-api"] .f02-browser { position: absolute; left: 900px; right: 96px; top: 120px; bottom: 220px; overflow: hidden; }
-    [data-composition-id="02-one-api"] .f02-head { height: 80px; box-sizing: border-box; display: flex; align-items: center; padding: 0 32px; background: var(--surface); border-bottom: 2px solid var(--line); }
+    /* a transformed wrapper is the containing block of what it holds: it must be the stage's size */
+    [data-composition-id="02-one-api"] .f02-beat { position: absolute; inset: 0; }
+    [data-composition-id="02-one-api"] .f02-stat { position: absolute; left: 96px; top: 210px; width: 780px; }
+    [data-composition-id="02-one-api"] .f02-num { display: block; white-space: nowrap; font-size: 320px; }
+    [data-composition-id="02-one-api"] .f02-models { display: block; margin-top: 48px; color: var(--muted); }
+    [data-composition-id="02-one-api"] .f02-list { position: absolute; left: 960px; right: 96px; top: 168px; bottom: 200px; overflow: hidden; }
+    [data-composition-id="02-one-api"] .f02-head { height: 80px; box-sizing: border-box; display: flex; align-items: center; padding: 0 44px; border-bottom: 2px solid var(--hair); }
     [data-composition-id="02-one-api"] .f02-view { position: absolute; left: 0; right: 0; top: 80px; bottom: 0; overflow: hidden; }
-    [data-composition-id="02-one-api"] .f02-list { list-style: none; margin: 0; padding: 8px 36px; }
-    [data-composition-id="02-one-api"] .f02-id { height: 72px; display: flex; align-items: center; border-bottom: 2px solid var(--surface-2); font-family: var(--mono); font-size: 38px; white-space: nowrap; color: var(--ink); }
+    [data-composition-id="02-one-api"] .f02-ids { list-style: none; margin: 0; padding: 0 44px; }
+    [data-composition-id="02-one-api"] .f02-id { height: 88px; display: flex; align-items: center; border-bottom: 2px solid var(--hair); font-family: var(--mono); font-size: 40px; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
     [data-composition-id="02-one-api"] .f02-org { color: var(--muted); }
+    /* "behind one API": the base URL alone, on the ink card */
+    [data-composition-id="02-one-api"] .f02-api { position: absolute; left: 260px; right: 260px; top: 250px; height: 420px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 28px; opacity: 0; }
+    [data-composition-id="02-one-api"] .f02-api-url { font-family: var(--mono); font-size: 76px; letter-spacing: -0.03em; white-space: nowrap; }
 
     @media (orientation: portrait) {
-      [data-composition-id="02-one-api"] .f02-col { left: 60px; top: 200px; width: 900px; }
-      [data-composition-id="02-one-api"] .f02-stat-row { flex-direction: row; align-items: baseline; gap: 28px; margin-top: 28px; }
-      [data-composition-id="02-one-api"] .f02-pill { margin-top: 32px; }
-      [data-composition-id="02-one-api"] .f02-browser { left: 60px; right: 120px; top: 720px; bottom: 700px; }
+      [data-composition-id="02-one-api"] .f02-stat { left: 60px; top: 236px; width: 900px; }
+      [data-composition-id="02-one-api"] .f02-num { font-size: 280px; }
+      [data-composition-id="02-one-api"] .f02-list { left: 60px; right: 120px; top: 650px; bottom: 700px; }
+      [data-composition-id="02-one-api"] .f02-head { padding: 0 36px; height: 72px; }
+      [data-composition-id="02-one-api"] .f02-view { top: 72px; }
+      [data-composition-id="02-one-api"] .f02-ids { padding: 0 36px; }
+      [data-composition-id="02-one-api"] .f02-id { height: 80px; }
+      [data-composition-id="02-one-api"] .f02-api { left: 60px; right: 120px; top: 520px; height: 380px; }
+      [data-composition-id="02-one-api"] .f02-api-url { font-size: 56px; }
     }
   </style>
 
   <div id="root" data-composition-id="02-one-api" data-width="1920" data-height="1080" data-duration="4.5">
     <div id="f02-bg" class="k-bg clip" data-start="0" data-duration="4.5" data-track-index="0"></div>
     <div id="f02-stage" class="k-stage clip" data-start="0" data-duration="4.5" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/providers/anyrouter.svg" alt="" />AnyRouter</div>
       <div id="f02-cam" class="k-cam">
-        <div class="f02-col">
-          <div id="f02-brand" class="f02-brand">
-            <svg viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter"><g transform="translate(0,1254) scale(0.1,-0.1)"><path d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/><path d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/></g></svg>
-            <span class="f02-word">AnyRouter</span>
-          </div>
-          <div class="f02-stat-row">
-            <span id="f02-stat" class="k-stat">270+</span>
+        <div id="f02-models-beat" class="f02-beat">
+          <div id="f02-stat" class="f02-stat">
+            <span id="f02-num" class="k-stat f02-num">270+</span>
             <span id="f02-models" class="k-h2 f02-models">models</span>
           </div>
-          <div id="f02-pill" class="f02-pill">anyrouter.dev/api/v1<div id="f02-ring" class="k-ring"></div></div>
+          <div id="f02-list" class="k-card f02-list">
+            <div class="f02-head"><span class="k-url">Model ids</span></div>
+            <div class="f02-view"><ul id="f02-ids" class="f02-ids"><li class="f02-id"><span class="f02-org">deepseek/</span>deepseek-v4-flash</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k3</li><li class="f02-id"><span class="f02-org">minimax/</span>minimax-m3.1-flash</li><li class="f02-id"><span class="f02-org">nvidia/</span>nemotron-3-super-120b-a12b</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k2.6</li><li class="f02-id"><span class="f02-org">openai/</span>gpt-oss-20b</li><li class="f02-id"><span class="f02-org">reflection/</span>beam-1.0</li><li class="f02-id"><span class="f02-org">meta/</span>muse-glimmer-30b</li><li class="f02-id"><span class="f02-org">scira/</span>amos-1-large</li><li class="f02-id"><span class="f02-org">hal-x/</span>thx-01</li><li class="f02-id"><span class="f02-org">google/</span>gemma-3n-e2b</li><li class="f02-id"><span class="f02-org">anyrouter/</span>auto</li><li class="f02-id"><span class="f02-org">anyrouter/</span>free</li><li class="f02-id"><span class="f02-org">x-ai/</span>grok-4.7</li><li class="f02-id"><span class="f02-org">z-ai/</span>glm-5.3</li><li class="f02-id"><span class="f02-org">mistralai/</span>mistral-large-4</li><li class="f02-id"><span class="f02-org">deepseek/</span>deepseek-v4-pro</li><li class="f02-id"><span class="f02-org">google/</span>gemma-4-26b-a4b-it</li><li class="f02-id"><span class="f02-org">cohere/</span>command-a</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k2.5</li><li class="f02-id"><span class="f02-org">minimax/</span>m3</li><li class="f02-id"><span class="f02-org">mistralai/</span>mistral-small-4</li></ul></div>
+          </div>
         </div>
-
-        <div id="f02-browser" class="k-card f02-browser">
-          <div class="f02-head"><span class="k-url">Model ids</span></div>
-          <div class="f02-view"><ul id="f02-list" class="f02-list"><li class="f02-id"><span class="f02-org">deepseek/</span>deepseek-v4.1-flash</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k3</li><li class="f02-id"><span class="f02-org">x-ai/</span>grok-4.7</li><li class="f02-id"><span class="f02-org">z-ai/</span>glm-5.3</li><li class="f02-id"><span class="f02-org">minimax/</span>minimax-m3.1-flash</li><li class="f02-id"><span class="f02-org">google/</span>gemma-4-31b</li><li class="f02-id"><span class="f02-org">openai/</span>gpt-oss-20b</li><li class="f02-id"><span class="f02-org">meta/</span>muse-glimmer-30b</li><li class="f02-id"><span class="f02-org">poolside/</span>laguna-s-2.1</li><li class="f02-id"><span class="f02-org">stepfun/</span>step-5-preview</li><li class="f02-id"><span class="f02-org">reflection/</span>beam-1.0</li><li class="f02-id"><span class="f02-org">inclusionai/</span>ling-3.1-flash</li><li class="f02-id"><span class="f02-org">liquid/</span>lfm-2.5-2.6b</li><li class="f02-id"><span class="f02-org">scira/</span>amos-1-large</li><li class="f02-id"><span class="f02-org">thinkingmachines/</span>inkling</li><li class="f02-id"><span class="f02-org">moonshotai/</span>kimi-k2.6</li><li class="f02-id"><span class="f02-org">z-ai/</span>glm-4.7-flash</li><li class="f02-id"><span class="f02-org">x-ai/</span>grok-latest</li><li class="f02-id"><span class="f02-org">google/</span>gemma-4-26b-a4b-it</li><li class="f02-id"><span class="f02-org">meituan/</span>longcat-2.5-preview</li><li class="f02-id"><span class="f02-org">anyrouter/</span>auto</li><li class="f02-id"><span class="f02-org">anyrouter/</span>free</li></ul></div>
+        <div id="f02-api" class="k-card is-ink f02-api">
+          <span class="k-label k-muted">One API</span>
+          <span class="f02-api-url">anyrouter.dev/api/v1</span>
         </div>
       </div>
     </div>
@@ -148,32 +175,57 @@
   <script>
     (function () {
       // kit:js
-// The explainer kit's motion helpers. tools/kit.mjs pastes this between the kit:js markers.
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
 const K = {
-  /** An element rises into place. */
-  rise(tl, el, t, { y = 40, d = 0.6 } = {}) {
-    tl.fromTo(el, { y, opacity: 0 }, { y: 0, opacity: 1, duration: d, ease: "power3.out" }, t);
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
   },
-  /** The orange wash on a value that just changed: 0.6s in all, or `span` when the next one comes sooner. */
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
   wash(tl, el, t, span = 0.6) {
-    const on = { backgroundColor: "rgba(240,145,90,0.32)", boxShadow: "0 0 0 4px rgba(240,145,90,0.32)" };
-    const off = { backgroundColor: "rgba(240,145,90,0)", boxShadow: "0 0 0 4px rgba(240,145,90,0)" };
-    const hold = Math.min(0.25, span * 0.4);
-    tl.set(el, on, t);
-    tl.fromTo(el, on, { ...off, duration: span - hold, ease: "power2.out", immediateRender: false }, t + hold);
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
   },
-  /** Roll a .k-roll slot to its next value at each time in `at`, washing each new value. */
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
   roll(tl, slot, at) {
     const items = [...slot.children];
+    slot.style.overflow = "hidden";
     slot.style.width = items[0].offsetWidth + "px";
     at.forEach((t, i) => {
       const out = items[i], into = items[i + 1];
-      // the old value is gone before the new one is readable, so no frame shows both
-      tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.6em", opacity: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, t);
-      tl.fromTo(into, { y: "0.6em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, t + 0.14);
-      tl.to(slot, { width: into.offsetWidth, duration: 0.24, ease: "power2.inOut" }, t);
-      const gap = (at[i + 1] ?? Infinity) - t;
-      K.wash(tl, slot, t + 0.1, Math.min(0.6, gap - 0.05));
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
     });
   },
   /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
@@ -191,12 +243,12 @@ const K = {
   scaleFor(view, r, max, margin = 48) {
     return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
   },
-  /** The camera: a slow push for the whole frame, so the picture never holds still. Portrait pushes
-      half as far, about the middle of its safe area, so text set on the safe edge stays inside it. */
-  push(tl, cam, dur, { from = 1, to = 1.05, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut" } = {}) {
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
     const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
     const s = (v) => 1 + (v - 1) * k;
-    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, 0);
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
   },
 };
       // /kit:js
@@ -204,26 +256,25 @@ const K = {
       const DURATION = 4.5;
       // Word starts from audio_meta.json frame 2: "270" 1.312 (spoken to 2.2), "models" 2.241, "one" 2.972.
       // The count lands on 270 as the voice starts saying it; the "+" waits for the count.
-      const COUNT_FROM = 0.5, COUNT_TO = 1.3, MODELS = 2.2, ONE = 2.9;
-      // Real ids from GET /api/v1/models (what one AnyRouter key runs on credit), scrolled like a list.
-      const SCROLL = 10 * 72;
+      const COUNT_FROM = 0.4, COUNT_TO = 1.3, MODELS = 2.2, ONE = 2.92;
+      // Real catalog ids, scrolled like a list: the ones AnyRouter routes itself first, then ones that need your own key.
+      const ROW = matchMedia("(orientation: portrait)").matches ? 80 : 88;
 
       document.fonts.ready.then(() => {
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.05 });
 
-        K.rise(tl, $("brand"), 0.04);
-        tl.fromTo($("browser"), { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.1);
-        tl.fromTo($("list"), { y: 0 }, { y: -SCROLL, duration: DURATION, ease: "power1.inOut" }, 0);
+        // "more than 270 models": the stat counts up beside the list of real ids
+        const num = $("num"), n = { v: 0 };
+        K.rise(tl, $("num"), 0.05, { y: 60, d: 1.2 });
+        tl.fromTo(n, { v: 0 }, { v: 270, duration: COUNT_TO - COUNT_FROM, ease: "power2.out", onUpdate: () => { num.textContent = Math.round(n.v) + (n.v >= 270 ? "+" : ""); } }, COUNT_FROM);
+        K.cards(tl, $("list"), [$("list")], 0.1);
+        tl.fromTo($("ids"), { y: 0 }, { y: -10 * ROW, duration: ONE, ease: "power2.inOut" }, 0);
+        K.rise(tl, $("models"), MODELS - 0.05, { y: 40, d: 1.0 });
 
-        // the stat counts up to the claim, "more than 270"; it is "270+" before and after
-        const stat = $("stat"), n = { v: 0 };
-        tl.fromTo(stat, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, COUNT_FROM - 0.1);
-        tl.fromTo(n, { v: 0 }, { v: 270, duration: COUNT_TO - COUNT_FROM, ease: "power2.out", onUpdate: () => { stat.textContent = Math.round(n.v) + (n.v >= 270 ? "+" : ""); } }, COUNT_FROM);
-        K.rise(tl, $("models"), MODELS);
-
-        K.rise(tl, $("pill"), ONE);
-        tl.fromTo($("ring"), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" }, ONE + 0.3);
+        // "behind one API": the models leave, and the base URL arrives on its own
+        K.exit(tl, $("models-beat"), ONE - 0.45, { y: -40, d: 0.7 });
+        tl.fromTo($("api"), { opacity: 0, y: 80, scale: 1.1 }, { opacity: 1, y: 0, scale: 1, duration: 1.6, ease: "expo.out" }, ONE - 0.1);
+        K.push(tl, $("cam"), DURATION, { to: 1.04 });
 
         window.__timelines = window.__timelines || {};
         window.__timelines["02-one-api"] = tl;

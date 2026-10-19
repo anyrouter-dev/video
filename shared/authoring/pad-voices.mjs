@@ -1,10 +1,12 @@
 // Pads each narration line with trailing silence: a breath between lines so frames don't
 // run sentences together, and a longer hold after the last line for the end card.
 //
-//   node ../../shared/authoring/pad-voices.mjs [--beat=0.5 --phase=0.059]
+//   node ../../shared/authoring/pad-voices.mjs [--beat=0.5 --phase=0.059] [--hold=4:0.5,…]
 //
 // With --beat (seconds per beat) and --phase (the first beat, from `hyperframes beats`), each
 // breath is stretched so the next line, and so the next frame, starts on a beat of the music.
+// --hold=FRAME:SECONDS keeps a frame on screen at least that long after its line ends, for a
+// frame that shows something to read once the voice has moved on.
 // Idempotent: a voice keeps its unpadded length in raw_s and is always padded from that.
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -15,12 +17,13 @@ const MIN_BREATH_S = 0.25;
 const END_HOLD_S = 2.5;
 
 /** The pad after each line: a fixed breath, or the shortest one that puts the next line on a beat. */
-export function pads(raws, { beat, phase = 0 } = {}) {
+export function pads(raws, { beat, phase = 0, holds = [] } = {}) {
   let at = 0;
   return raws.map((raw, i) => {
-    if (i === raws.length - 1) return END_HOLD_S;
-    if (!beat) return BREATH_S;
-    const end = at + raw + MIN_BREATH_S;
+    const hold = holds[i] ?? 0;
+    if (i === raws.length - 1) return Math.max(END_HOLD_S, hold);
+    if (!beat) return Math.max(BREATH_S, hold);
+    const end = at + raw + Math.max(MIN_BREATH_S, hold);
     const next = phase + Math.ceil((end - phase) / beat - 1e-9) * beat;
     const pad = +(next - at - raw).toFixed(3);
     at = next;
@@ -33,7 +36,9 @@ function main() {
   const meta = JSON.parse(fs.readFileSync('audio_meta.json', 'utf8'));
   const voices = [...meta.voices].sort((a, b) => Number(a.frame) - Number(b.frame));
   const raw = v => v.raw_s ?? +(v.duration_s - (v.padded_s ?? 0)).toFixed(3);
-  const plan = pads(voices.map(raw), { beat: flag('beat'), phase: flag('phase') });
+  const holdBy = new Map((process.argv.find(a => a.startsWith('--hold='))?.slice('--hold='.length).split(',') ?? [])
+    .map(pair => pair.split(':').map(Number)));
+  const plan = pads(voices.map(raw), { beat: flag('beat'), phase: flag('phase'), holds: voices.map(v => holdBy.get(Number(v.frame))) });
 
   voices.forEach((v, i) => {
     const pad = plan[i];

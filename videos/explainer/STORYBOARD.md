@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 47s
+duration: 47.5s
 message: "One API for every model. Your code barely changes, and free models work on every plan."
 arc: Every company bills you → One API → Two lines change → Call by name → Your own keys → Or auto → It keeps answering → Free → Claude Code → Close
 audience: people who land on anyrouter.dev and press play, developers or not
@@ -10,12 +10,12 @@ music: none
 
 ## Video direction
 
-- **Palette system** (from `frame.md`). White `bg` on every frame. `ink` for headlines and marks. `primary` burnt orange is the one accent per moment: the focus ring, the id that just rolled in (the orange wash from v1 frame 09). `free` green only means free, $0 or "it worked". `danger` only on the provider that goes down in Frame 7. The terminal (Frame 9) is the one dark surface.
-- **Type.** Geist for spoken words, Geist Mono for anything typed (ids, URLs, code). Phone first: nothing a viewer must read below 36px (URL pills and the terminal bar 32 to 34px). Kit: `tools/kit/` pasted into each frame by `tools/kit.mjs`.
-- **Camera.** Every frame sits in a `.k-cam` that pushes in slowly and eases toward the part the voice names, so no frame holds still for more than 1.5s. Real screens move by their own crop: the camera fits a named rectangle of the capture into the browser view.
-- **Cuts.** Every cut lands on a beat of the music (120 bpm, first beat 0.059s): `pad-voices.mjs --beat=0.5 --phase=0.059` stretches each breath so the next line starts on the grid. Reveals land on the spoken word (times from `audio_meta.json`, ElevenLabs alignment).
-- **Continuity.** Frames 3, 4 and 6 share one code card (same chrome, same place). Frames 4 and 9 roll the model id the way v1 frame 09 did.
-- **Honesty.** Ids on screen in Frames 4, 6, 7 and 9 come from `GET /api/v1/models` (what one AnyRouter key runs on credit). Claude and OpenAI appear only in Frame 5, on their real model pages, which say "bring your own key". No /models tab counts on screen. No key on screen: code reads it from `process.env`.
+- **Look** (`frame.md` v3, Monolith). White on every frame, ink type, one object in focus per beat, set large enough to fill the frame. The focused card is the one ink card. The burnt-orange accent goes only on the model id that just arrived or the one value that just changed; on the ink terminal it is the light accent. No green or red: free and "it worked" are said in words and shown by inking, a provider that goes down turns grey.
+- **Type.** Geist for spoken words, Geist Mono for anything typed (ids, URLs, code). Display 184px (portrait 148), body 56px, code 60px; nothing below 36px. Kit: `tools/kit/` pasted into each frame by `tools/kit.mjs`; parts list in `tools/shared-components.md`.
+- **Camera.** One hero move per beat, keynote-weighted: a headline settles from a 1.08 push (expo.out 2.2s), a card set eases out of a 1.1 close-up (power4.inOut 2.1s) while its cards rise in a stagger, and a beat leaves (power4.inOut 0.7s) before the next arrives. No bounce. No anyrouter.dev screenshot is on screen: the product UI (the playground result, the Add a provider key dialog, the free list) is redrawn in the kit from real values, with the signed-in captures in `shared/captures/2026-10-19/screens/signed-in/` as reference only.
+- **Cuts.** Every cut lands on a beat of the music (120 bpm, first beat 0.059s): `pad-voices.mjs --beat=0.5 --phase=0.059 --hold=4:1` stretches each breath (frame 4 holds 1s more for its result cards) so the next line starts on the grid. Reveals land on the spoken word (times from `audio_meta.json`, ElevenLabs alignment).
+- **Continuity.** Frames 3, 4 and 6 set code in the same type and colour; frames 4 and 6 are one call (the company name over the model line) in the same place. Frames 4, 6 and 9 roll the model id in place.
+- **Honesty.** Ids on screen in Frames 3, 4, 6, 7 and 9 are ones AnyRouter routes itself: `pricing.billing` is not `"byok"` in `GET /api/v1/models?all=1` (`model-ids.test.mjs` checks every frame against `model-billing.json`). Claude and OpenAI appear only in Frame 5, as providers in the Add a provider key dialog. No /models tab counts on screen. No key on screen: code reads it from `process.env`.
 - **Negative list.** No gradients, glows, blur, noise, emoji, routing diagrams, step-by-step setup. No `repeat` / `yoyo`, no randomness.
 - **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080x1920): content in y 200 to 1220 and x 60 to 960; captions own 1240 to 1480.
 - **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`; `shared/authoring/portrait.mjs` writes the 1080x1920 project.
@@ -23,13 +23,13 @@ music: none
 ## Frame 1 — Every company bills you
 - src: compositions/frames/01-every-bill.html
 
-- scene: Four AI company cards (DeepSeek, Kimi, Grok, GLM, each with its company); each grows an account row, a key row and a bill row as the voice names them
+- scene: Four AI company cards (DeepSeek, Kimi, MiniMax, Nemotron, each with its company); each grows an account row, a key row and a bill row as the voice names them
 - duration: 4.559s
 - transition_in: cut
 - type: problem
 - beat: friction
 - voiceover: "Every AI company has its own account, its own key and its own bill."
-- asset_candidates: assets/providers/deepseek.svg — DeepSeek mark; assets/providers/moonshotai.svg — Moonshot AI mark; assets/providers/xai.svg — xAI mark; assets/providers/z-ai.svg — Z.ai mark
+- asset_candidates: assets/providers/deepseek.svg — DeepSeek mark; assets/providers/moonshotai.svg — Moonshot AI mark; assets/providers/minimax.svg — MiniMax mark; assets/providers/nvidia.svg — NVIDIA mark
 - blueprint: overwhelm-surround (Adapt)
 - focal: the four company cards
 - roles: provider marks = card heads
@@ -82,42 +82,42 @@ Scene 3 (3.6–5.0s): "keep the rest" — the comment line gets an "Unchanged" b
 ## Frame 4 — Call a model by name
 - src: compositions/frames/04-call-by-name.html
 
-- scene: The same code card, now the call; the model id rolls through four real ids as the voice names each company
-- duration: 5.5s
+- scene: The same code card, now the call; the model id rolls through four real ids as the voice names each company, then three of them answer the same prompt
+- duration: 6s
 - transition_in: cut
 - type: key_feature
 - beat: choice
-- voiceover: "Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word."
-- asset_candidates: assets/providers/deepseek.svg; assets/providers/moonshotai.svg; assets/providers/xai.svg; assets/providers/z-ai.svg
+- voiceover: "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word."
+- asset_candidates: assets/providers/deepseek.svg; assets/providers/moonshotai.svg; assets/providers/minimax.svg; assets/providers/nvidia.svg
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the model id
-- roles: company chips = what each id means
+- roles: company chips = what each id means; answer cards = proof that switching is one word
 - sfx: click-soft on each name
 - status: animated
 
-Scene 1 (0.0–1.3s): the call block and the chip row rise.
-Scene 2 (1.3–3.8s): each name — its chip takes the ring and the id rolls to it (deepseek/deepseek-v4.1-flash, moonshotai/kimi-k3, x-ai/grok-4.7, z-ai/glm-5.3).
-Scene 3 (3.8–5.5s): "Switching is one word" — every other line dims; the id washes once more.
+Scene 1 (0.0–1.1s): the call block and the chip row rise.
+Scene 2 (1.1–3.35s): each name — its chip takes the ring and the id rolls to it (deepseek/deepseek-v4-flash, moonshotai/kimi-k3, minimax/minimax-m3.1-flash, nvidia/nemotron-3-super-120b-a12b).
+Scene 3 (3.35–6s): "Switching is one word" — the chips and their ring make way, the code card moves up, every other line dims, the ring comes back on the id and it washes once more; under it a neutral "Say hello in five words." bubble and three answer cards from the real playground run (2026-10-19): DeepSeek-V4-Flash "Hello! How can I help you today?" 5.81s TTFT, 96.9 t/s; MiniMax M3.1 Flash "Hello! How are you today?" 4.35s, 142.9 t/s; Nemotron-3 Super 120B "Hello, how are you today?" 13.95s, 42.4 t/s; each $0. No token counts (anyrouter #5802). Kimi is not shown answering: its platform route failed in that run.
 
 ## Frame 5 — Your own keys
 - src: compositions/frames/05-your-keys.html
 
-- scene: The real Claude Opus 5.5 and GPT-5.5 pages on anyrouter.dev; the camera lands on "Add your key" and on "AnyRouter adds no fee"
+- scene: anyrouter.dev's Add a provider key dialog, redrawn: the provider list, a search that finds OpenAI, then OpenAI's key form with Add key
 - duration: 5s
 - transition_in: cut
 - type: key_feature
 - beat: trust
 - voiceover: "Already pay for Claude or OpenAI? Add your own key and use them here too, at no markup."
-- asset_candidates: assets/captures/model-claude-opus-5-5.png — the real model page; assets/captures/model-gpt-5-5.png — the real model page
+- asset_candidates: assets/providers/anthropic.svg; assets/providers/openai.svg; assets/providers/aimlapi.svg (reference: byok-add-provider-list.png, byok-add-openrouter-key.png)
 - blueprint: ui-callout (Adapt)
-- focal: the Add your key button, then the no-fee sentence
-- roles: model pages = proof
+- focal: the Add key button, then the $0 markup badge
+- roles: dialog = how you bring a key
 - sfx: click on Add, pop on markup
 - status: animated
 
-Scene 1 (0.0–1.9s): "Claude", "OpenAI" — the Claude page, then the GPT-5.5 page deals in front of it.
-Scene 2 (1.9–3.4s): "Add your own key" — the camera fits the button; focus ring.
-Scene 3 (3.4–5.0s): "no markup" — the camera fits "AnyRouter adds no fee."; a "$0 markup" badge lands.
+Scene 1 (0.0–1.9s): "Claude" — the Anthropic row lights; "OpenAI" — the search types OpenAI and finds it.
+Scene 2 (1.9–3.7s): "Add your own key" — the list leaves, then OpenAI's key form comes in (sk-... placeholder, "Keys are encrypted at rest"); Add key goes from its disabled tint to solid as the focus ring lands on it.
+Scene 3 (3.7–5.0s): "no markup" — a "Your own API key, $0 markup" badge lands.
 
 ## Frame 6 — Or let AnyRouter pick
 - src: compositions/frames/06-auto.html
@@ -160,13 +160,13 @@ Scene 3 (3.5–6.0s): "still gets its answer" — the answer bubble lands with a
 ## Frame 8 — Free models
 - src: compositions/frames/08-free.html
 
-- scene: The real /models list with the free filter on, scrolling slowly; "Every plan" and "No daily cap" land beside it
+- scene: A list of free models, redrawn from the catalog (not "byok", $0 in and out in every fetch), stepping up a row on "every" and on "no"; "Every plan" and "No daily cap" land beside it
 - duration: 3.5s
 - transition_in: cut
 - type: key_feature
 - beat: delight
 - voiceover: "Free models work on every plan, with no daily cap."
-- asset_candidates: assets/captures/models-free.png — /models?free=true, cropped below the tab bar
+- asset_candidates: none — rows from model-billing.json `free`
 - blueprint: ui-callout (Adapt)
 - focal: the two free badges
 - roles: list = proof
