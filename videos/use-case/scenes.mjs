@@ -110,13 +110,22 @@ const indentOf = text => text.match(/^ */)[0].length;
 const caretWidth = px => 0.56 * px + 4;
 
 /**
+ * A roll line cut where the id's own row starts: before the token that holds the
+ * preset, as typedLine breaks it, so `anyrouter("anyrouter/free"),` keeps its
+ * `anyrouter("` on the id's row.
+ */
+const slotOf = (text, preset) => {
+  const at = text.indexOf(preset), start = text.lastIndexOf(' ', at - 1) + 1;
+  return { before: text.slice(0, start), row: id => text.slice(start, at) + id + text.slice(at + preset.length) };
+};
+
+/**
  * Whether `id`, rolled into the preset's place in `line`, sits whole on a row
  * of its own in both frames at their smallest code size. An id that needs more
  * would break mid-roll, so it does not roll.
  */
 export function idFitsRow(line, preset, id, shell) {
-  const after = line.text.slice(line.text.indexOf(preset) + preset.length);
-  const row = `${shell ? '$ ' : '  '}${id}${after}`;
+  const row = `${shell ? '$ ' : '  '}${slotOf(line.text, preset).row(id)}`;
   return Object.keys(WIN).every(o => { const px = WIN[o].sizes.at(-1); return monoWidth(row, px) + caretWidth(px) <= textWidth(o); });
 }
 
@@ -143,10 +152,10 @@ export function codeSizes(lines, roll, shell, title) {
   const rows = (px, o) => lines.reduce((n, l) => {
     if (!isTyped(l)) return n + 1;
     if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsOf(t, px, o)));
-    const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length);
+    const slot = slotOf(l.text, roll.preset);
     // the id's own row starts two characters in, where a shell line's prompt ends
     const lead = shell ? '' : '  ';
-    return n + rowsOf(l.text.slice(0, at), px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(lead + id + after, px, o)));
+    return n + rowsOf(slot.before, px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(lead + slot.row(id), px, o)));
   }, 0);
   const codeFor = (o, tLines) => {
     const w = WIN[o];
@@ -154,8 +163,8 @@ export function codeSizes(lines, roll, shell, title) {
     const room = px => (EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
     // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
     const clean = (l, px) => variants(l).every(t => fits(t, px, o)) || (l.focus && !!roll && (() => {
-      const at = l.text.indexOf(roll.preset), after = l.text.slice(at + roll.preset.length), lead = shell ? '' : '  ';
-      return fits(l.text.slice(0, at), px, o) && [roll.preset, ...roll.ids].every(id => fits(lead + id + after, px, o));
+      const slot = slotOf(l.text, roll.preset), lead = shell ? '' : '  ';
+      return fits(slot.before, px, o) && [roll.preset, ...roll.ids].every(id => fits(lead + slot.row(id), px, o));
     })());
     // a clean line at a smaller size reads better than a wrapped one at a larger
     return w.sizes.find(px => lines.filter(isTyped).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px)) ?? null;

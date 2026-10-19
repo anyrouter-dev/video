@@ -179,6 +179,13 @@ test('a preset rolls through real ids one key runs, then comes back to the page\
   assert.ok(seen >= 8, 'most pages that name a preset roll it');
 });
 
+test('a roll id that cannot sit whole on a portrait row with the code around it is left out', () => {
+  // anyrouter("deepseek/deepseek-v4-flash"), is 40 characters: at 40px it wraps inside a 900px window,
+  // so the line would reflow as the id rolls in
+  assert.deepEqual(rolled(html(filmOf(doc(), 'ai-sdk'))), []);
+  assert.ok(rolled(html(filmOf(doc(), 'free-llm-api'))).length > 2, '"deepseek/deepseek-v4-flash", sits whole on a row');
+});
+
 test('a page that promises $0 or free never rolls an id billed to credits', () => {
   // "Bring your own keys, $0 markup" over grok and kimi reads as "these are free"
   assert.deepEqual(rolled(html(filmOf(doc(), 'byok'))), []);
