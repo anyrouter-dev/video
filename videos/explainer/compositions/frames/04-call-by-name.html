@@ -101,18 +101,32 @@
     [data-composition-id="04-call-by-name"] .f04-code { left: 200px; right: 200px; top: 300px; }
     [data-composition-id="04-call-by-name"] .f04-chips { position: absolute; left: 200px; right: 200px; top: 152px; display: flex; flex-wrap: wrap; gap: 20px; }
     [data-composition-id="04-call-by-name"] .f04-ring { border-radius: 999px; }
+    /* the result: one prompt, answered by three models in the real playground run (2026-10-19) */
+    [data-composition-id="04-call-by-name"] .f04-ask { position: absolute; left: 1380px; right: 96px; top: 150px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+    [data-composition-id="04-call-by-name"] .f04-bubble { margin: 0; padding: 18px 28px; border-radius: 28px; background: var(--primary); color: #FFFFFF; font-size: 40px; font-weight: 500; line-height: 1.2; text-align: right; }
+    [data-composition-id="04-call-by-name"] .f04-cards { position: absolute; left: 200px; right: 200px; top: 462px; display: flex; flex-direction: column; gap: 12px; }
+    [data-composition-id="04-call-by-name"] .f04-card { padding: 14px 28px; display: flex; flex-direction: column; gap: 4px; }
+    [data-composition-id="04-call-by-name"] .f04-row { display: flex; align-items: center; gap: 16px; }
+    [data-composition-id="04-call-by-name"] .f04-row img { width: 40px; height: 40px; flex: none; }
+    [data-composition-id="04-call-by-name"] .f04-name { font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--ink-2); }
+    [data-composition-id="04-call-by-name"] .f04-stats { margin-left: auto; font-size: 36px; font-weight: 500; line-height: 1.2; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    [data-composition-id="04-call-by-name"] .f04-answer { margin: 0; font-size: 40px; line-height: 1.25; color: var(--ink); }
+    [data-composition-id="04-call-by-name"] .f04-cost { margin-left: auto; height: 48px; padding: 0 18px; }
 
     @media (orientation: portrait) {
       [data-composition-id="04-call-by-name"] .f04-chips { left: 60px; right: 120px; top: 240px; gap: 16px; }
       [data-composition-id="04-call-by-name"] .f04-code { left: 60px; right: 120px; top: 520px; }
+      [data-composition-id="04-call-by-name"] .f04-ask { left: 60px; right: 120px; top: 668px; }
+      [data-composition-id="04-call-by-name"] .f04-cards { left: 60px; right: 120px; top: 772px; }
+      [data-composition-id="04-call-by-name"] .f04-card { padding: 14px 22px; }
       /* the NVIDIA id is the longest line: two spaces of indent and the type floor keep it in the card */
       [data-composition-id="04-call-by-name"] .k-code-body { font-size: 36px; padding: 32px 28px; }
     }
   </style>
 
-  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="5">
-    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
-    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
+  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="5.5">
+    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
+    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
       <div id="f04-cam" class="k-cam">
         <div id="f04-chips" class="f04-chips">
           <span class="k-chip f04-chip"><img src="assets/providers/deepseek.svg" alt="" />DeepSeek</span>
@@ -126,6 +140,21 @@
 <div class="k-code-body"><span class="k-ln f04-quiet"><span class="kw">await</span> client.chat.completions<span class="k-pbr">
   </span>.create({</span><span class="k-ln">  model:<span class="k-lbr"> </span><span class="k-pbr">
   </span><span id="f04-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"deepseek/deepseek-v4-flash"</span><span data-layout-allow-overlap>"moonshotai/kimi-k3"</span><span data-layout-allow-overlap>"minimax/minimax-m3.1-flash"</span><span data-layout-allow-overlap>"nvidia/nemotron-3-super-120b-a12b"</span></span>,</span><span class="k-ln f04-quiet">  messages,</span><span class="k-ln f04-quiet">});</span></div>
+        </div>
+        <div id="f04-ask" class="f04-ask"><p class="f04-bubble">Say hello in five words.</p></div>
+        <div id="f04-cards" class="f04-cards">
+          <div class="k-card f04-card">
+            <div class="f04-row"><img src="assets/providers/deepseek.svg" alt="" /><span class="f04-name">DeepSeek-V4-Flash</span><span class="f04-stats">5.81s TTFT · 96.9 t/s</span></div>
+            <div class="f04-row"><p class="f04-answer">Hello! How can I help you today?</p><span class="k-badge is-free f04-cost">$0</span></div>
+          </div>
+          <div class="k-card f04-card">
+            <div class="f04-row"><img src="assets/providers/minimax.svg" alt="" /><span class="f04-name">MiniMax M3.1 Flash</span><span class="f04-stats">4.35s TTFT · 142.9 t/s</span></div>
+            <div class="f04-row"><p class="f04-answer">Hello! How are you today?</p><span class="k-badge is-free f04-cost">$0</span></div>
+          </div>
+          <div class="k-card f04-card">
+            <div class="f04-row"><img src="assets/providers/nvidia.svg" alt="" /><span class="f04-name">Nemotron-3 Super 120B</span><span class="f04-stats">13.95s TTFT · 42.4 t/s</span></div>
+            <div class="f04-row"><p class="f04-answer">Hello, how are you today?</p><span class="k-badge is-free f04-cost">$0</span></div>
+          </div>
         </div>
         <div id="f04-ring" class="k-ring f04-ring"></div>
       </div>
@@ -190,11 +219,15 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f04-" + s);
       const root = $("code").closest('[data-composition-id="04-call-by-name"]');
-      const DURATION = 5;
+      const DURATION = 5.5;
       // Word starts from audio_meta.json frame 4: "DeepSeek," 1.126, "Kimi," 1.695, "MiniMax," 2.078, "Nemotron." 2.659,
       // "Switching" 3.39, "one" 3.971. The ids are ones AnyRouter routes itself (model-billing.json, not "byok").
       const NAMES = [1.09, 1.66, 2.04, 2.62], SWITCHING = 3.35, ONE = 3.93;
       const QUIET = "#636363";
+      const portrait = matchMedia("(orientation: portrait)").matches;
+      // "Switching": the chips make way and the code card moves up to make room for the result.
+      // Landscape sets it at 0.75 (its 48px code reads at the 36px floor); portrait code is already 36px.
+      const CODE_UP = portrait ? { y: -320 } : { y: -180, scale: 0.75, transformOrigin: "0 0" };
 
       document.fonts.ready.then(() => {
         const chips = [...root.querySelectorAll('[class~="f04-chip"]')];
@@ -203,7 +236,10 @@ const K = {
         const slot = $("id");
         const items = [...slot.children];
         slot.style.width = items.at(-1).offsetWidth + "px";
+        // the ring meets the id where the code card ends up
+        gsap.set($("code"), CODE_UP);
         const idBox = { ...K.box(ring, slot, 10), borderRadius: 14 };
+        gsap.set($("code"), { clearProps: "transform" });
 
         const tl = gsap.timeline({ paused: true });
         K.push(tl, $("cam"), DURATION, { to: 1.05, y: 10 });
@@ -225,6 +261,12 @@ const K = {
         tl.to(root.querySelectorAll('[class~="f04-quiet"]'), { color: QUIET, duration: 0.4, ease: "power2.inOut" }, SWITCHING);
         tl.to(ring, { ...idBox, duration: 0.45, ease: "power3.inOut" }, ONE - 0.1);
         K.wash(tl, slot, ONE + 0.05, 0.9);
+
+        // the result: the same prompt, answered by each model for $0
+        tl.to($("chips"), { y: -30, opacity: 0, duration: 0.3, ease: "power2.in" }, SWITCHING);
+        tl.to($("code"), { ...CODE_UP, duration: 0.55, ease: "power3.inOut" }, SWITCHING);
+        K.rise(tl, $("ask"), SWITCHING + 0.2, { y: 24, d: 0.45 });
+        [...$("cards").children].forEach((c, i) => K.rise(tl, c, SWITCHING + 0.35 + i * 0.15, { y: 40, d: 0.5 }));
 
         window.__timelines = window.__timelines || {};
         window.__timelines["04-call-by-name"] = tl;

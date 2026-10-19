@@ -294,7 +294,7 @@
     {
       "frame": 4,
       "path": "assets/voice/04.wav",
-      "duration_s": 5,
+      "duration_s": 5.5,
       "raw_s": 4.737,
       "text": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
       "say": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
@@ -392,7 +392,7 @@
           "end": 4.737
         }
       ],
-      "padded_s": 0.263
+      "padded_s": 0.763
     },
     {
       "frame": 5,
