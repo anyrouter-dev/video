@@ -158,5 +158,15 @@
     "shows": "The /use-cases index.",
     "redacted": "none found",
     "capturedAt": "2026-10-19T14:57:16.290Z"
+  },
+  {
+    "file": "scrolls/models-scroll.mp4",
+    "kind": "scroll",
+    "url": "https://anyrouter.dev/models",
+    "viewport": "1920x1080",
+    "scale": 1,
+    "shows": "An eased 9s scroll at 60 fps from the top of /models through about three and a half screens of the catalog.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:58:13.301Z"
   }
 ]
