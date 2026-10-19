@@ -97,19 +97,39 @@
   [data-composition-id="05-your-keys"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    [data-composition-id="05-your-keys"] .f05-browser { left: 160px; right: 160px; top: 200px; height: 420px; }
-    [data-composition-id="05-your-keys"] .f05-shot { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-    [data-composition-id="05-your-keys"] .f05-shot img { display: block; max-width: none; }
-    /* "AnyRouter adds no fee." on the GPT-5.5 page, in capture px */
-    [data-composition-id="05-your-keys"] .f05-mark { position: absolute; left: 2092px; top: 604px; width: 318px; height: 52px; border-radius: 10px; background: rgba(240,145,90,0); }
-    /* the spotlight: the page dims around the part the voice names; it moves in capture px */
-    [data-composition-id="05-your-keys"] .f05-spot { position: absolute; border-radius: 14px; box-shadow: 0 0 0 4000px rgba(255,255,255,0); pointer-events: none; }
-    [data-composition-id="05-your-keys"] .f05-ring { border-radius: 22px; }
-    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 668px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
+    /* the Add a provider key dialog, redrawn from anyrouter.dev/dashboard/byok (2026-10-19) */
+    [data-composition-id="05-your-keys"] .f05-dialog { position: absolute; left: 400px; right: 400px; top: 110px; box-sizing: border-box; background: var(--bg); border: 2px solid var(--line); border-radius: 32px; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 32px 64px -32px rgba(0,0,0,.18); overflow: hidden; }
+    [data-composition-id="05-your-keys"] .f05-pane { position: absolute; left: 0; right: 0; top: 0; padding: 40px 44px 0; }
+    [data-composition-id="05-your-keys"] .f05-pane.is-key { opacity: 0; }
+    [data-composition-id="05-your-keys"] .f05-head { display: flex; align-items: center; gap: 20px; height: 64px; }
+    [data-composition-id="05-your-keys"] .f05-head svg, [data-composition-id="05-your-keys"] .f05-head img { width: 52px; height: 52px; flex: none; }
+    [data-composition-id="05-your-keys"] .f05-title { font-size: 44px; font-weight: 600; letter-spacing: -0.02em; }
+    [data-composition-id="05-your-keys"] .f05-close { margin-left: auto; width: 64px; height: 64px; border-radius: 14px; background: var(--surface-2); display: grid; place-items: center; color: var(--ink-2); }
+    [data-composition-id="05-your-keys"] .f05-close svg { width: 32px; height: 32px; }
+    [data-composition-id="05-your-keys"] .f05-field { position: relative; margin-top: 32px; height: 92px; box-sizing: border-box; border: 2px solid var(--line-strong); border-radius: 18px; display: flex; align-items: center; padding: 0 28px; font-size: 40px; color: var(--muted); white-space: nowrap; }
+    [data-composition-id="05-your-keys"] .f05-field.is-mono { font-family: var(--mono); }
+    [data-composition-id="05-your-keys"] .f05-typed { position: absolute; left: 28px; color: var(--ink); }
+    [data-composition-id="05-your-keys"] .f05-typed span { opacity: 0; }
+    [data-composition-id="05-your-keys"] .f05-list { position: relative; margin-top: 20px; height: 252px; border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+    [data-composition-id="05-your-keys"] .f05-rows { position: absolute; inset: 0; padding: 6px 0; }
+    [data-composition-id="05-your-keys"] .f05-row { display: flex; align-items: center; gap: 24px; height: 80px; padding: 0 28px; font-size: 40px; border-radius: 12px; margin: 0 6px; }
+    [data-composition-id="05-your-keys"] .f05-row img, [data-composition-id="05-your-keys"] .f05-row svg { width: 40px; height: 40px; flex: none; color: var(--ink-2); }
+    [data-composition-id="05-your-keys"] .f05-sub { display: flex; align-items: center; gap: 28px; margin-top: 10px; font-size: 36px; color: var(--muted); }
+    [data-composition-id="05-your-keys"] .f05-link { color: var(--ink); text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+    [data-composition-id="05-your-keys"] .f05-lock { display: flex; align-items: center; gap: 14px; margin-top: 18px; font-size: 36px; color: var(--muted); }
+    [data-composition-id="05-your-keys"] .f05-lock svg { width: 34px; height: 34px; }
+    [data-composition-id="05-your-keys"] .f05-foot { position: absolute; left: 0; right: 0; bottom: 0; height: 132px; border-top: 2px solid var(--line); display: flex; align-items: center; justify-content: flex-end; gap: 40px; padding: 0 44px; }
+    [data-composition-id="05-your-keys"] .f05-cancel { font-size: 40px; font-weight: 500; }
+    [data-composition-id="05-your-keys"] .f05-add { position: relative; height: 84px; padding: 0 36px; background: var(--primary); font-size: 40px; }
+    [data-composition-id="05-your-keys"] .f05-add svg { width: 36px; height: 36px; }
+    [data-composition-id="05-your-keys"] .f05-add .k-ring { inset: -14px; border-radius: 28px; }
+    [data-composition-id="05-your-keys"] .f05-badge { position: absolute; left: 50%; top: 760px; box-shadow: 0 12px 24px -12px rgba(0,0,0,.2); }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-your-keys"] .f05-browser { left: 60px; right: 120px; top: 380px; height: 420px; }
-      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 848px; }
+      [data-composition-id="05-your-keys"] .f05-dialog { left: 60px; right: 120px; top: 260px; }
+      [data-composition-id="05-your-keys"] .f05-pane { padding: 36px 36px 0; }
+      [data-composition-id="05-your-keys"] .f05-foot { padding: 0 36px; }
+      [data-composition-id="05-your-keys"] .f05-badge { left: 510px; top: 1000px; }
     }
   </style>
 
@@ -117,16 +137,26 @@
     <div id="f05-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
     <div id="f05-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
       <div id="f05-cam" class="k-cam">
-        <div id="f05-claude" class="k-browser f05-browser" data-layout-allow-overlap>
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url" data-layout-allow-overlap>anyrouter.dev<span class="k-lbr" data-layout-allow-overlap>/model/anthropic/claude-opus-5-5</span></span></div>
-          <div id="f05-view-claude" class="k-view"><div id="f05-shot-claude" class="f05-shot"><img src="assets/captures/model-claude-opus-5-5.png" alt="" /></div></div>
-        </div>
-        <div id="f05-gpt" class="k-browser f05-browser">
-          <div class="k-browser-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">anyrouter.dev<span class="k-lbr">/model/openai/gpt-5.5</span></span></div>
-          <div id="f05-view-gpt" class="k-view">
-            <div id="f05-shot-gpt" class="f05-shot"><img src="assets/captures/model-gpt-5-5.png" alt="" /><div id="f05-mark" class="f05-mark"></div><div id="f05-spot" class="f05-spot"></div></div>
-            <div id="f05-ring" class="k-ring f05-ring"></div>
+        <div id="f05-dialog" class="f05-dialog">
+          <div id="f05-pick" class="f05-pane">
+            <div class="f05-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg><span class="f05-title">Add a provider key</span><span class="f05-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></div>
+            <div class="f05-field"><span id="f05-hint">Search 68 providers…</span><span id="f05-typed" class="f05-typed"><span>O</span><span>p</span><span>e</span><span>n</span><span>A</span><span>I</span></span></div>
+            <div class="f05-list">
+              <div id="f05-all" class="f05-rows">
+                <div class="f05-row"><img src="assets/providers/aimlapi.svg" alt="" />AI/ML API</div>
+                <div class="f05-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Amazon Bedrock</div>
+                <div id="f05-anthropic" class="f05-row"><img src="assets/providers/anthropic.svg" alt="" />Anthropic</div>
+              </div>
+              <div id="f05-found" class="f05-rows"><div id="f05-openai" class="f05-row"><img src="assets/providers/openai.svg" alt="" />OpenAI</div></div>
+            </div>
           </div>
+          <div id="f05-key" class="f05-pane is-key">
+            <div class="f05-head"><img src="assets/providers/openai.svg" alt="" /><span class="f05-title">OpenAI</span><span class="f05-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></div>
+            <div class="f05-sub"><span>Get an API key</span><span class="f05-link">Change provider</span></div>
+            <div class="f05-field is-mono">sk-...</div>
+            <div class="f05-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Keys are encrypted at rest</div>
+          </div>
+          <div class="f05-foot"><span class="f05-cancel">Cancel</span><span id="f05-add" class="k-btn f05-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg>Add key<span id="f05-ring" class="k-ring"></span></span></div>
         </div>
         <span id="f05-badge" class="k-badge is-free is-big f05-badge">Your own API key, $0 markup</span>
       </div>
@@ -191,60 +221,38 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f05-" + s);
       const DURATION = 5;
-      // Word starts from audio_meta.json frame 5: "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
-      const OPENAI = 1.0, ADD = 1.85, NO = 3.45, MARKUP = 3.75;
-      const portrait = matchMedia("(orientation: portrait)").matches;
-      // Rectangles of the 2x captures (3840 px wide), measured on the GPT-5.5 page; the Claude page has the same layout.
-      // The breadcrumb, title and model id rows, stopping above the model blurb.
-      const HEAD = portrait ? { x: 780, y: 180, w: 720, h: 210 } : { x: 780, y: 180, w: 1340, h: 210 };
-      const BUTTON = { x: 2584, y: 250, w: 227, h: 71 };
-      const NO_FEE = { x: 2092, y: 604, w: 318, h: 52 };
-      // "Requests use your key and bill your provider account. AnyRouter adds no fee." on the GPT-5.5 page;
-      // portrait keeps "bill your provider account. AnyRouter adds no fee." so it stays large enough to read
-      const SENTENCES = portrait ? { x: 1800, y: 600, w: 610, h: 60 } : { x: 1405, y: 600, w: 1005, h: 60 };
-      // Capture scales: 1 is 2x the page's CSS size, so 14 px page text renders at 32 px or more from 1.15 up.
-      const HEAD_SCALE = 1.15, BUTTON_SCALE = 1.35, SENTENCES_SCALE = 1.3;
+      // Word starts from audio_meta.json frame 5: "Claude" 0.662, "OpenAI?" 1.08, "Add" 1.95, "no" 3.622, "markup." 3.808.
+      const CLAUDE = 0.62, OPENAI = 1.0, ADD = 1.9, MARKUP = 3.75;
+      const ROW_ON = "#F5F5F5";
 
       document.fonts.ready.then(() => {
-        const view = $("view-gpt");
-        const head = K.fit(view, HEAD, K.scaleFor(view, HEAD, HEAD_SCALE));
-        // the button at the middle of the view, at the title row's height
-        const button = K.fit(view, { x: BUTTON.x, y: HEAD.y, w: BUTTON.w, h: HEAD.h }, BUTTON_SCALE);
-        const noFee = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, SENTENCES_SCALE));
+        const dialog = $("dialog"), foot = dialog.lastElementChild;
+        const tall = (pane) => pane.offsetHeight + foot.offsetHeight + 40;
 
         const tl = gsap.timeline({ paused: true });
-        K.push(tl, $("cam"), DURATION, { to: 1.03 });
+        K.push(tl, $("cam"), DURATION, { to: 1.04 });
+        tl.set(dialog, { height: tall($("pick")) }, 0);
+        tl.set($("found"), { opacity: 0 }, 0);
+        K.rise(tl, dialog, 0.02, { y: 60, d: 0.7 });
 
-        // Claude's page, then GPT-5.5's deals in front of it
-        tl.set([$("shot-claude"), $("shot-gpt")], head, 0);
-        K.rise(tl, $("claude"), 0.02, { y: 70, d: 0.7 });
-        tl.fromTo($("gpt"), { x: 220, y: 40, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, OPENAI);
-        // Claude's page steps back until only its address bar shows above GPT-5.5's
-        tl.to($("claude"), { x: -40, y: -84, scale: 0.94, duration: 0.6, ease: "power3.out" }, OPENAI);
+        // "Claude": its company's row lights; "OpenAI?": the search finds it
+        tl.to($("anthropic"), { backgroundColor: ROW_ON, duration: 0.25 }, CLAUDE);
+        const typed = [...$("typed").children];
+        tl.set($("hint"), { opacity: 0 }, OPENAI);
+        typed.forEach((c, i) => tl.set(c, { opacity: 1 }, OPENAI + i * 0.06));
+        tl.to($("all"), { opacity: 0, duration: 0.2 }, OPENAI + 0.3);
+        tl.fromTo($("found"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, OPENAI + 0.35);
+        tl.to($("openai"), { backgroundColor: ROW_ON, duration: 0.25 }, OPENAI + 0.6);
 
-        // "Add your own key": the camera pans along the title row and pushes in on the button, the ring lands on it
-        tl.to($("shot-gpt"), { ...button, duration: 0.8, ease: "power3.inOut" }, ADD - 0.1);
-        const ring = $("ring");
-        tl.set(ring, {
-          left: button.x + BUTTON.x * button.scale - 12, top: button.y + BUTTON.y * button.scale - 12,
-          width: BUTTON.w * button.scale + 24, height: BUTTON.h * button.scale + 24,
-        }, 0);
-        tl.fromTo(ring, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, ADD + 0.55);
-        // the page dims around the button, then around the two sentences that say what it costs
-        const spot = $("spot"), pad = 14;
-        const around = (r) => ({ left: r.x - pad, top: r.y - pad, width: r.w + 2 * pad, height: r.h + 2 * pad });
-        tl.set(spot, around(BUTTON), 0);
-        tl.to(spot, { boxShadow: "0 0 0 4000px rgba(255,255,255,0.84)", duration: 0.4, ease: "power2.out" }, ADD + 0.5);
-        tl.to(spot, { ...around(SENTENCES), duration: 0.65, ease: "power3.inOut" }, NO - 0.15);
-        tl.to(ring, { opacity: 0, duration: 0.25, ease: "power2.in" }, NO - 0.2);
+        // "Add your own key": OpenAI's key form, and the ring on Add key
+        tl.to($("pick"), { opacity: 0, duration: 0.2 }, ADD);
+        tl.to(dialog, { height: tall($("key")), duration: 0.5, ease: "power3.inOut" }, ADD);
+        tl.fromTo($("key"), { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, ADD + 0.1);
+        tl.fromTo($("ring"), { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, ADD + 0.55);
 
-        // "at no markup": the page's own sentence, then the badge
-        tl.to($("shot-gpt"), { ...noFee, duration: 0.65, ease: "power3.inOut" }, NO - 0.15);
-        tl.to($("mark"), { backgroundColor: "rgba(240,145,90,0.32)", duration: 0.3, ease: "power2.out" }, NO + 0.45);
+        // "at no markup"
         tl.set($("badge"), { xPercent: -50 }, 0);
         tl.fromTo($("badge"), { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, MARKUP);
-        const drift = K.fit(view, SENTENCES, K.scaleFor(view, SENTENCES, SENTENCES_SCALE) * 1.04);
-        tl.to($("shot-gpt"), { ...drift, duration: DURATION - NO - 0.5, ease: "sine.inOut" }, NO + 0.5);
 
         window.__timelines = window.__timelines || {};
         window.__timelines["05-your-keys"] = tl;
