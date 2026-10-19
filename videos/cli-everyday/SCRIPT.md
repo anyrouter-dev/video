@@ -15,7 +15,7 @@ Claim E1.
 
 Claims E2, E3.
 
-    anyr models lists every model ID you can use.
+    anyr models lists every model ID in the catalog.
 
 ## Line 3 — Credits (Frame 3)
 

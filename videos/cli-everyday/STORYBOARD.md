@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 31.564s
+duration: 32.064s
 message: "The anyr CLI does the daily dashboard work from the terminal: list models, check credits, see and create API keys."
 arc: The promise → Models → Credits → Keys → A new key → Close
 audience: a developer who already has an AnyRouter account and lives in the terminal
@@ -39,12 +39,12 @@ music: none
 ## Frame 2 — Models
 - src: compositions/frames/02-models.html
 
-- scene: terminal types `anyr models`; real rows print one by one (id, provider); `deepseek/deepseek-v4-flash` takes the accent on "every model ID"
-- duration: 5s
+- scene: terminal types `anyr models`; real rows print one by one (id, provider)
+- duration: 5.5s
 - transition_in: cut
 - type: key_feature
 - beat: relief
-- voiceover: "anyr models lists every model ID you can use."
+- voiceover: "anyr models lists every model ID in the catalog."
 - asset_candidates: none
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the printed list

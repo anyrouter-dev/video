@@ -76,10 +76,10 @@
     {
       "frame": 2,
       "path": "assets/voice/02.wav",
-      "duration_s": 5,
-      "raw_s": 2.879,
-      "text": "anyr models lists every model ID you can use.",
-      "say": "any R models lists every model ID you can use.",
+      "duration_s": 5.5,
+      "raw_s": 3.204,
+      "text": "anyr models lists every model ID in the catalog.",
+      "say": "any R models lists every model ID in the catalog.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -93,58 +93,58 @@
           "id": "w0",
           "text": "anyr",
           "start": 0,
-          "end": 0.406
+          "end": 0.43
         },
         {
           "id": "w1",
           "text": "models",
-          "start": 0.464,
-          "end": 0.778
+          "start": 0.499,
+          "end": 0.836
         },
         {
           "id": "w2",
           "text": "lists",
-          "start": 0.848,
-          "end": 1.08
+          "start": 0.917,
+          "end": 1.149
         },
         {
           "id": "w3",
           "text": "every",
-          "start": 1.149,
-          "end": 1.358
+          "start": 1.242,
+          "end": 1.521
         },
         {
           "id": "w4",
           "text": "model",
-          "start": 1.405,
-          "end": 1.637
+          "start": 1.579,
+          "end": 1.846
         },
         {
           "id": "w5",
           "text": "ID",
-          "start": 1.707,
-          "end": 1.892
+          "start": 1.927,
+          "end": 2.101
         },
         {
           "id": "w6",
-          "text": "you",
-          "start": 2.009,
-          "end": 2.078
+          "text": "in",
+          "start": 2.194,
+          "end": 2.252
         },
         {
           "id": "w7",
-          "text": "can",
-          "start": 2.113,
-          "end": 2.229
+          "text": "the",
+          "start": 2.287,
+          "end": 2.357
         },
         {
           "id": "w8",
-          "text": "use.",
-          "start": 2.299,
-          "end": 2.879
+          "text": "catalog.",
+          "start": 2.392,
+          "end": 3.204
         }
       ],
-      "padded_s": 2.121
+      "padded_s": 2.296
     },
     {
       "frame": 3,
@@ -475,7 +475,7 @@
     {
       "frame": 2,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 0.464,
+      "offset_s": 0.499,
       "duration_s": 0.366,
       "volume": 0.26,
       "source": "bundled"
@@ -483,7 +483,7 @@
     {
       "frame": 2,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 1.355,
+      "offset_s": 1.529,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
