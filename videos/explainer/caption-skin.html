@@ -1,8 +1,9 @@
 <!--
-  AnyRouter film series caption skin. Built on the frame-preset skin contract (same
-  holes and hooks); only the look changes. TV subtitles: each phrase appears whole,
-  white Geist on a soft translucent chip, with a short fade between phrases. No
-  word-by-word highlight; it pulled the eye off the picture.
+  AnyRouter film series caption skin, frame.md v3 "Monolith". Built on the frame-preset
+  skin contract (same holes and hooks); only the look changes. Each phrase appears whole,
+  ink Geist 500 on the white frame, one line in landscape, with no chip or outline. It
+  rises 12px as it fades in, and the next phrase replaces it with no gap. No word-by-word
+  highlight; it pulled the eye off the picture.
 -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 
@@ -44,27 +45,28 @@
     opacity: 0;
   }
   .caption-chip {
-    max-width: 84%;
-    padding: 12px 28px 14px;
-    border-radius: 14px;
-    background: rgba(10, 10, 10, 0.84);
-    color: #FFFFFF;
+    max-width: 1640px;
+    color: #0A0A0A;
     font-family: var(--font-body, "Geist"), ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
-    font-size: 48px;
-    line-height: 1.25;
-    letter-spacing: -0.005em;
+    font-size: 52px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     text-align: center;
     text-wrap: balance;
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
 
-  /* portrait rendition: at most two lines inside the 900px safe width */
+  /* portrait rendition: the 900px safe width holds a short phrase on one line, a long one on two */
   @media (orientation: portrait) {
+    .caption-stage {
+      left: 60px;
+      right: 120px;
+    }
     .caption-chip {
       max-width: 900px;
-      font-size: 56px;
+      font-size: 46px;
     }
   }
 </style>
@@ -106,6 +108,7 @@
     window.__timelines = window.__timelines || {};
     var tl = gsap.timeline({ paused: true });
     var FADE = 0.12;
+    var RISE = 0.3;
 
     // exactly one phrase on screen at a time; back-to-back phrases swap without a gap
     GROUPS.forEach(function (group, g) {
@@ -117,7 +120,7 @@
       if (end <= start) end = start + 0.01;
       var joined = next && Number(next.start) - end < 0.05;
 
-      tl.fromTo(groupEl, { opacity: 0 }, { opacity: 1, duration: FADE, ease: "none" }, start);
+      tl.fromTo(groupEl, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: RISE, ease: "expo.out" }, start);
       if (joined) tl.set(groupEl, { opacity: 0 }, end);
       else tl.to(groupEl, { opacity: 0, duration: FADE, ease: "none" }, Math.max(start + FADE, end - FADE));
     });
