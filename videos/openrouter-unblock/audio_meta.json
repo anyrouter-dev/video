@@ -1859,7 +1859,7 @@
     {
       "frame": 3,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 7.345,
+      "offset_s": 6.405,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
@@ -1995,15 +1995,7 @@
     {
       "frame": 7,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 4.756,
-      "duration_s": 0.366,
-      "volume": 0.28,
-      "source": "bundled"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 5.456,
+      "offset_s": 4.906,
       "duration_s": 0.366,
       "volume": 0.28,
       "source": "bundled"
@@ -2035,7 +2027,7 @@
     {
       "frame": 7,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 15.794,
+      "offset_s": 13.789,
       "duration_s": 2.5,
       "volume": 0.25,
       "source": "bundled"
@@ -2078,14 +2070,6 @@
       "offset_s": 8.672,
       "duration_s": 1.32,
       "volume": 0.17,
-      "source": "bundled"
-    },
-    {
-      "frame": 8,
-      "file": "assets/sfx/ping.mp3",
-      "offset_s": 9.172,
-      "duration_s": 1.32,
-      "volume": 0.16,
       "source": "bundled"
     },
     {
