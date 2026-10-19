@@ -3,133 +3,107 @@
     @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
     @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
 
-    #root {
+    #root[data-composition-id="09-close"] {
       position: absolute;
       inset: 0;
-      width: 1920px;
-      height: 1080px;
       overflow: hidden;
-      font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
-      color: #0A0A0A;
     }
-    [id="09-close-bg"] { position: absolute; inset: 0; background: #FFFFFF; }
-    [id="09-close-stage"] { position: absolute; inset: 0; }
+    [data-composition-id="09-close"] {
+      .bg { position: absolute; inset: 0; background: #FFFFFF; }
+      .stage {
+        position: absolute;
+        inset: 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        color: #0A0A0A;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+      .safe { position: absolute; left: 96px; right: 96px; top: 88px; bottom: 200px; }
 
-    [id="09-close-rows"] {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 880px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 64px;
-    }
-    [class~="09-close-line"] { display: flex; align-items: center; gap: 48px; }
-    [class~="09-close-slot"] { width: 420px; flex: none; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    [class~="09-close-pill"] {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      height: 52px;
-      padding: 0 20px;
-      border-radius: 10px;
-      background: #FAFAFA;
-      border: 1.5px dashed #D4D4D8;
-      box-sizing: border-box;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 26px;
-      color: #0A0A0A;
-      white-space: nowrap;
-    }
-    [class~="09-close-mini"] { color: #636363; }
-    [class~="09-close-info"] { width: 52px; height: 52px; display: block; }
-    [class~="09-close-glyph"] { width: 22px; height: 22px; flex: none; display: block; }
-    [class~="09-close-text"] {
-      width: 900px;
-      font-size: 40px;
-      font-weight: 500;
-      line-height: 1.2;
-      letter-spacing: -0.015em;
-      color: #0A0A0A;
-      white-space: nowrap;
-    }
+      .msg {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 56px;
+      }
+      .h1 {
+        margin: 0;
+        max-width: 1500px;
+        font-size: 104px;
+        font-weight: 600;
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+      }
+      .callout {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        box-sizing: border-box;
+        max-width: 1400px;
+        padding: 40px 48px;
+        background: #FFFFFF;
+        border: 2px solid #E5E5E5;
+        border-radius: 24px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+      }
+      .callout svg { width: 48px; height: 48px; flex: none; }
+      .callout p { margin: 0; font-size: 44px; font-weight: 500; line-height: 1.25; color: #0A0A0A; }
 
-    [id="09-close-lockup"] {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 880px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    [id="09-close-row"] { display: flex; align-items: center; gap: 30px; height: 116px; }
-    [id="09-close-mark"] { width: 116px; height: 116px; display: block; }
-    [id="09-close-mark"] path { fill: #0A0A0A; fill-opacity: 0; stroke: #0A0A0A; stroke-width: 200; stroke-linejoin: round; }
-    [id="09-close-word"] {
-      font-weight: 600;
-      font-size: 112px;
-      line-height: 1.0;
-      letter-spacing: -0.035em;
-      white-space: nowrap;
-    }
-    [id="09-close-word"] span { display: inline-block; }
-    [id="09-close-url"] {
-      margin-top: 30px;
-      font-family: "Geist Mono", ui-monospace, Menlo, monospace;
-      font-size: 40px;
-      font-weight: 500;
-      line-height: 1.2;
-      color: #BB4D00;
+      .lockup {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+      }
+      .row { display: flex; align-items: center; gap: 40px; }
+      .mark { width: 176px; height: 176px; display: block; }
+      .mark path { fill: #0A0A0A; stroke: #0A0A0A; stroke-width: 60; }
+      .word { display: flex; font-size: 168px; font-weight: 600; line-height: 1; letter-spacing: -0.045em; }
+      .word span { display: inline-block; }
+      .url { font-family: "Geist Mono", ui-monospace, Menlo, monospace; font-size: 64px; font-weight: 500; line-height: 1; color: #BB4D00; }
+
+      @media (orientation: portrait) {
+        .safe { left: 60px; right: 120px; top: 200px; bottom: 700px; }
+        .h1 { max-width: none; }
+        .callout { padding: 36px 40px; }
+        .row { flex-direction: column; gap: 36px; }
+        .mark { width: 200px; height: 200px; }
+        .word { font-size: 152px; }
+      }
     }
   </style>
 
-  <div id="root" data-composition-id="09-close" data-width="1920" data-height="1080" data-duration="12.121">
-    <div id="09-close-bg" class="clip" data-start="0" data-duration="12.121" data-track-index="0"></div>
-
-    <div id="09-close-stage" class="clip" data-start="0" data-duration="12.121" data-track-index="1">
-      <div id="09-close-rows">
-        <div class="09-close-line" id="09-close-row1">
-          <div class="09-close-slot">
-            <div class="09-close-pill 09-close-mini" id="09-close-m1">
-              <svg class="09-close-glyph" viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
-              <span>sk-or-v1-••••</span>
-            </div>
-            <div class="09-close-pill 09-close-mini" id="09-close-m2">
-              <svg class="09-close-glyph" viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
-              <span>sk-or-v1-••••</span>
-            </div>
-            <div class="09-close-pill 09-close-mini" id="09-close-m3">
-              <svg class="09-close-glyph" viewBox="0 0 24 24" fill="#636363" aria-hidden="true"><path d="M18.654 3.87a5.087 5.087 0 110 10.174L23.7 19.09c.64.641.187 1.737-.72 1.737H8.48a8.479 8.479 0 010-16.958h10.175zM8.479 7.26a5.087 5.087 0 100 10.176 5.087 5.087 0 000-10.175z"/></svg>
-              <span>sk-or-v1-••••</span>
-            </div>
+  <div id="root" data-composition-id="09-close" data-width="1920" data-height="1080" data-duration="12.206">
+    <div id="t9-bg" class="bg clip" data-start="0" data-duration="12.206" data-track-index="0"></div>
+    <div id="t9-stage" class="stage clip" data-start="0" data-duration="12.206" data-track-index="1">
+      <div class="safe">
+        <div class="msg" id="t9-msg">
+          <h1 class="h1" id="t9-h1">More requests than OpenRouter's limit allows</h1>
+          <div class="callout" id="t9-callout">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#3F3F46" stroke-width="3.5" stroke-linecap="round" aria-hidden="true"><circle cx="24" cy="24" r="20"/><path d="M24 21v13"/><circle cx="24" cy="14.5" r="2" fill="#3F3F46" stroke="none"/></svg>
+            <p>Shared keys have their own limits, so the number can vary.</p>
           </div>
-          <div class="09-close-text" id="09-close-t1">More room past OpenRouter's limit</div>
         </div>
-        <div class="09-close-line" id="09-close-row2">
-          <div class="09-close-slot">
-            <svg class="09-close-info" id="09-close-key" viewBox="0 0 52 52" fill="none" stroke="#636363" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="26" cy="26" r="22"/><path d="M26 23v13"/><circle cx="26" cy="16" r="1.8" fill="#636363" stroke="none"/></svg>
-          </div>
-          <div class="09-close-text" id="09-close-t2">Shared keys have limits too, so it can vary</div>
-        </div>
-      </div>
 
-      <div id="09-close-lockup">
-        <div id="09-close-row">
-          <svg id="09-close-mark" xmlns="http://www.w3.org/2000/svg" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter">
-            <g transform="translate(0,1254) scale(0.1,-0.1)">
-              <path id="09-close-mark-a" pathLength="1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
-              <path id="09-close-mark-b" pathLength="1" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
-            </g>
-          </svg>
-          <div id="09-close-word"><span>A</span><span>n</span><span>y</span><span>R</span><span>o</span><span>u</span><span>t</span><span>e</span><span>r</span></div>
+        <div class="lockup">
+          <div class="row">
+            <svg class="mark" viewBox="203.66 206.57 801.34 801.34" aria-label="AnyRouter">
+              <g transform="translate(0,1254) scale(0.1,-0.1)">
+                <path id="t9-mark-a" pathLength="1" d="M5208 9108 c-102 -165 -346 -575 -781 -1313 -671 -1138 -1030 -1742 -1457 -2455 -320 -533 -914 -1530 -928 -1556 -11 -21 -9 -22 41 -26 28 -3 111 -4 182 -3 72 0 279 2 460 3 l330 2 86 143 c80 131 240 395 754 1237 191 314 496 820 1053 1745 145 242 275 461 288 488 13 26 28 47 33 47 10 0 286 -441 973 -1550 233 -377 624 -1006 868 -1397 l445 -712 543 -3 c298 -2 542 -2 542 0 0 2 -93 150 -206 330 -325 515 -1256 2003 -1484 2372 -114 184 -319 517 -457 740 -557 902 -1209 1948 -1228 1968 -10 11 -21 -1 -57 -60z"/>
+                <path id="t9-mark-b" pathLength="1" d="M5600 9175 c0 -3 22 -40 48 -83 64 -101 327 -522 428 -684 l79 -127 970 -3 970 -3 73 -23 c258 -79 443 -233 566 -471 67 -129 97 -253 97 -401 0 -128 -8 -184 -46 -297 -92 -276 -338 -507 -622 -585 -72 -19 -108 -21 -480 -25 -222 -3 -403 -7 -403 -9 0 -2 50 -84 112 -182 128 -205 258 -410 513 -817 100 -159 250 -398 334 -530 83 -132 283 -450 443 -707 l293 -467 538 -1 c295 0 537 2 537 5 0 2 -52 89 -116 192 -64 103 -129 208 -144 233 -23 38 -318 510 -877 1402 -67 108 -123 201 -123 205 1 4 37 30 81 56 182 110 396 310 528 495 140 197 250 446 301 687 31 142 39 438 16 590 -61 405 -251 768 -554 1056 -135 129 -260 215 -437 304 -220 109 -400 162 -634 185 -105 10 -2491 15 -2491 5z"/>
+              </g>
+            </svg>
+            <div class="word" id="t9-word"><span>A</span><span>n</span><span>y</span><span>R</span><span>o</span><span>u</span><span>t</span><span>e</span><span>r</span></div>
+          </div>
+          <div class="url" id="t9-url">anyrouter.dev</div>
         </div>
-        <div id="09-close-url">anyrouter.dev</div>
       </div>
     </div>
   </div>
@@ -137,29 +111,23 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
   <script>
     (function () {
-      const $ = (id) => document.getElementById("09-close-" + id);
+      const $ = (id) => document.getElementById("t9-" + id);
       // Word starts from 09-close.words.json (seconds from frame start).
-      const POOL = 0.43, SHARED = 3.87, START = 8.01;
-      // Lockup text waits for the rows to finish clearing (START + 0.4) so no two text layers overlap.
-      const WORD = START + 0.42, URL = START + 0.54;
-
+      const POOL = 0.38, SHARED = 4.13, START = 7.44;
       const tl = gsap.timeline({ paused: true });
 
-      tl.fromTo([$("m1"), $("m2"), $("m3")], { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.08 }, POOL);
-      tl.fromTo($("t1"), { x: -16, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, POOL + 0.12);
+      tl.fromTo($("h1"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, POOL);
+      tl.fromTo($("callout"), { y: 32, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, SHARED);
 
-      tl.fromTo($("key"), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, SHARED);
-      tl.fromTo($("t2"), { x: -16, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, SHARED + 0.12);
+      // "Start at anyrouter.dev": the message clears before any lockup text arrives.
+      tl.to($("msg"), { y: -60, opacity: 0, duration: 0.4, ease: "power2.in" }, START);
+      tl.fromTo($("mark-a"), { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START + 0.3);
+      tl.fromTo($("mark-b"), { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START + 0.45);
+      tl.to([$("mark-a"), $("mark-b")], { fillOpacity: 1, duration: 0.45, ease: "power2.out" }, START + 0.9);
+      tl.fromTo($("word").children, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.035 }, START + 0.42);
+      tl.fromTo($("url"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, START + 0.6);
+      tl.set({}, {}, 12.206);
 
-      tl.to($("rows"), { y: -80, opacity: 0, duration: 0.4, ease: "power2.in" }, START);
-
-      tl.fromTo($("mark-a"), { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START + 0.14);
-      tl.fromTo($("mark-b"), { strokeDasharray: 1, strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, START + 0.32);
-      tl.fromTo([$("mark-a"), $("mark-b")], { fillOpacity: 0 }, { fillOpacity: 1, duration: 0.45, ease: "power2.out" }, START + 0.74);
-      tl.fromTo($("word").children, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.035 }, WORD);
-      tl.fromTo($("url"), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, URL);
-
-      window.__timelines = window.__timelines || {};
       window.__timelines["09-close"] = tl;
     })();
   </script>

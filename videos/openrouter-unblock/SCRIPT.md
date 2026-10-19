@@ -1,6 +1,6 @@
 # SCRIPT — Unblock OpenRouter free models
 
-**Voice:** Kokoro `af_heart` (the explainer's narrator)
+**Voice:** ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), `eleven_multilingual_v2`, stability 0.5, similarity 0.8, style 0.15, speaker boost on
 **Voice direction:** Calm, clear, friendly. A person showing a friend a fix. No hype, short pauses between sentences.
 
 ---
@@ -21,13 +21,13 @@
 
 **Delivery:** The answer. Warm, confident.
 
-    AnyRouter keeps your key. When it hits the limit, the request goes through a key another member shared. Their quota, not yours.
+    AnyRouter keeps your key. When your key hits the limit, AnyRouter sends the request through a key another member shared, and that request uses their quota.
 
 ## Line 4 — Step one (Frame 4)
 
 **Delivery:** Instructional, clear.
 
-    Step one. On open router dot A. I., create a new key for AnyRouter, and copy it.
+    Step one. On OpenRouter, create a new key for AnyRouter, and copy it.
 
 ## Line 5 — Step two (Frame 5)
 
@@ -39,7 +39,7 @@
 
 **Delivery:** Instructional, honest, even.
 
-    Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. Yours are tried first. Check that OpenRouter's terms allow sharing. You can turn it off any time.
+    Step three. Leave the other switches as they are, and turn on Share with pool. The dialog calls it donating. On the free plan, sharing is what lets you use the pool. Other members' requests can run on your key, and they use your OpenRouter quota too. AnyRouter tries your own requests first. Check that OpenRouter's terms allow sharing. You can turn it off any time.
 
 ## Line 7 — Step four (Frame 7)
 
@@ -51,10 +51,10 @@
 
 **Delivery:** Explaining, steady, a lift on the last sentence.
 
-    Now each request tries your key first. When it hits the limit, your key takes a short break, and the next requests go to keys other members shared. Then your key comes back.
+    For each request, AnyRouter tries your key first. When your key hits the limit, AnyRouter stops using it for a short time and sends the next requests to keys other members shared. Then it uses your key again.
 
 ## Line 9 — Close (Frame 9)
 
 **Delivery:** Settled, warm sign-off.
 
-    With the pool on, you get more room past OpenRouter's limit. Shared keys have their own limits too, so the extra room can vary. Start at any router dot dev.
+    With the pool on, you can send more requests than OpenRouter's limit allows. Shared keys have their own limits, so how many more can vary. Start at any router dot dev.
