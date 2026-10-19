@@ -1,0 +1,652 @@
+{
+  "total_duration_s": 35.17,
+  "width": 1920,
+  "height": 1080,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0,
+      "end": 2.078,
+      "text": "Have a provider key with quota you don't use?",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Have",
+          "start": 0,
+          "end": 0.232
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "a",
+          "start": 0.255,
+          "end": 0.279
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "provider",
+          "start": 0.325,
+          "end": 0.697
+        },
+        {
+          "id": "caption-word-0-3",
+          "text": "key",
+          "start": 0.743,
+          "end": 0.859
+        },
+        {
+          "id": "caption-word-0-4",
+          "text": "with",
+          "start": 0.894,
+          "end": 1.01
+        },
+        {
+          "id": "caption-word-0-5",
+          "text": "quota",
+          "start": 1.057,
+          "end": 1.312
+        },
+        {
+          "id": "caption-word-0-6",
+          "text": "you",
+          "start": 1.358,
+          "end": 1.44
+        },
+        {
+          "id": "caption-word-0-7",
+          "text": "don't",
+          "start": 1.474,
+          "end": 1.637
+        },
+        {
+          "id": "caption-word-0-8",
+          "text": "use?",
+          "start": 1.695,
+          "end": 2.078
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 2.403,
+      "end": 4.133,
+      "text": "Share it with the AnyRouter pool.",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "Share",
+          "start": 2.403,
+          "end": 2.624
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "it",
+          "start": 2.647,
+          "end": 2.694
+        },
+        {
+          "id": "caption-word-1-2",
+          "text": "with",
+          "start": 2.717,
+          "end": 2.81
+        },
+        {
+          "id": "caption-word-1-3",
+          "text": "the",
+          "start": 2.844,
+          "end": 2.914
+        },
+        {
+          "id": "caption-word-1-4",
+          "text": "AnyRouter",
+          "start": 2.972,
+          "end": 3.448
+        },
+        {
+          "id": "caption-word-1-5",
+          "text": "pool.",
+          "start": 3.495,
+          "end": 4.133
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 2,
+      "start": 5.059,
+      "end": 7.799,
+      "text": "Add the key, and turn on Donate to the shared pool.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "Add",
+          "start": 5.059,
+          "end": 5.28
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "the",
+          "start": 5.314,
+          "end": 5.384
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "key,",
+          "start": 5.442,
+          "end": 5.663
+        },
+        {
+          "id": "caption-word-2-3",
+          "text": "and",
+          "start": 5.686,
+          "end": 5.779
+        },
+        {
+          "id": "caption-word-2-4",
+          "text": "turn",
+          "start": 5.825,
+          "end": 6.046
+        },
+        {
+          "id": "caption-word-2-5",
+          "text": "on",
+          "start": 6.104,
+          "end": 6.208
+        },
+        {
+          "id": "caption-word-2-6",
+          "text": "Donate",
+          "start": 6.278,
+          "end": 6.65
+        },
+        {
+          "id": "caption-word-2-7",
+          "text": "to",
+          "start": 6.673,
+          "end": 6.719
+        },
+        {
+          "id": "caption-word-2-8",
+          "text": "the",
+          "start": 6.766,
+          "end": 6.835
+        },
+        {
+          "id": "caption-word-2-9",
+          "text": "shared",
+          "start": 6.87,
+          "end": 7.137
+        },
+        {
+          "id": "caption-word-2-10",
+          "text": "pool.",
+          "start": 7.184,
+          "end": 7.799
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 3,
+      "start": 9.059,
+      "end": 11.068,
+      "text": "Pool members' requests can then run through it,",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "Pool",
+          "start": 9.059,
+          "end": 9.303
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "members'",
+          "start": 9.338,
+          "end": 9.651
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "requests",
+          "start": 9.686,
+          "end": 10.069
+        },
+        {
+          "id": "caption-word-3-3",
+          "text": "can",
+          "start": 10.116,
+          "end": 10.232
+        },
+        {
+          "id": "caption-word-3-4",
+          "text": "then",
+          "start": 10.278,
+          "end": 10.406
+        },
+        {
+          "id": "caption-word-3-5",
+          "text": "run",
+          "start": 10.464,
+          "end": 10.603
+        },
+        {
+          "id": "caption-word-3-6",
+          "text": "through",
+          "start": 10.638,
+          "end": 10.87
+        },
+        {
+          "id": "caption-word-3-7",
+          "text": "it,",
+          "start": 10.905,
+          "end": 11.068
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 3,
+      "start": 11.311,
+      "end": 13.053,
+      "text": "and yours always come first.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "and",
+          "start": 11.311,
+          "end": 11.532
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "yours",
+          "start": 11.602,
+          "end": 11.834
+        },
+        {
+          "id": "caption-word-4-2",
+          "text": "always",
+          "start": 11.88,
+          "end": 12.124
+        },
+        {
+          "id": "caption-word-4-3",
+          "text": "come",
+          "start": 12.17,
+          "end": 12.333
+        },
+        {
+          "id": "caption-word-4-4",
+          "text": "first.",
+          "start": 12.379,
+          "end": 13.053
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 4,
+      "start": 14.059,
+      "end": 15.406,
+      "text": "You get the Go plan free,",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "You",
+          "start": 14.059,
+          "end": 14.21
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "get",
+          "start": 14.268,
+          "end": 14.372
+        },
+        {
+          "id": "caption-word-5-2",
+          "text": "the",
+          "start": 14.407,
+          "end": 14.477
+        },
+        {
+          "id": "caption-word-5-3",
+          "text": "Go",
+          "start": 14.523,
+          "end": 14.686
+        },
+        {
+          "id": "caption-word-5-4",
+          "text": "plan",
+          "start": 14.756,
+          "end": 15.023
+        },
+        {
+          "id": "caption-word-5-5",
+          "text": "free,",
+          "start": 15.116,
+          "end": 15.406
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 4,
+      "start": 15.429,
+      "end": 16.985,
+      "text": "with four dollars of credit a month,",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "with",
+          "start": 15.429,
+          "end": 15.568
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "four",
+          "start": 15.615,
+          "end": 15.766
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "dollars",
+          "start": 15.8,
+          "end": 16.068
+        },
+        {
+          "id": "caption-word-6-3",
+          "text": "of",
+          "start": 16.102,
+          "end": 16.149
+        },
+        {
+          "id": "caption-word-6-4",
+          "text": "credit",
+          "start": 16.207,
+          "end": 16.497
+        },
+        {
+          "id": "caption-word-6-5",
+          "text": "a",
+          "start": 16.532,
+          "end": 16.555
+        },
+        {
+          "id": "caption-word-6-6",
+          "text": "month,",
+          "start": 16.613,
+          "end": 16.985
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 4,
+      "start": 17.112,
+      "end": 19.4,
+      "text": "and five percent back on what your key serves.",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "and",
+          "start": 17.112,
+          "end": 17.263
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "five",
+          "start": 17.321,
+          "end": 17.507
+        },
+        {
+          "id": "caption-word-7-2",
+          "text": "percent",
+          "start": 17.53,
+          "end": 17.821
+        },
+        {
+          "id": "caption-word-7-3",
+          "text": "back",
+          "start": 17.867,
+          "end": 18.053
+        },
+        {
+          "id": "caption-word-7-4",
+          "text": "on",
+          "start": 18.111,
+          "end": 18.157
+        },
+        {
+          "id": "caption-word-7-5",
+          "text": "what",
+          "start": 18.192,
+          "end": 18.297
+        },
+        {
+          "id": "caption-word-7-6",
+          "text": "your",
+          "start": 18.331,
+          "end": 18.436
+        },
+        {
+          "id": "caption-word-7-7",
+          "text": "key",
+          "start": 18.471,
+          "end": 18.622
+        },
+        {
+          "id": "caption-word-7-8",
+          "text": "serves.",
+          "start": 18.68,
+          "end": 19.4
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 5,
+      "start": 20.559,
+      "end": 22.811,
+      "text": "Those requests use your provider quota.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "Those",
+          "start": 20.559,
+          "end": 20.838
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "requests",
+          "start": 20.884,
+          "end": 21.256
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "use",
+          "start": 21.314,
+          "end": 21.488
+        },
+        {
+          "id": "caption-word-8-3",
+          "text": "your",
+          "start": 21.523,
+          "end": 21.639
+        },
+        {
+          "id": "caption-word-8-4",
+          "text": "provider",
+          "start": 21.708,
+          "end": 22.161
+        },
+        {
+          "id": "caption-word-8-5",
+          "text": "quota.",
+          "start": 22.242,
+          "end": 22.811
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 5,
+      "start": 23.508,
+      "end": 25.946,
+      "text": "Check that your provider's terms allow sharing.",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "Check",
+          "start": 23.508,
+          "end": 23.74
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "that",
+          "start": 23.775,
+          "end": 23.879
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "your",
+          "start": 23.914,
+          "end": 24.019
+        },
+        {
+          "id": "caption-word-9-3",
+          "text": "provider's",
+          "start": 24.077,
+          "end": 24.53
+        },
+        {
+          "id": "caption-word-9-4",
+          "text": "terms",
+          "start": 24.576,
+          "end": 24.866
+        },
+        {
+          "id": "caption-word-9-5",
+          "text": "allow",
+          "start": 24.901,
+          "end": 25.11
+        },
+        {
+          "id": "caption-word-9-6",
+          "text": "sharing.",
+          "start": 25.191,
+          "end": 25.946
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 6,
+      "start": 26.559,
+      "end": 28.045,
+      "text": "You can turn it off any time.",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "You",
+          "start": 26.559,
+          "end": 26.722
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "can",
+          "start": 26.756,
+          "end": 26.861
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "turn",
+          "start": 26.896,
+          "end": 27.07
+        },
+        {
+          "id": "caption-word-10-3",
+          "text": "it",
+          "start": 27.116,
+          "end": 27.186
+        },
+        {
+          "id": "caption-word-10-4",
+          "text": "off",
+          "start": 27.232,
+          "end": 27.36
+        },
+        {
+          "id": "caption-word-10-5",
+          "text": "any",
+          "start": 27.418,
+          "end": 27.557
+        },
+        {
+          "id": "caption-word-10-6",
+          "text": "time.",
+          "start": 27.616,
+          "end": 28.045
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 7,
+      "start": 29.559,
+      "end": 30.557,
+      "text": "Share a spare key.",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "Share",
+          "start": 29.559,
+          "end": 29.838
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "a",
+          "start": 29.861,
+          "end": 29.884
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "spare",
+          "start": 29.919,
+          "end": 30.186
+        },
+        {
+          "id": "caption-word-11-3",
+          "text": "key.",
+          "start": 30.244,
+          "end": 30.557
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 7,
+      "start": 30.801,
+      "end": 32.67,
+      "text": "Start at anyrouter.dev.",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "Start",
+          "start": 30.801,
+          "end": 31.08
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "at",
+          "start": 31.115,
+          "end": 31.184
+        },
+        {
+          "id": "caption-word-12-2",
+          "text": "anyrouter.dev.",
+          "start": 31.242,
+          "end": 32.67
+        }
+      ]
+    }
+  ]
+}
