@@ -1,0 +1,1286 @@
+{
+  "version": 1,
+  "useCases": [
+    {
+      "slug": "claude-code",
+      "url": "https://anyrouter.dev/use-cases/claude-code",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "anthropic"
+      ],
+      "kicker": "Claude Code",
+      "title": "Run Claude Code through AnyRouter",
+      "summary": "Run Claude Code through AnyRouter with one command",
+      "hook": "Install the anyr CLI, then anyr claude — it injects the base URL, key, and model. Env vars are the fallback if you already run claude yourself.",
+      "problem": "Claude Code talks to Anthropic by default. To use other models, share billing across tools, or keep an audit log, you need a custom base URL without rewriting how the CLI works.",
+      "steps": [
+        "Install the anyr CLI with the curl | bash one-liner (native binary, no npm).",
+        "Run anyr claude. First run signs you in or pastes an sk-ar- key; later runs reuse ~/.anyrouter/config.yaml.",
+        "Pin a catalog model when you want one (anyr claude --model anyrouter/auto). Env vars remain the manual fallback."
+      ],
+      "command": {
+        "text": "anyr claude",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude",
+          "title": "anyr CLI"
+        },
+        {
+          "lang": "bash",
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nclaude",
+          "title": "Env wrapper"
+        }
+      ],
+      "diagram": {
+        "label": "Claude Code sends requests to AnyRouter, which forwards them to the model you picked.",
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "one URL",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "m",
+            "kind": "provider",
+            "label": "Your model",
+            "note": "any model",
+            "provider": "anthropic"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "m"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "grokbot",
+      "url": "https://anyrouter.dev/use-cases/grokbot",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "xai"
+      ],
+      "kicker": "Grok Bot",
+      "title": "Grok Bot + Herdr + Anyr CLI coding loop",
+      "summary": "A live coding loop: Grok Bot, Herdr, anyr CLI",
+      "hook": "A live coding agent on a repo checkout: Grok Bot assigns the goal, Herdr shows the box, and the anyr CLI launches Claude Code through AnyRouter.",
+      "problem": "Cursor cloud on-demand can be exhausted or blocked. You still need a live terminal you can attach, a fleet manager to assign goals, and a way to run Claude Code against catalog models.",
+      "steps": [
+        "Install the anyr CLI if needed, then open a Herdr space on the repo checkout at the branch tip.",
+        "Launch anyr claude in that space with --yolo so it injects the base URL, key, and model.",
+        "Paste the goal into Grok Bot and let it drive the agent; squash-merge the PR and deploy from local."
+      ],
+      "command": {
+        "text": "anyr claude --model \"poolside/laguna-s-2.1[1m]\" --yolo",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude",
+          "title": "anyr CLI"
+        },
+        {
+          "lang": "bash",
+          "code": "anyr claude --model \"poolside/laguna-s-2.1[1m]\" --yolo",
+          "title": "Grok Bot loop"
+        }
+      ]
+    },
+    {
+      "slug": "opencode",
+      "url": "https://anyrouter.dev/use-cases/opencode",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "opencode"
+      ],
+      "kicker": "OpenCode",
+      "title": "Run OpenCode through AnyRouter",
+      "summary": "Add an AnyRouter provider to OpenCode",
+      "hook": "One CLI command injects an AnyRouter provider for the session, or add a custom provider in opencode.json — one key, the Chat Completions catalog, and request logs.",
+      "problem": "OpenCode's built-in providers each want their own key. Switching models or sharing billing with Claude Code and Codex means editing every tool separately.",
+      "steps": [
+        "Create an AnyRouter key in the dashboard (sk-ar-…), or let the CLI sign you in.",
+        "Launch with anyr opencode so it injects the provider for that session, or add AnyRouter to opencode.json for a persistent config.",
+        "Pick an anyrouter/… model in /models and confirm the call in request logs."
+      ],
+      "command": {
+        "text": "anyr opencode",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "anyr opencode",
+          "title": "anyr launcher"
+        },
+        {
+          "lang": "json",
+          "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"anyrouter\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"AnyRouter\",\n      \"options\": {\n        \"baseURL\": \"https://anyrouter.dev/api/v1\",\n        \"apiKey\": \"{env:ANYROUTER_API_KEY}\"\n      },\n      \"models\": {\n        \"anthropic/claude-sonnet-4-6\": {\n          \"name\": \"Claude Sonnet 4.6\"\n        }\n      }\n    }\n  },\n  \"model\": \"anyrouter/anthropic/claude-sonnet-4-6\"\n}",
+          "title": "opencode.json"
+        }
+      ]
+    },
+    {
+      "slug": "coding-agents",
+      "url": "https://anyrouter.dev/use-cases/coding-agents",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "anthropic",
+        "opencode",
+        "cursor"
+      ],
+      "kicker": "One gateway",
+      "title": "Run every coding agent through one URL",
+      "summary": "Point every OpenAI-compatible coding agent at one URL",
+      "hook": "Claude Code, Codex, OpenCode, Cursor, and other OpenAI-compatible tools share 270+ models, one balance, and one request log.",
+      "problem": "Each coding agent wants its own provider key and base URL. Switching models or comparing cost means editing every tool separately.",
+      "steps": [
+        "Mint one AnyRouter key.",
+        "Set Anthropic env vars for Claude Code, and OpenAI env vars for Codex, Cursor, and similar tools.",
+        "Start on anyrouter/auto so failover picks a model that is answering."
+      ],
+      "command": {
+        "text": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"",
+          "title": "Claude Code"
+        },
+        {
+          "lang": "bash",
+          "code": "export OPENAI_BASE_URL=\"https://anyrouter.dev/api/v1\"\nexport OPENAI_API_KEY=\"$ANYROUTER_API_KEY\"",
+          "title": "Codex / Cursor"
+        },
+        {
+          "lang": "bash",
+          "code": "anyr opencode",
+          "title": "OpenCode"
+        }
+      ]
+    },
+    {
+      "slug": "hermes-agent",
+      "url": "https://anyrouter.dev/use-cases/hermes-agent",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "hermes"
+      ],
+      "kicker": "Hermes Agent",
+      "title": "Run Hermes Agent on AnyRouter",
+      "summary": "Install the AnyRouter plugin and pick a model",
+      "hook": "Install the AnyRouter provider plugin, add one key, and Hermes lists only the models that can call tools.",
+      "problem": "Hermes Agent runs long tool loops, and a single upstream model means you eat that provider's outages and rate limits. Picking a model that cannot call tools breaks the loop.",
+      "steps": [
+        "Install the plugin with hermes plugins install anyrouter, then check it with hermes plugins list.",
+        "Add the key to ~/.hermes/.env as ANYROUTER_API_KEY=sk-.... Get one at anyrouter.dev; the same key also works against the OpenAI-compatible endpoint anyrouter.dev/api/v1.",
+        "Pick a model: run hermes model and choose anyrouter, or launch with hermes --provider anyrouter -m anyrouter/hermes. anyrouter/hermes auto-routes across the top tool-calling models with fallback, a good default for agentic work."
+      ],
+      "command": {
+        "text": "hermes plugins install anyrouter"
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "hermes plugins install anyrouter\nhermes plugins list",
+          "title": "Install the plugin"
+        },
+        {
+          "lang": "bash",
+          "code": "ANYROUTER_API_KEY=sk-...",
+          "title": "~/.hermes/.env"
+        },
+        {
+          "lang": "bash",
+          "code": "hermes --provider anyrouter -m anyrouter/hermes",
+          "title": "Run Hermes on AnyRouter"
+        },
+        {
+          "lang": "bash",
+          "code": "# Point Hermes at a proxy or self-hosted relay\nANYROUTER_BASE_URL=https://relay.example.com/api/v1\n# Credit Hermes traffic in the public app rankings\nANYROUTER_APP_ATTRIBUTION=1",
+          "title": "Optional settings"
+        }
+      ]
+    },
+    {
+      "slug": "claude-agent-sdk",
+      "url": "https://anyrouter.dev/use-cases/claude-agent-sdk",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "anthropic"
+      ],
+      "kicker": "Agent SDK",
+      "title": "Run the Claude Agent SDK on any model",
+      "summary": "Point query() at AnyRouter, no SDK fork",
+      "hook": "query() already reads ANTHROPIC_BASE_URL and ANTHROPIC_API_KEY. Point both at AnyRouter — no SDK fork.",
+      "problem": "The Agent SDK is built for Anthropic's /messages API. Teams still want GPT, GLM, Llama, or a failover preset without rewriting the loop.",
+      "steps": [
+        "Install @anthropic-ai/claude-agent-sdk.",
+        "Set ANTHROPIC_BASE_URL to https://anyrouter.dev/api and ANTHROPIC_API_KEY to your sk-ar key.",
+        "Pass model: \"anyrouter/auto\" (or any catalog id) in query() options."
+      ],
+      "command": {
+        "text": "model: \"anyrouter/auto\""
+      },
+      "snippets": [
+        {
+          "lang": "ts",
+          "code": "import { query } from \"@anthropic-ai/claude-agent-sdk\"\n\nfor await (const message of query({\n  prompt: \"List the files here and summarize the project.\",\n  options: {\n    model: \"anyrouter/auto\",\n    env: {\n      ...process.env,\n      ANTHROPIC_BASE_URL: \"https://anyrouter.dev/api\",\n      ANTHROPIC_API_KEY: process.env.ANYROUTER_API_KEY ?? \"\",\n    },\n  },\n})) {\n  if (message.type === \"result\") console.log(message.result)\n}",
+          "title": "query()"
+        }
+      ]
+    },
+    {
+      "slug": "claude-code-free-models",
+      "url": "https://anyrouter.dev/use-cases/claude-code-free-models",
+      "group": "coding-agents",
+      "cost": "free",
+      "logos": [
+        "anthropic"
+      ],
+      "kicker": "Free coding agent",
+      "title": "Run Claude Code on free models",
+      "summary": "Code with Claude Code on anyrouter/free",
+      "hook": "Point Claude Code at anyrouter/free and it codes on whichever free model is answering, with no credit deduction.",
+      "problem": "Trying a coding agent on a hobby repo should not need a paid plan with one vendor. You want a free model that fails over, and no daily cap.",
+      "steps": [
+        "Install the anyr CLI and sign in. Upgrade to Go ($2/mo) or donate a key to get paid-model access.",
+        "Run anyr claude --model anyrouter/free. Requests do not deduct credits.",
+        "Run anyr models to list catalog ids, and switch to anyrouter/auto or a pinned model when a task needs more."
+      ],
+      "command": {
+        "text": "anyr claude --model anyrouter/free",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anyrouter/free",
+          "title": "anyr CLI"
+        },
+        {
+          "lang": "bash",
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nclaude --model anyrouter/free",
+          "title": "Env wrapper"
+        }
+      ],
+      "diagram": {
+        "label": "Claude Code calls AnyRouter with anyrouter/free. AnyRouter answers from a free model and moves to another free model if that one is unavailable.",
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "a",
+            "kind": "provider",
+            "label": "Free model",
+            "note": "first candidate"
+          },
+          {
+            "id": "b",
+            "kind": "fallback",
+            "label": "Next free model",
+            "note": "if first fails"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "a"
+          },
+          {
+            "from": "gw",
+            "to": "b",
+            "dashed": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "openrouter-free-fallback",
+      "url": "https://anyrouter.dev/use-cases/openrouter-free-fallback",
+      "group": "free-cheap",
+      "cost": "free",
+      "logos": [
+        "openrouter"
+      ],
+      "kicker": "Free models",
+      "title": "OpenRouter free models, with fallback to another free model",
+      "summary": "Free models that fall back to another free model",
+      "hook": "Call a :free model by id. If its routes are rate limited or down, AnyRouter answers through anyrouter/free instead, with a different free model, and tells you which one.",
+      "problem": "A free model on one route runs out at busy hours, and a script that retries the same route keeps failing. You want a different free model to answer without writing the retry yourself.",
+      "steps": [
+        "Call a :free model id with your AnyRouter key, as in the curl below. No provider key is needed and no credits are used.",
+        "Check the model field in the response, and the X-AnyRouter-Fallback header. When the header reads anyrouter/free, a different free model answered."
+      ],
+      "command": {
+        "text": "\"model\": \"google/gemma-4-31b:free\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -si https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"google/gemma-4-31b:free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }' | grep -i -e x-anyrouter-fallback -e '\"model\"'",
+          "title": "curl · which model answered"
+        }
+      ],
+      "diagram": {
+        "label": "Your app calls AnyRouter with a :free model. If that model's routes are rate limited, AnyRouter answers with a different free model through anyrouter/free.",
+        "nodes": [
+          {
+            "id": "app",
+            "kind": "tool",
+            "label": "Your app",
+            "note": "OpenAI API"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "or",
+            "kind": "provider",
+            "label": "Your :free model",
+            "note": "free route",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "free",
+            "kind": "fallback",
+            "label": "Other free model",
+            "note": "anyrouter/free"
+          }
+        ],
+        "edges": [
+          {
+            "from": "app",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "or"
+          },
+          {
+            "from": "gw",
+            "to": "free",
+            "dashed": true
+          }
+        ]
+      },
+      "notes": [
+        "The fallback is a different model. Pin another model, or check the header, if you need that exact one."
+      ],
+      "limits": [
+        "The fallback answers with a different free model. It does not raise OpenRouter's or any provider's limit.",
+        "Free requests allow 2400 a minute per API key and have no daily cap.",
+        "When every free route is busy, the request fails and you retry later."
+      ]
+    },
+    {
+      "slug": "openrouter-free-in-your-tools",
+      "url": "https://anyrouter.dev/use-cases/openrouter-free-in-your-tools",
+      "group": "coding-agents",
+      "cost": "free",
+      "logos": [
+        "openrouter",
+        "opencode"
+      ],
+      "kicker": "Editor tools",
+      "title": "OpenRouter free models in OpenCode and Cline",
+      "summary": "One OpenAI-compatible URL for Cline, OpenCode and more",
+      "hook": "Any tool with an OpenAI-compatible provider can use free models through one base URL. Set the key and a :free model id, and the tool needs no other setup.",
+      "problem": "Each editor tool wants its own provider, key and model list. Free models change often, so the setup you copied last month points at a model that is gone.",
+      "steps": [
+        "Create an AnyRouter key under Dashboard → Keys. It starts with sk-ar-.",
+        "In the tool, add an OpenAI-compatible provider with the base URL and your key, and set the model to a :free id such as google/gemma-4-31b:free.",
+        "Prefer a model that AnyRouter picks for you? Use anyrouter/free instead. If a :free model has no route left, AnyRouter answers through anyrouter/free."
+      ],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1"
+      },
+      "snippets": [
+        {
+          "lang": "text",
+          "code": "API Provider: OpenAI Compatible\nBase URL: https://anyrouter.dev/api/v1\nAPI Key:  sk-ar-...\nModel:    google/gemma-4-31b:free",
+          "title": "Cline · OpenAI Compatible"
+        },
+        {
+          "lang": "json",
+          "code": "{\n  \"$schema\": \"https://opencode.ai/config.json\",\n  \"provider\": {\n    \"anyrouter\": {\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"name\": \"AnyRouter\",\n      \"options\": {\n        \"baseURL\": \"https://anyrouter.dev/api/v1\",\n        \"apiKey\": \"{env:ANYROUTER_API_KEY}\"\n      },\n      \"models\": {\n        \"google/gemma-4-31b:free\": { \"name\": \"Gemma 4 31B (free)\" }\n      }\n    }\n  },\n  \"model\": \"anyrouter/google/gemma-4-31b:free\"\n}",
+          "title": "opencode.json"
+        }
+      ],
+      "diagram": {
+        "label": "Your editor tool sends requests to one AnyRouter base URL. AnyRouter answers from the free model you named.",
+        "nodes": [
+          {
+            "id": "tool",
+            "kind": "tool",
+            "label": "Cline or OpenCode",
+            "note": "OpenAI API"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "one base URL",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "free",
+            "kind": "provider",
+            "label": "Free model",
+            "note": "a :free id",
+            "provider": "anyrouter"
+          }
+        ],
+        "edges": [
+          {
+            "from": "tool",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "free"
+          }
+        ]
+      },
+      "limits": [
+        "Coding agents call tools. Pick a model that supports tool calling; free models vary.",
+        "Free models have smaller context windows and shorter answers than paid ones. Check the model page.",
+        "Free requests allow 2400 a minute per API key and have no daily cap. A busy free route can still be slow.",
+        "When a :free model falls back, a different free model answers. Check the model field if you need one exact model."
+      ]
+    },
+    {
+      "slug": "nvidia-nim-models",
+      "url": "https://anyrouter.dev/use-cases/nvidia-nim-models",
+      "group": "free-cheap",
+      "cost": "both",
+      "logos": [
+        "nvidia"
+      ],
+      "kicker": "NVIDIA NIM",
+      "title": "NVIDIA NIM models through one endpoint",
+      "summary": "Call NVIDIA models with an AnyRouter key",
+      "hook": "Call Nemotron and other NVIDIA models with your AnyRouter key. Some run on a free shared route. You can also pin your own NVIDIA key to them.",
+      "problem": "NVIDIA's endpoint is OpenAI-compatible, but it is one more key, one more base URL and one more rate limit to track next to your other providers.",
+      "steps": [
+        "Pick a model on the NVIDIA page of the catalog. Models marked Free run on the shared route.",
+        "Call it with your AnyRouter key, as in the curl below.",
+        "Optional: get a key at build.nvidia.com (it starts with nvapi-), add it under Dashboard → BYOK → NVIDIA NIM, and turn on Always use → Strict. Requests for these models then use only your key, and if it fails the request fails."
+      ],
+      "command": {
+        "text": "\"model\": \"nvidia/nemotron-3-super-120b-a12b\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"nvidia/nemotron-3-super-120b-a12b\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · nvidia/nemotron-3-super-120b-a12b"
+        }
+      ],
+      "diagram": {
+        "label": "Your app calls AnyRouter, which sends the request to an NVIDIA NIM model, on the shared free route or on your own NVIDIA key.",
+        "nodes": [
+          {
+            "id": "app",
+            "kind": "tool",
+            "label": "Your app",
+            "note": "OpenAI API"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "nim",
+            "kind": "provider",
+            "label": "NVIDIA NIM",
+            "note": "free route or your key",
+            "provider": "nvidia"
+          }
+        ],
+        "edges": [
+          {
+            "from": "app",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "nim"
+          }
+        ]
+      },
+      "limits": [
+        "NVIDIA's free developer tier allows about 40 requests a minute per key and is meant for development and testing (see docs.api.nvidia.com/nim/docs/api-quickstart).",
+        "The shared free route is shared by every user, so at busy hours a request can fail.",
+        "With your own key pinned in Strict mode, the limit and any billing are NVIDIA's, on your account. AnyRouter adds no markup.",
+        "Which NVIDIA models are free can change. The catalog page shows the current price."
+      ]
+    },
+    {
+      "slug": "gemini-in-claude-code",
+      "url": "https://anyrouter.dev/use-cases/gemini-in-claude-code",
+      "group": "coding-agents",
+      "cost": "paid",
+      "logos": [
+        "anthropic",
+        "google"
+      ],
+      "kicker": "Claude Code + Gemini",
+      "title": "Gemini models in Claude Code",
+      "summary": "Pick a Gemini model inside Claude Code",
+      "hook": "Claude Code talks to the Messages API, and AnyRouter translates it for any catalog model. Save a Google key, then choose a Gemini model with --model.",
+      "problem": "You like Claude Code's loop but want to try Gemini on the same repo, without switching to another tool or editing its config by hand.",
+      "steps": [
+        "Create a key in Google AI Studio, then add it under Dashboard → BYOK → Google AI Studio.",
+        "Install the anyr CLI and run anyr claude with a Gemini model. A concrete --model also sets Claude Code's haiku, sonnet, opus and subagent models, so background tasks use Gemini too.",
+        "Prefer plain env vars? Point ANTHROPIC_BASE_URL at https://anyrouter.dev/api and pass the same model to claude."
+      ],
+      "command": {
+        "text": "anyr claude --model google/gemini-2.5-pro",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model google/gemini-2.5-pro",
+          "title": "anyr CLI"
+        },
+        {
+          "lang": "bash",
+          "code": "export ANTHROPIC_BASE_URL=\"https://anyrouter.dev/api\"\nexport ANTHROPIC_API_KEY=\"$ANYROUTER_API_KEY\"\nexport ANTHROPIC_DEFAULT_HAIKU_MODEL=\"google/gemini-2.5-pro\"\nclaude --model google/gemini-2.5-pro",
+          "title": "Env wrapper"
+        }
+      ],
+      "diagram": {
+        "label": "Claude Code sends Messages API requests to AnyRouter. AnyRouter translates them and calls a Gemini model on your Google key.",
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "note": "Messages API",
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "note": "translates",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "gem",
+            "kind": "provider",
+            "label": "Gemini",
+            "note": "your Google key",
+            "provider": "google"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "gem"
+          }
+        ]
+      },
+      "limits": [
+        "Gemini routes run on keys you add, so Google's limits and billing apply to your account.",
+        "Claude Code is built around Claude. Gemini models vary in how well they handle tool calls and long edits.",
+        "With plain env vars, set ANTHROPIC_DEFAULT_HAIKU_MODEL too, or Claude Code's small background tasks still call a Claude model.",
+        "Features that exist only on Anthropic's API, such as its prompt cache, do not apply on a Gemini route."
+      ]
+    },
+    {
+      "slug": "claude-code-multiple-keys",
+      "url": "https://anyrouter.dev/use-cases/claude-code-multiple-keys",
+      "group": "keys-pool",
+      "cost": "paid",
+      "logos": [
+        "anthropic"
+      ],
+      "kicker": "Keys behind Claude Code",
+      "title": "Several provider keys behind Claude Code",
+      "summary": "Add more than one provider key and fail over",
+      "hook": "Save keys for more than one provider. Claude Code keeps one URL, and AnyRouter tries the next provider when one fails.",
+      "problem": "One revoked, paused or capped key stops Claude Code mid-task. Swapping keys in your shell by hand loses the session.",
+      "steps": [
+        "Add a key for one provider under Dashboard → BYOK, then add a key for a second provider, such as OpenRouter.",
+        "On each provider card, keep the Fallback strategy. Round Robin and Weighted spread requests across a provider's keys instead.",
+        "Run anyr claude. anyrouter/coding picks from every model your saved keys can reach and moves on if a provider is busy."
+      ],
+      "command": {
+        "text": "anyr claude --model anyrouter/coding",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anyrouter/coding",
+          "title": "anyr CLI"
+        }
+      ],
+      "diagram": {
+        "label": "Claude Code calls AnyRouter. AnyRouter tries your first provider. If it fails or is rate limited, AnyRouter tries your second provider.",
+        "nodes": [
+          {
+            "id": "cc",
+            "kind": "tool",
+            "label": "Claude Code",
+            "provider": "anthropic"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "k1",
+            "kind": "provider",
+            "label": "Anthropic key",
+            "note": "tried first",
+            "provider": "anthropic"
+          },
+          {
+            "id": "k2",
+            "kind": "fallback",
+            "label": "OpenRouter key",
+            "note": "if the first fails",
+            "provider": "openrouter"
+          }
+        ],
+        "edges": [
+          {
+            "from": "cc",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "k1"
+          },
+          {
+            "from": "gw",
+            "to": "k2",
+            "dashed": true
+          }
+        ]
+      },
+      "limits": [
+        "Keys for one provider should come from one account you own. A second key there is redundancy against a revoked key, not more rate limit.",
+        "Fallback moves to the next key on a rate limit or provider error. If every key fails, the provider's error comes back.",
+        "A key that fails repeatedly is marked unhealthy and skipped until it recovers."
+      ]
+    },
+    {
+      "slug": "virtual-presets",
+      "url": "https://anyrouter.dev/use-cases/virtual-presets",
+      "group": "free-cheap",
+      "cost": "both",
+      "logos": [],
+      "kicker": "Built-in presets",
+      "title": "Start on anyrouter/free or anyrouter/auto",
+      "summary": "Start on anyrouter/free or anyrouter/auto",
+      "hook": "Two built-in virtual models: free failover on every plan (anyrouter/free) and stable paid failover (anyrouter/auto). Do not pick a flaky SKU for your first request.",
+      "problem": "A first request that pins a single free SKU often 404s or 429s. You want something that is answering right now, with automatic fallback.",
+      "steps": [
+        "Create a key. anyrouter/free needs the Go plan ($2/mo) or a donated provider key; it does not deduct credits and has no daily limit.",
+        "Call model anyrouter/free for the subsidized free chain, or anyrouter/auto for paid models that are healthy right now.",
+        "Read the model pages and the free-tier docs for failover behavior."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        },
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ]
+    },
+    {
+      "slug": "nvidia-free-key",
+      "url": "https://anyrouter.dev/use-cases/nvidia-free-key",
+      "group": "free-cheap",
+      "cost": "free",
+      "logos": [
+        "nvidia"
+      ],
+      "kicker": "NVIDIA BYOK",
+      "title": "Route a free NVIDIA key through one URL",
+      "summary": "Use a free NVIDIA key as BYOK",
+      "hook": "NVIDIA issues free API keys. Add one as BYOK and every OpenAI-compatible app you own can use it through AnyRouter.",
+      "problem": "A raw NVIDIA key only works in NVIDIA's client. Other apps still need their own keys, and you get no failover if NIM is down.",
+      "steps": [
+        "Create a free NVIDIA API key from NVIDIA's developer site.",
+        "Add it under BYOK in the AnyRouter dashboard.",
+        "Call AnyRouter with your sk-ar key. Use anyrouter/free when you want the shared free chain instead of one provider."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ]
+    },
+    {
+      "slug": "go-plan",
+      "url": "https://anyrouter.dev/use-cases/go-plan",
+      "group": "free-cheap",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Go plan",
+      "title": "Go: paid models from $2 a month",
+      "summary": "A $2 plan for paid models, or donate to unlock",
+      "hook": "The Go plan is $2/mo and adds paid-model access with a monthly credit. Free models have no daily limit on any plan. Cancel any time. Donating a provider key can unlock Go without paying.",
+      "problem": "anyrouter/free and :free models have no daily limit. Paid models need credits; Go (or a donated key) is the cheapest way in.",
+      "steps": [
+        "Open pricing and start Go at $2/mo, or donate an eligible provider key.",
+        "Call anyrouter/free — no credit deduction and no daily limit.",
+        "Use anyrouter/auto when you want paid failover billed to credits."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ]
+    },
+    {
+      "slug": "free-llm-api",
+      "url": "https://anyrouter.dev/use-cases/free-llm-api",
+      "group": "free-cheap",
+      "cost": "free",
+      "logos": [],
+      "kicker": "Students & side projects",
+      "title": "A real free LLM API for side projects",
+      "summary": "A documented free tier for side projects",
+      "hook": "One key, 270+ models, and a documented free tier — not a mystery coupon that disappears.",
+      "problem": "Most “free LLM API” posts dump a list of expired keys. You need no daily cap, a model id that fails over, and a path to pay $2 when you outgrow it.",
+      "steps": [
+        "Sign up and create a key.",
+        "Upgrade to Go ($2/mo) or donate a key to get paid-model access.",
+        "Call anyrouter/free from curl, the OpenAI SDK, or the playground."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/free\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        },
+        {
+          "lang": "ts",
+          "code": "import OpenAI from \"openai\"\n\nconst client = new OpenAI({\n  baseURL: \"https://anyrouter.dev/api/v1\",\n  apiKey: process.env.ANYROUTER_API_KEY,\n})\n\nconst res = await client.chat.completions.create({\n  model: \"anyrouter/free\",\n  messages: [{ role: \"user\", content: \"Say hello in one sentence.\" }],\n})\nconsole.log(res.choices[0]?.message.content)",
+          "title": "OpenAI SDK"
+        }
+      ]
+    },
+    {
+      "slug": "free-chatbot",
+      "url": "https://anyrouter.dev/use-cases/free-chatbot",
+      "group": "free-cheap",
+      "cost": "free",
+      "logos": [
+        "vercel"
+      ],
+      "kicker": "Side-project chatbot",
+      "title": "Build a free chatbot for a side project",
+      "summary": "Stream anyrouter/free replies with the AI SDK",
+      "hook": "Stream replies from anyrouter/free with the AI SDK. No credit deduction, and one model id that fails over between free models.",
+      "problem": "A demo chatbot dies the day its one free model gets rate-limited, and a paid key on a public page is a bill waiting to happen.",
+      "steps": [
+        "Create a key and keep it on your server. Go ($2/mo) or a donated key gets you paid-model access.",
+        "npm install @anyr/ai-sdk-provider ai, then stream with anyrouter/free.",
+        "Read the model field in the response or Dashboard → Logs to see which free model answered."
+      ],
+      "command": {
+        "text": "model: anyrouter(\"anyrouter/free\"),"
+      },
+      "snippets": [
+        {
+          "lang": "ts",
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { streamText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst result = streamText({\n  model: anyrouter(\"anyrouter/free\"),\n  system: \"You are a friendly help bot for my project.\",\n  prompt: \"How do I reset my password?\",\n})\n\nfor await (const textPart of result.textStream) {\n  process.stdout.write(textPart)\n}",
+          "title": "streamText"
+        },
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/free\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/free"
+        }
+      ]
+    },
+    {
+      "slug": "cheapest-llm-api",
+      "url": "https://anyrouter.dev/use-cases/cheapest-llm-api",
+      "group": "free-cheap",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Cost per token",
+      "title": "Shop for the cheapest model without lock-in",
+      "summary": "Compare list prices, switch with a string",
+      "hook": "Compare list prices in the catalog, then route through one URL so switching models is a string change.",
+      "problem": "The cheapest SKU on a landing page is often the wrong unit (cached vs uncached, input vs output) or a model that is not actually serving.",
+      "steps": [
+        "Compare models on /models and /compare — use the published list prices, not screenshots.",
+        "Start traffic on anyrouter/auto so health-aware failover avoids a dead cheap SKU.",
+        "Pin a specific id only after you have measured quality on your prompts."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/auto\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ]
+    },
+    {
+      "slug": "ai-sdk",
+      "url": "https://anyrouter.dev/use-cases/ai-sdk",
+      "group": "sdks",
+      "cost": "both",
+      "logos": [
+        "vercel"
+      ],
+      "kicker": "Vercel AI SDK",
+      "title": "One AI SDK provider for the whole catalog",
+      "summary": "One provider for generateText and streamText",
+      "hook": "Install @anyr/ai-sdk-provider. generateText and streamText take a catalog id — including anyrouter/free.",
+      "problem": "Vercel AI SDK providers are usually one-vendor. Switching models should not mean a new client or a new key.",
+      "steps": [
+        "npm install @anyr/ai-sdk-provider ai",
+        "createAnyRouter() reads ANYROUTER_API_KEY when you omit the key.",
+        "Call anyrouter(\"anyrouter/free\") or anyrouter(\"anyrouter/auto\")."
+      ],
+      "command": {
+        "text": "model: anyrouter(\"anyrouter/free\")"
+      },
+      "snippets": [
+        {
+          "lang": "ts",
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst { text } = await generateText({\n  model: anyrouter(\"anyrouter/free\"),\n  prompt: \"What is AnyRouter?\",\n})\nconsole.log(text)",
+          "title": "generateText"
+        }
+      ]
+    },
+    {
+      "slug": "openai-sdk",
+      "url": "https://anyrouter.dev/use-cases/openai-sdk",
+      "group": "sdks",
+      "cost": "paid",
+      "logos": [
+        "openai"
+      ],
+      "kicker": "OpenAI SDK",
+      "title": "Keep the OpenAI SDK, change two fields",
+      "summary": "Override baseURL and apiKey, keep the SDK",
+      "hook": "Override baseURL and apiKey. Model ids are owner/model strings across 270+ models.",
+      "problem": "The official openai package looks vendor-locked. It is not — it only needs a compatible base URL.",
+      "steps": [
+        "Keep openai installed.",
+        "Set baseURL to https://anyrouter.dev/api/v1 and apiKey to your sk-ar key.",
+        "Use model \"anyrouter/free\" or \"anyrouter/auto\" for the first call."
+      ],
+      "command": {
+        "text": "baseURL: \"https://anyrouter.dev/api/v1\""
+      },
+      "snippets": [
+        {
+          "lang": "ts",
+          "code": "import OpenAI from \"openai\"\n\nconst client = new OpenAI({\n  baseURL: \"https://anyrouter.dev/api/v1\",\n  apiKey: process.env.ANYROUTER_API_KEY,\n})\n\nconst res = await client.chat.completions.create({\n  model: \"anyrouter/free\",\n  messages: [{ role: \"user\", content: \"Say hello in one sentence.\" }],\n})\nconsole.log(res.choices[0]?.message.content)",
+          "title": "OpenAI SDK"
+        }
+      ]
+    },
+    {
+      "slug": "unify-api",
+      "url": "https://anyrouter.dev/use-cases/unify-api",
+      "group": "sdks",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "One endpoint",
+      "title": "One API in front of every provider dialect",
+      "summary": "Chat Completions, Messages, and Responses on one key",
+      "hook": "OpenAI /chat/completions, Anthropic /messages, and a Responses API — same key, same catalog.",
+      "problem": "Apps accumulate one client per vendor. Failover and logging then live in your code instead of the gateway.",
+      "steps": [
+        "Use https://anyrouter.dev/api/v1 for OpenAI-compatible calls.",
+        "Use https://anyrouter.dev/api for Anthropic /messages (Claude Code, Agent SDK).",
+        "Start with anyrouter/auto so the first request is not a single upstream."
+      ],
+      "command": {
+        "text": "curl https://anyrouter.dev/api/v1/chat/completions",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ]
+    },
+    {
+      "slug": "model-evals",
+      "url": "https://anyrouter.dev/use-cases/model-evals",
+      "group": "sdks",
+      "cost": "paid",
+      "logos": [
+        "openai",
+        "anthropic"
+      ],
+      "kicker": "Evals",
+      "title": "Run one eval across many models",
+      "summary": "Loop the same prompts over many models",
+      "hook": "Loop the same prompts over a list of catalog ids with one key and one client. Compare answers, latency, and cost side by side.",
+      "problem": "Evaluating models from different vendors means one SDK and one key per provider, and cost lands on separate invoices you have to add up.",
+      "steps": [
+        "Run anyr models (or open /models) and pick the ids you want to compare.",
+        "Send the same prompt to each id through one AI SDK provider.",
+        "Compare outputs and token usage, then check cost per request in Dashboard → Logs."
+      ],
+      "command": {
+        "text": "anyr models",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "ts",
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\nconst models = [\"openai/gpt-5.4-mini\", \"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"]\n\nfor (const id of models) {\n  const started = Date.now()\n  const { text, usage } = await generateText({\n    model: anyrouter(id),\n    prompt: \"Summarize the CAP theorem in two sentences.\",\n  })\n  console.log(id, Date.now() - started, \"ms\", usage.totalTokens, \"tokens\\n\", text)\n}",
+          "title": "Eval loop"
+        },
+        {
+          "lang": "bash",
+          "code": "anyr models",
+          "title": "anyr CLI"
+        }
+      ]
+    },
+    {
+      "slug": "agent-fallback",
+      "url": "https://anyrouter.dev/use-cases/agent-fallback",
+      "group": "sdks",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Uptime",
+      "title": "Keep an agent up when a provider goes down",
+      "summary": "List backup models so an agent stays up",
+      "hook": "List backup models in one request. If the primary model's providers are down or rate-limited, AnyRouter tries the next model.",
+      "problem": "An agent pinned to one model stops mid-task during a provider outage or a 429 burst. Retry loops in your code add latency and still hit the same provider.",
+      "steps": [
+        "Keep your primary model in model.",
+        "Add backup ids in models, in the order you want them tried. Fallbacks run on /api/v1/chat/completions.",
+        "Read the model field in the response to see which one answered. Or use anyrouter/auto and let AnyRouter pick a healthy model."
+      ],
+      "command": {
+        "text": "\"models\": [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"]"
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"openai/gpt-5.4-mini\",\n    \"models\": [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"],\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Plan the next step.\" }]\n  }'",
+          "title": "curl · models fallback"
+        },
+        {
+          "lang": "ts",
+          "code": "import { createAnyRouter } from \"@anyr/ai-sdk-provider\"\nimport { generateText } from \"ai\"\n\nconst anyrouter = createAnyRouter()\n\nconst { text } = await generateText({\n  model: anyrouter(\"openai/gpt-5.4-mini\"),\n  prompt: \"Plan the next step.\",\n  providerOptions: {\n    anyrouter: {\n      extraBody: { models: [\"anthropic/claude-sonnet-4-6\", \"z-ai/glm-4.7-flash\"] },\n    },\n  },\n})\nconsole.log(text)",
+          "title": "AI SDK"
+        }
+      ],
+      "diagram": {
+        "label": "Your agent calls AnyRouter with a list of models. AnyRouter tries the first model, and if its providers are down or rate limited, tries the next one.",
+        "nodes": [
+          {
+            "id": "agent",
+            "kind": "tool",
+            "label": "Your agent"
+          },
+          {
+            "id": "gw",
+            "kind": "gateway",
+            "label": "AnyRouter",
+            "provider": "anyrouter"
+          },
+          {
+            "id": "a",
+            "kind": "provider",
+            "label": "Primary model",
+            "note": "model",
+            "provider": "openai"
+          },
+          {
+            "id": "b",
+            "kind": "fallback",
+            "label": "Backup model",
+            "note": "models[0]",
+            "provider": "anthropic"
+          }
+        ],
+        "edges": [
+          {
+            "from": "agent",
+            "to": "gw"
+          },
+          {
+            "from": "gw",
+            "to": "a"
+          },
+          {
+            "from": "gw",
+            "to": "b",
+            "dashed": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "donate-keys",
+      "url": "https://anyrouter.dev/use-cases/donate-keys",
+      "group": "keys-pool",
+      "cost": "both",
+      "logos": [
+        "nvidia",
+        "openrouter"
+      ],
+      "kicker": "Shared pool",
+      "title": "Donate an idle key, earn credits back",
+      "summary": "Share an idle provider key, earn credits",
+      "hook": "Donate a provider key to the community pool. It serves other people's requests and pays you back in credits.",
+      "problem": "Free-tier and flat-rate keys sit unused at the end of the month. That headroom evaporates unless someone else can use it.",
+      "steps": [
+        "Add the key under BYOK.",
+        "Turn on donate for that key. Confirm your provider's terms allow sharing it.",
+        "Pending credits accrue from pool traffic. A donated key can also unlock Go so you can call anyrouter/free."
+      ],
+      "command": {
+        "text": "Dashboard → BYOK → open the key → Donate to the shared pool"
+      },
+      "snippets": [
+        {
+          "lang": "text",
+          "code": "Dashboard → BYOK → open the key → Donate to the shared pool",
+          "title": "Where to click"
+        }
+      ]
+    },
+    {
+      "slug": "byok",
+      "url": "https://anyrouter.dev/use-cases/byok",
+      "group": "keys-pool",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Your keys",
+      "title": "Bring your own keys, $0 markup",
+      "summary": "Attach your provider keys with no per-token cut",
+      "hook": "Attach OpenAI, Anthropic, Google, Groq, NVIDIA, and more. Requests bill the provider. AnyRouter does not take a per-token cut.",
+      "problem": "You already pay providers. A second gateway invoice is waste if all you needed was one URL, logs, and failover across the keys you have.",
+      "steps": [
+        "Open /byok and add each provider key.",
+        "Call AnyRouter with your sk-ar key. Matching models go out on your BYOK key.",
+        "Optionally donate idle quota, or fall through to credits when a key is exhausted."
+      ],
+      "command": {
+        "text": "\"model\": \"anyrouter/auto\""
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anyrouter/auto\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anyrouter/auto"
+        }
+      ]
+    },
+    {
+      "slug": "byok-anthropic",
+      "url": "https://anyrouter.dev/use-cases/byok-anthropic",
+      "group": "keys-pool",
+      "cost": "paid",
+      "logos": [
+        "anthropic"
+      ],
+      "kicker": "Anthropic key",
+      "title": "Bring your own Anthropic key",
+      "summary": "Use your own Anthropic plan through one AnyRouter endpoint",
+      "hook": "Add your sk-ant key once. Claude models then run on your Anthropic plan and limits, billing stays on your Anthropic account, and one AnyRouter endpoint can fall back to other models.",
+      "problem": "You already pay Anthropic, and your plan has its own limits and billing. Add that key to AnyRouter and keep one endpoint and one API for every tool, with other models ready if Claude is busy or you hit a limit.",
+      "steps": [
+        "Open Dashboard → BYOK → Add key.",
+        "Pick Anthropic and paste your sk-ant-… key.",
+        "Press Test key. It checks the key and the models you picked.",
+        "Save the key.",
+        "Call anthropic/claude-… models with your AnyRouter key, from curl or from Claude Code with anyr claude."
+      ],
+      "command": {
+        "text": "anyr claude --model anthropic/claude-sonnet-4-6",
+        "shell": true
+      },
+      "snippets": [
+        {
+          "lang": "bash",
+          "code": "curl https://anyrouter.dev/api/v1/chat/completions \\\n  -H \"Authorization: Bearer $ANYROUTER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"anthropic/claude-sonnet-4-6\",\n    \"messages\": [{ \"role\": \"user\", \"content\": \"Say hello in one sentence.\" }]\n  }'",
+          "title": "curl · anthropic/claude-sonnet-4-6"
+        },
+        {
+          "lang": "bash",
+          "code": "curl -fsSL https://anyrouter.dev/setup.sh | bash\nanyr claude --model anthropic/claude-sonnet-4-6",
+          "title": "Claude Code · anyr claude"
+        }
+      ],
+      "notes": [
+        "Your key is encrypted at rest and used only to route your own requests.",
+        "Test key makes a tiny call to Anthropic for each model you picked. Nothing is saved until you press Add key.",
+        "A key that has not passed a test is saved paused and does not route.",
+        "To turn a key off, open the Anthropic key list on the BYOK page and switch the key to Off. Traffic moves to your other keys or to AnyRouter credits.",
+        "To remove a key, open the same list and use the trash icon. The key is deleted for good."
+      ]
+    },
+    {
+      "slug": "sign-in",
+      "url": "https://anyrouter.dev/use-cases/sign-in",
+      "group": "keys-pool",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "For app builders",
+      "title": "Let users sign in with their AnyRouter account",
+      "summary": "Give your app a temporary inference-only key",
+      "hook": "Your app gets a temporary inference-only key. Their balance pays. You never store a raw provider secret.",
+      "problem": "Shipping your own LLM keys means you eat every user's bill. Asking them to paste an OpenAI key is a bad secret-handling story.",
+      "steps": [
+        "Register your app and implement the OAuth 2.1 + PKCE consent flow.",
+        "Exchange the code for a short-lived sk-ar-v1 key scoped to that user.",
+        "Call models on their behalf — start with anyrouter/free or anyrouter/auto."
+      ],
+      "command": {
+        "text": "https://anyrouter.dev/oauth/consent"
+      },
+      "snippets": [
+        {
+          "lang": "text",
+          "code": "https://anyrouter.dev/oauth/consent",
+          "title": "Consent endpoint"
+        }
+      ]
+    },
+    {
+      "slug": "mcp-gateway",
+      "url": "https://anyrouter.dev/use-cases/mcp-gateway",
+      "group": "mcp",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Workspace tools",
+      "title": "Manage models and keys from any MCP client",
+      "summary": "One MCP endpoint for every client",
+      "hook": "One Streamable HTTP endpoint. Claude Desktop, Claude Code, Cursor, and OpenCode call your workspace as tools.",
+      "problem": "Checking credits, listing models, or rotating a key means leaving the editor. MCP puts those tools next to the agent.",
+      "steps": [
+        "Point the MCP client at https://anyrouter.dev/api/v1/mcp.",
+        "Complete OAuth when the client prompts.",
+        "Use the landing page recipes for Claude Desktop, Claude Code, Cursor, and OpenCode."
+      ],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1/mcp"
+      },
+      "snippets": [
+        {
+          "lang": "text",
+          "code": "https://anyrouter.dev/api/v1/mcp",
+          "title": "MCP endpoint"
+        }
+      ]
+    },
+    {
+      "slug": "mcp-for-agents",
+      "url": "https://anyrouter.dev/use-cases/mcp-for-agents",
+      "group": "mcp",
+      "cost": "paid",
+      "logos": [],
+      "kicker": "Agent tools",
+      "title": "Give agents MCP tools without per-client sprawl",
+      "summary": "Connect agents to AnyRouter over MCP",
+      "hook": "Understand what an MCP server is, then connect agents to AnyRouter instead of pasting a new config into every app.",
+      "problem": "Every new MCP server is another token and another JSON blob copied into Claude Desktop, Cursor, and your own agents.",
+      "steps": [
+        "Read how MCP servers expose tools over one JSON-RPC transport.",
+        "Point clients at AnyRouter's MCP endpoint instead of N server URLs.",
+        "Keep model calls on anyrouter/auto so tool-using agents have a healthy default."
+      ],
+      "command": {
+        "text": "https://anyrouter.dev/api/v1/mcp"
+      },
+      "snippets": [
+        {
+          "lang": "text",
+          "code": "https://anyrouter.dev/api/v1/mcp",
+          "title": "MCP endpoint"
+        }
+      ]
+    }
+  ]
+}

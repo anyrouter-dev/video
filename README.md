@@ -23,6 +23,7 @@ Output lands in `renders/`.
 | `release` | one product release, e.g. "AnyRouter 1.6" | [`/changelog/rss.xml`](https://anyrouter.dev/changelog/rss.xml) | nightly |
 | `model-drop` | models added to the catalog, and price moves | [`/api/v1/models`](https://anyrouter.dev/api/v1/models?all=1), diffed against a baseline | nightly |
 | `changelog` | one day of changelog entries | the *Model releases* section of [`/llms.txt`](https://anyrouter.dev/llms.txt) | nightly |
+| `use-case` | one short silent film per use case, for its page on anyrouter.dev/use-cases. Each use case is its own release | [`/use-cases.json`](https://anyrouter.dev/use-cases.json) | on demand |
 
 Every kind is a folder under `videos/` with a `kind.mjs`. Adding a fifth means
 adding a folder — nothing in the engine changes. The contract is the header of
@@ -155,7 +156,7 @@ gitignored; CI uses repository secrets.
 Flags after the kind go to the kind: `--limit=N`, `--seconds=N`, `--from=FILE`
 (build from a saved response instead of the network). `model-drop` adds `--all`,
 `--first=N`, `--baseline=FILE`; `release` adds `--version=X.Y.Z`; `changelog`
-adds `--date=YYYY-MM-DD`. `run` adds `--quality=draft|looks|delivery` and
+adds `--date=YYYY-MM-DD`; `use-case` adds `--slug=SLUG`. `run` adds `--quality=draft|looks|delivery` and
 `--workers=N`.
 
 ## model-drop
