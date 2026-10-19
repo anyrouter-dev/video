@@ -27,7 +27,7 @@
 
 **Delivery:** Light, the four names evenly spaced.
 
-    Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word.
+    Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.
 
 ## Line 5 — Your own keys (Frame 5)
 

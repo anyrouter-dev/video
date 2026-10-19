@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 47s
+duration: 46.5s
 message: "One API for every model. Your code barely changes, and free models work on every plan."
 arc: Every company bills you → One API → Two lines change → Call by name → Your own keys → Or auto → It keeps answering → Free → Claude Code → Close
 audience: people who land on anyrouter.dev and press play, developers or not
@@ -15,7 +15,7 @@ music: none
 - **Camera.** Every frame sits in a `.k-cam` that pushes in slowly and eases toward the part the voice names, so no frame holds still for more than 1.5s. Real screens move by their own crop: the camera fits a named rectangle of the capture into the browser view.
 - **Cuts.** Every cut lands on a beat of the music (120 bpm, first beat 0.059s): `pad-voices.mjs --beat=0.5 --phase=0.059` stretches each breath so the next line starts on the grid. Reveals land on the spoken word (times from `audio_meta.json`, ElevenLabs alignment).
 - **Continuity.** Frames 3, 4 and 6 share one code card (same chrome, same place). Frames 4 and 9 roll the model id the way v1 frame 09 did.
-- **Honesty.** Ids on screen in Frames 4, 6, 7 and 9 come from `GET /api/v1/models` (what one AnyRouter key runs on credit). Claude and OpenAI appear only in Frame 5, on their real model pages, which say "bring your own key". No /models tab counts on screen. No key on screen: code reads it from `process.env`.
+- **Honesty.** Ids on screen in Frames 3, 4, 6, 7 and 9 are ones AnyRouter routes itself: `pricing.billing` is not `"byok"` in `GET /api/v1/models?all=1` (`model-ids.test.mjs` checks every frame against `model-billing.json`). Claude and OpenAI appear only in Frame 5, on their real model pages, which say "bring your own key". No /models tab counts on screen. No key on screen: code reads it from `process.env`.
 - **Negative list.** No gradients, glows, blur, noise, emoji, routing diagrams, step-by-step setup. No `repeat` / `yoyo`, no randomness.
 - **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080x1920): content in y 200 to 1220 and x 60 to 960; captions own 1240 to 1480.
 - **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`; `shared/authoring/portrait.mjs` writes the 1080x1920 project.
@@ -23,13 +23,13 @@ music: none
 ## Frame 1 — Every company bills you
 - src: compositions/frames/01-every-bill.html
 
-- scene: Four AI company cards (DeepSeek, Kimi, Grok, GLM, each with its company); each grows an account row, a key row and a bill row as the voice names them
+- scene: Four AI company cards (DeepSeek, Kimi, MiniMax, Nemotron, each with its company); each grows an account row, a key row and a bill row as the voice names them
 - duration: 4.559s
 - transition_in: cut
 - type: problem
 - beat: friction
 - voiceover: "Every AI company has its own account, its own key and its own bill."
-- asset_candidates: assets/providers/deepseek.svg — DeepSeek mark; assets/providers/moonshotai.svg — Moonshot AI mark; assets/providers/xai.svg — xAI mark; assets/providers/z-ai.svg — Z.ai mark
+- asset_candidates: assets/providers/deepseek.svg — DeepSeek mark; assets/providers/moonshotai.svg — Moonshot AI mark; assets/providers/minimax.svg — MiniMax mark; assets/providers/nvidia.svg — NVIDIA mark
 - blueprint: overwhelm-surround (Adapt)
 - focal: the four company cards
 - roles: provider marks = card heads
@@ -83,21 +83,21 @@ Scene 3 (3.6–5.0s): "keep the rest" — the comment line gets an "Unchanged" b
 - src: compositions/frames/04-call-by-name.html
 
 - scene: The same code card, now the call; the model id rolls through four real ids as the voice names each company
-- duration: 5.5s
+- duration: 5s
 - transition_in: cut
 - type: key_feature
 - beat: choice
-- voiceover: "Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word."
-- asset_candidates: assets/providers/deepseek.svg; assets/providers/moonshotai.svg; assets/providers/xai.svg; assets/providers/z-ai.svg
+- voiceover: "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word."
+- asset_candidates: assets/providers/deepseek.svg; assets/providers/moonshotai.svg; assets/providers/minimax.svg; assets/providers/nvidia.svg
 - blueprint: kinetic-type-beats (Adapt)
 - focal: the model id
 - roles: company chips = what each id means
 - sfx: click-soft on each name
 - status: animated
 
-Scene 1 (0.0–1.3s): the call block and the chip row rise.
-Scene 2 (1.3–3.8s): each name — its chip takes the ring and the id rolls to it (deepseek/deepseek-v4.1-flash, moonshotai/kimi-k3, x-ai/grok-4.7, z-ai/glm-5.3).
-Scene 3 (3.8–5.5s): "Switching is one word" — every other line dims; the id washes once more.
+Scene 1 (0.0–1.1s): the call block and the chip row rise.
+Scene 2 (1.1–3.35s): each name — its chip takes the ring and the id rolls to it (deepseek/deepseek-v4-flash, moonshotai/kimi-k3, minimax/minimax-m3.1-flash, nvidia/nemotron-3-super-120b-a12b).
+Scene 3 (3.35–5s): "Switching is one word" — every other line dims; the id washes once more.
 
 ## Frame 5 — Your own keys
 - src: compositions/frames/05-your-keys.html

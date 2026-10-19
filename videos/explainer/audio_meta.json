@@ -294,10 +294,10 @@
     {
       "frame": 4,
       "path": "assets/voice/04.wav",
-      "duration_s": 5.5,
-      "raw_s": 5.201,
-      "text": "Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word.",
-      "say": "Call a model by its name. DeepSeek, Kimi, Grok, GLM. Switching is one word.",
+      "duration_s": 5,
+      "raw_s": 4.737,
+      "text": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
+      "say": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -311,88 +311,88 @@
           "id": "w0",
           "text": "Call",
           "start": 0,
-          "end": 0.255
+          "end": 0.221
         },
         {
           "id": "w1",
           "text": "a",
-          "start": 0.29,
-          "end": 0.313
+          "start": 0.267,
+          "end": 0.29
         },
         {
           "id": "w2",
           "text": "model",
-          "start": 0.348,
-          "end": 0.592
+          "start": 0.325,
+          "end": 0.546
         },
         {
           "id": "w3",
           "text": "by",
-          "start": 0.639,
-          "end": 0.743
+          "start": 0.592,
+          "end": 0.685
         },
         {
           "id": "w4",
           "text": "its",
-          "start": 0.778,
-          "end": 0.894
+          "start": 0.731,
+          "end": 0.836
         },
         {
           "id": "w5",
           "text": "name.",
-          "start": 0.94,
-          "end": 1.219
+          "start": 0.882,
+          "end": 1.103
         },
         {
           "id": "w6",
           "text": "DeepSeek,",
-          "start": 1.335,
-          "end": 1.974
+          "start": 1.126,
+          "end": 1.637
         },
         {
           "id": "w7",
           "text": "Kimi,",
-          "start": 2.009,
-          "end": 2.415
+          "start": 1.695,
+          "end": 2.043
         },
         {
           "id": "w8",
-          "text": "Grok,",
-          "start": 2.473,
-          "end": 2.937
+          "text": "MiniMax,",
+          "start": 2.078,
+          "end": 2.624
         },
         {
           "id": "w9",
-          "text": "GLM.",
-          "start": 3.007,
-          "end": 3.715
+          "text": "Nemotron.",
+          "start": 2.659,
+          "end": 3.239
         },
         {
           "id": "w10",
           "text": "Switching",
-          "start": 3.831,
-          "end": 4.226
+          "start": 3.39,
+          "end": 3.785
         },
         {
           "id": "w11",
           "text": "is",
-          "start": 4.284,
-          "end": 4.354
+          "start": 3.831,
+          "end": 3.901
         },
         {
           "id": "w12",
           "text": "one",
-          "start": 4.435,
-          "end": 4.574
+          "start": 3.971,
+          "end": 4.122
         },
         {
           "id": "w13",
           "text": "word.",
-          "start": 4.609,
-          "end": 5.201
+          "start": 4.156,
+          "end": 4.737
         }
       ],
-      "padded_s": 0.299
+      "padded_s": 0.263
     },
     {
       "frame": 5,
@@ -1027,7 +1027,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 1.335,
+      "offset_s": 1.126,
       "duration_s": 0.366,
       "volume": 0.22,
       "source": "bundled"
@@ -1035,7 +1035,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 2.009,
+      "offset_s": 1.695,
       "duration_s": 0.366,
       "volume": 0.22,
       "source": "bundled"
@@ -1043,7 +1043,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 2.473,
+      "offset_s": 2.078,
       "duration_s": 0.366,
       "volume": 0.22,
       "source": "bundled"
@@ -1051,7 +1051,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 3.007,
+      "offset_s": 2.659,
       "duration_s": 0.366,
       "volume": 0.22,
       "source": "bundled"
@@ -1059,7 +1059,7 @@
     {
       "frame": 4,
       "file": "assets/sfx/ping.mp3",
-      "offset_s": 4.435,
+      "offset_s": 3.971,
       "duration_s": 1.32,
       "volume": 0.18,
       "source": "bundled"

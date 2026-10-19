@@ -105,26 +105,27 @@
     @media (orientation: portrait) {
       [data-composition-id="04-call-by-name"] .f04-chips { left: 60px; right: 120px; top: 240px; gap: 16px; }
       [data-composition-id="04-call-by-name"] .f04-code { left: 60px; right: 120px; top: 520px; }
-      [data-composition-id="04-call-by-name"] .k-code-body { font-size: 38px; }
+      /* the NVIDIA id is the longest line: two spaces of indent and the type floor keep it in the card */
+      [data-composition-id="04-call-by-name"] .k-code-body { font-size: 36px; padding: 32px 28px; }
     }
   </style>
 
-  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="5.5">
-    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="5.5" data-track-index="0"></div>
-    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="5.5" data-track-index="1">
+  <div id="root" data-composition-id="04-call-by-name" data-width="1920" data-height="1080" data-duration="5">
+    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
+    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="5" data-track-index="1">
       <div id="f04-cam" class="k-cam">
         <div id="f04-chips" class="f04-chips">
           <span class="k-chip f04-chip"><img src="assets/providers/deepseek.svg" alt="" />DeepSeek</span>
           <span class="k-chip f04-chip"><img src="assets/providers/moonshotai.svg" alt="" />Kimi</span>
-          <span class="k-chip f04-chip"><img src="assets/providers/xai.svg" alt="" />Grok</span>
-          <span class="k-chip f04-chip"><img src="assets/providers/z-ai.svg" alt="" />GLM</span>
+          <span class="k-chip f04-chip"><img src="assets/providers/minimax.svg" alt="" />MiniMax</span>
+          <span class="k-chip f04-chip"><img src="assets/providers/nvidia.svg" alt="" />NVIDIA</span>
           <span id="f04-more" class="k-chip is-more">+ hundreds more</span>
         </div>
         <div id="f04-code" class="k-code f04-code">
           <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">app.ts</span></div>
 <div class="k-code-body"><span class="k-ln f04-quiet"><span class="kw">await</span> client.chat.completions<span class="k-pbr">
   </span>.create({</span><span class="k-ln">  model:<span class="k-lbr"> </span><span class="k-pbr">
-    </span><span id="f04-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"deepseek/deepseek-v4.1-flash"</span><span data-layout-allow-overlap>"moonshotai/kimi-k3"</span><span data-layout-allow-overlap>"x-ai/grok-4.7"</span><span data-layout-allow-overlap>"z-ai/glm-5.3"</span></span>,</span><span class="k-ln f04-quiet">  messages,</span><span class="k-ln f04-quiet">});</span></div>
+  </span><span id="f04-id" class="k-roll" data-layout-allow-overlap><span data-layout-allow-overlap>"deepseek/deepseek-v4-flash"</span><span data-layout-allow-overlap>"moonshotai/kimi-k3"</span><span data-layout-allow-overlap>"minimax/minimax-m3.1-flash"</span><span data-layout-allow-overlap>"nvidia/nemotron-3-super-120b-a12b"</span></span>,</span><span class="k-ln f04-quiet">  messages,</span><span class="k-ln f04-quiet">});</span></div>
         </div>
         <div id="f04-ring" class="k-ring f04-ring"></div>
       </div>
@@ -189,10 +190,10 @@ const K = {
       // /kit:js
       const $ = (s) => document.getElementById("f04-" + s);
       const root = $("code").closest('[data-composition-id="04-call-by-name"]');
-      const DURATION = 5.5;
-      // Word starts from audio_meta.json frame 4: "DeepSeek," 1.335, "Kimi," 2.009, "Grok," 2.473, "GLM." 3.007,
-      // "Switching" 3.831, "one" 4.435. The ids are credit-routed ids from GET /api/v1/models.
-      const NAMES = [1.3, 1.97, 2.43, 2.96], SWITCHING = 3.8, ONE = 4.4;
+      const DURATION = 5;
+      // Word starts from audio_meta.json frame 4: "DeepSeek," 1.126, "Kimi," 1.695, "MiniMax," 2.078, "Nemotron." 2.659,
+      // "Switching" 3.39, "one" 3.971. The ids are ones AnyRouter routes itself (model-billing.json, not "byok").
+      const NAMES = [1.09, 1.66, 2.04, 2.62], SWITCHING = 3.35, ONE = 3.93;
       const QUIET = "#636363";
 
       document.fonts.ready.then(() => {
