@@ -19,12 +19,12 @@ export default {
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
-  headline: () => 'What is AnyRouter? One key for every AI model, and free models',
+  headline: () => 'What is AnyRouter, and how do you get its free models?',
 
   notes: data => [
-    `A ${Math.round(data.seconds)}-second narrated explainer for people new to AnyRouter.`,
-    'It shows what AnyRouter is, how to unlock free models by donating an OpenRouter or NVIDIA key to the shared pool, and how to code with Claude Code through `anyr`.',
-    `Film version v${data.version}.`,
+    `This ${Math.round(data.seconds)}-second narrated film explains AnyRouter to people who have never used it.`,
+    'It shows what AnyRouter is, how to unlock the shared pool\'s free models by sharing an OpenRouter or NVIDIA key, and how to use AnyRouter with Claude Code through `anyr`.',
+    `This is version ${data.version} of the film.`,
   ],
 
   /** The closing lockup, once it has settled and before the fade to white. */
