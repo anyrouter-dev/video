@@ -38,8 +38,8 @@ export function codeOf(id) {
   const one = `  "model": "${id}",`;
   const request = [
     { text: '{', cls: 'p' },
-    ...(one.length <= CODE_COLS ? [{ text: one, cls: 'kv' }] : [{ text: '  "model":', cls: 'k' }, { text: `  "${id}",`, cls: 's' }]),
-    { text: '  "messages": [ … ]', cls: 'k' },
+    // an id on a row of its own leaves no room in the portrait card for the messages line
+    ...(one.length <= CODE_COLS ? [{ text: one, cls: 'kv' }, { text: '  "messages": [ … ]', cls: 'k' }] : [{ text: '  "model":', cls: 'k' }, { text: `  "${id}"`, cls: 's' }]),
     { text: '}', cls: 'p' },
   ];
   const cmd = `$ anyr claude --model ${id}`;
@@ -150,6 +150,8 @@ export function css(accent) {
     .reply{font-size:46px}
     .meta{margin-top:30px}
     .code,.term{padding:16px 20px;margin-top:14px}
+    .use.tight .code,.use.tight .term{padding:12px 18px;margin-top:10px}
+    .use.tight .ln{line-height:1.35}
     .close{bottom:640px;top:160px}
     .close .logo{width:400px}
     .close .url div{font-size:32px}
@@ -191,7 +193,7 @@ export function body(f, t) {
       <div class="reply" data-one-row>${chars(f.capture.reply)}</div><div class="meta">${esc(f.capture.meta)}</div></div>` : '';
 
   const code = codeOf(f.id);
-  const usePane = `<div class="pane use"><div class="lbl">IN ANY REQUEST</div><div class="code">${code.request.map(codeLine).join('')}</div>
+  const usePane = `<div class="pane use${code.request.some(l => l.cls === 's') ? ' tight' : ''}"><div class="lbl">IN ANY REQUEST</div><div class="code">${code.request.map(codeLine).join('')}</div>
       <div class="lbl" style="margin-top:28px">IN CLAUDE CODE</div><div class="term">${code.term.map(l => `<div class="ln" data-one-row>${chars(l)}</div>`).join('')}</div></div>`;
 
   const caps = t.captions.map((c, k) => `<span data-k="${k}">${esc(c.text)}</span>`).join('');
