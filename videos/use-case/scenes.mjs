@@ -669,6 +669,9 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       tl.fromTo(crotx, from.rx, { ...to.rx, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(croty, from.ry, { ...to.ry, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(cpush, { z: PUSH }, { z: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      // the audit reads no text while the camera carries it (stage-audit.mjs, flight)
+      tl.set(cpull, { attr: { "data-in-flight": "1" } }, a);
+      tl.set(cpull, { attr: { "data-in-flight": "0" } }, a + TRAVEL);
       tl.fromTo(cpull, { z: 0 }, { z: -PULL, duration: TRAVEL / 2, ease: "power2.out", immediateRender: false }, a);
       tl.fromTo(cpull, { z: -PULL }, { z: 0, duration: TRAVEL / 2, ease: "power2.in", immediateRender: false }, a + TRAVEL / 2);
       {
@@ -696,7 +699,8 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     tl.fromTo(tiles, { x: i => (i - mid) * 56, z: -200, rotationY: i => (i - mid) * -14 }, { x: 0, z: 0, rotationY: 0, duration: 1.3, ease: "expo.out" }, 0);
     tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.15);
     const hw = $$(".h .w > span");
-    tl.fromTo(hw, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.06, 0.3 / hw.length), ease: "expo.out" }, 0.1);
+    // every word is up within half a second, however long the headline
+    tl.fromTo(hw, { yPercent: 110 }, { yPercent: 0, duration: 0.4, stagger: Math.min(0.04, 0.08 / hw.length), ease: "expo.out" }, 0);
 
     // ── kinetic type: each word of the line rises as it is said, out of its own mask
     const kinetic = (sel, times) => {

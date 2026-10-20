@@ -10,6 +10,8 @@
 //   safe    with --safe, readable text stays inside that box (the part of it not clipped away). Frame chrome and captions sit
 //           outside it on purpose: they carry data-outside-safe-area and only have to stay
 //           on the stage.
+//   flight  text inside an element marked data-in-flight="1" is moving with the camera and is
+//           not judged until it lands
 //   fit     every line of text is whole where it is set: not cut by a box that clips it, not
 //           running past the card around it, no row ending inside a word, an id or a name, no
 //           line marked data-one-row on two rows,
@@ -144,6 +146,8 @@ async function seekAndMeasure(t, frame, safe, tol, floor) {
   for (const el of holders) {
     const r = clipped(el);
     if (!shown(el, r)) continue;
+    // text the camera is carrying between two places is not read until it lands
+    if (el.closest('[data-in-flight="1"]')) continue;
     live.push(el);
     const free = el.closest('[data-outside-safe-area]');
     const [x0, y0, x1, y1] = free || !safe ? [0, 0, frame.w, frame.h] : safe;
@@ -176,15 +180,25 @@ function fitOf(live, frame, floor, { keyOf, compOf, what, box }) {
     range.selectNodeContents(n);
     return [...range.getClientRects()].filter(q => q.width > 0 && q.height > 0);
   });
-  const scaleOf = el => {
-    let s = 1;
-    for (let n = el; n; n = n.parentElement) {
-      const cs = getComputedStyle(n);
-      if (cs.transform !== 'none') { const m = new DOMMatrixReadOnly(cs.transform); s *= Math.min(Math.hypot(m.a, m.b), Math.hypot(m.c, m.d)); }
-      if (cs.scale !== 'none') s *= Math.min(...cs.scale.split(' ').map(Number.parseFloat));
+  // The size a line is drawn at is read off its glyphs on screen: a glyph box is a fixed share of
+  // the font size for each face and size, measured once untransformed. Multiplying each ancestor's own scale
+  // instead misreads 3D: a camera turned against a panel turned the other way draws it at 1:1.
+  const share = new Map();
+  const shareOf = cs => {
+    const key = `${cs.fontFamily}|${cs.fontWeight}|${cs.fontStyle}|${cs.fontSize}`;
+    if (!share.has(key)) {
+      const probe = document.createElement('span');
+      probe.textContent = 'Hxg';
+      Object.assign(probe.style, { position: 'absolute', left: '0', top: '0', fontFamily: cs.fontFamily, fontWeight: cs.fontWeight, fontStyle: cs.fontStyle, fontSize: cs.fontSize, lineHeight: 'normal', whiteSpace: 'pre', transform: 'none', visibility: 'hidden' });
+      document.body.appendChild(probe);
+      const range = document.createRange();
+      range.selectNodeContents(probe.firstChild);
+      share.set(key, range.getClientRects()[0].height / Number.parseFloat(cs.fontSize));
+      probe.remove();
     }
-    return s;
+    return share.get(key);
   };
+  const drawnPx = (el, rects) => Math.min(...rects.map(q => q.height)) / shareOf(getComputedStyle(el));
   const stage = r => r.width >= frame.w - 2 && r.height >= frame.h - 2;
   const clips = cs => cs.overflowX !== 'visible' || cs.overflowY !== 'visible' || (cs.maskImage && cs.maskImage !== 'none');
   const drawn = cs => ['Top', 'Right', 'Bottom', 'Left'].some(s => Number.parseFloat(cs[`border${s}Width`]) > 0)
@@ -193,7 +207,7 @@ function fitOf(live, frame, floor, { keyOf, compOf, what, box }) {
   for (const el of live) {
     const rects = glyphs(el);
     if (!rects.length) continue;
-    const px = Number.parseFloat(getComputedStyle(el).fontSize) * scaleOf(el);
+    const px = drawnPx(el, rects);
     if (px < floor) report(el, 'small', `drawn at ${px.toFixed(1)}px, under the ${floor}px floor`);
     // a glyph box is taller than the row it sits in, so up and down a fifth of the size is let through
     const slackY = 0.22 * px, slackX = 2;
