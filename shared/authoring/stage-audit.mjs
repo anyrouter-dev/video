@@ -11,7 +11,8 @@
 //           outside it on purpose: they carry data-outside-safe-area and only have to stay
 //           on the stage.
 //   fit     every line of text is whole where it is set: not cut by a box that clips it, not
-//           running past the card around it, no row ending inside a word, an id or a name,
+//           running past the card around it, no row ending inside a word, an id or a name, no
+//           line marked data-one-row on two rows,
 //           and never drawn under --floor px (see fitOf)
 //
 // --shots writes a screenshot to DIR at each second a problem starts, its boxes outlined.
@@ -137,6 +138,7 @@ async function seekAndMeasure(t, frame, safe, tol, floor) {
  *   clip   its glyphs run past a box that clips them (overflow, a mask) while partly in view
  *   spill  its glyphs run past the card or pill drawn around them
  *   break  a row ends inside a word or a token of code, or between two words of a name
+ *   wrap   a line marked data-one-row (a line of code) takes more than one row
  *   small  it is drawn under `floor` px, transforms included
  *
  * The marks a layout uses on purpose (data-layout-allow-overflow) do not excuse it here: a
@@ -184,6 +186,15 @@ function fitOf(live, frame, floor, { keyOf, compOf, what, box }) {
         break;
       }
     }
+  }
+
+  // A line marked data-one-row (a line of code) that takes a second row has wrapped.
+  for (const line of document.querySelectorAll('[data-one-row]')) {
+    const holders = [...line.querySelectorAll('*'), line].filter(e => live.includes(e));
+    const rects = holders.flatMap(glyphs);
+    if (!rects.length) continue;
+    const tops = rects.map(q => q.top), tall = Math.min(...rects.map(q => q.height));
+    if (Math.max(...tops) - Math.min(...tops) > tall * 0.5) report(line, 'wrap', 'a line of code that wraps onto a second row');
   }
 
   // Rows: the characters of each block that wraps them, in order, with where each sits. A row
