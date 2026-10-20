@@ -30,17 +30,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
-import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, boardOf } from './scenes.mjs';
 import { reflow, standsAlone, closed, headless } from './reflow.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
 export const MODELS_API = 'https://anyrouter.dev/api/v1/models?all=1';
 // The voice sets a film's length; a page with little to say still runs long enough to read.
-export const FILM = { min: 22, max: 60 };
+export const FILM = { min: 33, max: 62 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -54,6 +53,8 @@ function parseUseCase(u, i) {
   return {
     slug,
     url: str(u.url, `${at}.url`),
+    // the page's group lays out the film's board (scenes.mjs BOARDS)
+    group: typeof u.group === 'string' ? u.group : null,
     kicker: str(u.kicker, `${at}.kicker`),
     title: str(u.title, `${at}.title`),
     summary: str(u.summary, `${at}.summary`),
@@ -186,7 +187,7 @@ export function copyOf(u, pools) {
   };
   // a page sentence that opens by repeating the label shows only what follows it
   const beyond = (label, t) => (t && t.toLowerCase().startsWith(`${label.toLowerCase()}.`) ? t.slice(label.length + 1).trim() || null : t);
-  const steps = u.narration.lines.filter(l => l.beat === 'step').map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? redact(beyond(l.label, pageStep(l.label)) ?? '') || null : null }));
+  const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? redact(beyond(l.label, pageStep(l.label)) ?? '') || null : null }));
   const shown = steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
   if (!shown.length || !steps.some(st => st.shows === 'command')) fail(u.slug, 'no step shows the command');
   const detailSizes = { landscape: TYPE.detail.landscape.sizes, portrait: TYPE.detail.portrait.sizes };
@@ -242,6 +243,17 @@ export function copyOf(u, pools) {
   }
   const detailT = Object.fromEntries(['landscape', 'portrait'].map(o => [o, detailSizes[o].find(px => steps.every((st, k) => !st.detail || roomFor(k, o, px)))]));
 
+  // the problem and the result are said and set as kinetic type, each word rising as it is spoken,
+  // over a diagram drawn from the page: the problem's picture, and the route that removes it
+  const lineOf = beat => u.narration.lines.find(l => l.beat === beat).text;
+  const kinetic = beat => {
+    const text = redact(lineOf(beat)), type = sayType(text);
+    if (!type) fail(u.slug, `its ${beat} line does not set in either frame: shorten it`);
+    return { text, type };
+  };
+  const problem = { ...kinetic('problem'), diagram: diagramOf(u.narration.motif, 'problem', u.slug) };
+  const result = { ...kinetic('result'), diagram: diagramOf(u.narration.flow, 'result', u.slug) };
+
   const code = { landscape: fitL.px, portrait: fitP.px };
   const code_lines = { landscape: fitL.lines, portrait: fitP.lines };
   const titleT = titleType(title);
@@ -252,6 +264,7 @@ export function copyOf(u, pools) {
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
+    problem, result,
     steps: steps.map(st => ({
       ...st,
       breaks: { landscape: labelSet(st.label, 'landscape', stepT.landscape).breaks, portrait: labelSet(st.label, 'portrait', stepT.portrait).breaks },
@@ -267,20 +280,24 @@ export function copyOf(u, pools) {
 const tenths = s => Math.round(s * 10) / 10;
 // Typing reads as typing at this pace, never slower than a comfortable typist.
 const TYPE_EACH = 0.05, TYPE_MAX = 1.4, LINE_PAUSE = 0.3;
-// The voice starts once the headline is up, a step has tilted in, the lockup has landed.
-const VOICE_AT = { outcome: 0.4, step: 0.45, close: 0.7 };
+// The camera travels between beats for TRAVEL seconds, half before the beat starts and half after
+// (MOTION.md: 33 to 39 frames); a beat's voice starts once the camera has arrived.
+export const TRAVEL = 1.2;
+const VOICE_AT = { intro: 0.6, problem: 0.55, step: 0.55, result: 0.7, close: 0.8 };
 // A step reads for this long at least; the beat after its last word before the next one comes.
-const STEP_MIN = 2.0, AFTER = 0.7;
+const STEP_MIN = 2.2, AFTER = 0.6;
+// A step's second line follows its first after a breath.
+const MORE_GAP = 0.2;
 // The window has settled before its code is typed; the lockup holds once the link is said.
-const TYPE_AT = 0.9, END_HOLD = 2.2, END_MIN = 4.5;
-// The typed line is read before its answer arrives.
-const ANSWER_AFTER = 0.6;
+const TYPE_AT = 1.0, END_HOLD = 2.0, END_MIN = 4.5;
 
-/** A film's voiced lines: { outcome, steps: [...], close }. */
+/** A film's voiced lines: { intro, problem, steps: [{ line, more }], result, close }. */
 export function voiceOf(u) {
   if (!u.narration) fail(u.slug, 'no script in videos/use-case/narration.json');
   const voiced = u.narration.lines.map(l => voicedLine(u.narration, l));
-  return { outcome: voiced.find(l => l.beat === 'outcome'), steps: voiced.filter(l => l.beat === 'step'), close: voiced.find(l => l.beat === 'close') };
+  const one = beat => voiced.find(l => l.beat === beat);
+  const steps = voiced.filter(l => l.beat === 'step' && !l.more).map(line => ({ line, more: voiced.find(l => l.more && l.step === line.step) ?? null }));
+  return { intro: one('intro'), problem: one('problem'), steps, result: one('result'), close: one('close') };
 }
 const spoken = line => line.words.at(-1).end;
 const typingOf = lines => {
@@ -290,16 +307,16 @@ const typingOf = lines => {
 };
 
 /**
- * When everything happens, set by the voice. Beat 1 holds the headline while
- * the outcome is said. Then each step tilts in and holds while its line is
- * said; the window comes in with the first step that shows it and stays while
- * the next steps do. On an `install` step its lines before the command are
- * typed, on the `command` step the command (and, with no install step, the
- * lines before it), and the roll or the answer comes on the `result` step, or
- * after the command when there is none. The last beat lands the lockup and the
- * short link under its line. A film shorter than FILM.min holds its last
- * end card a little longer and its last window step the rest, where a tint
- * points out the lines it changes.
+ * When everything happens, set by the voice. The film is five panels the camera
+ * travels between: what this is, the problem, the steps, the result, the short
+ * link. Each beat holds while its line is said. Each step holds while its line,
+ * and the line that explains it, are said; the window comes in with the first
+ * step that shows it and stays while the next steps do. On an `install` step
+ * its lines before the command are typed, on the `command` step the command
+ * (and, with no install step, the lines before it), and the roll or the answer
+ * comes on the `result` step, or after the command when there is none. A film
+ * shorter than FILM.min holds its last window step longer, where a tint points
+ * out the lines it changes.
  */
 export function storyOf(u, pools) {
   const copy = copyOf(u, pools), voice = voiceOf(u);
@@ -319,8 +336,10 @@ export function storyOf(u, pools) {
 
   // each step, in seconds from its start: how long it needs, and what lands in it
   const plan = copy.steps.map((st, k) => {
-    const v = voice.steps[k], said = VOICE_AT.step + spoken(v), lands = {};
-    let need = Math.max(STEP_MIN, said + AFTER);
+    const v = voice.steps[k], first = VOICE_AT.step + spoken(v.line), lands = { moreAt: v.more ? first + MORE_GAP : null };
+    const said = v.more ? lands.moreAt + spoken(v.more) : first;
+    // a step with no window holds until its page sentence is read
+    let need = Math.max(STEP_MIN, said + AFTER, st.detail ? VOICE_AT.step + 0.4 + read(st.detail.text) : 0);
     if (st.shows === 'install') { lands.preAt = TYPE_AT; need = Math.max(need, TYPE_AT + pre.dur + 0.6); }
     if (st.shows === 'command') {
       lands.cmdAt = TYPE_AT;
@@ -328,7 +347,7 @@ export function storyOf(u, pools) {
       need = Math.max(need, typedEnd + Math.max(roll ? 0.8 : 1.2, read(groups.cmd.map(l => l.text).join(' ')) - cmd.dur));
       if (!has('result')) {
         if (roll) { lands.rollAt = typedEnd + 0.5; need = Math.max(need, lands.rollAt + rolling + 0.4); }
-        if (answer) { lands.answerAt = typedEnd + ANSWER_AFTER; need = Math.max(need, lands.answerAt + read(answer)); }
+        if (answer) { lands.answerAt = typedEnd + 0.6; need = Math.max(need, lands.answerAt + read(answer)); }
       }
     }
     if (st.shows === 'result') {
@@ -340,39 +359,53 @@ export function storyOf(u, pools) {
     if (st.shows) lands.pointAt = Math.max(said, lands.rollAt != null ? lands.rollAt + rolling : 0, lands.answerAt != null ? lands.answerAt + 0.8 : 0, lands.cmdAt != null ? TYPE_AT + cmd.dur : 0) + 0.2;
     return { need, lands };
   });
-  const outcome = Math.max(3.5, VOICE_AT.outcome + spoken(voice.outcome) + AFTER);
-  let close = Math.max(END_MIN, VOICE_AT.close + spoken(voice.close) + END_HOLD);
-  // A short film holds its end card a little longer, and its last window step the rest, where the tint
-  // points out the lines it changes: the one beat that keeps moving without a word.
-  let extra = Math.max(0, FILM.min - (outcome + plan.reduce((t, p) => t + p.need, 0) + close));
-  const toClose = Math.min(extra, 0.8);
-  close += toClose;
-  plan[copy.steps.map(st => !!st.shows).lastIndexOf(true)].need += extra - toClose;
+  const intro = Math.max(3.4, VOICE_AT.intro + spoken(voice.intro) + AFTER, read(copy.title) + 0.6);
+  const problem = Math.max(3.2, VOICE_AT.problem + spoken(voice.problem) + AFTER + 0.2);
+  // the result holds while the request runs its route, and a beat after
+  let result = Math.max(5.2, VOICE_AT.result + spoken(voice.result) + AFTER + 1.2);
+  const close = Math.max(END_MIN, VOICE_AT.close + spoken(voice.close) + END_HOLD);
+  // A short film holds its last window step longer, where the tint points out the lines it changes,
+  // and its result, where the request runs its route: the beats that keep moving without a word.
+  const extra = Math.max(0, FILM.min - (intro + problem + plan.reduce((t, p) => t + p.need, 0) + result + close));
+  plan[copy.steps.map(st => !!st.shows).lastIndexOf(true)].need += extra / 2;
+  result += extra / 2;
 
-  const beats = [{ key: 'outcome', start: 0, dur: tenths(outcome) }];
-  for (const [k, p] of plan.entries()) {
-    const start = tenths(beats.at(-1).start + beats.at(-1).dur);
-    beats.push({ key: `step-${k + 1}`, start, dur: tenths(p.need) });
-  }
+  const beats = [{ key: 'intro', start: 0, dur: tenths(intro) }];
+  const next = (key, dur) => beats.push({ key, start: tenths(beats.at(-1).start + beats.at(-1).dur), dur: tenths(dur) });
+  next('problem', problem);
+  for (const [k, p] of plan.entries()) next(`step-${k + 1}`, p.need);
+  next('result', result);
   const end = tenths(beats.at(-1).start + beats.at(-1).dur);
-  // a beat's tenths can round the film a frame under FILM.min: the end card takes it
   const duration = Math.max(FILM.min, tenths(end + close));
   if (duration > FILM.max) fail(u.slug, `the film needs ${duration}s (max ${FILM.max})`);
   beats.push({ key: 'close', start: end, dur: tenths(duration - end) });
 
-  const at = (k, t) => (t == null ? null : +(beats[k + 1].start + t).toFixed(2));
+  const S0 = 2; // the beat index of step 1
+  const at = (k, t) => (t == null ? null : +(beats[k + S0].start + t).toFixed(2));
   const pick = key => plan.map((p, k) => at(k, p.lands[key])).find(t => t != null) ?? null;
+  const beatAt = key => beats.find(b => b.key === key).start;
+  // a line on screen as kinetic type is its own caption; the others are captioned under the picture
   const said = [
-    { ...voice.outcome, at: VOICE_AT.outcome },
-    ...voice.steps.map((v, k) => ({ ...v, at: at(k, VOICE_AT.step) })),
-    { ...voice.close, at: +(end + VOICE_AT.close).toFixed(2) },
+    { ...voice.intro, at: VOICE_AT.intro, cap: true },
+    { ...voice.problem, at: +(beatAt('problem') + VOICE_AT.problem).toFixed(2), cap: false },
+    ...voice.steps.flatMap((v, k) => [
+      { ...v.line, at: at(k, VOICE_AT.step), cap: false },
+      ...(v.more ? [{ ...v.more, at: at(k, plan[k].lands.moreAt), cap: true }] : []),
+    ]),
+    { ...voice.result, at: +(beatAt('result') + VOICE_AT.result).toFixed(2), cap: false },
+    { ...voice.close, at: +(end + VOICE_AT.close).toFixed(2), cap: false },
   ];
   const winSteps = copy.steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
+  const word = line => line.words.map(w => +(line.at + w.start).toFixed(2));
   return {
     copy, beats, duration, said,
     timing: {
-      steps: copy.steps.map((st, k) => ({ at: beats[k + 1].start, voiceAt: at(k, VOICE_AT.step), shows: st.shows ?? null })),
-      windowIn: beats[winSteps[0] + 1].start, windowOut: beats[winSteps.at(-1) + 2].start,
+      travel: TRAVEL,
+      intro: { at: 0, voiceAt: VOICE_AT.intro },
+      problem: { at: beatAt('problem'), words: word(said[1]) },
+      steps: copy.steps.map((st, k) => ({ at: beats[k + S0].start, voiceAt: at(k, VOICE_AT.step), words: word(said.find(l => l.id === voice.steps[k].line.id)), shows: st.shows ?? null })),
+      result: { at: beatAt('result'), words: word(said.find(l => l.beat === 'result')) },
+      windowIn: beats[winSteps[0] + S0].start, windowOut: beats[winSteps.at(-1) + S0 + 1].start,
       each: +each.toFixed(4), linePause: LINE_PAUSE,
       preAt: pick('preAt'), cmdAt: pick('cmdAt'), typing: +(pre.dur + cmd.dur).toFixed(2),
       rollAt: pick('rollAt'), answerAt: pick('answerAt'), pointAt: plan.map((p, k) => at(k, p.lands.pointAt)).filter(t => t != null).at(-1),
@@ -381,20 +414,7 @@ export function storyOf(u, pools) {
   };
 }
 
-// ── the score: one of its own per film ─────────────────────────────────────
-/**
- * The calm score's style for a film, read off its slug: the same page always
- * gets the same music, and two pages one of their own (videos/use-case/sound-check.mjs
- * measures every pair). Each choice takes its own bytes of the slug's hash.
- */
-export function styleOf(slug) {
-  const h = crypto.createHash('sha256').update(`use-case:${slug}`).digest();
-  const modes = Object.keys(CALM.modes), [lo, hi] = CALM.bpm;
-  return {
-    key: h[0] % 12, mode: modes[h[1] % modes.length], bpm: lo + (h[2] % (hi - lo + 1)), prog: h[3] % CALM.progs.length,
-    groove: CALM.grooves[h[4] % CALM.grooves.length], lead: CALM.leads[h[5] % CALM.leads.length], seed: h.readUInt32LE(6),
-  };
-}
+// ── the camera ─────────────────────────────────────────────────────────────
 
 // ── identity ───────────────────────────────────────────────────────────────
 const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
@@ -418,7 +438,7 @@ const filmed = (u, pools) => ({
 export function narrate(useCases, narration = loadNarration()) {
   return useCases.map(u => ({
     ...u,
-    narration: narration.films[u.slug] ? { voice: narration.voice, say: narration.say, lines: scriptOf(narration, u.slug, u.link) } : null,
+    narration: narration.films[u.slug] ? { voice: narration.voice, say: narration.say, lines: scriptOf(narration, u.slug, u.link), motif: narration.films[u.slug].motif, flow: narration.films[u.slug].flow } : null,
   }));
 }
 const partsOf = (u, pools) => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u, pools))).digest('hex')}`];
@@ -461,21 +481,18 @@ export default {
 
   split: data => data.useCases.map(u => releaseOf([u], data.pools)),
 
-  film(data) {
+  film(data, { board = boardOf(one(data).group) } = {}) {
     const u = one(data);
     const story = storyOf(u, data.pools);
     return {
       title: u.title,
       duration: story.duration,
-      palette: 'calm',
-      style: styleOf(u.slug),
-      volume: 0.5,
-      // the voice, each line where the story puts it; the score steps down under its words
-      said: story.said.map(l => ({ id: l.id, file: l.file, at: l.at, dur: l.duration })),
-      voice: story.said.map(l => ({ at: +(l.at + l.words[0].start).toFixed(2), dur: +(l.words.at(-1).end - l.words[0].start).toFixed(2) })),
+      slug: u.slug,
+      // the voice, each line where the story puts it; the music steps down under its words (mix.mjs)
+      said: story.said.map(l => ({ id: l.id, file: l.file, at: l.at, speaks: +(l.at + l.words[0].start).toFixed(2), dur: +(l.words.at(-1).end - l.words[0].start).toFixed(2) })),
       css: CSS,
       beats: story.beats,
-      scenes: [{ ...filmScene(story), id: 's01-film', key: 'film', start: 0, dur: story.duration }],
+      scenes: [{ ...filmScene(story, board), id: 's01-film', key: 'film', start: 0, dur: story.duration }],
       summary: `${u.slug}: ${story.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,
     };
   },

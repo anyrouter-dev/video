@@ -22,7 +22,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SHARED } from '../../lib/paths.mjs';
 import { MARKS_DIR, marksUsed } from '../../lib/marks.mjs';
-import { writeSound } from '../../lib/sound.mjs';
+import { writeMix } from './mix.mjs';
 
 export const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -111,8 +111,7 @@ const rootFile = (film, scenes) => `<!doctype html>
 <div id="root" data-composition-id="main" data-width="1920" data-height="1080" data-duration="${film.duration}" data-fps="30">
 ${scenes.map(s => `  <div id="clip-${s.id}" class="clip" data-composition-id="${s.id}" data-composition-src="compositions/${s.id}.html"
        data-start="${s.start}" data-duration="${s.dur}" data-track-index="1" data-width="1920" data-height="1080"></div>`).join('\n')}
-  <audio id="score" data-start="0" data-duration="${film.duration}" data-track-index="9" src="audio/mix.wav" data-volume="${film.volume}"></audio>
-${(film.said ?? []).map(l => `  <audio id="vo-${l.id}" data-start="${l.at}" data-duration="${l.dur}" data-track-index="8" src="audio/${l.id}.mp3" data-volume="1"></audio>`).join('\n')}
+  <audio id="mix" data-start="0" data-duration="${film.duration}" data-track-index="9" src="audio/mix.wav" data-volume="1"></audio>
 </div>
 <script>
   // The root only mounts the scenes; each scene drives its own timeline.
@@ -129,12 +128,10 @@ function assertBackToBack(scenes, duration) {
   });
 }
 
-/** What lib/sound.mjs renders for a film: its score, and its scenes' cues on the film's clock. */
-export function soundOf(film) {
-  const { duration } = film;
-  const cues = film.scenes.flatMap(s => (s.cues ?? []).map(c => ({ ...c, at: +(s.start + c.at).toFixed(3) })))
-    .filter(c => c.at >= 0 && c.at < duration).sort((a, b) => a.at - b.at);
-  return { duration, palette: film.palette ?? 'intro', style: film.style, cues, voice: film.voice ?? [] };
+/** A film's sound effects on its clock: its scenes' cues, each moved by the scene's start. */
+export function cuesOf(film) {
+  return film.scenes.flatMap(s => (s.cues ?? []).map(c => ({ ...c, at: +(s.start + c.at).toFixed(3) })))
+    .filter(c => c.at >= 0 && c.at < film.duration).sort((a, b) => a.at - b.at);
 }
 
 /**
@@ -158,9 +155,9 @@ export function writeProject(dir, id, spec) {
     fs.copyFileSync(path.join(MARKS_DIR, f), path.join(dir, 'assets/providers', f));
   }
 
-  const opts = soundOf(film);
-  const sound = writeSound(path.join(dir, 'audio', 'mix.wav'), opts);
-  for (const l of film.said ?? []) fs.copyFileSync(l.file, path.join(dir, 'audio', `${l.id}.mp3`));
+  // one soundtrack: the music, the voice and the effects, mixed and normalised (mix.mjs)
+  const cues = cuesOf(film);
+  const sound = writeMix(path.join(dir, 'audio', 'mix.wav'), { slug: film.slug, duration, voice: film.said ?? [], cues });
 
   fs.writeFileSync(path.join(dir, 'hyperframes.json'), JSON.stringify({
     $schema: 'https://hyperframes.heygen.com/schema/hyperframes.json',
@@ -168,5 +165,5 @@ export function writeProject(dir, id, spec) {
     media: { autoProxy: true },
   }, null, 2) + '\n');
   fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({ id, name: id }, null, 2) + '\n');
-  return { ...film, cues: opts.cues, sound };
+  return { ...film, cues: sound.cues, sound };
 }

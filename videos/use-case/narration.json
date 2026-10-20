@@ -99,6 +99,14 @@
      "from": "use-cases.json claude-code.diagram"
     },
     {
+     "says": "problem picture: Claude Code | Anthropic | by default",
+     "from": "use-cases.json claude-code.problem"
+    },
+    {
+     "says": "result picture: Claude Code | anyrouter/auto | anyr claude --model anyrouter/auto",
+     "from": "use-cases.json claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/claude-code",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -166,6 +174,14 @@
     {
      "says": "Grok Bot drives the agent. You review the pull request it opens.",
      "from": "use-cases.json grokbot.steps"
+    },
+    {
+     "says": "problem picture: Your goal | Cloud agent | blocked",
+     "from": "use-cases.json grokbot.problem"
+    },
+    {
+     "says": "result picture: Claude Code | poolside/laguna-s-2.1 | Grok Bot assigns the goal",
+     "from": "use-cases.json grokbot.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/grokbot",
@@ -238,6 +254,14 @@
     {
      "says": "One key, the catalog, and every call in your request logs.",
      "from": "use-cases.json opencode.hook"
+    },
+    {
+     "says": "problem picture: OpenCode | provider key | provider key | provider key",
+     "from": "use-cases.json opencode.problem"
+    },
+    {
+     "says": "result picture: OpenCode | anyrouter/auto | request logs",
+     "from": "use-cases.json opencode.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/opencode",
@@ -321,6 +345,14 @@
      "from": "use-cases.json coding-agents.hook"
     },
     {
+     "says": "problem picture: Claude Code | key + base URL | Codex | key + base URL | OpenCode | key + base URL",
+     "from": "use-cases.json coding-agents.problem"
+    },
+    {
+     "says": "result picture: Claude Code | Codex | OpenCode | anyrouter/auto",
+     "from": "use-cases.json coding-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/coding-agents",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -389,6 +421,14 @@
      "from": "use-cases.json hermes-agent.hook"
     },
     {
+     "says": "problem picture: Hermes Agent | One model | outage",
+     "from": "use-cases.json hermes-agent.problem"
+    },
+    {
+     "says": "result picture: Hermes Agent | anyrouter/hermes",
+     "from": "use-cases.json hermes-agent.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/hermes-agent",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -450,6 +490,14 @@
     {
      "says": "The loop stays the same. No SDK fork.",
      "from": "use-cases.json claude-agent-sdk.hook"
+    },
+    {
+     "says": "problem picture: Agent SDK | Anthropic | /messages",
+     "from": "use-cases.json claude-agent-sdk.problem"
+    },
+    {
+     "says": "result picture: Agent SDK | anyrouter/auto",
+     "from": "use-cases.json claude-agent-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/claude-agent-sdk",
@@ -525,6 +573,14 @@
      "from": "use-cases.json claude-code-free-models.hook"
     },
     {
+     "says": "problem picture: a free model | that fails over | no daily cap",
+     "from": "use-cases.json claude-code-free-models.problem"
+    },
+    {
+     "says": "result picture: Claude Code | Free model | Next free model",
+     "from": "use-cases.json claude-code-free-models.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/claude-code-free-models",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -587,6 +643,14 @@
     {
      "says": "When the header reads anyrouter/free, a different free model answered.",
      "from": "use-cases.json openrouter-free-fallback.steps"
+    },
+    {
+     "says": "problem picture: Your script | :free model | rate limited",
+     "from": "use-cases.json openrouter-free-fallback.problem"
+    },
+    {
+     "says": "result picture: Your app | Your :free model | Other free model",
+     "from": "use-cases.json openrouter-free-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/openrouter-free-fallback",
@@ -664,6 +728,14 @@
      "from": "use-cases.json openrouter-free-in-your-tools.hook"
     },
     {
+     "says": "problem picture: OpenCode | provider + key + models | Cline | provider + key + models",
+     "from": "use-cases.json openrouter-free-in-your-tools.problem"
+    },
+    {
+     "says": "result picture: Cline or OpenCode | google/gemma-4-31b:free",
+     "from": "use-cases.json openrouter-free-in-your-tools.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/openrouter-free-in-your-tools",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -721,6 +793,14 @@
     {
      "says": "Some run on a free shared route. You can also pin your own NVIDIA key.",
      "from": "use-cases.json nvidia-nim-models.hook"
+    },
+    {
+     "says": "problem picture: one more key | one more base URL | one more rate limit",
+     "from": "use-cases.json nvidia-nim-models.problem"
+    },
+    {
+     "says": "result picture: Your app | NVIDIA NIM | nvidia/nemotron-3-super-120b-a12b",
+     "from": "use-cases.json nvidia-nim-models.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/nvidia-nim-models",
@@ -784,6 +864,14 @@
     {
      "says": "AnyRouter translates each call, on your own Google key.",
      "from": "use-cases.json gemini-in-claude-code.diagram"
+    },
+    {
+     "says": "problem picture: another tool | config edits by hand",
+     "from": "use-cases.json gemini-in-claude-code.problem"
+    },
+    {
+     "says": "result picture: Claude Code | Gemini | your Google key",
+     "from": "use-cases.json gemini-in-claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/gemini-in-claude-code",
@@ -856,6 +944,14 @@
      "from": "use-cases.json claude-code-multiple-keys.hook"
     },
     {
+     "says": "problem picture: Claude Code | One key | revoked",
+     "from": "use-cases.json claude-code-multiple-keys.problem"
+    },
+    {
+     "says": "result picture: Claude Code | Anthropic key | OpenRouter key",
+     "from": "use-cases.json claude-code-multiple-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/claude-code-multiple-keys",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -920,6 +1016,14 @@
      "from": "use-cases.json virtual-presets.hook"
     },
     {
+     "says": "problem picture: First request | One free model | 404 or 429",
+     "from": "use-cases.json virtual-presets.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/free | anyrouter/auto",
+     "from": "use-cases.json virtual-presets.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/virtual-presets",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -982,6 +1086,14 @@
     {
      "says": "Every OpenAI-compatible app you own can use it through AnyRouter.",
      "from": "use-cases.json nvidia-free-key.hook"
+    },
+    {
+     "says": "problem picture: NVIDIA key | NVIDIA's client | only",
+     "from": "use-cases.json nvidia-free-key.problem"
+    },
+    {
+     "says": "result picture: Your apps | NVIDIA key | anyrouter/free",
+     "from": "use-cases.json nvidia-free-key.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/nvidia-free-key",
@@ -1054,6 +1166,14 @@
      "from": "use-cases.json go-plan.hook"
     },
     {
+     "says": "problem picture: free: no daily cap | paid: needs credits",
+     "from": "use-cases.json go-plan.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/auto | anyrouter/free",
+     "from": "use-cases.json go-plan.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/go-plan",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1115,6 +1235,14 @@
     {
      "says": "One key, and a documented free tier.",
      "from": "use-cases.json free-llm-api.hook"
+    },
+    {
+     "says": "problem picture: Free key list | Your app | expired",
+     "from": "use-cases.json free-llm-api.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/free",
+     "from": "use-cases.json free-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/free-llm-api",
@@ -1185,6 +1313,14 @@
      "from": "use-cases.json free-chatbot.hook"
     },
     {
+     "says": "problem picture: Demo chatbot | One free model | rate limited",
+     "from": "use-cases.json free-chatbot.problem"
+    },
+    {
+     "says": "result picture: Your chatbot | anyrouter/free",
+     "from": "use-cases.json free-chatbot.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/free-chatbot",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1253,6 +1389,14 @@
      "from": "use-cases.json cheapest-llm-api.hook"
     },
     {
+     "says": "problem picture: Cheapest SKU | Your app | not serving",
+     "from": "use-cases.json cheapest-llm-api.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/auto",
+     "from": "use-cases.json cheapest-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/cheapest-llm-api",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1312,6 +1456,14 @@
     {
      "says": "Switching models is a new id, not a new client or key.",
      "from": "use-cases.json ai-sdk.problem"
+    },
+    {
+     "says": "problem picture: AI SDK provider | One vendor | locked",
+     "from": "use-cases.json ai-sdk.problem"
+    },
+    {
+     "says": "result picture: AI SDK | anyrouter/free",
+     "from": "use-cases.json ai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/ai-sdk",
@@ -1375,6 +1527,14 @@
     {
      "says": "Same client, same calls, across the whole catalog.",
      "from": "use-cases.json openai-sdk.hook"
+    },
+    {
+     "says": "problem picture: openai package | One vendor | looks locked",
+     "from": "use-cases.json openai-sdk.problem"
+    },
+    {
+     "says": "result picture: openai | anyrouter/free",
+     "from": "use-cases.json openai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/openai-sdk",
@@ -1441,6 +1601,14 @@
     {
      "says": "Chat completions, messages and responses. Same key, same catalog.",
      "from": "use-cases.json unify-api.hook"
+    },
+    {
+     "says": "problem picture: Your app | client | client | client",
+     "from": "use-cases.json unify-api.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/auto",
+     "from": "use-cases.json unify-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/unify-api",
@@ -1523,6 +1691,14 @@
      "from": "use-cases.json model-evals.hook"
     },
     {
+     "says": "problem picture: Vendor A | SDK + key + invoice | Vendor B | SDK + key + invoice | Vendor C | SDK + key + invoice",
+     "from": "use-cases.json model-evals.problem"
+    },
+    {
+     "says": "result picture: Eval loop | deepseek/deepseek-v4-flash | google/gemma-4-31b",
+     "from": "use-cases.json model-evals.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/model-evals",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1586,6 +1762,14 @@
     {
      "says": "If the first model fails, AnyRouter tries the next one.",
      "from": "use-cases.json agent-fallback.hook"
+    },
+    {
+     "says": "problem picture: Your agent | One model | down",
+     "from": "use-cases.json agent-fallback.problem"
+    },
+    {
+     "says": "result picture: Your agent | Primary model | Backup model",
+     "from": "use-cases.json agent-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/agent-fallback",
@@ -1657,6 +1841,14 @@
      "from": "use-cases.json donate-keys.hook"
     },
     {
+     "says": "problem picture: Idle key | Month end | unused",
+     "from": "use-cases.json donate-keys.problem"
+    },
+    {
+     "says": "result picture: Your key | Shared pool | credits back",
+     "from": "use-cases.json donate-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/donate-keys",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1718,6 +1910,14 @@
     {
      "says": "Requests bill your provider. AnyRouter takes no per-token cut.",
      "from": "use-cases.json byok.hook"
+    },
+    {
+     "says": "problem picture: one URL | logs | failover",
+     "from": "use-cases.json byok.problem"
+    },
+    {
+     "says": "result picture: Your app | Your provider keys",
+     "from": "use-cases.json byok.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/byok",
@@ -1785,6 +1985,14 @@
      "from": "use-cases.json byok-anthropic.hook"
     },
     {
+     "says": "problem picture: Your tools | Anthropic plan | limit",
+     "from": "use-cases.json byok-anthropic.problem"
+    },
+    {
+     "says": "result picture: Your tools | anthropic/claude-sonnet-4-6 | Other models",
+     "from": "use-cases.json byok-anthropic.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/byok-anthropic",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1850,6 +2058,14 @@
      "from": "use-cases.json sign-in.hook"
     },
     {
+     "says": "problem picture: Your users | Your key | every user's bill",
+     "from": "use-cases.json sign-in.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/free | anyrouter/auto | their balance pays",
+     "from": "use-cases.json sign-in.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/sign-in",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -1908,6 +2124,14 @@
     {
      "says": "Claude Desktop, Claude Code, Cursor and OpenCode call it as tools.",
      "from": "use-cases.json mcp-gateway.hook"
+    },
+    {
+     "says": "problem picture: check credits | list models | rotate a key",
+     "from": "use-cases.json mcp-gateway.problem"
+    },
+    {
+     "says": "result picture: Your MCP client | credits | models | keys",
+     "from": "use-cases.json mcp-gateway.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/mcp-gateway",
@@ -1979,6 +2203,14 @@
      "from": "use-cases.json mcp-for-agents.hook"
     },
     {
+     "says": "problem picture: Claude Desktop | token + JSON | Cursor | token + JSON | Your agents | token + JSON",
+     "from": "use-cases.json mcp-for-agents.problem"
+    },
+    {
+     "says": "result picture: Claude Desktop | Cursor | Your agents | anyrouter/auto",
+     "from": "use-cases.json mcp-for-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/mcp-for-agents",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -2042,6 +2274,14 @@
      "from": "use-cases.json free-coding-agent.hook"
     },
     {
+     "says": "problem picture: a different model | each run",
+     "from": "use-cases.json free-coding-agent.problem"
+    },
+    {
+     "says": "result picture: Claude Code | minimax/minimax-m3.1-flash:free",
+     "from": "use-cases.json free-coding-agent.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/free-coding-agent",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -2102,6 +2342,14 @@
     {
      "says": "Codex launches against one stored AnyRouter key.",
      "from": "use-cases.json codex.hook"
+    },
+    {
+     "says": "problem picture: Codex | OpenAI | key + base URL",
+     "from": "use-cases.json codex.problem"
+    },
+    {
+     "says": "result picture: Codex | catalog models",
+     "from": "use-cases.json codex.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/codex",
@@ -2179,6 +2427,14 @@
      "from": "use-cases.json embeddings-search.hook"
     },
     {
+     "says": "problem picture: Chat | key + base URL | Embeddings | key + base URL",
+     "from": "use-cases.json embeddings-search.problem"
+    },
+    {
+     "says": "result picture: Your app | nvidia/nemotron-3-embed-1b",
+     "from": "use-cases.json embeddings-search.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
      "says": "anyrouter.dev/u/embeddings-search",
      "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
     }
@@ -2246,6 +2502,14 @@
     {
      "says": "You get probabilities back, not generated text.",
      "from": "use-cases.json decisions.hook"
+    },
+    {
+     "says": "problem picture: prompt for JSON | parse it",
+     "from": "use-cases.json decisions.problem"
+    },
+    {
+     "says": "result picture: Your app | anyrouter/decision",
+     "from": "use-cases.json decisions.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
      "says": "anyrouter.dev/u/decisions",

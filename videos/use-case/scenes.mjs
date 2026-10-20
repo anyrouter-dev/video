@@ -21,6 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SHARED } from '../../lib/paths.mjs';
 import { esc, C } from './project.mjs';
+import { markFor } from '../../lib/marks.mjs';
 import { PORTRAIT_CAPTION_BAND } from '../../shared/authoring/portrait.mjs';
 
 // ── reading pace ────────────────────────────────────────────────────────────
@@ -443,115 +444,394 @@ export function urlSet(link) {
   return { landscape: set('landscape'), portrait: set('portrait') };
 }
 
+// ── kinetic type and diagrams ──────────────────────────────────────────────
+// The problem and the result are set as kinetic type: the line the voice says, each word rising
+// as it is spoken. It is its own caption, so no caption chip runs under it.
+TYPE.say = { weight: 600, tracking: -0.04,
+  landscape: { sizes: [112, 104, 96, 88, 80, 72, 64], width: SAFE.landscape, lines: 2 },
+  portrait: { sizes: [100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56], width: SAFE.portrait, lines: 4 } };
+
+/** How a spoken line is set as kinetic type, per frame: { px, breaks, lines }, or null when it sets in neither. */
+export function sayType(text) {
+  const t = TYPE.say, out = {};
+  for (const o of ['landscape', 'portrait']) {
+    for (const px of t[o].sizes) {
+      const set = breakSet(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, room: n => n <= t[o].lines });
+      if (set) { out[o] = { px, ...set }; break; }
+    }
+    if (!out[o]) return null;
+  }
+  return out;
+}
+
+// A diagram card: its label in Geist, or in Geist Mono when it is an id or a path. Sizes per frame,
+// largest first; a card is as wide as its label, up to its column.
+const NODE = { padX: 34, mark: 60, markGap: 20,
+  landscape: { sizes: [64, 60, 56, 52, 48, 44, 40], mono: [52, 48, 46, 44, 40, 36, 34] },
+  portrait: { sizes: [60, 56, 52, 48, 44, 40, 36], mono: [48, 44, 42, 40, 36, 34, 32] } };
+// The room a diagram has across, per frame, and the gaps its edges take: a problem is two columns
+// (what you have, what it costs you), a result three (your side, AnyRouter, what answers), across
+// in landscape. Portrait stacks them down the frame, its tall side, except rows of pairs, which
+// read across.
+const ACROSS_DG = { landscape: 1720, portrait: 900 };
+const GAPS = { problem: { landscape: 200, portrait: 60 }, result: { landscape: 220, portrait: 0 } };
+// an id or a path is set in mono: no spaces, and a slash or a colon in it
+const isId = label => !/\s/.test(label) && /[/:]/.test(label);
+const nodeWidth = (label, o, k, marked) => {
+  const px = (isId(label) ? NODE[o].mono : NODE[o].sizes)[k];
+  return widthOf(label, isId(label) ? { px, weight: 'mono' } : { px, weight: 600, tracking: -0.02 }) + 2 * NODE.padX + 4 + (marked ? NODE.mark + NODE.markGap : 0);
+};
+
+/**
+ * A problem's picture or a result's route, from narration.json, as columns of cards and the
+ * edges between them. A problem: `single` (one thing, the one thing it depends on, and a tag on
+ * the edge or a word for how it fails), `rows` (each thing and what it costs), `sprawl` (one thing
+ * fanning out to what it needs), `chips` (what you want, no edges). A result: your side, AnyRouter,
+ * and what answers, the ones after the first dashed when they are fallbacks. Each card takes the
+ * largest size at which every card of its diagram fits its column in both frames.
+ */
+export function diagramOf(spec, kind, slug) {
+  if (!spec) throw new Error(`${slug}: narration.json has no ${kind === 'problem' ? 'motif' : 'flow'}`);
+  let d;
+  if (kind === 'result') d = { left: spec.left, right: spec.right, edges: 'via', fallback: !!spec.fallback, note: spec.note ?? null };
+  else if (spec.kind === 'single') d = { left: [spec.a], right: [spec.b], edges: 'pairs', tag: spec.tag ?? null, fail: spec.fail ?? null };
+  else if (spec.kind === 'rows') d = { left: spec.rows.map(r => r[0]), right: spec.rows.map(r => r[1]), edges: 'pairs' };
+  else if (spec.kind === 'sprawl') d = { left: [spec.a], right: spec.rows, edges: 'fan' };
+  else if (spec.kind === 'chips') d = { left: [], right: spec.items, edges: 'none' };
+  else throw new Error(`${slug}: unknown motif "${spec.kind}"`);
+  d = { tag: null, fail: null, fallback: false, note: null, ...d, kind };
+  d.stack = kind === 'result' || spec.kind !== 'rows';
+  d.tall = { left: false, right: false };
+  const marks = l => !!markFor(l) && !isId(l);
+  d.size = {};
+  for (const o of ['landscape', 'portrait']) {
+    const widest = (ls, i) => Math.max(0, ...ls.map(l => nodeWidth(l, o, i, marks(l))));
+    const hub = i => (kind === 'result' ? nodeWidth('AnyRouter', o, i, true) : 0);
+    const stacked = o === 'portrait' && d.stack;
+    // a stacked result sets each side's cards in a row where one fits, else one under another
+    const row = (ls, i) => ls.reduce((w, l) => w + nodeWidth(l, o, i, marks(l)), 0) + 18 * Math.max(0, ls.length - 1);
+    const side = (ls, i, tall) => (tall ? widest(ls, i) : row(ls, i));
+    const fits = (i, tall) => (stacked ? (kind === 'result' ? Math.max(side(d.left, i, tall), hub(i), side(d.right, i, tall)) : Math.max(widest(d.left, i), widest(d.right, i)))
+      : widest(d.left, i) + hub(i) + widest(d.right, i) + GAPS[kind][o]) <= ACROSS_DG[o];
+    let k = NODE[o].sizes.findIndex((_, i) => fits(i, false));
+    if (k < 0 && stacked) {
+      k = NODE[o].sizes.findIndex((_, i) => fits(i, true));
+      if (k >= 0) d.tall = { left: row(d.left, k) > ACROSS_DG[o], right: row(d.right, k) > ACROSS_DG[o] };
+    }
+    if (k < 0) throw new Error(`${slug}: the ${kind} diagram is too wide for the ${o} frame: ${[...d.left, ...d.right].join(', ')}`);
+    d.size[o] = { sans: NODE[o].sizes[k], mono: NODE[o].mono[k] };
+  }
+  d.marks = Object.fromEntries([...d.left, ...d.right].filter(marks).map(l => [l, markFor(l)]));
+  return d;
+}
+
 // ── the shot ───────────────────────────────────────────────────────────────
 // How long each id holds in a roll. Each wash is shorter, so one never fades over the next.
 export const ROLL_EVERY = 0.9;
+// The camera's perspective per frame (MOTION.md, 3D camera language).
+const CAM_PERSPECTIVE = { landscape: 1600, portrait: 1400 };
+// The camera's language (MOTION.md): the five panels lie on a board tilted back from the viewer,
+// and the camera cranes along it from panel to panel, pulling back as it goes and squaring up to
+// each so it reads flat. A film's group lays the board out its own way, so films of one kind share
+// a shape and films of different kinds do not: `path` is each panel's place in panel widths along
+// the board and across it, `rx` how far the board leans back, `ry` how far each panel turns aside.
+// Portrait runs the board down the frame instead of across it.
+export const BOARDS = {
+  row: { path: [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], rx: 48, ry: 0 },
+  climb: { path: [[0, 0], [1, -0.45], [2, -0.9], [3, -1.35], [4, -1.8]], rx: 40, ry: 0 },
+  zigzag: { path: [[0, 0], [1, 0.42], [2, 0], [3, 0.42], [4, 0]], rx: 44, ry: 0 },
+  deck: { path: [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], rx: 18, ry: -34 },
+  descend: { path: [[0, 0], [1, 0.45], [2, 0.9], [3, 1.35], [4, 1.8]], rx: 40, ry: 0 },
+};
+/** The board a film's group lays out (BOARDS). */
+export const boardOf = group => ({ 'coding-agents': 'row', sdks: 'climb', 'free-cheap': 'zigzag', 'keys-pool': 'deck', mcp: 'descend' })[group] ?? 'row';
+
+const words = (text, set) => masked(text, { landscape: set.landscape.breaks, portrait: set.portrait.breaks });
+const kineticHtml = (cls, line) => `<p class="kt ${cls}" style="${fsVars({ landscape: line.type.landscape.px, portrait: line.type.portrait.px }, 'ks')}">${words(line.text, line.type)}</p>`;
+
+function nodeHtml(label, d, role) {
+  const m = d.marks[label];
+  return `<div class="nd card${isId(label) ? ' id' : ''}" data-role="${role}">${m ? mark(m) : ''}<span class="nl${isId(label) ? ' mono' : ''}">${esc(label)}</span></div>`;
+}
+
+function diagramHtml(d) {
+  const size = `--nd:${d.size.landscape.sans}px;--nd-p:${d.size.portrait.sans}px;--ndm:${d.size.landscape.mono}px;--ndm-p:${d.size.portrait.mono}px`;
+  const center = d.edges === 'via' ? `<div class="col mid"><div class="nd card hub">${LOGO}<span class="nl">AnyRouter</span></div></div>` : '';
+  return `<div class="dg ${d.kind} e-${d.edges}${d.left.length ? '' : ' no-left'}${d.stack ? ' stack-p' : ''}" style="${size}">
+      <svg class="edges" aria-hidden="true"></svg>
+      ${d.left.length ? `<div class="col l${d.tall.left ? ' tall' : ''}">${d.left.map(l => nodeHtml(l, d, 'l')).join('')}</div>` : ''}
+      ${center}
+      <div class="col r${d.tall.right ? ' tall' : ''}">${d.right.map((l, i) => nodeHtml(l, d, d.fallback && i > 0 ? 'fb' : 'r')).join('')}</div>
+      ${d.tag ? `<div class="tg mono">${esc(d.tag)}</div>` : ''}
+      ${d.fail ? `<div class="fl">${esc(d.fail)}</div>` : ''}
+      ${d.note ? `<div class="nt mono">${esc(d.note)}</div>` : ''}
+    </div>`;
+}
+
+/**
+ * When each piece of a diagram lands, in seconds on the film's clock: a card lands on the spoken
+ * word its label ends on, so "one more key" lands on "key"; a card no word matches, in order
+ * across the line. `words` are the line's words with their times, `from` when the panel is up.
+ */
+export function landings(d, said, from) {
+  const norm = w => w.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const ws = said.words.map(w => ({ w: norm(w.text), at: said.at + w.start }));
+  const first = ws[0]?.at ?? from, last = ws.at(-1)?.at ?? from + 1;
+  let i = 0;
+  const onWord = (label, fallbackAt) => {
+    const key = norm(label.split(/[\s/]+/).filter(Boolean).at(-1));
+    const k = ws.findIndex((w, j) => j >= i && key && w.w === key);
+    if (k < 0) return fallbackAt;
+    i = k + 1;
+    return ws[k].at;
+  };
+  const spread = (n, k) => +(first + (last - first) * ((k + 1) / (n + 1))).toFixed(2);
+  if (d.kind === 'result') {
+    const lead = from;
+    return { left: d.left.map((_, k) => +(lead + k * 0.08).toFixed(2)), hub: +(lead + 0.3).toFixed(2), right: d.right.map((_, k) => +(lead + 0.55 + k * 0.12).toFixed(2)), mark: null, note: +(last + 0.2).toFixed(2) };
+  }
+  const left = d.left.map((_, k) => +(from + k * 0.15).toFixed(2));
+  const right = d.right.map((l, k) => +(onWord(l, spread(d.right.length, k)) - 0.05).toFixed(2));
+  const word = d.fail ?? d.tag;
+  return { left, right, mark: word ? +(onWord(word, last) - 0.05).toFixed(2) : null, note: null };
+}
 
 /** The film's one sub-composition: { cls, body, inner, cues }. */
-export function filmScene({ copy, beats, duration, timing, said }) {
-  const caps = captionsOf(said);
+export function filmScene({ copy, beats, duration, timing, said }, board = 'row') {
+  const B = BOARDS[board];
+  if (!B) throw new Error(`no board "${board}"`);
+  const caps = captionsOf(said.filter(l => l.cap));
   const url = urlSet(copy.link);
   const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
   const { roll } = copy.window;
   const rolls = roll ? roll.ids.length : 0;
+  const T = timing, S = T.steps;
+  const problemLine = said.find(l => l.beat === 'problem'), resultLine = said.find(l => l.beat === 'result');
+  // a diagram's cards ride in with the camera, so it arrives at a composed frame; the rest lands on the voice
+  const land = { problem: landings(copy.problem.diagram, problemLine, T.problem.at - 0.35), result: landings(copy.result.diagram, resultLine, T.result.at - 0.35) };
   const steps = copy.steps.map((st, k) => `<div class="stp" style="${fsVars(copy.type.step, 'ls')};${fsVars(copy.type.detail, 'ds')}">
       <div class="head"><span class="sm"><i class="ring"></i><b>${k + 1}</b></span><div class="sl">${masked(st.label, st.breaks)}</div></div>
       ${st.detail ? `<p class="dt">${masked(st.detail.text, st.detail.breaks)}</p>` : ''}</div>`).join('');
-  // The camera scales and dollies the whole frame a few percent on purpose, so the layout audit is told so.
-  const body = `<div class="cam" data-layout-allow-overflow><div class="deep">
-    <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
-      <div class="badge kick">${esc(copy.kicker)}</div></div>
-    <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1>
-    ${steps}
-    <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div>
-    <div class="flat">${windowHtml(copy.window)}</div></div>
+  const back = '<div class="bk" aria-hidden="true"></div>';
+  // the camera moves the world through five wrappers, one move each, so every move is a plain tween
+  const body = `<div class="cam" data-layout-allow-overflow><div class="cpull"><div class="carc"><div class="cpush"><div class="crotx"><div class="croty"><div class="cpos">
+    <section class="pn p-intro">${back}
+      <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
+        <div class="badge kick">${esc(copy.kicker)}</div></div>
+      <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1></section>
+    <section class="pn p-problem">${back}<div class="blk"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}</div></section>
+    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}</div></section>
+    <section class="pn p-result">${back}<div class="blk"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}</div></section>
+    <section class="pn p-close">${back}
+      <p class="h2" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</p>
+      <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
+        <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></section>
+    </div></div></div></div></div></div></div>
     <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span style="${fsVars(c.px, 'cf')}">${esc(c.text)}</span></div>`).join('')}</div>`;
-  const T = timing, S = T.steps;
+
+  // the panel each beat reads, and when the camera travels: centred on each beat change
+  const cuts = [T.problem.at, S[0].at, T.result.at, T.end];
   const inner = `
-    const STEPS = ${JSON.stringify(S)}, T1 = STEPS[0].at, END = ${T.end}, W_IN = ${T.windowIn}, W_OUT = ${T.windowOut};
+    const BOARD = ${JSON.stringify(B)}, TRAVEL = ${T.travel}, CUTS = ${JSON.stringify(cuts)};
+    const STEPS = ${JSON.stringify(S)}, T1 = STEPS[0].at, END = ${T.end}, W_IN = ${T.windowIn}, W_OUT = ${T.windowOut}, RESULT = ${T.result.at};
     const PRE_AT = ${T.preAt}, CMD_AT = ${T.cmdAt}, INSTALL = ${T.preAt != null}, EACH = ${T.each}, LINE_PAUSE = ${T.linePause};
     const ROLL_AT = ${T.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${T.answerAt}, POINT_AT = ${T.pointAt};
+    const LAND = ${JSON.stringify(land)}, PWORDS = ${JSON.stringify(T.problem.words)}, RWORDS = ${JSON.stringify(T.result.words)};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
-    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean"), DONE = ${STEP.done}, RG = ${STEP.rowGap}, HG = ${STEP.headGap};
-    const cam = $(".cam"), END_LEAN = v("--end");
-    const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end"), stp = $$(".stp");
-    // the code this frame shows
+    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), DONE = ${STEP.done}, RG = ${STEP.rowGap}, HG = ${STEP.headGap};
+    const W = uc.offsetWidth, H = uc.offsetHeight, TALL = H > W;
+    const panels = $$(".pn"), [pIntro, pProblem, pSteps, pResult, pClose] = panels;
+    const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end"), h2 = $(".h2"), stp = $$(".stp");
     const rows = $$(".rows").find(r => getComputedStyle(r).display !== "none"), R = s => Array.from(rows.querySelectorAll(s));
 
-    // 1 · what and why. The headline sits in the middle of the safe area; the marks close in, the words
-    // rise, the camera leans in.
-    const fs = parseFloat(getComputedStyle(h).fontSize), heroH = hero.offsetHeight, hH = h.offsetHeight;
-    const top1 = SY + (SH - heroH - G - hH) / 2;
+    // ── the camera. Each panel has a pose in the world; at rest the camera is that pose's inverse, so
+    // the panel it reads is square to it at 1:1. Between beats it travels, pulling back on the way.
+    const poseOf = i => {
+      const [along, across] = BOARD.path[i];
+      return TALL ? { x: across * W * 0.6, y: along * H * 1.12, z: 0, rx: BOARD.rx, ry: BOARD.ry / 2 }
+        : { x: along * W * 1.12, y: across * H, z: 0, rx: BOARD.rx, ry: BOARD.ry };
+    };
+    panels.forEach((p, i) => { const q = poseOf(i); gsap.set(p, { x: q.x, y: q.y, z: q.z, rotationX: q.rx, rotationY: q.ry }); });
+    const cpos = $(".cpos"), crotx = $(".crotx"), croty = $(".croty"), cpush = $(".cpush"), carc = $(".carc"), cpull = $(".cpull");
+    // the inverse of a panel's pose: undo its turn aside (inner), then its lean back (outer), then its place
+    const at = i => { const q = poseOf(i); return { pos: { x: -q.x, y: -q.y, z: -q.z }, rx: { rotationX: -q.rx }, ry: { rotationY: -q.ry } }; };
+    tl.set(cpos, at(0).pos, 0);
+    tl.set(crotx, at(0).rx, 0);
+    tl.set(croty, at(0).ry, 0);
+    // the travel pulls back further on a long move, and swings a little to the side on the way
+    const PULL = 420, SWING = TALL ? 4 : 8, LIFT = TALL ? 10 : 16;
+    // between travels the camera pushes in at an even speed: a frame at rest reads as dead air
+    const PUSH = 40, rests = [0, ...CUTS.map(c => c + TRAVEL / 2)], restEnds = [...CUTS.map(c => c - TRAVEL / 2), D];
+    rests.forEach((a, i) => tl.fromTo(cpush, { z: 0 }, { z: PUSH, duration: Math.max(0.1, restEnds[i] - a), ease: "none", immediateRender: false }, a));
+    CUTS.forEach((c, i) => {
+      const a = c - TRAVEL / 2, from = at(i), to = at(i + 1), side = i % 2 ? -1 : 1;
+      tl.fromTo(cpos, from.pos, { ...to.pos, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(crotx, from.rx, { ...to.rx, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(croty, from.ry, { ...to.ry, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(cpush, { z: PUSH }, { z: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(cpull, { z: 0 }, { z: -PULL, duration: TRAVEL / 2, ease: "power2.out", immediateRender: false }, a);
+      tl.fromTo(cpull, { z: -PULL }, { z: 0, duration: TRAVEL / 2, ease: "power2.in", immediateRender: false }, a + TRAVEL / 2);
+      {
+        // on the way the camera rises off the board, so it is seen lying back, and swings a little aside
+        tl.fromTo(carc, { rotationX: 0, rotationY: 0, x: 0 }, { rotationX: LIFT, rotationY: SWING * side, x: -side * W * 0.04, duration: TRAVEL / 2, ease: "power2.out", immediateRender: false }, a);
+        tl.fromTo(carc, { rotationX: LIFT, rotationY: SWING * side, x: -side * W * 0.04 }, { rotationX: 0, rotationY: 0, x: 0, duration: TRAVEL / 2, ease: "power2.in", immediateRender: false }, a + TRAVEL / 2);
+      }
+    });
+    // a panel is drawn only around its own beats
+    const spans = [[0, CUTS[0]], [CUTS[0], CUTS[1]], [CUTS[1], CUTS[2]], [CUTS[2], CUTS[3]], [CUTS[3], D + 1]];
+    panels.forEach((p, i) => {
+      const [a, b] = spans[i];
+      tl.set(p, { autoAlpha: i ? 0 : 1 }, 0);
+      if (i) tl.set(p, { autoAlpha: 1 }, a - TRAVEL / 2);
+      if (i < 4) tl.set(p, { autoAlpha: 0 }, b + TRAVEL / 2);
+    });
+    // the dots behind each panel drift at their own speed, so depth reads even while the text holds still
+    $$(".bk").forEach((b, i) => tl.fromTo(b, { x: 0, y: 0 }, { x: i % 2 ? -60 : 60, y: -40, duration: D, ease: "none" }, 0));
+
+    // ── 1 · what and why. The headline sits in the middle of the safe area; the marks close in, the words rise.
+    const heroH = hero.offsetHeight, hH = h.offsetHeight, top1 = SY + (SH - heroH - G - hH) / 2;
     hero.style.top = top1 + "px";
     h.style.top = top1 + heroH + G + "px";
     const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
-    tl.fromTo(tiles, { x: i => (i - mid) * 48 }, { x: 0, duration: 1.4, ease: "expo.out" }, 0);
-    tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.1);
-    // every word is up within half a second, however long the headline: a word still under its
-    // mask sits a line low, and on a long headline that line is past the safe area
-    const words = $$(".h .w > span");
-    tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
-    tl.fromTo(cam, { scale: 1 }, { scale: LEAN, duration: T1, ease: "none" }, 0);
+    tl.fromTo(tiles, { x: i => (i - mid) * 56, z: -200, rotationY: i => (i - mid) * -14 }, { x: 0, z: 0, rotationY: 0, duration: 1.3, ease: "expo.out" }, 0);
+    tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.15);
+    const hw = $$(".h .w > span");
+    tl.fromTo(hw, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.06, 0.3 / hw.length), ease: "expo.out" }, 0.1);
 
-    // 1 → 2 · the headline falls back into the page as the steps begin, and the camera squares up to them.
-    // it is gone before the first step comes in where it stood
-    tl.to([hero, h], { z: -700, rotationX: 24, y: "-=140", opacity: 0, duration: 0.6, ease: "power3.in" }, T1 - 0.65);
-    tl.to(cam, { scale: 1, duration: 0.8, ease: "power3.inOut" }, T1 - 0.65);
+    // ── kinetic type: each word of the line rises as it is said, out of its own mask
+    const kinetic = (sel, times) => {
+      const ws = $$(sel + " .w > span");
+      ws.forEach((w, i) => tl.fromTo(w, { yPercent: 115 }, { yPercent: 0, duration: 0.45, ease: "expo.out", immediateRender: true }, Math.max(0, (times[i] ?? times.at(-1)) - 0.08)));
+    };
+    kinetic(".kp", PWORDS);
+    kinetic(".kr", RWORDS);
 
-    // 2 · the steps. Each tilts in from deep in the page and settles flat to read; a step done shrinks to a
-    // row above the next, a layer back, so the camera's slow dolly moves it less than the step in front.
-    // a step done is its head alone, its detail gone
+    // ── a diagram: its cards fly in from depth onto the panel, each on its word; the edges draw between them
+    const svgNS = "http://www.w3.org/2000/svg";
+    const diagram = (panel, L) => {
+      const dg = panel.querySelector(".dg"), svg = dg.querySelector(".edges");
+      const box = e => { let x = 0, y = 0, n = e; while (n && n !== dg) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; } return { x, y, w: e.offsetWidth, h: e.offsetHeight }; };
+      svg.setAttribute("width", dg.offsetWidth); svg.setAttribute("height", dg.offsetHeight);
+      const left = Array.from(dg.querySelectorAll('.col.l .nd')), right = Array.from(dg.querySelectorAll('.col.r .nd')), hub = dg.querySelector(".hub");
+      // an edge leaves the side of a card that faces the next one: across in landscape, down a stacked portrait
+      // a column of cards one under another is reached by a trunk down its left side, never through a card
+      const stackedCol = e => { const c = Array.from(e.parentElement.children); return c.length > 1 && c[1].offsetTop > c[0].offsetTop + 4; };
+      const trunk = e => Math.min(...Array.from(e.parentElement.children).map(c => box(c).x)) - 40;
+      const link = (a, b, dashed) => {
+        const A = box(a), B = box(b), across = B.x >= A.x + A.w - 1;
+        const p = across ? [A.x + A.w, A.y + A.h / 2, B.x, B.y + B.h / 2] : [A.x + A.w / 2, A.y + A.h, B.x + B.w / 2, B.y];
+        const path = document.createElementNS(svgNS, "path"), m = across ? (p[0] + p[2]) / 2 : (p[1] + p[3]) / 2;
+        let d = across ? "M" + p[0] + " " + p[1] + " C" + m + " " + p[1] + " " + m + " " + p[3] + " " + p[2] + " " + p[3] : "M" + p[0] + " " + p[1] + " C" + p[0] + " " + m + " " + p[2] + " " + m + " " + p[2] + " " + p[3];
+        if (!across && stackedCol(b)) { const x = trunk(b), y = A.y + A.h + 28; d = "M" + p[0] + " " + p[1] + " V" + y + " H" + x + " V" + (B.y + B.h / 2) + " H" + B.x; }
+        else if (!across && stackedCol(a)) { const x = trunk(a), y = B.y - 28; d = "M" + A.x + " " + (A.y + A.h / 2) + " H" + x + " V" + y + " H" + p[2] + " V" + B.y; }
+        path.setAttribute("d", d);
+        path.setAttribute("class", dashed ? "ed dash" : "ed");
+        svg.appendChild(path);
+        const len = path.getTotalLength();
+        return { path, len, mid: path.getPointAtLength(len / 2), end: path.getPointAtLength(len) };
+      };
+      const lands = (els, times, z) => els.forEach((e, k) => tl.fromTo(e, { z, rotationX: 22, y: 60, opacity: 0 }, { z: 0, rotationX: 0, y: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: true }, times[k]));
+      lands(left, L.left, -520);
+      if (hub) lands([hub], [L.hub], -380);
+      lands(right, L.right, -640);
+      const draw = (e, a) => { tl.fromTo(e.path, { strokeDasharray: e.len, strokeDashoffset: e.len }, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut", immediateRender: true }, a); if (e.path.classList.contains("dash")) tl.set(e.path, { strokeDasharray: "10 10", strokeDashoffset: 0 }, a + 0.46); };
+      const edges = [];
+      if (hub) {
+        left.forEach((l, k) => { const e = link(l, hub); draw(e, L.hub + 0.1); edges.push(e); });
+        right.forEach((r, k) => { const e = link(hub, r, r.dataset.role === "fb"); draw(e, L.right[k] + 0.1); edges.push(e); });
+      } else if (dg.classList.contains("e-pairs")) left.forEach((l, k) => { const e = link(l, right[k]); draw(e, Math.max(L.left[k], L.right[k]) + 0.1); edges.push(e); });
+      else if (dg.classList.contains("e-fan")) right.forEach((r, k) => { const e = link(left[0], r); draw(e, L.right[k] + 0.1); edges.push(e); });
+      // the tag sits on the edge it names; a failure breaks the edge and greys out what it reached
+      const tg = dg.querySelector(".tg"), fl = dg.querySelector(".fl");
+      if (tg && edges[0]) {
+        tg.style.left = edges[0].mid.x - tg.offsetWidth / 2 + "px"; tg.style.top = edges[0].mid.y - tg.offsetHeight / 2 + "px";
+        tl.fromTo(tg, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: true }, L.mark);
+      }
+      if (fl && edges[0]) {
+        const r = box(right[0]);
+        fl.style.left = r.x + r.w / 2 - fl.offsetWidth / 2 + "px"; fl.style.top = r.y + r.h + 18 + "px";
+        tl.set(edges[0].path, { strokeDasharray: "4 14", attr: { class: "ed broke" } }, L.mark);
+        tl.set(right[0], { attr: { "data-state": "off" } }, L.mark);
+        tl.fromTo(fl, { scale: 0.6, opacity: 0, y: -10 }, { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)", immediateRender: true }, L.mark);
+      }
+      const nt = dg.querySelector(".nt");
+      if (nt) tl.fromTo(nt, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: true }, L.note);
+      return { edges, hub };
+    };
+    // the panel's block (badge, line, diagram) sits in the middle of the safe area
+    const centre = p => { const b = p.querySelector(".blk"); b.style.top = SY + Math.max(0, (SH - b.offsetHeight) / 2) + "px"; };
+    centre(pProblem); centre(pResult);
+    diagram(pProblem, LAND.problem);
+    const route = diagram(pResult, LAND.result);
+    // a request runs the route while the result is said: out from your side, through AnyRouter, to what answers
+    if (route.hub && route.edges.length) {
+      const dot = document.createElementNS(svgNS, "circle");
+      dot.setAttribute("r", 13); dot.setAttribute("class", "pulse");
+      pResult.querySelector(".edges").appendChild(dot);
+      const legs = [route.edges[0], route.edges.find(e => !e.path.classList.contains("dash")) ?? route.edges.at(-1)].filter((e, i, a) => a.indexOf(e) === i);
+      let t0 = Math.max(LAND.result.right.at(-1) + 0.4, RWORDS[0] ?? 0);
+      tl.set(dot, { opacity: 0 }, 0);
+      // set frame by frame along the path: a seek renders a set, where a callback may be skipped
+      const ease = gsap.parseEase("power2.inOut");
+      const answered = Array.from(pResult.querySelectorAll('.col.r .nd')).find(n => n.dataset.role === "r");
+      // a request runs the route again and again while the result holds, so the frame keeps its pulse
+      for (let run = 0; t0 + legs.length * 0.75 < END - 0.4; run++) {
+        tl.set(dot, { opacity: 1 }, t0);
+        legs.forEach(leg => {
+          for (let f = 0; f <= 21; f++) { const q = leg.path.getPointAtLength(ease(f / 21) * leg.len); tl.set(dot, { attr: { cx: q.x, cy: q.y } }, t0 + f / 30); }
+          t0 += 0.75;
+        });
+        // the card that answered takes the accent as the request reaches it
+        if (answered && !run) tl.set(answered, { attr: { "data-state": "on" } }, t0 - 0.05);
+        tl.set(dot, { opacity: 0 }, t0);
+        t0 += 0.45;
+      }
+    }
+
+    // ── 2 · the steps. Each tilts in from deep in the page and settles flat to read; its words rise as
+    // they are said. A step done shrinks to a row above the next.
     const hs = stp.map(e => e.offsetHeight), heads = stp.map(e => e.querySelector(".head").offsetHeight), winH = win.offsetHeight;
     const doneY = k => SY + heads.slice(0, k).reduce((y, x) => y + x * DONE + RG, 0);
-    // a step and, when it shows the window, the window under it: one block, centred in the room left
     const place = k => {
       const block = hs[k] + (STEPS[k].shows ? HG + winH : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
       return { top, win: top + hs[k] + HG };
     };
-    tl.fromTo(Q(".deep"), { z: 0 }, { z: v("--dolly"), duration: END - T1, ease: "none" }, T1);
     STEPS.forEach((st, k) => {
       const el = stp[k], at = place(k).top, next = STEPS[k + 1];
       tl.set(el, { y: at }, 0);
-      // a later step comes in once the one before has made room, so the two never cross
-      const enter = st.at + (k ? 0.45 : 0);
-      // it shows whole from deep in the page and flies forward: a step half faded is pale text on white
+      const enter = st.at + (k ? 0.45 : 0.1);
       tl.set(el, { opacity: 1 }, enter);
       tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90 },
         { z: 0, rotationX: 0, rotationY: 0, y: at, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
-      el.querySelectorAll(".sl .w > span").forEach(w => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, enter + 0.15));
-      // the page's sentence rises a row at a time while the step is said and after, and goes once the step is done
-      const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : END) - 0.5;
+      // the label's words rise as the voice says them, after "Step N."
+      el.querySelectorAll(".sl .w > span").forEach((w, i) => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, Math.max(enter + 0.1, (st.words[i + 2] ?? st.words.at(-1)) - 0.08)));
+      const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : RESULT) - 0.5;
       if (dw.length) {
         const rowsOfDt = Object.values(Object.groupBy(dw, w => w.offsetTop)).map(ws => ws.map(w => w.firstElementChild));
         const gap = Math.min(1.2, Math.max(0.3, (until0 - st.voiceAt - 0.6) / rowsOfDt.length));
         rowsOfDt.forEach((ws, r) => tl.fromTo(ws, { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, st.voiceAt + 0.3 + r * gap));
         if (next) tl.set(el.querySelector(".dt"), { opacity: 0 }, next.at);
       }
-      // the marker lights as its step is said, and goes to ink once the next one comes
       tl.fromTo(el.querySelector(".sm"), { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, st.voiceAt);
-      // once its line is said, a ring breathes out of the marker until the next step: the step is still the one to do
-      const ring = el.querySelector(".ring"), until = (next ? next.at : END) - 0.3;
+      const ring = el.querySelector(".ring"), until = (next ? next.at : RESULT) - 0.3;
       for (let r = st.voiceAt + 1.2; r + 0.5 < until; r += 1.0) tl.fromTo(ring, { scale: 1, opacity: 0.7 }, { scale: 3, opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, r);
       if (next) {
         tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
-        // at once: a marker half way from accent to ink is pale text on a pale disk
         tl.set(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}" }, next.at);
       }
     });
-    tl.to(stp, { z: -600, y: "-=120", duration: 0.5, stagger: 0.04, ease: "power3.in" }, END - 0.55);
-    tl.set(stp, { opacity: 0 }, END - 0.02);
 
-    // The window comes in with the first step that shows it, follows its steps down, and drops back out.
+    // The window comes in with the first step that shows it, turning to face the viewer, follows its steps down, and goes.
     const firstWin = STEPS.findIndex(st => st.shows);
     tl.set(win, { autoAlpha: 0, y: place(firstWin).win }, 0);
     tl.set(win, { autoAlpha: 1 }, W_IN + 0.15);
-    tl.fromTo(win, { z: -420, rotationX: 18, y: place(firstWin).win + 160 }, { z: 0, rotationX: 0, y: place(firstWin).win, duration: 1.1, ease: "expo.out", immediateRender: false }, W_IN + 0.15);
+    tl.fromTo(win, { z: -420, rotationX: 18, rotationY: TALL ? -6 : -14, y: place(firstWin).win + 160 }, { z: 0, rotationX: 0, rotationY: 0, y: place(firstWin).win, duration: 1.1, ease: "expo.out", immediateRender: false }, W_IN + 0.15);
     STEPS.forEach((st, k) => { if (st.shows && k > firstWin) tl.to(win, { y: place(k).win, duration: 0.8, ease: "power4.inOut" }, st.at); });
-    tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.4, ease: "power3.in" }, W_OUT - 0.1);
-    tl.set(win, { autoAlpha: 0 }, W_OUT + 0.3);
+    if (W_OUT < RESULT) {
+      tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.4, ease: "power3.in" }, W_OUT - 0.1);
+      tl.set(win, { autoAlpha: 0 }, W_OUT + 0.3);
+    }
 
-    // Lines of context paste in with the window; lines before the command are typed on their step, the command on its own.
     if (R(".ln.ctx, .ln.keep").length) tl.fromTo(R(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, W_IN + 0.5);
     const typed = R(".typed"), PRE = INSTALL ? Math.max(0, typed.findIndex(l => l.classList.contains("focus"))) : 0;
     let t = 0;
@@ -559,19 +839,14 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       if (k === 0) t = PRE ? PRE_AT : CMD_AT;
       else if (k === PRE) t = Math.max(t + LINE_PAUSE, CMD_AT);
       else t += LINE_PAUSE;
-      // a later line, prompt and all, shows only once it starts
       if (k > 0) { tl.set(ln, { opacity: 0 }, 0); tl.set(ln, { opacity: 1 }, t); }
-      // the rolled-in ids are not typed: only the characters of the line and its first id
       ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
     });
-    // the caret sits after the last line, blinking until the window leaves or the answer comes
     const caret = R(".caret").at(-1), still = ANSWER_AT ?? W_OUT;
     for (let b = t + 0.05, on = 1; b < still; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
     if (ANSWER_AT) tl.set(caret, { opacity: 0 }, still);
 
-    // The request is answered through the fallback: the code scrolls up and the header the page's curl prints arrives under it.
     if (ANSWER_AT) {
-      // it scrolls by the top padding and whole rows, so the window's top edge never cuts a row in half
       const out = R(".out")[0], cs = getComputedStyle($(".code")), row = parseFloat(cs.fontSize) * ${CODE_LH};
       let by = parseFloat(cs.paddingTop);
       while (by < out.offsetHeight - parseFloat(cs.paddingBottom)) by += row;
@@ -579,7 +854,6 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.fromTo(out, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "expo.out" }, ANSWER_AT + 0.25);
     }
 
-    // Under the window, the ids the same key runs come in one after another.
     if (ROLLS) {
       const also = $(".also"), slot = also.querySelector(".roll"), items = Array.from(slot.children);
       slot.style.width = Math.max(...items.map(x => x.offsetWidth)) + "px";
@@ -587,15 +861,11 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.fromTo(also, { y: 20 }, { y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, ROLL_AT - 0.3);
       items.forEach((into, i) => {
         const at = ROLL_AT + i * ROLL_EVERY, out = items[i - 1];
-        // the old id is gone before the new one shows, so two ids are never drawn over each other
         if (out) tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, at);
         tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, at + 0.2);
       });
     }
 
-    // A tint comes up under the command as it starts to be typed (t is where the typing ended). Once all is said and
-    // shown, it points out each line the page changes in turn until the window leaves; a lone line
-    // breathes, so the frame never stands still.
     const lit = R(".ln.keep, .ln.focus, .ln.typed, .ln.out"), first = Math.max(0, lit.findIndex(l => l.classList.contains("focus")));
     if (lit.length) {
       const glow = document.createElement("div");
@@ -604,97 +874,136 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       const to = ln => ({ y: ln.offsetTop, height: ln.offsetHeight });
       tl.set(glow, { ...to(lit[first]), opacity: 0 }, 0);
       tl.to(glow, { opacity: 1, duration: 0.3, ease: "power2.out" }, CMD_AT);
-      // and flashes as the typing ends, so the line just typed is the one to read
       tl.fromTo(glow, { opacity: 0.2 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
-      // then each line in turn is selected, as an editor selects it: the accent behind it, its text white
       const sel = document.createElement("div");
       sel.className = "sel";
       rows.prepend(sel);
       tl.set(sel, { opacity: 0 }, 0);
       let on = null;
-      for (let t = POINT_AT + 0.3, k = first; t < W_OUT - 0.4; t += 1.1, k++) {
+      const stop = Math.min(W_OUT, RESULT) - 0.7;
+      for (let t = POINT_AT + 0.3, k = first; t < stop; t += 1.1, k++) {
         const ln = lit[k % lit.length];
         if (on) tl.set(on, { attr: { "data-on": "0" } }, t);
         tl.set(sel, { ...to(ln), opacity: 1 }, t);
         tl.set(ln, { attr: { "data-on": "1" } }, t);
-        // a lone line is let go between selections, so the selection reads as a beat
         if (lit.length === 1) { tl.set(sel, { opacity: 0 }, t + 0.8); tl.set(ln, { attr: { "data-on": "0" } }, t + 0.8); }
         on = ln;
       }
-      tl.set(sel, { opacity: 0 }, W_OUT - 0.2);
-      if (on) tl.set(on, { attr: { "data-on": "0" } }, W_OUT - 0.2);
+      tl.set(sel, { opacity: 0 }, stop + 0.1);
+      if (on) tl.set(on, { attr: { "data-on": "0" } }, stop + 0.1);
     }
 
-    // 3 · the lockup: the headline comes back above it, small, and the short link lands under it.
-    const s3 = v("--cap3") / fs, cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
-    end.style.top = cap3 + hH * s3 + G + "px";
-    tl.set(h, { y: cap3 - (top1 + heroH + G), scale: s3, rotationX: 0 }, END);
-    tl.fromTo(h, { z: -500, opacity: 0 }, { z: 0, opacity: 1, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.2);
-    tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.35);
+    // ── 5 · the lockup: the headline, small, above the AnyRouter lockup, and the short link under it.
+    const h2H = h2.offsetHeight, top5 = SY + (SH - h2H - G - end.offsetHeight) / 2;
+    h2.style.top = top5 + "px";
+    end.style.top = top5 + h2H + G + "px";
+    const h2w = $$(".h2 .w > span");
+    tl.fromTo(h2w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.04, 0.25 / h2w.length), ease: "expo.out", immediateRender: false }, END + 0.15);
+    tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0, rotationY: -40 }, { scale: 1, opacity: 1, rotationY: 0, duration: 1.0, ease: "expo.out" }, END + 0.35);
     tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.45);
-    // the ink pill never fades (half faded it reads as grey): it shows whole and flies forward from the page
     tl.set(Q(".url"), { opacity: 0 }, 0);
     tl.set(Q(".url"), { opacity: 1 }, END + 0.6);
-    tl.fromTo(Q(".url"), { y: 40, z: -200 }, { y: 0, z: 0, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.6);
-    // the lockup holds while the camera keeps leaning in, at an even speed to the last frame: an eased lean
-    // comes to rest, and a frame at rest reads as dead air
-    tl.fromTo(cam, { scale: 1 }, { scale: END_LEAN, duration: D - END, ease: "none", immediateRender: false }, END);
+    tl.fromTo(Q(".url"), { y: 40, z: -200, rotationX: 30 }, { y: 0, z: 0, rotationX: 0, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.6);
 
-    // The captions: one phrase at a time, whole, under the picture, cut on and off as subtitles are:
-    // a chip half faded in is grey text on grey
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
     $$(".cap").forEach((cap, i) => {
       const [at, end] = CAPS[i];
       tl.set(cap, { opacity: 1 }, at);
       tl.set(cap, { opacity: 0 }, end);
     });`;
-  const cues = [
-    { at: 0.15, kind: 'tick', gain: 0.45 },
-    ...S.map(st => ({ at: st.at, kind: 'cut', gain: 0.35 })),
-    ...(T.preAt != null ? [{ at: T.preAt, kind: 'type', dur: 1.2, gain: 0.4 }] : []),
-    { at: T.cmdAt, kind: 'type', dur: Math.min(2.2, T.typing), gain: 0.45 },
-    ...Array.from({ length: rolls }, (_, i) => ({ at: +(T.rollAt + i * ROLL_EVERY + 0.1).toFixed(2), kind: 'tick', gain: 0.4 })),
-    ...(T.answerAt ? [{ at: +(T.answerAt + 0.25).toFixed(2), kind: 'tick', gain: 0.45 }] : []),
-    { at: +(T.end + 0.35).toFixed(2), kind: 'end', gain: 0.55 },
-  ];
-  return { cls: 'film', body, inner, cues, duration, style: `--end-l:${url.landscape.lean};--end-p:${url.portrait.lean}` };
+  const cues = cuesOf({ timing: T, cuts, land, rolls, copy });
+  return { cls: 'film', body, inner, cues, duration, style: `--persp:${CAM_PERSPECTIVE.landscape}px;--persp-p:${CAM_PERSPECTIVE.portrait}px` };
+}
+
+// ── sound events ───────────────────────────────────────────────────────────
+/**
+ * The film's sound effects, on its clock, each a motion event the picture makes (MOTION.md, sound
+ * events): the camera's travel, a card tilting in, a step marker lighting (a step higher each
+ * step), the command typed, a result arriving, the end card. mix.mjs maps each kind to its sound.
+ */
+function cuesOf({ timing: T, cuts, land, rolls, copy }) {
+  const cue = (at, kind, extra = {}) => ({ at: +at.toFixed(2), kind, ...extra });
+  const out = [];
+  for (const c of cuts) out.push(cue(c - T.travel / 2 + 0.05, 'travel'));
+  out.push(cue(0.1, 'tilt'));
+  out.push(cue(land.problem.right[0] ?? land.problem.left[0], 'land'));
+  if (land.problem.mark != null) out.push(cue(land.problem.mark, 'arrive'));
+  T.steps.forEach((st, k) => out.push(cue(st.voiceAt, 'step', { step: k })));
+  out.push(cue(T.windowIn + 0.15, 'tilt'));
+  // a key press every few characters typed, only while text is typed
+  const typed = copy.window.lines.landscape.filter(l => copy.window.shell || l.focus).reduce((n, l) => n + [...l.text].length, 0);
+  const start = T.preAt ?? T.cmdAt, every = Math.max(T.each * 3, 0.07);
+  for (let t = start, n = 0; n < Math.min(typed / 3, 40) && t < start + T.typing; t += every, n++) out.push(cue(t, 'key', { n }));
+  for (let i = 0; i < rolls; i++) out.push(cue(T.rollAt + i * ROLL_EVERY + 0.2, 'arrive'));
+  if (T.answerAt) out.push(cue(T.answerAt + 0.25, 'arrive'));
+  out.push(cue(land.result.hub, 'land'));
+  // the first request reaching the card that answered
+  out.push(cue(Math.max(land.result.right.at(-1) + 0.4, T.result.words[0] ?? 0) + 1.5, 'arrive', { n: 1 }));
+  out.push(cue(T.end + 0.6, 'end'));
+  return out.sort((a, b) => a.at - b.at);
 }
 
 // ── the look, in frame.md's tokens ─────────────────────────────────────────
-// The terminal is the ink surface; an editor is a hairline card. The command is
-// the line in focus: on the ink it is white, its other lines muted; in the
-// editor it is ink, its context muted. The accent is on the id in the command.
+// The terminal is the ink surface; an editor and a diagram card are hairline cards. The accent is on
+// what just changed: the id in the command, the step being said, the card a request reached.
+// Behind every panel a field of dots on a far plane drifts, so depth reads while the text holds still.
+const DOTS = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Ccircle cx='24' cy='24' r='2.4' fill='%23DCDCDC'/%3E%3C/svg%3E")`;
 export const CSS = `
-  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:96px;--tw:${WIN.landscape.width}px;--lean:${WIN.landscape.lean};--dolly:${dollyOf('landscape')}px;--end:var(--end-l)}
-  /* the camera leans in about the safe area's centre, so nothing drifts out of it, and looks into the page:
-     the deep layer dollies in, so what sits further back moves less (parallax) */
-  .film .cam{position:absolute;inset:0;transform-origin:50% 50%;perspective:${PERSPECTIVE}px;perspective-origin:50% 50%}
-  .film .deep{position:absolute;inset:0;transform-style:preserve-3d}
-  /* the window is drawn at its own size, out of the dolly: it fills the safe width and must not grow past it */
-  .film .flat{position:absolute;inset:0;transform-style:preserve-3d}
-  .film .hero,.film .h,.film .stp,.film .win,.film .end{backface-visibility:hidden}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:96px;--tw:${WIN.landscape.width}px}
+  /* the camera: a perspective, then one wrapper per move (pull back, swing, push in, turn, travel) */
+  .film .cam{position:absolute;inset:0;perspective:var(--persp);perspective-origin:50% 50%}
+  .film .cpull,.film .carc,.film .cpush,.film .crotx,.film .croty,.film .cpos{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50% 0}
+  .film .pn{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50% 0;backface-visibility:hidden}
+  .film .bk{position:absolute;left:-50%;top:-50%;width:200%;height:200%;transform:translateZ(-520px);background-image:${DOTS};background-size:48px 48px;pointer-events:none}
+  .film .hero,.film .h,.film .stp,.film .win,.film .end,.film .h2,.film .blk{backface-visibility:hidden}
+  .film .win-host{position:absolute;inset:0;transform-style:preserve-3d}
+
   /* a step: its number in a marker, its label beside it; the marker is the accent while its step is said */
   .film .stp{position:absolute;left:var(--sl);right:var(--sr);top:0;transform-origin:0 0;opacity:0}
   .film .head{display:flex;align-items:flex-start;gap:${STEP.gap}px}
   .film .dt{margin:${STEP.detailGap}px 0 0 ${STEP.mark + STEP.gap}px;font-size:var(--ds);line-height:1.3;letter-spacing:-.01em;color:${C.ink2};white-space:nowrap}
   .film .dt .bp{display:none}
-  .film .sm{flex:none;width:${STEP.mark}px;height:${STEP.mark}px;border-radius:50%;display:grid;place-items:center;background:${C.accent};border:3px solid ${C.accent};color:${C.onInk};font-size:68px;font-weight:600;line-height:1;letter-spacing:-.04em}
-  .film .sm{position:relative}
-  .film .sm b{font-weight:600}
+  .film .sm{position:relative;flex:none;width:${STEP.mark}px;height:${STEP.mark}px;border-radius:50%;display:grid;place-items:center;background:${C.accent};border:3px solid ${C.accent};color:${C.onInk};font-size:68px;font-weight:600;line-height:1;letter-spacing:-.04em}
+  .film .sm b{position:relative;font-weight:600}
   .film .ring{position:absolute;inset:-3px;border-radius:50%;background:${C.accent};opacity:0}
-  .film .sm b{position:relative}
   .film .sl{font-size:var(--ls);font-weight:600;line-height:${STEP.lh};letter-spacing:-.035em;white-space:nowrap;padding-top:calc((${STEP.mark}px - var(--ls) * ${STEP.lh}) / 2)}
   .film .sl .bp{display:none}
-  .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
-  .film .hero{display:flex;flex-direction:column;align-items:center;gap:40px}
-  .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px}
+  .film .hero,.film .h,.film .end,.film .h2{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
+  .film .hero{display:flex;flex-direction:column;align-items:center;gap:40px;transform-style:preserve-3d}
+  .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px;transform-style:preserve-3d}
   .film .tile{width:160px;height:160px;display:grid;place-items:center}
   .film .tile .mk{width:92px;height:92px}
-  /* frame.md's badge a quarter larger: at 36px the kicker is a smudge on a phone */
   .film .kick{height:80px;padding:0 32px;font-size:45px}
   .film .plus{width:48px;height:48px;fill:none;stroke:${C.muted};stroke-width:2;stroke-linecap:round}
-  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;white-space:nowrap;transform-origin:50% 0}
-  .film .h .bp{display:none}
+  .film .h{font-size:var(--fs);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.055em;white-space:nowrap}
+  .film .h2{font-size:var(--cap3);font-weight:600;line-height:${TITLE_LH};letter-spacing:-.05em;white-space:nowrap}
+  .film .h .bp,.film .h2 .bp,.film .kt .bp{display:none}
+
+  /* the problem and the result: a badge, the line as kinetic type, and the diagram */
+  .film .blk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:column;align-items:center;gap:44px;transform-style:preserve-3d}
+  .film .lbl{height:76px;padding:0 32px;font-size:42px;color:${C.ink2}}
+  .film .kt{font-size:var(--ks);font-weight:600;line-height:1.08;letter-spacing:-.04em;white-space:nowrap;text-align:center}
+  .film .dg{position:relative;display:flex;align-items:center;justify-content:center;gap:200px;transform-style:preserve-3d}
+  .film .dg.result{gap:110px}
+  .film .dg:has(.nt){margin-bottom:96px}
+  .film .col{display:flex;flex-direction:column;align-items:center;gap:22px;transform-style:preserve-3d}
+  .film .col.l{align-items:flex-end}
+  .film .col.r{align-items:flex-start}
+  .film .no-left .col.r{align-items:center}
+  .film .edges{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+  .film .ed{fill:none;stroke:${C.ink2};stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .film .ed.broke{stroke:${C.muted}}
+  .film .pulse{fill:${C.accent}}
+  .film .nd{display:inline-flex;align-items:center;gap:${NODE.markGap}px;padding:22px ${NODE.padX}px;border-radius:28px;font-size:var(--nd);font-weight:600;letter-spacing:-.02em;line-height:1.1;white-space:nowrap;color:${C.ink}}
+  .film .nd .mk{width:${NODE.mark}px;height:${NODE.mark}px}
+  .film .nd .nl.mono{font-size:var(--ndm);font-weight:500;letter-spacing:0}
+  .film .nd[data-state="off"]{color:${C.muted};border-style:dashed}
+  .film .nd[data-state="on"]{border-color:${C.accent};color:${C.accent}}
+  .film .nd.hub{background:${C.ink};border-color:${C.ink};color:${C.onInk}}
+  .film .nd.hub svg{width:${NODE.mark}px;height:${NODE.mark}px;display:block}
+  .film .tg{position:absolute;left:0;top:0;padding:8px 22px;border-radius:999px;border:3px solid ${C.accent};background:${C.bg};color:${C.accent};font-size:38px;white-space:nowrap}
+  .film .fl{position:absolute;left:0;top:0;padding:10px 26px;border-radius:999px;background:${C.accent};color:${C.onInk};font-size:42px;font-weight:600;white-space:nowrap}
+  .film .nt{position:absolute;left:0;right:0;top:100%;margin-top:44px;text-align:center;font-size:40px;color:${C.ink2};white-space:nowrap}
 
   .film .win{position:absolute;top:0;left:${winLeft('landscape')}px;width:var(--tw)}
   .film .term{overflow:hidden;border-radius:32px}
@@ -708,9 +1017,7 @@ export const CSS = `
   .film .ttl{text-align:center;font-family:'Geist Mono',ui-monospace,monospace;font-size:${TTL_PX}px;color:${C.muted};white-space:pre}
   .film .ttl.off-l{display:none}
   .film .is-ink .ttl{color:${C.onInkMuted}}
-  /* --adv is a glyph's advance: the unit rowsOf measures rows in */
   .film .code{--adv:${WIN.landscape.adv}em;padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
-  /* a line of code is one row and never wraps; a blank line keeps its row */
   .film .ln{min-height:${CODE_LH}em;white-space:pre}
   .film .ln.ctx{color:${C.muted}}
   .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}
@@ -724,10 +1031,8 @@ export const CSS = `
   .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top}
   .film .ri{position:absolute;left:0;top:0;white-space:pre;font-style:normal}
   .film em.ri{opacity:0}
-  /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
   .film .rows{position:relative}
-  /* a line sits over the tint that points it out, which comes first in the rows */
   .film .rows > .ln{position:relative}
   .film .rows.rp{display:none}
   .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none}
@@ -739,21 +1044,19 @@ export const CSS = `
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}
   .film .is-ink .caret{background:${C.onInk}}
 
-  .film .end{display:flex;flex-direction:column;align-items:center;gap:56px}
-  .film .lock{display:flex;align-items:center;gap:32px}
+  .film .end{display:flex;flex-direction:column;align-items:center;gap:56px;transform-style:preserve-3d}
+  .film .lock{display:flex;align-items:center;gap:32px;transform-style:preserve-3d}
   .film .lock svg{width:144px;height:144px;display:block}
   .film .lock b{font-size:144px;font-weight:600;letter-spacing:-.055em;line-height:1}
-  /* the one thing to do next, so it is the ink card */
   .film .url{font-size:var(--us);letter-spacing:${(URL_ADV - 0.6).toFixed(2)}em;color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
-  .film .url .up{display:none}
 
   .film .caps{position:absolute;left:0;right:0;top:${CAP.landscape.top}px;height:${CAP.landscape.height}px;pointer-events:none}
   .film .cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
   .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:var(--cf);font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:80px;--tw:${WIN.portrait.width}px;--lean:${WIN.portrait.lean};--dolly:${dollyOf('portrait')}px;--end:var(--end-p)}
-    .film .cam{transform-origin:510px 750px;perspective-origin:510px 750px}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:80px;--tw:${WIN.portrait.width}px}
+    .film .cam{perspective:var(--persp-p)}
     .film .sl{font-size:var(--ls-p);padding-top:calc((${STEP.mark}px - var(--ls-p) * ${STEP.lh}) / 2)}
     .film .sl .bl,.film .dt .bl{display:none}
     .film .sl .bp,.film .dt .bp{display:inline}
@@ -761,11 +1064,19 @@ export const CSS = `
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
-    .film .h .bl{display:none}
-    .film .h .bp{display:inline}
+    .film .h .bl,.film .h2 .bl,.film .kt .bl{display:none}
+    .film .h .bp,.film .h2 .bp,.film .kt .bp{display:inline}
+    .film .kt{font-size:var(--ks-p)}
+    .film .blk{gap:40px}
+    .film .dg{gap:60px}
+    .film .dg.stack-p{flex-direction:column;gap:110px}
+    .film .dg.stack-p .col{align-items:center}
+    .film .dg.result .col{flex-direction:row;flex-wrap:nowrap;justify-content:center;gap:18px}
+    .film .dg.result .col.tall{flex-direction:column;align-items:center}
+    .film .nd{font-size:var(--nd-p);padding:16px 26px}
+    .film .nd .nl.mono{font-size:var(--ndm-p)}
     .film .win{left:${winLeft('portrait')}px}
     .film .term{border-radius:28px}
-    /* a hair tighter than the font's own advance, so a 45-character URL sits whole across the safe width */
     .film .code{--adv:${WIN.portrait.adv}em;letter-spacing:${(WIN.portrait.adv - 0.6).toFixed(2)}em;font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
     .film .also{font-size:${ALSO.px.portrait}px}
     .film .rows.rl{display:none}
@@ -775,9 +1086,6 @@ export const CSS = `
     .film .lock svg{width:120px;height:120px}
     .film .lock b{font-size:120px}
     .film .url{font-size:var(--us-p);padding:24px ${URL_PAD.portrait}px;border-radius:28px}
-    .film .url .ul{display:none}
-    /* the band Reels, Shorts and TikTok leave clear (shared/authoring/portrait.mjs), across the safe width */
     .film .caps{left:${ACROSS.portrait.left}px;right:${1080 - ACROSS.portrait.left - ACROSS.portrait.width}px;top:${CAP.portrait.top}px;height:${CAP.portrait.height}px}
     .film .cap span{font-size:var(--cf-p)}
-    .film .url .up{display:inline}
   }`;

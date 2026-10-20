@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, styleOf, narrate } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, narrate } from './kind.mjs';
 import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
@@ -50,8 +50,17 @@ const rolled = h => [...(h.match(/<div class="also">[\s\S]*?<\/div>/)?.[0] ?? ''
 // the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
 const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/u/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
   ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
-// Chrome, not copy: the brand, the line over the ids the same key runs, and the "…" that marks code left out.
-const CHROME = s => ['AnyRouter', 'The same key also runs', '…'].includes(s);
+// Chrome, not copy: the brand, the line over the ids the same key runs, the "…" that marks code left
+// out, and the badges over the problem and the result.
+const CHROME = s => ['AnyRouter', 'The same key also runs', '…', 'The problem', 'The result'].includes(s);
+const NARRATION = () => JSON.parse(fs.readFileSync(path.join(dir, 'narration.json'), 'utf8'));
+// What a film says on screen from its script: the problem and the result as kinetic type, and the
+// labels of the two diagrams. Each is in the film's claims ledger, with its source.
+const scriptedOf = slug => {
+  const f = NARRATION().films[slug], m = f.motif, fl = f.flow;
+  const labels = { single: [m.a, m.b, m.tag, m.fail], rows: (m.rows ?? []).flat(), sprawl: [m.a, ...(m.rows ?? [])], chips: m.items }[m.kind];
+  return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note].filter(Boolean);
+};
 
 // ── one release per use case ───────────────────────────────────────────────
 
@@ -135,9 +144,9 @@ test('a malformed response fails loudly at the boundary', () => {
 const picture = h => h.replace(/<div class="caps"[\s\S]*$/, '').replace(/<div class="sl">[\s\S]*?<\/div>/g, '');
 const captions = h => [...h.matchAll(/<div class="cap"[^>]*><span[^>]*>([^<]*)<\/span>/g)].map(m => m[1].replace(/&amp;/g, '&'));
 
-test('every string on screen is a fact, verbatim', () => {
+test('every string on screen is a fact, verbatim, or a line of the script its ledger sources', () => {
   for (const [u, film] of films()) {
-    const facts = factsOf(u);
+    const facts = [...factsOf(u), ...scriptedOf(u.slug)];
     for (const shownText of shown(picture(html(film)))) {
       // a line rewritten narrower is still the page's code: a " \\" continues a command onto the next row
       const text = shownText.replace(/\s*\\$/, '');
@@ -159,7 +168,7 @@ test('an API key never reaches the screen, only its prefix', () => {
 test('the film opens on the page title and closes on its short link', () => {
   for (const [u, film] of films()) {
     const text = shown(html(film));
-    assert.equal(text.filter(t => t === u.title).length, 1, `${u.slug}: the headline is one element, carried through every beat`);
+    assert.equal(text.filter(t => t === u.title).length, 2, `${u.slug}: the headline opens the film and sits over the lockup`);
     // the end card names the page's short link, never its long /use-cases URL
     const card = html(film).match(/<div class="url[^>]*>([\s\S]*?)<\/div>/)[1];
     assert.deepEqual(shown(card), [`anyrouter.dev/u/${u.slug}`], `${u.slug}: the short link`);
@@ -244,12 +253,12 @@ test('an id the catalog bills to the user\'s own key, or prices above 0 under fr
 
 // ── the film ───────────────────────────────────────────────────────────────
 
-test('every film is 35 to 60 seconds: what and why, its steps, the end card, back to back on whole frames', () => {
+test('every film runs what it is, the problem, its steps, the result and the end card, back to back on whole frames', () => {
   for (const [u, f] of films()) {
     assert.ok(f.duration >= FILM.min && f.duration <= FILM.max, `${u.slug}: ${f.duration}s`);
-    const n = f.beats.length - 2;
+    const n = f.beats.length - 4;
     assert.ok(n >= 2 && n <= 3, `${u.slug}: two or three steps`);
-    assert.deepEqual(f.beats.map(b => b.key), ['outcome', ...Array.from({ length: n }, (_, i) => `step-${i + 1}`), 'close']);
+    assert.deepEqual(f.beats.map(b => b.key), ['intro', 'problem', ...Array.from({ length: n }, (_, i) => `step-${i + 1}`), 'result', 'close']);
     let at = 0;
     for (const b of f.beats) {
       assert.ok(Math.abs(b.start - at) < 1e-9, `${u.slug} ${b.key} starts at ${b.start}, not ${at}`);
@@ -394,15 +403,16 @@ test('a page about a fallback shows its request answered through it, as the page
   for (const [v, g] of films()) if (v.slug !== u.slug) assert.ok(!html(g).includes('class="ln out"'), `${v.slug} shows no fallback`);
 });
 
-test('every film has a score of its own, read off its slug', () => {
-  // all 29 films shared the intro score; videos/use-case/sound-check.mjs measures how far apart they sound
-  const styles = parseDoc(doc()).map(u => [u.slug, styleOf(u.slug)]);
-  assert.deepEqual(styleOf('claude-code'), styleOf('claude-code'), 'the same page always gets the same music');
-  for (const [, f] of films()) assert.equal(f.palette, 'calm');
-  const sig = s => `${s.key} ${s.mode} ${s.groove} ${s.lead} ${s.prog}`;
-  for (let i = 0; i < styles.length; i++) for (let j = i + 1; j < styles.length; j++) {
-    const [a, x] = styles[i], [b, y] = styles[j];
-    assert.ok(sig(x) !== sig(y) || Math.abs(x.bpm - y.bpm) > 6, `${a} and ${b} share key, mode, groove, motif voice and chords`);
+test('every film has a licensed track of its own, and its sound effects are tied to what moves', () => {
+  // the films shared one synthesized score; videos/use-case/sound-check.mjs also measures how far apart they sound
+  const music = JSON.parse(fs.readFileSync(path.join(dir, 'audio/music.json'), 'utf8'));
+  const tracks = parseDoc(doc()).map(u => music.films[u.slug]?.track);
+  assert.ok(tracks.every(Boolean), 'every film has a track');
+  assert.equal(new Set(tracks).size, tracks.length, 'no two films share a track');
+  for (const t of tracks) assert.match(music.tracks[t].license, /^CC (BY [34]\.0|0)$/, `${t}: a license that allows public YouTube and commercial use`);
+  for (const [u, f] of films()) {
+    const kinds = new Set(f.scenes[0].cues.map(c => c.kind));
+    for (const k of ['travel', 'step', 'key', 'end']) assert.ok(kinds.has(k), `${u.slug}: a ${k} sound`);
   }
 });
 
@@ -410,24 +420,29 @@ test('the captions are the narration, word for word, in the order it is said', (
   // a caption that drops or adds a word reads as a different claim than the one voiced
   const narration = JSON.parse(fs.readFileSync(path.join(dir, 'narration.json'), 'utf8'));
   for (const [u, f] of films()) {
+    // the lines not on screen as kinetic type or in the window are captioned: what it is, and how each step works
     const n = narration.films[u.slug];
-    const lines = [n.outcome, ...n.steps.map((st, i) => `Step ${i + 1}. ${st.text}`), `anyrouter.dev/u/${u.slug}`];
+    const lines = [n.role === 'intro' ? n.outcome : n.intro, ...n.steps.map(st => st.more).filter(Boolean)];
     assert.equal(captions(html(f)).join(' '), lines.join(' '), u.slug);
   }
 });
 
 test('the voice is placed where the story says, one line after another, inside the film', () => {
+  const narration = NARRATION();
   for (const [u, f] of films()) {
-    const steps = f.beats.filter(b => b.key.startsWith('step-')).length;
-    assert.deepEqual(f.said.map(l => l.id), [`${u.slug}-outcome`, ...Array.from({ length: steps }, (_, i) => `${u.slug}-step-${i + 1}`), `${u.slug}-close`]);
+    const n = narration.films[u.slug], other = n.role === 'intro' ? 'problem' : 'intro';
+    const ids = [n.role === 'intro' ? 'outcome' : other, n.role === 'intro' ? other : 'outcome',
+      ...n.steps.flatMap((st, i) => [`step-${i + 1}`, ...(st.more ? [`step-${i + 1}-more`] : [])]), 'result', 'close'].map(id => `${u.slug}-${id}`);
+    assert.deepEqual(f.said.map(l => l.id), ids);
     f.said.forEach((l, i) => {
       assert.ok(fs.existsSync(l.file), `${l.id} is voiced`);
-      if (i) assert.ok(l.at >= f.said[i - 1].at + f.said[i - 1].dur - 0.3, `${u.slug}: ${l.id} starts over the line before it`);
+      if (i) assert.ok(l.speaks >= f.said[i - 1].speaks + f.said[i - 1].dur - 0.05, `${u.slug}: ${l.id} starts over the line before it`);
     });
-    // each step's line is said in its own beat, and the short link over the end card
-    f.said.slice(1, -1).forEach((l, i) => assert.ok(l.at >= f.beats[i + 1].start && l.at < f.beats[i + 2].start, `${u.slug}: step ${i + 1} is said in its beat`));
-    assert.ok(f.said.at(-1).at >= f.beats.at(-1).start && f.said.at(-1).at + f.said.at(-1).dur <= f.duration, `${u.slug}: the link is said over the end card`);
-    // the music steps down under every spoken stretch
-    assert.equal(f.voice.length, f.said.length);
+    // each line is said in its own beat: intro, problem, its step, the result, the link over the end card
+    const beatOf = id => (/-step-(\d+)/.exec(id) ? `step-${/-step-(\d+)/.exec(id)[1]}` : id.endsWith('-result') ? 'result' : id.endsWith('-close') ? 'close' : null);
+    f.said.forEach((l, i) => {
+      const key = beatOf(l.id) ?? (i === 0 ? 'intro' : 'problem'), b = f.beats.find(x => x.key === key);
+      assert.ok(l.speaks >= b.start && l.speaks + l.dur <= b.start + b.dur + 0.05, `${u.slug}: ${l.id} is said inside ${key}`);
+    });
   }
 });
