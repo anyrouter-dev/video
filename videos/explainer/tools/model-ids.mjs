@@ -17,7 +17,8 @@ export const SOURCE = 'https://anyrouter.dev/api/v1/models?all=1';
 
 /**
  * Every `org/model` id in a frame's visible text. Scripts, styles and attributes are dropped,
- * and a match inside a URL or path (anyrouter.dev/api/v1, /model/openai/gpt-5.5) is not an id.
+ * and a match inside a URL or path (anyrouter.dev/api/v1, /model/openai/gpt-5.5) or an npm scope
+ * (@anthropic-ai/sdk) is not an id.
  * Sibling elements (the values of a roll) are separate words; an id split across nested
  * spans (`<span>org/</span>model`) is one.
  */
@@ -26,7 +27,7 @@ export function shownIds(html) {
     .replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ')
     .replace(/(<\/[a-z0-9]+>)(?=<[a-z])/gi, '$1 ')
     .replace(/<[^>]*>/g, '');
-  return [...text.matchAll(/(?<![\w./~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:-]*[a-z0-9](?![\w/.-])/g)].map(m => m[0]);
+  return [...text.matchAll(/(?<![\w./~@-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:-]*[a-z0-9](?![\w/.-])/g)].map(m => m[0]);
 }
 
 /** The billing rule for each id: unknown (not in the catalog), byok, or runnable. */

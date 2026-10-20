@@ -1,0 +1,26 @@
+{
+  "releases": [
+    {
+      "id": "001-20261019-v1-3b244818cf",
+      "hash": "3b244818cf",
+      "kind": "why-gateway",
+      "label": "v1",
+      "title": "Why an LLM gateway: one address and one key for models from many providers",
+      "seconds": 33.006,
+      "renderedAt": "2026-10-19T20:17:51.400Z",
+      "commit": "e3c7495",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/why-gateway-001-20261019-v1-3b244818cf.mp4",
+          "cover": "renders/why-gateway-001-20261019-v1-3b244818cf.png"
+        },
+        "portrait": {
+          "artifact": "renders/why-gateway-001-20261019-v1-3b244818cf-portrait.mp4",
+          "cover": "renders/why-gateway-001-20261019-v1-3b244818cf-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T20:17:51.424Z"
+    }
+  ]
+}

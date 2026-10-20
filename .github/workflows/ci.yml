@@ -72,6 +72,10 @@ jobs:
             args: ''
           - kind: cli-everyday
             args: ''
+          - kind: why-gateway
+            args: ''
+          - kind: byok-upstreams
+            args: ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

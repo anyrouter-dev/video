@@ -1,0 +1,22 @@
+{
+  "id": "001-20261019-v1-c4bfa4f00e",
+  "hash": "c4bfa4f00e",
+  "kind": "byok-upstreams",
+  "label": "v1",
+  "title": "Bring your own provider keys to AnyRouter and call their models through one endpoint",
+  "seconds": 30.542,
+  "renderedAt": "2026-10-19T20:25:13.740Z",
+  "commit": "e3c7495",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/byok-upstreams-001-20261019-v1-c4bfa4f00e.mp4",
+      "cover": "renders/byok-upstreams-001-20261019-v1-c4bfa4f00e.png"
+    },
+    "portrait": {
+      "artifact": "renders/byok-upstreams-001-20261019-v1-c4bfa4f00e-portrait.mp4",
+      "cover": "renders/byok-upstreams-001-20261019-v1-c4bfa4f00e-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T20:25:13.761Z"
+}
