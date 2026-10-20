@@ -32,7 +32,7 @@ import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, boardOf } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, boardOf } from './scenes.mjs';
 import { reflow, standsAlone, closed, headless } from './reflow.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
@@ -253,6 +253,7 @@ export function copyOf(u, pools) {
   };
   const problem = { ...kinetic('problem'), diagram: diagramOf(u.narration.motif, 'problem', u.slug) };
   const result = { ...kinetic('result'), diagram: diagramOf(u.narration.flow, 'result', u.slug) };
+  for (const panel of [problem, result]) fitPanel(panel, panel.diagram, u.slug);
 
   const code = { landscape: fitL.px, portrait: fitP.px };
   const code_lines = { landscape: fitL.lines, portrait: fitP.lines };

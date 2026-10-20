@@ -568,6 +568,46 @@ function diagramHtml(d) {
     </div>`;
 }
 
+// How tall a problem or result panel's block is set, per frame: its badge, the gaps, the kinetic
+// line, and the diagram. The block sits in the safe area's height (WIN sh).
+const BLOCK = { badge: 76, landscape: { gap: 44, pad: 24, rowGap: 22, stackGap: 0 }, portrait: { gap: 40, pad: 18, rowGap: 22, stackGap: 72 } };
+const NOTE_H = 44 + 52, FAIL_H = 18 + 64;
+
+/**
+ * Fits a panel's kinetic line and diagram together into the safe height of each frame: the
+ * largest line, then the largest cards, that sit in it. Sets `line.type` and `d.size` in place;
+ * throws when nothing fits.
+ */
+export function fitPanel(line, d, slug) {
+  for (const o of ['landscape', 'portrait']) {
+    const b = BLOCK[o], room = WIN[o].sh;
+    const cardH = k => Math.max(NODE.mark, NODE[o].sizes[k] * 1.1) + 2 * b.pad;
+    const col = (n, k) => n * cardH(k) + Math.max(0, n - 1) * b.rowGap;
+    const stacked = o === 'portrait' && d.stack;
+    const height = k => {
+      let h;
+      if (d.kind === 'result' && stacked) h = (d.tall.left ? col(d.left.length, k) : cardH(k)) + cardH(k) + (d.tall.right ? col(d.right.length, k) : cardH(k)) + 2 * b.stackGap;
+      else if (d.kind === 'result') h = Math.max(col(d.left.length, k), cardH(k), col(d.right.length, k));
+      else if (stacked) h = (d.left.length ? col(d.left.length, k) + b.stackGap : 0) + col(d.right.length, k);
+      else h = Math.max(col(d.left.length, k), col(d.right.length, k));
+      return h + (d.note ? NOTE_H : 0) + (d.fail ? FAIL_H : 0);
+    };
+    const k0 = NODE[o].sizes.indexOf(d.size[o].sans);
+    let done = false;
+    for (const px of TYPE.say[o].sizes.filter(x => x <= line.type[o].px)) {
+      const set = breakSet(line.text, { px, width: TYPE.say[o].width, weight: TYPE.say.weight, tracking: TYPE.say.tracking, room: n => n <= TYPE.say[o].lines });
+      if (!set) continue;
+      const k = NODE[o].sizes.findIndex((_, i) => i >= k0 && BLOCK.badge + 2 * b.gap + set.lines * px * 1.08 + height(i) <= room);
+      if (k < 0) continue;
+      line.type[o] = { px, ...set };
+      d.size[o] = { sans: NODE[o].sizes[k], mono: NODE[o].mono[k] };
+      done = true;
+      break;
+    }
+    if (!done) throw new Error(`${slug}: the ${d.kind} line and diagram do not fit the ${o} frame's height`);
+  }
+}
+
 /**
  * When each piece of a diagram lands, in seconds on the film's clock: a card lands on the spoken
  * word its label ends on, so "one more key" lands on "key"; a card no word matches, in order
@@ -984,12 +1024,12 @@ export const CSS = `
   .film .h .bp,.film .h2 .bp,.film .kt .bp{display:none}
 
   /* the problem and the result: a badge, the line as kinetic type, and the diagram */
-  .film .blk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:column;align-items:center;gap:44px;transform-style:preserve-3d}
-  .film .lbl{height:76px;padding:0 32px;font-size:42px;color:${C.ink2}}
+  .film .blk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:column;align-items:center;gap:${BLOCK.landscape.gap}px;transform-style:preserve-3d}
+  .film .lbl{height:${BLOCK.badge}px;padding:0 32px;font-size:42px;color:${C.ink2}}
   .film .kt{font-size:var(--ks);font-weight:600;line-height:1.08;letter-spacing:-.04em;white-space:nowrap;text-align:center}
   .film .dg{position:relative;display:flex;align-items:center;justify-content:center;gap:200px;transform-style:preserve-3d}
   .film .dg.result{gap:110px}
-  .film .dg:has(.nt){margin-bottom:96px}
+  .film .dg:has(.nt){margin-bottom:${NOTE_H}px}
   .film .col{display:flex;flex-direction:column;align-items:center;gap:22px;transform-style:preserve-3d}
   .film .col.l{align-items:flex-end}
   .film .col.r{align-items:flex-start}
@@ -1071,9 +1111,9 @@ export const CSS = `
     .film .h .bl,.film .h2 .bl,.film .kt .bl{display:none}
     .film .h .bp,.film .h2 .bp,.film .kt .bp{display:inline}
     .film .kt{font-size:var(--ks-p)}
-    .film .blk{gap:40px}
+    .film .blk{gap:${BLOCK.portrait.gap}px}
     .film .dg{gap:60px}
-    .film .dg.stack-p{flex-direction:column;gap:110px}
+    .film .dg.stack-p{flex-direction:column;gap:${BLOCK.portrait.stackGap}px}
     .film .dg.stack-p .col{align-items:center}
     .film .dg.result .col{flex-direction:row;flex-wrap:nowrap;justify-content:center;gap:18px}
     .film .dg.result .col.tall{flex-direction:column;align-items:center}
