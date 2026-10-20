@@ -1,0 +1,13 @@
+{
+  "spoken": "This is Any Router for the week of October 12 to 18.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "bf_emma",
+    "speed": 1,
+    "lang": "en-gb"
+  },
+  "duration": 3.136,
+  "start": 0.07,
+  "end": 3.08,
+  "heard": "This is any router for the week of October 12 to 18."
+}

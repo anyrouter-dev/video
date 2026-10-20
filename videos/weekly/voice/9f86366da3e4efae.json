@@ -1,0 +1,13 @@
+{
+  "spoken": "Three are free and four run on your own provider key.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "bf_emma",
+    "speed": 1,
+    "lang": "en-gb"
+  },
+  "duration": 2.795,
+  "start": 0.1,
+  "end": 2.79,
+  "heard": "3 are free and 4 run on your own provider key."
+}

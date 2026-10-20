@@ -1,0 +1,13 @@
+{
+  "spoken": "Read every entry on any router dot dev slash changelog.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "bf_emma",
+    "speed": 1,
+    "lang": "en-gb"
+  },
+  "duration": 3.264,
+  "start": 0.04,
+  "end": 3.24,
+  "heard": "Read every entry on any router.dev slash changelog."
+}

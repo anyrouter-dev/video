@@ -1,0 +1,13 @@
+{
+  "spoken": "Seven models in the catalog were created this week.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "bf_emma",
+    "speed": 1,
+    "lang": "en-gb"
+  },
+  "duration": 2.752,
+  "start": 0.14,
+  "end": 2.69,
+  "heard": "Seven models in the catalog were created this week."
+}

@@ -69,7 +69,7 @@ export function scriptOf(f) {
   if (f.capture) {
     line('reply', 'In the AnyRouter playground, it said hello back, at no cost.', `capture ${f.capture.file}: "${f.capture.reply}", ${f.capture.cost} cost, ${f.capture.date}`);
   }
-  line('use', 'Use its id in any request, or run anyr claude with it.', 'anyr --help: "anyr claude --model <id>"; the OpenAI-compatible "model" field');
+  line('use', 'Use its id in any request, or run it with anyr claude.', 'anyr --help: "anyr claude --model <id>"; the OpenAI-compatible "model" field');
   line('close', 'Find it on anyrouter.dev.', `the page anyrouter.dev/model/${f.id}`);
   return lines;
 }

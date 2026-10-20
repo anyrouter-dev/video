@@ -65,7 +65,7 @@ export function scriptOf(d) {
   if (dec.length) pages.push('Decision models answer typed questions with probabilities, not chat.');
   pages.push('Each one is free to call, with no daily cap.');
   pages.forEach((text, k) => lines.push({ beat: 'page', text, from: k === pages.length - 1 ? 'docs/features/free-tier.md: "Daily cap: None"' : 'catalog: capabilities (chat, systemone)' }));
-  lines.push({ beat: 'pick', text: 'To use one, put its id in the model field, or run anyr claude with it.', from: 'anyr --help: anyr claude --model <id>' });
+  lines.push({ beat: 'pick', text: 'To use one, put its id in the model field, or run it with anyr claude.', from: 'anyr --help: anyr claude --model <id>' });
   if (dec.length) lines.push({ beat: 'pick', text: 'Decision models run with anyr decision.', from: 'anyr decision --help' });
   lines.push({ beat: 'close', text: 'See every model on anyrouter.dev/models.', from: 'the page anyrouter.dev/models' });
   return lines.map(l => ({ ...l, say: { ...SAY, [d.entries[0].name]: speakName(d.entries[0].name), [d.entries[0].maker]: d.entries[0].maker } }));
