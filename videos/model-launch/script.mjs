@@ -48,7 +48,8 @@ export function scriptOf(f) {
   const lines = [];
   const line = (beat, text, from, extra = {}) => lines.push({ beat, text, say: { ...say, ...extra }, from });
 
-  line('reveal', f.isNew ? `${f.name}, from ${f.maker}, is new on AnyRouter.` : `${f.name}, from ${f.maker}, is on AnyRouter.`,
+  // the catalog's date is when the model was created, not when AnyRouter listed it, so "new" is said of the model
+  line('reveal', f.isNew ? `${f.name} is a new model from ${f.maker}, created on ${f.dateWords}.` : `${f.name}, from ${f.maker}, runs on AnyRouter.`,
     `catalog: name, provider${f.isNew ? `, created ${f.day} (inside the ${f.window}-day launch window)` : ''}`);
 
   const ins = f.inputs.map(i => PLURAL[i] ?? i);

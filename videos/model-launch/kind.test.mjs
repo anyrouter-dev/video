@@ -40,6 +40,9 @@ test('"new" is said only inside the launch window: deepseek-v4-flash dates from 
   assert.doesNotMatch(scriptOf(old)[0].text, /\bnew\b/);
   assert.match(body(old, { captions: [] }), /class="kicker">ON ANYROUTER</);
   assert.equal(facts('minimax/minimax-m3.1-flash').isNew, true);
+  // "new" is said of the model and its created date, never as "new on AnyRouter": created is not the day it was listed
+  assert.match(scriptOf(facts('minimax/minimax-m3.1-flash'))[0].text, /is a new model from MiniMax, created on October 19/);
+  assert.ok(!scriptOf(facts('minimax/minimax-m3.1-flash')).some(l => /new on AnyRouter/.test(l.text)));
 });
 
 test('a reply reaches the screen only from a real capture of a free model', () => {
@@ -65,7 +68,8 @@ test('every line of the request and the command sits on one row of the card', ()
 
 test('a name breaks at spaces, then after hyphens, never inside a word', () => {
   assert.deepEqual(nameLines('Nemotron 3.5 Super VL 120B A12B', 13), ['Nemotron 3.5', 'Super VL 120B', 'A12B']);
-  assert.deepEqual(nameLines('DeepSeek-V4-Flash', 13), ['DeepSeek-V4-', 'Flash']);
+  assert.deepEqual(nameLines('DeepSeek-V4-Flash', 13), ['DeepSeek-V4-Flash']);
+  assert.deepEqual(nameLines('Averyveryverylong-Model-Name', 13), ['Averyveryverylong-', 'Model-Name']);
 });
 
 test('each film runs 20 to 35 seconds, its beats back to back', () => {

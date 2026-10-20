@@ -6,6 +6,7 @@
 //   mixdown({ out, duration, music, voice, sfx }) → { lufs, truePeak, lra }
 //
 //   music  { file, offset, gain, fadeIn, fadeOut, duck }   gain and duck in dB
+//   sfxDuck  dB the effects step down while a line is spoken (default 5), so no effect sits on a word
 //   voice  [{ file, at, start, end }]   start/end: when speech runs inside the file
 //   sfx    [{ file, at, gain, rate, from, dur }]   rate repitches (1.04 is a little higher)
 import fs from 'node:fs';
@@ -68,14 +69,14 @@ export function parseLoudness(text) {
   return { lufs: pick(/I:\s+(-?[\d.]+) LUFS/), lra: pick(/LRA:\s+(-?[\d.]+) LU/), truePeak: pick(/Peak:\s+(-?[\d.]+) dBFS/) };
 }
 
-export function mixdown({ out, duration, music, voice = [], sfx = [] }) {
+export function mixdown({ out, duration, music, voice = [], sfx = [], sfxDuck = 5 }) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const inputs = [], chains = [], mix = [];
   const add = (args) => { inputs.push(...args); return inputs.filter(a => a === '-i').length - 1; };
 
+  const spans = voice.map(v => [v.at + (v.start ?? 0), v.at + (v.end ?? 0)]);
   if (music) {
     const i = add(['-ss', String(music.offset ?? 0), '-t', String(duration + 1), '-i', music.file]);
-    const spans = voice.map(v => [v.at + (v.start ?? 0), v.at + (v.end ?? 0)]);
     chains.push(`[${i}:a]aresample=48000,aformat=channel_layouts=stereo,volume=${r3(db(music.gain ?? 0))},`
       + `volume='${duckExpr(spans, music.duck ?? 10)}':eval=frame,`
       + `afade=t=in:st=0:d=${music.fadeIn ?? 0.8},afade=t=out:st=${r3(duration - (music.fadeOut ?? 2.5))}:d=${music.fadeOut ?? 2.5}[m]`);
@@ -93,8 +94,11 @@ export function mixdown({ out, duration, music, voice = [], sfx = [] }) {
     const cut = c.dur ? `atrim=start=${c.from}:duration=${c.dur},asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st=${r3(c.dur - Math.min(0.25, c.dur / 3))}:d=${r3(Math.min(0.25, c.dur / 3))},` : '';
     const pitch = c.rate && c.rate !== 1 ? `asetrate=${Math.round(48000 * c.rate)},aresample=48000,` : '';
     chains.push(`[${i}:a]aresample=48000,aformat=channel_layouts=stereo,${cut}${pitch}volume=${r3(db(c.gain ?? -12))},adelay=${ms}|${ms}[s${k}]`);
-    mix.push(`[s${k}]`);
   });
+  if (sfx.length) {
+    chains.push(`${sfx.map((_, k) => `[s${k}]`).join('')}amix=inputs=${sfx.length}:normalize=0:dropout_transition=0,volume='${duckExpr(spans, sfxDuck, 0.12)}':eval=frame[fx]`);
+    mix.push('[fx]');
+  }
   if (!mix.length) throw new Error('nothing to mix');
   const graph = `${chains.join(';')};${mix.join('')}amix=inputs=${mix.length}:normalize=0:dropout_transition=0,`
     + `apad,atrim=0:${duration},asetpts=PTS-STARTPTS[pre]`;
@@ -106,10 +110,18 @@ export function mixdown({ out, duration, music, voice = [], sfx = [] }) {
   const pass1 = stderrOf(['-hide_banner', '-nostats', '-i', raw, '-af',
     `loudnorm=I=${TARGET.lufs}:TP=${TARGET.truePeak}:LRA=11:print_format=json`, '-f', 'null', '-']);
   const m = JSON.parse(/\{[^{}]*"target_offset"[^{}]*\}/.exec(pass1)[0]);
-  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', raw, '-af',
-    `loudnorm=I=${TARGET.lufs}:TP=${TARGET.truePeak}:LRA=11:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,`
-    + `alimiter=limit=${r3(db(TARGET.truePeak - 0.3))}:attack=1:release=50:level=false,aresample=48000`,
-    '-ar', '48000', '-c:a', 'pcm_s16le', out]);
+  // The limiter that holds the peak can pull a percussive mix under the target, so the gain is
+  // measured again and corrected, at most twice, until it lands within 0.3 LU.
+  let gain = 0, got;
+  for (let pass = 0; pass < 3; pass++) {
+    execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', raw, '-af',
+      `loudnorm=I=${TARGET.lufs}:TP=${TARGET.truePeak}:LRA=11:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,`
+      + `volume=${r3(gain)}dB,alimiter=limit=${r3(db(TARGET.truePeak - 0.3))}:attack=1:release=50:level=false,aresample=48000`,
+      '-ar', '48000', '-c:a', 'pcm_s16le', out]);
+    got = loudness(out);
+    if (Math.abs(got.lufs - TARGET.lufs) <= 0.3) break;
+    gain += TARGET.lufs - got.lufs;
+  }
   fs.rmSync(raw, { force: true });
-  return loudness(out);
+  return got;
 }

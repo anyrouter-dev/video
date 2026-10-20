@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { SHARED } from '../../lib/paths.mjs';
 import { markFor } from '../../lib/marks.mjs';
 import {
-  MODELS_API, parseCatalog, billingOf, isNew, makerOf, dayOf, contextLabel, modalitiesOf, keyProvidersOf, pricesOf,
+  MODELS_API, parseCatalog, billingOf, isNew, makerOf, dayOf, dateWords, contextLabel, modalitiesOf, keyProvidersOf, pricesOf,
 } from '../../lib/models.mjs';
 import { writeProject } from '../../shared/authoring/film-project.mjs';
 import { voicedLine, captionsOf } from '../../shared/authoring/narrate.mjs';
@@ -88,6 +88,7 @@ export function factsOf(m, { now }) {
     accent: ACCENT[owner] ?? HOUSE,
     day,
     dateLabel: dateLabel(day),
+    dateWords: dateWords(day),
     isNew: isNew(m, { now, days: WINDOW }),
     window: WINDOW,
     billing,
@@ -105,7 +106,7 @@ export function factsOf(m, { now }) {
 // ── timing ─────────────────────────────────────────────────────────────────
 const tenths = s => Math.round(s * 10) / 10;
 // The voice starts once the beat's picture has begun to land.
-const LEAD = { reveal: 0.9, spec: 0.5, price: 0.7, reply: 0.4, use: 0.5, close: 0.7 };
+const LEAD = { reveal: 0.9, spec: 0.5, price: 1.3, reply: 0.4, use: 0.5, close: 1.3 };
 // Each beat holds at least this long, and this long after its last word.
 const MIN = { reveal: 3.4, spec: 4.0, price: 3.4, reply: 4.2, use: 4.6, close: 4.2 };
 const AFTER = 0.55, BETWEEN = 0.35, END_HOLD = 2.2;
@@ -134,7 +135,7 @@ export function storyOf(f, lines) {
 
   const at = { mark: 0.15, kicker: 0.35, name: 0.55, rule: 1.25 };
   at.rows = [...Array(6).keys()].map(k => +(beats.spec.at + 0.75 + k * ROW_EVERY).toFixed(2));
-  at.stamp = +(beats.price.at + 0.6).toFixed(2);
+  at.stamp = +(beats.price.at + 0.5).toFixed(2);
   if (beats.reply) {
     at.bubble = +(beats.reply.at + 0.45).toFixed(2);
     at.reply = +(beats.reply.at + 1.3).toFixed(2);
@@ -169,7 +170,7 @@ export const SOUNDS = {
   stamp: { file: AUDIO('stamp.mp3'), gain: -9, big: true },
   reply: { file: AUDIO('ping.mp3'), gain: -19 },
   typing: { file: AUDIO('typing.mp3'), gain: -24, pitch: [1, 1.05], dur: 1.5 },
-  close: { file: AUDIO('chime.mp3'), gain: -15, big: true },
+  close: { file: AUDIO('chime.mp3'), gain: -19, big: true },
 };
 
 export function eventsOf(s) {
@@ -182,7 +183,7 @@ export function eventsOf(s) {
   // typing runs as long as the code is typed, in 1.5 s takes
   const from = s.at.typed[0], to = s.at.typingEnd;
   for (let t = from; t < to - 0.3; t += 1.5) out.push(ev('typing', t));
-  out.push(ev('close', s.beats.close.at + 0.55));
+  out.push(ev('close', s.beats.close.at + 0.45));
   return out;
 }
 
@@ -252,6 +253,7 @@ export default {
         sfx: cues,
       },
       beats: s.beats,
+      claims: s.said.map(l => ({ says: l.text, at: l.at, from: l.from })),
       said: s.said,
       cues,
       summary: `${f.id}: ${Object.entries(s.beats).map(([k, b]) => `${k} ${b.dur}s`).join(' · ')}`,

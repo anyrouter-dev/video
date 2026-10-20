@@ -73,7 +73,7 @@ export function css(cols) {
     .head h1 span{display:block}
     .head .sub{margin-top:12px;font-size:34px}
     .rods{display:none}
-    .mount{top:460px}
+    .mount{top:470px}
     .board{padding:22px 22px 18px}
     .grid.l,.labels.l{display:none}
     .grid.p,.labels.p{display:grid}
@@ -119,7 +119,8 @@ export function inner(t) {
     const d = ${FLIP.dur};
     // the camera eases in on the board and keeps drifting, so no frame sits dead
     tl.fromTo($(".cam"), { scale: PORTRAIT ? 1.015 : 1.06, y: PORTRAIT ? 0 : -20 }, { scale: 1, y: 0, duration: 2.2, ease: "power2.out" }, 0);
-    tl.to($(".cam"), { scale: PORTRAIT ? 1.01 : 1.03, duration: D - 2.2, ease: "none" }, 2.2);
+    tl.to($(".cam"), { scale: PORTRAIT ? 1.01 : 1.05, duration: D - 2.2, ease: "none" }, 2.2);
+    sway($(".stage"));
     tl.from($(".head h1"), { y: -60, opacity: 0, duration: 0.8, ease: "expo.out" }, 0.15);
     tl.from($(".head .sub"), { opacity: 0, x: 40, duration: 0.6 }, 0.5);
     // the board drops in on its rods and settles

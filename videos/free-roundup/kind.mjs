@@ -2,7 +2,7 @@
  * free-roundup: one narrated film per run day of every model that is free on AnyRouter and was
  * created in the last 30 days, newest first, flipped onto a split-flap board (STYLE.md).
  *
- *   title   the wall sign, the board dropping in on its rods
+ *   page-1  the wall sign, the board dropping in on its rods, its first page flipping as the count is said
  *   page-N  six models a page: date, maker, model, chat or decision
  *   pick    how to use one: its id, anyr claude, anyr decision
  *   close   anyrouter.dev/models
@@ -65,7 +65,7 @@ export function scriptOf(d) {
   if (dec.length) pages.push('Decision models answer typed questions with probabilities, not chat.');
   pages.push('Each one is free to call, with no daily cap.');
   pages.forEach((text, k) => lines.push({ beat: 'page', text, from: k === pages.length - 1 ? 'docs/features/free-tier.md: "Daily cap: None"' : 'catalog: capabilities (chat, systemone)' }));
-  lines.push({ beat: 'pick', text: 'To use one, put its id in the model field, or run it with anyr claude.', from: 'anyr --help: anyr claude --model <id>' });
+  lines.push({ beat: 'pick', text: 'To use a chat model, put its id in the model field, or run it with anyr claude.', from: 'anyr --help: anyr claude --model <id>' });
   if (dec.length) lines.push({ beat: 'pick', text: 'Decision models run with anyr decision.', from: 'anyr decision --help' });
   lines.push({ beat: 'close', text: 'See every model on anyrouter.dev/models.', from: 'the page anyrouter.dev/models' });
   return lines.map(l => ({ ...l, say: { ...SAY, [d.entries[0].name]: speakName(d.entries[0].name), [d.entries[0].maker]: d.entries[0].maker } }));
@@ -107,34 +107,39 @@ export function pagesOf(d) {
 const tenths = s => Math.round(s * 10) / 10;
 const LEAD = 0.5, BETWEEN = 0.4, AFTER = 0.6, END_HOLD = 2.4;
 // The board drops in, then the first page flips.
-const DROP = 0.9, TITLE_MIN = 3.6;
+const DROP = 0.9, FIRST_FLIP = 2.0;
 
 /**
- * When everything happens. The title holds while the count is said; each page flips, then holds
+ * When everything happens. The board drops in and its first page flips while the count is said; each later page flips, then holds
  * while its line is said, or long enough to read its rows; the pick and close pages likewise.
  * Lines meant for pages the list does not need are said on its last page.
  */
 export function storyOf(d, lines, pages) {
   const span = flipSpan(pages.cols);
-  const holds = [];   // { key, lines }
+  const holds = [];
   const pageLines = lines.filter(l => l.beat === 'page');
   const nPages = pages.list.length;
-  holds.push({ key: 'title', lines: lines.filter(l => l.beat === 'title'), min: TITLE_MIN });
-  pages.list.forEach((_, k) => holds.push({ key: `page-${k + 1}`, lines: k < nPages - 1 ? pageLines.slice(k, k + 1) : pageLines.slice(k), min: span + 2.8, flip: true }));
-  holds.push({ key: 'pick', lines: lines.filter(l => l.beat === 'pick'), min: span + 3.6, flip: true });
-  holds.push({ key: 'close', lines: lines.filter(l => l.beat === 'close'), min: span + 3.2, flip: true, end: true });
+  // the first page flips as soon as the board has landed, while the count is said
+  pages.list.forEach((_, k) => holds.push({
+    key: `page-${k + 1}`,
+    lines: [...(k ? [] : lines.filter(l => l.beat === 'title')), ...(k < nPages - 1 ? pageLines.slice(k, k + 1) : pageLines.slice(k))],
+    min: span + 2.8 + (k ? 0 : FIRST_FLIP),
+    flipAfter: k ? 0 : FIRST_FLIP,
+  }));
+  holds.push({ key: 'pick', lines: lines.filter(l => l.beat === 'pick'), min: span + 3.6, flipAfter: 0 });
+  holds.push({ key: 'close', lines: lines.filter(l => l.beat === 'close'), min: span + 3.2, flipAfter: 0, end: true });
 
   const beats = [], said = [];
   let t = 0;
   for (const h of holds) {
-    let at = t + (h.flip ? span * 0.5 : DROP) + LEAD;
+    let at = t + (h.flipAfter ? DROP : h.flipAfter + span * 0.5) + LEAD;
     for (const l of h.lines) { said.push({ ...l, at: +at.toFixed(2) }); at += l.end + BETWEEN; }
     const dur = tenths(Math.max(h.min, at - BETWEEN - t + (h.end ? END_HOLD : AFTER)));
-    beats.push({ key: h.key, at: tenths(t), dur, flip: !!h.flip });
+    beats.push({ key: h.key, at: tenths(t), dur, flipAt: +(t + h.flipAfter).toFixed(2) });
     t = tenths(t + dur);
   }
   if (t > MAX_SECONDS) throw new Error(`the roundup needs ${t}s, over ${MAX_SECONDS}s`);
-  const flipAt = beats.filter(b => b.flip).map(b => b.at);
+  const flipAt = beats.map(b => b.flipAt);
   return { duration: t, beats, said, span, flipAt, captions: said.flatMap(l => captionsOf(l.text, { at: l.at, start: l.start, end: l.end })) };
 }
 
@@ -144,7 +149,7 @@ const FLAP_TAKES = [0.4, 10.2, 20.0, 29.6, 38.9];
 export const SOUNDS = {
   drop: { file: AUDIO('whoosh-short.mp3'), gain: -16, pitch: [0.85] },
   land: { file: AUDIO('click-soft.mp3'), gain: -10, big: true },
-  flip: { file: AUDIO('flaps.mp3'), gain: -7 },
+  flip: { file: AUDIO('flaps.mp3'), gain: -10 },
   close: { file: AUDIO('chime.mp3'), gain: -17, big: true },
 };
 
@@ -191,8 +196,8 @@ export default {
     const grids = gridsOf([...pages.list, pages.pick, pages.close], pages.cols);
     const s = storyOf(d, lines, pages);
     const flips = Object.fromEntries(['landscape', 'portrait'].map(o => [o, flipsOf(grids, s.flipAt, o).map(f => [f.r, f.c, f.at, f.from, f.to])]));
-    const nameCols = pages.cols.landscape - 29;
-    const labels = [['DATE', 1, 6], ['MAKER', 8, 12], ['MODEL', 21, nameCols], ['TYPE', 22 + nameCols, 8]];
+    const nameCols = pages.cols.landscape - 30;
+    const labels = [['DATE', 1, 6], ['MAKER', 8, 12], ['MODEL', 21, nameCols], ['TYPE', 23 + nameCols, 8]];
     const facts = {
       grids, days: DAYS, asOf: dateWords(d.asOf, { short: true }).replace(/ 0?/, ' ') + `, ${d.asOf.slice(0, 4)}`, labels,
       count: d.entries.length, chat: d.entries.filter(e => e.type === 'chat').length, decision: d.entries.filter(e => e.type === 'decision').length,
@@ -213,6 +218,7 @@ export default {
       scenes: [{ id: 's01-board', start: 0, dur: s.duration, body: body(facts, t), inner: inner(t) }],
       sound: { music: MUSIC, voice: s.said.map(l => ({ file: l.file, at: l.at, start: l.start, end: l.end })), sfx: cuesOf(s) },
       beats: s.beats,
+      claims: s.said.map(l => ({ says: l.text, at: l.at, from: l.from })),
       summary: `free-roundup ${d.asOf}: ${d.entries.length} models, ${s.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,
     };
   },
@@ -232,5 +238,5 @@ export default {
   asset: entry => `${entry.label}`,
 
   /** The first page, flipped in. */
-  coverAt: film => +(film.beats[1].at + film.beats[1].dur - 0.4).toFixed(2),
+  coverAt: film => +(film.beats[0].at + film.beats[0].dur - 0.4).toFixed(2),
 };

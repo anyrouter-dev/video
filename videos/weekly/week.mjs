@@ -23,7 +23,8 @@ export function weekOf(doc, llms, week) {
     .map(m => ({ id: m.id, day: dayOf(m.created), name: m.display_name || m.name || m.id.split('/')[1], maker: makerOf(m), billing: billingOf(m), type: isDecision(m) ? 'decision' : 'chat' }));
   const from = dayOf(span.from / 1000), to = dayOf((span.to - 1) / 1000);
   const entries = parseEntries(llms).filter(e => e.date >= from && e.date <= to)
-    .map(e => ({ date: e.date, title: e.title, type: e.type === 'disabled' ? 'retired' : 'added', link: e.link }));
+    // a removed route (-upstream) changes how a model is served, not whether it is listed: it is not a retirement
+    .map(e => ({ date: e.date, title: e.title, type: /-upstream$/.test(e.slug) ? 'changed' : e.type === 'disabled' ? 'retired' : 'added', link: e.link }));
   const days = WEEKDAYS.map((wd, k) => {
     const day = dayOf(span.from / 1000 + k * 86400);
     return { day, weekday: wd, n: Number(day.slice(8)), models: models.filter(m => m.day === day).length, entries: entries.filter(e => e.date === day).length };
@@ -70,9 +71,9 @@ export function scriptOf(w) {
     line('number', 'No model in the catalog was created this week.', 'catalog: created inside the week');
   }
 
-  const e = w.entries.length, added = w.entries.filter(x => x.type === 'added').length, retired = e - added;
+  const e = w.entries.length, count = type => w.entries.filter(x => x.type === type).length;
   if (e) {
-    const kinds = [added && `${numberWords(added)} added`, retired && `${numberWords(retired)} retired`].filter(Boolean);
+    const kinds = ['added', 'retired', 'changed'].map(type => count(type) && `${numberWords(count(type))} ${type}`).filter(Boolean);
     line('changelog', `The changelog lists ${plural(e, 'entry', 'entries')}: ${list(kinds)}.`, '/llms.txt ## Model releases, dated inside the week');
   } else {
     line('changelog', 'The changelog has no entries this week.', '/llms.txt ## Model releases');

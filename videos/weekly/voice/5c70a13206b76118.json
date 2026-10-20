@@ -1,0 +1,13 @@
+{
+  "spoken": "The changelog lists eight entries: five added, two retired and one changed.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "bf_emma",
+    "speed": 1,
+    "lang": "en-gb"
+  },
+  "duration": 4.565,
+  "start": 0.04,
+  "end": 4.52,
+  "heard": "The change log lists eight entries, five added, two retired and one changed."
+}

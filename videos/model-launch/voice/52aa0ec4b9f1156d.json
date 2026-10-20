@@ -1,0 +1,13 @@
+{
+  "spoken": "Ling three point one flash is a new model from inclusion A I, created on October 2.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 5.248,
+  "start": 0.04,
+  "end": 5.2,
+  "heard": "Ling 3.1 Flash is a new model from Inclusion AI, created on October 2."
+}

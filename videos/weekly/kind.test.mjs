@@ -31,8 +31,10 @@ test('a BYOK model is never counted or named as free', () => {
 
 test('a retirement in the changelog is never read as a launch', () => {
   const retired = w.entries.filter(e => e.type === 'retired').map(e => e.title);
-  assert.deepEqual(retired, ['GLM-5.3-Flash disabled', 'Amos 1 Medium disabled', 'Novita routes for DeepSeek V4 Flash removed']);
-  assert.match(scriptOf(w).find(l => l.beat === 'changelog').text, /five added and three retired/);
+  assert.deepEqual(retired, ['GLM-5.3-Flash disabled', 'Amos 1 Medium disabled']);
+  // a removed route leaves the model listed: it is a change, not a retirement
+  assert.deepEqual(w.entries.filter(e => e.type === 'changed').map(e => e.title), ['Novita routes for DeepSeek V4 Flash removed']);
+  assert.match(scriptOf(w).find(l => l.beat === 'changelog').text, /five added, two retired and one changed/);
 });
 
 test('a week across two months is said with both', () => {

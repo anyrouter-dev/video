@@ -21,7 +21,8 @@ export const CODE_COLS = 43;
 
 /** The name in lines of at most `max` characters, broken at spaces, then after hyphens. */
 export function nameLines(name, max) {
-  const tokens = name.split(' ').flatMap(t => (t.length <= max ? [t] : t.split(/(?<=-)/)));
+  // a name of one token up to 18 characters stays whole and is set smaller: a row ending in a hyphen reads as a broken word
+  const tokens = name.split(' ').flatMap(t => (t.length <= Math.max(max, 18) ? [t] : t.split(/(?<=-)/)));
   const lines = [];
   for (const t of tokens) {
     const last = lines.at(-1);
@@ -67,8 +68,9 @@ export function css(accent) {
   .cam{position:absolute;inset:0;transform-origin:40% 45%}
   .rings{position:absolute;left:-240px;top:-300px;width:1260px;height:1260px}
   .rings circle{fill:none;stroke:${accent};stroke-width:2}
-  .id{position:absolute;left:110px;top:170px;width:750px}
+  .id{position:absolute;left:110px;top:170px;width:720px}
   .mk{display:block;width:104px;height:104px;object-fit:contain}
+  .mk.inv{filter:brightness(0) invert(1)}
   .mono-mark{display:flex;width:104px;height:104px;border:3px solid ${accent};border-radius:24px;align-items:center;justify-content:center;
     font:700 44px 'Geist';color:${accent}}
   .kicker{margin-top:34px;font:500 32px 'Geist Mono';letter-spacing:.16em;color:${accent};white-space:nowrap}
@@ -82,9 +84,9 @@ export function css(accent) {
   .pill.free{background:${accent};color:${C.bg}}
   .pill.byok{border:3px dashed ${accent};color:${C.ink}}
   .pill.credits{border:3px solid ${C.line};color:${C.ink}}
-  .panel{position:absolute;left:900px;top:150px;width:920px;height:740px;perspective:1600px}
+  .panel{position:absolute;left:860px;top:150px;width:960px;height:740px;perspective:1600px}
   .card{position:absolute;inset:0;background:${C.card};border:2px solid ${C.line};border-radius:32px}
-  .pane{position:absolute;left:36px;right:36px;top:40px;bottom:36px}
+  .pane{position:absolute;left:30px;right:30px;top:40px;bottom:36px}
   .lbl{font:500 32px 'Geist Mono';letter-spacing:.12em;color:${C.muted};white-space:nowrap}
   .row{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:18px 0;border-bottom:2px solid ${C.line}}
   .row:last-child{border-bottom:0}
@@ -107,8 +109,8 @@ export function css(accent) {
   .who{margin-top:44px;font:500 32px 'Geist';color:${C.muted};white-space:nowrap}
   .reply{margin-top:14px;font:600 52px 'Geist';white-space:nowrap}
   .meta{margin-top:40px;font:500 32px 'Geist Mono';color:${C.muted};white-space:nowrap}
-  .code{margin-top:18px;padding:22px 26px;border-radius:20px;background:#0E0E11;border:2px solid ${C.line}}
-  .term{margin-top:18px;padding:22px 26px;border-radius:20px;background:${C.ink};color:${C.bg}}
+  .code{margin-top:18px;padding:22px 18px;border-radius:20px;background:#0E0E11;border:2px solid ${C.line}}
+  .term{margin-top:18px;padding:22px 18px;border-radius:20px;background:${C.ink};color:${C.bg}}
   .ln{font:500 32px/1.5 'Geist Mono';white-space:pre}
   .code .key{color:#C9C9C4}
   .code .str{color:${accent}}
@@ -129,7 +131,7 @@ export function css(accent) {
     .name.l{display:none}
     .name.p{display:block;margin-top:14px}
     .name .nl{font-size:108px}
-    .name.long .nl{font-size:88px}
+    .name.long .nl{font-size:80px}
     .rule{margin-top:22px;height:6px}
     .pill{height:56px;margin-top:22px;font-size:32px}
     .panel{left:60px;top:690px;width:900px;height:610px}
@@ -158,8 +160,9 @@ export function body(f, t) {
   const nameL = nameLines(f.name, 13), nameP = nameLines(f.name, 15);
   const name = (lines, cls) => `<div class="name ${cls}${lines.length > 2 ? ' long' : ''}">${lines.map(l => `<div class="nl"><span>${esc(l)}</span></div>`).join('')}</div>`;
   const pill = { free: 'Free on AnyRouter', byok: 'Bring your own key', credits: 'AnyRouter credits' }[f.billing];
-  const mark = f.mark ? markImg(f.mark, 'mk') : `<span class="mono-mark">${esc(f.maker.slice(0, 2).toUpperCase())}</span>`;
-  const rings = [170, 250, 340, 440, 560].map((r, k) => `<circle cx="630" cy="630" r="${r}" stroke-dasharray="${k % 2 ? '4 14' : '220 40'}" opacity="${(0.42 - k * 0.06).toFixed(2)}"/>`).join('');
+  // a one-colour mark is drawn in ink, so it reads on the dark stage; a colour mark keeps its colours
+  const mark = f.mark ? markImg(f.mark, /-color\.svg$/.test(f.mark) ? 'mk' : 'mk inv') : `<span class="mono-mark">${esc(f.maker.slice(0, 2).toUpperCase())}</span>`;
+  const rings = [170, 250, 340, 440, 560].map((r, k) => `<circle cx="630" cy="630" r="${r}" stroke-dasharray="${k % 2 ? '6 14' : '180 50'}" opacity="${(0.6 - k * 0.07).toFixed(2)}"/>`).join('');
 
   const spec = [
     ['MAKER', f.maker], ['CONTEXT', f.contextLabel ? `${f.contextLabel} tokens` : 'not listed'], ['INPUT', f.inputsLabel],
@@ -176,7 +179,7 @@ export function body(f, t) {
         <div class="facts"><div class="f"><b>$0</b> per 1M input tokens</div><div class="f"><b>$0</b> per 1M output tokens</div><div class="f">No daily cap</div></div></div>`
     : f.billing === 'byok'
       ? `<div class="pane price"><div class="stamp byok" data-layout-allow-overlap><div class="big">BYOK</div></div><div class="sub">Bring your own provider key</div>
-        <div class="facts"><div class="f">AnyRouter markup: <b>$0</b></div></div><div class="lbl" style="margin-top:18px">KEYS THAT RUN IT</div>
+        <div class="facts"><div class="f">You pay your provider's price</div><div class="f">AnyRouter adds no markup</div></div><div class="lbl" style="margin-top:18px">KEYS THAT RUN IT</div>
         <div class="chips">${keys.map(k => `<span class="chip">${esc(k)}</span>`).join('')}${more ? `<span class="chip">+${more} more</span>` : ''}</div></div>`
       : `<div class="pane price"><div class="sub">Runs on AnyRouter credits</div></div>`;
 
@@ -191,7 +194,7 @@ export function body(f, t) {
   const caps = t.captions.map((c, k) => `<span data-k="${k}">${esc(c.text)}</span>`).join('');
   return `<div class="cam" data-layout-allow-overflow>
     <svg class="rings" viewBox="0 0 1260 1260">${rings}</svg>
-    <div class="id">${mark}<div class="kicker">${f.isNew ? 'NEW ON ANYROUTER' : 'ON ANYROUTER'}</div>${name(nameL, 'l')}${name(nameP, 'p')}
+    <div class="id">${mark}<div class="kicker">${f.isNew ? 'NEW MODEL' : 'ON ANYROUTER'}</div>${name(nameL, 'l')}${name(nameP, 'p')}
       <div class="rule"></div><div><span class="pill ${f.billing}">${pill}</span></div></div>
     <div class="panel"><div class="card"></div>${specPane}${pricePane}${replyPane}${usePane}</div>
     <div class="close"><img class="logo" src="assets/brand/anyrouter-logo-white.svg" alt="AnyRouter">
@@ -205,9 +208,16 @@ export function inner(t) {
   return `
     const T = ${JSON.stringify(t)};
     fit($$(".name .nl > span").map(s => s.parentElement));
+    // in portrait the card starts under the identity block, however many rows the name takes
+    if (PORTRAIT) {
+      const idBox = $(".id"), panel = $(".panel");
+      const bottom = idBox.offsetTop + idBox.offsetHeight + 28;
+      if (bottom > panel.offsetTop) { panel.style.height = (panel.offsetTop + panel.offsetHeight - bottom) + "px"; panel.style.top = bottom + "px"; }
+    }
     // the camera never rests: a slow push and the rings turning
-    tl.fromTo($(".cam"), { scale: 1 }, { scale: 1.035, x: PORTRAIT ? 0 : -14, duration: D, ease: "none" }, 0);
-    $$(".rings circle").forEach((c, k) => tl.fromTo(c, { rotation: 0, svgOrigin: "630 630" }, { rotation: (k % 2 ? -1 : 1) * (40 + k * 12), svgOrigin: "630 630", duration: D, ease: "none" }, 0));
+    tl.fromTo($(".cam"), { scale: 1 }, { scale: PORTRAIT ? 1.02 : 1.05, duration: D, ease: "none" }, 0);
+    sway($(".stage"));
+    $$(".rings circle").forEach((c, k) => tl.fromTo(c, { rotation: 0, svgOrigin: "630 630" }, { rotation: (k % 2 ? -1 : 1) * D * (9 + k * 2), svgOrigin: "630 630", duration: D, ease: "none" }, 0));
     tl.from($$(".rings circle"), { scale: 0.2, svgOrigin: "630 630", opacity: 0, duration: 1.4, stagger: 0.12, ease: "expo.out" }, 0.1);
 
     // reveal: the mark, the kicker, the name rising out of its rows, the rule
@@ -252,6 +262,9 @@ export function inner(t) {
     tl.from($(".close .logo"), { opacity: 0, scale: 0.86, duration: 0.7, ease: "expo.out" }, T.beats.close.at + 0.5);
     tl.from($$(".close .url div"), { opacity: 0, y: 40, duration: 0.6, stagger: 0.14, ease: "expo.out" }, T.beats.close.at + 0.8);
     tl.from($(".close .pill"), { opacity: 0, scale: 0.8, duration: 0.5, ease: "back.out(2)" }, T.beats.close.at + 1.3);
+    // the end card keeps coming toward the viewer until the last frame
+    tl.fromTo($(".close .logo"), { y: 0 }, { y: -26, duration: T.beats.close.dur - 0.5, ease: "none" }, T.beats.close.at + 0.5);
+    tl.fromTo($(".close .url"), { scale: 1 }, { scale: 1.05, duration: T.beats.close.dur - 0.8, ease: "none" }, T.beats.close.at + 0.8);
 
     // captions: each group while it is said
     T.captions.forEach((c, k) => { const el = $('.cap span[data-k="' + k + '"]'); tl.set(el, { opacity: 1 }, c.at); tl.set(el, { opacity: 0 }, c.end); });

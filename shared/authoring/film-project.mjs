@@ -31,6 +31,12 @@ const HELPERS = `
     const $ = s => document.querySelector(Q(s));
     const $$ = s => Array.from(document.querySelectorAll(Q(s)));
     const PORTRAIT = matchMedia("(orientation: portrait)").matches;
+    // A slow two-axis sway, so a frame never sits still while it is read: x and y on
+    // different periods so they never come to rest together. Small enough for the safe area.
+    const sway = (el, ax = 12, ay = 8) => {
+      tl.fromTo(el, { x: -ax }, { x: ax, duration: 3.1, ease: "sine.inOut", repeat: Math.ceil(D / 3.1), yoyo: true }, 0);
+      tl.fromTo(el, { y: -ay }, { y: ay, duration: 2.3, ease: "sine.inOut", repeat: Math.ceil(D / 2.3), yoyo: true }, 0);
+    };
     // Shrinks each element's font until its text fits the width of its box, never under 32px.
     const fit = (els, floor = 32) => els.forEach(el => {
       let px = parseFloat(getComputedStyle(el).fontSize);
@@ -141,5 +147,7 @@ export function writeProject(dir, id, spec) {
     media: { autoProxy: true },
   }, null, 2) + '\n');
   fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({ id, name: id }, null, 2) + '\n');
+  // what the film says and where each claim comes from, beside the film it was cut from
+  if (spec.claims) fs.writeFileSync(path.join(dir, 'claims.json'), JSON.stringify(spec.claims, null, 2) + '\n');
   return { ...spec, sound };
 }

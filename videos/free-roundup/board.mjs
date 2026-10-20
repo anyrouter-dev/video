@@ -21,7 +21,7 @@ const pad = (s, n) => (s.length > n ? s.slice(0, n) : s + ' '.repeat(n - s.lengt
 /** The columns of each grid for a list whose longest name is `nameCols` wide. */
 export function colsOf(nameCols) {
   return {
-    landscape: COL.date + 1 + COL.maker + 1 + nameCols + 1 + COL.type,
+    landscape: COL.date + 1 + COL.maker + 1 + nameCols + 2 + COL.type,
     portrait: Math.max(COL.date + 1 + COL.maker + 1 + COL.type, nameCols),
   };
 }
@@ -31,7 +31,7 @@ export function entryRows(e, nameCols) {
   const maker = e.maker.toUpperCase().slice(0, COL.maker);
   const type = e.type.toUpperCase();
   return {
-    landscape: [`${pad(e.date, COL.date)} ${pad(maker, COL.maker)} ${pad(e.name.toUpperCase(), nameCols)} ${pad(type, COL.type)}`],
+    landscape: [`${pad(e.date, COL.date)} ${pad(maker, COL.maker)} ${pad(e.name.toUpperCase(), nameCols)}  ${pad(type, COL.type)}`],
     portrait: [`${pad(e.date, COL.date)} ${pad(maker, COL.maker)} ${pad(type, COL.type)}`, e.name.toUpperCase()],
   };
 }

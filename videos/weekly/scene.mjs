@@ -11,7 +11,7 @@ export const MAX_MODELS = 7, MAX_ENTRIES = 5;
 
 const MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const short = day => `${MON[Number(day.slice(5, 7)) - 1]} ${Number(day.slice(8))}`;
-const TAG = { free: 'FREE', byok: 'BYOK', credits: 'CREDITS', added: 'ADDED', retired: 'RETIRED' };
+const TAG = { free: 'FREE', byok: 'BYOK', credits: 'CREDITS', added: 'ADDED', retired: 'RETIRED', changed: 'CHANGED' };
 
 export function css() {
   return `
@@ -54,7 +54,7 @@ export function css() {
   .tag{display:inline-block;min-width:150px;padding:2px 12px;font:700 32px 'Inter';letter-spacing:.06em;text-align:center;white-space:nowrap}
   .tag.free{background:${C.red};color:#FFFFFF}
   .tag.byok{border:3px dashed ${C.ink}}
-  .tag.credits,.tag.retired{border:3px solid ${C.muted};color:${C.muted}}
+  .tag.credits,.tag.retired,.tag.changed{border:3px solid ${C.muted};color:${C.muted}}
   .tag.added{border:3px solid ${C.ink}}
   .mname{font:600 42px 'Newsreader';white-space:nowrap}
   .mby{font:500 32px 'Inter';color:${C.muted};white-space:nowrap;margin-left:auto}
@@ -137,7 +137,7 @@ export function body(w, t) {
         <div class="numtext"><div class="what">${n === 1 ? 'model' : 'models'} in the catalog</div><div class="what">created this week</div>
         <div class="split">${counts.map(([b, k]) => `<div><b>${k}</b>${words[b]}</div>`).join('')}</div></div></div></div>
 
-    <div class="sec s-new"><div class="kick">NEW IN THE CATALOG</div><div class="hed">Created this week</div>
+    <div class="sec s-new"><div class="kick">CREATED THIS WEEK</div><div class="hed">Models in the catalog, by created date</div>
       <div class="rows">${models.map((m, k) => `<div class="mrow${k >= portraitRows ? ' lo' : ''}"><span class="tag ${m.billing}">${TAG[m.billing]}</span><span class="mname">${esc(m.name)}</span>
         <span class="mby one">${esc(m.maker)} · ${short(m.day)}</span><span class="mby two">${esc(m.maker)} · ${short(m.day)}</span></div>`).join('')}
         ${models.length < w.models.length ? `<div class="more lo">+ ${w.models.length - models.length} more on anyrouter.dev/models</div>` : ''}
@@ -159,7 +159,8 @@ export function inner(t) {
   return `
     const T = ${JSON.stringify(t)};
     fit($$(".mname, .etitle .tl, .hed, .numtext .what"));
-    tl.fromTo($(".cam"), { scale: PORTRAIT ? 1.004 : 1.012 }, { scale: 1, duration: D, ease: "none" }, 0);
+    tl.fromTo($(".cam"), { scale: 1 }, { scale: PORTRAIT ? 1.006 : 1.05, duration: D, ease: "none" }, 0);
+    sway($(".stage"));
     // the nameplate prints: rules draw, the title rises, the dateline slides in
     tl.from($$(".mast .rule2, .mast .line"), { scaleX: 0, transformOrigin: "50% 50%", duration: 0.8, ease: "power4.inOut" }, 0.1);
     tl.from($$(".mast h1 span"), { y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "expo.out" }, 0.3);

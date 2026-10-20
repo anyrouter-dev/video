@@ -1,0 +1,13 @@
+{
+  "spoken": "MiniMax M three point one Flash is a new model from MiniMax, created on October 19.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 6.272,
+  "start": 0.04,
+  "end": 6.17,
+  "heard": "Minimax M 3.1 Flash is a new model for Minimax, created on October 19."
+}

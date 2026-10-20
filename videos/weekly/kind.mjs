@@ -45,7 +45,7 @@ export function storyOf(w, lines) {
     if (!mine.length) continue;
     // a section with a list holds a beat longer per row so each row is read
     const rows = key === 'models' ? Math.min(w.models.length, 7) : key === 'changelog' ? Math.min(w.entries.length, 5) : 0;
-    let at = t + LEAD + (key === 'masthead' ? 0.6 : 0);
+    let at = t + LEAD + (key === 'masthead' ? 0.6 : key === 'close' ? 0.8 : 0);
     for (const l of mine) { said.push({ ...l, at: +at.toFixed(2) }); at += l.end + BETWEEN; }
     const dur = tenths(Math.max(MIN[key] + rows * 0.35, at - BETWEEN - t + (key === 'close' ? END_HOLD : AFTER)));
     beats.push({ key, at: tenths(t), dur });
@@ -80,7 +80,7 @@ export function cuesOf(s, w) {
   s.sections.slice(1).forEach((x, k) => ev.push({ event: k % 2 ? 'turnB' : 'turnA', at: x.at - 0.3 }));
   s.at.tiles.forEach(at => ev.push({ event: 'tile', at }));
   if (s.at.odo) ev.push({ event: 'settle', at: s.at.odo + 1.0 + (String(w.models.length).length - 1) * 0.2 });
-  ev.push({ event: 'close', at: s.at.end + 0.2 });
+  ev.push({ event: 'close', at: s.at.end - 0.1 });
   return cueSheet(ev, SOUNDS);
 }
 
@@ -127,6 +127,7 @@ export default {
       scenes: [{ id: 's01-week', start: 0, dur: s.duration, body: body(w, t), inner: inner(t) }],
       sound: { music: MUSIC, voice: s.said.map(l => ({ file: l.file, at: l.at, start: l.start, end: l.end })), sfx: cuesOf(s, w) },
       beats: s.beats,
+      claims: s.said.map(l => ({ says: l.text, at: l.at, from: l.from })),
       summary: `weekly ${w.week}: ${s.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,
     };
   },

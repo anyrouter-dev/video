@@ -1,0 +1,13 @@
+{
+  "spoken": "DeepSeek V four point one Flash is a new model from DeepSeek, created on September 10.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 5.867,
+  "start": 0.07,
+  "end": 5.78,
+  "heard": "DeepSeek V4.1 Flash is a new model from DeepSeek, created on September 10."
+}

@@ -1,0 +1,13 @@
+{
+  "spoken": "To use a chat model, put its id in the model field, or run it with any R claude.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 5.931,
+  "start": 0.04,
+  "end": 5.931,
+  "heard": "to use a chat model, put its ID in the model field, or run it with any R-Claud."
+}

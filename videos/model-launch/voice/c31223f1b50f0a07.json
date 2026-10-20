@@ -1,0 +1,13 @@
+{
+  "spoken": "DeepSeek V four Flash, from DeepSeek, runs on Any Router.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 3.648,
+  "start": 0.04,
+  "end": 3.53,
+  "heard": "DeepSeek V4 Flash from DeepSeek runs on any router."
+}
