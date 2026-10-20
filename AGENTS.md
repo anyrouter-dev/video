@@ -61,7 +61,7 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `cli-agents`, `cli-everyday` | the narrated `anyr` CLI guides (any agent on any model; models, credits and keys), same series look and tools | their own files | on demand |
 | `why-gateway` | the narrated short on why a unified LLM gateway, same series look and tools | its own files | on demand |
 | `byok-upstreams` | the narrated short on bringing your own provider keys, same series look and tools | its own files | on demand |
-| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page. Each use case is its own release | `/use-cases.json` | on demand |
+| `use-case` | one short narrated film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup, with a voice, captions and a score of its own. Each use case is its own release | `/use-cases.json`, the ids a preset rolls through from `/api/v1/models?all=1`, and its script in `videos/use-case/narration.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
@@ -130,7 +130,8 @@ npm test                               # unit tests — Node builtins only, no i
 Kind flags: `--limit=N`, `--seconds=N`, `--from=FILE` (build from a saved
 response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 `--baseline=FILE`; `release` takes `--version=X.Y.Z`; `changelog` takes
-`--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG`.
+`--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG` and `--models-from=FILE`
+(a saved `/api/v1/models?all=1` response, so a fixture build needs no network).
 
 ## model-drop layouts
 
@@ -154,9 +155,34 @@ logo comes from `lib/marks.mjs`; a provider with no vendored mark gets a monogra
 never a borrowed logo.
 
 `use-case` is the exception. It brings its own `write` (`videos/use-case/project.mjs`)
-in the Clear look of `videos/explainer/frame.md`: white, Geist, shadcn surfaces,
-one accent per moment. Its scenes carry their portrait layout, so
+in the Monolith look of `videos/explainer/frame.md` (v3): white, near-black ink,
+display-size Geist, flat hairline cards, the terminal as the ink surface, and one
+accent, on what is being said or changed. A film is one sub-composition: the headline,
+then numbered step cards in CSS 3D depth (each tilts in and settles flat to read),
+the code window on the step that shows it, and an end card with the page's short
+link `anyrouter.dev/u/<slug>`; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
+Every line of code sits on one row and the window shows whole code
+(`videos/use-case/reflow.mjs`). Where the page's command names an `anyrouter/*`
+preset, the request keeps it, and a line under the window rolls through a few
+hand-picked ids (`ROLL_IDS` in its `kind.mjs`) the same key runs.
+An id rolls only while `/api/v1/models?all=1` lists it as a chat model whose
+`pricing.billing` is not `"byok"`: a byok id needs the user's own provider key,
+so under a preset it would read as included. `anyrouter/free` rolls only ids
+priced 0, and no credit id rolls under a page that promises "$0" or "free".
+No film shows a screenshot of anyrouter.dev: any UI on screen is drawn in the
+film's kit from real facts.
+
+A use-case film is narrated. `videos/use-case/narration.json` holds each film's
+lines and a claims ledger naming the source of every spoken claim;
+`node videos/use-case/voice.mjs --budget=N` voices a line with ElevenLabs only
+when its spoken text changes, into `videos/use-case/voice/`, so the render never
+calls a voice service. A film with no script fails to build. The voice sets the
+timing (from 22 s), captions run in a band under the picture, and each film's
+calm score (`lib/sound.mjs`) is read off its slug and steps down under the voice.
+`node videos/use-case/audit-all.mjs` puts every film, both renditions, through
+the stage audit; `node videos/use-case/sound-check.mjs` fails when two films'
+scores sound alike.
 
 ## Rules every generated film obeys
 
