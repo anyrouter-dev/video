@@ -599,7 +599,7 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     }
     const GLOW_PULSES = ROLLS ? Array.from({ length: ROLLS }, (_, i) => ROLL_AT + i * ROLL_EVERY + 0.2) : [];
 
-    // A tint comes up under the command as it is typed (t is where the typing ended). Once all is said and
+    // A tint comes up under the command as it starts to be typed (t is where the typing ended). Once all is said and
     // shown, it points out each line the page changes in turn until the window leaves; a lone line
     // breathes, so the frame never stands still.
     const lit = R(".ln.keep, .ln.focus, .ln.typed, .ln.out"), first = Math.max(0, lit.findIndex(l => l.classList.contains("focus")));
@@ -609,7 +609,9 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       rows.prepend(glow);
       const to = ln => ({ y: ln.offsetTop, height: ln.offsetHeight });
       tl.set(glow, { ...to(lit[first]), opacity: 0 }, 0);
-      tl.to(glow, { opacity: 1, duration: Math.max(0.6, t - CMD_AT), ease: "none" }, CMD_AT);
+      tl.to(glow, { opacity: 1, duration: 0.3, ease: "power2.out" }, CMD_AT);
+      // and flashes as the typing ends, so the line just typed is the one to read
+      tl.fromTo(glow, { opacity: 0.2 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
       // each id that rolls in flashes the line it lands on
       for (const p of GLOW_PULSES) tl.fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, p);
       for (let t = POINT_AT + 0.3, k = first + 1; t < W_OUT - 0.3; t += 1.1, k++) {
