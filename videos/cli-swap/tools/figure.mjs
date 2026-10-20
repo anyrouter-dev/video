@@ -50,7 +50,8 @@ const SLIDE_TOP = STAGE_TOP + 1.4;
 const CONDENSER = { z0: 172, z1: 198, r: 13 };
 
 export const TURRET = { x: 0, y: OY - 22, bottom: 266, ports: 22 };
-const T_PROFILE = [[0, 33], [2.4, 33], [2.4, 35.5], [10.4, 35.5], [10.4, 37.4], [17.4, 37.4], [17.4, 34.6, 1], [20, 33, 1], [23, 29.4, 1], [26, 24, 1], [28, 18.6, 1], [29.4, 13]];
+const T_REVOLVER = [[0, 33], [2.4, 33], [2.4, 35.5], [10.4, 35.5], [10.4, 37.4], [17.4, 37.4]];
+const T_COVER = [[17.4, 34.4], [20, 33, 1], [23, 29.4, 1], [26, 24, 1], [28, 18.6, 1], [29.4, 13]];
 const BAND = [2.4, 10.4, 35.5];
 const RING = [10.4, 17.4, 37.4];
 const HUB = { r: 12, z0: TURRET.bottom + 29.4, z1: HEAD_Z };
@@ -66,7 +67,9 @@ export const PORTS = [
   { id: 'grok', empty: true },
 ];
 export const STEP_DEG = 360 / PORTS.length;
-const INDEX_AT = 31;
+const INDEX_AT = 34;
+export const DETENT_AT = 58;
+const ANNULUS = [34.4, 37.4];
 
 const V3 = (a) => a;
 export const P = k.fitProjection(
@@ -99,11 +102,12 @@ function scene(R, { turn, lamp, lit }) {
     put(layer, [plan.x + plan.w / 2, plan.y + plan.d / 2, z + h / 2], S(k.slabOf(plan, z, h, P, steps, bevel), { ...style, inner }) + extra, [A.slab(plan, z, h, { name: name ?? 'stand.slab', owner, ground: layer === 'back' && z <= 0 })], name);
   const can = (layer, cx, cy, r, z, h, style, { steps = 28, bevel = 0, name, extra = '', inner, last, owner } = {}) =>
     put(layer, [cx, cy, z + h / 2], S(k.cylinder(cx, cy, r, z, h, P, steps, bevel), { ...style, inner }) + extra, [A.cylinder(cx, cy, r, z, h, { name: name ?? 'stand.can', owner })], name, { last });
-  const turned = (layer, F, profile, style, { name, extra = '', inner = '', smooth, last, owner, cut } = {}) => {
+  const turned = (layer, F, profile, style, { name, extra = '', inner = '', smooth, last, owner, cut, port } = {}) => {
     const soft = smooth ?? profile.some((p) => p[2]);
     const paths = G.solidOf(profile, F, P, soft ? { smooth: { rows: 4 } } : {});
     const mid = (profile[0][0] + profile[profile.length - 1][0]) / 2;
-    put(layer, G.add3(F.o, G.mul3(F.a, mid)), S(paths, { tone: 'hi', ...style, inner }) + extra, [A.solid(F, profile, { name: name ?? 'part', owner, cut, seated: !!cut, curve: soft ? profile : undefined })], name, { last });
+    const svg = S(paths, { tone: 'hi', ...style, inner }) + extra;
+    put(layer, G.add3(F.o, G.mul3(F.a, mid)), port ? `<g data-port="${port}">${svg}</g>` : svg, [A.solid(F, profile, { name: name ?? 'part', owner, cut, seated: !!cut, curve: soft ? profile : undefined })], name, { last });
   };
 
   // The bench: a plate on feet, a ruler strip and a label plate.
@@ -210,33 +214,37 @@ function scene(R, { turn, lamp, lit }) {
   // The turret: ports and objectives first, then its body over them.
   const FT = G.frameOf([TURRET.x, TURRET.y, TURRET.bottom], [0, 0, 1], [0, 1, 0], [1, 0, 0]);
   const port = (i) => around(TURRET.x, TURRET.y, TURRET.ports, i * STEP_DEG + turn, TURRET.bottom);
-  const active = PORTS.findIndex((_, i) => Math.abs(((i * STEP_DEG + turn) % 360 + 540) % 360 - 180) < 0.5);
   PORTS.forEach((p, i) => {
     const o = port(i);
     const F = G.frameOf(o, [0, 0, -1], [0, 1, 0], [1, 0, 0]);
-    const isLit = lit === 'objective' && i === active;
     if (p.empty) {
       turned('turret', F, [[0, 9.4], [4.4, 9.4]], { tone: 'mid' }, { name: `turret.port-${p.id}`, extra: k.fadedSvg(G.ribsOf(F, 0.4, 4, 9.4, 30, P, { fade: [0.1, 0.55], phase: rad(turn) }), { tone: 'lo' }) });
       return;
     }
     const grip = p.profile.findIndex(([s], j) => j > 1 && s > 3) - 1;
     const [g0, g1] = [p.profile[2][0], p.profile[grip + 1][0]];
-    turned('turret', F, p.profile, { tone: 'hi', lit: isLit }, {
-      name: `turret.objective-${p.id}`, smooth: false, inner: L(G.arcOf(F, g1, p.profile[2][1], P), { tone: 'lo' }),
+    turned('turret', F, p.profile, { tone: 'hi' }, {
+      port: p.id, name: `turret.objective-${p.id}`, smooth: false, inner: L(G.arcOf(F, g1, p.profile[2][1], P), { tone: 'lo' }),
       extra: k.fadedSvg(G.ribsOf(F, g0, g1, p.profile[2][1], 34, P, { fade: [0.12, 0.6], phase: rad(turn) }), { tone: 'lo' }),
     });
   });
-  const ribs = G.ribsOf(FT, RING[0] + 0.5, RING[1] - 0.5, RING[2], RIBS, P, { fade: [0.1, 0.55], phase: rad(turn) });
-  const notches = PORTS.map((_, i) => notchOf(FT, rad(i * STEP_DEG + turn + INDEX_AT))).join('');
-  const names = PORTS.map((p, i) => engrave(p.id, FT, i * STEP_DEG + turn, { lit: lit === 'objective' && i === active })).join('');
-  turned('turret', FT, T_PROFILE, { tone: 'mid' }, {
-    name: 'turret.body', last: true,
-    inner: L(G.arcOf(FT, BAND[0], BAND[2], P) + G.arcOf(FT, RING[1], RING[2], P), { tone: 'faint' }),
+  // The revolving part: label band and knurled grip, a notch on its top face for each port.
+  const ribs = G.ribsOf(FT, RING[0], RING[1], RING[2], RIBS, P, { fade: [0.1, 0.55], phase: rad(turn) });
+  const notches = PORTS.map((_, i) => notchOf(FT, rad(i * STEP_DEG + turn + DETENT_AT))).join('');
+  const names = PORTS.map((p, i) => engrave(p.id, FT, i * STEP_DEG + turn, { port: p.id })).join('');
+  turned('turret', FT, T_REVOLVER, { tone: 'mid' }, {
+    name: 'turret.revolver', last: true,
+    inner: L(G.arcOf(FT, BAND[0], BAND[2], P) + G.arcOf(FT, RING[0], RING[2], P), { tone: 'faint' }),
     extra: k.fadedSvg(ribs, { tone: 'lo' }) + notches + names,
   });
-  can('turret', TURRET.x, TURRET.y, HUB.r, HUB.z0, HUB.z1 - HUB.z0, { tone: 'mid' }, { steps: 32, last: true, name: 'turret.hub', inner: L(k.sideArc(TURRET.x, TURRET.y, HUB.r, HUB.z0 + 4, P, 24), { tone: 'faint' }) });
 
-  // The column head over the turret, and the index and detent block at the ring.
+  // The fixed cover over the revolver, with the index mark the ring's ticks pass, and the hub.
+  const idxTop = G.pointOf(FT, 21.6, 32.0, rad(INDEX_AT));
+  const idxLow = G.pointOf(FT, RING[1] + 0.02, ANNULUS[0], rad(INDEX_AT));
+  turned('front', FT, T_COVER, { tone: 'mid' }, { name: 'turret.cover', inner: L(k.pathOf([at(idxLow), at(idxTop)]), { tone: 'lit', free: 'end' }) });
+  can('front', TURRET.x, TURRET.y, HUB.r, HUB.z0, HUB.z1 - HUB.z0, { tone: 'mid' }, { steps: 32, name: 'turret.hub', inner: L(k.sideArc(TURRET.x, TURRET.y, HUB.r, HUB.z0 + 4, P, 24), { tone: 'faint' }) });
+
+  // The column head over the turret, and the detent plunger that rides the revolver's top face.
   slab('front', HEAD, HEAD_Z, HEAD_TOP - HEAD_Z, { tone: 'mid' }, { steps: 6, bevel: 1.2, name: 'scope.head', extra: L(k.planOutline(k.insetPlan(HEAD, 5), HEAD_TOP, P, 6), { tone: 'faint' }) + D([[0, HEAD.y + 10], [0, HEAD.y + HEAD.d - 10]].map(([x, y]) => at([x, y, HEAD_TOP])), { size: 0.5 }) });
   const headPlate = { x: -14, y: HEAD.y + 46, w: 28, d: 12, r: 1.2 };
   slab('front', headPlate, HEAD_TOP, 0.8, { tone: 'lo', crease: 'none' }, { steps: 3, name: 'scope.head-label', extra: L([18, 11].map((w, i) => k.lineOnTop([headPlate.x + 4, headPlate.y + 3.6 + i * 3.6], [headPlate.x + 4 + w, headPlate.y + 3.6 + i * 3.6], HEAD_TOP + 0.8, P)).join(''), { tone: 'lo', free: true }) });
@@ -248,31 +256,38 @@ function scene(R, { turn, lamp, lit }) {
     const FE = G.frameAlong([ex, BINO.y + BINO.d - 10, HEAD_TOP + 16], EYE_A);
     turned('front', FE, [[0, 5.2], [24, 5.2], [24, 6.2], [31, 6.2], [31, 6.8], [38, 6.8]], { tone: 'mid' }, { name: 'scope.eyepiece', owner: 'scope.bino', cut: [binoShape], extra: k.fadedSvg(G.ribsOf(FE, 31.4, 37.6, 6.8, 26, P, { fade: [0.12, 0.6] }), { tone: 'lo' }) + L(G.circleOf(FE, 38, 4, P, 20), { tone: 'faint' }) });
   }
-  const IDX = around(TURRET.x, TURRET.y, RING[2] + 6.4, INDEX_AT, 0);
-  const arm = { x: 14, y: HEAD.y + HEAD.d - 4, w: 9, d: IDX[1] - HEAD.y - HEAD.d + 4 + 2, r: 1.5 };
-  slab('front', arm, HEAD_Z - 6, 6, { tone: 'mid' }, { steps: 3, bevel: 0.4, name: 'scope.index-arm' });
-  const ringZ = TURRET.bottom + (RING[0] + RING[1]) / 2;
-  const IDX_R = 5;
-  const face = around(TURRET.x, TURRET.y, RING[2] + 6.4 - IDX_R, INDEX_AT, ringZ);
-  can('front', IDX[0], IDX[1], IDX_R, TURRET.bottom + 8, HEAD_Z - 6 - TURRET.bottom - 8, { tone: 'mid' }, { steps: 24, bevel: 0.4, name: 'scope.index-post', owner: 'scope.index',
-    inner: L(k.pathOf([at(G.add3(face, [0, 0, 3.4])), at(G.add3(face, [0, 0, -3.4]))]), { tone: 'lit', free: true }) + L(k.sideArc(IDX[0], IDX[1], IDX_R, TURRET.bottom + 12, P, 16), { tone: 'faint' }) });
-  // The detent ball: it rides the ring between notches and drops into one at each port.
-  const off = ((turn + 0) % STEP_DEG + STEP_DEG) % STEP_DEG;
-  const into = Math.max(0, 1 - Math.min(off, STEP_DEG - off) / 2.4);
-  const ballAt = around(TURRET.x, TURRET.y, RING[2] + 0.7 - 0.45 * into, INDEX_AT, ringZ);
-  put('front', ballAt, S(G.sphereOf(ballAt, 0.7, P), { tone: 'hi' }), [A.ball(ballAt, 0.7, { name: 'scope.detent-ball', owner: 'scope.index' })], 'scope.detent-ball');
+  const ringTop = TURRET.bottom + RING[1];
+  const DET = around(TURRET.x, TURRET.y, (ANNULUS[0] + ANNULUS[1]) / 2, DETENT_AT, 0);
+  const arm = { x: 14, y: Math.min(HEAD.y + HEAD.d - 5, DET[1] - 3.2), w: DET[0] + 3.2 - 14, d: 0, r: 1.5 };
+  arm.d = Math.max(HEAD.y + HEAD.d, DET[1] + 3.2) - arm.y;
+  slab('front', arm, HEAD_Z - 5, 5, { tone: 'mid' }, { steps: 3, bevel: 0.4, name: 'scope.detent-arm', extra: D([at([DET[0], DET[1], HEAD_Z])], { size: 0.45 }) });
+  const BALL = 0.75;
+  const plungerTop = HEAD_Z - 5;
+  const sleeve0 = ringTop + 2 * BALL + 1.4;
+  can('front', DET[0], DET[1], 2.2, sleeve0, plungerTop - sleeve0, { tone: 'mid' }, { steps: 20, name: 'scope.detent-sleeve', owner: 'scope.detent', inner: L(k.sideArc(DET[0], DET[1], 2.2, sleeve0 + 6, P, 16), { tone: 'faint' }) });
+  // The plunger and its ball move as one: they rise on the face and drop into each notch.
+  const ball = [DET[0], DET[1], ringTop + BALL];
+  put('front', ball, `<g data-part="detent">${S(k.cylinder(DET[0], DET[1], 1.1, ringTop + BALL, sleeve0 - ringTop - BALL + 2, P, 16), { tone: 'mid' })}${S(G.sphereOf(ball, BALL, P), { tone: 'hi' })}</g>`, [A.cylinder(DET[0], DET[1], 1.1, ringTop + BALL, sleeve0 - ringTop - BALL + 2, { name: 'scope.detent-pin', owner: 'scope.detent' }), A.ball(ball, BALL, { name: 'scope.detent-ball', owner: 'scope.detent' })], 'scope.detent-ball');
 
   return layers;
 }
 
 /** A V-notch on the ring: a short dark slot where the detent ball drops. Hidden when it turns away. */
 function notchOf(F, angle) {
-  const facing = G.dot3(G.radialOf(F, angle), V);
-  if (facing < 0.05) return '';
-  const w = 0.045;
-  const pts = [[RING[0] + 0.8, angle - w], [RING[1] - 0.8, angle - w], [RING[1] - 0.8, angle + w], [RING[0] + 0.8, angle + w]].map(([s, a]) => at(G.pointOf(F, s, RING[2], a)));
-  return `<path class="cs-notch" d="${k.pathOf(pts, true)}" style="opacity:${G.fadeOf(facing, [0.05, 0.4]).toFixed(2)}"/>`;
+  const w = 0.03;
+  const r0 = ANNULUS[0] + 0.5;
+  const r1 = ANNULUS[1] - 0.5;
+  const pts = [[r0, angle - w], [r1, angle - w * 1.3], [r1, angle + w * 1.3], [r0, angle + w]].map(([r, a]) => at(G.pointOf(F, RING[1], r, a)));
+  return `<path class="cs-notch" d="${k.pathOf(pts, true)}"/>`;
 }
+
+/** How far the detent's ball has dropped into a notch at this turret angle, 0..1. */
+export function detentDrop(turn) {
+  const off = ((turn % STEP_DEG) + STEP_DEG) % STEP_DEG;
+  const from = Math.min(off, STEP_DEG - off);
+  return Math.max(0, 1 - from / 1.6) ** 0.6;
+}
+export const DETENT_DEPTH = 0.9;
 
 // Engraved names on the turret's label band: Geist Mono outlines wrapped onto the cylinder.
 const MONO = fontkit.openSync(path.join(FILM, 'assets/fonts/geist-mono.woff2'));
@@ -308,7 +323,7 @@ function outline(text) {
   GLYPHS.set(text, out);
   return out;
 }
-function engrave(text, F, deg, { lit }) {
+function engrave(text, F, deg, { port }) {
   const { polys, width, em } = outline(text);
   const size = 5.2;
   const s0 = BAND[0] + (BAND[1] - BAND[0]) / 2 - size * 0.36;
@@ -318,7 +333,7 @@ function engrave(text, F, deg, { lit }) {
   if (facing < 0.08) return '';
   const toWorld = ([u, v]) => G.pointOf(F, s0 + (v / em) * size, r, centre + ((u - width / 2) / em) * size / r);
   const d = polys.map((poly) => k.pathOf(poly.map((p) => at(toWorld(p))), true)).join('');
-  return `<path class="cs-engrave${lit ? ' is-lit' : ''}" fill-rule="evenodd" d="${d}" style="opacity:${G.fadeOf(facing, [0.08, 0.45]).toFixed(2)}"/>`;
+  return `<path class="cs-engrave" data-name="${port}" fill-rule="evenodd" d="${d}" style="opacity:${G.fadeOf(facing, [0.08, 0.45]).toFixed(2)}"/>`;
 }
 
 let clips = 0;

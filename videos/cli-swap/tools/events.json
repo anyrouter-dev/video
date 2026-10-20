@@ -1,0 +1,267 @@
+{
+ "duration": 33.854,
+ "events": [
+  {
+   "kind": "names",
+   "at": 4.54
+  },
+  {
+   "kind": "whoosh",
+   "at": 6.387
+  },
+  {
+   "kind": "out",
+   "at": 7.439
+  },
+  {
+   "kind": "key",
+   "at": 9.166,
+   "n": 1
+  },
+  {
+   "kind": "lamp",
+   "at": 9.918000000000001
+  },
+  {
+   "kind": "type",
+   "at": 11.427,
+   "n": 6,
+   "step": 0.055
+  },
+  {
+   "kind": "start",
+   "at": 12.213
+  },
+  {
+   "kind": "select",
+   "at": 16.029
+  },
+  {
+   "kind": "type",
+   "at": 16.389,
+   "n": 2,
+   "step": 0.1
+  },
+  {
+   "kind": "tick",
+   "at": 16.791,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.824,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.857,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.891,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.924,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.957,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 16.991,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 17.024,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 17.057,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 17.124,
+   "port": "pi"
+  },
+  {
+   "kind": "detent",
+   "at": 17.141,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 17.191,
+   "port": "pi"
+  },
+  {
+   "kind": "tick",
+   "at": 17.424,
+   "port": "pi"
+  },
+  {
+   "kind": "select",
+   "at": 19.727
+  },
+  {
+   "kind": "type",
+   "at": 19.867,
+   "n": 8,
+   "step": 0.05
+  },
+  {
+   "kind": "tick",
+   "at": 20.225,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.258,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.291,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.325,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.358,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.391,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.425,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.458,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.491,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.558,
+   "port": "opencode"
+  },
+  {
+   "kind": "detent",
+   "at": 20.575,
+   "port": "opencode"
+  },
+  {
+   "kind": "riser",
+   "at": 20.575
+  },
+  {
+   "kind": "tick",
+   "at": 20.625,
+   "port": "opencode"
+  },
+  {
+   "kind": "tick",
+   "at": 20.858,
+   "port": "opencode"
+  },
+  {
+   "kind": "key-ping",
+   "at": 21.704
+  },
+  {
+   "kind": "tick",
+   "at": 25.891,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 25.924,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 25.957,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 25.991,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.024,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.057,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.091,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.124,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.157,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.224,
+   "port": "codex"
+  },
+  {
+   "kind": "detent",
+   "at": 26.241,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.291,
+   "port": "codex"
+  },
+  {
+   "kind": "tick",
+   "at": 26.524,
+   "port": "codex"
+  },
+  {
+   "kind": "chime",
+   "at": 28.707
+  },
+  {
+   "kind": "sparkle",
+   "at": 29.229
+  }
+ ]
+}

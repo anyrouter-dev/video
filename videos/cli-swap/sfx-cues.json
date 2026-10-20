@@ -1,0 +1,26 @@
+{
+  "about": "One machine event, one sound. tools/compose.mjs writes when each event happens (tools/events.json, from the voice timing and the turret's spring); tools/mix.mjs plays these layers at those times. gain is dB, pitch is semitones (a list is picked by the agent the turret lands on: pi, opencode, codex), pan is -1 left to 1 right, trim keeps the first seconds of a file, tail keeps its last seconds and ends it on the event.",
+  "library": "~/.claude/skills/media-use/audio/assets/sfx (Pixabay Content License, see audio/LICENSES.md)",
+  "events": {
+    "detent":   { "what": "the detent ball drops into the next port's notch", "layers": [
+      { "sound": "click", "gain": -4, "pitch": { "pi": -2, "opencode": 0, "codex": 2 }, "pan": -0.2 },
+      { "sound": "impact-bass-1", "gain": -15, "lowpass": 380, "trim": 0.5, "pan": -0.1, "offset": 0.005 } ] },
+    "tick":     { "what": "a rib of the knurled ring passes the index mark", "layers": [
+      { "sound": "click-soft", "gain": -17, "trim": 0.07, "pitch": "vary", "vary": 3, "highpass": 1800, "pan": -0.25 } ] },
+    "lamp":     { "what": "the lamp in the foot switches on (anyr login)", "layers": [
+      { "sound": "ping", "gain": -11, "pitch": -5, "pan": 0 },
+      { "synth": "hum", "gain": -24, "swell": 0.5, "hold": 1.2, "fade": 1.6 } ] },
+    "type":     { "what": "a key for each letter of the agent word being typed", "layers": [
+      { "sound": "key-press", "gain": -15, "trim": 0.09, "pitch": "vary", "vary": 2, "pan": 0.15 } ] },
+    "key":      { "what": "anyr login entered", "layers": [ { "sound": "key-press", "gain": -12, "trim": 0.12, "pan": 0.15 } ] },
+    "select":   { "what": "the agent word is selected before it is replaced", "layers": [ { "sound": "click-soft", "gain": -15, "trim": 0.1, "pitch": 4, "pan": 0.15 } ] },
+    "whoosh":   { "what": "the install line snaps onto the screen", "layers": [ { "sound": "whoosh-short", "gain": -10, "pan": 0.1 } ] },
+    "out":      { "what": "the installer prints its one line", "layers": [ { "sound": "click-soft", "gain": -15, "trim": 0.1, "pitch": -3, "pan": 0.1 } ] },
+    "start":    { "what": "Claude Code starts in the light path", "layers": [ { "sound": "click", "gain": -14, "trim": 0.15, "pitch": -4, "pan": -0.2 } ] },
+    "riser":    { "what": "a rise into the second turn, ending as it lands", "layers": [ { "sound": "riser", "gain": -16, "tail": 1.7, "fadein": 0.6 } ] },
+    "key-ping": { "what": "same key: the lamp pulses", "layers": [ { "sound": "ping", "gain": -18, "pitch": 3, "pan": 0 } ] },
+    "names":    { "what": "the agents' names light on the turret", "layers": [ { "sound": "sparkle", "gain": -20, "pan": -0.15 } ] },
+    "chime":    { "what": "the close", "layers": [ { "sound": "chime", "gain": -13 } ] },
+    "sparkle":  { "what": "anyrouter.dev/cli lands", "layers": [ { "sound": "sparkle", "gain": -15, "pan": 0.2 } ] }
+  }
+}

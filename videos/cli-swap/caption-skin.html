@@ -1,0 +1,132 @@
+<!--
+  AnyRouter film series caption skin, frame.md v3 "Monolith". Built on the frame-preset
+  skin contract (same holes and hooks); only the look changes. Each phrase appears whole,
+  light Geist 500 on the dark frame (cli-swap draws in the Anatomy dark ramp), one line in landscape, with no chip or outline. It
+  rises 12px as it fades in, and the next phrase replaces it with no gap. No word-by-word
+  highlight; it pulled the eye off the picture.
+-->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+<!-- captions.mjs injects the project's :root tokens here -->
+<style data-brand-tokens></style>
+
+<style>
+  /* captions.mjs injects a "Geist" face that points at geist-mono.woff2 (it matches files by
+     name prefix); shared/authoring/finish.mjs drops that rule, so this is the Geist face. */
+  @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+  .caption-chip {
+    max-width: 1640px;
+    color: #E6E6E6;
+    font-family: var(--font-body, "Geist"), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 52px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-wrap: balance;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* portrait rendition: the 900px safe width holds a short phrase on one line, a long one on two */
+  @media (orientation: portrait) {
+    .caption-stage {
+      left: 60px;
+      right: 120px;
+    }
+    .caption-chip {
+      max-width: 900px;
+      font-size: 46px;
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="0"
+  data-fps="30"
+  data-width="0"
+  data-height="0"
+>
+  <div class="caption-layer" aria-hidden="true" data-outside-safe-area>
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [];
+  var DURATION = 0;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var chip = document.createElement("div");
+      chip.className = "caption-chip";
+      chip.textContent = (group.words || []).map(function (w) { return String(w.text); }).join(" ");
+      groupEl.appendChild(chip);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+    var FADE = 0.12;
+    var RISE = 0.3;
+
+    // exactly one phrase on screen at a time; back-to-back phrases swap without a gap
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.4);
+      if (end <= start) end = start + 0.01;
+      var joined = next && Number(next.start) - end < 0.05;
+
+      tl.fromTo(groupEl, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: RISE, ease: "expo.out" }, start);
+      if (joined) tl.set(groupEl, { opacity: 0 }, end);
+      else tl.to(groupEl, { opacity: 0, duration: FADE, ease: "none" }, Math.max(start + FADE, end - FADE));
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
