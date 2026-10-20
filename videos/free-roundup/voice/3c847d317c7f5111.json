@@ -1,0 +1,13 @@
+{
+  "spoken": "Five are chat models, and thirteen are decision models.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 3.904,
+  "start": 0.13,
+  "end": 3.84,
+  "heard": "5 are chat models and 13 are decision models."
+}

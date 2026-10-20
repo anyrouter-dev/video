@@ -1,0 +1,13 @@
+{
+  "spoken": "Decision models answer typed questions with probabilities, not chat.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 4.693,
+  "start": 0.09,
+  "end": 4.6,
+  "heard": "Decision models answer typed questions with probabilities, not chat."
+}

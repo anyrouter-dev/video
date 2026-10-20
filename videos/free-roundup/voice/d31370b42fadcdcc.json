@@ -1,0 +1,13 @@
+{
+  "spoken": "See every model on any router dot dev slash models.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 3.627,
+  "start": 0.05,
+  "end": 3.6,
+  "heard": "See every model on any router.dev-slash-models."
+}

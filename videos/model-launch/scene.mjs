@@ -76,6 +76,7 @@ export function css(accent) {
   .name .nl{display:block;font:800 136px/1.02 'Geist';letter-spacing:-.045em;white-space:nowrap;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
   .name .nl>span{display:inline-block}
   .name.p{display:none}
+  .name.long .nl{font-size:104px}
   .rule{margin-top:30px;width:260px;height:8px;background:${accent};transform-origin:0 50%}
   .pill{display:inline-flex;align-items:center;height:64px;margin-top:30px;padding:0 26px;border-radius:999px;font:600 34px 'Geist';white-space:nowrap}
   .pill.free{background:${accent};color:${C.bg}}
@@ -128,6 +129,7 @@ export function css(accent) {
     .name.l{display:none}
     .name.p{display:block;margin-top:14px}
     .name .nl{font-size:108px}
+    .name.long .nl{font-size:88px}
     .rule{margin-top:22px;height:6px}
     .pill{height:56px;margin-top:22px;font-size:32px}
     .panel{left:60px;top:690px;width:900px;height:610px}
@@ -153,8 +155,8 @@ export function css(accent) {
 
 /** The scene's HTML. `t` is the timing from kind.mjs's storyOf. */
 export function body(f, t) {
-  const nameL = nameLines(f.name, 11), nameP = nameLines(f.name, 15);
-  const name = (lines, cls) => `<div class="name ${cls}">${lines.map(l => `<div class="nl"><span>${esc(l)}</span></div>`).join('')}</div>`;
+  const nameL = nameLines(f.name, 13), nameP = nameLines(f.name, 15);
+  const name = (lines, cls) => `<div class="name ${cls}${lines.length > 2 ? ' long' : ''}">${lines.map(l => `<div class="nl"><span>${esc(l)}</span></div>`).join('')}</div>`;
   const pill = { free: 'Free on AnyRouter', byok: 'Bring your own key', credits: 'AnyRouter credits' }[f.billing];
   const mark = f.mark ? markImg(f.mark, 'mk') : `<span class="mono-mark">${esc(f.maker.slice(0, 2).toUpperCase())}</span>`;
   const rings = [170, 250, 340, 440, 560].map((r, k) => `<circle cx="630" cy="630" r="${r}" stroke-dasharray="${k % 2 ? '4 14' : '220 40'}" opacity="${(0.42 - k * 0.06).toFixed(2)}"/>`).join('');
@@ -166,7 +168,8 @@ export function body(f, t) {
   const specPane = `<div class="pane spec">${spec.map(([k, v]) => `<div class="row"><span class="k">${k}</span><span class="v">${esc(v)}</span></div>`).join('')}
     <div class="row idrow"><span class="k">MODEL ID</span><span class="v" data-one-row>${esc(f.id)}</span></div></div>`;
 
-  const keys = f.keyNames.slice(0, f.keyNames.length > 7 ? 6 : 7);
+  const named = f.keyNames.filter(k => k.named).map(k => k.name);
+  const keys = named.slice(0, named.length > 7 ? 6 : 7);
   const more = f.keyNames.length - keys.length;
   const pricePane = f.billing === 'free'
     ? `<div class="pane price"><div class="stamp" data-layout-allow-overlap><div class="big">FREE</div></div><div class="sub">on AnyRouter</div>

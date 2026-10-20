@@ -1,0 +1,13 @@
+{
+  "spoken": "Each one is free to call, with no daily cap.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 3.029,
+  "start": 0.13,
+  "end": 3.02,
+  "heard": "Each one is free to call with no daily cap."
+}

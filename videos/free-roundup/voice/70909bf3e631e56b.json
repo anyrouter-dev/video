@@ -1,0 +1,13 @@
+{
+  "spoken": "The newest is MiniMax M three point one Flash, from MiniMax.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 4.565,
+  "start": 0.06,
+  "end": 4.46,
+  "heard": "The newest is MINIMAX M 3.1 Flash from MINIMAX."
+}

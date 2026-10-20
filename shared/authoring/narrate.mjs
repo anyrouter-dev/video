@@ -123,3 +123,29 @@ export function captionsOf(text, { at, start, end }, most = 6) {
     return c;
   });
 }
+
+export const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
+  'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+/** A whole number under a million, as it is said. */
+export function numberWords(n) {
+  if (n < 20) return ONES[n];
+  if (n < 100) return `${TENS[Math.floor(n / 10)]}${n % 10 ? ` ${ONES[n % 10]}` : ''}`;
+  if (n < 1000) return `${ONES[Math.floor(n / 100)]} hundred${n % 100 ? ` ${numberWords(n % 100)}` : ''}`;
+  return `${numberWords(Math.floor(n / 1000))} thousand${n % 1000 ? ` ${numberWords(n % 1000)}` : ''}`;
+}
+
+/**
+ * A model name as it is said: "M3.1" is "M three point one", "120B" is "one hundred twenty B",
+ * "VL" is "V L", and hyphens are pauses.
+ */
+export function speakName(name) {
+  const num = n => (n.includes('.') ? `${numberWords(Number(n.split('.')[0]))} point ${[...n.split('.')[1]].map(d => ONES[d]).join(' ')}` : numberWords(Number(n)));
+  const spell = s => (/^[A-Z]{1,3}$/.test(s) ? [...s].join(' ') : s);
+  return name.split(/[\s-]+/).filter(Boolean).map(tok => {
+    const m = /^([A-Za-z]*?)(\d+(?:\.\d+)?)([A-Za-z]*)$/.exec(tok);
+    if (!m) return spell(tok);
+    return [m[1] && spell(m[1].toUpperCase() === m[1] ? m[1] : m[1]), num(m[2]), m[3] && spell(m[3].toUpperCase())].filter(Boolean).join(' ');
+  }).join(' ');
+}

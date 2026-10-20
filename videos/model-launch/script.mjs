@@ -13,18 +13,7 @@
  *   close   anyrouter.dev
  */
 import { contextLabel } from '../../lib/models.mjs';
-
-const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
-  'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-
-/** A whole number under a million, as it is said. */
-export function numberWords(n) {
-  if (n < 20) return ONES[n];
-  if (n < 100) return `${TENS[Math.floor(n / 10)]}${n % 10 ? ` ${ONES[n % 10]}` : ''}`;
-  if (n < 1000) return `${ONES[Math.floor(n / 100)]} hundred${n % 100 ? ` ${numberWords(n % 100)}` : ''}`;
-  return `${numberWords(Math.floor(n / 1000))} thousand${n % 1000 ? ` ${numberWords(n % 1000)}` : ''}`;
-}
+import { numberWords, ONES, speakName } from '../../shared/authoring/narrate.mjs';
 
 /** "1.05M" → "one point zero five million", "262K" → "two hundred sixty two thousand". */
 export function contextWords(label) {
@@ -38,20 +27,6 @@ export function contextWords(label) {
 const PLURAL = { image: 'images', file: 'files' };
 /** ["text", "image", "video"] → "text, images and video". */
 export const listWords = (xs, and = 'and') => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} ${and} ${xs.at(-1)}`);
-
-/**
- * A model name as it is said: "M3.1" is "M three point one", "120B" is "one hundred twenty B",
- * "VL" is "V L", and hyphens are pauses.
- */
-export function speakName(name) {
-  const num = n => (n.includes('.') ? `${numberWords(Number(n.split('.')[0]))} point ${[...n.split('.')[1]].map(d => ONES[d]).join(' ')}` : numberWords(Number(n)));
-  const spell = s => (/^[A-Z]{1,3}$/.test(s) ? [...s].join(' ') : s);
-  return name.split(/[\s-]+/).filter(Boolean).map(tok => {
-    const m = /^([A-Za-z]*?)(\d+(?:\.\d+)?)([A-Za-z]*)$/.exec(tok);
-    if (!m) return spell(tok);
-    return [m[1] && spell(m[1].toUpperCase() === m[1] ? m[1] : m[1]), num(m[2]), m[3] && spell(m[3].toUpperCase())].filter(Boolean).join(' ');
-  }).join(' ');
-}
 
 /** How on-screen words are spoken. */
 export const SAY = {
@@ -84,7 +59,7 @@ export function scriptOf(f) {
     line('price', 'It is free to call, with no daily cap.', 'catalog: pricing $0/$0, no billing "byok"; docs/features/free-tier.md: "Daily cap: None"');
   } else if (f.billing === 'byok') {
     line('price', 'It runs on your own provider key. AnyRouter adds no markup.', 'catalog: pricing.billing "byok"; docs/features/byok.md: "with no AnyRouter markup"');
-    const keys = f.keyNames;
+    const keys = f.keyNames.map(k => k.name);
     line('price', keys.length <= 4 ? `Keys from ${listWords(keys, 'or')} run it.` : `Keys from ${numberWords(keys.length)} providers run it.`,
       'catalog: providers ending in -byok');
   } else {

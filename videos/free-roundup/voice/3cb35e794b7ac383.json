@@ -1,0 +1,13 @@
+{
+  "spoken": "To use one, put its id in the model field, or run any R claude with it.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 5.099,
+  "start": 0.03,
+  "end": 5.04,
+  "heard": "To use one, put its ID in the Model field or run any R-Claud with it."
+}

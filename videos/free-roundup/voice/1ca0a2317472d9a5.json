@@ -1,0 +1,13 @@
+{
+  "spoken": "Decision models run with any R decision.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 2.965,
+  "start": 0.1,
+  "end": 2.82,
+  "heard": "Decision models run with any Rdecision."
+}

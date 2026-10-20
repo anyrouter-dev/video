@@ -56,7 +56,7 @@ const HOUSE = '#F0915A';
 // How a provider whose own key runs a BYOK model is named on screen.
 const PROVIDERS = {
   openrouter: 'OpenRouter', novita: 'Novita', commandcode: 'Command Code', vercel: 'Vercel', nvidia: 'NVIDIA', ollama: 'Ollama',
-  aihubmix: 'AIHubMix', deepinfra: 'DeepInfra', router: 'Router', siliconflow: 'SiliconFlow', gmicloud: 'GMI Cloud',
+  aihubmix: 'AIHubMix', deepinfra: 'DeepInfra', siliconflow: 'SiliconFlow', gmicloud: 'GMI Cloud',
   huggingface: 'Hugging Face', venice: 'Venice', nousresearch: 'Nous Research', baseten: 'Baseten', fireworks: 'Fireworks',
   wafer: 'Wafer', onetoken: 'OneToken', deepseek: 'DeepSeek', minimax: 'MiniMax', moonshotai: 'Moonshot AI', zenmux: 'ZenMux',
   orcarouter: 'OrcaRouter', cline: 'Cline', 'opencode-go': 'OpenCode Go', 'opencode-zen': 'OpenCode Zen', experiential: 'Experiential',
@@ -97,7 +97,7 @@ export function factsOf(m, { now }) {
     inputs: mods.in,
     inputsLabel: cap(mods.in.join(', ')),
     outputsLabel: cap(mods.out.join(', ')),
-    keyNames: billing === 'byok' ? keyProvidersOf(m).map(p => PROVIDERS[p] ?? p) : [],
+    keyNames: billing === 'byok' ? keyProvidersOf(m).map(p => ({ name: PROVIDERS[p] ?? p, named: !!PROVIDERS[p] })) : [],
     capture: capture && { ...capture, dateLabel: dateLabel(capture.date) },
   };
 }

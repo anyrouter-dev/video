@@ -1,0 +1,13 @@
+{
+  "spoken": "Any Router lists eighteen free models created in the last thirty days.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "am_michael",
+    "speed": 0.95,
+    "lang": "en-us"
+  },
+  "duration": 4.629,
+  "start": 0.17,
+  "end": 4.62,
+  "heard": "Any router lists 18 free models created in the last 30 days."
+}
