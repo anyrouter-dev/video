@@ -20,9 +20,9 @@
 
   drift(C.intro, 0, T.pull, 1.06);
   const introEnd = grown(C.intro, 1.06);
-  tl.fromTo(cam, { x: introEnd.x, y: introEnd.y, scale: introEnd.s }, { x: C.wide.x, y: C.wide.y, scale: C.wide.s, duration: 1.25, ease: 'power2.inOut', immediateRender: false }, T.pull);
-  drift(C.wide, T.pull + 1.25, T.install - 0.36, 1.03);
-  const wideEnd = grown(C.wide, 1.03);
+  tl.fromTo(cam, { x: introEnd.x, y: introEnd.y, scale: introEnd.s }, { x: C.wide.x, y: C.wide.y, scale: C.wide.s, duration: 1.0, ease: 'power2.inOut', immediateRender: false }, T.pull);
+  drift(C.wide, T.pull + 1.0, T.install - 0.36, 1.01);
+  const wideEnd = grown(C.wide, 1.01);
   tl.fromTo(cam, { x: wideEnd.x, y: wideEnd.y, scale: wideEnd.s }, { x: C.screen.x, y: C.screen.y, scale: C.screen.s, duration: 0.34, ease: 'power3.inOut', immediateRender: false }, T.install - 0.36);
   drift(C.screen, T.install - 0.02, T.lampOn - 0.55, 1.04);
   const screenEnd = grown(C.screen, 1.04);
@@ -74,7 +74,7 @@
   // What is lit: one word per part in .mc[data-on].
   const lights = [
     [0, ''],
-    [T.names[0], 'name-claude'], [T.names[1], 'name-claude name-pi'], [T.names[2], 'name-claude name-pi name-opencode'],
+    [T.names[0], 'name-claude'], [T.names[1], 'name-claude name-pi'], [T.names[2], 'name-claude name-pi claude pi'],
     [T.namesOff, ''],
     [T.lampOn, 'lamp'], [T.lampOn + 0.07, ''], [T.lampOn + 0.14, 'lamp'],
     [T.claudeLit, 'claude name-claude'],
@@ -91,6 +91,10 @@
 
   // The lamp's light: it flickers on with the lamp and stays on.
   const beam = $('.beam');
+  const lens = $('.cs-lamp');
+  tl.set(lens, { opacity: 0.6 }, T.lampOn);
+  tl.set(lens, { opacity: 0 }, T.lampOn + 0.07);
+  tl.fromTo(lens, { opacity: 0.4 }, { opacity: 1, duration: 0.3, ease: 'power2.out', immediateRender: false }, T.lampOn + 0.14);
   tl.set(beam, { opacity: 0.6 }, T.lampOn);
   tl.set(beam, { opacity: 0 }, T.lampOn + 0.07);
   tl.fromTo(beam, { opacity: 0.4 }, { opacity: 1, duration: 0.6, ease: 'power2.out', immediateRender: false }, T.lampOn + 0.14);
@@ -150,6 +154,7 @@
     tl.fromTo($('.ro-' + id), { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out', immediateRender: false }, on);
     tl.to($('.ro-' + id), { opacity: 0, duration: 0.2 }, off);
   };
+  readout('key', T.lampOn + 0.4, T.claudeLit - 0.05);
   readout('claude', T.claudeLit, D.TURNS[0].at);
   readout('pi', D.TURNS[0].lands, D.TURNS[1].at);
   readout('opencode', D.TURNS[1].lands, T.three);

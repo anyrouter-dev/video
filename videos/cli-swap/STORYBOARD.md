@@ -21,13 +21,13 @@ music: Cherry Blossom, Kevin MacLeod (CC BY 4.0), 100 bpm, first beat 0.507s, du
 ## Frame 1 — Why
 - duration: 6.507s
 - voiceover: "Every coding agent wants its own provider, key and setup. With anyr, one sign-in serves them all."
-- scene: close on the turret, the three objectives in the dark; on "With anyr" the camera pulls back to the whole machine, lamp off, screen asleep; on "serves them all" the three agents' names light in turn
+- scene: close on the turret, the three objectives in the dark; on "serves them all" the agents' names light in turn; after "all" the camera pulls back to the whole machine, lamp off, screen asleep
 - sfx: soft room tone swell (music only), sparkle on "all"
 
 ## Frame 2 — Install
 - duration: 1.8s
 - voiceover: "Install it with one line."
-- scene: the camera snaps to the screen; the whole install line lands at once on "Install", then the one line the installer prints
+- scene: the camera snaps to the screen; the whole install line lands at once on "Install", then the first line the installer prints
 - sfx: whoosh-short as the line snaps in, click-soft as the output lands
 
 ## Frame 3 — Sign in

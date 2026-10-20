@@ -37,9 +37,13 @@ const spring = (tau) => {
   const wd = omega * Math.sqrt(1 - zeta * zeta);
   return 1 - Math.exp(-zeta * omega * tau) * (Math.cos(wd * tau) + ((zeta * omega) / wd) * Math.sin(wd * tau));
 };
+// The word is replaced first and the turret turns after it, so the edit is seen before the camera
+// rises: a turn starts 0.3 s after the typing ends plus the 0.42 s rise.
+const SELECT1 = w(5, 'Change');
+const SELECT2 = frameStart(6) - 0.75;
 const TURNS = [
-  { at: w(5, 'pi') - 0.3, from: 0, to: -72, port: 'pi' },
-  { at: w(6, 'opencode') + 0.06, from: -72, to: -144, port: 'opencode' },
+  { at: +(SELECT1 + 0.46 + 0.72).toFixed(3), from: 0, to: -72, port: 'pi' },
+  { at: +Math.max(w(6, 'opencode') + 0.06, SELECT2 + 0.49 + 0.72).toFixed(3), from: -72, to: -144, port: 'opencode' },
   { at: w(7, 'more') + 0.02, from: -144, to: -216, port: 'codex' },
 ];
 const SETTLE = 1.15;
@@ -135,7 +139,7 @@ for (const [name, cams] of Object.entries(CAMS)) {
 // ── Story times ──
 const DATA_EXTRA = {};
 const T = {
-  pull: w(1, 'With') - 0.15,
+  pull: w(1, 'all') + 0.05,
   names: [w(1, 'serves'), w(1, 'them'), w(1, 'all')],
   namesOff: frameStart(2) - 0.3,
   install: w(2, 'Install') + 0.02,
@@ -147,11 +151,12 @@ const T = {
   claudeNote: w(4, 'Claude'),
   model: w(4, 'model'),
   change: w(5, 'Change'),
-  select1: w(5, 'word'),
+  select1: SELECT1,
   piNote: w(5, 'starts'),
-  select2: frameStart(6) + 0.02,
+  select2: SELECT2,
   ocNote: w(6, 'starts'),
   sameKey: w(6, 'Same'),
+  key: w(6, 'key'),
   three: w(7, 'Three'),
   codex: w(7, 'Codex'),
   grok: w(7, 'Grok'),
@@ -187,7 +192,7 @@ const screen = `
   </div>
 </div>`;
 
-const built = F.build({ turn: 0, lamp: 1, lit: 'none' });
+const built = F.build({ turn: 0, lamp: 0, lit: 'none' });
 const turretFrames = list.map((f) => `<g class="tf" data-tf="${f.index}">${F.build({ turn: f.angle, lamp: 1, lit: 'none' }).turret}</g>`).join('');
 const VB = { x: -1600, y: -1200, w: 4800, h: 3400 };
 // The light: a column from the lamp's lens up to the condenser, and from the slide to the objective.
@@ -209,10 +214,11 @@ const litCss = LIT.map((key) => {
 }).join('');
 
 const readouts = [
-  ['claude', 'claude · anyrouter/free'],
-  ['pi', 'pi · anyrouter/free'],
-  ['opencode', 'opencode · anyrouter/free'],
-  ['more', 'and more · codex, grok'],
+  ['key', 'key · on'],
+  ['claude', 'key · claude · anyrouter/free'],
+  ['pi', 'key · pi · anyrouter/free'],
+  ['opencode', 'key · opencode · anyrouter/free'],
+  ['more', 'key · and more: codex, grok'],
 ];
 
 const DATA = {
@@ -298,7 +304,7 @@ console.log(`machine.html: ${(html.length / 1e6).toFixed(2)} MB, ${DURATION}s`);
 
 // Events the mix needs, besides the turret's own.
 events.push(
-  { kind: 'whoosh', at: T.install - 0.14 },
+  { kind: 'whoosh', at: T.install - 0.42 },
   { kind: 'out', at: T.installed },
   { kind: 'key', at: T.login, n: 1 },
   { kind: 'lamp', at: T.lampOn },
@@ -309,10 +315,10 @@ events.push(
   { kind: 'select', at: T.select2 },
   { kind: 'type', at: T.select2 + 0.14, n: 8, step: 0.05 },
   { kind: 'riser', at: TURNS[1].lands },
-  { kind: 'key-ping', at: T.sameKey },
-  { kind: 'names', at: T.names[0] },
+  { kind: 'key-ping', at: T.key },
+  { kind: 'names', at: +(w(1, 'all') + 0.6).toFixed(3) },
   { kind: 'chime', at: T.end },
-  { kind: 'sparkle', at: T.url },
+  { kind: 'sparkle', at: +(starts[7] + voices[7].raw_s + 0.1).toFixed(3) },
 );
 events.sort((a, b) => a.at - b.at);
 fs.writeFileSync(path.join(HERE, 'events.json'), JSON.stringify({ duration: DURATION, events }, null, 1));

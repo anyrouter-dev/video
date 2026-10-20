@@ -87,10 +87,12 @@ for (let i = 1; i < played.length; i++) {
 
 // Music: the bed from its start, faded in and out, ducked under the voice.
 const m = add(path.join(FILM, 'assets/bgm/track.mp3'));
-chains.push(`${voiceLabels.join('')}amix=inputs=${voiceLabels.length}:normalize=0,asplit=2[voice][key]`);
-chains.push(`[${m}:a]aresample=${RATE},atrim=0:${DURATION},afade=t=in:d=0.8,afade=t=out:st=${(DURATION - 3.2).toFixed(2)}:d=3.2,volume=-9dB[bed]`);
-chains.push(`[bed][key]sidechaincompress=threshold=0.03:ratio=5:attack=25:release=420:makeup=1[ducked]`);
-chains.push(`${sfxLabels.join('')}amix=inputs=${sfxLabels.length}:normalize=0[sfx]`);
+chains.push(`${voiceLabels.join('')}amix=inputs=${voiceLabels.length}:normalize=0,asplit=3[voice][key][key2]`);
+chains.push(`[${m}:a]aresample=${RATE},atrim=0:${DURATION},afade=t=in:d=0.8,afade=t=out:st=${(DURATION - 3.2).toFixed(2)}:d=3.2,volume=-11dB[bed]`);
+chains.push(`[bed][key]sidechaincompress=threshold=0.015:ratio=6:attack=20:release=500:makeup=1[ducked]`);
+// The machine steps under the voice too, so no hit sits on a spoken word.
+chains.push(`${sfxLabels.join('')}amix=inputs=${sfxLabels.length}:normalize=0[sfxraw]`);
+chains.push(`[sfxraw][key2]sidechaincompress=threshold=0.03:ratio=4:attack=10:release=250[sfx]`);
 chains.push(`[voice][ducked][sfx]amix=inputs=3:normalize=0,atrim=0:${DURATION}[mix]`);
 
 const inputArgs = inputs.flatMap((x) => (x.startsWith('aevalsrc') ? ['-f', 'lavfi', '-i', x] : ['-i', x]));
