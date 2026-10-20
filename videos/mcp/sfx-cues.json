@@ -1,0 +1,15 @@
+[
+  {"frame": 1, "sound": "pop", "word": "AnyRouter", "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "Claude,", "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "Cursor", "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "any", "volume": 0.2},
+  {"frame": 2, "sound": "click", "word": "entry", "volume": 0.26},
+  {"frame": 2, "sound": "whoosh-short", "word": "Authorize", "offset": -0.25, "volume": 0.2},
+  {"frame": 2, "sound": "click-soft", "word": "choose", "volume": 0.22},
+  {"frame": 3, "sound": "pop", "at": 0.1, "volume": 0.2},
+  {"frame": 3, "sound": "whoosh-short", "word": "ranks", "offset": -0.1, "volume": 0.2},
+  {"frame": 4, "sound": "pop", "at": 0.1, "volume": 0.2},
+  {"frame": 4, "sound": "ping", "word": "shown", "volume": 0.18},
+  {"frame": 5, "sound": "chime", "word": "Models,", "volume": 0.16},
+  {"frame": 5, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]

@@ -1,0 +1,14 @@
+[
+  {"frame": 1, "sound": "pop", "word": "app", "volume": 0.2},
+  {"frame": 1, "sound": "click-soft", "word": "own", "volume": 0.2},
+  {"frame": 2, "sound": "click", "word": "expiry", "volume": 0.24},
+  {"frame": 2, "sound": "click", "word": "rate", "volume": 0.24},
+  {"frame": 2, "sound": "click", "word": "spending", "volume": 0.24},
+  {"frame": 3, "sound": "click", "word": "Copy", "volume": 0.28},
+  {"frame": 4, "sound": "click-soft", "word": "API", "volume": 0.24},
+  {"frame": 4, "sound": "click-soft", "word": "AnyRouter's", "volume": 0.24},
+  {"frame": 5, "sound": "click", "word": "click.", "volume": 0.3},
+  {"frame": 5, "sound": "whoosh-short", "word": "requests", "offset": -0.1, "volume": 0.18},
+  {"frame": 6, "sound": "chime", "word": "One", "volume": 0.16},
+  {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]

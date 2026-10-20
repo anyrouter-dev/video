@@ -1,0 +1,32 @@
+{
+  "notable": true,
+  "label": "v1",
+  "parts": [
+    "assets/anyrouter-logo-black.svg:470da5aeb0e69ff983a8686970be78c5afe2f6c5e9b042acbb7a142520018a52",
+    "assets/bgm/track.mp3:3e835f27e127aaa5cfa56240a1f0d84fc8900e63c9898dc4f3ae28e51ca9f022",
+    "assets/fonts/geist-mono.woff2:684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+    "assets/fonts/geist.woff2:19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1",
+    "assets/sfx/CREDITS.md:c756b441352fc92de6d200cf618eff3bc0bdffabf3077fc14e08f7000fe82d3d",
+    "assets/sfx/chime.mp3:74823b1b27703c56e0652db838f503c150ce9c2442d47d27430af3d5121d6d12",
+    "assets/sfx/click-soft.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/click.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/ping.mp3:c54d088fa2709e6b3c9ce87594a9187d0d5338d3a8c683271f9c4353a8ee8c91",
+    "assets/sfx/pop.mp3:19ab7193f626ff57fdeef60b45543bac416fcbcec803cfb417abe4b271c1b352",
+    "assets/sfx/sparkle.mp3:a66b2829a307bcb5b1f6551d7cdc72fe45bbe9a91abfb994d28db8d5e4e42ea8",
+    "assets/sfx/whoosh-short.mp3:c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30",
+    "assets/voice/01.wav:afc0643e8c5dfc01186b3fa60502b063c2abb64fcc4fd2de04d4c74e4f3cf8c8",
+    "assets/voice/02.wav:f3a5f7284c28bc6f18cbf6c4d23dfabc848341e00062e8c5efafdc315955784e",
+    "assets/voice/03.wav:880ac597881cef679b1478d796382a6fc0135996dafa1a85e95f663d091c4b22",
+    "assets/voice/04.wav:0dbd6c05ab505ba62cfb52a9bfcd94ee00a5cd40d43426ec2216011a98176e0f",
+    "assets/voice/05.wav:82a5ee50ab54b2c55ecf0dd68a76f3eccf1f714e0bbcf8fc635bcd323a0d7f19",
+    "compositions/captions.html:a0dfeaf1316020005f463d093a814b09457bb68e7c58cdf4bb871b782cb88f52",
+    "compositions/frames/01-promise.html:29006e004c1adf6f57ca8bd5f7042fc90f055a6644467dd0ca1f6a3bee7f1a54",
+    "compositions/frames/02-setup.html:3b9b6b06f41054231b72e84aa2f6f0609c9925ee86a9246a090586406adff643",
+    "compositions/frames/03-recommend.html:8af572373f79ab7919bcba3117a1b054842f00649695dafd3c1a111b2a0ec14d",
+    "compositions/frames/04-create-key.html:dc6dcfd1b3dd3a9ae9ffe1510599cae5bed63a0a50c2fe9a5d6ef33a5a530c36",
+    "compositions/frames/05-close.html:ec7f7f2cd17266ed679b2bb85ef610a16c6a658f4781565539bbe20010e91421",
+    "index.html:4cd43bd9327c9d52c42ef63d6b6ce22a26f2eb97267059eeb0b09daaa907a972"
+  ],
+  "version": 1,
+  "seconds": 33.039
+}

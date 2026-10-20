@@ -1,6 +1,6 @@
 # Authoring tools for narrated films
 
-Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`, `sign-in-with-anyrouter`, `pool-donation`, `sign-in-with-agentid`, `cli-agents`, `cli-everyday`, `why-gateway`, `byok-upstreams`).
+Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`, `sign-in-with-anyrouter`, `pool-donation`, `sign-in-with-agentid`, `cli-agents`, `cli-everyday`, `why-gateway`, `byok-upstreams`, `mcp`, `api-keys`).
 Run each from the film's own folder: they read and write that folder's
 `audio_meta.json` and `.hyperframes/frame-packets/`.
 
