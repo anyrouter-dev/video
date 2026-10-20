@@ -1,7 +1,8 @@
 // Voices the use-case scripts in videos/use-case/narration.json with ElevenLabs, each line
 // once: a line whose spoken text and voice match its recording is skipped, so a rerun voices
 // only what changed. Each line becomes voice/<line>.mp3 and voice/<line>.json, its length and
-// when each character is spoken, taken from the service's own timestamps.
+// when each character is spoken, taken from the service's own timestamps. A recording no script
+// speaks any more is removed when the run covers every film.
 //
 //   ELEVENLABS_API_KEY=… node videos/use-case/voice.mjs --budget=N [--slug=a,b] [--dry-run]
 //
@@ -19,7 +20,7 @@ const narration = loadNarration();
 const slugs = flags.slug ? String(flags.slug).split(',') : Object.keys(narration.films);
 
 const lines = [...new Map(slugs.flatMap(s => scriptOf(narration, s)).map(l => [l.id, l])).values()];
-const todo = lines.map(l => ({ ...l, spoken: parseLine(l.text, narration.say).spoken })).map(l => ({ ...l, hash: hashOf(narration.voice, l.spoken) }))
+const todo = lines.map(l => ({ ...l, spoken: parseLine(l.text, { ...narration.say, ...l.say }).spoken })).map(l => ({ ...l, hash: hashOf(narration.voice, l.spoken) }))
   .filter(l => {
     const meta = path.join(VOICE_DIR, `${l.id}.json`);
     return !(fs.existsSync(meta) && JSON.parse(fs.readFileSync(meta, 'utf8')).hash === l.hash && fs.existsSync(path.join(VOICE_DIR, `${l.id}.mp3`)));
@@ -27,6 +28,13 @@ const todo = lines.map(l => ({ ...l, spoken: parseLine(l.text, narration.say).sp
 const chars = todo.reduce((n, l) => n + l.spoken.length, 0);
 console.log(`${lines.length} lines, ${lines.length - todo.length} already voiced, ${todo.length} to voice: ${chars} characters`);
 for (const l of todo) console.log(`  ${l.id.padEnd(38)} ${String(l.spoken.length).padStart(4)}  ${l.spoken}`);
+// a recording no script speaks any more goes, when every film is in the run
+if (!flags.slug && !flags['dry-run'] && fs.existsSync(VOICE_DIR)) {
+  const ids = new Set(lines.map(l => l.id));
+  const stale = fs.readdirSync(VOICE_DIR).filter(f => /\.(mp3|json)$/.test(f) && !ids.has(f.replace(/\.(mp3|json)$/, '')));
+  for (const f of stale) fs.rmSync(path.join(VOICE_DIR, f));
+  if (stale.length) console.log(`removed ${stale.length} files no script speaks`);
+}
 if (flags['dry-run'] || !todo.length) process.exit(0);
 
 const key = process.env.ELEVENLABS_API_KEY;

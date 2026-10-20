@@ -74,7 +74,17 @@ export const TYPE = {
   title: { weight: 600, tracking: -0.055,
     landscape: { sizes: [184, 176, 168, 160, 152, 144], width: SAFE.landscape, lines: 3 },
     portrait: { sizes: [148, 140, 132, 124, 120], width: SAFE.portrait, lines: 5 } },
+  // a step's label sits beside its marker (STEP.mark), so its box is the safe width less the marker and the gap
+  step: { weight: 600, tracking: -0.035,
+    landscape: { sizes: [120, 112, 104, 96, 88, 80, 72], width: SAFE.landscape - 96 - 36, lines: 2 },
+    portrait: { sizes: [88, 80, 72, 64, 56], width: SAFE.portrait - 96 - 36, lines: 3 } },
 };
+TYPE.detail = { weight: 400, tracking: -0.01,
+  landscape: { sizes: [56, 52, 48, 44, 40, 36], width: TYPE.step.landscape.width, lines: 3 },
+  portrait: { sizes: [48, 44, 40, 36, 32], width: TYPE.step.portrait.width, lines: 7 } };
+// A step: its marker and label beside it, active; a step done shrinks to a row at STEP.done of its size.
+// The page's own sentence for a step sits under its label, indented to it, until the step is done.
+export const STEP = { mark: 96, gap: 36, lh: 1.04, done: 0.5, rowGap: 18, headGap: 40, detailGap: 28 };
 
 // The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, kicker.
 const HERO = { landscape: 160 + 40 + 80, portrait: 144 + 40 + 80 };
@@ -84,27 +94,26 @@ const HERO = { landscape: 160 + 40 + 80, portrait: 144 + 40 + 80 };
 const named = (w, i) => (i > 0 ? /^[A-Z0-9]/ : /^[A-Z0-9].*[A-Z]/).test(w);
 
 /**
- * How the headline is set at `px` in frame `o`: { lines, breaks }, where breaks
- * are the word indices that start a line. Its fewest lines, as even as they
- * come, and never between two words of a name ("Claude Code", "OpenAI SDK")
- * when another set of breaks fits, taking one more line if it has to. The
- * browser's balancing knows no names, and takes extra lines to even them out.
- * Null when it cannot be set there: a word wider than the line (a word sits in
- * its own mask, which never breaks), more lines than the budget, or a beat 1
- * taller than the safe area once the camera has leaned in.
+ * Where `text` breaks into lines at `px` in a box `width` wide: { lines, breaks },
+ * where breaks are the word indices that start a line. Its fewest lines, as
+ * even as they come, and never between two words of a name ("Claude Code",
+ * "OpenAI SDK") when another set of breaks fits, taking one more line if it
+ * has to. The browser's balancing knows no names, and takes extra lines to even
+ * them out. `room(n)` says whether n lines fit. Null when nothing fits: a word
+ * wider than the line (a word sits in its own mask, which never breaks), or no
+ * line count with room.
  */
-export function titleSet(text, o, px) {
-  const t = TYPE.title, w = WIN[o], words = text.split(/\s+/).filter(Boolean);
-  const fewest = linesOf(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, breakWords: false });
-  const room = n => n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean;
-  const wide = (a, b) => widthOf(words.slice(a, b).join(' '), { px, weight: t.weight, tracking: t.tracking });
+function breakSet(text, { px, width, weight, tracking, room }) {
+  const words = text.split(/\s+/).filter(Boolean);
+  const fewest = linesOf(text, { px, width, weight, tracking, breakWords: false });
+  const wide = (a, b) => widthOf(words.slice(a, b).join(' '), { px, weight, tracking });
   const splits = k => (named(words[k - 1], k - 1) && named(words[k], k) && !/[,.:;]$/.test(words[k - 1]) ? 1 : 0);
   // a split name costs more than an extra line, and an extra line more than any unevenness
   let best = null;
   const walk = (from, left, starts) => {
     if (left === 1) {
       const cuts = [0, ...starts, words.length], widths = cuts.slice(1).map((b, i) => wide(cuts[i], b));
-      if (widths.some(x => x > t[o].width)) return;
+      if (widths.some(x => x > width)) return;
       const most = Math.max(...widths);
       const cost = starts.reduce((c, k) => c + splits(k), 0) * 1e12 + (starts.length + 1 - fewest) * 1e9
         + widths.reduce((c, x) => c + (most - x) ** 2, 0);
@@ -116,6 +125,32 @@ export function titleSet(text, o, px) {
   for (const n of [fewest, fewest + 1].filter(room)) walk(0, n, []);
   return best && { lines: best.starts.length + 1, breaks: best.starts };
 }
+
+/** How the headline is set at `px` in frame `o` (see breakSet): beat 1 fits the safe area once the camera has leaned in. */
+export function titleSet(text, o, px) {
+  const t = TYPE.title, w = WIN[o];
+  return breakSet(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, room: n => n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean });
+}
+
+/** The headline's size per frame: the largest that sets. */
+export const titleType = text => Object.fromEntries(['landscape', 'portrait'].map(o => [o, TYPE.title[o].sizes.find(px => titleSet(text, o, px))]));
+
+/** How a step's label is set at `px` in frame `o`, beside its marker, in at most two lines. */
+export function labelSet(text, o, px) {
+  const t = TYPE.step;
+  return breakSet(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, room: n => n <= t[o].lines });
+}
+
+/** How a step's detail, the page's own sentence for it, is set at `px` in frame `o`. */
+export function detailSet(text, o, px) {
+  const t = TYPE.detail;
+  return breakSet(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, room: n => n <= t[o].lines });
+}
+/** One size for every step detail of a film, per frame. */
+export const detailType = texts => Object.fromEntries(['landscape', 'portrait'].map(o => [o, TYPE.detail[o].sizes.find(px => texts.every(d => detailSet(d, o, px)))]));
+
+/** One size for every step label of a film, per frame: the largest at which each sets. */
+export const stepType = labels => Object.fromEntries(['landscape', 'portrait'].map(o => [o, TYPE.step[o].sizes.find(px => labels.every(l => labelSet(l, o, px)))]));
 
 /** Whether the headline can be set at some size in both frames. */
 export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].sizes.some(px => titleSet(text, o, px)));
@@ -136,6 +171,11 @@ const WIN = {
   landscape: { sizes: [56, 52, 48, 44, 40], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
   portrait: { sizes: [44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.01, pushMax: 1.01, adv: 0.57 },
 };
+// The camera's perspective, and how far the deep layer dollies in so the window grows by `pushMax` at most.
+const PERSPECTIVE = 2000;
+const dollyOf = o => +(PERSPECTIVE * (1 - 1 / WIN[o].pushMax)).toFixed(1);
+// The safe area's height each frame's steps have, the camera leaned in.
+export const WIN_SH = { landscape: WIN.landscape.sh / WIN.landscape.lean, portrait: WIN.portrait.sh / WIN.portrait.lean };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
 /** The window's left and right edges at its fullest, leaned and pushed in all the way. */
@@ -186,7 +226,7 @@ export function rowsOf(text, px, o, { lead = 0, hang = 0, caret = false } = {}) 
 const leadOf = (l, shell) => (shell && !l.cont ? 2 : 0);
 
 /** Characters a row of code holds at `px` in frame `o`, and how many the caret takes. */
-export const PORTRAIT_SIZES = () => WIN.portrait.sizes;
+export const SIZES = { landscape: WIN.landscape.sizes, portrait: WIN.portrait.sizes };
 export const codeCols = (o, px) => textWidth(o) / (WIN[o].adv * px);
 export const caretCols = (o, px) => caretWidth(px) / (WIN[o].adv * px);
 
@@ -206,31 +246,35 @@ export function idFitsRow(line, preset, id, shell) {
 }
 
 /**
- * The headline and code sizes per orientation. Every line of code sits on one
- * row, each roll id in place, with its prompt and caret: a line of code never
- * wraps (reflow.mjs rewrites one that is too wide). The code is the largest
- * size at which it does and the window still leaves room for the caption at its
- * smallest; the headline is then the largest that leaves the window that room.
- * `sizes` narrows the code sizes a frame may take. Null when none fits.
+ * The code size per frame. Every line of code sits on one row, each roll id in
+ * place, with its prompt and caret: a line of code never wraps (reflow.mjs
+ * rewrites one that is too wide). The code is the largest size at which it
+ * does and the window fits the safe area under the step it shows on, `head[o]`
+ * px of steps above it. `sizes` narrows the sizes a frame may take; with `only`, just that
+ * frame's size. Null when none fits.
  */
-export function codeSizes(lines, roll, shell, title, sizes = {}) {
+export function codeSizes(lines, roll, shell, head, sizes = {}, only = null) {
   const isTyped = l => shell || l.focus;
   const variants = l => (roll && l.focus && l.text.includes(roll.preset) ? [roll.preset, ...roll.ids].map(id => rolledIn(l, roll, id)) : [l.text]);
   const oneRow = (px, o) => lines.every(l => variants(l).every(t => rowsOf(t, px, o, { lead: leadOf(l, shell), caret: isTyped(l) }) === 1));
-  const codeFor = (o, tLines) => {
+  const codeFor = o => {
     const w = WIN[o];
-    // the window pushes in about its own middle, so its bottom edge drops by half its growth
-    const room = px => (EDGE + BAR + w.padTop + w.padBottom + lines.length * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
+    // the window grows with the camera's dolly about its own middle, so its bottom edge drops by half its growth
+    const room = px => (EDGE + BAR + w.padTop + w.padBottom + lines.length * px * CODE_LH) * w.push + head[o] <= w.sh / w.lean;
     return (sizes[o] ?? w.sizes).find(px => oneRow(px, o) && room(px)) ?? null;
   };
-  // the code reads first: the largest code size, then the largest headline that leaves it its room
-  const pick = o => TYPE.title[o].sizes.map(px => {
-    const tLines = titleSet(title, o, px)?.lines;
-    return { title: px, code: tLines && codeFor(o, tLines) };
-  }).filter(c => c.code).reduce((best, c) => (!best || c.code > best.code ? c : best), null);
-  const l = pick('landscape'), p = pick('portrait');
-  if (!l || !p) return null;
-  return { title: { landscape: l.title, portrait: p.title }, landscape: l.code, portrait: p.code };
+  if (only) return codeFor(only);
+  const l = codeFor('landscape'), p = codeFor('portrait');
+  return l && p ? { landscape: l, portrait: p } : null;
+}
+
+/** How tall the steps above the window are, per frame, when step `k` (from 0) shows it: k steps done, then its own label. */
+export function headOf(labels, k, type) {
+  return Object.fromEntries(Object.keys(type).map(o => {
+    const px = type[o], block = l => Math.max(STEP.mark, labelSet(l, o, px).lines * px * STEP.lh);
+    const done = labels.slice(0, k).reduce((h, l) => h + block(l) * STEP.done + STEP.rowGap, 0);
+    return [o, done + block(labels[k]) + STEP.headGap];
+  }));
 }
 
 // ── pieces ─────────────────────────────────────────────────────────────────
@@ -312,7 +356,7 @@ function windowHtml(win) {
   const { shell, title, lines, roll, answer, code } = win;
   const cls = [shell ? 'sh' : 'ed', answer && 'ans'].filter(Boolean).join(' ');
   // each line is one row (codeSizes): the audit holds it to that with data-one-row
-  const body = lines.map(l => {
+  const rowsOf = set => set.map(l => {
     const cls = `ln${l.cont ? ' cont' : ''}`;
     if (shell || l.focus) return `<div class="${cls} typed${l.focus ? ' focus' : ''}" data-one-row>${typedLine(l, roll)}</div>`;
     return `<div class="${cls} ${l.keep ? 'keep' : 'ctx'}" data-one-row>${wholeLine(l.text)}</div>`;
@@ -321,9 +365,10 @@ function windowHtml(win) {
   const value = answer && answer.indexOf(': ') + 2;
   const out = answer ? `<div class="ln out" data-layout-allow-overflow>${esc(answer.slice(0, value))}<span class="m">${esc(answer.slice(value))}</span></div>` : '';
   const ttl = title && ['landscape', 'portrait'].filter(o => !ttlFits(title, o)).map(o => ` off-${o[0]}`).join('');
-  return `<div class="win"><div class="push"><div class="term ${shell ? 'is-ink' : 'card'}">
+  // each frame sets the code as fits it: the lines landscape shows, and portrait's, rewritten narrower where they must be
+  return `<div class="win"><div class="term ${shell ? 'is-ink' : 'card'}">
       <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl${ttl}">${esc(title)}</span>` : ''}</div>
-      <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows">${body}${out}</div></div></div></div></div>`;
+      <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows rl">${rowsOf(lines.landscape)}${out}</div><div class="rows rp">${rowsOf(lines.portrait)}${out}</div></div></div></div>`;
 }
 
 // ── captions ───────────────────────────────────────────────────────────────
@@ -335,7 +380,10 @@ export const CAP = {
   portrait: { px: 60, top: 1240, height: 240 },
   padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 }, say: 1.35,
 };
-const capFits = text => ['landscape', 'portrait'].every(o => widthOf(text, { px: CAP[o].px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4);
+const capFitsAt = (text, o, px) => widthOf(text, { px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4;
+const capFits = text => ['landscape', 'portrait'].every(o => capFitsAt(text, o, CAP[o].px));
+// a lone word wider than the chip (a short link) is set smaller, down to the 32px floor
+const capPx = (text, o) => [CAP[o].px, 56, 52, 48, 44, 40, 36, 32].filter(px => px <= CAP[o].px).find(px => capFitsAt(text, o, px)) ?? 32;
 // a word that is part of a name, as named() reads one: past a sentence's first word, any capitalised word
 // pairs read as one term, so a phrase never ends between them
 const BOUND = /^(base URL|API key|rate limited|typed answer|more than|model id|catalog id)[,.]?$/i;
@@ -389,20 +437,22 @@ export function captionsOf(said = []) {
     const at = +(p[0].at - 0.05).toFixed(2);
     // held a beat past its last word, until the next phrase, and long enough to read
     const end = Math.min(next ? next[0].at - 0.05 : Infinity, Math.max(p.at(-1).end + 0.3, at + 0.8));
-    return { text: p.map(w => w.text).join(' '), at, end: +end.toFixed(2) };
+    const text = p.map(w => w.text).join(' ');
+    return { text, at, end: +end.toFixed(2), px: { landscape: capPx(text, 'landscape'), portrait: capPx(text, 'portrait') } };
   });
 }
 
-// The page's URL on the lockup sits on one row, as large as fits the safe width once the
-// camera has leaned in. Where a long slug would set it under URL_SIZES, the card names the
-// list every use case is on instead: a URL cut across rows reads as two addresses.
-const URL_SIZES = { landscape: [48], portrait: [44, 40, 36] }, URL_PAD = { landscape: 44, portrait: 36 };
-const LIST = 'anyrouter.dev/use-cases';
-export function urlSet(href) {
-  const page = href.replace(/^https:\/\//, '');
+// The short link on the lockup sits on one row, as large as fits the safe width once the camera
+// has leaned in; a link too long for that keeps the lockup still (`lean` 1) in that frame, and
+// one that fits neither way fails the build: a link cut across rows reads as two addresses.
+const URL_SIZES = { landscape: [48, 44, 40], portrait: [44, 40, 36, 32] }, URL_PAD = { landscape: 44, portrait: 24 }, URL_ADV = 0.57;
+export function urlSet(link) {
   const set = o => {
-    const room = ACROSS[o].width / (2 * WIN[o].lean - 1) - 2 * URL_PAD[o], fit = t => URL_SIZES[o].find(px => [...t].length * 0.6 * px <= room);
-    return fit(page) ? { text: page, px: fit(page) } : { text: LIST, px: fit(LIST) };
+    for (const lean of [2 * WIN[o].lean - 1, 1]) {
+      const room = ACROSS[o].width / lean - 2 * URL_PAD[o], px = URL_SIZES[o].find(x => [...link].length * URL_ADV * x <= room);
+      if (px) return { text: link, px, lean };
+    }
+    throw new Error(`the short link ${link} does not sit on one row of the ${o} lockup`);
   };
   return { landscape: set('landscape'), portrait: set('portrait') };
 }
@@ -413,48 +463,42 @@ export const ROLL_EVERY = 0.9;
 
 /** The film's one sub-composition: { cls, body, inner, cues }. */
 export function filmScene({ copy, beats, duration, timing, said }) {
-  const [, doing, lockup] = beats;
   const caps = captionsOf(said);
-  const url = urlSet(copy.url);
+  const url = urlSet(copy.link);
   const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
   const { roll } = copy.window;
   const rolls = roll ? roll.ids.length + 1 : 0;
-  // The camera scales the whole frame a few percent on purpose, so the layout audit is told so.
-  const body = `<div class="cam" data-layout-allow-overflow>
+  const steps = copy.steps.map((st, k) => `<div class="stp" style="${fsVars(copy.type.step, 'ls')};${fsVars(copy.type.detail, 'ds')}">
+      <div class="head"><span class="sm"><i class="ring"></i><b>${k + 1}</b></span><div class="sl">${masked(st.label, st.breaks)}</div></div>
+      ${st.detail ? `<p class="dt">${masked(st.detail.text, st.detail.breaks)}</p>` : ''}</div>`).join('');
+  // The camera scales and dollies the whole frame a few percent on purpose, so the layout audit is told so.
+  const body = `<div class="cam" data-layout-allow-overflow><div class="deep">
     <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
       <div class="badge kick">${esc(copy.kicker)}</div></div>
     <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1>
+    ${steps}
     ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${url.landscape.text === url.portrait.text ? esc(url.landscape.text)
-        : `<span class="ul">${esc(url.landscape.text)}</span><span class="up">${esc(url.portrait.text)}</span>`}</div></div></div>
-    <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span>${esc(c.text)}</span></div>`).join('')}</div>`;
+      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div></div>
+    <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span style="${fsVars(c.px, 'cf')}">${esc(c.text)}</span></div>`).join('')}</div>`;
+  const T = timing, S = T.steps;
   const inner = `
-    const T1 = ${doing.start}, T2 = ${lockup.start};
-    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt}, POINT_AT = ${timing.pointAt};
+    const STEPS = ${JSON.stringify(S)}, T1 = STEPS[0].at, END = ${T.end}, W_IN = ${T.windowIn}, W_OUT = ${T.windowOut};
+    const PRE_AT = ${T.preAt}, CMD_AT = ${T.cmdAt}, INSTALL = ${T.preAt != null}, EACH = ${T.each}, LINE_PAUSE = ${T.linePause};
+    const ROLL_AT = ${T.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${T.answerAt}, POINT_AT = ${T.pointAt};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
-    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean");
-    const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
+    const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean"), DONE = ${STEP.done}, RG = ${STEP.rowGap}, HG = ${STEP.headGap};
+    const cam = $(".cam"), END_LEAN = v("--end");
+    const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end"), stp = $$(".stp");
+    // the code this frame shows
+    const rows = $$(".rows").find(r => getComputedStyle(r).display !== "none"), R = s => Array.from(rows.querySelectorAll(s));
 
-    // Where the headline sits in each beat. It scales from its top edge, so a
-    // beat's column is centred in the safe area from the boxes the layout gave.
-    const fs = parseFloat(getComputedStyle(h).fontSize);
-    const heroH = hero.offsetHeight, hH = h.offsetHeight;
+    // 1 · what and why. The headline sits in the middle of the safe area; the marks close in, the words
+    // rise, the camera leans in.
+    const fs = parseFloat(getComputedStyle(h).fontSize), heroH = hero.offsetHeight, hH = h.offsetHeight;
     const top1 = SY + (SH - heroH - G - hH) / 2;
     hero.style.top = top1 + "px";
     h.style.top = top1 + heroH + G + "px";
-    // the caption is as large as fits above the window, up to the headline itself, so the two fill the safe area as one block
-    // leaned and pushed in, it still sits in the safe area (see codeSizes)
-    const winH = win.offsetHeight;
-    const s2 = Math.min(v("--cap2") / fs, (SH / LEAN - G - winH * v("--push")) / hH), s3 = v("--cap3") / fs;
-    const PUSH = Math.min(v("--push-max"), (SH / LEAN - G - hH * s2) / winH);
-    const cap2 = SY + (SH - hH * s2 - G - win.offsetHeight) / 2;
-    win.style.top = cap2 + hH * s2 + G + "px";
-    const cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
-    end.style.top = cap3 + hH * s3 + G + "px";
-    const at1 = top1 + heroH + G;
-
-    // 1 · the outcome. The marks close in, the words rise, the camera leans in.
     const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
     tl.fromTo(tiles, { x: i => (i - mid) * 48 }, { x: 0, duration: 1.4, ease: "expo.out" }, 0);
     tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, 0.1);
@@ -462,48 +506,88 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     // mask sits a line low, and on a long headline that line is past the safe area
     const words = $$(".h .w > span");
     tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
-    tl.fromTo(Q(".cam"), { scale: 1 }, { scale: v("--lean"), duration: T1, ease: "none" }, 0);
+    tl.fromTo(cam, { scale: 1 }, { scale: LEAN, duration: T1, ease: "none" }, 0);
 
-    // 1 → 2 · the headline shrinks into the caption as the window rises under it.
-    tl.to(hero, { y: -80, opacity: 0, duration: 0.45, ease: "power4.inOut" }, T1);
-    tl.to(h, { y: cap2 - at1, scale: s2, duration: 0.8, ease: "power4.inOut" }, T1);
-    // it rises once the headline has cleared its place, so the two never cross
-    // A dark slab half faded reads as grey, so it never fades: it slides in from below the frame.
-    const below = uc.offsetHeight - win.offsetTop;
-    // off the stage it is hidden, so it never counts as text outside the frame
-    tl.set(win, { autoAlpha: 0 }, 0);
-    tl.set(win, { autoAlpha: 1 }, T1 + 0.35);
-    tl.fromTo(win, { y: below }, { y: 0, duration: 0.9, ease: "expo.out" }, T1 + 0.35);
+    // 1 → 2 · the headline falls back into the page as the steps begin.
+    tl.to([hero, h], { z: -700, rotationX: 24, y: "-=140", opacity: 0, duration: 0.8, ease: "power3.in" }, T1 - 0.35);
 
-    // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
-    // it reaches its fullest when all is said and shown, and the tint takes over the motion from there
-    tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: Math.max(1, Math.min(POINT_AT, T2) - T1 - 0.4), ease: "none" }, T1 + 0.4);
-    if (has(".ln.ctx, .ln.keep")) tl.fromTo(Q(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
-    let t = TYPE_AT;
-    $$(".typed").forEach((ln, k) => {
+    // 2 · the steps. Each tilts in from deep in the page and settles flat to read; a step done shrinks to a
+    // row above the next, a layer back, so the camera's slow dolly moves it less than the step in front.
+    // a step done is its head alone, its detail gone
+    const hs = stp.map(e => e.offsetHeight), heads = stp.map(e => e.querySelector(".head").offsetHeight), winH = win.offsetHeight;
+    const doneY = k => SY + heads.slice(0, k).reduce((y, x) => y + x * DONE + RG, 0);
+    // a step and, when it shows the window, the window under it: one block, centred in the room left
+    const place = k => {
+      const block = hs[k] + (STEPS[k].shows ? HG + winH : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
+      return { top, win: top + hs[k] + HG };
+    };
+    tl.fromTo(Q(".deep"), { z: 0 }, { z: v("--dolly"), duration: END - T1, ease: "none" }, T1);
+    STEPS.forEach((st, k) => {
+      const el = stp[k], at = place(k).top, next = STEPS[k + 1];
+      tl.set(el, { y: at }, 0);
+      tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90, opacity: 0 },
+        { z: 0, rotationX: 0, rotationY: 0, y: at, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: false }, st.at);
+      el.querySelectorAll(".sl .w > span").forEach(w => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, st.at + 0.15));
+      // the page's sentence rises a row at a time while the step is said and after, and goes once the step is done
+      const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : END) - 0.5;
+      if (dw.length) {
+        const rowsOfDt = Object.values(Object.groupBy(dw, w => w.offsetTop)).map(ws => ws.map(w => w.firstElementChild));
+        const gap = Math.min(1.2, Math.max(0.3, (until0 - st.voiceAt - 0.6) / rowsOfDt.length));
+        rowsOfDt.forEach((ws, r) => tl.fromTo(ws, { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, st.voiceAt + 0.3 + r * gap));
+        if (next) tl.to(el.querySelector(".dt"), { opacity: 0, duration: 0.3, ease: "none" }, next.at);
+      }
+      // the marker lights as its step is said, and goes to ink once the next one comes
+      tl.fromTo(el.querySelector(".sm"), { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, st.voiceAt);
+      // once its line is said, a ring breathes out of the marker until the next step: the step is still the one to do
+      const ring = el.querySelector(".ring"), until = (next ? next.at : END) - 0.3;
+      for (let r = st.voiceAt + 1.6; r + 0.9 < until; r += 1.2) tl.fromTo(ring, { scale: 1, opacity: 0.45 }, { scale: 2.6, opacity: 0, duration: 0.5, ease: "power2.out", immediateRender: false }, r);
+      if (next) {
+        tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.8, ease: "power4.inOut" }, next.at);
+        tl.to(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}", duration: 0.4, ease: "none" }, next.at);
+      }
+    });
+    tl.to(stp, { z: -600, y: "-=120", opacity: 0, duration: 0.6, stagger: 0.05, ease: "power3.in" }, END - 0.1);
+
+    // The window comes in with the first step that shows it, follows its steps down, and drops back out.
+    const firstWin = STEPS.findIndex(st => st.shows);
+    tl.set(win, { autoAlpha: 0, y: place(firstWin).win }, 0);
+    tl.set(win, { autoAlpha: 1 }, W_IN + 0.15);
+    tl.fromTo(win, { z: -420, rotationX: 18, y: place(firstWin).win + 160 }, { z: 0, rotationX: 0, y: place(firstWin).win, duration: 1.1, ease: "expo.out", immediateRender: false }, W_IN + 0.15);
+    STEPS.forEach((st, k) => { if (st.shows && k > firstWin) tl.to(win, { y: place(k).win, duration: 0.8, ease: "power4.inOut" }, st.at); });
+    tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.5, ease: "power3.in" }, W_OUT - 0.1);
+    tl.set(win, { autoAlpha: 0 }, W_OUT + 0.4);
+
+    // Lines of context paste in with the window; lines before the command are typed on their step, the command on its own.
+    if (R(".ln.ctx, .ln.keep").length) tl.fromTo(R(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, W_IN + 0.5);
+    const typed = R(".typed"), PRE = INSTALL ? Math.max(0, typed.findIndex(l => l.classList.contains("focus"))) : 0;
+    let t = 0;
+    typed.forEach((ln, k) => {
+      if (k === 0) t = PRE ? PRE_AT : CMD_AT;
+      else if (k === PRE) t = Math.max(t + LINE_PAUSE, CMD_AT);
+      else t += LINE_PAUSE;
       // a later line, prompt and all, shows only once it starts
-      if (k > 0) { t += LINE_PAUSE; tl.set(ln, { opacity: 0 }, 0); tl.set(ln, { opacity: 1 }, t); }
+      if (k > 0) { tl.set(ln, { opacity: 0 }, 0); tl.set(ln, { opacity: 1 }, t); }
       // the rolled-in ids are not typed: only the characters of the line and its first id
       ln.querySelectorAll(".c").forEach(c => { tl.set(c, { opacity: 1 }, t); t += EACH; });
     });
     // the caret sits after the last line, blinking until the window leaves or the answer comes
-    const caret = $$(".caret").at(-1), still = ANSWER_AT ?? T2;
+    const caret = R(".caret").at(-1), still = ANSWER_AT ?? W_OUT;
     for (let b = t + 0.05, on = 1; b < still; b += 0.45, on = 1 - on) tl.set(caret, { opacity: on }, b);
     if (ANSWER_AT) tl.set(caret, { opacity: 0 }, still);
 
     // The request is answered through the fallback: the code scrolls up and the header the page's curl prints arrives under it.
     if (ANSWER_AT) {
       // it scrolls by the top padding and whole rows, so the window's top edge never cuts a row in half
-      const out = $(".out"), cs = getComputedStyle($(".code")), row = parseFloat(cs.fontSize) * ${CODE_LH};
+      const out = R(".out")[0], cs = getComputedStyle($(".code")), row = parseFloat(cs.fontSize) * ${CODE_LH};
       let by = parseFloat(cs.paddingTop);
       while (by < out.offsetHeight - parseFloat(cs.paddingBottom)) by += row;
-      tl.to(Q(".rows"), { y: -by, duration: 0.6, ease: "power4.inOut" }, ANSWER_AT);
+      tl.to(rows, { y: -by, duration: 0.6, ease: "power4.inOut" }, ANSWER_AT);
       tl.fromTo(out, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "expo.out" }, ANSWER_AT + 0.25);
     }
 
     // The preset rolls through real ids one key runs, then comes back to the page's own.
     if (ROLLS) {
-      const slot = $(".roll"), items = Array.from(slot.children);
+      const slot = R(".roll")[0], items = Array.from(slot.children);
       slot.style.width = items[0].offsetWidth + "px";
       for (let i = 0; i < ROLLS; i++) {
         const at = ROLL_AT + i * ROLL_EVERY, out = items[i], into = items[i + 1];
@@ -513,35 +597,38 @@ export function filmScene({ copy, beats, duration, timing, said }) {
         tl.to(slot, { width: into.offsetWidth, duration: 0.45, ease: "power4.inOut" }, at + 0.05);
       }
     }
+    const GLOW_PULSES = ROLLS ? Array.from({ length: ROLLS }, (_, i) => ROLL_AT + i * ROLL_EVERY + 0.2) : [];
 
-    // A tint comes up under the command as it is typed (t is where the typing ended). Once all is said and shown, it points out
-    // each line the page changes in turn until the window leaves; a lone line breathes, so the
-    // frame never stands still.
-    const lit = $$(".ln.keep, .ln.focus, .sh .ln.typed, .ln.out"), first = Math.max(0, lit.indexOf($(".ln.focus")));
+    // A tint comes up under the command as it is typed (t is where the typing ended). Once all is said and
+    // shown, it points out each line the page changes in turn until the window leaves; a lone line
+    // breathes, so the frame never stands still.
+    const lit = R(".ln.keep, .ln.focus, .ln.typed, .ln.out"), first = Math.max(0, lit.findIndex(l => l.classList.contains("focus")));
     if (lit.length) {
       const glow = document.createElement("div");
       glow.className = "glow";
-      $(".rows").prepend(glow);
+      rows.prepend(glow);
       const to = ln => ({ y: ln.offsetTop, height: ln.offsetHeight });
       tl.set(glow, { ...to(lit[first]), opacity: 0 }, 0);
-      tl.to(glow, { opacity: 1, duration: Math.max(0.6, t - TYPE_AT), ease: "none" }, TYPE_AT);
-      for (let t = POINT_AT + 0.3, k = first + 1; t < T2 - 0.3; t += 1.1, k++) {
+      tl.to(glow, { opacity: 1, duration: Math.max(0.6, t - CMD_AT), ease: "none" }, CMD_AT);
+      // each id that rolls in flashes the line it lands on
+      for (const p of GLOW_PULSES) tl.fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, p);
+      for (let t = POINT_AT + 0.3, k = first + 1; t < W_OUT - 0.3; t += 1.1, k++) {
         if (lit.length > 1) tl.to(glow, { ...to(lit[k % lit.length]), duration: 0.5, ease: "power3.inOut" }, t);
         else tl.to(glow, { opacity: k % 2 ? 0.45 : 1, duration: 0.5, ease: "sine.inOut" }, t);
       }
     }
 
-    // 2 → 3 · the window drops away; the headline settles above the lockup.
-    tl.to(win, { y: below, duration: 0.5, ease: "power4.inOut" }, T2);
-    tl.set(win, { autoAlpha: 0 }, T2 + 0.5);
-    tl.to(h, { y: cap3 - at1, scale: s3, duration: 0.8, ease: "power4.inOut" }, T2 + 0.05);
-    tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.35);
-    tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.45);
-    tl.fromTo(Q(".url"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.6);
-
-    // 3 · the lockup holds while the camera keeps leaning in.
-    // at an even speed to the last frame: an eased lean comes to rest, and a frame at rest reads as dead air
-    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "none", immediateRender: false }, T2);
+    // 3 · the lockup: the headline comes back above it, small, and the short link lands under it.
+    const s3 = v("--cap3") / fs, cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
+    end.style.top = cap3 + hH * s3 + G + "px";
+    tl.set(h, { y: cap3 - (top1 + heroH + G), scale: s3, rotationX: 0 }, END);
+    tl.fromTo(h, { z: -500, opacity: 0 }, { z: 0, opacity: 1, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.1);
+    tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.35);
+    tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.45);
+    tl.fromTo(Q(".url"), { y: 40, z: -200, opacity: 0 }, { y: 0, z: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.6);
+    // the lockup holds while the camera keeps leaning in, at an even speed to the last frame: an eased lean
+    // comes to rest, and a frame at rest reads as dead air
+    tl.fromTo(cam, { scale: LEAN }, { scale: END_LEAN, duration: D - END, ease: "none", immediateRender: false }, END);
 
     // The captions: one phrase at a time, whole, under the picture; back to back they swap with no gap.
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
@@ -553,13 +640,14 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     });`;
   const cues = [
     { at: 0.15, kind: 'tick', gain: 0.45 },
-    { at: doing.start, kind: 'cut', gain: 0.4 },
-    { at: timing.typeAt, kind: 'type', dur: timing.typing, gain: 0.45 },
-    ...Array.from({ length: rolls }, (_, i) => ({ at: +(timing.rollAt + i * ROLL_EVERY + 0.1).toFixed(2), kind: 'tick', gain: 0.4 })),
-    ...(timing.answerAt ? [{ at: +(timing.answerAt + 0.25).toFixed(2), kind: 'tick', gain: 0.45 }] : []),
-    { at: +(lockup.start + 0.35).toFixed(2), kind: 'end', gain: 0.55 },
+    ...S.map(st => ({ at: st.at, kind: 'cut', gain: 0.35 })),
+    ...(T.preAt != null ? [{ at: T.preAt, kind: 'type', dur: 1.2, gain: 0.4 }] : []),
+    { at: T.cmdAt, kind: 'type', dur: Math.min(2.2, T.typing), gain: 0.45 },
+    ...Array.from({ length: rolls }, (_, i) => ({ at: +(T.rollAt + i * ROLL_EVERY + 0.1).toFixed(2), kind: 'tick', gain: 0.4 })),
+    ...(T.answerAt ? [{ at: +(T.answerAt + 0.25).toFixed(2), kind: 'tick', gain: 0.45 }] : []),
+    { at: +(T.end + 0.35).toFixed(2), kind: 'end', gain: 0.55 },
   ];
-  return { cls: 'film', body, inner, cues, duration };
+  return { cls: 'film', body, inner, cues, duration, style: `--end-l:${url.landscape.lean};--end-p:${url.portrait.lean}` };
 }
 
 // ── the look, in frame.md's tokens ─────────────────────────────────────────
@@ -567,9 +655,23 @@ export function filmScene({ copy, beats, duration, timing, said }) {
 // the line in focus: on the ink it is white, its other lines muted; in the
 // editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--push-max:${WIN.landscape.pushMax};--lean:${WIN.landscape.lean}}
-  /* the camera leans in about the safe area's centre, so nothing drifts out of it */
-  .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--lean:${WIN.landscape.lean};--dolly:${dollyOf('landscape')}px;--end:var(--end-l)}
+  /* the camera leans in about the safe area's centre, so nothing drifts out of it, and looks into the page:
+     the deep layer dollies in, so what sits further back moves less (parallax) */
+  .film .cam{position:absolute;inset:0;transform-origin:50% 50%;perspective:${PERSPECTIVE}px;perspective-origin:50% 50%}
+  .film .deep{position:absolute;inset:0;transform-style:preserve-3d}
+  .film .hero,.film .h,.film .stp,.film .win,.film .end{backface-visibility:hidden}
+  /* a step: its number in a marker, its label beside it; the marker is the accent while its step is said */
+  .film .stp{position:absolute;left:var(--sl);right:var(--sr);top:0;transform-origin:0 0;opacity:0}
+  .film .head{display:flex;align-items:flex-start;gap:${STEP.gap}px}
+  .film .dt{margin:${STEP.detailGap}px 0 0 ${STEP.mark + STEP.gap}px;font-size:var(--ds);line-height:1.3;letter-spacing:-.01em;color:${C.ink2};white-space:nowrap}
+  .film .dt .bp{display:none}
+  .film .sm{flex:none;width:${STEP.mark}px;height:${STEP.mark}px;border-radius:50%;display:grid;place-items:center;background:${C.accent};border:3px solid ${C.accent};color:${C.onInk};font-size:68px;font-weight:600;line-height:1;letter-spacing:-.04em}
+  .film .sm{position:relative}
+  .film .sm b{font-weight:600}
+  .film .ring{position:absolute;inset:-3px;border-radius:50%;background:${C.accent};opacity:0;z-index:-1}
+  .film .sl{font-size:var(--ls);font-weight:600;line-height:${STEP.lh};letter-spacing:-.035em;white-space:nowrap;padding-top:calc((${STEP.mark}px - var(--ls) * ${STEP.lh}) / 2)}
+  .film .sl .bp{display:none}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
   .film .hero{display:flex;flex-direction:column;align-items:center;gap:40px}
   .film .tiles{display:flex;align-items:center;justify-content:center;gap:24px}
@@ -611,6 +713,7 @@ export const CSS = `
   /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
   .film .rows{position:relative;z-index:0}
+  .film .rows.rp{display:none}
   .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none;z-index:-1}
   .film .is-ink .glow{background:rgba(240,145,90,.24)}
   .film .ln.out{position:absolute;left:0;right:0;top:100%;padding-top:.3em;border-top:2px solid ${C.line};opacity:0}
@@ -623,16 +726,20 @@ export const CSS = `
   .film .lock svg{width:144px;height:144px;display:block}
   .film .lock b{font-size:144px;font-weight:600;letter-spacing:-.055em;line-height:1}
   /* the one thing to do next, so it is the ink card */
-  .film .url{font-size:var(--us);color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
+  .film .url{font-size:var(--us);letter-spacing:${(URL_ADV - 0.6).toFixed(2)}em;color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
   .film .url .up{display:none}
 
   .film .caps{position:absolute;left:0;right:0;top:${CAP.landscape.top}px;height:${CAP.landscape.height}px;pointer-events:none}
   .film .cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
-  .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:${CAP.landscape.px}px;font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
+  .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:var(--cf);font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--push-max:${WIN.portrait.pushMax};--lean:${WIN.portrait.lean}}
-    .film .cam{transform-origin:510px 710px}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--lean:${WIN.portrait.lean};--dolly:${dollyOf('portrait')}px;--end:var(--end-p)}
+    .film .cam{transform-origin:510px 710px;perspective-origin:510px 710px}
+    .film .sl{font-size:var(--ls-p);padding-top:calc((${STEP.mark}px - var(--ls-p) * ${STEP.lh}) / 2)}
+    .film .sl .bl,.film .dt .bl{display:none}
+    .film .sl .bp,.film .dt .bp{display:inline}
+    .film .dt{font-size:var(--ds-p)}
     .film .tile{width:144px;height:144px}
     .film .tile .mk{width:84px;height:84px}
     .film .h{font-size:var(--fs-p)}
@@ -642,6 +749,8 @@ export const CSS = `
     .film .term{border-radius:28px}
     /* a hair tighter than the font's own advance, so a 45-character URL sits whole across the safe width */
     .film .code{--adv:${WIN.portrait.adv}em;letter-spacing:${(WIN.portrait.adv - 0.6).toFixed(2)}em;font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
+    .film .rows.rl{display:none}
+    .film .rows.rp{display:block}
     .film .ttl.off-l{display:block}
     .film .ttl.off-p{display:none}
     .film .lock svg{width:120px;height:120px}
@@ -650,6 +759,6 @@ export const CSS = `
     .film .url .ul{display:none}
     /* the band Reels, Shorts and TikTok leave clear (shared/authoring/portrait.mjs), across the safe width */
     .film .caps{left:${ACROSS.portrait.left}px;right:${1080 - ACROSS.portrait.left - ACROSS.portrait.width}px;top:${CAP.portrait.top}px;height:${CAP.portrait.height}px}
-    .film .cap span{font-size:${CAP.portrait.px}px}
+    .film .cap span{font-size:var(--cf-p)}
     .film .url .up{display:inline}
   }`;

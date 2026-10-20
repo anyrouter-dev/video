@@ -24,7 +24,9 @@ const collect = async (d = doc(), flags = {}) => {
 const releases = async d => kind.split(await collect(d));
 const byLabel = rs => Object.fromEntries(rs.map(r => [r.label, fingerprint(r.parts)]));
 const filmOf = (d, slug) => kind.film(kind.split({ useCases: narrate(parseDoc(d)), pools }).find(r => r.label === slug));
-const films = () => narrate(parseDoc(doc())).map(u => [u, kind.film(kind.split({ useCases: [u], pools })[0])]);
+// every film of the fixture, built once: a build reflows each window at every size
+let built;
+const films = () => (built ??= narrate(parseDoc(doc())).map(u => [u, kind.film(kind.split({ useCases: [u], pools })[0])]));
 const html = film => film.scenes.map(s => s.body).join('\n');
 
 // What a viewer can read: tags dropped, inline spans joined (word masks, typed
@@ -41,11 +43,12 @@ const shown = h => h
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
   .split('\n').map(s => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
 // The ids that roll into the preset's place, in order.
-const rolled = h => [...h.matchAll(/<em class="ri[^"]*"[^>]*>([^<]*)<\/em>/g)].map(m => m[1]);
+// (the landscape rows: each frame sets the same code in rows of its own)
+const rolled = h => [...(h.match(/<div class="rows rl">[\s\S]*?<div class="rows rp">/)?.[0] ?? '').matchAll(/<em class="ri[^"]*"[^>]*>([^<]*)<\/em>/g)].map(m => m[1]);
 
 // The strings a use case states, redacted the way the film redacts them, the ids the catalog gave, and
 // the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
-const factsOf = u => [u.kicker, u.title, u.url, u.command?.text, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
+const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/u/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
   ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
 // Chrome, not copy: the brand.
 const CHROME = s => s === 'AnyRouter';
@@ -74,7 +77,7 @@ test('a field the film never shows does not make a new release', async () => {
   const edited = doc();
   const u = edited.useCases.find(x => x.slug === 'claude-code');
   u.hook = 'A different hook line.';
-  u.steps[0] = 'A different first step.';
+  u.problem = 'A different problem.';
   assert.deepEqual(byLabel(await releases(edited)), before);
 });
 
@@ -128,8 +131,9 @@ test('a malformed response fails loudly at the boundary', () => {
 // ── what reaches the screen ────────────────────────────────────────────────
 
 // The captions are the narration, whose claims narration.json sources line by line.
-const picture = h => h.replace(/<div class="caps"[\s\S]*$/, '');
-const captions = h => [...h.matchAll(/<div class="cap"[^>]*><span>([^<]*)<\/span>/g)].map(m => m[1].replace(/&amp;/g, '&'));
+// so are the step labels: each is its step's line, said
+const picture = h => h.replace(/<div class="caps"[\s\S]*$/, '').replace(/<div class="sl">[\s\S]*?<\/div>/g, '');
+const captions = h => [...h.matchAll(/<div class="cap"[^>]*><span[^>]*>([^<]*)<\/span>/g)].map(m => m[1].replace(/&amp;/g, '&'));
 
 test('every string on screen is a fact, verbatim', () => {
   for (const [u, film] of films()) {
@@ -152,13 +156,14 @@ test('an API key never reaches the screen, only its prefix', () => {
   assert.ok(shown(h).some(t => t.includes('sk-ar-v1-••••••••')), 'the prefix stays, so a viewer knows which key');
 });
 
-test('the film opens on the page title and closes on its URL', () => {
+test('the film opens on the page title and closes on its short link', () => {
   for (const [u, film] of films()) {
     const text = shown(html(film));
     assert.equal(text.filter(t => t === u.title).length, 1, `${u.slug}: the headline is one element, carried through every beat`);
-    const card = html(film).match(/<div class="url[^>]*>([\s\S]*?)<\/div>/)[1], page = u.url.replace(/^https:\/\//, '');
-    // portrait names the list the page is on when the page's own URL would not sit on one row
-    assert.ok(shown(card).length === 1 ? shown(card)[0] === page : shown(card)[0] === page && shown(card)[1] === 'anyrouter.dev/use-cases', `${u.slug}: the page URL`);
+    // the end card names the page's short link, never its long /use-cases URL
+    const card = html(film).match(/<div class="url[^>]*>([\s\S]*?)<\/div>/)[1];
+    assert.deepEqual(shown(card), [`anyrouter.dev/u/${u.slug}`], `${u.slug}: the short link`);
+    assert.ok(!html(film).includes('/use-cases/'), `${u.slug}: no long URL on screen`);
     assert.ok(text.includes(u.kicker), `${u.slug}: the kicker`);
   }
 });
@@ -243,10 +248,12 @@ test('an id the catalog bills to the user\'s own key, or prices above 0 under fr
 
 // ── the film ───────────────────────────────────────────────────────────────
 
-test('every film is 25 to 45 seconds, its three beats back to back on whole frames', () => {
+test('every film is 35 to 60 seconds: what and why, its steps, the end card, back to back on whole frames', () => {
   for (const [u, f] of films()) {
     assert.ok(f.duration >= FILM.min && f.duration <= FILM.max, `${u.slug}: ${f.duration}s`);
-    assert.deepEqual(f.beats.map(b => b.key), ['outcome', 'doing', 'lockup']);
+    const n = f.beats.length - 2;
+    assert.ok(n >= 2 && n <= 3, `${u.slug}: two or three steps`);
+    assert.deepEqual(f.beats.map(b => b.key), ['outcome', ...Array.from({ length: n }, (_, i) => `step-${i + 1}`), 'close']);
     let at = 0;
     for (const b of f.beats) {
       assert.ok(Math.abs(b.start - at) < 1e-9, `${u.slug} ${b.key} starts at ${b.start}, not ${at}`);
@@ -271,9 +278,10 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+cl >= 40 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
     // never under the 32px a phone reads, and that small only where a whole token needs the row
     assert.ok(+cp >= 32 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
-    if (+cl >= 52) large++;
+    if (+cl >= 48) large++;
   }
-  assert.ok(large >= films().length * 0.7, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
+  // the steps above the window take room from it, so half at 48px or more
+  assert.ok(large >= films().length * 0.5, `${large} of ${films().length} at 48px or more`);
 });
 
 test('no headline word is wider than its frame', () => {
@@ -293,7 +301,7 @@ test('code too tall to sit under the caption fails the build, never a caption to
   const d = doc();
   const u = d.useCases.find(x => x.slug === 'openrouter-free-fallback');
   u.snippets = u.snippets.map(s => ({ ...s, code: s.code.split('\n').map(l => (l.includes(u.command.text) ? l : `${l} ${'x'.repeat(30)} ${'y'.repeat(30)}`)).join('\n').replace(u.command.text, `${u.command.text} ${'z '.repeat(120)}`) }));
-  assert.throws(() => filmOf(d, 'openrouter-free-fallback'), /does not fit under the caption/);
+  assert.throws(() => filmOf(d, 'openrouter-free-fallback'), /does not fit under its step/);
 });
 
 test('the release copy is the page: its title, its summary and a link back', async () => {
@@ -383,8 +391,10 @@ test('a page about a fallback shows its request answered through it, as the page
   assert.deepEqual(shown(out[1]), ['x-anyrouter-fallback: anyrouter/free']);
   assert.match(out[1], /<span class="m">anyrouter\/free<\/span>/, 'the fallback that answered takes the accent');
   // it arrives inside beat 2, with time to read it before the window leaves
-  const at = Number(f.scenes[0].inner.match(/ANSWER_AT = ([\d.]+)/)[1]);
-  assert.ok(at > f.beats[1].start && at + 1.5 <= f.beats[2].start, `the answer at ${at}s, beat 3 at ${f.beats[2].start}s`);
+  // it arrives on the step that reads it, with time to read it before the window leaves
+  const at = Number(f.scenes[0].inner.match(/ANSWER_AT = ([\d.]+)/)[1]), leaves = Number(f.scenes[0].inner.match(/W_OUT = ([\d.]+)/)[1]);
+  const step = f.beats.find(b => b.key === 'step-2');
+  assert.ok(at >= step.start && at + 1.5 <= leaves, `the answer at ${at}s, its step at ${step.start}s, the window out at ${leaves}s`);
   for (const [v, g] of films()) if (v.slug !== u.slug) assert.ok(!html(g).includes('class="ln out"'), `${v.slug} shows no fallback`);
 });
 
@@ -404,19 +414,23 @@ test('the captions are the narration, word for word, in the order it is said', (
   // a caption that drops or adds a word reads as a different claim than the one voiced
   const narration = JSON.parse(fs.readFileSync(path.join(dir, 'narration.json'), 'utf8'));
   for (const [u, f] of films()) {
-    const lines = ['outcome', 'doing', 'then'].map(b => narration.films[u.slug][b]).filter(Boolean).concat(narration.lockup);
-    assert.equal(captions(html(f)).join(' '), lines.join(' ').replace(/\^/g, ''), u.slug);
+    const n = narration.films[u.slug];
+    const lines = [n.outcome, ...n.steps.map((st, i) => `Step ${i + 1}. ${st.text}`), `anyrouter.dev/u/${u.slug}`];
+    assert.equal(captions(html(f)).join(' '), lines.join(' '), u.slug);
   }
 });
 
 test('the voice is placed where the story says, one line after another, inside the film', () => {
   for (const [u, f] of films()) {
-    assert.deepEqual(f.said.map(l => l.id), [...['outcome', 'doing', 'then'].map(b => `${u.slug}-${b}`).filter(id => fs.existsSync(path.join(dir, 'voice', `${id}.json`))), 'lockup']);
+    const steps = f.beats.filter(b => b.key.startsWith('step-')).length;
+    assert.deepEqual(f.said.map(l => l.id), [`${u.slug}-outcome`, ...Array.from({ length: steps }, (_, i) => `${u.slug}-step-${i + 1}`), `${u.slug}-close`]);
     f.said.forEach((l, i) => {
       assert.ok(fs.existsSync(l.file), `${l.id} is voiced`);
       if (i) assert.ok(l.at >= f.said[i - 1].at + f.said[i - 1].dur - 0.3, `${u.slug}: ${l.id} starts over the line before it`);
     });
-    assert.ok(f.said.at(-1).at >= f.beats[2].start && f.said.at(-1).at + f.said.at(-1).dur <= f.duration, `${u.slug}: the last line is said over the lockup`);
+    // each step's line is said in its own beat, and the short link over the end card
+    f.said.slice(1, -1).forEach((l, i) => assert.ok(l.at >= f.beats[i + 1].start && l.at < f.beats[i + 2].start, `${u.slug}: step ${i + 1} is said in its beat`));
+    assert.ok(f.said.at(-1).at >= f.beats.at(-1).start && f.said.at(-1).at + f.said.at(-1).dur <= f.duration, `${u.slug}: the link is said over the end card`);
     // the music steps down under every spoken stretch
     assert.equal(f.voice.length, f.said.length);
   }

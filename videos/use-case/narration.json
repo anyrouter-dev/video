@@ -25,662 +25,1206 @@
     "$2": "two dollars",
     "$4": "four dollars",
     "270": "two hundred seventy",
-    "1M-token": "one million token"
+    "1M-token": "one million token",
+    "1": "one",
+    "2": "two",
+    "3": "three",
+    "/api": "slash API"
   },
-  "lockup": "The steps are on anyrouter.dev.",
   "films": {
     "claude-code": {
       "outcome": "Claude Code talks to Anthropic by default. AnyRouter lets it use other models.",
-      "doing": "^Install anyr, then run anyr claude.",
-      "then": "It sets the base URL, the key and the model for you.",
+      "steps": [
+        {
+          "text": "Install anyr.",
+          "shows": "install"
+        },
+        {
+          "text": "Run anyr claude.",
+          "shows": "command"
+        },
+        {
+          "text": "Pin a model when you want one."
+        }
+      ],
+      "close": "claude code",
       "claims": [
         {
           "says": "Claude Code talks to Anthropic by default",
           "from": "use-cases.json claude-code.problem"
         },
         {
-          "says": "AnyRouter lets it use other models",
-          "from": "use-cases.json claude-code.problem, diagram node m: any model"
+          "says": "Install anyr.",
+          "from": "use-cases.json claude-code.steps"
         },
         {
-          "says": "install the anyr CLI, then run anyr claude",
-          "from": "use-cases.json claude-code.hook, steps[0..1]"
+          "says": "Run anyr claude.",
+          "from": "use-cases.json claude-code.steps"
         },
         {
-          "says": "it sets the base URL, the key and the model",
-          "from": "use-cases.json claude-code.hook: it injects the base URL, key, and model"
+          "says": "Pin a model when you want one.",
+          "from": "use-cases.json claude-code.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/claude-code",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "grokbot": {
-      "outcome": "Grok Bot assigns the goal. Herdr shows the live terminal.",
-      "doing": "There, anyr ^launches Claude Code through AnyRouter, on a catalog model.",
-      "then": "Paste the goal into Grok Bot, and review the pull request it opens.",
+      "outcome": "Run a live coding agent when cloud agents are blocked. Grok Bot assigns the goal, and Herdr shows the terminal.",
+      "steps": [
+        {
+          "text": "Open a Herdr space on your repo."
+        },
+        {
+          "text": "Launch anyr claude in that space.",
+          "shows": "command"
+        },
+        {
+          "text": "Paste the goal into Grok Bot."
+        }
+      ],
+      "close": "grokbot",
       "claims": [
         {
-          "says": "Grok Bot assigns the goal, Herdr shows the box (a live terminal you can attach)",
-          "from": "use-cases.json grokbot.hook, problem"
+          "says": "Run a live coding agent when cloud agents are blocked. Grok Bot assigns the goal, and Herdr shows the terminal.",
+          "from": "use-cases.json grokbot.problem, hook, title (the outcome: what it is and why)"
         },
         {
-          "says": "the anyr CLI launches Claude Code through AnyRouter",
-          "from": "use-cases.json grokbot.hook"
+          "says": "Open a Herdr space on your repo.",
+          "from": "use-cases.json grokbot.steps"
         },
         {
-          "says": "on a catalog model",
-          "from": "use-cases.json grokbot.problem; poolside/laguna-s-2.1 in /api/v1/models?all=1, billing not byok"
+          "says": "Launch anyr claude in that space.",
+          "from": "use-cases.json grokbot.steps"
         },
         {
-          "says": "paste the goal into Grok Bot and review the PR it opens",
-          "from": "use-cases.json grokbot.steps[2]"
+          "says": "Paste the goal into Grok Bot.",
+          "from": "use-cases.json grokbot.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/grokbot",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "opencode": {
       "outcome": "OpenCode's built-in providers each want their own key.",
-      "doing": "Run ^anyr opencode. It adds an AnyRouter provider for this session.",
-      "then": "You get one key, the Chat Completions catalog, and request logs.",
+      "steps": [
+        {
+          "text": "Create an AnyRouter key."
+        },
+        {
+          "text": "Launch anyr opencode.",
+          "shows": "command"
+        },
+        {
+          "text": "Pick a model, and check the request logs."
+        }
+      ],
+      "close": "open code",
       "claims": [
         {
           "says": "OpenCode's built-in providers each want their own key",
           "from": "use-cases.json opencode.problem"
         },
         {
-          "says": "anyr opencode adds an AnyRouter provider for the session",
-          "from": "use-cases.json opencode.hook, steps[1]"
+          "says": "Create an AnyRouter key.",
+          "from": "use-cases.json opencode.steps"
         },
         {
-          "says": "one key, the Chat Completions catalog, and request logs",
-          "from": "use-cases.json opencode.hook"
+          "says": "Launch anyr opencode.",
+          "from": "use-cases.json opencode.steps"
+        },
+        {
+          "says": "Pick a model, and check the request logs.",
+          "from": "use-cases.json opencode.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/opencode",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "coding-agents": {
       "outcome": "Each coding agent wants its own provider key and base URL.",
-      "doing": "^Set two variables, and Claude Code talks to AnyRouter.",
-      "then": "Codex, OpenCode and Cursor take the same URL and key. They share one balance and one request log.",
+      "steps": [
+        {
+          "text": "Mint one AnyRouter key."
+        },
+        {
+          "text": "Set the Anthropic env vars.",
+          "shows": "command"
+        },
+        {
+          "text": "Start on anyrouter/auto."
+        }
+      ],
+      "close": "coding agents",
       "claims": [
         {
           "says": "each coding agent wants its own provider key and base URL",
           "from": "use-cases.json coding-agents.problem"
         },
         {
-          "says": "two variables point Claude Code at AnyRouter",
-          "from": "use-cases.json coding-agents snippet Claude Code (ANTHROPIC_BASE_URL, ANTHROPIC_API_KEY), steps[1]"
+          "says": "Mint one AnyRouter key.",
+          "from": "use-cases.json coding-agents.steps"
         },
         {
-          "says": "Codex, OpenCode and Cursor take the same URL and key",
-          "from": "use-cases.json coding-agents.hook, steps[1]"
+          "says": "Set the Anthropic env vars.",
+          "from": "use-cases.json coding-agents.steps"
         },
         {
-          "says": "one balance and one request log",
-          "from": "use-cases.json coding-agents.hook"
+          "says": "Start on anyrouter/auto.",
+          "from": "use-cases.json coding-agents.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/coding-agents",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "hermes-agent": {
       "outcome": "Hermes Agent runs long tool loops. With one upstream model, its outages stop the loop.",
-      "doing": "^Install the AnyRouter plugin, and add one key.",
-      "then": "Hermes then lists only the models that can call tools.",
+      "steps": [
+        {
+          "text": "Install the AnyRouter plugin.",
+          "shows": "command"
+        },
+        {
+          "text": "Add your AnyRouter key."
+        },
+        {
+          "text": "Pick a model, such as anyrouter/hermes."
+        }
+      ],
+      "close": "hermes agent",
       "claims": [
         {
           "says": "Hermes Agent runs long tool loops; one upstream model means its outages",
           "from": "use-cases.json hermes-agent.problem"
         },
         {
-          "says": "install the AnyRouter plugin and add one key",
-          "from": "use-cases.json hermes-agent.hook, steps[0..1]"
+          "says": "Install the AnyRouter plugin.",
+          "from": "use-cases.json hermes-agent.steps"
         },
         {
-          "says": "Hermes lists only the models that can call tools",
-          "from": "use-cases.json hermes-agent.hook"
+          "says": "Add your AnyRouter key.",
+          "from": "use-cases.json hermes-agent.steps"
+        },
+        {
+          "says": "Pick a model, such as anyrouter/hermes.",
+          "from": "use-cases.json hermes-agent.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/hermes-agent",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "claude-agent-sdk": {
       "outcome": "Run the Claude Agent SDK on any model, with no fork.",
-      "doing": "Point its base URL and key at AnyRouter, and ^pick a model.",
-      "then": "Use anyrouter/auto, or another catalog id.",
+      "steps": [
+        {
+          "text": "Install the Agent SDK."
+        },
+        {
+          "text": "Point the base URL and key at AnyRouter."
+        },
+        {
+          "text": "Pass a model, such as anyrouter/auto.",
+          "shows": "command"
+        }
+      ],
+      "close": "claude agent S D K",
       "claims": [
         {
           "says": "run the Claude Agent SDK on any model, no SDK fork",
           "from": "use-cases.json claude-agent-sdk.title, summary"
         },
         {
-          "says": "point its base URL and key at AnyRouter",
-          "from": "use-cases.json claude-agent-sdk.hook, steps[1]"
+          "says": "Install the Agent SDK.",
+          "from": "use-cases.json claude-agent-sdk.steps"
         },
         {
-          "says": "anyrouter/auto or any catalog id",
-          "from": "use-cases.json claude-agent-sdk.steps[2]; rolled ids have billing not byok in /api/v1/models?all=1"
+          "says": "Point the base URL and key at AnyRouter.",
+          "from": "use-cases.json claude-agent-sdk.steps"
+        },
+        {
+          "says": "Pass a model, such as anyrouter/auto.",
+          "from": "use-cases.json claude-agent-sdk.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/claude-agent-sdk",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "claude-code-free-models": {
       "outcome": "Try a coding agent on a hobby repo, without a paid plan.",
-      "doing": "Run ^anyr claude on anyrouter/free. Requests use no credits.",
-      "then": "It codes on whichever free model is answering, with no daily cap.",
+      "steps": [
+        {
+          "text": "Install anyr and sign in.",
+          "shows": "install"
+        },
+        {
+          "text": "Run anyr claude on anyrouter/free.",
+          "shows": "command"
+        },
+        {
+          "text": "Switch models when a task needs more."
+        }
+      ],
+      "close": "claude code free models",
       "claims": [
         {
           "says": "a hobby repo should not need a paid plan",
           "from": "use-cases.json claude-code-free-models.problem"
         },
         {
-          "says": "anyr claude --model anyrouter/free; requests do not deduct credits",
-          "from": "use-cases.json claude-code-free-models.steps[1]"
+          "says": "Install anyr and sign in.",
+          "from": "use-cases.json claude-code-free-models.steps"
         },
         {
-          "says": "whichever free model is answering",
-          "from": "use-cases.json claude-code-free-models.hook"
+          "says": "Run anyr claude on anyrouter/free.",
+          "from": "use-cases.json claude-code-free-models.steps"
         },
         {
-          "says": "no daily cap",
-          "from": "use-cases.json virtual-presets.steps[0]: anyrouter/free ... has no daily cap; claude-code-free-models.problem"
+          "says": "Switch models when a task needs more.",
+          "from": "use-cases.json claude-code-free-models.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/claude-code-free-models",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "openrouter-free-fallback": {
       "outcome": "A free model on one route runs out at busy hours.",
-      "doing": "^Call a free model by its id, with your AnyRouter key.",
-      "then": "If its routes are rate limited, a different free model answers. The header says so.",
+      "steps": [
+        {
+          "text": "Call a free model by its id.",
+          "shows": "command"
+        },
+        {
+          "text": "Read the fallback header.",
+          "shows": "result"
+        }
+      ],
+      "close": "open router free fallback",
       "claims": [
         {
           "says": "a free model on one route runs out at busy hours",
           "from": "use-cases.json openrouter-free-fallback.problem"
         },
         {
-          "says": "call a :free model by id with your AnyRouter key",
-          "from": "use-cases.json openrouter-free-fallback.hook, steps[0]; google/gemma-4-31b:free is the free route of catalog row google/gemma-4-31b (priced 0, billing not byok)"
+          "says": "Call a free model by its id.",
+          "from": "use-cases.json openrouter-free-fallback.steps"
         },
         {
-          "says": "if its routes are rate limited, a different free model answers",
-          "from": "use-cases.json openrouter-free-fallback.hook"
+          "says": "Read the fallback header.",
+          "from": "use-cases.json openrouter-free-fallback.steps"
         },
         {
-          "says": "the header says so",
-          "from": "use-cases.json openrouter-free-fallback.steps[1]: X-AnyRouter-Fallback reads anyrouter/free"
+          "says": "anyrouter.dev/u/openrouter-free-fallback",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "openrouter-free-in-your-tools": {
       "outcome": "Each editor tool wants its own provider, key and model list.",
-      "doing": "In Cline, or in OpenCode, add an OpenAI-compatible provider with ^this base URL.",
-      "then": "Paste your key, then pick a free model id. The tool needs no other setup.",
+      "steps": [
+        {
+          "text": "Create an AnyRouter key."
+        },
+        {
+          "text": "Add an OpenAI-compatible provider with this URL.",
+          "shows": "command"
+        },
+        {
+          "text": "Set a free model id."
+        }
+      ],
+      "close": "open router free in your tools",
       "claims": [
         {
           "says": "each editor tool wants its own provider, key and model list",
           "from": "use-cases.json openrouter-free-in-your-tools.problem"
         },
         {
-          "says": "add an OpenAI-compatible provider with the base URL",
-          "from": "use-cases.json openrouter-free-in-your-tools.steps[1]"
+          "says": "Create an AnyRouter key.",
+          "from": "use-cases.json openrouter-free-in-your-tools.steps"
         },
         {
-          "says": "set the key and a :free model id; no other setup",
-          "from": "use-cases.json openrouter-free-in-your-tools.hook"
+          "says": "Add an OpenAI-compatible provider with this URL.",
+          "from": "use-cases.json openrouter-free-in-your-tools.steps"
+        },
+        {
+          "says": "Set a free model id.",
+          "from": "use-cases.json openrouter-free-in-your-tools.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/openrouter-free-in-your-tools",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "nvidia-nim-models": {
       "outcome": "Call NVIDIA models with your AnyRouter key.",
-      "doing": "^Name Nemotron, or another NVIDIA model, in the request.",
-      "then": "Some run on a free shared route. You can also pin your own NVIDIA key.",
+      "steps": [
+        {
+          "text": "Pick an NVIDIA model in the catalog."
+        },
+        {
+          "text": "Call it with your AnyRouter key.",
+          "shows": "command"
+        }
+      ],
+      "close": "NVIDIA NIM models",
       "claims": [
         {
           "says": "call NVIDIA models with your AnyRouter key",
           "from": "use-cases.json nvidia-nim-models.summary, hook"
         },
         {
-          "says": "Nemotron and other NVIDIA models",
-          "from": "use-cases.json nvidia-nim-models.hook"
+          "says": "Pick an NVIDIA model in the catalog.",
+          "from": "use-cases.json nvidia-nim-models.steps"
         },
         {
-          "says": "some run on a free shared route; you can pin your own NVIDIA key",
-          "from": "use-cases.json nvidia-nim-models.hook"
+          "says": "Call it with your AnyRouter key.",
+          "from": "use-cases.json nvidia-nim-models.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/nvidia-nim-models",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "gemini-in-claude-code": {
       "outcome": "Keep Claude Code's loop, and try Gemini on the same repo.",
-      "doing": "Save a Google key, then ^run anyr claude with a Gemini model.",
-      "then": "AnyRouter translates the Messages API for any catalog model.",
+      "steps": [
+        {
+          "text": "Save a Google key in AnyRouter."
+        },
+        {
+          "text": "Run anyr claude with a Gemini model.",
+          "shows": "command"
+        }
+      ],
+      "close": "gemini in claude code",
       "claims": [
         {
           "says": "try Gemini on the same repo in Claude Code's loop",
           "from": "use-cases.json gemini-in-claude-code.problem"
         },
         {
-          "says": "save a Google key, then choose a Gemini model",
-          "from": "use-cases.json gemini-in-claude-code.hook, steps[0..1]; google/gemini-2.5-pro is billing byok"
+          "says": "Save a Google key in AnyRouter.",
+          "from": "use-cases.json gemini-in-claude-code.steps"
         },
         {
-          "says": "AnyRouter translates the Messages API for any catalog model",
-          "from": "use-cases.json gemini-in-claude-code.hook"
+          "says": "Run anyr claude with a Gemini model.",
+          "from": "use-cases.json gemini-in-claude-code.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/gemini-in-claude-code",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "claude-code-multiple-keys": {
       "outcome": "One revoked or capped key can stop Claude Code mid-task.",
-      "doing": "Save keys for more than one provider, then ^run anyr claude.",
-      "then": "Claude Code keeps one URL, and AnyRouter tries the next provider when one fails.",
+      "steps": [
+        {
+          "text": "Save keys for two providers."
+        },
+        {
+          "text": "Keep the Fallback strategy."
+        },
+        {
+          "text": "Run anyr claude.",
+          "shows": "command"
+        }
+      ],
+      "close": "claude code multiple keys",
       "claims": [
         {
           "says": "one revoked, paused or capped key stops Claude Code mid-task",
           "from": "use-cases.json claude-code-multiple-keys.problem"
         },
         {
-          "says": "save keys for more than one provider, then run anyr claude",
-          "from": "use-cases.json claude-code-multiple-keys.hook, steps[0], steps[2]"
+          "says": "Save keys for two providers.",
+          "from": "use-cases.json claude-code-multiple-keys.steps"
         },
         {
-          "says": "one URL, AnyRouter tries the next provider when one fails",
-          "from": "use-cases.json claude-code-multiple-keys.hook"
+          "says": "Keep the Fallback strategy.",
+          "from": "use-cases.json claude-code-multiple-keys.steps"
+        },
+        {
+          "says": "Run anyr claude.",
+          "from": "use-cases.json claude-code-multiple-keys.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/claude-code-multiple-keys",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "virtual-presets": {
       "outcome": "A first request that pins one free model often fails.",
-      "doing": "^Start on anyrouter/free. It works on every plan, with no daily cap.",
-      "then": "The response names the model that answered. For paid models, start on anyrouter/auto.",
+      "steps": [
+        {
+          "text": "Create a key."
+        },
+        {
+          "text": "Call anyrouter/free or anyrouter/auto.",
+          "shows": "command"
+        },
+        {
+          "text": "Read which model answered."
+        }
+      ],
+      "close": "virtual presets",
       "claims": [
         {
           "says": "a first request that pins a single free SKU often 404s or 429s",
           "from": "use-cases.json virtual-presets.problem"
         },
         {
-          "says": "anyrouter/free works on every plan, no daily cap",
-          "from": "use-cases.json virtual-presets.steps[0]"
+          "says": "Create a key.",
+          "from": "use-cases.json virtual-presets.steps"
         },
         {
-          "says": "the response model field names the model that answered",
-          "from": "use-cases.json virtual-presets.steps[2]"
+          "says": "Call anyrouter/free or anyrouter/auto.",
+          "from": "use-cases.json virtual-presets.steps"
         },
         {
-          "says": "anyrouter/auto for paid models",
-          "from": "use-cases.json virtual-presets.steps[1]"
+          "says": "Read which model answered.",
+          "from": "use-cases.json virtual-presets.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/virtual-presets",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "nvidia-free-key": {
       "outcome": "NVIDIA issues free API keys.",
-      "doing": "Add yours to AnyRouter once. Then any OpenAI-compatible app you own can ^use it through one URL.",
-      "then": "Use anyrouter/free when you want the shared free chain instead.",
+      "steps": [
+        {
+          "text": "Create a free NVIDIA key."
+        },
+        {
+          "text": "Add it under BYOK."
+        },
+        {
+          "text": "Call AnyRouter with your key.",
+          "shows": "command"
+        }
+      ],
+      "close": "NVIDIA free key",
       "claims": [
         {
           "says": "NVIDIA issues free API keys",
           "from": "use-cases.json nvidia-free-key.hook"
         },
         {
-          "says": "add it as BYOK; every OpenAI-compatible app you own can use it through AnyRouter",
-          "from": "use-cases.json nvidia-free-key.hook"
+          "says": "Create a free NVIDIA key.",
+          "from": "use-cases.json nvidia-free-key.steps"
         },
         {
-          "says": "anyrouter/free for the shared free chain",
-          "from": "use-cases.json nvidia-free-key.steps[2]"
+          "says": "Add it under BYOK.",
+          "from": "use-cases.json nvidia-free-key.steps"
+        },
+        {
+          "says": "Call AnyRouter with your key.",
+          "from": "use-cases.json nvidia-free-key.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/nvidia-free-key",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "go-plan": {
       "outcome": "Go is $2 a month, and includes $4 of credits each month for paid models.",
-      "doing": "^Call anyrouter/auto, and paid models bill your credits.",
-      "then": "You do not need Go for free models. They have no daily cap.",
+      "steps": [
+        {
+          "text": "Start Go on the pricing page."
+        },
+        {
+          "text": "Call anyrouter/auto.",
+          "shows": "command"
+        },
+        {
+          "text": "Call anyrouter/free any time."
+        }
+      ],
+      "close": "go plan",
       "claims": [
         {
           "says": "Go is $2/mo with $4 of credits a month for paid models",
           "from": "use-cases.json go-plan.hook"
         },
         {
-          "says": "call anyrouter/auto; paid models bill your credits",
-          "from": "use-cases.json go-plan.steps[1]"
+          "says": "Start Go on the pricing page.",
+          "from": "use-cases.json go-plan.steps"
         },
         {
-          "says": "you do not need Go to call free models; no daily cap",
-          "from": "use-cases.json go-plan.hook, problem"
+          "says": "Call anyrouter/auto.",
+          "from": "use-cases.json go-plan.steps"
+        },
+        {
+          "says": "Call anyrouter/free any time.",
+          "from": "use-cases.json go-plan.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/go-plan",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "free-llm-api": {
       "outcome": "Side projects get a free LLM API, with no daily cap.",
-      "doing": "Sign up, create a key, and ^call anyrouter/free. No plan is needed.",
-      "then": "One model id fails over between free models. Move to paid models when you need them.",
+      "steps": [
+        {
+          "text": "Sign up and create a key."
+        },
+        {
+          "text": "Call anyrouter/free.",
+          "shows": "command"
+        },
+        {
+          "text": "Move to paid models when you need them."
+        }
+      ],
+      "close": "free L L M A P I",
       "claims": [
         {
           "says": "a free LLM API for side projects, no daily cap",
           "from": "use-cases.json free-llm-api.title, problem"
         },
         {
-          "says": "sign up, create a key, call anyrouter/free; no plan is needed",
-          "from": "use-cases.json free-llm-api.steps[0..1]"
+          "says": "Sign up and create a key.",
+          "from": "use-cases.json free-llm-api.steps"
         },
         {
-          "says": "a model id that fails over; a clear path to paid models",
-          "from": "use-cases.json free-llm-api.problem, steps[2]"
+          "says": "Call anyrouter/free.",
+          "from": "use-cases.json free-llm-api.steps"
+        },
+        {
+          "says": "Move to paid models when you need them.",
+          "from": "use-cases.json free-llm-api.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/free-llm-api",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "free-chatbot": {
       "outcome": "A demo chatbot dies the day its one free model gets rate limited.",
-      "doing": "^Stream replies from anyrouter/free with the AI SDK.",
-      "then": "It deducts no credits, and fails over between free models.",
+      "steps": [
+        {
+          "text": "Keep your key on your server."
+        },
+        {
+          "text": "Stream with anyrouter/free.",
+          "shows": "command"
+        },
+        {
+          "text": "Read which model answered."
+        }
+      ],
+      "close": "free chatbot",
       "claims": [
         {
           "says": "a demo chatbot dies the day its one free model gets rate limited",
           "from": "use-cases.json free-chatbot.problem"
         },
         {
-          "says": "stream replies from anyrouter/free with the AI SDK",
-          "from": "use-cases.json free-chatbot.hook"
+          "says": "Keep your key on your server.",
+          "from": "use-cases.json free-chatbot.steps"
         },
         {
-          "says": "no credit deduction; one model id that fails over between free models",
-          "from": "use-cases.json free-chatbot.hook"
+          "says": "Stream with anyrouter/free.",
+          "from": "use-cases.json free-chatbot.steps"
+        },
+        {
+          "says": "Read which model answered.",
+          "from": "use-cases.json free-chatbot.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/free-chatbot",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "cheapest-llm-api": {
       "outcome": "The cheapest model on a landing page is often one that is not serving.",
-      "doing": "Compare list prices in the catalog, then ^start on anyrouter/auto.",
-      "then": "Switching models is a string change.",
+      "steps": [
+        {
+          "text": "Compare list prices in the catalog."
+        },
+        {
+          "text": "Start on anyrouter/auto.",
+          "shows": "command"
+        },
+        {
+          "text": "Pin an id once you have measured it."
+        }
+      ],
+      "close": "cheapest L L M A P I",
       "claims": [
         {
           "says": "the cheapest SKU on a landing page is often a model that is not serving",
           "from": "use-cases.json cheapest-llm-api.problem"
         },
         {
-          "says": "compare list prices in the catalog, start traffic on anyrouter/auto",
-          "from": "use-cases.json cheapest-llm-api.hook, steps[0..1]"
+          "says": "Compare list prices in the catalog.",
+          "from": "use-cases.json cheapest-llm-api.steps"
         },
         {
-          "says": "switching models is a string change",
-          "from": "use-cases.json cheapest-llm-api.hook"
+          "says": "Start on anyrouter/auto.",
+          "from": "use-cases.json cheapest-llm-api.steps"
+        },
+        {
+          "says": "Pin an id once you have measured it.",
+          "from": "use-cases.json cheapest-llm-api.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/cheapest-llm-api",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "ai-sdk": {
       "outcome": "Vercel AI SDK providers are usually one vendor.",
-      "doing": "Install the provider from AnyRouter, and ^pass a catalog id.",
-      "then": "The generateText and streamText calls take it, including anyrouter/free.",
+      "steps": [
+        {
+          "text": "Install the AnyRouter provider."
+        },
+        {
+          "text": "Pass a catalog id.",
+          "shows": "command"
+        }
+      ],
+      "close": "A I S D K",
       "claims": [
         {
           "says": "Vercel AI SDK providers are usually one-vendor",
           "from": "use-cases.json ai-sdk.problem"
         },
         {
-          "says": "install @anyr/ai-sdk-provider; pass a catalog id",
-          "from": "use-cases.json ai-sdk.hook"
+          "says": "Install the AnyRouter provider.",
+          "from": "use-cases.json ai-sdk.steps"
         },
         {
-          "says": "generateText and streamText take a catalog id, including anyrouter/free",
-          "from": "use-cases.json ai-sdk.hook"
+          "says": "Pass a catalog id.",
+          "from": "use-cases.json ai-sdk.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/ai-sdk",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "openai-sdk": {
       "outcome": "The official OpenAI package is not locked to one vendor.",
-      "doing": "Keep the SDK. ^Change the base URL and the API key.",
-      "then": "Model ids are owner/model strings, across more than 270 models.",
+      "steps": [
+        {
+          "text": "Keep openai installed."
+        },
+        {
+          "text": "Change the base URL and API key.",
+          "shows": "command"
+        },
+        {
+          "text": "Use anyrouter/free for the first call."
+        }
+      ],
+      "close": "open A I S D K",
       "claims": [
         {
           "says": "the official openai package is not vendor-locked",
           "from": "use-cases.json openai-sdk.problem"
         },
         {
-          "says": "override baseURL and apiKey, keep the SDK",
-          "from": "use-cases.json openai-sdk.summary, hook"
+          "says": "Keep openai installed.",
+          "from": "use-cases.json openai-sdk.steps"
         },
         {
-          "says": "owner/model strings across 271+ models",
-          "from": "use-cases.json openai-sdk.hook"
+          "says": "Change the base URL and API key.",
+          "from": "use-cases.json openai-sdk.steps"
+        },
+        {
+          "says": "Use anyrouter/free for the first call.",
+          "from": "use-cases.json openai-sdk.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/openai-sdk",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "unify-api": {
       "outcome": "Apps pile up one client per vendor.",
-      "doing": "^One key reaches Chat Completions, Messages and Responses.",
-      "then": "Failover and logging stay in the gateway, not in your code.",
+      "steps": [
+        {
+          "text": "Use this URL for OpenAI-style calls.",
+          "shows": "command"
+        },
+        {
+          "text": "Use /api for Anthropic Messages."
+        },
+        {
+          "text": "Start with anyrouter/auto."
+        }
+      ],
+      "close": "unify A P I",
       "claims": [
         {
           "says": "apps accumulate one client per vendor",
           "from": "use-cases.json unify-api.problem"
         },
         {
-          "says": "Chat Completions, Messages and Responses on one key",
-          "from": "use-cases.json unify-api.summary, hook"
+          "says": "Use this URL for OpenAI-style calls.",
+          "from": "use-cases.json unify-api.steps"
         },
         {
-          "says": "failover and logging in the gateway instead of your code",
-          "from": "use-cases.json unify-api.problem"
+          "says": "Use /api for Anthropic Messages.",
+          "from": "use-cases.json unify-api.steps"
+        },
+        {
+          "says": "Start with anyrouter/auto.",
+          "from": "use-cases.json unify-api.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/unify-api",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "model-evals": {
       "outcome": "Comparing models from different vendors usually means one key per provider.",
-      "doing": "Run ^anyr models, and pick the ids to compare.",
-      "then": "Loop the same prompts over them with one key. Compare answers, latency and cost.",
+      "steps": [
+        {
+          "text": "Run anyr models, and pick ids.",
+          "shows": "command"
+        },
+        {
+          "text": "Send each the same prompt."
+        },
+        {
+          "text": "Compare answers, latency and cost."
+        }
+      ],
+      "close": "model evals",
       "claims": [
         {
           "says": "evaluating models from different vendors means one SDK and one key per provider",
           "from": "use-cases.json model-evals.problem"
         },
         {
-          "says": "run anyr models and pick the ids to compare",
-          "from": "use-cases.json model-evals.steps[0]"
+          "says": "Run anyr models, and pick ids.",
+          "from": "use-cases.json model-evals.steps"
         },
         {
-          "says": "loop the same prompts with one key; compare answers, latency, and cost",
-          "from": "use-cases.json model-evals.hook"
+          "says": "Send each the same prompt.",
+          "from": "use-cases.json model-evals.steps"
+        },
+        {
+          "says": "Compare answers, latency and cost.",
+          "from": "use-cases.json model-evals.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/model-evals",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "agent-fallback": {
       "outcome": "An agent pinned to one model stops when its provider goes down.",
-      "doing": "^List backup models in the same request.",
-      "then": "If the first model's providers are down, AnyRouter tries the next one.",
+      "steps": [
+        {
+          "text": "Keep your primary model."
+        },
+        {
+          "text": "Add backup models in order.",
+          "shows": "command"
+        },
+        {
+          "text": "Read which one answered."
+        }
+      ],
+      "close": "agent fallback",
       "claims": [
         {
           "says": "an agent pinned to one model stops mid-task during a provider outage",
           "from": "use-cases.json agent-fallback.problem"
         },
         {
-          "says": "list backup models in one request",
-          "from": "use-cases.json agent-fallback.hook"
+          "says": "Keep your primary model.",
+          "from": "use-cases.json agent-fallback.steps"
         },
         {
-          "says": "if the primary model's providers are down, AnyRouter tries the next model",
-          "from": "use-cases.json agent-fallback.hook"
+          "says": "Add backup models in order.",
+          "from": "use-cases.json agent-fallback.steps"
+        },
+        {
+          "says": "Read which one answered.",
+          "from": "use-cases.json agent-fallback.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/agent-fallback",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "donate-keys": {
       "outcome": "Free and flat-rate keys sit unused at the end of the month.",
-      "doing": "^Open the key in your dashboard, and donate it to the shared pool.",
-      "then": "It serves other people's requests, and pays you back in credits. Check that your provider's terms allow sharing.",
+      "steps": [
+        {
+          "text": "Add the key under BYOK."
+        },
+        {
+          "text": "Turn on donate.",
+          "shows": "command"
+        },
+        {
+          "text": "Credits come from pool traffic."
+        }
+      ],
+      "close": "donate keys",
       "claims": [
         {
           "says": "free-tier and flat-rate keys sit unused at the end of the month",
           "from": "use-cases.json donate-keys.problem"
         },
         {
-          "says": "open the key, donate to the shared pool",
-          "from": "use-cases.json donate-keys.command"
+          "says": "Add the key under BYOK.",
+          "from": "use-cases.json donate-keys.steps"
         },
         {
-          "says": "it serves other people's requests and pays you back in credits",
-          "from": "use-cases.json donate-keys.hook"
+          "says": "Turn on donate.",
+          "from": "use-cases.json donate-keys.steps"
         },
         {
-          "says": "check that your provider's terms allow sharing",
-          "from": "use-cases.json donate-keys.steps[1]"
+          "says": "Credits come from pool traffic.",
+          "from": "use-cases.json donate-keys.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/donate-keys",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "byok": {
       "outcome": "Attach the provider keys you already pay for.",
-      "doing": "Add them once, then ^call AnyRouter with one key.",
-      "then": "Requests bill the provider. AnyRouter takes no per-token cut.",
+      "steps": [
+        {
+          "text": "Add each provider key."
+        },
+        {
+          "text": "Call AnyRouter with one key.",
+          "shows": "command"
+        }
+      ],
+      "close": "B Y O K",
       "claims": [
         {
           "says": "attach your provider keys",
           "from": "use-cases.json byok.summary, problem: you already pay providers"
         },
         {
-          "says": "add each key, call AnyRouter with your sk-ar key",
-          "from": "use-cases.json byok.steps[0..1]"
+          "says": "Add each provider key.",
+          "from": "use-cases.json byok.steps"
         },
         {
-          "says": "requests bill the provider; no per-token cut",
-          "from": "use-cases.json byok.hook"
+          "says": "Call AnyRouter with one key.",
+          "from": "use-cases.json byok.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/byok",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "byok-anthropic": {
       "outcome": "Bring the Anthropic API key you already pay for.",
-      "doing": "Add your Anthropic key once, then ^run anyr claude with a Claude model.",
-      "then": "Billing stays on your Anthropic account, and other models are ready if Claude is busy.",
+      "steps": [
+        {
+          "text": "Add your Anthropic key in BYOK."
+        },
+        {
+          "text": "Test the key, and save it."
+        },
+        {
+          "text": "Run anyr claude with a Claude model.",
+          "shows": "command"
+        }
+      ],
+      "close": "B Y O K anthropic",
       "claims": [
         {
           "says": "you already pay Anthropic",
           "from": "use-cases.json byok-anthropic.problem"
         },
         {
-          "says": "add your sk-ant key once; call anthropic/claude models with anyr claude",
-          "from": "use-cases.json byok-anthropic.hook, steps[4]; anthropic/claude-sonnet-4-6 is billing byok"
+          "says": "Add your Anthropic key in BYOK.",
+          "from": "use-cases.json byok-anthropic.steps"
         },
         {
-          "says": "billing stays on your Anthropic account; other models ready if Claude is busy",
-          "from": "use-cases.json byok-anthropic.hook, problem"
+          "says": "Test the key, and save it.",
+          "from": "use-cases.json byok-anthropic.steps"
+        },
+        {
+          "says": "Run anyr claude with a Claude model.",
+          "from": "use-cases.json byok-anthropic.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/byok-anthropic",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "sign-in": {
-      "outcome": "Let users sign in with their AnyRouter account.",
-      "doing": "Send them to ^the consent page, and your app gets a temporary key.",
-      "then": "Their balance pays. You never store a raw provider secret.",
+      "outcome": "Let users sign in with AnyRouter, and their balance pays for their calls.",
+      "steps": [
+        {
+          "text": "Add the OAuth consent flow.",
+          "shows": "command"
+        },
+        {
+          "text": "Exchange the code for a short-lived key."
+        },
+        {
+          "text": "Call models on their behalf."
+        }
+      ],
+      "close": "sign in",
       "claims": [
         {
-          "says": "users sign in with their AnyRouter account",
-          "from": "use-cases.json sign-in.title"
+          "says": "Let users sign in with AnyRouter, and their balance pays for their calls.",
+          "from": "use-cases.json sign-in.problem, hook, title (the outcome: what it is and why)"
         },
         {
-          "says": "the OAuth consent flow; a short-lived key scoped to that user",
-          "from": "use-cases.json sign-in.steps[0..1], summary"
+          "says": "Add the OAuth consent flow.",
+          "from": "use-cases.json sign-in.steps"
         },
         {
-          "says": "their balance pays; you never store a raw provider secret",
-          "from": "use-cases.json sign-in.hook"
+          "says": "Exchange the code for a short-lived key.",
+          "from": "use-cases.json sign-in.steps"
+        },
+        {
+          "says": "Call models on their behalf.",
+          "from": "use-cases.json sign-in.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/sign-in",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "mcp-gateway": {
       "outcome": "Check credits, list models and rotate keys, without leaving the editor.",
-      "doing": "Point your MCP client at ^one endpoint.",
-      "then": "Claude Desktop, Claude Code, Cursor and OpenCode call your workspace as tools.",
+      "steps": [
+        {
+          "text": "Point your MCP client at this URL.",
+          "shows": "command"
+        },
+        {
+          "text": "Sign in when it asks."
+        }
+      ],
+      "close": "M C P gateway",
       "claims": [
         {
           "says": "checking credits, listing models, or rotating a key means leaving the editor",
           "from": "use-cases.json mcp-gateway.problem"
         },
         {
-          "says": "point the MCP client at one endpoint",
-          "from": "use-cases.json mcp-gateway.summary, steps[0]"
+          "says": "Point your MCP client at this URL.",
+          "from": "use-cases.json mcp-gateway.steps"
         },
         {
-          "says": "Claude Desktop, Claude Code, Cursor, and OpenCode call your workspace as tools",
-          "from": "use-cases.json mcp-gateway.hook"
+          "says": "Sign in when it asks.",
+          "from": "use-cases.json mcp-gateway.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/mcp-gateway",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "mcp-for-agents": {
       "outcome": "Every new MCP server is another token and another config to copy.",
-      "doing": "Point your agents at ^AnyRouter's MCP endpoint instead.",
-      "then": "Keep model calls on anyrouter/auto, so agents that use tools have a healthy default.",
+      "steps": [
+        {
+          "text": "Point your agents at one endpoint.",
+          "shows": "command"
+        },
+        {
+          "text": "Keep model calls on anyrouter/auto."
+        }
+      ],
+      "close": "M C P for agents",
       "claims": [
         {
           "says": "every new MCP server is another token and another JSON blob copied into each app",
           "from": "use-cases.json mcp-for-agents.problem"
         },
         {
-          "says": "point clients at AnyRouter's MCP endpoint",
-          "from": "use-cases.json mcp-for-agents.steps[1]"
+          "says": "Point your agents at one endpoint.",
+          "from": "use-cases.json mcp-for-agents.steps"
         },
         {
-          "says": "keep model calls on anyrouter/auto for a healthy default",
-          "from": "use-cases.json mcp-for-agents.steps[2]"
+          "says": "Keep model calls on anyrouter/auto.",
+          "from": "use-cases.json mcp-for-agents.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/mcp-for-agents",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "free-coding-agent": {
       "outcome": "Pin one free coding model, with a 1M-token context.",
-      "doing": "Run ^anyr claude with MiniMax M3.1 Flash free.",
-      "then": "It calls tools, costs nothing, and stays the same model between runs.",
+      "steps": [
+        {
+          "text": "Install anyr and sign in.",
+          "shows": "install"
+        },
+        {
+          "text": "Run anyr claude with MiniMax M3.1 Flash free.",
+          "shows": "command"
+        }
+      ],
+      "close": "free coding agent",
       "claims": [
         {
           "says": "a free model with a 1M-token context window",
           "from": "use-cases.json free-coding-agent.hook; minimax/minimax-m3.1-flash context 1000000, priced 0 in /api/v1/models?all=1; the :free id is the free route of the catalog row minimax/minimax-m3.1-flash"
         },
         {
-          "says": "anyr claude --model minimax/minimax-m3.1-flash:free",
-          "from": "use-cases.json free-coding-agent.command"
+          "says": "Install anyr and sign in.",
+          "from": "use-cases.json free-coding-agent.steps"
         },
         {
-          "says": "function calling, $0, one known model instead of a chain that changes between runs",
-          "from": "use-cases.json free-coding-agent.hook, problem"
+          "says": "Run anyr claude with MiniMax M3.1 Flash free.",
+          "from": "use-cases.json free-coding-agent.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/free-coding-agent",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "codex": {
       "outcome": "Codex expects an OpenAI key and base URL.",
-      "doing": "^Install anyr, then run anyr codex.",
-      "then": "It signs you in, stores one key, and launches Codex against AnyRouter.",
+      "steps": [
+        {
+          "text": "Install anyr.",
+          "shows": "install"
+        },
+        {
+          "text": "Run anyr codex.",
+          "shows": "command"
+        }
+      ],
+      "close": "codex",
       "claims": [
         {
           "says": "Codex expects an OpenAI key and base URL",
           "from": "use-cases.json codex.problem"
         },
         {
-          "says": "install the anyr CLI, run anyr codex",
-          "from": "use-cases.json codex.steps[0..1]"
+          "says": "Install anyr.",
+          "from": "use-cases.json codex.steps"
         },
         {
-          "says": "signs you in, stores one sk-ar- key, launches Codex against AnyRouter",
-          "from": "use-cases.json codex.hook"
+          "says": "Run anyr codex.",
+          "from": "use-cases.json codex.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/codex",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "embeddings-search": {
       "outcome": "Search and RAG pipelines need embeddings next to chat.",
-      "doing": "^Send text to the embeddings endpoint, in the OpenAI request shape.",
-      "then": "Nemotron Embed 1B is free. Other embedding models bill per input token.",
+      "steps": [
+        {
+          "text": "Pick an embedding model."
+        },
+        {
+          "text": "Send your text to the endpoint.",
+          "shows": "command"
+        },
+        {
+          "text": "Embed queries with the same model."
+        }
+      ],
+      "close": "embeddings search",
       "claims": [
         {
           "says": "a retrieval pipeline needs an embeddings endpoint next to the chat one",
           "from": "use-cases.json embeddings-search.problem"
         },
         {
-          "says": "/api/v1/embeddings takes the OpenAI request shape",
-          "from": "use-cases.json embeddings-search.hook"
+          "says": "Pick an embedding model.",
+          "from": "use-cases.json embeddings-search.steps"
         },
         {
-          "says": "nvidia/nemotron-3-embed-1b is $0; others bill per input token",
-          "from": "use-cases.json embeddings-search.hook; priced 0 in /api/v1/models?all=1"
+          "says": "Send your text to the endpoint.",
+          "from": "use-cases.json embeddings-search.steps"
+        },
+        {
+          "says": "Embed queries with the same model.",
+          "from": "use-cases.json embeddings-search.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/embeddings-search",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     },
     "decisions": {
       "outcome": "Triage a ticket with a typed answer, not a chat reply.",
-      "doing": "^Send the ticket as state, with the model anyrouter/decision.",
-      "then": "You get probabilities back, not generated text. It is free on every plan.",
+      "steps": [
+        {
+          "text": "Send the ticket as state."
+        },
+        {
+          "text": "Use anyrouter/decision.",
+          "shows": "command"
+        },
+        {
+          "text": "Read the answers."
+        }
+      ],
+      "close": "decisions",
       "claims": [
         {
           "says": "triage with typed decisions instead of chat",
           "from": "use-cases.json decisions.title, problem"
         },
         {
-          "says": "send state; model anyrouter/decision",
-          "from": "use-cases.json decisions.hook, steps[0..1], snippet"
+          "says": "Send the ticket as state.",
+          "from": "use-cases.json decisions.steps"
         },
         {
-          "says": "probabilities back, not generated text; free on every plan",
-          "from": "use-cases.json decisions.hook"
+          "says": "Use anyrouter/decision.",
+          "from": "use-cases.json decisions.steps"
+        },
+        {
+          "says": "Read the answers.",
+          "from": "use-cases.json decisions.steps"
+        },
+        {
+          "says": "anyrouter.dev/u/decisions",
+          "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
         }
       ]
     }

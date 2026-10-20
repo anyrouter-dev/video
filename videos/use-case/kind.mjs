@@ -33,14 +33,14 @@ import { markFor } from '../../lib/marks.mjs';
 import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, codeCols, caretCols, PORTRAIT_SIZES, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY } from './scenes.mjs';
 import { reflow, standsAlone } from './reflow.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
 export const MODELS_API = 'https://anyrouter.dev/api/v1/models?all=1';
 // The voice sets a film's length; a page with little to say still runs long enough to read.
-export const FILM = { min: 25, max: 45 };
+export const FILM = { min: 35, max: 60 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -60,8 +60,11 @@ function parseUseCase(u, i) {
     logos: list(u.logos ?? [], `${at}.logos`),
     command: u.command?.text ? { text: str(u.command.text, `${at}.command.text`), shell: !!u.command.shell } : null,
     snippets: list(u.snippets ?? [], `${at}.snippets`).map(s => ({ code: String(s.code ?? ''), title: s.title ?? null })),
+    steps: list(u.steps ?? [], `${at}.steps`).map(String),
     // what the page's diagram says answers when the model asked for cannot
     fallbacks: list(u.diagram?.nodes ?? [], `${at}.diagram.nodes`).filter(n => n?.kind === 'fallback').map(n => String(n.note ?? '')),
+    // the short link the site publishes for the page, once it does
+    link: typeof u.shortUrl === 'string' ? u.shortUrl : Array.isArray(u.shortUrls) && typeof u.shortUrls[0] === 'string' ? u.shortUrls[0] : null,
   };
 }
 
@@ -174,39 +177,82 @@ export function windowOf(u) {
 export function copyOf(u, pools) {
   const title = redact(u.title);
   if (!setIn(title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
+  if (!u.narration) fail(u.slug, 'no script in videos/use-case/narration.json');
+  // a step that does not show the window shows the page's own sentence for it: the page step sharing most words with it
+  const wordsOf = t => new Set(t.toLowerCase().match(/[a-z0-9]+/g) ?? []);
+  const pageStep = label => {
+    const mine = wordsOf(label);
+    return u.steps.map(t => ({ t, n: [...wordsOf(t)].filter(w => mine.has(w)).length })).reduce((a, b) => (b.n > a.n ? b : a), { t: null, n: 0 }).t;
+  };
+  // a page sentence that opens by repeating the label shows only what follows it
+  const beyond = (label, t) => (t && t.toLowerCase().startsWith(`${label.toLowerCase()}.`) ? t.slice(label.length + 1).trim() || null : t);
+  const steps = u.narration.lines.filter(l => l.beat === 'step').map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? redact(beyond(l.label, pageStep(l.label)) ?? '') || null : null }));
+  const shown = steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
+  if (!shown.length || !steps.some(st => st.shows === 'command')) fail(u.slug, 'no step shows the command');
+  const detailSizes = { landscape: TYPE.detail.landscape.sizes, portrait: TYPE.detail.portrait.sizes };
+  if (!['landscape', 'portrait'].every(o => stepType(steps.map(st => st.label))[o])) fail(u.slug, 'a step label does not fit beside its marker in two lines');
+  const labels = steps.map(st => st.label), stepT = {};
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text), keep: !l.focus && CHANGED.test(l.text) }));
   const rolled = rollOf(u, pools);
   const roll = rolled && { ...rolled, extra: Math.max(...rolled.ids.map(id => id.length)) - rolled.preset.length };
-  // Every line of code sits on one row. Portrait is the narrow frame: its code takes the largest size,
-  // down to the floor, at which every line fits as the page wrote it; only past the floor are lines
-  // rewritten narrower (reflow.mjs). Landscape shows the same lines. A window too tall drops its
-  // trailing context, then context that stands alone, never the command or a line it changes; of the
-  // cuts, the one whose landscape code is set largest wins, then the one keeping most lines.
-  const P = PORTRAIT_SIZES();
-  const fitAt = (px, narrower) => {
-    const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (roll && l.focus && t.includes(roll.preset) ? roll.extra : 0)
-      + (win.shell || l.focus ? caretCols('portrait', px) : 0);
-    const set = narrower ? reflow(lines, codeCols('portrait', px), { shell: win.shell, width }) : lines.every(l => width(l, l.text) <= codeCols('portrait', px)) && lines;
-    if (!set) return null;
-    const cuts = [set];
-    while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
-    // then, top down, lines of context that stand alone, so the code around them stays whole
-    const alone = (ls, i) => !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
-    for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
-    return cuts.map(shown => ({ shown, code: codeSizes(shown, roll, win.shell, title, { portrait: [px] }) })).filter(c => c.code)
-      .reduce((best, c) => (!best || c.code.landscape > best.code.landscape || (c.code.landscape === best.code.landscape && c.shown.length > best.shown.length) ? c : best), null);
+  // Every line of code sits on one row, in each frame on its own: the code takes the largest size, down
+  // to the floor, at which every line fits as the page wrote it; only past the floor are lines rewritten
+  // narrower (reflow.mjs). A window too tall drops its trailing context, then context that stands alone,
+  // never the command or a line it changes; of the cuts, the one set largest wins, then the one keeping most lines.
+  const fitIn = (o, head) => {
+    const fitAt = (px, narrower) => {
+      const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (roll && l.focus && t.includes(roll.preset) ? roll.extra : 0)
+        + (win.shell || l.focus ? caretCols(o, px) : 0);
+      const set = narrower ? reflow(lines, codeCols(o, px), { shell: win.shell, width }) : lines.every(l => width(l, l.text) <= codeCols(o, px)) && lines;
+      if (!set) return null;
+      const cuts = [set];
+      while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
+      // then, top down, lines of context that stand alone, so the code around them stays whole
+      const alone = (ls, i) => !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
+      for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
+      const fits = cuts.filter(ls => codeSizes(ls, roll, win.shell, { [o]: head }, { [o]: [px] }, o));
+      return fits.length ? { lines: fits.reduce((a, b) => (b.length > a.length ? b : a)), px } : null;
+    };
+    return [false, true].flatMap(narrower => SIZES[o].map(px => [px, narrower])).map(([px, n]) => fitAt(px, n)).find(Boolean) ?? null;
   };
-  // a smaller size, down to the floor, before any line is rewritten
-  const { shown, code } = [false, true].flatMap(narrower => P.map(px => [px, narrower])).map(([px, n]) => fitAt(px, n)).find(Boolean) ?? fail(`${u.slug}.command`, 'its code does not fit under the caption in either frame, one row a line');
+  // The step labels take the largest size at which the window still fits under whichever of its steps
+  // has the most above it.
+  const fitWith = o => {
+    for (const px of TYPE.step[o].sizes.filter(x => labels.every(l => labelSet(l, o, x)))) {
+      const head = Math.max(...shown.map(k => headOf(labels, k, { [o]: px })[o])), fit = fitIn(o, head);
+      if (fit) { stepT[o] = px; return fit; }
+    }
+    return fail(`${u.slug}.command`, `its code does not fit under its step in the ${o} frame, one row a line`);
+  };
+  const fitL = fitWith('landscape'), fitP = fitWith('portrait');
+  // a detail too long for the room under its step at the smallest size is left out
+  const roomFor = (k, o, px) => {
+    const set = detailSet(steps[k].detail, o, px), above = headOf(steps.map(st => st.label), k, stepT)[o] - STEP.headGap;
+    return set && above + STEP.detailGap + set.lines * px * 1.3 <= WIN_SH[o];
+  };
+  for (const [k, st] of steps.entries()) {
+    if (st.detail && !['landscape', 'portrait'].every(o => detailSizes[o].some(px => roomFor(k, o, px)))) st.detail = null;
+  }
+  const detailT = Object.fromEntries(['landscape', 'portrait'].map(o => [o, detailSizes[o].find(px => steps.every((st, k) => !st.detail || roomFor(k, o, px)))]));
+
+  const code = { landscape: fitL.px, portrait: fitP.px };
+  const code_lines = { landscape: fitL.lines, portrait: fitP.lines };
+  const titleT = titleType(title);
   return {
     slug: u.slug,
     url: u.url,
+    link: u.narration.lines.find(l => l.beat === 'close').text,
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    window: { shell: win.shell, title: win.title && redact(win.title), lines: shown, roll, answer: fallbackOf(u), code },
-    type: { title: code.title, breaks: { landscape: titleSet(title, 'landscape', code.title.landscape).breaks, portrait: titleSet(title, 'portrait', code.title.portrait).breaks } },
+    steps: steps.map(st => ({
+      ...st,
+      breaks: { landscape: labelSet(st.label, 'landscape', stepT.landscape).breaks, portrait: labelSet(st.label, 'portrait', stepT.portrait).breaks },
+      detail: st.detail && { text: st.detail, breaks: { landscape: detailSet(st.detail, 'landscape', detailT.landscape).breaks, portrait: detailSet(st.detail, 'portrait', detailT.portrait).breaks } },
+    })),
+    window: { shell: win.shell, title: win.title && redact(win.title), lines: code_lines, roll, answer: fallbackOf(u), code },
+    type: { title: titleT, step: stepT, detail: detailT, breaks: { landscape: titleSet(title, 'landscape', titleT.landscape).breaks, portrait: titleSet(title, 'portrait', titleT.portrait).breaks } },
   };
 }
 
@@ -214,83 +260,117 @@ export function copyOf(u, pools) {
 // Times are kept in tenths of a second: three frames, so every beat lands on a frame.
 const tenths = s => Math.round(s * 10) / 10;
 // Typing reads as typing at this pace, never slower than a comfortable typist.
-const TYPE_EACH = 0.05, TYPE_MAX = 2.2, LINE_PAUSE = 0.3;
-// The headline is up, the window risen, the lockup landed when the voice starts on each.
-const VOICE_AT = { outcome: 0.4, doing: 0.6, lockup: 0.5 };
-// A breath between two lines, and the beat after its last word before the picture moves on.
-const BREATH = 0.35, AFTER = 0.6;
-// The window rises before the code is typed; the lockup holds once its line is said.
-const MOVE = 0.7, TYPE_AT = 0.95, END_HOLD = 2.4, LOCKUP_HOLD = 1.6;
+const TYPE_EACH = 0.05, TYPE_MAX = 1.4, LINE_PAUSE = 0.3;
+// The voice starts once the headline is up, a step has tilted in, the lockup has landed.
+const VOICE_AT = { outcome: 0.4, step: 0.45, close: 0.7 };
+// A step reads for this long at least; the beat after its last word before the next one comes.
+const STEP_MIN = 2.6, AFTER = 0.7;
+// The window has settled before its code is typed; the lockup holds once the link is said.
+const TYPE_AT = 0.9, END_HOLD = 2.2, END_MIN = 4.5;
 // The typed line is read before its answer arrives.
 const ANSWER_AFTER = 0.6;
 
-/** A film's voiced lines by beat: outcome, doing, then (when it has one) and lockup. */
+/** A film's voiced lines: { outcome, steps: [...], close }. */
 export function voiceOf(u) {
   if (!u.narration) fail(u.slug, 'no script in videos/use-case/narration.json');
-  return Object.fromEntries(u.narration.lines.map(l => [l.beat, voicedLine(u.narration, l)]));
+  const voiced = u.narration.lines.map(l => voicedLine(u.narration, l));
+  return { outcome: voiced.find(l => l.beat === 'outcome'), steps: voiced.filter(l => l.beat === 'step'), close: voiced.find(l => l.beat === 'close') };
 }
-// When a line's marked word starts, from the start of the line; its start when nothing is marked.
-const anchorOf = line => (line.anchor == null ? 0 : line.words[line.anchor].start);
 const spoken = line => line.words.at(-1).end;
+const typingOf = lines => {
+  const chars = lines.reduce((n, l) => n + [...l.text].length, 0);
+  const each = chars ? Math.min(TYPE_EACH, TYPE_MAX / chars) : 0;
+  return { each, dur: chars * each + Math.max(0, lines.length - 1) * LINE_PAUSE };
+};
 
 /**
- * When everything happens, set by the voice. Beat 1 holds the headline while its
- * line is said. Beat 2 raises the window and types the code from the word its
- * line marks; the `then` line follows once both the code and the line before it
- * are done, and the roll or the answer comes on its marked word. Beat 3 lands
- * the lockup under the line every film ends on. A film shorter than FILM.min
- * holds each beat longer after its words, in proportion.
+ * When everything happens, set by the voice. Beat 1 holds the headline while
+ * the outcome is said. Then each step tilts in and holds while its line is
+ * said; the window comes in with the first step that shows it and stays while
+ * the next steps do. On an `install` step its lines before the command are
+ * typed, on the `command` step the command (and, with no install step, the
+ * lines before it), and the roll or the answer comes on the `result` step, or
+ * after the command when there is none. The last beat lands the lockup and the
+ * short link under its line. A film shorter than FILM.min holds its last
+ * end card a little longer and its last window step the rest, where a tint
+ * points out the lines it changes.
  */
 export function storyOf(u, pools) {
   const copy = copyOf(u, pools), voice = voiceOf(u);
-  const { lines, roll, answer, shell } = copy.window;
-  const typed = lines.filter(l => shell || l.focus);
-  const chars = typed.reduce((n, l) => n + [...l.text].length, 0);
-  const each = Math.min(TYPE_EACH, TYPE_MAX / chars);
-  const typing = chars * each + (typed.length - 1) * LINE_PAUSE;
+  const { roll, answer, shell } = copy.window;
+  const has = shows => copy.steps.some(st => st.shows === shows);
+  // the frames type the same code, set in rows of their own: the one with more rows types longer
+  const groupsOf = set => {
+    const typed = set.filter(l => shell || l.focus), at = Math.max(0, typed.findIndex(l => l.focus));
+    return has('install') ? { pre: typed.slice(0, at), cmd: typed.slice(at) } : { pre: [], cmd: typed };
+  };
+  const sets = ['landscape', 'portrait'].map(o => groupsOf(copy.window.lines[o]));
+  const groups = sets[1];
+  const pre = typingOf(groups.pre), cmd = typingOf(groups.cmd);
+  for (const g of sets) { pre.dur = Math.max(pre.dur, typingOf(g.pre).dur); cmd.dur = Math.max(cmd.dur, typingOf(g.cmd).dur); }
+  const each = Math.max(pre.each, cmd.each) || TYPE_EACH;
   const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
 
-  // beat 2, in seconds from its start
-  const typeAt = Math.max(TYPE_AT, VOICE_AT.doing + anchorOf(voice.doing));
-  const typed2 = typeAt + typing, said2 = VOICE_AT.doing + spoken(voice.doing);
-  const thenAt = voice.then && Math.max(said2 + BREATH, typed2 + 0.3);
-  const showAt = voice.then ? thenAt + anchorOf(voice.then) : typed2 + 0.5;
-  const rollAt = roll ? showAt : null, answerAt = answer ? (voice.then ? showAt : typed2 + ANSWER_AFTER) : null;
-  const ends = [said2, typed2 + Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - typing)];
-  if (voice.then) ends.push(thenAt + spoken(voice.then));
-  if (roll) ends.push(rollAt + rolling);
-  if (answer) ends.push(answerAt + read(answer));
-  // once everything is said and shown, the lines the page changes are pointed out in turn until the window leaves
-  const settled = Math.max(said2, typed2, voice.then ? thenAt + spoken(voice.then) : 0, roll ? rollAt + rolling : 0, answer ? answerAt + 0.8 : 0) + 0.2;
+  // each step, in seconds from its start: how long it needs, and what lands in it
+  const plan = copy.steps.map((st, k) => {
+    const v = voice.steps[k], said = VOICE_AT.step + spoken(v), lands = {};
+    let need = Math.max(STEP_MIN, said + AFTER);
+    if (st.shows === 'install') { lands.preAt = TYPE_AT; need = Math.max(need, TYPE_AT + pre.dur + 0.6); }
+    if (st.shows === 'command') {
+      lands.cmdAt = TYPE_AT;
+      const typedEnd = TYPE_AT + cmd.dur;
+      need = Math.max(need, typedEnd + Math.max(roll ? 0.8 : 1.2, read(groups.cmd.map(l => l.text).join(' ')) - cmd.dur));
+      if (!has('result')) {
+        if (roll) { lands.rollAt = typedEnd + 0.5; need = Math.max(need, lands.rollAt + rolling + 0.4); }
+        if (answer) { lands.answerAt = typedEnd + ANSWER_AFTER; need = Math.max(need, lands.answerAt + read(answer)); }
+      }
+    }
+    if (st.shows === 'result') {
+      const at = VOICE_AT.step + 0.6;
+      if (roll) { lands.rollAt = at; need = Math.max(need, at + rolling + 0.4); }
+      if (answer) { lands.answerAt = at; need = Math.max(need, at + read(answer)); }
+    }
+    // once all in it is said and shown, a tint points out the lines the page changes until it ends
+    if (st.shows) lands.pointAt = Math.max(said, lands.rollAt != null ? lands.rollAt + rolling : 0, lands.answerAt != null ? lands.answerAt + 0.8 : 0, lands.cmdAt != null ? TYPE_AT + cmd.dur : 0) + 0.2;
+    return { need, lands };
+  });
+  const outcome = Math.max(3.5, VOICE_AT.outcome + spoken(voice.outcome) + AFTER);
+  let close = Math.max(END_MIN, VOICE_AT.close + spoken(voice.close) + END_HOLD);
+  // A short film holds its end card a little longer, and its last window step the rest, where the tint
+  // points out the lines it changes: the one beat that keeps moving without a word.
+  let extra = Math.max(0, FILM.min - (outcome + plan.reduce((t, p) => t + p.need, 0) + close));
+  const toClose = Math.min(extra, 0.8);
+  close += toClose;
+  plan[copy.steps.map(st => !!st.shows).lastIndexOf(true)].need += extra - toClose;
 
-  const base = {
-    outcome: Math.max(2.4, read(`${copy.kicker} ${copy.title}`) - 0.4, VOICE_AT.outcome + spoken(voice.outcome) + AFTER),
-    doing: Math.max(...ends) + AFTER,
-    lockup: Math.max(MOVE + END_HOLD, VOICE_AT.lockup + spoken(voice.lockup) + LOCKUP_HOLD),
-  };
-  // a short film holds each beat longer after its words, never before them
-  const extra = Math.max(0, FILM.min - (base.outcome + base.doing + base.lockup));
-  const outcome = tenths(base.outcome + extra * 0.3), doing = tenths(base.doing + extra * 0.45);
-  const duration = Math.max(FILM.min, tenths(outcome + doing + base.lockup + extra * 0.25));
+  const beats = [{ key: 'outcome', start: 0, dur: tenths(outcome) }];
+  for (const [k, p] of plan.entries()) {
+    const start = tenths(beats.at(-1).start + beats.at(-1).dur);
+    beats.push({ key: `step-${k + 1}`, start, dur: tenths(p.need) });
+  }
+  const end = tenths(beats.at(-1).start + beats.at(-1).dur);
+  // a beat's tenths can round the film a frame under FILM.min: the end card takes it
+  const duration = Math.max(FILM.min, tenths(end + close));
   if (duration > FILM.max) fail(u.slug, `the film needs ${duration}s (max ${FILM.max})`);
-  const beats = [
-    { key: 'outcome', start: 0, dur: outcome },
-    { key: 'doing', start: outcome, dur: doing },
-    { key: 'lockup', start: tenths(outcome + doing), dur: tenths(duration - outcome - doing) },
-  ];
-  const at = (beat, t) => +(beats.find(b => b.key === beat).start + t).toFixed(2);
+  beats.push({ key: 'close', start: end, dur: tenths(duration - end) });
+
+  const at = (k, t) => (t == null ? null : +(beats[k + 1].start + t).toFixed(2));
+  const pick = key => plan.map((p, k) => at(k, p.lands[key])).find(t => t != null) ?? null;
   const said = [
-    { beat: 'outcome', at: at('outcome', VOICE_AT.outcome) },
-    { beat: 'doing', at: at('doing', VOICE_AT.doing) },
-    ...(voice.then ? [{ beat: 'then', at: at('doing', thenAt) }] : []),
-    { beat: 'lockup', at: at('lockup', VOICE_AT.lockup) },
-  ].map(s => ({ ...voice[s.beat], at: s.at }));
+    { ...voice.outcome, at: VOICE_AT.outcome },
+    ...voice.steps.map((v, k) => ({ ...v, at: at(k, VOICE_AT.step) })),
+    { ...voice.close, at: +(end + VOICE_AT.close).toFixed(2) },
+  ];
+  const winSteps = copy.steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
   return {
     copy, beats, duration, said,
     timing: {
-      each: +each.toFixed(4), typeAt: at('doing', typeAt), typing: +typing.toFixed(2), linePause: LINE_PAUSE,
-      rollAt: rollAt == null ? null : at('doing', rollAt), answerAt: answerAt == null ? null : at('doing', answerAt),
-      pointAt: at('doing', settled),
+      steps: copy.steps.map((st, k) => ({ at: beats[k + 1].start, voiceAt: at(k, VOICE_AT.step), shows: st.shows ?? null })),
+      windowIn: beats[winSteps[0] + 1].start, windowOut: beats[winSteps.at(-1) + 2].start,
+      each: +each.toFixed(4), linePause: LINE_PAUSE,
+      preAt: pick('preAt'), cmdAt: pick('cmdAt'), typing: +(pre.dur + cmd.dur).toFixed(2),
+      rollAt: pick('rollAt'), answerAt: pick('answerAt'), pointAt: plan.map((p, k) => at(k, p.lands.pointAt)).filter(t => t != null).at(-1),
+      end,
     },
   };
 }
@@ -314,13 +394,14 @@ export function styleOf(slug) {
 const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
   : v && typeof v === 'object' ? `{${Object.keys(v).sort().map(k => `${JSON.stringify(k)}:${stable(v[k])}`).join(',')}}`
   : JSON.stringify(v ?? null));
-/** The facts a film and its release notes are cut from, and what it says. Fields the film never shows (steps, hook, notes) are left out. */
+/** The facts a film and its release notes are cut from, and what it says. Fields the film never shows (hook, problem, notes) are left out. */
 const filmed = (u, pools) => ({
   slug: u.slug, url: u.url, kicker: u.kicker, title: u.title, summary: u.summary, logos: u.logos,
   window: u.command && windowOf(u), roll: rollOf(u, pools),
   // only a film that shows a fallback carries one, so the others keep their identity
   ...(fallbackOf(u) && { answer: fallbackOf(u) }),
   said: u.narration ? u.narration.lines.map(l => l.text) : null,
+  steps: u.steps,
 });
 
 /**
@@ -331,7 +412,7 @@ const filmed = (u, pools) => ({
 export function narrate(useCases, narration = loadNarration()) {
   return useCases.map(u => ({
     ...u,
-    narration: narration.films[u.slug] ? { voice: narration.voice, say: narration.say, lines: scriptOf(narration, u.slug) } : null,
+    narration: narration.films[u.slug] ? { voice: narration.voice, say: narration.say, lines: scriptOf(narration, u.slug, u.link) } : null,
   }));
 }
 const partsOf = (u, pools) => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u, pools))).digest('hex')}`];

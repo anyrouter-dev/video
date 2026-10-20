@@ -65,7 +65,7 @@ const sceneFile = (s, css) => `<!doctype html>
 <body><template>
 <style>${BASE_CSS}${css}</style>
 <div id="root" data-composition-id="${s.id}" data-width="1920" data-height="1080" data-duration="${s.dur}">
-  <div class="uc ${s.cls ?? ''}">${s.body}</div>
+  <div class="uc ${s.cls ?? ''}"${s.style ? ` style="${s.style}"` : ''}>${s.body}</div>
 </div>
 <script src="${GSAP}"></script>
 <script>

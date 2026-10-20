@@ -1,12 +1,11 @@
 /**
  * narration: what each use-case film says, and when each word of it is spoken.
  *
- * videos/use-case/narration.json holds the scripts: per film an `outcome`, a
- * `doing` and an optional `then` line, the `lockup` line every film shares, the
- * claims ledger, the voice and its settings, and `say`, how a word on screen is
- * spoken ("anyr" is "any R"). A `^` before a word marks where the picture moves
- * on it: the typing starts on that word of `doing`, the roll or the answer on
- * that word of `then`.
+ * videos/use-case/narration.json holds the scripts: per film an `outcome` (what
+ * this is and why you would want it), its `steps`, each one short line and what
+ * the code window shows on it (`shows`: install, command or result), `close`,
+ * how its short link is spoken, and the claims ledger; the voice and its
+ * settings; and `say`, how a word on screen is spoken ("anyr" is "any R").
  *
  * videos/use-case/voice/<line>.mp3 is each line voiced, and <line>.json its
  * alignment: when each character of the spoken text starts and ends. They are
@@ -21,17 +20,26 @@ import { fileURLToPath } from 'node:url';
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 export const NARRATION = path.join(DIR, 'narration.json');
 export const VOICE_DIR = path.join(DIR, 'voice');
-export const BEATS = ['outcome', 'doing', 'then'];
 
 export const loadNarration = (file = NARRATION) => JSON.parse(fs.readFileSync(file, 'utf8'));
 
-/** The lines one film speaks, in order, as { id, beat, text }; the lockup line is shared by every film. */
-export function scriptOf(narration, slug) {
+/** The short link a film ends on: the page's own, or /u/<slug> until the site publishes one. */
+export const shortLinkOf = (slug, published) => (published ?? `anyrouter.dev/u/${slug}`).replace(/^https?:\/\//, '');
+
+/**
+ * The lines one film speaks, in order, as { id, beat, text, step?, shows?, say? }:
+ * its outcome, then "Step 1. …" for each step, then its short link. The link
+ * is spoken as `close` says it ("any router dot dev slash u slash open code").
+ */
+export function scriptOf(narration, slug, published) {
   const film = narration.films[slug];
   if (!film) throw new Error(`narration.json has no script for "${slug}": write one before this film can be built`);
+  const link = shortLinkOf(slug, published);
+  if (link !== `anyrouter.dev/u/${slug}`) throw new Error(`${slug} ends on ${link}, and its close is written for anyrouter.dev/u/${slug}: rewrite it`);
   return [
-    ...BEATS.filter(b => film[b]).map(beat => ({ id: `${slug}-${beat}`, beat, text: film[beat] })),
-    { id: 'lockup', beat: 'lockup', text: narration.lockup },
+    { id: `${slug}-outcome`, beat: 'outcome', text: film.outcome },
+    ...film.steps.map((st, i) => ({ id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, text: `Step ${i + 1}. ${st.text}` })),
+    { id: `${slug}-close`, beat: 'close', text: link, say: { [link]: `any router dot dev slash u slash ${film.close}.` } },
   ];
 }
 
@@ -63,7 +71,7 @@ export const hashOf = (voice, spoken) => crypto.createHash('sha256').update(JSON
  * its current text, so a stale voice never reaches a render.
  */
 export function voicedLine(narration, line, dir = VOICE_DIR) {
-  const { words, spoken, anchor } = parseLine(line.text, narration.say);
+  const { words, spoken, anchor } = parseLine(line.text, { ...narration.say, ...line.say });
   const meta = path.join(dir, `${line.id}.json`);
   const rec = fs.existsSync(meta) && JSON.parse(fs.readFileSync(meta, 'utf8'));
   if (!rec || rec.hash !== hashOf(narration.voice, spoken)) {
