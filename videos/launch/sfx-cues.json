@@ -9,7 +9,7 @@
  {
   "frame": 1,
   "sound": "click",
-  "at": 2.706,
+  "at": 2.552,
   "volume": 0.28
  },
  {
@@ -36,7 +36,7 @@
   "frame": 2,
   "sound": "click-soft",
   "at": 1.014,
-  "volume": 0.2,
+  "volume": 0.14,
   "pitch": -2
  },
  {
@@ -50,7 +50,7 @@
   "frame": 2,
   "sound": "click-soft",
   "at": 1.864,
-  "volume": 0.24
+  "volume": 0.168
  },
  {
   "frame": 2,
@@ -69,7 +69,7 @@
  {
   "frame": 2,
   "sound": "click-soft",
-  "at": 4.415,
+  "at": 4.282,
   "volume": 0.24
  },
  {
@@ -126,51 +126,51 @@
  {
   "frame": 4,
   "sound": "pop",
-  "at": 0.966,
+  "at": 0.764,
   "volume": 0.2,
   "pitch": -3
  },
  {
   "frame": 4,
   "sound": "error",
-  "at": 1.116,
+  "at": 1.316,
   "volume": 0.1
  },
  {
   "frame": 4,
   "sound": "whoosh-short",
-  "at": 1.246,
+  "at": 1.346,
   "volume": 0.1
  },
  {
   "frame": 4,
   "sound": "whoosh-short",
-  "at": 2.242,
+  "at": 2.342,
   "volume": 0.1,
   "pitch": -3
  },
  {
   "frame": 4,
   "sound": "click-soft",
-  "at": 2.776,
-  "volume": 0.24
+  "at": 2.876,
+  "volume": 0.168
  },
  {
   "frame": 4,
   "sound": "whoosh-short",
-  "at": 2.876,
+  "at": 2.976,
   "volume": 0.1
  },
  {
   "frame": 4,
   "sound": "pop",
-  "at": 3.792,
+  "at": 3.892,
   "volume": 0.22
  },
  {
   "frame": 4,
   "sound": "ping",
-  "at": 3.962,
+  "at": 4.062,
   "volume": 0.13,
   "pitch": 9
  },
@@ -183,34 +183,41 @@
  },
  {
   "frame": 5,
-  "sound": "click-soft",
-  "at": 2.621,
-  "volume": 0.22
- },
- {
-  "frame": 5,
   "sound": "whoosh-short",
-  "at": 3.461,
+  "at": 2.628,
   "volume": 0.08,
   "pitch": -4
  },
  {
   "frame": 5,
   "sound": "click-soft",
-  "at": 4.221,
-  "volume": 0.22,
+  "at": 3.388,
+  "volume": 0.154
+ },
+ {
+  "frame": 5,
+  "sound": "whoosh-short",
+  "at": 3.678,
+  "volume": 0.08,
+  "pitch": -4
+ },
+ {
+  "frame": 5,
+  "sound": "click-soft",
+  "at": 4.438,
+  "volume": 0.154,
   "pitch": 2
  },
  {
   "frame": 6,
   "sound": "pop",
-  "at": 0.836,
+  "at": 0.695,
   "volume": 0.2
  },
  {
   "frame": 6,
   "sound": "pop",
-  "at": 1.185,
+  "at": 1.031,
   "volume": 0.2,
   "pitch": 3
  },
@@ -225,7 +232,7 @@
   "frame": 6,
   "sound": "click-soft",
   "at": 2.931,
-  "volume": 0.22,
+  "volume": 0.154,
   "pitch": -2
  },
  {
@@ -238,7 +245,7 @@
  {
   "frame": 6,
   "sound": "click-soft",
-  "at": 4.281,
+  "at": 4.131,
   "volume": 0.22,
   "pitch": 3
  },
@@ -267,7 +274,7 @@
   "frame": 7,
   "sound": "click-soft",
   "at": 1.158,
-  "volume": 0.22
+  "volume": 0.154
  },
  {
   "frame": 7,
@@ -291,6 +298,20 @@
   "pitch": 2
  },
  {
+  "frame": 7,
+  "sound": "whoosh-short",
+  "at": 5.096,
+  "volume": 0.08,
+  "pitch": -4
+ },
+ {
+  "frame": 7,
+  "sound": "click-soft",
+  "at": 5.675,
+  "volume": 0.22,
+  "pitch": -2
+ },
+ {
   "frame": 8,
   "sound": "whoosh-short",
   "at": 0.112,
@@ -302,14 +323,14 @@
   "sound": "click-soft",
   "at": 0.872,
   "volume": 0.22,
-  "pitch": -2
+  "pitch": 3
  },
  {
   "frame": 8,
   "sound": "ping",
   "at": 1.332,
   "volume": 0.1,
-  "pitch": 9
+  "pitch": 4
  },
  {
   "frame": 8,
@@ -321,16 +342,16 @@
  {
   "frame": 8,
   "sound": "click-soft",
-  "at": 1.877,
+  "at": 1.74,
   "volume": 0.22,
-  "pitch": 3
+  "pitch": 1
  },
  {
   "frame": 8,
   "sound": "ping",
   "at": 2.337,
   "volume": 0.1,
-  "pitch": 4
+  "pitch": 7
  },
  {
   "frame": 8,
@@ -343,15 +364,14 @@
   "frame": 8,
   "sound": "click-soft",
   "at": 3.693,
-  "volume": 0.22,
-  "pitch": 1
+  "volume": 0.22
  },
  {
   "frame": 8,
   "sound": "ping",
   "at": 4.153,
   "volume": 0.1,
-  "pitch": 7
+  "pitch": 9
  },
  {
   "frame": 9,
@@ -364,7 +384,7 @@
   "frame": 10,
   "sound": "click",
   "at": 0.774,
-  "volume": 0.16,
+  "volume": 0.112,
   "pitch": 2
  },
  {
@@ -384,7 +404,7 @@
  {
   "frame": 11,
   "sound": "click",
-  "at": 1.189,
+  "at": 1.02,
   "volume": 0.16
  },
  {
@@ -397,7 +417,7 @@
  {
   "frame": 11,
   "sound": "click",
-  "at": 2.193,
+  "at": 1.983,
   "volume": 0.2
  },
  {
@@ -411,7 +431,7 @@
   "frame": 11,
   "sound": "click",
   "at": 2.719,
-  "volume": 0.2,
+  "volume": 0.14,
   "pitch": 2
  },
  {
@@ -424,7 +444,7 @@
  {
   "frame": 12,
   "sound": "click",
-  "at": 0.6,
+  "at": 0.474,
   "volume": 0.2,
   "pitch": 4
  },

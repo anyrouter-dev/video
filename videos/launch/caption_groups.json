@@ -352,89 +352,95 @@
       "id": "caption-group-7",
       "frame": 5,
       "start": 21.257,
-      "end": 23.103,
-      "text": "Free models run on someone's quota.",
+      "end": 23.591,
+      "text": "Some free models run on donated keys.",
       "words": [
         {
           "id": "caption-word-7-0",
-          "text": "Free",
+          "text": "Some",
           "start": 21.257,
-          "end": 21.524
+          "end": 21.489
         },
         {
           "id": "caption-word-7-1",
-          "text": "models",
-          "start": 21.57,
-          "end": 21.907
+          "text": "free",
+          "start": 21.536,
+          "end": 21.721
         },
         {
           "id": "caption-word-7-2",
-          "text": "run",
-          "start": 21.965,
+          "text": "models",
+          "start": 21.779,
           "end": 22.116
         },
         {
           "id": "caption-word-7-3",
-          "text": "on",
-          "start": 22.163,
-          "end": 22.232
+          "text": "run",
+          "start": 22.174,
+          "end": 22.337
         },
         {
           "id": "caption-word-7-4",
-          "text": "someone's",
-          "start": 22.279,
-          "end": 22.581
+          "text": "on",
+          "start": 22.395,
+          "end": 22.488
         },
         {
           "id": "caption-word-7-5",
-          "text": "quota.",
-          "start": 22.627,
-          "end": 23.103
+          "text": "donated",
+          "start": 22.569,
+          "end": 23.01
+        },
+        {
+          "id": "caption-word-7-6",
+          "text": "keys.",
+          "start": 23.068,
+          "end": 23.591
         }
       ]
     },
     {
       "id": "caption-group-8",
       "frame": 5,
-      "start": 23.486,
-      "end": 25.808,
+      "start": 23.869,
+      "end": 25.947,
       "text": "The AnyRouter pool spreads that load.",
       "words": [
         {
           "id": "caption-word-8-0",
           "text": "The",
-          "start": 23.486,
-          "end": 23.614
+          "start": 23.869,
+          "end": 23.974
         },
         {
           "id": "caption-word-8-1",
           "text": "AnyRouter",
-          "start": 23.672,
-          "end": 24.159
+          "start": 24.02,
+          "end": 24.438
         },
         {
           "id": "caption-word-8-2",
           "text": "pool",
-          "start": 24.218,
-          "end": 24.485
+          "start": 24.485,
+          "end": 24.705
         },
         {
           "id": "caption-word-8-3",
           "text": "spreads",
-          "start": 24.554,
-          "end": 24.891
+          "start": 24.763,
+          "end": 25.088
         },
         {
           "id": "caption-word-8-4",
           "text": "that",
-          "start": 24.937,
-          "end": 25.088
+          "start": 25.123,
+          "end": 25.274
         },
         {
           "id": "caption-word-8-5",
           "text": "load.",
-          "start": 25.158,
-          "end": 25.808
+          "start": 25.344,
+          "end": 25.947
         }
       ]
     },

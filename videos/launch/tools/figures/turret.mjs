@@ -150,7 +150,7 @@ export function build(view = "landscape", pose = REST) {
   const SF = G.frameAlong([HOUSING.x + HOUSING.w, 0, AXIS_Z], [1, 0, 0]);
   disc("drive", "drive.flange", SF, 0, 3, 17, { tone: "mid" }, { extra: Dots([0, 60, 120, 180, 240, 300].map((q) => at([HOUSING.x + HOUSING.w + 3, 14.5 * Math.cos(rad(q + 30)), AXIS_Z + 14.5 * Math.sin(rad(q + 30))])), { size: 0.5 }) });
   const gap = HEX_X[0] - (HOUSING.x + HOUSING.w);
-  disc("drive", "drive.coupling", SF, 3, gap, 12, { tone: "hi", lit: true, crease: "lo" });
+  disc("drive", "drive.coupling", SF, 3, gap, 12, { tone: "hi", lit: true, crease: "lo" }, { extra: `<path class="lf-lamp" data-lamp="drive" opacity="0" d="${G.disc(3, gap, 12, SF, P).fill}"/>` });
   const pin = pinPaths(P, pose.pull);
   B.put("pin", "drive.pin", [HOUSING.x + HOUSING.w + 6, 0, AXIS_Z - PIN_R], `<g data-part="pin">${S(pin, { tone: "hi" })}</g>`, [B.R.solid(A.solid(G.frameAlong([HOUSING.x + HOUSING.w, 0, AXIS_Z - PIN_R], [1, 0, 0]), [[3, 2.6], [gap + 4, 2.6], [gap + 5, 1.8]], { name: "drive.pin", owner: "pin" }))]);
 

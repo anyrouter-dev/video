@@ -34,7 +34,16 @@ function act(initial) {
       move(key, t0, d, to) { track(key).segs.push([+t0.toFixed(3), +d.toFixed(3), to]); state[key] = to; return t0 + d; },
       set(key, t, to) { return api.move(key, t, 0, to); },
       now: (key) => state[key],
-      sound(t, sound, volume = 0.3, pitch = 0) { events.push({ t: +t.toFixed(3), sound, volume, pitch }); },
+      /** A hit that would land inside a spoken word moves just ahead of it, or plays softer. */
+      sound(t, sound, volume = 0.3, pitch = 0) {
+        if (/^(pop|click|click-soft)$/.test(sound)) {
+          const word = voice.words.find((x) => t > x.start + 0.04 && t < x.end);
+          if (word && t - word.start <= 0.15) t = Math.max(0, word.start - 0.06);
+          else if (word) volume = +(volume * 0.7).toFixed(3);
+        }
+        events.push({ t: +t.toFixed(3), sound, volume, pitch });
+      },
+      statement(t, text) { (spec.statement = Array.isArray(spec.statement) ? spec.statement : [[0, spec.statement]]).push([+t.toFixed(3), text]); },
       say(t, text) { readout.push([+t.toFixed(3), text]); },
     };
     script(api);
@@ -112,19 +121,23 @@ function traverserFrames() {
     slide(a, t + 0.1, EXITS[2]);
   }));
   out.push(frame(4, { id: "04-failover", fig: "traverser", statement: "If a provider fails, the next one answers." }, (a) => {
-    a.say(0, `${m2} · route 1`);
+    a.say(0, `${m2} · upstream 1`);
     const fast = (t0, to) => { const d = runTime(a.now("carX"), to, 320); a.sound(t0, "whoosh-short", 0.1); return a.move("carX", t0, d, to); };
     let t = fast(0.05, CAR_STOP);
     a.sound(t - 0.03, "pop", 0.2, -3);
-    a.say(t, `${m2} · 429 → fallback`);
-    a.sound(t + 0.12, "error", 0.1);
-    t = fast(t + 0.25, ONBRIDGE);
+    a.say(t, `${m2} · upstream 1 · 429`);
+    a.move("lamp:fault-exit2", t, 0.1, 1);
+    a.sound(t + 0.32, "error", 0.1);
+    a.move("lamp:fault-exit2", t + 0.6, 0.3, 0);
+    t = fast(t + 0.35, ONBRIDGE);
+    a.say(t, `${m2} · upstream 2`);
     t = slide(a, t + 0.05, EXITS[3]);
     t = fast(t + 0.05, CAR_STOP);
     a.sound(t - 0.03, "pop", 0.22);
     light(a, t, "lamp:exit3");
     a.sound(t + 0.14, "ping", 0.13, 9);
-    a.say(t, "200 · billed once");
+    a.say(t, `${m2} · upstream 2 · 200`);
+    a.statement(t, "One request. Billed once.");
   }));
   return { frame, out, car, slide };
 }
@@ -157,15 +170,15 @@ function carouselFrames() {
     return at + 0.7;
   };
   const out = [];
-  out.push(frame(5, { id: "05-pool", fig: "carousel", cardIn: true, statement: "Free models run on someone's quota." }, (a) => {
+  out.push(frame(5, { id: "05-pool", fig: "carousel", cardIn: true, statement: "Some free models run on donated keys." }, (a) => {
     a.say(0, "the shared pool");
     a.sound(0.05, "whoosh-short", 0.14, -5);
     const p = a.w("pool");
-    serve(a, p - 0.5, 1);
-    serve(a, p + 0.5, 2);
+    serve(a, p - 0.6, 0);
+    serve(a, p + 0.45, 1);
   }));
   out.push(frame(6, { id: "06-donate", fig: "carousel", statement: "Members donate spare provider keys." }, (a) => {
-    a.say(0, "keys donated · 9");
+    a.say(0, "slots filled · 9 of 12");
     for (const [slot, word] of [[4, "donate"], [7, "spare"]]) {
       const t = a.w(word);
       a.set(`lift${slot}`, t - 0.01, 26);
@@ -173,32 +186,33 @@ function carouselFrames() {
       a.move(`lift${slot}`, t, 0.45, 0);
       a.sound(t + 0.43, "pop", 0.2, slot === 4 ? 0 : 3);
     }
-    a.say(a.w("spare") + 0.45, "keys donated · 11");
+    a.say(a.w("spare") + 0.45, "slots filled · 11 of 12");
     const e = a.w("Each");
     a.say(e, "each request → the key idle longest");
-    let t = serve(a, e, 3);
-    t = serve(a, t + 0.05, 4);
-    serve(a, t + 0.05, 5);
+    let t = serve(a, e, 2);
+    t = serve(a, t + 0.05, 3);
+    serve(a, t + 0.05, 4);
   }));
-  out.push(frame(7, { id: "07-fair", fig: "carousel", statement: [[0, "Your requests come first."], ["back", "Take your key back any time."], ["Only", "Donors and paid plans draw from it."]] }, (a) => {
+  out.push(frame(7, { id: "07-fair", fig: "carousel", statement: [[0, "Your requests come first."], ["back", "Take your key back any time."], ["Only", "Pool models: donors and paid plans."]] }, (a) => {
     a.say(0, "your key · served first");
     serve(a, a.w("first,") - 0.6, 9);
     const b = a.w("back") - 0.1;
-    a.move("lift9", b, 0.6, 30);
-    a.move("key9", b + 0.3, 0.5, 0);
+    a.move("lift9", b, 0.8, 64);
+    a.move("key9", b + 0.15, 0.45, 0);
     a.sound(b, "whoosh-short", 0.12, 3);
     a.say(b + 0.4, "your key · withdrawn");
     const o = a.w("Only");
-    a.say(o, "donors · Go · Pro · Pro+ · Max · Enterprise");
-    serve(a, o + 0.3, 6);
+    a.say(o, "other free models · every plan");
+    serve(a, o + 0.3, 5);
+    serve(a, o + 1.3, 6);
   }));
-  out.push(frame(8, { id: "08-reward", fig: "carousel", statement: "Go free · $4 credit a month · 5% back" }, (a) => {
-    a.say(0, "8% on Pro and Max · up to $1 per key per day");
+  out.push(frame(8, { id: "08-reward", fig: "carousel", statement: "Go free · $4 credit a month · 5% of what your key serves" }, (a) => {
+    a.say(0, "8% on Pro and Max · up to $1/key/day");
     serve(a, a.w("Go") - 0.55, 7, { token: true });
     serve(a, a.w("four") - 0.45, 8, { token: true });
-    serve(a, a.w("five") - 0.55, 9 - 1 + 3, { token: true });
+    serve(a, a.w("five") - 0.55, 11, { token: true });
   }));
-  out.push(frame(9, { id: "09-byok", fig: "carousel", statement: "Your own keys: $0 markup.", overlay: { type: "capture", src: "assets/captures/byok-add-provider-list.png", w: 1156, h: 826 } }, (a) => {
+  out.push(frame(9, { id: "09-byok", fig: "carousel", title: "Your own keys", statement: "Your own keys: $0 markup.", overlay: { type: "capture", src: "assets/captures/byok-add-provider-list.png", w: 1156, h: 826, crop: [212, 8, 0, 8] } }, (a) => {
     a.say(0, "BYOK · private to your account");
     a.sound(0.08, "whoosh-short", 0.12, 2);
   }));
@@ -221,7 +235,6 @@ function turretFrames() {
   };
   const out = [];
   out.push(frame(10, { id: "10-install", fig: null, statement: "Install anyr with one command.", overlay: { type: "term", lines: ["curl -fsSL https://anyrouter.dev/setup.sh | bash"], title: "Install · macOS and Linux" } }, (a) => {
-    a.say(0, "macOS and Linux");
     a.sound(a.w("install") - 0.05, "click", 0.16, 2);
   }));
   out.push(frame(11, { id: "11-agents", fig: "turret", cardIn: true, mono: true, statement: [[0, "anyr login"], ["Claude", "anyr claude"], ["Pi", "anyr pi"], ["OpenCode", "anyr opencode"]] }, (a) => {

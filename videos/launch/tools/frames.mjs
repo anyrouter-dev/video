@@ -14,7 +14,7 @@ import * as turret from "./figures/turret.mjs";
 
 const FILM = path.join(path.dirname(new URL(import.meta.url).pathname), "..");
 const OUT = path.join(FILM, "compositions/frames");
-const ISO_CSS = fs.readFileSync(path.join(FILM, "tools/anatomy/iso.css"), "utf8");
+const ISO_CSS = fs.readFileSync(path.join(FILM, "tools/anatomy/iso.css"), "utf8").replace("filter:blur(9px);", "");
 const GSAP = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>`;
 
 const FIGS = {
@@ -45,7 +45,7 @@ ${R} .lf-card { position: absolute; left: 72px; right: 72px; top: 56px; bottom: 
 ${R} .lf-corner { position: absolute; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; line-height: 1; letter-spacing: 0.02em; color: var(--muted); white-space: nowrap; }
 ${R} .lf-no { left: 36px; bottom: 104px; color: var(--ink-2); }
 ${R} .lf-title { margin-left: 28px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-${R} .lf-art { position: absolute; left: 50%; top: 8px; width: 1420px; margin-left: -710px; }
+${R} .lf-art { position: absolute; left: 50%; top: 0; width: 1340px; margin-left: -670px; }
 ${R} .lf-art .lf-port { display: none; }
 ${R} .lf-statement { position: absolute; left: 36px; bottom: 30px; font-size: 52px; font-weight: 600; line-height: 1.05; letter-spacing: -0.035em; white-space: nowrap; }
 ${R} .lf-statement.lf-mono { font-family: "Geist Mono", ui-monospace, monospace; font-weight: 500; letter-spacing: -0.02em; }
@@ -57,7 +57,7 @@ ${R} .lf-shot-port { display: none; }
 ${R} .lf-crop { position: relative; overflow: hidden; border-bottom: 2px solid var(--hair); }
 ${R} .lf-crop:last-child { border-bottom: 0; }
 ${R} .lf-crop img { position: absolute; max-width: none; }
-${R} .lf-term { position: absolute; left: 50%; top: 50%; width: 1440px; margin-left: -720px; transform: translateY(-62%); background: var(--ink); border-radius: 28px; overflow: hidden; }
+${R} .lf-term { position: absolute; left: 50%; top: 43%; width: 1440px; margin-left: -720px; transform: translateY(-50%); background: var(--ink); border-radius: 28px; overflow: hidden; }
 ${R} .lf-term-bar { height: 76px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; color: #A3A3A3; }
 ${R} .lf-term-body { padding: 56px 60px 64px; font-family: "Geist Mono", ui-monospace, monospace; font-size: 46px; line-height: 1.35; letter-spacing: -0.02em; color: #FFFFFF; white-space: pre; }
 ${R} .lf-term-body .lf-prompt { color: #A3A3A3; }
@@ -74,7 +74,7 @@ ${R} .lf-plate .lf-corner { left: 24px; bottom: 22px; color: var(--ink-2); }
 @media (orientation: portrait) {
   ${R} .lf-cam { transform-origin: 50% 40%; }
   ${R} .lf-card { left: 60px; right: 60px; top: 190px; bottom: 640px; }
-  ${R} .lf-art { top: 24px; width: 920px; margin-left: -460px; }
+  ${R} .lf-art { top: 24px; left: 24px; width: 860px; margin-left: 0; }
   ${R} .lf-art .lf-land { display: none; }
   ${R} .lf-art .lf-port { display: block; }
   ${R} .lf-no { bottom: 232px; }
@@ -82,18 +82,18 @@ ${R} .lf-plate .lf-corner { left: 24px; bottom: 22px; color: var(--ink-2); }
   ${R} .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   ${R} .lf-shot-land { display: none; }
   ${R} .lf-shot-port { display: block; }
-  ${R} .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  ${R} .lf-term { left: 36px; top: 40%; width: 860px; margin-left: 0; transform: translateY(-50%); }
   ${R} .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   ${R} .lf-term-body .lf-pbr { display: inline; }
   ${R} .lf-term-body .lf-lsp { display: none; }
   ${R} .lf-close-line { font-size: 60px; }
   ${R} .lf-lockup { font-size: 104px; gap: 24px; }
   ${R} .lf-lockup img { width: 92px; height: 92px; }
-  ${R} .lf-close-head { top: 330px; }
-  ${R} .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
-  ${R} .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
-  ${R} .lf-plate .lf-corner { left: 18px; bottom: 18px; }
-  ${R} .lf-plate .lf-title { display: none; }
+  ${R} .lf-close-head { top: 300px; }
+  ${R} .lf-plates { left: 60px; right: 120px; top: 540px; height: 750px; flex-direction: column; gap: 18px; }
+  ${R} .lf-plate .iso { left: auto; right: 1%; width: 52%; top: 4px; }
+  ${R} .lf-plate .lf-corner { left: 22px; top: 26px; bottom: auto; white-space: normal; width: 300px; line-height: 1.25; }
+  ${R} .lf-plate .lf-title { display: block; margin-left: 0; }
 }
 ${ISO_CSS}
 ${FILM_CSS}`;
@@ -101,18 +101,25 @@ ${FILM_CSS}`;
 
 /** A capture laid over the card: whole in landscape; in portrait, panels stacked when it has them. */
 function captureHtml(id, o) {
-  const lw = o.panels ? 1500 : 860;
-  const lh = Math.round((lw * o.h) / o.w);
-  const top = Math.round(56 + (824 - lh) / 2 - 24);
+  // crop = [top, right, bottom, left] in capture pixels: what the frame leaves out of the screenshot
+  const [ct, cr, cb, cl] = o.crop ?? [0, 0, 14, 0];
+  const vw = o.w - cl - cr, vh = o.h - ct - cb;
+  const shot = (w, extra) => {
+    const k = w / vw;
+    return `style="width: ${w}px; height: ${Math.round(vh * k)}px; ${extra}"><img src="${o.src}" alt="" style="position: absolute; max-width: none; width: ${Math.round(o.w * k)}px; left: ${-Math.round(cl * k)}px; top: ${-Math.round(ct * k)}px" />`;
+  };
+  const lw = o.panels ? 1500 : 780;
+  const lh = Math.round((lw * vh) / vw);
+  const top = Math.round(56 + (700 - lh) / 2);
   let port;
   if (o.panels) {
-    const pw = o.w / o.panels, y0 = 418, ph = o.h - y0, scale = 860 / pw;
-    const crops = Array.from({ length: o.panels }, (_, i) => `<div class="lf-crop" style="height: ${Math.round(ph * scale)}px"><img src="${o.src}" alt="" style="width: ${Math.round(o.w * scale)}px; left: ${-Math.round(i * pw * scale)}px; top: ${-Math.round(y0 * scale)}px" /></div>`).join("");
-    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 250px">${crops}</div>`;
+    const pw = o.w / o.panels, y0 = 330, y1 = 514, scale = 700 / pw;
+    const crops = Array.from({ length: o.panels }, (_, i) => `<div class="lf-crop" style="height: ${Math.round((y1 - y0) * scale)}px"><img src="${o.src}" alt="" style="width: ${Math.round(o.w * scale)}px; left: ${-Math.round(i * pw * scale)}px; top: ${-Math.round(y0 * scale)}px" /></div>`).join("");
+    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 700px; left: 160px; top: 240px">${crops}</div>`;
   } else {
-    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 260px"><img src="${o.src}" alt="" /></div>`;
+    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" ${shot(820, "left: 100px; top: 250px;")}</div>`;
   }
-  return `<div id="lf${id}-shot" class="lf-shot lf-shot-land" style="width: ${lw}px; margin-left: ${-lw / 2}px; top: ${top}px"><img src="${o.src}" alt="" /></div>${port}`;
+  return `<div id="lf${id}-shot" class="lf-shot lf-shot-land" ${shot(lw, `margin-left: ${-lw / 2}px; top: ${top}px;`)}</div>${port}`;
 }
 
 function termHtml(id, o) {
@@ -153,7 +160,7 @@ function html(f, i, all) {
   const art = fig ? `<div class="lf-art iso lf-fig" data-theme="light"><div class="lf-land" data-fig="${f.fig}" data-view="land"></div><div class="lf-port" data-fig="${f.fig}" data-view="port"></div></div>` : "";
   const statements = `<div id="lf${id}-st" class="lf-statement${f.mono ? " lf-mono" : ""}">${f.mono ? '<span class="lf-prompt">$ </span>' : ""}<span id="lf${id}-stt">${esc(f.statement[0][1])}</span></div>`;
   const card = close ? closeHtml(id, f) : `<div id="lf${id}-card" class="lf-card">
-          ${meta ? `<div class="lf-corner lf-no">${meta.no}<span class="lf-title">${esc(meta.title)}</span></div>` : ""}
+          ${meta ? `<div class="lf-corner lf-no">${meta.no}<span class="lf-title">${esc(f.title ?? meta.title)}</span></div>` : ""}
           ${art}
           ${f.overlay?.type === "term" ? termHtml(id, f.overlay) : ""}
           ${statements}

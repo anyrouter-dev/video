@@ -10,7 +10,7 @@
 [data-composition-id="05-pool"] .lf-corner { position: absolute; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; line-height: 1; letter-spacing: 0.02em; color: var(--muted); white-space: nowrap; }
 [data-composition-id="05-pool"] .lf-no { left: 36px; bottom: 104px; color: var(--ink-2); }
 [data-composition-id="05-pool"] .lf-title { margin-left: 28px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-[data-composition-id="05-pool"] .lf-art { position: absolute; left: 50%; top: 8px; width: 1420px; margin-left: -710px; }
+[data-composition-id="05-pool"] .lf-art { position: absolute; left: 50%; top: 0; width: 1340px; margin-left: -670px; }
 [data-composition-id="05-pool"] .lf-art .lf-port { display: none; }
 [data-composition-id="05-pool"] .lf-statement { position: absolute; left: 36px; bottom: 30px; font-size: 52px; font-weight: 600; line-height: 1.05; letter-spacing: -0.035em; white-space: nowrap; }
 [data-composition-id="05-pool"] .lf-statement.lf-mono { font-family: "Geist Mono", ui-monospace, monospace; font-weight: 500; letter-spacing: -0.02em; }
@@ -22,7 +22,7 @@
 [data-composition-id="05-pool"] .lf-crop { position: relative; overflow: hidden; border-bottom: 2px solid var(--hair); }
 [data-composition-id="05-pool"] .lf-crop:last-child { border-bottom: 0; }
 [data-composition-id="05-pool"] .lf-crop img { position: absolute; max-width: none; }
-[data-composition-id="05-pool"] .lf-term { position: absolute; left: 50%; top: 50%; width: 1440px; margin-left: -720px; transform: translateY(-62%); background: var(--ink); border-radius: 28px; overflow: hidden; }
+[data-composition-id="05-pool"] .lf-term { position: absolute; left: 50%; top: 43%; width: 1440px; margin-left: -720px; transform: translateY(-50%); background: var(--ink); border-radius: 28px; overflow: hidden; }
 [data-composition-id="05-pool"] .lf-term-bar { height: 76px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; color: #A3A3A3; }
 [data-composition-id="05-pool"] .lf-term-body { padding: 56px 60px 64px; font-family: "Geist Mono", ui-monospace, monospace; font-size: 46px; line-height: 1.35; letter-spacing: -0.02em; color: #FFFFFF; white-space: pre; }
 [data-composition-id="05-pool"] .lf-term-body .lf-prompt { color: #A3A3A3; }
@@ -39,7 +39,7 @@
 @media (orientation: portrait) {
   [data-composition-id="05-pool"] .lf-cam { transform-origin: 50% 40%; }
   [data-composition-id="05-pool"] .lf-card { left: 60px; right: 60px; top: 190px; bottom: 640px; }
-  [data-composition-id="05-pool"] .lf-art { top: 24px; width: 920px; margin-left: -460px; }
+  [data-composition-id="05-pool"] .lf-art { top: 24px; left: 24px; width: 860px; margin-left: 0; }
   [data-composition-id="05-pool"] .lf-art .lf-land { display: none; }
   [data-composition-id="05-pool"] .lf-art .lf-port { display: block; }
   [data-composition-id="05-pool"] .lf-no { bottom: 232px; }
@@ -47,18 +47,18 @@
   [data-composition-id="05-pool"] .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   [data-composition-id="05-pool"] .lf-shot-land { display: none; }
   [data-composition-id="05-pool"] .lf-shot-port { display: block; }
-  [data-composition-id="05-pool"] .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  [data-composition-id="05-pool"] .lf-term { left: 36px; top: 40%; width: 860px; margin-left: 0; transform: translateY(-50%); }
   [data-composition-id="05-pool"] .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   [data-composition-id="05-pool"] .lf-term-body .lf-pbr { display: inline; }
   [data-composition-id="05-pool"] .lf-term-body .lf-lsp { display: none; }
   [data-composition-id="05-pool"] .lf-close-line { font-size: 60px; }
   [data-composition-id="05-pool"] .lf-lockup { font-size: 104px; gap: 24px; }
   [data-composition-id="05-pool"] .lf-lockup img { width: 92px; height: 92px; }
-  [data-composition-id="05-pool"] .lf-close-head { top: 330px; }
-  [data-composition-id="05-pool"] .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
-  [data-composition-id="05-pool"] .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
-  [data-composition-id="05-pool"] .lf-plate .lf-corner { left: 18px; bottom: 18px; }
-  [data-composition-id="05-pool"] .lf-plate .lf-title { display: none; }
+  [data-composition-id="05-pool"] .lf-close-head { top: 300px; }
+  [data-composition-id="05-pool"] .lf-plates { left: 60px; right: 120px; top: 540px; height: 750px; flex-direction: column; gap: 18px; }
+  [data-composition-id="05-pool"] .lf-plate .iso { left: auto; right: 1%; width: 52%; top: 4px; }
+  [data-composition-id="05-pool"] .lf-plate .lf-corner { left: 22px; top: 26px; bottom: auto; white-space: normal; width: 300px; line-height: 1.25; }
+  [data-composition-id="05-pool"] .lf-plate .lf-title { display: block; margin-left: 0; }
 }
 .iso{
   --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
@@ -103,7 +103,7 @@
 .iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
 .iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
 .iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
-.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
 .iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
 .iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
 .iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
@@ -174,15 +174,15 @@
 .iso.lf-fig .lf-ink{fill:var(--anatomy-hi);stroke:none}
 
   </style>
-  <div id="root" data-composition-id="05-pool" data-width="1920" data-height="1080" data-duration="5.451">
-    <div id="lf05-pool-bg" class="lf-bg clip" data-start="0" data-duration="5.451" data-track-index="0"></div>
-    <div id="lf05-pool-stage" class="lf-stage clip" data-start="0" data-duration="5.451" data-track-index="1">
+  <div id="root" data-composition-id="05-pool" data-width="1920" data-height="1080" data-duration="5.59">
+    <div id="lf05-pool-bg" class="lf-bg clip" data-start="0" data-duration="5.59" data-track-index="0"></div>
+    <div id="lf05-pool-stage" class="lf-stage clip" data-start="0" data-duration="5.59" data-track-index="1">
       <div id="lf05-pool-cam" class="lf-cam">
         <div id="lf05-pool-card" class="lf-card">
           <div class="lf-corner lf-no">Fig. 2<span class="lf-title">The pool</span></div>
           <div class="lf-art iso lf-fig" data-theme="light"><div class="lf-land" data-fig="carousel" data-view="land"></div><div class="lf-port" data-fig="carousel" data-view="port"></div></div>
           
-          <div id="lf05-pool-st" class="lf-statement"><span id="lf05-pool-stt">Free models run on someone's quota.</span></div>
+          <div id="lf05-pool-st" class="lf-statement"><span id="lf05-pool-stt">Some free models run on donated keys.</span></div>
           <div id="lf05-pool-ro" class="lf-readout">the shared pool</div>
         </div>
         
@@ -195,7 +195,7 @@
     (function () {
       const { k, G, TRAVERSER, CAROUSEL, TURRET } = window.LF || {};
       const ID = "05-pool";
-      const DATA = {"dur":5.451,"tracks":{"dip":{"init":0,"segs":[[2.461,0.18,1],[2.881,0.25,0],[4.061,0.18,1],[4.481,0.25,0]]},"lit":{"init":-1,"segs":[[2.641,0,1],[4.241,0,2]]},"lamp:serve":{"init":0,"segs":[[2.641,0.12,1],[2.911,0.25,0],[4.241,0.12,1],[4.511,0.25,0]]},"turn":{"init":0,"segs":[[3.461,0.55,-30]]},"key0":{"init":1,"segs":[]},"lift0":{"init":0,"segs":[]},"token0":{"init":0,"segs":[]},"key1":{"init":1,"segs":[]},"lift1":{"init":0,"segs":[]},"token1":{"init":0,"segs":[]},"key2":{"init":1,"segs":[]},"lift2":{"init":0,"segs":[]},"token2":{"init":0,"segs":[]},"key3":{"init":1,"segs":[]},"lift3":{"init":0,"segs":[]},"token3":{"init":0,"segs":[]},"key4":{"init":0,"segs":[]},"lift4":{"init":0,"segs":[]},"token4":{"init":0,"segs":[]},"key5":{"init":1,"segs":[]},"lift5":{"init":0,"segs":[]},"token5":{"init":0,"segs":[]},"key6":{"init":1,"segs":[]},"lift6":{"init":0,"segs":[]},"token6":{"init":0,"segs":[]},"key7":{"init":0,"segs":[]},"lift7":{"init":0,"segs":[]},"token7":{"init":0,"segs":[]},"key8":{"init":1,"segs":[]},"lift8":{"init":0,"segs":[]},"token8":{"init":0,"segs":[]},"key9":{"init":1,"segs":[]},"lift9":{"init":0,"segs":[]},"token9":{"init":0,"segs":[]},"key10":{"init":0,"segs":[]},"lift10":{"init":0,"segs":[]},"token10":{"init":0,"segs":[]},"key11":{"init":1,"segs":[]},"lift11":{"init":0,"segs":[]},"token11":{"init":0,"segs":[]}},"readout":[[0,"the shared pool"]],"P":[{"origin":[320,183.40053167509046],"scale":1.4828194217530113,"azimuth":45,"elevation":34},{"origin":[300,283.1285607754622],"scale":2.0642645837210254,"azimuth":45,"elevation":36}],"cardIn":true,"cardOut":false,"statements":[[0,"Free models run on someone's quota."]],"firstIn":true,"overlay":null,"push":[1,1.00577]};
+      const DATA = {"dur":5.59,"tracks":{"turn":{"init":0,"segs":[[2.628,0.55,30],[3.678,0.55,0]]},"dip":{"init":0,"segs":[[3.228,0.18,1],[3.648,0.25,0],[4.278,0.18,1],[4.698,0.25,0]]},"lit":{"init":-1,"segs":[[3.408,0,0],[4.458,0,1]]},"lamp:serve":{"init":0,"segs":[[3.408,0.12,1],[3.678,0.25,0],[4.458,0.12,1],[4.728,0.25,0]]},"key0":{"init":1,"segs":[]},"lift0":{"init":0,"segs":[]},"token0":{"init":0,"segs":[]},"key1":{"init":1,"segs":[]},"lift1":{"init":0,"segs":[]},"token1":{"init":0,"segs":[]},"key2":{"init":1,"segs":[]},"lift2":{"init":0,"segs":[]},"token2":{"init":0,"segs":[]},"key3":{"init":1,"segs":[]},"lift3":{"init":0,"segs":[]},"token3":{"init":0,"segs":[]},"key4":{"init":0,"segs":[]},"lift4":{"init":0,"segs":[]},"token4":{"init":0,"segs":[]},"key5":{"init":1,"segs":[]},"lift5":{"init":0,"segs":[]},"token5":{"init":0,"segs":[]},"key6":{"init":1,"segs":[]},"lift6":{"init":0,"segs":[]},"token6":{"init":0,"segs":[]},"key7":{"init":0,"segs":[]},"lift7":{"init":0,"segs":[]},"token7":{"init":0,"segs":[]},"key8":{"init":1,"segs":[]},"lift8":{"init":0,"segs":[]},"token8":{"init":0,"segs":[]},"key9":{"init":1,"segs":[]},"lift9":{"init":0,"segs":[]},"token9":{"init":0,"segs":[]},"key10":{"init":0,"segs":[]},"lift10":{"init":0,"segs":[]},"token10":{"init":0,"segs":[]},"key11":{"init":1,"segs":[]},"lift11":{"init":0,"segs":[]},"token11":{"init":0,"segs":[]}},"readout":[[0,"the shared pool"]],"P":[{"origin":[320,183.40053167509046],"scale":1.4828194217530113,"azimuth":45,"elevation":34},{"origin":[300,283.1285607754622],"scale":2.0642645837210254,"azimuth":45,"elevation":36}],"cardIn":true,"cardOut":false,"statements":[[0,"Some free models run on donated keys."]],"firstIn":true,"overlay":null,"push":[1,1.00589]};
       const $ = (s) => document.getElementById("lf" + ID + "-" + s);
       const ease = (x) => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
       function value(track, t) {

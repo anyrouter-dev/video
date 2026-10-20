@@ -10,7 +10,7 @@
 [data-composition-id="09-byok"] .lf-corner { position: absolute; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; line-height: 1; letter-spacing: 0.02em; color: var(--muted); white-space: nowrap; }
 [data-composition-id="09-byok"] .lf-no { left: 36px; bottom: 104px; color: var(--ink-2); }
 [data-composition-id="09-byok"] .lf-title { margin-left: 28px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
-[data-composition-id="09-byok"] .lf-art { position: absolute; left: 50%; top: 8px; width: 1420px; margin-left: -710px; }
+[data-composition-id="09-byok"] .lf-art { position: absolute; left: 50%; top: 0; width: 1340px; margin-left: -670px; }
 [data-composition-id="09-byok"] .lf-art .lf-port { display: none; }
 [data-composition-id="09-byok"] .lf-statement { position: absolute; left: 36px; bottom: 30px; font-size: 52px; font-weight: 600; line-height: 1.05; letter-spacing: -0.035em; white-space: nowrap; }
 [data-composition-id="09-byok"] .lf-statement.lf-mono { font-family: "Geist Mono", ui-monospace, monospace; font-weight: 500; letter-spacing: -0.02em; }
@@ -22,7 +22,7 @@
 [data-composition-id="09-byok"] .lf-crop { position: relative; overflow: hidden; border-bottom: 2px solid var(--hair); }
 [data-composition-id="09-byok"] .lf-crop:last-child { border-bottom: 0; }
 [data-composition-id="09-byok"] .lf-crop img { position: absolute; max-width: none; }
-[data-composition-id="09-byok"] .lf-term { position: absolute; left: 50%; top: 50%; width: 1440px; margin-left: -720px; transform: translateY(-62%); background: var(--ink); border-radius: 28px; overflow: hidden; }
+[data-composition-id="09-byok"] .lf-term { position: absolute; left: 50%; top: 43%; width: 1440px; margin-left: -720px; transform: translateY(-50%); background: var(--ink); border-radius: 28px; overflow: hidden; }
 [data-composition-id="09-byok"] .lf-term-bar { height: 76px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: "Geist Mono", ui-monospace, monospace; font-size: 32px; color: #A3A3A3; }
 [data-composition-id="09-byok"] .lf-term-body { padding: 56px 60px 64px; font-family: "Geist Mono", ui-monospace, monospace; font-size: 46px; line-height: 1.35; letter-spacing: -0.02em; color: #FFFFFF; white-space: pre; }
 [data-composition-id="09-byok"] .lf-term-body .lf-prompt { color: #A3A3A3; }
@@ -39,7 +39,7 @@
 @media (orientation: portrait) {
   [data-composition-id="09-byok"] .lf-cam { transform-origin: 50% 40%; }
   [data-composition-id="09-byok"] .lf-card { left: 60px; right: 60px; top: 190px; bottom: 640px; }
-  [data-composition-id="09-byok"] .lf-art { top: 24px; width: 920px; margin-left: -460px; }
+  [data-composition-id="09-byok"] .lf-art { top: 24px; left: 24px; width: 860px; margin-left: 0; }
   [data-composition-id="09-byok"] .lf-art .lf-land { display: none; }
   [data-composition-id="09-byok"] .lf-art .lf-port { display: block; }
   [data-composition-id="09-byok"] .lf-no { bottom: 232px; }
@@ -47,18 +47,18 @@
   [data-composition-id="09-byok"] .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   [data-composition-id="09-byok"] .lf-shot-land { display: none; }
   [data-composition-id="09-byok"] .lf-shot-port { display: block; }
-  [data-composition-id="09-byok"] .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  [data-composition-id="09-byok"] .lf-term { left: 36px; top: 40%; width: 860px; margin-left: 0; transform: translateY(-50%); }
   [data-composition-id="09-byok"] .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   [data-composition-id="09-byok"] .lf-term-body .lf-pbr { display: inline; }
   [data-composition-id="09-byok"] .lf-term-body .lf-lsp { display: none; }
   [data-composition-id="09-byok"] .lf-close-line { font-size: 60px; }
   [data-composition-id="09-byok"] .lf-lockup { font-size: 104px; gap: 24px; }
   [data-composition-id="09-byok"] .lf-lockup img { width: 92px; height: 92px; }
-  [data-composition-id="09-byok"] .lf-close-head { top: 330px; }
-  [data-composition-id="09-byok"] .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
-  [data-composition-id="09-byok"] .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
-  [data-composition-id="09-byok"] .lf-plate .lf-corner { left: 18px; bottom: 18px; }
-  [data-composition-id="09-byok"] .lf-plate .lf-title { display: none; }
+  [data-composition-id="09-byok"] .lf-close-head { top: 300px; }
+  [data-composition-id="09-byok"] .lf-plates { left: 60px; right: 120px; top: 540px; height: 750px; flex-direction: column; gap: 18px; }
+  [data-composition-id="09-byok"] .lf-plate .iso { left: auto; right: 1%; width: 52%; top: 4px; }
+  [data-composition-id="09-byok"] .lf-plate .lf-corner { left: 22px; top: 26px; bottom: auto; white-space: normal; width: 300px; line-height: 1.25; }
+  [data-composition-id="09-byok"] .lf-plate .lf-title { display: block; margin-left: 0; }
 }
 .iso{
   --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
@@ -103,7 +103,7 @@
 .iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
 .iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
 .iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
-.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
 .iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
 .iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
 .iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
@@ -179,13 +179,13 @@
     <div id="lf09-byok-stage" class="lf-stage clip" data-start="0" data-duration="3.947" data-track-index="1">
       <div id="lf09-byok-cam" class="lf-cam">
         <div id="lf09-byok-card" class="lf-card">
-          <div class="lf-corner lf-no">Fig. 2<span class="lf-title">The pool</span></div>
+          <div class="lf-corner lf-no">Fig. 2<span class="lf-title">Your own keys</span></div>
           <div class="lf-art iso lf-fig" data-theme="light"><div class="lf-land" data-fig="carousel" data-view="land"></div><div class="lf-port" data-fig="carousel" data-view="port"></div></div>
           
           <div id="lf09-byok-st" class="lf-statement"><span id="lf09-byok-stt">Your own keys: $0 markup.</span></div>
           <div id="lf09-byok-ro" class="lf-readout">BYOK · private to your account</div>
         </div>
-        <div id="lf09-byok-shot" class="lf-shot lf-shot-land" style="width: 860px; margin-left: -430px; top: 137px"><img src="assets/captures/byok-add-provider-list.png" alt="" /></div><div id="lf09-byok-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 260px"><img src="assets/captures/byok-add-provider-list.png" alt="" /></div>
+        <div id="lf09-byok-shot" class="lf-shot lf-shot-land" style="width: 780px; height: 420px; margin-left: -390px; top: 196px;"><img src="assets/captures/byok-add-provider-list.png" alt="" style="position: absolute; max-width: none; width: 791px; left: -5px; top: -145px" /></div><div id="lf09-byok-shotp" class="lf-shot lf-shot-port" style="width: 820px; height: 442px; left: 100px; top: 250px;"><img src="assets/captures/byok-add-provider-list.png" alt="" style="position: absolute; max-width: none; width: 832px; left: -6px; top: -152px" /></div>
       </div>
     </div>
   </div>
@@ -195,7 +195,7 @@
     (function () {
       const { k, G, TRAVERSER, CAROUSEL, TURRET } = window.LF || {};
       const ID = "09-byok";
-      const DATA = {"dur":3.947,"tracks":{"turn":{"init":-300,"segs":[]},"dip":{"init":0,"segs":[]},"lit":{"init":11,"segs":[]},"lamp:serve":{"init":0,"segs":[]},"key0":{"init":1,"segs":[]},"lift0":{"init":0,"segs":[]},"token0":{"init":0,"segs":[]},"key1":{"init":1,"segs":[]},"lift1":{"init":0,"segs":[]},"token1":{"init":0,"segs":[]},"key2":{"init":1,"segs":[]},"lift2":{"init":0,"segs":[]},"token2":{"init":0,"segs":[]},"key3":{"init":1,"segs":[]},"lift3":{"init":0,"segs":[]},"token3":{"init":0,"segs":[]},"key4":{"init":1,"segs":[]},"lift4":{"init":0,"segs":[]},"token4":{"init":0,"segs":[]},"key5":{"init":1,"segs":[]},"lift5":{"init":0,"segs":[]},"token5":{"init":0,"segs":[]},"key6":{"init":1,"segs":[]},"lift6":{"init":0,"segs":[]},"token6":{"init":0,"segs":[]},"key7":{"init":1,"segs":[]},"lift7":{"init":0,"segs":[]},"token7":{"init":1,"segs":[]},"key8":{"init":1,"segs":[]},"lift8":{"init":0,"segs":[]},"token8":{"init":1,"segs":[]},"key9":{"init":0,"segs":[]},"lift9":{"init":30,"segs":[]},"token9":{"init":0,"segs":[]},"key10":{"init":0,"segs":[]},"lift10":{"init":0,"segs":[]},"token10":{"init":0,"segs":[]},"key11":{"init":1,"segs":[]},"lift11":{"init":0,"segs":[]},"token11":{"init":1,"segs":[]}},"readout":[[0,"BYOK · private to your account"]],"P":[{"origin":[320,183.40053167509046],"scale":1.4828194217530113,"azimuth":45,"elevation":34},{"origin":[300,283.1285607754622],"scale":2.0642645837210254,"azimuth":45,"elevation":36}],"cardIn":false,"cardOut":true,"statements":[[0,"Your own keys: $0 markup."]],"firstIn":true,"overlay":"capture","push":[1.02582,1.03]};
+      const DATA = {"dur":3.947,"tracks":{"turn":{"init":-300,"segs":[]},"dip":{"init":0,"segs":[]},"lit":{"init":11,"segs":[]},"lamp:serve":{"init":0,"segs":[]},"key0":{"init":1,"segs":[]},"lift0":{"init":0,"segs":[]},"token0":{"init":0,"segs":[]},"key1":{"init":1,"segs":[]},"lift1":{"init":0,"segs":[]},"token1":{"init":0,"segs":[]},"key2":{"init":1,"segs":[]},"lift2":{"init":0,"segs":[]},"token2":{"init":0,"segs":[]},"key3":{"init":1,"segs":[]},"lift3":{"init":0,"segs":[]},"token3":{"init":0,"segs":[]},"key4":{"init":1,"segs":[]},"lift4":{"init":0,"segs":[]},"token4":{"init":0,"segs":[]},"key5":{"init":1,"segs":[]},"lift5":{"init":0,"segs":[]},"token5":{"init":0,"segs":[]},"key6":{"init":1,"segs":[]},"lift6":{"init":0,"segs":[]},"token6":{"init":0,"segs":[]},"key7":{"init":1,"segs":[]},"lift7":{"init":0,"segs":[]},"token7":{"init":1,"segs":[]},"key8":{"init":1,"segs":[]},"lift8":{"init":0,"segs":[]},"token8":{"init":1,"segs":[]},"key9":{"init":0,"segs":[]},"lift9":{"init":64,"segs":[]},"token9":{"init":0,"segs":[]},"key10":{"init":0,"segs":[]},"lift10":{"init":0,"segs":[]},"token10":{"init":0,"segs":[]},"key11":{"init":1,"segs":[]},"lift11":{"init":0,"segs":[]},"token11":{"init":1,"segs":[]}},"readout":[[0,"BYOK · private to your account"]],"P":[{"origin":[320,183.40053167509046],"scale":1.4828194217530113,"azimuth":45,"elevation":34},{"origin":[300,283.1285607754622],"scale":2.0642645837210254,"azimuth":45,"elevation":36}],"cardIn":false,"cardOut":true,"statements":[[0,"Your own keys: $0 markup."]],"firstIn":true,"overlay":"capture","push":[1.02584,1.03]};
       const $ = (s) => document.getElementById("lf" + ID + "-" + s);
       const ease = (x) => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
       function value(track, t) {

@@ -225,7 +225,7 @@ export function build(view = "landscape", pose = REST) {
     }
     cyl(end, `${row}.lamp.body`, block.x + 5, y, 3, 22, 2.4, { tone: "mid" });
     const lensTop = k.cylinder(block.x + 5, y, 2.1, 24.4, 1, P, 22);
-    B.put(end, `${row}.lamp.lens`, [block.x + 5, y, 24.9], S(lensTop, { tone: "hi" }) + `<path class="lf-lamp" data-lamp="exit${i}" opacity="0" d="${lensTop.top}"/>`, [B.R.solid(A.cylinder(block.x + 5, y, 2.1, 24.4, 1, { name: `${row}.lamp.lens` }))]);
+    B.put(end, `${row}.lamp.lens`, [block.x + 5, y, 24.9], S(lensTop, { tone: "hi" }) + `<path class="lf-lamp" data-lamp="exit${i}" opacity="0" d="${lensTop.top}"/>` + `<path class="lf-ink" data-lamp="fault-exit${i}" opacity="0" d="${lensTop.top}"/>`, [B.R.solid(A.cylinder(block.x + 5, y, 2.1, 24.4, 1, { name: `${row}.lamp.lens` }))]);
   });
 
   // the request car, built at its home on the entry track; the live code moves the row

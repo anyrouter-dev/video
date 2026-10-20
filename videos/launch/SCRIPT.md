@@ -26,7 +26,7 @@ Every line below carries its claims in the ledger at the end. Truth snapshots ar
 
 ## Line 5: Why a pool (Frame 5)
 
-    Free models run on someone's quota. The AnyRouter pool spreads that load.
+    Some free models run on donated keys. The AnyRouter pool spreads that load.
 
 ## Line 6: How the pool works (Frame 6)
 
@@ -71,14 +71,14 @@ One row per claim, spoken (S) or shown (W). Sources are live pages and APIs fetc
 |---|---|---|---|---|
 | C1 | 1 | Hundreds of AI models behind one API key | S | `truth/llms.txt` line 3: "One API key reaches hundreds of models" |
 | C2 | 1 | One endpoint: `https://anyrouter.dev/api/v1`, `POST /api/v1/chat/completions` | S, W | `truth/llms.txt` key facts (OpenAI SDK base URL); home page code sample (`truth/page_home.txt`) |
-| C3 | 1 | 271 models, 17 providers | W | `truth/stats.json` from `GET /api/v1/stats` (`models: 271, providers: 17`), the same numbers the home page prints ("271 models, 17 providers") |
+| C3 | 1 | 271 models, 17 providers | W | `truth/stats.json` from `GET /api/v1/stats` (`models: 271, providers: 17`), the same numbers the home page prints ("271 models, 17 providers"). `/api/v1/models?all=1` lists 299 ids (244 BYOK-only, plus 22 `-latest` aliases and 9 `anyrouter/*` presets), so it is not used as the count. The BYOK dialog's "68 providers" (BYOK upstreams) is cropped out of the capture so the film shows one provider count |
 | C4 | 2 | Works with OpenAI and Anthropic clients | S | `truth/llms.txt`: OpenAI Chat Completions, Responses and Embeddings, and Anthropic Messages; home: "OpenAI- and Anthropic-compatible. Switch models, keep your code." |
 | C5 | 2 | Switch models by changing the model ID | S | `truth/llms.txt` "When to use": "swap providers or models by changing a model id, not your client code" |
 | C6 | 2 | Model ids shown run on AnyRouter credits | W | each id shown has `pricing.billing !== "byok"` in `truth/models-all.json`; checked by `kind.test.mjs` |
 | C7 | 3 | One prompt answered by three models through `/api/v1/chat/completions` | S, W | capture `shared/captures/2026-10-19/screens/signed-in/playground-three-models.png` (deepseek/deepseek-v4-flash, nvidia/nemotron-3-super-120b-a12b, minimax/minimax-m3.1-flash, `$0 cost` each) |
 | C8 | 4 | If an upstream fails, the next one is tried | S, W | home page Fig. 1: "if an upstream fails, falls back to the next one"; `truth/llms.txt`: "a 401, 429, or 5xx from one upstream retries on the next upstream for that model" |
 | C9 | 4 | Billed once | S | home page Fig. 1: "You are billed once"; "429 → fallback · 200 · billed once" |
-| C10 | 5 | Free models run on someone's quota; the pool spreads that load | S | `truth/blog_anyrouter-pool.md`: "Free models run on someone's quota ... The AnyRouter Pool spreads that load." |
+| C10 | 5 | Some free models run on donated keys; the pool spreads that load | S, W | `truth/blog_anyrouter-pool.md`: "Models marked Free via Pool in the catalog are served by donated keys" and "The AnyRouter Pool spreads that load."; other free models stay open to every plan (`truth/llms.txt` key facts: `anyrouter/free` and `:free` models work on every plan, Free included) |
 | C11 | 6 | Members donate spare provider keys | S | `truth/blog_anyrouter-pool.md`: "Members donate spare provider keys" |
 | C12 | 6 | Each request takes the key idle longest | S, W | `truth/blog_anyrouter-pool.md`: "It picks the key that has been idle the longest, with some randomness among the less recently used keys" |
 | C13 | 7 | Your own requests come first | S | `truth/shared-pool.md`: "Your account comes first. You always keep first call on your own key" |

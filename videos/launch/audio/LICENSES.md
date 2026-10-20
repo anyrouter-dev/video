@@ -4,7 +4,7 @@
 
 | File | Track | Creator | License | Source |
 |---|---|---|---|---|
-| `assets/bgm/track.mp3` | "Low key background music fragment" (first 69 s, faded in and out, levelled) | Clacksberg | CC0 1.0 Universal (public domain dedication): free for commercial use, public YouTube and the web, no attribution required | https://freesound.org/people/Clacksberg/sounds/587612 (Openverse id `8fca1b90-d3ca-46b5-845a-34ba9398bb13`, license re-checked through `GET https://api.openverse.org/v1/audio/8fca1b90-d3ca-46b5-845a-34ba9398bb13/` on 2026-10-21: `cc0` `1.0`) |
+| `assets/bgm/track.mp3` | "Low key background music fragment" (69 s from 4.85 s, where its intro silence ends; faded in and out, levelled) | Clacksberg | CC0 1.0 Universal (public domain dedication): free for commercial use, public YouTube and the web, no attribution required | https://freesound.org/people/Clacksberg/sounds/587612 (Openverse id `8fca1b90-d3ca-46b5-845a-34ba9398bb13`, license re-checked through `GET https://api.openverse.org/v1/audio/8fca1b90-d3ca-46b5-845a-34ba9398bb13/` on 2026-10-21: `cc0` `1.0`) |
 
 Found through the Openverse audio search (the provider media-use uses for CC0 and CC BY sound),
 registered in the project's media manifest with `hyperframes media-use resolve --adopt`. The
