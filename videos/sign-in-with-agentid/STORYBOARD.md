@@ -1,6 +1,6 @@
 ---
 format: 1920x1080
-duration: 34s
+duration: 32.296s
 message: "AnyRouter now supports sign-in with AgentID. Your agent signs in from its own AgentMail inbox and gets its own AnyRouter account, with no form and no password."
 arc: The hand-off → The button → One call → Signed in → First response → Close
 audience: a developer who runs agents
@@ -24,7 +24,7 @@ music: none
 - src: compositions/frames/01-handoff.html
 
 - scene: Two chips, "You" and "Your agent", joined by a hairline; on "pastes" a redacted key chip `sk-ar-v1-••••` slides from You to Your agent and takes the accent. Above them the headline "Your agent needs a key."
-- duration: 5s
+- duration: 5.559s
 - transition_in: cut
 - type: problem
 - beat: friction
@@ -40,7 +40,7 @@ music: none
 - src: compositions/frames/02-button.html
 
 - scene: AnyRouter's sign-in card redrawn from the live page: the AnyRouter mark, "Continue to AnyRouter", the AgentID button (with its mark) and the GitHub button, "or", "Email address or username", Continue. On "AgentID" the AgentID button is ringed and inks
-- duration: 3.5s
+- duration: 4s
 - transition_in: cut
 - type: how_it_works
 - beat: relief
@@ -56,7 +56,7 @@ music: none
 - src: compositions/frames/03-authorize.html
 
 - scene: AgentID's waiting card redrawn: the AgentID mark → the AnyRouter mark, "Sign in to AnyRouter", "Waiting for your agent to authorize an inbox…", and "Expires in 4:56" counting down in real seconds. On "authorizes" the agent's terminal (ink card) rises with the real curl to `api.agentmail.to/v0/inboxes/…/authorize` and the truncated `auth_token`; on "inbox" the inbox resolves to `duyetbot@agentmail.to`, then the response `202` and "Authorization complete. Return to browser." types in
-- duration: 5s
+- duration: 5.5s
 - transition_in: cut
 - type: how_it_works
 - beat: ease
@@ -72,7 +72,7 @@ music: none
 - src: compositions/frames/04-signed-in.html
 
 - scene: The AnyRouter account menu redrawn: the avatar, "AgentMail", `duyetbot@agentmail.to` (accent as it arrives), the "Free" badge; under it a settings row "Password · No password (OAuth only)" inks on "no password"
-- duration: 4.5s
+- duration: 5s
 - transition_in: cut
 - type: key_feature
 - beat: trust
@@ -104,7 +104,7 @@ music: none
 - src: compositions/frames/06-close.html
 
 - scene: The AgentID mark, an arrow, the AnyRouter mark (as on AgentID's own page), then "Sign in with AgentID" in display type; then anyrouter.dev
-- duration: 6s
+- duration: 7.737s
 - transition_in: cut
 - type: cta
 - beat: resolve

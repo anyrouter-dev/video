@@ -1,0 +1,544 @@
+{
+  "bgm": {
+    "path": "assets/bgm/track.mp3",
+    "source": "host",
+    "volume": 0.12,
+    "duration_s": 68
+  },
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 5.559,
+      "raw_s": 4.365,
+      "text": "Your agent needs model access. Usually, a person signs up and pastes it a key.",
+      "say": "Your agent needs model access. Usually, a person signs up and pastes it a key.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Your",
+          "start": 0,
+          "end": 0.197
+        },
+        {
+          "id": "w1",
+          "text": "agent",
+          "start": 0.232,
+          "end": 0.476
+        },
+        {
+          "id": "w2",
+          "text": "needs",
+          "start": 0.522,
+          "end": 0.743
+        },
+        {
+          "id": "w3",
+          "text": "model",
+          "start": 0.801,
+          "end": 1.057
+        },
+        {
+          "id": "w4",
+          "text": "access.",
+          "start": 1.138,
+          "end": 1.718
+        },
+        {
+          "id": "w5",
+          "text": "Usually,",
+          "start": 1.962,
+          "end": 2.31
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.334,
+          "end": 2.357
+        },
+        {
+          "id": "w7",
+          "text": "person",
+          "start": 2.403,
+          "end": 2.67
+        },
+        {
+          "id": "w8",
+          "text": "signs",
+          "start": 2.728,
+          "end": 2.984
+        },
+        {
+          "id": "w9",
+          "text": "up",
+          "start": 3.03,
+          "end": 3.123
+        },
+        {
+          "id": "w10",
+          "text": "and",
+          "start": 3.17,
+          "end": 3.239
+        },
+        {
+          "id": "w11",
+          "text": "pastes",
+          "start": 3.297,
+          "end": 3.564
+        },
+        {
+          "id": "w12",
+          "text": "it",
+          "start": 3.599,
+          "end": 3.657
+        },
+        {
+          "id": "w13",
+          "text": "a",
+          "start": 3.692,
+          "end": 3.715
+        },
+        {
+          "id": "w14",
+          "text": "key.",
+          "start": 3.773,
+          "end": 4.365
+        }
+      ],
+      "padded_s": 1.194
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 4,
+      "raw_s": 3.111,
+      "text": "Now agents can sign in to AnyRouter with AgentID.",
+      "say": "Now agents can sign in to AnyRouter with Agent I D.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Now",
+          "start": 0,
+          "end": 0.221
+        },
+        {
+          "id": "w1",
+          "text": "agents",
+          "start": 0.302,
+          "end": 0.65
+        },
+        {
+          "id": "w2",
+          "text": "can",
+          "start": 0.697,
+          "end": 0.813
+        },
+        {
+          "id": "w3",
+          "text": "sign",
+          "start": 0.871,
+          "end": 1.08
+        },
+        {
+          "id": "w4",
+          "text": "in",
+          "start": 1.115,
+          "end": 1.161
+        },
+        {
+          "id": "w5",
+          "text": "to",
+          "start": 1.196,
+          "end": 1.254
+        },
+        {
+          "id": "w6",
+          "text": "AnyRouter",
+          "start": 1.312,
+          "end": 1.776
+        },
+        {
+          "id": "w7",
+          "text": "with",
+          "start": 1.823,
+          "end": 1.962
+        },
+        {
+          "id": "w8",
+          "text": "AgentID.",
+          "start": 2.02,
+          "end": 3.111
+        }
+      ],
+      "padded_s": 0.889
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 5.5,
+      "raw_s": 3.669,
+      "text": "The agent authorizes with one call, from its own AgentMail inbox.",
+      "say": "The agent authorizes with one call, from its own Agent Mail inbox.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "The",
+          "start": 0,
+          "end": 0.163
+        },
+        {
+          "id": "w1",
+          "text": "agent",
+          "start": 0.232,
+          "end": 0.499
+        },
+        {
+          "id": "w2",
+          "text": "authorizes",
+          "start": 0.546,
+          "end": 1.103
+        },
+        {
+          "id": "w3",
+          "text": "with",
+          "start": 1.161,
+          "end": 1.3
+        },
+        {
+          "id": "w4",
+          "text": "one",
+          "start": 1.37,
+          "end": 1.533
+        },
+        {
+          "id": "w5",
+          "text": "call,",
+          "start": 1.579,
+          "end": 1.95
+        },
+        {
+          "id": "w6",
+          "text": "from",
+          "start": 2.009,
+          "end": 2.159
+        },
+        {
+          "id": "w7",
+          "text": "its",
+          "start": 2.206,
+          "end": 2.31
+        },
+        {
+          "id": "w8",
+          "text": "own",
+          "start": 2.357,
+          "end": 2.496
+        },
+        {
+          "id": "w9",
+          "text": "AgentMail",
+          "start": 2.554,
+          "end": 3.019
+        },
+        {
+          "id": "w10",
+          "text": "inbox.",
+          "start": 3.077,
+          "end": 3.669
+        }
+      ],
+      "padded_s": 1.831
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 5,
+      "raw_s": 3.715,
+      "text": "Seconds later, it is signed in to its own account, with no password.",
+      "say": "Seconds later, it is signed in to its own account, with no password.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Seconds",
+          "start": 0,
+          "end": 0.406
+        },
+        {
+          "id": "w1",
+          "text": "later,",
+          "start": 0.464,
+          "end": 0.755
+        },
+        {
+          "id": "w2",
+          "text": "it",
+          "start": 0.778,
+          "end": 0.836
+        },
+        {
+          "id": "w3",
+          "text": "is",
+          "start": 0.882,
+          "end": 0.964
+        },
+        {
+          "id": "w4",
+          "text": "signed",
+          "start": 1.01,
+          "end": 1.335
+        },
+        {
+          "id": "w5",
+          "text": "in",
+          "start": 1.393,
+          "end": 1.474
+        },
+        {
+          "id": "w6",
+          "text": "to",
+          "start": 1.544,
+          "end": 1.614
+        },
+        {
+          "id": "w7",
+          "text": "its",
+          "start": 1.683,
+          "end": 1.788
+        },
+        {
+          "id": "w8",
+          "text": "own",
+          "start": 1.823,
+          "end": 1.927
+        },
+        {
+          "id": "w9",
+          "text": "account,",
+          "start": 1.95,
+          "end": 2.31
+        },
+        {
+          "id": "w10",
+          "text": "with",
+          "start": 2.403,
+          "end": 2.589
+        },
+        {
+          "id": "w11",
+          "text": "no",
+          "start": 2.67,
+          "end": 2.798
+        },
+        {
+          "id": "w12",
+          "text": "password.",
+          "start": 2.868,
+          "end": 3.715
+        }
+      ],
+      "padded_s": 1.285
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.5,
+      "raw_s": 2.74,
+      "text": "With its own key, its first request runs on the free tier.",
+      "say": "With its own key, its first request runs on the free tier.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "With",
+          "start": 0,
+          "end": 0.197
+        },
+        {
+          "id": "w1",
+          "text": "its",
+          "start": 0.232,
+          "end": 0.337
+        },
+        {
+          "id": "w2",
+          "text": "own",
+          "start": 0.372,
+          "end": 0.476
+        },
+        {
+          "id": "w3",
+          "text": "key,",
+          "start": 0.534,
+          "end": 0.755
+        },
+        {
+          "id": "w4",
+          "text": "its",
+          "start": 0.778,
+          "end": 0.894
+        },
+        {
+          "id": "w5",
+          "text": "first",
+          "start": 0.94,
+          "end": 1.138
+        },
+        {
+          "id": "w6",
+          "text": "request",
+          "start": 1.184,
+          "end": 1.498
+        },
+        {
+          "id": "w7",
+          "text": "runs",
+          "start": 1.533,
+          "end": 1.707
+        },
+        {
+          "id": "w8",
+          "text": "on",
+          "start": 1.753,
+          "end": 1.811
+        },
+        {
+          "id": "w9",
+          "text": "the",
+          "start": 1.846,
+          "end": 1.916
+        },
+        {
+          "id": "w10",
+          "text": "free",
+          "start": 1.962,
+          "end": 2.136
+        },
+        {
+          "id": "w11",
+          "text": "tier.",
+          "start": 2.171,
+          "end": 2.74
+        }
+      ],
+      "padded_s": 1.76
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 7.737,
+      "raw_s": 4.737,
+      "text": "Give your agent its own AnyRouter account. Start at anyrouter.dev.",
+      "say": "Give your agent its own AnyRouter account. Start at any router dot dev.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Give",
+          "start": 0,
+          "end": 0.209
+        },
+        {
+          "id": "w1",
+          "text": "your",
+          "start": 0.232,
+          "end": 0.348
+        },
+        {
+          "id": "w2",
+          "text": "agent",
+          "start": 0.395,
+          "end": 0.662
+        },
+        {
+          "id": "w3",
+          "text": "its",
+          "start": 0.708,
+          "end": 0.836
+        },
+        {
+          "id": "w4",
+          "text": "own",
+          "start": 0.894,
+          "end": 1.068
+        },
+        {
+          "id": "w5",
+          "text": "AnyRouter",
+          "start": 1.138,
+          "end": 1.625
+        },
+        {
+          "id": "w6",
+          "text": "account.",
+          "start": 1.672,
+          "end": 2.113
+        },
+        {
+          "id": "w7",
+          "text": "Start",
+          "start": 2.717,
+          "end": 3.03
+        },
+        {
+          "id": "w8",
+          "text": "at",
+          "start": 3.065,
+          "end": 3.146
+        },
+        {
+          "id": "w9",
+          "text": "anyrouter.dev.",
+          "start": 3.216,
+          "end": 4.737
+        }
+      ],
+      "padded_s": 3
+    }
+  ]
+}
