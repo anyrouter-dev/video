@@ -30,13 +30,14 @@ import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
+import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
 import { CSS, read, setIn, codeSizes, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
 export const MODELS_API = 'https://anyrouter.dev/api/v1/models?all=1';
-// A page with little to show runs short rather than holding a still frame.
-export const FILM = { min: 10, max: 18 };
+// The voice sets a film's length; a page with little to say still runs long enough to read.
+export const FILM = { min: 25, max: 45 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -197,42 +198,81 @@ export function copyOf(u, pools) {
 const tenths = s => Math.round(s * 10) / 10;
 // Typing reads as typing at this pace, never slower than a comfortable typist.
 const TYPE_EACH = 0.05, TYPE_MAX = 2.2, LINE_PAUSE = 0.3;
-// The headline is up and read, the code typed and read, the URL found.
-const MOVE = 0.7, TYPE_AT = 0.95, END_HOLD = 2.4;
+// The headline is up, the window risen, the lockup landed when the voice starts on each.
+const VOICE_AT = { outcome: 0.4, doing: 0.6, lockup: 0.5 };
+// A breath between two lines, and the beat after its last word before the picture moves on.
+const BREATH = 0.35, AFTER = 0.6;
+// The window rises before the code is typed; the lockup holds once its line is said.
+const MOVE = 0.7, TYPE_AT = 0.95, END_HOLD = 2.4, LOCKUP_HOLD = 1.6;
 // The typed line is read before its answer arrives.
 const ANSWER_AFTER = 0.6;
 
+/** A film's voiced lines by beat: outcome, doing, then (when it has one) and lockup. */
+export function voiceOf(u) {
+  if (!u.narration) fail(u.slug, 'no script in videos/use-case/narration.json');
+  return Object.fromEntries(u.narration.lines.map(l => [l.beat, voicedLine(u.narration, l)]));
+}
+// When a line's marked word starts, from the start of the line; its start when nothing is marked.
+const anchorOf = line => (line.anchor == null ? 0 : line.words[line.anchor].start);
+const spoken = line => line.words.at(-1).end;
+
 /**
- * When everything happens. Beat 1 holds the headline for its reading time,
- * beat 2 types the code, rolls the id or shows the fallback answering, and
- * holds for reading it, beat 3 lands the lockup. A short film reads slower, in
- * proportion, up to FILM.min.
+ * When everything happens, set by the voice. Beat 1 holds the headline while its
+ * line is said. Beat 2 raises the window and types the code from the word its
+ * line marks; the `then` line follows once both the code and the line before it
+ * are done, and the roll or the answer comes on its marked word. Beat 3 lands
+ * the lockup under the line every film ends on. A film shorter than FILM.min
+ * holds each beat longer after its words, in proportion.
  */
 export function storyOf(u, pools) {
-  const copy = copyOf(u, pools);
+  const copy = copyOf(u, pools), voice = voiceOf(u);
   const { lines, roll, answer, shell } = copy.window;
   const typed = lines.filter(l => shell || l.focus);
   const chars = typed.reduce((n, l) => n + [...l.text].length, 0);
   const each = Math.min(TYPE_EACH, TYPE_MAX / chars);
   const typing = chars * each + (typed.length - 1) * LINE_PAUSE;
   const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
-  // the answer scrolls in once the line is typed, and holds for its own read
-  const answering = answer ? ANSWER_AFTER + read(answer) : 0;
-  // typing and the roll are time to read the line, so the hold after them is what is left
-  const reading = { outcome: read(`${copy.kicker} ${copy.title}`) - 0.4, code: Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - typing - rolling) };
-  const fixed = MOVE + TYPE_AT + typing + rolling + answering + MOVE + END_HOLD;
-  const stretch = Math.max(1, (FILM.min - fixed) / (reading.outcome + reading.code));
-  const outcome = tenths(Math.max(2.4, reading.outcome * stretch));
-  const doing = tenths(MOVE + TYPE_AT + typing + rolling + answering + reading.code * stretch);
-  const duration = tenths(outcome + doing + MOVE + END_HOLD);
+
+  // beat 2, in seconds from its start
+  const typeAt = Math.max(TYPE_AT, VOICE_AT.doing + anchorOf(voice.doing));
+  const typed2 = typeAt + typing, said2 = VOICE_AT.doing + spoken(voice.doing);
+  const thenAt = voice.then && Math.max(said2 + BREATH, typed2 + 0.3);
+  const showAt = voice.then ? thenAt + anchorOf(voice.then) : typed2 + 0.5;
+  const rollAt = roll ? showAt : null, answerAt = answer ? (voice.then ? showAt : typed2 + ANSWER_AFTER) : null;
+  const ends = [said2, typed2 + Math.max(roll ? 0.8 : 1.2, read(typed.map(l => l.text).join(' ')) - typing)];
+  if (voice.then) ends.push(thenAt + spoken(voice.then));
+  if (roll) ends.push(rollAt + rolling);
+  if (answer) ends.push(answerAt + read(answer));
+
+  const base = {
+    outcome: Math.max(2.4, read(`${copy.kicker} ${copy.title}`) - 0.4, VOICE_AT.outcome + spoken(voice.outcome) + AFTER),
+    doing: Math.max(...ends) + AFTER,
+    lockup: Math.max(MOVE + END_HOLD, VOICE_AT.lockup + spoken(voice.lockup) + LOCKUP_HOLD),
+  };
+  // a short film holds each beat longer after its words, never before them
+  const extra = Math.max(0, FILM.min - (base.outcome + base.doing + base.lockup));
+  const outcome = tenths(base.outcome + extra * 0.3), doing = tenths(base.doing + extra * 0.45);
+  const duration = Math.max(FILM.min, tenths(outcome + doing + base.lockup + extra * 0.25));
   if (duration > FILM.max) fail(u.slug, `the film needs ${duration}s (max ${FILM.max})`);
   const beats = [
     { key: 'outcome', start: 0, dur: outcome },
     { key: 'doing', start: outcome, dur: doing },
     { key: 'lockup', start: tenths(outcome + doing), dur: tenths(duration - outcome - doing) },
   ];
-  const typeAt = tenths(outcome + TYPE_AT);
-  return { copy, beats, duration, timing: { each: +each.toFixed(4), typeAt, typing: +typing.toFixed(2), rollAt: +(typeAt + typing + 0.5).toFixed(2), answerAt: answer ? +(typeAt + typing + rolling + ANSWER_AFTER).toFixed(2) : null, linePause: LINE_PAUSE } };
+  const at = (beat, t) => +(beats.find(b => b.key === beat).start + t).toFixed(2);
+  const said = [
+    { beat: 'outcome', at: at('outcome', VOICE_AT.outcome) },
+    { beat: 'doing', at: at('doing', VOICE_AT.doing) },
+    ...(voice.then ? [{ beat: 'then', at: at('doing', thenAt) }] : []),
+    { beat: 'lockup', at: at('lockup', VOICE_AT.lockup) },
+  ].map(s => ({ ...voice[s.beat], at: s.at }));
+  return {
+    copy, beats, duration, said,
+    timing: {
+      each: +each.toFixed(4), typeAt: at('doing', typeAt), typing: +typing.toFixed(2), linePause: LINE_PAUSE,
+      rollAt: rollAt == null ? null : at('doing', rollAt), answerAt: answerAt == null ? null : at('doing', answerAt),
+    },
+  };
 }
 
 // ── the score: one of its own per film ─────────────────────────────────────
@@ -254,13 +294,26 @@ export function styleOf(slug) {
 const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
   : v && typeof v === 'object' ? `{${Object.keys(v).sort().map(k => `${JSON.stringify(k)}:${stable(v[k])}`).join(',')}}`
   : JSON.stringify(v ?? null));
-/** The facts a film and its release notes are cut from. Fields the film never shows (steps, hook, notes) are left out. */
+/** The facts a film and its release notes are cut from, and what it says. Fields the film never shows (steps, hook, notes) are left out. */
 const filmed = (u, pools) => ({
   slug: u.slug, url: u.url, kicker: u.kicker, title: u.title, summary: u.summary, logos: u.logos,
   window: u.command && windowOf(u), roll: rollOf(u, pools),
   // only a film that shows a fallback carries one, so the others keep their identity
   ...(fallbackOf(u) && { answer: fallbackOf(u) }),
+  said: u.narration ? u.narration.lines.map(l => l.text) : null,
 });
+
+/**
+ * Each use case with what its film says, from narration.json: its lines, how
+ * words are spoken, and the voice. A page with no script yet has none, and its
+ * film fails to build until it is written.
+ */
+export function narrate(useCases, narration = loadNarration()) {
+  return useCases.map(u => ({
+    ...u,
+    narration: narration.films[u.slug] ? { voice: narration.voice, say: narration.say, lines: scriptOf(narration, u.slug) } : null,
+  }));
+}
 const partsOf = (u, pools) => [`${u.slug}:${crypto.createHash('sha256').update(stable(filmed(u, pools))).digest('hex')}`];
 
 /** Collected facts in the shape every release has, for one use case or many. */
@@ -293,9 +346,10 @@ export default {
     const useCases = flags.slug ? all.filter(u => u.slug === flags.slug) : all;
     if (flags.slug && !useCases.length) throw new Error(`no use case "${flags.slug}". The use cases are: ${all.map(u => u.slug).join(', ')}`);
     const pools = rollPools(flags['models-from'] ? readJson(path.resolve(flags['models-from'])) : await fetchJson(MODELS_API));
-    for (const u of useCases) console.log(`  ${u.slug.padEnd(32)} ${u.title}`);
+    const said = narrate(useCases);
+    for (const u of said) console.log(`  ${u.slug.padEnd(32)} ${u.narration ? '' : '(no script) '}${u.title}`);
     console.log(`  roll: ${pools.credit.join(', ')} · free: ${pools.free.join(', ')}`);
-    return releaseOf(useCases, pools);
+    return releaseOf(said, pools);
   },
 
   split: data => data.useCases.map(u => releaseOf([u], data.pools)),
@@ -309,6 +363,9 @@ export default {
       palette: 'calm',
       style: styleOf(u.slug),
       volume: 0.5,
+      // the voice, each line where the story puts it; the score steps down under its words
+      said: story.said.map(l => ({ id: l.id, file: l.file, at: l.at, dur: l.duration })),
+      voice: story.said.map(l => ({ at: +(l.at + l.words[0].start).toFixed(2), dur: +(l.words.at(-1).end - l.words[0].start).toFixed(2) })),
       css: CSS,
       beats: story.beats,
       scenes: [{ ...filmScene(story), id: 's01-film', key: 'film', start: 0, dur: story.duration }],

@@ -10,9 +10,9 @@
  * this project into the 1080x1920 rendition. Geometry that follows the stage is
  * read from the DOM at runtime, never written as a number.
  *
- *   index.html                 root: one host per scene, the score
+ *   index.html                 root: one host per scene, the score, a clip per line of the voice
  *   compositions/<scene>.html  one sub-composition per scene, back to back
- *   fonts/  assets/providers/  audio/mix.wav
+ *   fonts/  assets/providers/  audio/mix.wav  audio/<line>.mp3
  *
  * A scene is { id, start, dur, cls, body, inner, cues }: `body` is HTML, `inner`
  * is GSAP code run with tl, D, Q, $, $$ and has in scope once the fonts are in,
@@ -112,6 +112,7 @@ const rootFile = (film, scenes) => `<!doctype html>
 ${scenes.map(s => `  <div id="clip-${s.id}" class="clip" data-composition-id="${s.id}" data-composition-src="compositions/${s.id}.html"
        data-start="${s.start}" data-duration="${s.dur}" data-track-index="1" data-width="1920" data-height="1080"></div>`).join('\n')}
   <audio id="score" data-start="0" data-duration="${film.duration}" data-track-index="9" src="audio/mix.wav" data-volume="${film.volume}"></audio>
+${(film.said ?? []).map(l => `  <audio id="vo-${l.id}" data-start="${l.at}" data-duration="${l.dur}" data-track-index="8" src="audio/${l.id}.mp3" data-volume="1"></audio>`).join('\n')}
 </div>
 <script>
   // The root only mounts the scenes; each scene drives its own timeline.
@@ -159,6 +160,7 @@ export function writeProject(dir, id, spec) {
 
   const opts = soundOf(film);
   const sound = writeSound(path.join(dir, 'audio', 'mix.wav'), opts);
+  for (const l of film.said ?? []) fs.copyFileSync(l.file, path.join(dir, 'audio', `${l.id}.mp3`));
 
   fs.writeFileSync(path.join(dir, 'hyperframes.json'), JSON.stringify({
     $schema: 'https://hyperframes.heygen.com/schema/hyperframes.json',

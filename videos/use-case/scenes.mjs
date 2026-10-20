@@ -134,7 +134,7 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // is a glyph's advance in em), which fits the API's 45-character URL whole at
 // 32px. It steps down to `least` only when nothing larger has room.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
+  landscape: { sizes: [56, 52, 48], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
   portrait: { sizes: [44, 40, 36], least: 32, width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.02, push: 1, pushMax: 1, adv: 0.57 },
 };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
@@ -352,6 +352,68 @@ function windowHtml(win) {
       <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows">${body}${out}</div></div></div></div></div>`;
 }
 
+// ── captions ───────────────────────────────────────────────────────────────
+// The narration on screen, as the series' explainer sets it: one phrase at a time, whole, white
+// Geist on an ink chip in the band under the picture, never over it. A phrase sits on one row in
+// both frames; portrait's is the narrower, so it decides where a phrase ends.
+export const CAP = {
+  landscape: { px: 52, top: 924, height: 120 },
+  portrait: { px: 60, top: 1240, height: 240 },
+  padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 },
+};
+const capFits = text => ['landscape', 'portrait'].every(o => widthOf(text, { px: CAP[o].px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4);
+// a word that is part of a name, as named() reads one: past a sentence's first word, any capitalised word
+const HANGING = /^(a|an|the|to|of|its|your|by|on|in|for|with|and|or|at|from|than|that)$/i;
+const isName = (w, first) => (first ? /^[A-Z0-9].*[A-Z]/ : /^[A-Z0-9]/).test(w);
+
+/**
+ * The narration's phrases with their times on the film's clock. A sentence, or
+ * a stretch of one between pauses, is one phrase when it sits on one row;
+ * otherwise it is cut into the fewest phrases that do, as even as they come,
+ * after a comma where one is, never between two words of a name or after a
+ * small word that leads into the next. Each shows
+ * from its first word until its last is said, held a beat.
+ */
+export function captionsOf(said = []) {
+  const words = said.flatMap((line, l) => line.words.map((w, k) => ({ text: w.text, at: line.at + w.start, end: line.at + w.end, line: l, first: k === 0 })));
+  // stretches: a line's sentences, cut again at a pause
+  const stretches = [];
+  words.forEach((w, i) => {
+    const prev = words[i - 1];
+    const fresh = !prev || prev.line !== w.line || /[.!?]["')]*$/.test(prev.text) || w.at - prev.end > 0.35;
+    if (fresh) stretches.push([]);
+    stretches.at(-1).push({ ...w, sentenceStart: fresh });
+  });
+  const width = ws => widthOf(ws.map(w => w.text).join(' '), { px: CAP.portrait.px, weight: 500, tracking: -0.005 });
+  const ok = ws => ws.length <= 6 && capFits(ws.map(w => w.text).join(' '));
+  const phrases = stretches.flatMap(ws => {
+    // the cut that holds: no name split, no phrase hanging on a small word, the fewest phrases, then commas, then the most even
+    let best = null;
+    const walk = (from, cuts) => {
+      if (from === ws.length) {
+        const parts = [0, ...cuts].map((c, i, a) => ws.slice(c, a[i + 1] ?? ws.length));
+        const named = cuts.filter(c => !/[,;:]$/.test(ws[c - 1].text) && isName(ws[c - 1].text, ws[c - 1].sentenceStart) && isName(ws[c].text, false)).length;
+        const plain = cuts.filter(c => !/[,;:]$/.test(ws[c - 1].text)).length;
+        // a phrase that ends on "the", "to" or "its" leaves its reader hanging
+        const hanging = cuts.filter(c => HANGING.test(ws[c - 1].text)).length;
+        const cost = named * 1e12 + hanging * 1e10 + parts.length * 1e9 + plain * 1e5 + Math.max(...parts.map(width)) - Math.min(...parts.map(width));
+        if (!best || cost < best.cost) best = { cost, parts };
+        return;
+      }
+      for (let to = from + 1; to <= ws.length; to++) if (ok(ws.slice(from, to))) walk(to, to < ws.length ? [...cuts, to] : cuts);
+    };
+    walk(0, []);
+    return best ? best.parts : ws.map(w => [w]);
+  });
+  return phrases.map((p, i) => {
+    const next = phrases[i + 1];
+    const at = +(p[0].at - 0.05).toFixed(2);
+    // held a beat past its last word, until the next phrase, and long enough to read
+    const end = Math.min(next ? next[0].at - 0.05 : Infinity, Math.max(p.at(-1).end + 0.3, at + 0.8));
+    return { text: p.map(w => w.text).join(' '), at, end: +end.toFixed(2) };
+  });
+}
+
 // The page's URL on the lockup sits on one row, as large as fits the safe width once the
 // camera has leaned in. Where a long slug would set it under URL_SIZES, the card names the
 // list every use case is on instead: a URL cut across rows reads as two addresses.
@@ -371,8 +433,9 @@ export function urlSet(href) {
 export const ROLL_EVERY = 0.9;
 
 /** The film's one sub-composition: { cls, body, inner, cues }. */
-export function filmScene({ copy, beats, duration, timing }) {
+export function filmScene({ copy, beats, duration, timing, said }) {
   const [, doing, lockup] = beats;
+  const caps = captionsOf(said);
   const url = urlSet(copy.url);
   const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
   const { roll } = copy.window;
@@ -385,7 +448,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
       <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${url.landscape.text === url.portrait.text ? esc(url.landscape.text)
-        : `<span class="ul">${esc(url.landscape.text)}</span><span class="up">${esc(url.portrait.text)}</span>`}</div></div></div>`;
+        : `<span class="ul">${esc(url.landscape.text)}</span><span class="up">${esc(url.portrait.text)}</span>`}</div></div></div>
+    <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span>${esc(c.text)}</span></div>`).join('')}</div>`;
   const inner = `
     const T1 = ${doing.start}, T2 = ${lockup.start};
     const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt};
@@ -479,7 +543,16 @@ export function filmScene({ copy, beats, duration, timing }) {
     tl.fromTo(Q(".url"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.6);
 
     // 3 · the lockup holds while the camera keeps leaning in.
-    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "power1.out", immediateRender: false }, T2);`;
+    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "power1.out", immediateRender: false }, T2);
+
+    // The captions: one phrase at a time, whole, under the picture; back to back they swap with no gap.
+    const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
+    $$(".cap").forEach((cap, i) => {
+      const [at, end] = CAPS[i], next = CAPS[i + 1];
+      tl.fromTo(cap, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none", immediateRender: false }, at);
+      if (next && next[0] - end < 0.05) tl.set(cap, { opacity: 0 }, next[0]);
+      else tl.to(cap, { opacity: 0, duration: 0.12, ease: "none" }, end - 0.12);
+    });`;
   const cues = [
     { at: 0.15, kind: 'tick', gain: 0.45 },
     { at: doing.start, kind: 'cut', gain: 0.4 },
@@ -496,7 +569,7 @@ export function filmScene({ copy, beats, duration, timing }) {
 // the line in focus: on the ink it is white, its other lines muted; in the
 // editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:96px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--push-max:${WIN.landscape.pushMax};--lean:${WIN.landscape.lean}}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--push:${WIN.landscape.push};--push-max:${WIN.landscape.pushMax};--lean:${WIN.landscape.lean}}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
@@ -556,6 +629,10 @@ export const CSS = `
   .film .url{font-size:var(--us);color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
   .film .url .up{display:none}
 
+  .film .caps{position:absolute;left:0;right:0;top:${CAP.landscape.top}px;height:${CAP.landscape.height}px;pointer-events:none}
+  .film .cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
+  .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:${CAP.landscape.px}px;font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
+
   @media (orientation: portrait){
     .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--push-max:${WIN.portrait.pushMax};--lean:${WIN.portrait.lean}}
     .film .cam{transform-origin:510px 710px}
@@ -579,5 +656,8 @@ export const CSS = `
     .film .lock b{font-size:120px}
     .film .url{font-size:var(--us-p);padding:24px ${URL_PAD.portrait}px;border-radius:28px}
     .film .url .ul{display:none}
+    /* the band Reels, Shorts and TikTok leave clear (shared/authoring/portrait.mjs), across the safe width */
+    .film .caps{left:${ACROSS.portrait.left}px;right:${1080 - ACROSS.portrait.left - ACROSS.portrait.width}px;top:${CAP.portrait.top}px;height:${CAP.portrait.height}px}
+    .film .cap span{font-size:${CAP.portrait.px}px}
     .film .url .up{display:inline}
   }`;

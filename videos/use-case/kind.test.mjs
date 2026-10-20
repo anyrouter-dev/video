@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, styleOf } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, styleOf, narrate } from './kind.mjs';
 import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
@@ -23,8 +23,8 @@ const collect = async (d = doc(), flags = {}) => {
 };
 const releases = async d => kind.split(await collect(d));
 const byLabel = rs => Object.fromEntries(rs.map(r => [r.label, fingerprint(r.parts)]));
-const filmOf = (d, slug) => kind.film(kind.split({ useCases: parseDoc(d), pools }).find(r => r.label === slug));
-const films = () => parseDoc(doc()).map(u => [u, kind.film(kind.split({ useCases: [u], pools })[0])]);
+const filmOf = (d, slug) => kind.film(kind.split({ useCases: narrate(parseDoc(d)), pools }).find(r => r.label === slug));
+const films = () => narrate(parseDoc(doc())).map(u => [u, kind.film(kind.split({ useCases: [u], pools })[0])]);
 const html = film => film.scenes.map(s => s.body).join('\n');
 
 // What a viewer can read: tags dropped, inline spans joined (word masks, typed
@@ -127,10 +127,14 @@ test('a malformed response fails loudly at the boundary', () => {
 
 // ── what reaches the screen ────────────────────────────────────────────────
 
+// The captions are the narration, whose claims narration.json sources line by line.
+const picture = h => h.replace(/<div class="caps"[\s\S]*$/, '');
+const captions = h => [...h.matchAll(/<div class="cap"[^>]*><span>([^<]*)<\/span>/g)].map(m => m[1].replace(/&amp;/g, '&'));
+
 test('every string on screen is a fact, verbatim', () => {
   for (const [u, film] of films()) {
     const facts = factsOf(u);
-    for (const text of shown(html(film))) {
+    for (const text of shown(picture(html(film)))) {
       if (CHROME(text)) continue;
       assert.ok(facts.some(f => f.includes(text)), `${u.slug} shows "${text}", which no fact states`);
     }
@@ -232,7 +236,7 @@ test('an id the catalog bills to the user\'s own key, or prices above 0 under fr
 
 // ── the film ───────────────────────────────────────────────────────────────
 
-test('every film is 12 to 18 seconds, its three beats back to back on whole frames', () => {
+test('every film is 25 to 45 seconds, its three beats back to back on whole frames', () => {
   for (const [u, f] of films()) {
     assert.ok(f.duration >= FILM.min && f.duration <= FILM.max, `${u.slug}: ${f.duration}s`);
     assert.deepEqual(f.beats.map(b => b.key), ['outcome', 'doing', 'lockup']);
@@ -385,5 +389,27 @@ test('every film has a score of its own, read off its slug', () => {
   for (let i = 0; i < styles.length; i++) for (let j = i + 1; j < styles.length; j++) {
     const [a, x] = styles[i], [b, y] = styles[j];
     assert.ok(sig(x) !== sig(y) || Math.abs(x.bpm - y.bpm) > 6, `${a} and ${b} share key, mode, groove, motif voice and chords`);
+  }
+});
+
+test('the captions are the narration, word for word, in the order it is said', () => {
+  // a caption that drops or adds a word reads as a different claim than the one voiced
+  const narration = JSON.parse(fs.readFileSync(path.join(dir, 'narration.json'), 'utf8'));
+  for (const [u, f] of films()) {
+    const lines = ['outcome', 'doing', 'then'].map(b => narration.films[u.slug][b]).filter(Boolean).concat(narration.lockup);
+    assert.equal(captions(html(f)).join(' '), lines.join(' ').replace(/\^/g, ''), u.slug);
+  }
+});
+
+test('the voice is placed where the story says, one line after another, inside the film', () => {
+  for (const [u, f] of films()) {
+    assert.deepEqual(f.said.map(l => l.id), [...['outcome', 'doing', 'then'].map(b => `${u.slug}-${b}`).filter(id => fs.existsSync(path.join(dir, 'voice', `${id}.json`))), 'lockup']);
+    f.said.forEach((l, i) => {
+      assert.ok(fs.existsSync(l.file), `${l.id} is voiced`);
+      if (i) assert.ok(l.at >= f.said[i - 1].at + f.said[i - 1].dur - 0.3, `${u.slug}: ${l.id} starts over the line before it`);
+    });
+    assert.ok(f.said.at(-1).at >= f.beats[2].start && f.said.at(-1).at + f.said.at(-1).dur <= f.duration, `${u.slug}: the last line is said over the lockup`);
+    // the music steps down under every spoken stretch
+    assert.equal(f.voice.length, f.said.length);
   }
 });
