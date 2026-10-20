@@ -59,10 +59,10 @@ AgentID behavior is sourced to the live captures and AgentMail's docs only.
 | A5 | Seconds later the waiting browser was on anyrouter.dev, signed in: the authorize call was at 14:54:23Z, the browser was signed in by 14:54:38Z. ("Seconds later") | C/`signed-in.txt` |
 | A6 | Its own account: the account menu reads AgentMail, `duyetbot@agentmail.to`, Free. | C/`signed-in.txt`, C/`account-menu.png` |
 | A7 | No password: Settings reads "No password (OAuth only)", and Connected accounts lists AgentID with `duyetbot@agentmail.to`. | C/`settings.txt` |
-| A8 | With its own key, the agent's first request ran on the free tier: a key `agentid-film` created on that account, then `POST /api/v1/chat/completions` with `model: "anyrouter/free"` answered "Hello! I'm here and ready to help." with `usage.cost` 0. | C/`keys-after-call.txt`, C/`chat-request.json`, C/`chat-response.txt` |
+| A8 | With its own key, the agent's first request ran on the free tier: a key `agentid-film` created on that account, then `POST /api/v1/chat/completions` with `model: "anyrouter/free"` answered "Hello! I'm here and ready to help." with `usage.cost` 0. The code bar names the key's owner and name, `duyetbot@agentmail.to · agentid-film`. | C/`keys-after-call.txt`, C/`chat-request.json`, C/`chat-response.txt` |
 | A9 | `anyrouter/free` runs on every plan, Free included, and deducts no credits; it is not BYOK. (Why the film's call uses it: named free models such as `minimax/minimax-m3.1-flash` returned 402 on the Free plan at $0.00.) | https://anyrouter.dev/llms.txt line 11 (read 2026-10-20); C/`models-subset.json` (pricing 0, no `billing: "byok"`); C/`manifest.json` entry for `chat-response.txt` |
 | A10 | Close: "Give your agent its own AnyRouter account. Start at anyrouter.dev." The sign-in is at anyrouter.dev/sign-in. | A1, A6 |
-| F1 | Framing, not a product claim: "Usually, a person signs up and pastes it a key." A new account starts with no API keys; a key is made in the dashboard by a signed-in user. | C/`keys-before.png` ("No API keys yet"), C/`keys-after-call.txt` |
+| F1 | Framing, not a product claim: "Usually, a person signs up for it, with a password." The contrast the film proves is A7: the agent's account has no password. The film does not claim AgentID removes making a key: the agent's key was made in its own signed-in account. | A7; C/`keys-before.png` ("No API keys yet"), C/`keys-after-call.txt` |
 
 ## Not claimed
 

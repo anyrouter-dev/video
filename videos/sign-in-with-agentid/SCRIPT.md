@@ -6,11 +6,11 @@
 
 ---
 
-## Line 1 — The key hand-off (Frame 1)
+## Line 1 — The sign-up (Frame 1)
 
-Framing F1: the step the film removes.
+Framing F1: the step the film removes. Revised after review: the film does not show a key hand-off going away (the agent still makes its key in its own account), only the sign-up and the password.
 
-    Your agent needs model access. Usually, a person signs up and pastes it a key.
+    Your agent needs model access. Usually, a person signs up for it, with a password.
 
 ## Line 2 — The button (Frame 2)
 

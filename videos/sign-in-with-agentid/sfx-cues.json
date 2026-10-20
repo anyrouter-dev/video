@@ -1,6 +1,6 @@
 [
   {"frame": 1, "sound": "pop", "word": "access.", "volume": 0.2},
-  {"frame": 1, "sound": "whoosh-short", "word": "pastes", "offset": -0.1, "volume": 0.22},
+  {"frame": 1, "sound": "click-soft", "word": "password.", "volume": 0.2},
   {"frame": 2, "sound": "click", "word": "AgentID.", "volume": 0.28},
   {"frame": 3, "sound": "click-soft", "word": "authorizes", "volume": 0.2},
   {"frame": 3, "sound": "pop", "word": "inbox.", "offset": 0.3, "volume": 0.2},

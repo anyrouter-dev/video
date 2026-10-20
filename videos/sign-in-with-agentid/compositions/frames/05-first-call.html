@@ -120,8 +120,8 @@
   [data-composition-id="05-first-call"] .k-lbr { display: none; }
 }
     /* /kit:css */
-    /* The agent's first call with its own key (C/chat-request.json, C/chat-response.txt): the key is
-       redacted; anyrouter/free answered from dots-studio/dots-3-note-preview at cost 0. */
+    /* The agent's first call with its own key (C/chat-request.json, C/chat-response.txt): the bar names
+       the key's owner and name (C/keys-after-call.txt), the key is redacted, the answer cost 0. */
     [data-composition-id="05-first-call"] .f05-code { left: 150px; right: 150px; top: 170px; transform-origin: 50% 50%; }
     [data-composition-id="05-first-call"] .f05-code .k-code-body { font-size: 50px; padding: 40px 56px 48px; }
     [data-composition-id="05-first-call"] .f05-sep { display: block; height: 2px; margin: 26px 0 30px; background: var(--hair); }
@@ -129,8 +129,10 @@
     [data-composition-id="05-first-call"] .f05-w { display: inline-block; white-space: pre; }
 
     @media (orientation: portrait) {
-      [data-composition-id="05-first-call"] .f05-code { left: 60px; right: 120px; top: 230px; }
-      [data-composition-id="05-first-call"] .f05-code .k-code-body { font-size: 38px; padding: 36px 28px 44px; }
+      [data-composition-id="05-first-call"] .f05-code { left: 72px; right: 132px; top: 400px; }
+      [data-composition-id="05-first-call"] .f05-code .k-code-body { font-size: 40px; padding: 36px 32px 44px; }
+      [data-composition-id="05-first-call"] .f05-code .k-code-bar { padding-left: 28px; }
+      [data-composition-id="05-first-call"] .f05-code .k-browser-dots { display: none; }
     }
   </style>
 
@@ -140,10 +142,10 @@
       <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
       <div id="f05-cam" class="k-cam">
         <div id="f05-code" class="k-code f05-code">
-          <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">POST /api/v1/chat/completions</span></div>
-<div class="k-code-body"><span id="f05-key" class="k-ln f05-q">Bearer sk-ar-v1-••••</span><span id="f05-model" class="k-ln f05-q">"model": "anyrouter/free"</span><span class="f05-sep"></span><span id="f05-served" class="k-ln f05-q">"model":<span class="k-lbr"> </span><span class="k-pbr">
-</span>"dots-studio/dots-3-note-preview"</span><span id="f05-content" class="k-ln f05-q">"content":<span class="k-lbr"> </span><span class="k-pbr">
-</span><span class="f05-reply"><span class="f05-w">"Hello! </span><span class="f05-w">I'm </span><span class="f05-w">here </span><span class="f05-w">and </span><span class="f05-w">ready </span><span class="f05-w">to </span><span class="f05-w">help."</span></span></span><span id="f05-cost" class="k-ln f05-q">"cost": <span id="f05-zero">0</span></span></div>
+          <div class="k-code-bar"><div class="k-browser-dots"><i></i><i></i><i></i></div><span class="k-url">duyetbot@agentmail.to · agentid-film</span></div>
+<div class="k-code-body"><span id="f05-key" class="k-ln f05-q">Bearer sk-ar-v1-••••</span><span id="f05-model" class="k-ln f05-q">"model": "anyrouter/free"</span><span class="f05-sep"></span><span id="f05-content" class="k-ln f05-q">"content":<span class="k-lbr"> </span><span class="k-pbr">
+</span><span class="f05-reply"><span class="f05-w">"Hello! </span><span class="f05-w">I'm </span><span class="f05-w">here </span><span class="f05-w">and </span><span class="k-pbr">
+</span><span class="f05-w">ready </span><span class="f05-w">to </span><span class="f05-w">help."</span></span></span><span id="f05-cost" class="k-ln f05-q">"cost": <span id="f05-zero">0</span></span></div>
         </div>
       </div>
     </div>
@@ -243,7 +245,7 @@ const K = {
         const words = [...root.querySelectorAll('[class~="f05-w"]')];
         const tone = (els, color, t) => tl.to(els, { color, duration: 0.5, ease: "power2.inOut" }, t);
         K.cards(tl, $("code"), [$("code")], 0);
-        tl.set([$("served"), $("content"), $("cost")], { opacity: 0 }, 0);
+        tl.set([$("content"), $("cost")], { opacity: 0 }, 0);
         tl.set(words, { opacity: 0 }, 0);
 
         // "With its own key": the agent's key is the line in ink
@@ -251,12 +253,12 @@ const K = {
         // "its first request": the request goes out, the answer comes back word by word
         tone($("key"), K.MUTED, REQ);
         tone($("model"), K.INK, REQ);
-        tl.to([$("served"), $("content")], { opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.1 }, REQ + 0.15);
+        tl.to($("content"), { opacity: 1, duration: 0.4, ease: "power2.out" }, REQ + 0.15);
         tone($("content"), K.INK, REQ);
         tl.to(words, { opacity: 1, duration: 0.12, ease: "none", stagger: 0.09 }, REPLY);
         // "on the free tier": the cost line
         tl.to($("cost"), { opacity: 1, duration: 0.4, ease: "power2.out" }, FREE - 0.1);
-        tone([$("model"), $("served")], K.MUTED, FREE);
+        tone($("model"), K.MUTED, FREE);
         tone($("cost"), K.INK, FREE);
         tone(root.querySelector('[class~="f05-reply"]'), K.INK, FREE);
         tl.fromTo($("zero"), { color: K.INK }, { color: K.ACCENT, duration: 0.5, ease: "power2.inOut", immediateRender: false }, FREE);

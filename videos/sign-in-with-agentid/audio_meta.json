@@ -10,9 +10,9 @@
       "frame": 1,
       "path": "assets/voice/01.wav",
       "duration_s": 5.559,
-      "raw_s": 4.365,
-      "text": "Your agent needs model access. Usually, a person signs up and pastes it a key.",
-      "say": "Your agent needs model access. Usually, a person signs up and pastes it a key.",
+      "raw_s": 4.319,
+      "text": "Your agent needs model access. Usually, a person signs up for it, with a password.",
+      "say": "Your agent needs model access. Usually, a person signs up for it, with a password.",
       "voice": "cjVigY5qzO86Huf0OWal",
       "model": "eleven_multilingual_v2",
       "settings": {
@@ -26,94 +26,94 @@
           "id": "w0",
           "text": "Your",
           "start": 0,
-          "end": 0.197
+          "end": 0.221
         },
         {
           "id": "w1",
           "text": "agent",
-          "start": 0.232,
-          "end": 0.476
+          "start": 0.267,
+          "end": 0.511
         },
         {
           "id": "w2",
           "text": "needs",
-          "start": 0.522,
-          "end": 0.743
+          "start": 0.557,
+          "end": 0.789
         },
         {
           "id": "w3",
           "text": "model",
-          "start": 0.801,
-          "end": 1.057
+          "start": 0.848,
+          "end": 1.115
         },
         {
           "id": "w4",
           "text": "access.",
-          "start": 1.138,
-          "end": 1.718
+          "start": 1.184,
+          "end": 1.649
         },
         {
           "id": "w5",
           "text": "Usually,",
-          "start": 1.962,
-          "end": 2.31
+          "start": 1.718,
+          "end": 2.148
         },
         {
           "id": "w6",
           "text": "a",
-          "start": 2.334,
-          "end": 2.357
+          "start": 2.171,
+          "end": 2.194
         },
         {
           "id": "w7",
           "text": "person",
-          "start": 2.403,
-          "end": 2.67
+          "start": 2.252,
+          "end": 2.508
         },
         {
           "id": "w8",
           "text": "signs",
-          "start": 2.728,
-          "end": 2.984
+          "start": 2.554,
+          "end": 2.798
         },
         {
           "id": "w9",
           "text": "up",
-          "start": 3.03,
-          "end": 3.123
+          "start": 2.844,
+          "end": 2.937
         },
         {
           "id": "w10",
-          "text": "and",
-          "start": 3.17,
-          "end": 3.239
+          "text": "for",
+          "start": 2.995,
+          "end": 3.135
         },
         {
           "id": "w11",
-          "text": "pastes",
-          "start": 3.297,
-          "end": 3.564
+          "text": "it,",
+          "start": 3.181,
+          "end": 3.262
         },
         {
           "id": "w12",
-          "text": "it",
-          "start": 3.599,
-          "end": 3.657
+          "text": "with",
+          "start": 3.286,
+          "end": 3.425
         },
         {
           "id": "w13",
           "text": "a",
-          "start": 3.692,
-          "end": 3.715
+          "start": 3.46,
+          "end": 3.483
         },
         {
           "id": "w14",
-          "text": "key.",
-          "start": 3.773,
-          "end": 4.365
+          "text": "password.",
+          "start": 3.529,
+          "end": 4.319
         }
       ],
-      "padded_s": 1.194
+      "padded_s": 1.24
     },
     {
       "frame": 2,
@@ -545,17 +545,17 @@
     {
       "frame": 1,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 1.138,
+      "offset_s": 1.184,
       "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
     },
     {
       "frame": 1,
-      "file": "assets/sfx/whoosh-short.mp3",
-      "offset_s": 3.197,
-      "duration_s": 0.575,
-      "volume": 0.22,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 3.529,
+      "duration_s": 0.366,
+      "volume": 0.2,
       "source": "bundled"
     },
     {

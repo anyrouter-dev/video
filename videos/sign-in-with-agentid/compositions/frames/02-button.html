@@ -123,17 +123,17 @@
     /* AnyRouter's sign-in card, redrawn from the live page (C/sign-in.txt): the mark, "Continue to
        AnyRouter", AgentID then GitHub, "or", "Email address or username", Continue. Clicking AgentID
        opens AgentID's waiting card (C/wait-page.txt), which Frame 3 opens on. */
-    [data-composition-id="02-button"] .f02-card { position: absolute; left: 340px; right: 340px; top: 96px; height: 784px; padding: 48px 96px; display: flex; flex-direction: column; align-items: stretch; justify-content: center; transform-origin: 50% 50%; }
+    [data-composition-id="02-button"] .f02-card { position: absolute; left: 400px; right: 400px; top: 150px; height: 730px; padding: 36px 88px; display: flex; flex-direction: column; align-items: stretch; justify-content: center; transform-origin: 50% 50%; }
     [data-composition-id="02-button"] .f02-mark { width: 80px; height: 80px; align-self: center; }
-    [data-composition-id="02-button"] .f02-title { text-align: center; margin: 20px 0 44px; }
+    [data-composition-id="02-button"] .f02-title { text-align: center; margin: 16px 0 32px; }
     [data-composition-id="02-button"] .f02-socials { display: flex; gap: 28px; }
     [data-composition-id="02-button"] .f02-social { position: relative; flex: 1; height: 120px; display: flex; align-items: center; justify-content: center; gap: 22px; border: 2px solid var(--hair); border-radius: 20px; background: var(--bg); font-size: 48px; font-weight: 500; letter-spacing: -0.03em; }
     [data-composition-id="02-button"] .f02-social img, [data-composition-id="02-button"] .f02-social svg { width: 56px; height: 56px; flex: none; }
-    [data-composition-id="02-button"] .f02-or { display: flex; align-items: center; gap: 24px; margin: 30px 0; }
+    [data-composition-id="02-button"] .f02-or { display: flex; align-items: center; gap: 24px; margin: 22px 0; }
     [data-composition-id="02-button"] .f02-or i { flex: 1; height: 2px; background: var(--hair); }
     [data-composition-id="02-button"] .f02-label { font-size: 36px; font-weight: 500; color: var(--ink-2); margin-bottom: 14px; }
     [data-composition-id="02-button"] .f02-input { height: 88px; border: 2px solid var(--hair); border-radius: 18px; }
-    [data-composition-id="02-button"] .f02-go { margin-top: 32px; height: 96px; border-radius: 18px; font-size: 44px; }
+    [data-composition-id="02-button"] .f02-go { margin-top: 24px; height: 96px; border-radius: 18px; font-size: 44px; }
     [data-composition-id="02-button"] .f02-ring { border-radius: 32px; }
     [data-composition-id="02-button"] .f02-ptr { position: absolute; left: 0; top: 0; width: 72px; height: 72px; opacity: 0; }
     /* AgentID's waiting card, as it opens: Frame 3 starts on this same layout */
@@ -145,6 +145,8 @@
 
     @media (orientation: portrait) {
       [data-composition-id="02-button"] .f02-card { left: 60px; right: 120px; top: 230px; height: 960px; padding: 56px 44px; }
+      [data-composition-id="02-button"] .f02-title { margin: 28px 0 56px; }
+      [data-composition-id="02-button"] .f02-or { margin: 30px 0; }
       [data-composition-id="02-button"] .f02-title { margin: 28px 0 56px; }
       [data-composition-id="02-button"] .f02-socials { flex-direction: column; gap: 24px; }
       [data-composition-id="02-button"] .f02-social { flex: none; }

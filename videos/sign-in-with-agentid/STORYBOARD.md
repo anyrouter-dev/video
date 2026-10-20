@@ -2,7 +2,7 @@
 format: 1920x1080
 duration: 32.296s
 message: "AnyRouter now supports sign-in with AgentID. Your agent signs in from its own AgentMail inbox and gets its own AnyRouter account, with no form and no password."
-arc: The hand-off → The button → One call → Signed in → First response → Close
+arc: The sign-up → The button → One call → Signed in → First response → Close
 audience: a developer who runs agents
 mode: autonomous
 music: none
@@ -20,20 +20,20 @@ music: none
 - **Caption band.** Landscape: the bottom 200px stays clear. Portrait (1080x1920): content in y 200 to 1220 and x 60 to 960; captions own 1240 to 1480.
 - **Two renditions.** Each frame carries its portrait layout under `@media (orientation: portrait)`.
 
-## Frame 1 — The hand-off
-- src: compositions/frames/01-handoff.html
+## Frame 1 — The sign-up
+- src: compositions/frames/01-signup.html
 
-- scene: Two chips, "You" and "Your agent", joined by a hairline; on "pastes" a redacted key chip `sk-ar-v1-••••` slides from You to Your agent and takes the accent. Above them the headline "Your agent needs a key."
+- scene: The headline "Your agent needs an account." Under it the usual way: a "You" chip beside a sign-up card (Email, Password ••••••••). On "person" You inks; on "password" the password dots take the accent. Frame 4 answers it with "No password".
 - duration: 5.559s
 - transition_in: cut
 - type: problem
 - beat: friction
-- voiceover: "Your agent needs model access. Usually, a person signs up and pastes it a key."
+- voiceover: "Your agent needs model access. Usually, a person signs up for it, with a password."
 - asset_candidates: none, type only
 - blueprint: kinetic-type-beats (Adapt)
-- focal: the headline, then the key on its way
-- roles: You = a person, Your agent = the agent
-- sfx: pop on access, whoosh-short on pastes
+- focal: the headline, then the password field
+- roles: You = a person, the card = any sign-up form (generic, no product named)
+- sfx: pop on access, click-soft on password
 - status: animated
 
 ## Frame 2 — The button

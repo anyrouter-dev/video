@@ -134,12 +134,13 @@
     [data-composition-id="03-authorize"] .f03-term .k-roll { height: 1.4em; }
     [data-composition-id="03-authorize"] .f03-res { display: block; margin-top: 28px; padding-top: 28px; border-top: 2px solid var(--ink-2); }
     [data-composition-id="03-authorize"] .f03-res .id { color: var(--accent-on-ink); }
+    [data-composition-id="03-authorize"] .f03-term .k-roll > span:first-child { color: var(--on-ink); }
 
     @media (orientation: portrait) {
       [data-composition-id="03-authorize"] .f03-wait { left: 60px; right: 120px; top: 260px; height: 900px; padding: 56px 44px; }
       [data-composition-id="03-authorize"] .f03-marks img { width: 112px; height: 112px; }
-      [data-composition-id="03-authorize"] .f03-term { left: 60px; right: 120px; top: 220px; }
-      [data-composition-id="03-authorize"] .f03-term .k-term-body { font-size: 38px; padding: 32px 32px 40px; }
+      [data-composition-id="03-authorize"] .f03-term { left: 72px; right: 132px; top: 260px; }
+      [data-composition-id="03-authorize"] .f03-term .k-term-body { font-size: 38px; padding: 32px 28px 40px; }
     }
   </style>
 
@@ -269,6 +270,7 @@ const K = {
         K.roll(tl, $("inbox"), [INBOX]);
         // the answer
         tl.fromTo($("res"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, RES);
+        tl.to($("inbox").children[1], { color: K.ON_INK, duration: 0.5, ease: "power2.inOut" }, RES);
         K.push(tl, $("cam"), DURATION, { to: 1.04 });
 
         window.__timelines = window.__timelines || {};
