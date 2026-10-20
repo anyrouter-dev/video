@@ -1,0 +1,534 @@
+{
+ "tracks": {
+  "avec-soin-macleod": {
+   "file": "avec-soin-macleod.mp3",
+   "title": "Avec Soin",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100860",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Avec Soin\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100860. Catalog instruments: Piano. Quiet/soft intro (first 3 s ~41 dB under median level); skip in or trim start. Loudness: -16.3 LUFS integrated, LRA 12.6 LU, sample peak -0.0 dBFS; mp3,44100,2,320000."
+  },
+  "beauty-flow-macleod": {
+   "file": "beauty-flow-macleod.mp3",
+   "title": "Beauty Flow",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1900008",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Beauty Flow\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1900008. Catalog instruments: Synths, Bass, Percussion. Loudness: -17.8 LUFS integrated, LRA 2.1 LU, sample peak -0.4 dBFS; mp3,44100,2,320000."
+  },
+  "clear-air-macleod": {
+   "file": "clear-air-macleod.mp3",
+   "title": "Clear Air",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100626",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Clear Air\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100626. Catalog instruments: Guitar, Piano. Loudness: -16.8 LUFS integrated, LRA 7.0 LU, sample peak -0.1 dBFS; mp3,44100,2,320000."
+  },
+  "diffusion-airtone": {
+   "file": "diffusion-airtone.mp3",
+   "title": "diffusion",
+   "artist": "airtone",
+   "from": 0,
+   "source": "https://ccmixter.org/files/airtone/64852",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"diffusion\" by airtone (c) 2022 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/64852 Ft: SkyeJordan",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Longing For Peace by SkyeJordan [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Loudness: -11.1 LUFS integrated, LRA 8.0 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "dream-culture-macleod": {
+   "file": "dream-culture-macleod.mp3",
+   "title": "Dream Culture",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300046",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Dream Culture\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1300046. Catalog instruments: Piano, Percussion. Light percussion/hi-hat content present (not drum-led). Loudness: -17.2 LUFS integrated, LRA 7.3 LU, sample peak -0.8 dBFS; mp3,44100,2,320000."
+  },
+  "dreamer-macleod": {
+   "file": "dreamer-macleod.mp3",
+   "title": "Dreamer",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600043",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Dreamer\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1600043. Catalog instruments: Piano, Percussion. Loudness: -19.3 LUFS integrated, LRA 6.3 LU, sample peak -1.4 dBFS; mp3,44100,2,256000."
+  },
+  "facile-macleod": {
+   "file": "facile-macleod.mp3",
+   "title": "Facile",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100858",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Facile\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100858. Catalog instruments: Piano. Quiet/soft intro (first 3 s ~32 dB under median level); skip in or trim start. Sparse with near-silent gaps (9% of frames under -50 dBFS). Loudness: -17.9 LUFS integrated, LRA 14.0 LU, sample peak -0.1 dBFS; mp3,44100,2,320000."
+  },
+  "fresh-air-macleod": {
+   "file": "fresh-air-macleod.mp3",
+   "title": "Fresh Air",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500084",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Fresh Air\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1500084. Catalog instruments: Piano. Quiet/soft intro (first 3 s ~37 dB under median level); skip in or trim start. Loudness: -15.1 LUFS integrated, LRA 9.7 LU, sample peak -0.1 dBFS; mp3,44100,2,256000."
+  },
+  "inspired-macleod": {
+   "file": "inspired-macleod.mp3",
+   "title": "Inspired",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600022",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Inspired\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1600022. Catalog instruments: Guitar, Synths, Percussion. Loudness: -12.8 LUFS integrated, LRA 2.0 LU, sample peak -0.1 dBFS; mp3,44100,2,256000."
+  },
+  "light-thought-var-1-macleod": {
+   "file": "light-thought-var-1-macleod.mp3",
+   "title": "Light Thought var 1",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200006",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Light Thought var 1\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1200006. Catalog instruments: Electric Piano. Loudness: -14.9 LUFS integrated, LRA 9.2 LU, sample peak -0.1 dBFS; mp3,44100,2,320000."
+  },
+  "mellow-piano-doxent": {
+   "file": "mellow-piano-doxent.mp3",
+   "title": "Mellow Piano",
+   "artist": "doxent",
+   "from": 0,
+   "source": "https://ccmixter.org/files/doxent/39616",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"Mellow Piano\" by doxent (c) 2012 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/doxent/39616",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~82 dB under median level); skip in or trim start. Sparse with near-silent gaps (12% of frames under -50 dBFS). Loudness: -23.4 LUFS integrated, LRA 13.9 LU, sample peak -5.0 dBFS; mp3,44100,2,320000."
+  },
+  "nightwalk-airtone": {
+   "file": "nightwalk-airtone.mp3",
+   "title": "nightWalk",
+   "artist": "airtone",
+   "from": 23,
+   "source": "https://ccmixter.org/files/airtone/56520",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"nightWalk\" by airtone (c) 2017 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/56520 Ft: mwic",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): \"Short fiction\" double piano by mwic [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~25 dB under median level); skip in or trim start. Loudness: -10.8 LUFS integrated, LRA 10.9 LU, sample peak -0.0 dBFS; mp3,44100,2,192000."
+  },
+  "nocturnal-doxent": {
+   "file": "nocturnal-doxent.mp3",
+   "title": "Nocturnal",
+   "artist": "doxent",
+   "from": 0,
+   "source": "https://ccmixter.org/files/doxent/51454",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"Nocturnal\" by doxent (c) 2015 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/doxent/51454",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~89 dB under median level); skip in or trim start. Loudness: -21.3 LUFS integrated, LRA 13.3 LU, sample peak -2.5 dBFS; mp3,44100,2,235209."
+  },
+  "northern-glade-macleod": {
+   "file": "northern-glade-macleod.mp3",
+   "title": "Northern Glade",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1800017",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Northern Glade\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1800017. Catalog instruments: Synths. Loudness: -17.0 LUFS integrated, LRA 3.6 LU, sample peak -0.5 dBFS; mp3,44100,2,128000."
+  },
+  "numinous-shine-macleod": {
+   "file": "numinous-shine-macleod.mp3",
+   "title": "Numinous Shine",
+   "artist": "Kevin MacLeod",
+   "from": 3,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100129",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Numinous Shine\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100129. Catalog instruments: Synth. Quiet/soft intro (first 3 s ~33 dB under median level); skip in or trim start. Higher share of energy in the 1-4 kHz voice band (0.19); duck/EQ under VO more than usual. Loudness: -15.4 LUFS integrated, LRA 3.0 LU, sample peak -2.7 dBFS; mp3,44100,2,320000."
+  },
+  "odyssey-macleod": {
+   "file": "odyssey-macleod.mp3",
+   "title": "Odyssey",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500012",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Odyssey\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1500012. Catalog instruments: Synths. Quiet/soft intro (first 3 s ~16 dB under median level); skip in or trim start. Loudness: -16.3 LUFS integrated, LRA 5.4 LU, sample peak -1.2 dBFS; mp3,44100,2,256000."
+  },
+  "perspectives-macleod": {
+   "file": "perspectives-macleod.mp3",
+   "title": "Perspectives",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300027",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Perspectives\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1300027. Catalog instruments: Percussion, Synths, Piano, Flute. Loudness: -16.5 LUFS integrated, LRA 3.8 LU, sample peak -0.1 dBFS; mp3,44100,2,320000."
+  },
+  "preamble-airtone": {
+   "file": "preamble-airtone.mp3",
+   "title": "preamble",
+   "artist": "airtone",
+   "from": 4,
+   "source": "https://ccmixter.org/files/airtone/61579",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"preamble\" by airtone (c) 2020 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/61579 Ft: admiralbob77",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Something Old Something New by admiralbob77 [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Loudness: -12.5 LUFS integrated, LRA 5.6 LU, sample peak -0.3 dBFS; mp3,44100,2,320000."
+  },
+  "recreation-airtone": {
+   "file": "recreation-airtone.mp3",
+   "title": "reCreation",
+   "artist": "airtone",
+   "from": 17,
+   "source": "https://ccmixter.org/files/airtone/59721",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"reCreation\" by airtone (c) 2019 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/59721 Ft: mwic",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Eyes Closed by mwic [Attribution (3.0)]; Alberti Fractal by mwic [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~54 dB under median level); skip in or trim start. Light percussion/hi-hat content present (not drum-led). Loudness: -15.6 LUFS integrated, LRA 13.1 LU, sample peak -0.7 dBFS; mp3,44100,2,320000."
+  },
+  "renovation-airtone": {
+   "file": "renovation-airtone.mp3",
+   "title": "reNovation",
+   "artist": "airtone",
+   "from": 8,
+   "source": "https://ccmixter.org/files/airtone/60674",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"reNovation\" by airtone (c) 2019 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/60674",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~22 dB under median level); skip in or trim start. Loudness: -12.6 LUFS integrated, LRA 8.9 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "roboduck-airtone": {
+   "file": "roboduck-airtone.mp3",
+   "title": "roboduck",
+   "artist": "airtone",
+   "from": 3,
+   "source": "https://ccmixter.org/files/airtone/66098",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"roboduck\" by airtone (c) 2023 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/66098 Ft: duckett",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): RoboChimp by duckett [Attribution (3.0)]; Southern Rain EP by duckett [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~41 dB under median level); skip in or trim start. Loudness: -13.0 LUFS integrated, LRA 4.1 LU, sample peak -0.3 dBFS; mp3,44100,2,320000."
+  },
+  "sapphire-isle-macleod": {
+   "file": "sapphire-isle-macleod.mp3",
+   "title": "Sapphire Isle",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100087",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Sapphire Isle\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100087. Catalog instruments: Piano. Quiet/soft intro (first 3 s ~40 dB under median level); skip in or trim start. Loudness: -21.9 LUFS integrated, LRA 7.1 LU, sample peak -3.9 dBFS; mp3,44100,2,256000."
+  },
+  "shimmer-airtone": {
+   "file": "shimmer-airtone.mp3",
+   "title": "shimmer",
+   "artist": "airtone",
+   "from": 4,
+   "source": "https://ccmixter.org/files/airtone/64622",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"shimmer\" by airtone (c) 2022 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/64622 Ft: SackJo22",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Shimmer Singing Bowls by SackJo22 [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Quiet/soft intro (first 3 s ~38 dB under median level); skip in or trim start. Loudness: -14.1 LUFS integrated, LRA 4.7 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "silver-blue-light-macleod": {
+   "file": "silver-blue-light-macleod.mp3",
+   "title": "Silver Blue Light",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100718",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Silver Blue Light\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100718. Catalog instruments: Guitar, Synths. Quiet/soft intro (first 3 s ~21 dB under median level); skip in or trim start. Loudness: -19.3 LUFS integrated, LRA 7.5 LU, sample peak -0.1 dBFS; mp3,48000,2,320000."
+  },
+  "sincerely-macleod": {
+   "file": "sincerely-macleod.mp3",
+   "title": "Sincerely",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1900016",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Sincerely\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1900016. Catalog instruments: Synths, Percussion. Loudness: -13.2 LUFS integrated, LRA 4.4 LU, sample peak -0.4 dBFS; mp3,44100,2,320000."
+  },
+  "sleepwalking-airtone": {
+   "file": "sleepwalking-airtone.mp3",
+   "title": "sleepwalking",
+   "artist": "airtone",
+   "from": 0,
+   "source": "https://ccmixter.org/files/airtone/65416",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"sleepwalking\" by airtone (c) 2022 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/65416 Ft: mactonite",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): soaring over the sea by mactonite [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Loudness: -14.3 LUFS integrated, LRA 3.5 LU, sample peak -0.3 dBFS; mp3,44100,2,320000."
+  },
+  "spacedust-airtone": {
+   "file": "spacedust-airtone.mp3",
+   "title": "spacedust",
+   "artist": "airtone",
+   "from": 0,
+   "source": "https://ccmixter.org/files/airtone/64741",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"spacedust\" by airtone (c) 2022 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/airtone/64741 Ft: mwic",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Alberti Fractal by mwic [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Light percussion/hi-hat content present (not drum-led). Loudness: -16.3 LUFS integrated, LRA 5.4 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "starry-macleod": {
+   "file": "starry-macleod.mp3",
+   "title": "Starry",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100062",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Starry\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100062. Catalog instruments: Piano. Loudness: -25.3 LUFS integrated, LRA 10.8 LU, sample peak -8.0 dBFS; mp3,44100,2,320000."
+  },
+  "thinking-of-you-macleod": {
+   "file": "thinking-of-you-macleod.mp3",
+   "title": "Thinking of You",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100637",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Thinking of You\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100637. Catalog instruments: Electric Piano. Loudness: -15.8 LUFS integrated, LRA 8.7 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "too-quiet-piano-olddog": {
+   "file": "too-quiet-piano-olddog.mp3",
+   "title": "too quiet (piano)",
+   "artist": "oldDog",
+   "from": 0,
+   "source": "https://ccmixter.org/files/oldDog/17322",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"too quiet (piano)\" by oldDog (c) 2008 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/oldDog/17322",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Loudness: -16.7 LUFS integrated, LRA 6.8 LU, sample peak -0.1 dBFS; mp3,44100,2,259578."
+  },
+  "truth-onlymeith": {
+   "file": "truth-onlymeith.mp3",
+   "title": "Truth?",
+   "artist": "onlymeith",
+   "from": 0,
+   "source": "https://ccmixter.org/files/onlymeith/38010",
+   "license": "CC BY 3.0",
+   "licenseUrl": "http://creativecommons.org/licenses/by/3.0/",
+   "attribution": "\"Truth?\" by onlymeith (c) 2012 Licensed under a Creative Commons Attribution (3.0) license. https://ccmixter.org/files/onlymeith/38010 Ft: tglancy",
+   "evidence": "https://creativecommons.org/licenses/by/3.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\" + https://dig.ccmixter.org/licenses: \"Free to use, even in commercial projects but you must give credit to the musicians.\" + track page shows \"Licensed under Creative Commons Attribution (3.0)\" linking http://creativecommons.org/licenses/by/3.0/",
+   "notes": "ccMixter remix; sample sources (all CC BY, credited via 'Ft:'): Satied Piano by tglancy [Attribution (3.0)]. Content ID: source states nothing about Content ID; no known registration. Download needs a browser User-Agent and Referer (track page) or the CDN returns 403. Light percussion/hi-hat content present (not drum-led). Loudness: -11.7 LUFS integrated, LRA 13.6 LU, sample peak 0.0 dBFS; mp3,44100,2,320000."
+  },
+  "winter-reflections-macleod": {
+   "file": "winter-reflections-macleod.mp3",
+   "title": "Winter Reflections",
+   "artist": "Kevin MacLeod",
+   "from": 0,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100580",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Winter Reflections\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1100580. Catalog instruments: Synths. Quiet/soft intro (first 3 s ~19 dB under median level); skip in or trim start. Loudness: -16.2 LUFS integrated, LRA 9.0 LU, sample peak -0.2 dBFS; mp3,44100,2,320000."
+  },
+  "wisps-of-whorls-macleod": {
+   "file": "wisps-of-whorls-macleod.mp3",
+   "title": "Wisps of Whorls",
+   "artist": "Kevin MacLeod",
+   "from": 5,
+   "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200082",
+   "license": "CC BY 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+   "attribution": "\"Wisps of Whorls\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0\nhttps://creativecommons.org/licenses/by/4.0/",
+   "evidence": "https://incompetech.com/music/royalty-free/faq.html: \"Can I use your music... for YouTube videos? Yes, AND you can monetize the videos. Be sure to credit me.\" + https://incompetech.com/music/royalty-free/youtubeFAQ.html: \"Can I use this music in the YouTube partner program? Yes. Please use my music to make money on YouTube.\" + https://creativecommons.org/licenses/by/4.0/: \"Share — copy and redistribute the material in any medium or format for any purpose, even commercially.\"",
+   "notes": "Content ID: incompetech says its music is now pre-registered in YouTube Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html); put the credit in the video description BEFORE publishing, and dispute any claim (released within 72 h). ISRC USUAN1200082. Catalog instruments: Electric Piano, Synths. Quiet/soft intro (first 3 s ~80 dB under median level); skip in or trim start. Loudness: -15.8 LUFS integrated, LRA 6.5 LU, sample peak -0.1 dBFS; mp3,44100,2,320000."
+  }
+ },
+ "films": {
+  "agent-fallback": {
+   "track": "spacedust-airtone",
+   "start": 0
+  },
+  "ai-sdk": {
+   "track": "thinking-of-you-macleod",
+   "start": 0
+  },
+  "byok": {
+   "track": "silver-blue-light-macleod",
+   "start": 0
+  },
+  "byok-anthropic": {
+   "track": "fresh-air-macleod",
+   "start": 0
+  },
+  "cheapest-llm-api": {
+   "track": "nocturnal-doxent",
+   "start": 0
+  },
+  "claude-agent-sdk": {
+   "track": "sleepwalking-airtone",
+   "start": 0
+  },
+  "claude-code": {
+   "track": "beauty-flow-macleod",
+   "start": 0
+  },
+  "claude-code-free-models": {
+   "track": "renovation-airtone",
+   "start": 0
+  },
+  "claude-code-multiple-keys": {
+   "track": "numinous-shine-macleod",
+   "start": 0
+  },
+  "codex": {
+   "track": "diffusion-airtone",
+   "start": 0
+  },
+  "coding-agents": {
+   "track": "nightwalk-airtone",
+   "start": 0
+  },
+  "decisions": {
+   "track": "truth-onlymeith",
+   "start": 0
+  },
+  "donate-keys": {
+   "track": "winter-reflections-macleod",
+   "start": 0
+  },
+  "embeddings-search": {
+   "track": "recreation-airtone",
+   "start": 0
+  },
+  "free-chatbot": {
+   "track": "mellow-piano-doxent",
+   "start": 0
+  },
+  "free-coding-agent": {
+   "track": "sincerely-macleod",
+   "start": 0
+  },
+  "free-llm-api": {
+   "track": "too-quiet-piano-olddog",
+   "start": 0
+  },
+  "gemini-in-claude-code": {
+   "track": "northern-glade-macleod",
+   "start": 0
+  },
+  "go-plan": {
+   "track": "clear-air-macleod",
+   "start": 0
+  },
+  "grokbot": {
+   "track": "odyssey-macleod",
+   "start": 0
+  },
+  "hermes-agent": {
+   "track": "roboduck-airtone",
+   "start": 0
+  },
+  "mcp-for-agents": {
+   "track": "wisps-of-whorls-macleod",
+   "start": 0
+  },
+  "mcp-gateway": {
+   "track": "shimmer-airtone",
+   "start": 0
+  },
+  "model-evals": {
+   "track": "inspired-macleod",
+   "start": 0
+  },
+  "nvidia-free-key": {
+   "track": "avec-soin-macleod",
+   "start": 0
+  },
+  "nvidia-nim-models": {
+   "track": "sapphire-isle-macleod",
+   "start": 0
+  },
+  "openai-sdk": {
+   "track": "dream-culture-macleod",
+   "start": 0
+  },
+  "opencode": {
+   "track": "perspectives-macleod",
+   "start": 0
+  },
+  "openrouter-free-fallback": {
+   "track": "starry-macleod",
+   "start": 0
+  },
+  "openrouter-free-in-your-tools": {
+   "track": "light-thought-var-1-macleod",
+   "start": 0
+  },
+  "sign-in": {
+   "track": "preamble-airtone",
+   "start": 0
+  },
+  "unify-api": {
+   "track": "dreamer-macleod",
+   "start": 0
+  },
+  "virtual-presets": {
+   "track": "facile-macleod",
+   "start": 0
+  }
+ }
+}

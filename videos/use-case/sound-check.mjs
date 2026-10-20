@@ -1,24 +1,25 @@
-// Renders every use-case film's mix, as the film writes it, and measures how far apart each
-// pair sounds. Fails when two films are as close as one score is to itself with another motif.
+// Checks that every use-case film has music of its own: a licensed track no other film uses
+// (audio/music.json, audio/LICENSES.md), a file no other film's track is, and an excerpt that
+// does not sound like another film's. Fails otherwise.
 //
-//   node videos/use-case/sound-check.mjs [--from=FILE] [--models-from=FILE] [--out=FILE] [--keep=DIR]
+//   node videos/use-case/sound-check.mjs [--out=FILE]
 //
-// Each mix is reduced to three fingerprints, from the audio alone:
-//   chroma   energy per pitch class over the film (its key and chords)
+// Each excerpt is reduced to three fingerprints, from the audio alone:
+//   chroma   energy per pitch class (its key and chords)
 //   rhythm   the autocorrelation of its onsets over 0.25–1.6 s (its tempo and groove)
-//   bright   its mean spectral centroid (its voices)
+//   bright   its mean spectral centroid (its instruments)
 // A pair's distance is the length of (1 - chroma cosine, 1 - rhythm cosine, |log centroid ratio|).
-// The bar it must clear is measured, not picked: the first film's score rendered again with
-// another seed, the same key, tempo, chords and groove under a different motif, is the closest
-// a film can sound to another without being it. Every pair must be farther apart than that.
+// The bar is measured, not picked: a track's first 30 s against its next 30 s, the closest a piece
+// of music sounds to itself. Every pair of films must be farther apart than the closest of those.
 //
-// --out writes every pair's distance as JSON; --keep writes each mix as a wav.
+// --out writes every pair's distance as JSON.
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { parseArgs } from '../../lib/paths.mjs';
-import { renderSound } from '../../lib/sound.mjs';
-import { soundOf } from './project.mjs';
-import kind from './kind.mjs';
+import { AUDIO } from './mix.mjs';
+import { loadNarration } from './narration.mjs';
 
 const SR = 48000, DOWN = 4, RATE = SR / DOWN;
 
@@ -102,37 +103,52 @@ export function distance(a, b) {
   return { chroma: +chroma.toFixed(4), rhythm: +rhythm.toFixed(4), bright: +bright.toFixed(4), d: +Math.hypot(chroma, rhythm, bright).toFixed(4) };
 }
 
+/** `seconds` of a file from `from`, as the 48 kHz stereo 16-bit WAV mono() reads. */
+function pcm(file, from, seconds) {
+  const raw = execFileSync('ffmpeg', ['-v', 'error', '-nostdin', '-ss', String(from), '-t', String(seconds), '-i', file, '-ar', '48000', '-ac', '2', '-f', 's16le', '-'], { maxBuffer: 1 << 28 });
+  const head = Buffer.alloc(44);
+  head.writeUInt32LE(raw.length, 40);
+  return Buffer.concat([head, raw]);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   const { flags } = parseArgs(process.argv.slice(2));
-  const films = kind.split(await kind.collect({ flags: { ...flags, slug: undefined } })).map(rel => {
-    const film = kind.film(rel), opts = soundOf(film), wav = renderSound(opts);
-    if (flags.keep) { fs.mkdirSync(flags.keep, { recursive: true }); fs.writeFileSync(path.join(flags.keep, `${rel.label}.wav`), wav); }
-    return { slug: rel.label, style: film.style, opts, print: fingerprint(wav) };
-  });
-
-  // the bar: the first film's score again, the same style under another motif
-  const [first] = films;
-  const twin = fingerprint(renderSound({ ...first.opts, style: { ...first.style, seed: first.style.seed + 1 } }));
-  const bar = distance(first.print, twin);
-  console.log(`bar: ${first.slug} against its own score with another motif, d ${bar.d} (chroma ${bar.chroma}, rhythm ${bar.rhythm}, bright ${bar.bright})`);
-
-  const pairs = [];
-  for (let i = 0; i < films.length; i++) for (let j = i + 1; j < films.length; j++) {
-    pairs.push({ a: films[i].slug, b: films[j].slug, ...distance(films[i].print, films[j].print) });
+  const music = JSON.parse(fs.readFileSync(path.join(AUDIO, 'music.json'), 'utf8'));
+  const slugs = Object.keys(loadNarration().films);
+  const problems = [];
+  for (const slug of slugs) if (!music.films[slug]) problems.push(`${slug} has no track`);
+  const owner = new Map();
+  for (const [slug, f] of Object.entries(music.films)) {
+    if (owner.has(f.track)) problems.push(`${slug} and ${owner.get(f.track)} share ${f.track}`);
+    owner.set(f.track, slug);
+    const t = music.tracks[f.track];
+    if (!t) { problems.push(`${slug}: no track ${f.track} in the ledger`); continue; }
+    for (const k of ['title', 'artist', 'source', 'license', 'licenseUrl', 'attribution', 'evidence']) if (!t[k]) problems.push(`${f.track}: no ${k} in the ledger`);
   }
+  const hashes = new Map();
+  for (const [id, t] of Object.entries(music.tracks)) {
+    const h = crypto.createHash('sha256').update(fs.readFileSync(path.join(AUDIO, 'music', t.file))).digest('hex');
+    if (hashes.has(h)) problems.push(`${id} is the same file as ${hashes.get(h)}`);
+    hashes.set(h, id);
+  }
+  // what each film plays (its first 40 s), and the bar: each track's first 30 s against its next 30 s
+  const films = Object.entries(music.films).map(([slug, f]) => {
+    const file = path.join(AUDIO, 'music', music.tracks[f.track].file);
+    return { slug, track: f.track, print: fingerprint(pcm(file, f.start ?? 0, 40)), self: distance(fingerprint(pcm(file, 0, 30)), fingerprint(pcm(file, 30, 30))) };
+  });
+  const bar = films.reduce((a, b) => (b.self.d < a.self.d ? b : a));
+  console.log(`bar: ${bar.track} against itself 30 s later, d ${bar.self.d}`);
+  const pairs = [];
+  for (let i = 0; i < films.length; i++) for (let j = i + 1; j < films.length; j++) pairs.push({ a: films[i].slug, b: films[j].slug, ...distance(films[i].print, films[j].print) });
   pairs.sort((p, q) => p.d - q.d);
-  const near = pairs.filter(p => p.d <= bar.d);
   const fmt = p => `${p.a} · ${p.b}`.padEnd(58) + `d ${p.d.toFixed(4)}  chroma ${p.chroma.toFixed(4)}  rhythm ${p.rhythm.toFixed(4)}  bright ${p.bright.toFixed(4)}`;
-  const style = f => { const s = films.find(x => x.slug === f).style; return `${'C C# D D# E F F# G G# A A# B'.split(' ')[s.key]} ${s.mode} ${s.bpm}bpm ${s.groove} ${s.lead} prog${s.prog}`; };
-  console.log(`\n${films.length} films, ${pairs.length} pairs. Closest ten:`);
-  for (const p of pairs.slice(0, 10)) console.log(`  ${fmt(p)}\n      ${style(p.a)}  |  ${style(p.b)}`);
-  const ds = pairs.map(p => p.d);
-  console.log(`\nmedian d ${ds[Math.floor(ds.length / 2)].toFixed(4)}, farthest ${ds.at(-1).toFixed(4)}, closest ${ds[0].toFixed(4)} against the bar ${bar.d.toFixed(4)}`);
-  if (flags.out) fs.writeFileSync(flags.out, JSON.stringify({ bar: { slug: first.slug, ...bar }, pairs, styles: Object.fromEntries(films.map(f => [f.slug, f.style])) }, null, 1) + '\n');
-  if (near.length) {
-    console.log(`\nFAIL: ${near.length} pair(s) as close as one score with another motif:`);
-    for (const p of near) console.log(`  ${fmt(p)}`);
+  console.log(`\n${films.length} films, ${owner.size} tracks, ${pairs.length} pairs. Closest five:`);
+  for (const p of pairs.slice(0, 5)) console.log(`  ${fmt(p)}`);
+  for (const p of pairs.filter(p => p.d <= bar.self.d)) problems.push(`${p.a} and ${p.b} sound as close as a track to itself (d ${p.d})`);
+  if (flags.out) fs.writeFileSync(flags.out, JSON.stringify({ bar: { track: bar.track, ...bar.self }, pairs }, null, 1) + '\n');
+  if (problems.length) {
+    console.log(`\nFAIL:\n  ${problems.join('\n  ')}`);
     process.exit(1);
   }
-  console.log('\nno two films share a score');
+  console.log(`\nevery film has a licensed track of its own; the closest pair is d ${pairs[0].d}, the bar ${bar.self.d}`);
 }
