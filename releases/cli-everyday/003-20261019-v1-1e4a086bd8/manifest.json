@@ -1,0 +1,22 @@
+{
+  "id": "003-20261019-v1-1e4a086bd8",
+  "hash": "1e4a086bd8",
+  "kind": "cli-everyday",
+  "label": "v1",
+  "title": "List models, check credits and manage API keys from the terminal with anyr",
+  "seconds": 32.064,
+  "renderedAt": "2026-10-19T20:35:28.178Z",
+  "commit": "19816cf",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/cli-everyday-003-20261019-v1-1e4a086bd8.mp4",
+      "cover": "renders/cli-everyday-003-20261019-v1-1e4a086bd8.png"
+    },
+    "portrait": {
+      "artifact": "renders/cli-everyday-003-20261019-v1-1e4a086bd8-portrait.mp4",
+      "cover": "renders/cli-everyday-003-20261019-v1-1e4a086bd8-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T20:35:28.205Z"
+}

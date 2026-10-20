@@ -1,0 +1,70 @@
+{
+  "releases": [
+    {
+      "id": "001-20261019-v1-d2e4c205ff",
+      "hash": "d2e4c205ff",
+      "kind": "cli-everyday",
+      "label": "v1",
+      "title": "List models, check credits and manage API keys from the terminal with anyr",
+      "seconds": 31.564,
+      "renderedAt": "2026-10-19T20:15:54.854Z",
+      "commit": "5ff8548",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/cli-everyday-001-20261019-v1-d2e4c205ff.mp4",
+          "cover": "renders/cli-everyday-001-20261019-v1-d2e4c205ff.png"
+        },
+        "portrait": {
+          "artifact": "renders/cli-everyday-001-20261019-v1-d2e4c205ff-portrait.mp4",
+          "cover": "renders/cli-everyday-001-20261019-v1-d2e4c205ff-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T20:15:54.874Z"
+    },
+    {
+      "id": "002-20261019-v1-4800129791",
+      "hash": "4800129791",
+      "kind": "cli-everyday",
+      "label": "v1",
+      "title": "List models, check credits and manage API keys from the terminal with anyr",
+      "seconds": 31.564,
+      "renderedAt": "2026-10-19T20:21:12.646Z",
+      "commit": "5ff8548",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/cli-everyday-002-20261019-v1-4800129791.mp4",
+          "cover": "renders/cli-everyday-002-20261019-v1-4800129791.png"
+        },
+        "portrait": {
+          "artifact": "renders/cli-everyday-002-20261019-v1-4800129791-portrait.mp4",
+          "cover": "renders/cli-everyday-002-20261019-v1-4800129791-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T20:21:12.669Z"
+    },
+    {
+      "id": "003-20261019-v1-1e4a086bd8",
+      "hash": "1e4a086bd8",
+      "kind": "cli-everyday",
+      "label": "v1",
+      "title": "List models, check credits and manage API keys from the terminal with anyr",
+      "seconds": 32.064,
+      "renderedAt": "2026-10-19T20:35:28.178Z",
+      "commit": "19816cf",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/cli-everyday-003-20261019-v1-1e4a086bd8.mp4",
+          "cover": "renders/cli-everyday-003-20261019-v1-1e4a086bd8.png"
+        },
+        "portrait": {
+          "artifact": "renders/cli-everyday-003-20261019-v1-1e4a086bd8-portrait.mp4",
+          "cover": "renders/cli-everyday-003-20261019-v1-1e4a086bd8-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T20:35:28.205Z"
+    }
+  ]
+}

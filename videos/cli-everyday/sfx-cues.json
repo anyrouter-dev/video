@@ -1,0 +1,13 @@
+[
+  {"frame": 1, "sound": "click-soft", "word": "dashboard", "volume": 0.2},
+  {"frame": 2, "sound": "click", "word": "models", "volume": 0.26},
+  {"frame": 2, "sound": "pop", "word": "model", "offset": -0.05, "volume": 0.2},
+  {"frame": 3, "sound": "click", "word": "usage", "volume": 0.26},
+  {"frame": 3, "sound": "pop", "word": "credits", "offset": -0.05, "volume": 0.22},
+  {"frame": 4, "sound": "click", "word": "keys", "volume": 0.26},
+  {"frame": 4, "sound": "click-soft", "word": "masked.", "offset": -0.05, "volume": 0.2},
+  {"frame": 5, "sound": "click", "word": "create", "volume": 0.26},
+  {"frame": 5, "sound": "pop", "word": "new", "offset": -0.05, "volume": 0.22},
+  {"frame": 6, "sound": "chime", "word": "Models,", "volume": 0.16},
+  {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]

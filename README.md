@@ -23,6 +23,8 @@ Output lands in `renders/`.
 | `sign-in-with-anyrouter` | narrated guide: add a Sign in with AnyRouter button, each user's usage billed to them | `videos/sign-in-with-anyrouter/` | on demand |
 | `pool-donation` | narrated guide: donate an idle provider key to the shared pool | `videos/pool-donation/` | on demand |
 | `sign-in-with-agentid` | narrated announcement: an agent signs in with AgentID and gets its own AnyRouter account | `videos/sign-in-with-agentid/` | on demand |
+| `cli-agents` | narrated guide: install `anyr` once, then run any coding agent on any model | `videos/cli-agents/` | on demand |
+| `cli-everyday` | narrated guide: models, credits and API keys from the terminal with `anyr` | `videos/cli-everyday/` | on demand |
 | `release` | one product release, e.g. "AnyRouter 1.6" | [`/changelog/rss.xml`](https://anyrouter.dev/changelog/rss.xml) | nightly |
 | `model-drop` | models added to the catalog, and price moves | [`/api/v1/models`](https://anyrouter.dev/api/v1/models?all=1), diffed against a baseline | nightly |
 | `changelog` | one day of changelog entries | the *Model releases* section of [`/llms.txt`](https://anyrouter.dev/llms.txt) | nightly |

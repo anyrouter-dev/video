@@ -1,0 +1,556 @@
+{
+  "bgm": {
+    "path": "assets/bgm/track.mp3",
+    "source": "host",
+    "volume": 0.12,
+    "duration_s": 68
+  },
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.559,
+      "raw_s": 3.065,
+      "text": "anyr puts your AnyRouter dashboard in the terminal.",
+      "say": "any R puts your AnyRouter dashboard in the terminal.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.488
+        },
+        {
+          "id": "w1",
+          "text": "puts",
+          "start": 0.557,
+          "end": 0.755
+        },
+        {
+          "id": "w2",
+          "text": "your",
+          "start": 0.778,
+          "end": 0.894
+        },
+        {
+          "id": "w3",
+          "text": "AnyRouter",
+          "start": 0.964,
+          "end": 1.474
+        },
+        {
+          "id": "w4",
+          "text": "dashboard",
+          "start": 1.544,
+          "end": 2.067
+        },
+        {
+          "id": "w5",
+          "text": "in",
+          "start": 2.136,
+          "end": 2.229
+        },
+        {
+          "id": "w6",
+          "text": "the",
+          "start": 2.276,
+          "end": 2.345
+        },
+        {
+          "id": "w7",
+          "text": "terminal.",
+          "start": 2.38,
+          "end": 3.065
+        }
+      ],
+      "padded_s": 1.494
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 5.5,
+      "raw_s": 3.204,
+      "text": "anyr models lists every model ID in the catalog.",
+      "say": "any R models lists every model ID in the catalog.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.43
+        },
+        {
+          "id": "w1",
+          "text": "models",
+          "start": 0.499,
+          "end": 0.836
+        },
+        {
+          "id": "w2",
+          "text": "lists",
+          "start": 0.917,
+          "end": 1.149
+        },
+        {
+          "id": "w3",
+          "text": "every",
+          "start": 1.242,
+          "end": 1.521
+        },
+        {
+          "id": "w4",
+          "text": "model",
+          "start": 1.579,
+          "end": 1.846
+        },
+        {
+          "id": "w5",
+          "text": "ID",
+          "start": 1.927,
+          "end": 2.101
+        },
+        {
+          "id": "w6",
+          "text": "in",
+          "start": 2.194,
+          "end": 2.252
+        },
+        {
+          "id": "w7",
+          "text": "the",
+          "start": 2.287,
+          "end": 2.357
+        },
+        {
+          "id": "w8",
+          "text": "catalog.",
+          "start": 2.392,
+          "end": 3.204
+        }
+      ],
+      "padded_s": 2.296
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 4.5,
+      "raw_s": 2.461,
+      "text": "anyr usage shows the credits you have left.",
+      "say": "any R usage shows the credits you have left.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.418
+        },
+        {
+          "id": "w1",
+          "text": "usage",
+          "start": 0.511,
+          "end": 0.859
+        },
+        {
+          "id": "w2",
+          "text": "shows",
+          "start": 0.882,
+          "end": 1.126
+        },
+        {
+          "id": "w3",
+          "text": "the",
+          "start": 1.173,
+          "end": 1.242
+        },
+        {
+          "id": "w4",
+          "text": "credits",
+          "start": 1.277,
+          "end": 1.567
+        },
+        {
+          "id": "w5",
+          "text": "you",
+          "start": 1.591,
+          "end": 1.66
+        },
+        {
+          "id": "w6",
+          "text": "have",
+          "start": 1.707,
+          "end": 1.834
+        },
+        {
+          "id": "w7",
+          "text": "left.",
+          "start": 1.881,
+          "end": 2.461
+        }
+      ],
+      "padded_s": 2.039
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 5.5,
+      "raw_s": 3.297,
+      "text": "anyr keys list shows your API keys, each one masked.",
+      "say": "any R keys list shows your API keys, each one masked.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.383
+        },
+        {
+          "id": "w1",
+          "text": "keys",
+          "start": 0.464,
+          "end": 0.673
+        },
+        {
+          "id": "w2",
+          "text": "list",
+          "start": 0.731,
+          "end": 0.917
+        },
+        {
+          "id": "w3",
+          "text": "shows",
+          "start": 0.952,
+          "end": 1.219
+        },
+        {
+          "id": "w4",
+          "text": "your",
+          "start": 1.254,
+          "end": 1.37
+        },
+        {
+          "id": "w5",
+          "text": "API",
+          "start": 1.416,
+          "end": 1.788
+        },
+        {
+          "id": "w6",
+          "text": "keys,",
+          "start": 1.858,
+          "end": 2.148
+        },
+        {
+          "id": "w7",
+          "text": "each",
+          "start": 2.206,
+          "end": 2.392
+        },
+        {
+          "id": "w8",
+          "text": "one",
+          "start": 2.461,
+          "end": 2.612
+        },
+        {
+          "id": "w9",
+          "text": "masked.",
+          "start": 2.659,
+          "end": 3.297
+        }
+      ],
+      "padded_s": 2.203
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.5,
+      "raw_s": 2.601,
+      "text": "And anyr keys create makes a new one when you need it.",
+      "say": "And any R keys create makes a new one when you need it.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "And",
+          "start": 0,
+          "end": 0.197
+        },
+        {
+          "id": "w1",
+          "text": "anyr",
+          "start": 0.267,
+          "end": 0.65
+        },
+        {
+          "id": "w2",
+          "text": "keys",
+          "start": 0.731,
+          "end": 0.929
+        },
+        {
+          "id": "w3",
+          "text": "create",
+          "start": 0.975,
+          "end": 1.265
+        },
+        {
+          "id": "w4",
+          "text": "makes",
+          "start": 1.3,
+          "end": 1.451
+        },
+        {
+          "id": "w5",
+          "text": "a",
+          "start": 1.486,
+          "end": 1.509
+        },
+        {
+          "id": "w6",
+          "text": "new",
+          "start": 1.556,
+          "end": 1.66
+        },
+        {
+          "id": "w7",
+          "text": "one",
+          "start": 1.695,
+          "end": 1.776
+        },
+        {
+          "id": "w8",
+          "text": "when",
+          "start": 1.8,
+          "end": 1.892
+        },
+        {
+          "id": "w9",
+          "text": "you",
+          "start": 1.927,
+          "end": 1.997
+        },
+        {
+          "id": "w10",
+          "text": "need",
+          "start": 2.02,
+          "end": 2.183
+        },
+        {
+          "id": "w11",
+          "text": "it.",
+          "start": 2.218,
+          "end": 2.601
+        }
+      ],
+      "padded_s": 1.899
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 7.505,
+      "raw_s": 4.505,
+      "text": "Models, credits and keys, from your terminal. Start at anyrouter.dev.",
+      "say": "Models, credits and keys, from your terminal. Start at any router dot dev.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Models,",
+          "start": 0,
+          "end": 0.476
+        },
+        {
+          "id": "w1",
+          "text": "credits",
+          "start": 0.511,
+          "end": 0.848
+        },
+        {
+          "id": "w2",
+          "text": "and",
+          "start": 0.882,
+          "end": 0.952
+        },
+        {
+          "id": "w3",
+          "text": "keys,",
+          "start": 1.01,
+          "end": 1.3
+        },
+        {
+          "id": "w4",
+          "text": "from",
+          "start": 1.324,
+          "end": 1.451
+        },
+        {
+          "id": "w5",
+          "text": "your",
+          "start": 1.486,
+          "end": 1.602
+        },
+        {
+          "id": "w6",
+          "text": "terminal.",
+          "start": 1.649,
+          "end": 2.159
+        },
+        {
+          "id": "w7",
+          "text": "Start",
+          "start": 2.403,
+          "end": 2.67
+        },
+        {
+          "id": "w8",
+          "text": "at",
+          "start": 2.705,
+          "end": 2.775
+        },
+        {
+          "id": "w9",
+          "text": "anyrouter.dev.",
+          "start": 2.856,
+          "end": 4.505
+        }
+      ],
+      "padded_s": 3
+    }
+  ],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 1.544,
+      "duration_s": 0.366,
+      "volume": 0.2,
+      "source": "bundled"
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0.499,
+      "duration_s": 0.366,
+      "volume": 0.26,
+      "source": "bundled"
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 1.529,
+      "duration_s": 0.72,
+      "volume": 0.2,
+      "source": "bundled"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0.511,
+      "duration_s": 0.366,
+      "volume": 0.26,
+      "source": "bundled"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 1.227,
+      "duration_s": 0.72,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0.464,
+      "duration_s": 0.366,
+      "volume": 0.26,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 2.609,
+      "duration_s": 0.366,
+      "volume": 0.2,
+      "source": "bundled"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0.975,
+      "duration_s": 0.366,
+      "volume": 0.26,
+      "source": "bundled"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 1.506,
+      "duration_s": 0.72,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 0,
+      "duration_s": 2.5,
+      "volume": 0.16,
+      "source": "bundled"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/sparkle.mp3",
+      "offset_s": 2.403,
+      "duration_s": 1.802,
+      "volume": 0.2,
+      "source": "bundled"
+    }
+  ]
+}
