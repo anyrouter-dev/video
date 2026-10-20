@@ -476,6 +476,9 @@ const NODE = { padX: 34, mark: 60, markGap: 20,
 const ACROSS_DG = { landscape: 1720, portrait: 900 };
 const GAPS = { problem: { landscape: 200, portrait: 60 }, result: { landscape: 220, portrait: 0 } };
 // an id or a path is set in mono: no spaces, and a slash or a colon in it
+// the tag on an edge: Geist Mono at TAG_PX in a pill (.tg)
+const TAG_PX = 38, TAG_MARGIN = 96;
+const tagWidth = tag => [...tag].length * 0.6 * TAG_PX + 2 * 22 + 6;
 const isId = label => !/\s/.test(label) && /[/:]/.test(label);
 const nodeWidth = (label, o, k, marked) => {
   const px = (isId(label) ? NODE[o].mono : NODE[o].sizes)[k];
@@ -511,8 +514,10 @@ export function diagramOf(spec, kind, slug) {
     // a stacked result sets each side's cards in a row where one fits, else one under another
     const row = (ls, i) => ls.reduce((w, l) => w + nodeWidth(l, o, i, marks(l)), 0) + 18 * Math.max(0, ls.length - 1);
     const side = (ls, i, tall) => (tall ? widest(ls, i) : row(ls, i));
+    // a tag sits on its edge, so the edge is at least as long as the tag and a margin each side
+    const gap = Math.max(GAPS[kind][o], d.tag ? tagWidth(d.tag) + TAG_MARGIN : 0);
     const fits = (i, tall) => (stacked ? (kind === 'result' ? Math.max(side(d.left, i, tall), hub(i), side(d.right, i, tall)) : Math.max(widest(d.left, i), widest(d.right, i)))
-      : widest(d.left, i) + hub(i) + widest(d.right, i) + GAPS[kind][o]) <= ACROSS_DG[o];
+      : widest(d.left, i) + hub(i) + widest(d.right, i) + gap) <= ACROSS_DG[o];
     let k = NODE[o].sizes.findIndex((_, i) => fits(i, false));
     if (k < 0 && stacked) {
       k = NODE[o].sizes.findIndex((_, i) => fits(i, true));
@@ -588,7 +593,7 @@ export function fitPanel(line, d, slug) {
       let h;
       if (d.kind === 'result' && stacked) h = (d.tall.left ? col(d.left.length, k) : cardH(k)) + cardH(k) + (d.tall.right ? col(d.right.length, k) : cardH(k)) + 2 * b.stackGap;
       else if (d.kind === 'result') h = Math.max(col(d.left.length, k), cardH(k), col(d.right.length, k));
-      else if (stacked) h = (d.left.length ? col(d.left.length, k) + b.stackGap : 0) + col(d.right.length, k);
+      else if (stacked) h = (d.left.length ? col(d.left.length, k) + Math.max(b.stackGap, d.tag ? 60 + TAG_MARGIN : 0) : 0) + col(d.right.length, k);
       else h = Math.max(col(d.left.length, k), col(d.right.length, k));
       return h + (d.note ? NOTE_H : 0) + (d.fail ? FAIL_H : 0);
     };
@@ -802,6 +807,14 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       if (nt) tl.fromTo(nt, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: true }, L.note);
       return { edges, hub };
     };
+    // an edge that carries a tag is long enough to show the tag whole with the edge either side
+    $$(".dg").forEach(dg => {
+      const tg = dg.querySelector(".tg");
+      if (!tg) return;
+      const cs = getComputedStyle(dg), down = cs.flexDirection === "column";
+      if (down) dg.style.rowGap = Math.max(parseFloat(cs.rowGap) || 0, tg.offsetHeight + ${TAG_MARGIN}) + "px";
+      else dg.style.columnGap = Math.max(parseFloat(cs.columnGap) || 0, tg.offsetWidth + ${TAG_MARGIN}) + "px";
+    });
     // the panel's block (badge, line, diagram) sits in the middle of the safe area
     const centre = p => { const b = p.querySelector(".blk"); b.style.top = SY + Math.max(0, (SH - b.offsetHeight) / 2) + "px"; };
     centre(pProblem); centre(pResult);
@@ -1045,7 +1058,7 @@ export const CSS = `
   .film .nd[data-state="on"]{border-color:${C.accent};color:${C.accent}}
   .film .nd.hub{background:${C.ink};border-color:${C.ink};color:${C.onInk}}
   .film .nd.hub svg{width:${NODE.mark}px;height:${NODE.mark}px;display:block}
-  .film .tg{position:absolute;left:0;top:0;padding:8px 22px;border-radius:999px;border:3px solid ${C.accent};background:${C.bg};color:${C.accent};font-size:38px;white-space:nowrap}
+  .film .tg{position:absolute;left:0;top:0;padding:8px 22px;border-radius:999px;border:3px solid ${C.accent};background:${C.bg};color:${C.accent};font-size:${TAG_PX}px;white-space:nowrap}
   .film .fl{position:absolute;left:0;top:0;padding:10px 26px;border-radius:999px;background:${C.accent};color:${C.onInk};font-size:42px;font-weight:600;white-space:nowrap}
   .film .nt{position:absolute;left:0;right:0;top:100%;margin-top:44px;text-align:center;font-size:40px;color:${C.ink2};white-space:nowrap}
 

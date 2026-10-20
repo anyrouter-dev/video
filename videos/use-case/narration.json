@@ -221,7 +221,7 @@
      "OpenCode"
     ],
     "right": [
-     "anyrouter/auto"
+     "catalog models"
     ],
     "note": "request logs"
    },
@@ -260,7 +260,7 @@
      "from": "use-cases.json opencode.problem"
     },
     {
-     "says": "result picture: OpenCode | anyrouter/auto | request logs",
+     "says": "result picture: OpenCode | catalog models | request logs",
      "from": "use-cases.json opencode.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
