@@ -62,6 +62,9 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `why-gateway` | the narrated short on why a unified LLM gateway, same series look and tools | its own files | on demand |
 | `byok-upstreams` | the narrated short on bringing your own provider keys, same series look and tools | its own files | on demand |
 | `use-case` | one short narrated film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup, with a voice, captions and a score of its own. Each use case is its own release | `/use-cases.json`, the ids a preset rolls through from `/api/v1/models?all=1`, and its script in `videos/use-case/narration.json` | on demand |
+| `model-launch` | one narrated launch film per model: name, spec card, FREE or BYOK, the playground reply where a real capture exists, the request and `anyr claude --model`, the model page | `/api/v1/models?all=1` through `lib/models.mjs`, `videos/model-launch/captures.json` | on demand (`--model=<id>`) |
+| `free-roundup` | the free models created in the last 30 days on a split-flap board, then how to use one | `/api/v1/models?all=1` through `lib/models.mjs` | on demand, one release per day and list |
+| `weekly` | "This week on AnyRouter": models created that week (free, BYOK or credits), the number of the week, the week's changelog | `/api/v1/models?all=1` and the `## Model releases` section of `/llms.txt` | weekly, by hand (`--week=YYYY-Www`, default the last full week) |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
@@ -183,6 +186,33 @@ calm score (`lib/sound.mjs`) is read off its slug and steps down under the voice
 `node videos/use-case/audit-all.mjs` puts every film, both renditions, through
 the stage audit; `node videos/use-case/sound-check.mjs` fails when two films'
 scores sound alike.
+
+## Model films (model-launch, free-roundup, weekly)
+
+Three generated kinds with looks of their own (each `videos/<kind>/STYLE.md`), written by
+`shared/authoring/film-project.mjs`. "Free" and "new" have one definition, `lib/models.mjs`:
+free is not BYOK and $0 in and out (a BYOK model at $0 is never free); new is `created` inside
+a window (30 days for the roundup, 45 for a launch) or an ISO week. A launch film shows a reply
+only from a real capture in `captures.json`.
+
+They are narrated by a local voice, Kokoro-82M (Apache-2.0), recorded ahead of the render into
+`videos/<kind>/voice/<hash>.mp3` (`shared/authoring/narrate.mjs`), so the render calls no voice
+service. A film whose line has no recording fails to build and names the command:
+
+```bash
+KOKORO_PYTHON=~/.cache/kokoro-venv/bin/python node videos/<kind>/voice.mjs [the collect flags]
+```
+
+The soundtrack is one file (`shared/authoring/mixdown.mjs`): a CC0 music bed that steps down
+under the voice, the voice, and one sound per motion event from the kind's table, at -14 LUFS
+and true peak under -1 dBTP. Sources and licenses: `videos/<kind>/audio/LICENSES.md`.
+
+The weekly film is one release per ISO week. It is not in the nightly run, because CI has no
+local voice; each Monday, by hand:
+
+```bash
+KOKORO_PYTHON=… node videos/weekly/voice.mjs && npm run video -- weekly
+```
 
 ## Rules every generated film obeys
 

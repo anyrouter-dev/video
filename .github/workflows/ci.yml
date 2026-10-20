@@ -54,6 +54,12 @@ jobs:
             args: --from=videos/changelog/fixtures/llms.txt
           - kind: use-case
             args: --from=videos/use-case/fixtures/use-cases.json --models-from=videos/use-case/fixtures/models.json --slug=openrouter-free-fallback
+          - kind: model-launch
+            args: --from=videos/model-launch/fixtures/models.json --now=2026-10-21 --model=minimax/minimax-m3.1-flash
+          - kind: free-roundup
+            args: --from=videos/free-roundup/fixtures/models.json --now=2026-10-21
+          - kind: weekly
+            args: --week=2026-W42 --from=videos/weekly/fixtures/models.json --llms-from=videos/weekly/fixtures/llms.txt
           - kind: intro
             args: ''
           - kind: teaser
