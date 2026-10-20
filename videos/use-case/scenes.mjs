@@ -1060,7 +1060,8 @@ export const CSS = `
   .film .nd.hub svg{width:${NODE.mark}px;height:${NODE.mark}px;display:block}
   .film .tg{position:absolute;left:0;top:0;padding:8px 22px;border-radius:999px;border:3px solid ${C.accent};background:${C.bg};color:${C.accent};font-size:${TAG_PX}px;white-space:nowrap}
   .film .fl{position:absolute;left:0;top:0;padding:10px 26px;border-radius:999px;background:${C.accent};color:${C.onInk};font-size:42px;font-weight:600;white-space:nowrap}
-  .film .nt{position:absolute;left:0;right:0;top:100%;margin-top:44px;text-align:center;font-size:40px;color:${C.ink2};white-space:nowrap}
+  /* the note is centred on the diagram even when it is wider than it */
+  .film .nt{position:absolute;left:-1000px;right:-1000px;top:100%;margin-top:44px;text-align:center;font-size:40px;color:${C.ink2};white-space:nowrap}
 
   .film .win{position:absolute;top:0;left:${winLeft('landscape')}px;width:var(--tw)}
   .film .term{overflow:hidden;border-radius:32px}

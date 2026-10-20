@@ -361,7 +361,8 @@ export function storyOf(u, pools) {
     return { need, lands };
   });
   const intro = Math.max(3.4, VOICE_AT.intro + spoken(voice.intro) + AFTER, read(copy.title) + 0.6);
-  const problem = Math.max(3.2, VOICE_AT.problem + spoken(voice.problem) + AFTER + 0.2);
+  // the problem's picture is complete on its last word, and holds to be read
+  const problem = Math.max(3.6, VOICE_AT.problem + spoken(voice.problem) + AFTER + 0.9);
   // the result holds while the request runs its route, and a beat after
   let result = Math.max(5.2, VOICE_AT.result + spoken(voice.result) + AFTER + 1.2);
   const close = Math.max(END_MIN, VOICE_AT.close + spoken(voice.close) + END_HOLD);
