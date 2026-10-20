@@ -66,6 +66,8 @@ jobs:
             args: ''
           - kind: pool-donation
             args: ''
+          - kind: sign-in-with-agentid
+            args: ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

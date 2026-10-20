@@ -1,6 +1,6 @@
 # Authoring tools for narrated films
 
-Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`, `sign-in-with-anyrouter`, `pool-donation`).
+Scripts shared by the hand-authored, narrated kinds (`explainer`, `openrouter-unblock`, `sign-in-with-anyrouter`, `pool-donation`, `sign-in-with-agentid`).
 Run each from the film's own folder: they read and write that folder's
 `audio_meta.json` and `.hyperframes/frame-packets/`.
 
