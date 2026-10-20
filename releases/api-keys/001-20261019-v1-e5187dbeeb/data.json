@@ -1,0 +1,33 @@
+{
+  "notable": true,
+  "label": "v1",
+  "parts": [
+    "assets/anyrouter-logo-black.svg:470da5aeb0e69ff983a8686970be78c5afe2f6c5e9b042acbb7a142520018a52",
+    "assets/bgm/track.mp3:3e835f27e127aaa5cfa56240a1f0d84fc8900e63c9898dc4f3ae28e51ca9f022",
+    "assets/fonts/geist-mono.woff2:684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+    "assets/fonts/geist.woff2:19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1",
+    "assets/sfx/CREDITS.md:c756b441352fc92de6d200cf618eff3bc0bdffabf3077fc14e08f7000fe82d3d",
+    "assets/sfx/chime.mp3:74823b1b27703c56e0652db838f503c150ce9c2442d47d27430af3d5121d6d12",
+    "assets/sfx/click-soft.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/click.mp3:075e17bdac5c13662a1c9530050e0046f81d4138e00eb3bf30427a7b4404103d",
+    "assets/sfx/pop.mp3:19ab7193f626ff57fdeef60b45543bac416fcbcec803cfb417abe4b271c1b352",
+    "assets/sfx/sparkle.mp3:a66b2829a307bcb5b1f6551d7cdc72fe45bbe9a91abfb994d28db8d5e4e42ea8",
+    "assets/sfx/whoosh-short.mp3:c2efd9d902a59bf9ec5019035d7deadd17762136896b6e3cb6dd99ea50997a30",
+    "assets/voice/01.wav:889e3ca1380acabfbe5ec08739717b00faa57b41cea55684b61a70ebaee929bb",
+    "assets/voice/02.wav:9b9e33994d38f40ee0cda92455ea7b7c2449b77bf5ca30129b9b5ca8bf7d2574",
+    "assets/voice/03.wav:1b086ed7e4f77d02f40b6b45490aa8f59056618833574a84f4452b3983b7934c",
+    "assets/voice/04.wav:453a9e4324087d1b71f094c95842dc95955785b4a6dc8e95c46314b0a9b6ca26",
+    "assets/voice/05.wav:a603d2d89a96b0487fe1a2cf727d614d3f0d15474a4557d64311925a92cd1941",
+    "assets/voice/06.wav:9467b23ca2f63e7e3e43efcd15d3a41d122277e1ca96150efeab058891918adc",
+    "compositions/captions.html:74e87a044baf76274a3ad800d11d69452793b4f0dda14fc1e0bd69708454f870",
+    "compositions/frames/01-per-app.html:f4b5916d3dca16232c8fd26af3d874fd147704051fd21eb2b6fd4a2cc612ad93",
+    "compositions/frames/02-limits.html:b209e560a690c27fdbecf91bc74600f6aa2659c6fddc2f29fa5c2fec9139d31b",
+    "compositions/frames/03-shown-once.html:d5bcd70fa90906ee5b680170dc8a9a8b0b03cc40409ee22de2604d25808d7224",
+    "compositions/frames/04-your-app.html:c990a1a9ddcd651da317d49a96b44a907d49b433e747a99760993eb0cf9e5c86",
+    "compositions/frames/05-disable.html:ebf1440ffc7b05c27094687cfe15fa8548d7de88ec08d31f65dbfe996bb2df01",
+    "compositions/frames/06-close.html:9ac95f6026f4e18f144ec51230a82f063343be3f180408db33732f463de384c0",
+    "index.html:d456663f98a180f4c2268259a2b40081891686ae80a5489d9a3a0f86aa268d8e"
+  ],
+  "version": 1,
+  "seconds": 31.799
+}

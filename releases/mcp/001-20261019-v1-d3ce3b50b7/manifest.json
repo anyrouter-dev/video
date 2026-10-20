@@ -1,0 +1,22 @@
+{
+  "id": "001-20261019-v1-d3ce3b50b7",
+  "hash": "d3ce3b50b7",
+  "kind": "mcp",
+  "label": "v1",
+  "title": "Add AnyRouter to Claude, Cursor or any MCP client, then ask in plain words",
+  "seconds": 33.039,
+  "renderedAt": "2026-10-19T20:10:48.345Z",
+  "commit": "d666b13",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/mcp-001-20261019-v1-d3ce3b50b7.mp4",
+      "cover": "renders/mcp-001-20261019-v1-d3ce3b50b7.png"
+    },
+    "portrait": {
+      "artifact": "renders/mcp-001-20261019-v1-d3ce3b50b7-portrait.mp4",
+      "cover": "renders/mcp-001-20261019-v1-d3ce3b50b7-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T20:10:48.364Z"
+}
