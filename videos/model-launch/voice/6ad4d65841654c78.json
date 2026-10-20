@@ -1,0 +1,13 @@
+{
+  "spoken": "It is free to call, with no daily cap.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 2.368,
+  "start": 0.03,
+  "end": 2.34,
+  "heard": "It is free to call, with no daily cap."
+}

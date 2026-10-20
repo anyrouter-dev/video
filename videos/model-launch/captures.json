@@ -1,0 +1,20 @@
+{
+  "deepseek/deepseek-v4-flash": {
+    "file": "shared/captures/2026-10-19/screens/signed-in/playground-deepseek-v4-flash.png",
+    "date": "2026-10-19",
+    "model": "DeepSeek-V4-Flash",
+    "prompt": "Say hello in five words.",
+    "reply": "Hello! How can I help you today?",
+    "cost": "$0",
+    "meta": "5.81s TTFT · 96.9 t/s · $0 cost"
+  },
+  "minimax/minimax-m3.1-flash": {
+    "file": "shared/captures/2026-10-19/screens/signed-in/playground-minimax-m3-1-flash.png",
+    "date": "2026-10-19",
+    "model": "MiniMax M3.1 Flash",
+    "prompt": "Say hello in five words.",
+    "reply": "Hello! How are you today?",
+    "cost": "$0",
+    "meta": "4.35s TTFT · 142.9 t/s · $0 cost"
+  }
+}

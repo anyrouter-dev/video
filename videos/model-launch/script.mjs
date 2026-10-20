@@ -1,0 +1,100 @@
+/**
+ * script: what a model-launch film says, written from the facts of its one model.
+ *
+ * Every line is built from the catalog, the playground capture or a page of anyrouter.dev,
+ * and `claims` names the source of each. Lines are short and plain: the copy lint
+ * (shared/authoring/copy-lint.test.mjs) reads every line a fixture film speaks.
+ *
+ *   reveal  the name, the maker, and "new" only while the model is inside the launch window
+ *   spec    what it reads and how long a context it takes
+ *   price   free: $0 and no daily cap · BYOK: your own provider key, and whose keys run it
+ *   reply   only with a real playground capture: what it was asked and that it answered
+ *   use     its id in a request, or anyr claude with --model
+ *   close   anyrouter.dev
+ */
+import { contextLabel } from '../../lib/models.mjs';
+
+const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve',
+  'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+/** A whole number under a million, as it is said. */
+export function numberWords(n) {
+  if (n < 20) return ONES[n];
+  if (n < 100) return `${TENS[Math.floor(n / 10)]}${n % 10 ? ` ${ONES[n % 10]}` : ''}`;
+  if (n < 1000) return `${ONES[Math.floor(n / 100)]} hundred${n % 100 ? ` ${numberWords(n % 100)}` : ''}`;
+  return `${numberWords(Math.floor(n / 1000))} thousand${n % 1000 ? ` ${numberWords(n % 1000)}` : ''}`;
+}
+
+/** "1.05M" → "one point zero five million", "262K" → "two hundred sixty two thousand". */
+export function contextWords(label) {
+  const m = /^([\d.]+)([MK])$/.exec(label);
+  if (!m) throw new Error(`cannot say the context "${label}"`);
+  const [whole, frac] = m[1].split('.');
+  const said = `${numberWords(Number(whole))}${frac ? ` point ${[...frac].map(d => ONES[d]).join(' ')}` : ''}`;
+  return `${said} ${m[2] === 'M' ? 'million' : 'thousand'}`;
+}
+
+const PLURAL = { image: 'images', file: 'files' };
+/** ["text", "image", "video"] → "text, images and video". */
+export const listWords = (xs, and = 'and') => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} ${and} ${xs.at(-1)}`);
+
+/**
+ * A model name as it is said: "M3.1" is "M three point one", "120B" is "one hundred twenty B",
+ * "VL" is "V L", and hyphens are pauses.
+ */
+export function speakName(name) {
+  const num = n => (n.includes('.') ? `${numberWords(Number(n.split('.')[0]))} point ${[...n.split('.')[1]].map(d => ONES[d]).join(' ')}` : numberWords(Number(n)));
+  const spell = s => (/^[A-Z]{1,3}$/.test(s) ? [...s].join(' ') : s);
+  return name.split(/[\s-]+/).filter(Boolean).map(tok => {
+    const m = /^([A-Za-z]*?)(\d+(?:\.\d+)?)([A-Za-z]*)$/.exec(tok);
+    if (!m) return spell(tok);
+    return [m[1] && spell(m[1].toUpperCase() === m[1] ? m[1] : m[1]), num(m[2]), m[3] && spell(m[3].toUpperCase())].filter(Boolean).join(' ');
+  }).join(' ');
+}
+
+/** How on-screen words are spoken. */
+export const SAY = {
+  anyr: 'any R',
+  'anyrouter.dev': 'any router dot dev',
+  AnyRouter: 'Any Router',
+  BYOK: 'B Y O K',
+  NVIDIA: 'Nvidia',
+  inclusionAI: 'inclusion A I',
+};
+
+/**
+ * The lines of one film, in order, each { beat, text, say, from }. `say` adds how this
+ * film's own words are spoken (its name, its context).
+ */
+export function scriptOf(f) {
+  const say = { ...SAY, [f.name]: speakName(f.name) };
+  const ctx = contextLabel(f.context);
+  const lines = [];
+  const line = (beat, text, from, extra = {}) => lines.push({ beat, text, say: { ...say, ...extra }, from });
+
+  line('reveal', f.isNew ? `${f.name}, from ${f.maker}, is new on AnyRouter.` : `${f.name}, from ${f.maker}, is on AnyRouter.`,
+    `catalog: name, provider${f.isNew ? `, created ${f.day} (inside the ${f.window}-day launch window)` : ''}`);
+
+  const ins = f.inputs.map(i => PLURAL[i] ?? i);
+  line('spec', ctx ? `It reads ${listWords(ins)}, with a ${ctx} token context.` : `It reads ${listWords(ins)}.`,
+    'catalog: architecture.input_modalities, context_length', ctx ? { [ctx]: contextWords(ctx) } : {});
+
+  if (f.billing === 'free') {
+    line('price', 'It is free to call, with no daily cap.', 'catalog: pricing $0/$0, no billing "byok"; docs/features/free-tier.md: "Daily cap: None"');
+  } else if (f.billing === 'byok') {
+    line('price', 'It runs on your own provider key. AnyRouter adds no markup.', 'catalog: pricing.billing "byok"; docs/features/byok.md: "with no AnyRouter markup"');
+    const keys = f.keyNames;
+    line('price', keys.length <= 4 ? `Keys from ${listWords(keys, 'or')} run it.` : `Keys from ${numberWords(keys.length)} providers run it.`,
+      'catalog: providers ending in -byok');
+  } else {
+    line('price', 'It runs on AnyRouter credits.', 'catalog: pricing');
+  }
+
+  if (f.capture) {
+    line('reply', 'In the AnyRouter playground, it said hello back, at no cost.', `capture ${f.capture.file}: "${f.capture.reply}", ${f.capture.cost} cost, ${f.capture.date}`);
+  }
+  line('use', 'Use its id in any request, or run anyr claude with it.', 'anyr --help: "anyr claude --model <id>"; the OpenAI-compatible "model" field');
+  line('close', 'Find it on anyrouter.dev.', `the page anyrouter.dev/model/${f.id}`);
+  return lines;
+}

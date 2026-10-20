@@ -1,0 +1,13 @@
+{
+  "spoken": "In the Any Router playground, it said hello back, at no cost.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 3.328,
+  "start": 0.03,
+  "end": 3.32,
+  "heard": "In the Any Router playground, it set Hello back at no cost."
+}

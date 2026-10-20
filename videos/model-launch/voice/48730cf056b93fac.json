@@ -1,0 +1,13 @@
+{
+  "spoken": "Keys from Novita, OpenRouter, Command Code or Vercel run it.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 3.989,
+  "start": 0.05,
+  "end": 3.92,
+  "heard": "Keys from Navita, open router, command code or Versal run it."
+}

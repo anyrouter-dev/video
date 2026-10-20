@@ -1,0 +1,13 @@
+{
+  "spoken": "DeepSeek V four point one Flash, from DeepSeek, is new on Any Router.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 4.331,
+  "start": 0.04,
+  "end": 4.24,
+  "heard": "DeepSeek V4.1 Flash from DeepSeek is new on any router."
+}

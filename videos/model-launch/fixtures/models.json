@@ -1,0 +1,2677 @@
+{
+ "data": [
+  {
+   "id": "deepseek/deepseek-v4-flash",
+   "object": "model",
+   "canonical_slug": "deepseek/deepseek-v4-flash",
+   "owned_by": "deepseek",
+   "hugging_face_id": null,
+   "name": "DeepSeek-V4-Flash",
+   "display_name": "DeepSeek-V4-Flash",
+   "provider": "DeepSeek",
+   "providers": [
+    "freebuff",
+    "freebuff-byok",
+    "deepseek-byok",
+    "siliconflow-byok",
+    "opencode-zen-byok",
+    "opencode-go-byok",
+    "openrouter-byok",
+    "commandcode-byok",
+    "fpt-byok",
+    "experiential-byok",
+    "aihubmix-byok",
+    "router-byok",
+    "vercel-byok",
+    "deepinfra-byok",
+    "gmicloud-byok",
+    "huggingface-byok",
+    "venice-byok",
+    "nousresearch-byok"
+   ],
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision",
+    "agentic"
+   ],
+   "created": 1783468800,
+   "description": "Fast and cheap DeepSeek-V4 MoE variant via SiliconFlow free tier for high-throughput chat and coding.",
+   "context_length": 1050000,
+   "architecture": {
+    "modality": "text->text",
+    "input_modalities": [
+     "text",
+     "image"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Deepseek",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   },
+   "top_provider": {
+    "context_length": 1050000,
+    "max_completion_tokens": 32768,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "tools",
+    "tool_choice",
+    "reasoning",
+    "include_reasoning",
+    "reasoning_effort",
+    "stop",
+    "response_format",
+    "structured_outputs",
+    "frequency_penalty",
+    "logit_bias",
+    "logprobs",
+    "max_completion_tokens",
+    "min_p",
+    "presence_penalty",
+    "repetition_penalty",
+    "seed",
+    "top_a",
+    "top_k",
+    "top_logprobs"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/deepseek/deepseek-v4-flash",
+    "metrics": "/api/v1/models/deepseek%2Fdeepseek-v4-flash/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "freebuff",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "freebuff",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning",
+      "reasoning_effort"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "freebuff-byok",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "freebuff-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning",
+      "reasoning_effort"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "deepseek-byok",
+     "model_name": "deepseek-flash",
+     "llm_provider": "deepseek-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "siliconflow-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4-Flash",
+     "llm_provider": "siliconflow-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "opencode-zen-byok",
+     "model_name": "deepseek-v4-flash",
+     "llm_provider": "opencode-zen-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "opencode-go-byok",
+     "model_name": "deepseek-v4-flash",
+     "llm_provider": "opencode-go-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.077,
+      "output_per_1m": 0.154
+     },
+     "context": {
+      "max_length": 128000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "commandcode-byok",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "commandcode-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "fpt-byok",
+     "model_name": "DeepSeek-V4-Flash",
+     "llm_provider": "fpt-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.14,
+      "output_per_1m": 0.28
+     },
+     "context": {
+      "max_length": 500000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p"
+     ],
+     "features": {
+      "streaming": true
+     }
+    },
+    {
+     "backend": "experiential-byok",
+     "model_name": "deepseek-v4-flash",
+     "llm_provider": "experiential-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "aihubmix-byok",
+     "model_name": "deepseek-v4-flash-0731-fast",
+     "llm_provider": "aihubmix-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.28,
+      "output_per_1m": 0.56
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "router-byok",
+     "model_name": "deepseek-v4-flash",
+     "llm_provider": "router-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.14,
+      "output_per_1m": 0.28
+     },
+     "context": {
+      "max_length": 1050000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "vercel-byok",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "vercel-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.13,
+      "output_per_1m": 0.26
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "stop",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning",
+      "response_format",
+      "structured_outputs"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "deepinfra-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4-Flash",
+     "llm_provider": "deepinfra-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.09,
+      "output_per_1m": 0.18
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "gmicloud-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4-Flash",
+     "llm_provider": "gmicloud-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.14,
+      "output_per_1m": 0.28
+     },
+     "context": {
+      "max_length": 1048575
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true
+     }
+    },
+    {
+     "backend": "huggingface-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4-Flash",
+     "llm_provider": "huggingface-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.042448,
+      "output_per_1m": 0.084896
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "venice-byok",
+     "model_name": "deepseek-v4-flash",
+     "llm_provider": "venice-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.138,
+      "output_per_1m": 0.275
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 32768
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "nousresearch-byok",
+     "model_name": "deepseek/deepseek-v4-flash",
+     "llm_provider": "nousresearch-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.03,
+      "output_per_1m": 1.28
+     },
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 943718
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "frequency_penalty",
+      "include_reasoning",
+      "logit_bias",
+      "logprobs",
+      "max_completion_tokens",
+      "max_tokens",
+      "min_p",
+      "presence_penalty",
+      "reasoning",
+      "reasoning_effort",
+      "repetition_penalty",
+      "response_format",
+      "seed",
+      "stop",
+      "structured_outputs",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_a",
+      "top_k",
+      "top_logprobs",
+      "top_p"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash",
+   "object": "model",
+   "canonical_slug": "deepseek/deepseek-v4.1-flash",
+   "owned_by": "deepseek",
+   "hugging_face_id": null,
+   "name": "DeepSeek V4.1 Flash",
+   "display_name": "DeepSeek V4.1 Flash",
+   "provider": "DeepSeek",
+   "providers": [
+    "nvidia-byok",
+    "openrouter-byok",
+    "ollama-byok",
+    "aihubmix-byok",
+    "deepinfra-byok",
+    "router-byok",
+    "vercel-byok",
+    "novita-byok",
+    "siliconflow-byok",
+    "gmicloud-byok",
+    "huggingface-byok",
+    "venice-byok",
+    "nousresearch-byok",
+    "baseten-byok",
+    "fireworks-byok",
+    "wafer-byok",
+    "onetoken-byok"
+   ],
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "reasoning",
+    "vision"
+   ],
+   "created": 1788998400,
+   "description": "DeepSeek V4.1 Flash is the cost-efficient sparse MoE tier of the V4.1 family, built on the Causal Encoder-Decoder (CED) architecture: 552B total parameters with 8B active on input and 16B on output. Native vision in, text out, 1M context. Compressed KV cache needs roughly a quarter of the previous Flash's HBM. This is the original September 2026 checkpoint, listed by OpenRouter as `deepseek/deepseek-v4.1-flash`. The official API id `deepseek-flash` now serves the October 17 snapshot, which has its own listing `deepseek/deepseek-v4.1-flash-1017`.",
+   "context_length": 1050000,
+   "architecture": {
+    "modality": "text->text",
+    "input_modalities": [
+     "text",
+     "image"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Deepseek",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0.04",
+    "completion": "0.144",
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.144,
+    "billing": "byok",
+    "list_pricing": {
+     "input_per_1m": 0.04,
+     "output_per_1m": 0.144
+    }
+   },
+   "top_provider": {
+    "context_length": 1050000,
+    "max_completion_tokens": 32768,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "stop",
+    "tools",
+    "tool_choice",
+    "reasoning",
+    "include_reasoning",
+    "response_format",
+    "structured_outputs",
+    "frequency_penalty",
+    "logprobs",
+    "presence_penalty",
+    "reasoning_effort",
+    "repetition_penalty",
+    "seed",
+    "top_a",
+    "top_k",
+    "top_logprobs"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/deepseek/deepseek-v4.1-flash",
+    "metrics": "/api/v1/models/deepseek%2Fdeepseek-v4.1-flash/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "nvidia-byok",
+     "model_name": "deepseek-ai/deepseek-v4.1-flash",
+     "llm_provider": "nvidia-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "deepseek/deepseek-v4.1-flash",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.04,
+      "output_per_1m": 0.144
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "ollama-byok",
+     "model_name": "deepseek-v4.1-flash",
+     "llm_provider": "ollama-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "aihubmix-byok",
+     "model_name": "deepseek-v4.1-flash",
+     "llm_provider": "aihubmix-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.155,
+      "output_per_1m": 0.62
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "deepinfra-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "llm_provider": "deepinfra-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.2,
+      "output_per_1m": 0.6
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 384000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "router-byok",
+     "model_name": "deepseek-v4.1-flash",
+     "llm_provider": "router-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.22,
+      "output_per_1m": 0.66
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1050000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "vercel-byok",
+     "model_name": "deepseek/deepseek-v4.1-flash",
+     "llm_provider": "vercel-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 32768
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "stop",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning",
+      "response_format",
+      "structured_outputs"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "novita-byok",
+     "model_name": "deepseek/deepseek-v4.1-flash",
+     "llm_provider": "novita-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576,
+      "max_completion_tokens": 393216
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "siliconflow-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "llm_provider": "siliconflow-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true
+     }
+    },
+    {
+     "backend": "gmicloud-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "llm_provider": "gmicloud-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048575
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true
+     }
+    },
+    {
+     "backend": "huggingface-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "llm_provider": "huggingface-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "venice-byok",
+     "model_name": "deepseek-v4-1-flash",
+     "llm_provider": "venice-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 131072
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "nousresearch-byok",
+     "model_name": "deepseek/deepseek-v4.1-flash",
+     "llm_provider": "nousresearch-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.106,
+      "output_per_1m": 0.513
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "frequency_penalty",
+      "logprobs",
+      "max_tokens",
+      "presence_penalty",
+      "reasoning",
+      "reasoning_effort",
+      "repetition_penalty",
+      "response_format",
+      "seed",
+      "stop",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_a",
+      "top_k",
+      "top_logprobs",
+      "top_p"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "baseten-byok",
+     "model_name": "deepseek-ai/DeepSeek-V4.1-Flash",
+     "llm_provider": "baseten-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "fireworks-byok",
+     "model_name": "accounts/fireworks/models/deepseek-v4p1-flash",
+     "llm_provider": "fireworks-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "wafer-byok",
+     "model_name": "DeepSeek-V4.1-Flash",
+     "llm_provider": "wafer-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.3,
+      "output_per_1m": 1.2
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "onetoken-byok",
+     "model_name": "deepseek-v4.1-flash",
+     "llm_provider": "onetoken-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.011,
+      "output_per_1m": 0.044
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "inclusionai/ling-3.1-flash",
+   "object": "model",
+   "canonical_slug": "inclusionai/ling-3.1-flash",
+   "owned_by": "inclusionai",
+   "hugging_face_id": null,
+   "name": "Ling-3.1-flash",
+   "display_name": "Ling-3.1-flash",
+   "provider": "inclusionai",
+   "providers": [
+    "hermes-agent",
+    "novita-byok",
+    "openrouter-byok",
+    "commandcode-byok",
+    "vercel-byok"
+   ],
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "coding",
+    "agentic"
+   ],
+   "created": 1790899200,
+   "description": "Ling 3.1 Flash is a hybrid reasoning mixture-of-experts model from inclusionAI, with 25B active parameters out of 560B total. Nous Portal platform hop is paid ($0.075/$0.225 per 1M, repriced by Nous 2026-10-16); the OpenRouter platform hop is commented out (#4527) after 402-ing on every attempt, and Novita/OpenRouter/Command Code/Vercel BYOK hops serve it at $0.",
+   "context_length": 262144,
+   "architecture": {
+    "modality": "text->text",
+    "input_modalities": [
+     "text"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Ling",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0.075",
+    "completion": "0.225",
+    "input_per_1m": 0.075,
+    "output_per_1m": 0.225,
+    "billing": "byok",
+    "list_pricing": {
+     "input_per_1m": 0.075,
+     "output_per_1m": 0.225
+    }
+   },
+   "top_provider": {
+    "context_length": 262144,
+    "max_completion_tokens": 32768,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "stop",
+    "tools",
+    "tool_choice",
+    "frequency_penalty",
+    "presence_penalty",
+    "seed",
+    "reasoning",
+    "include_reasoning"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/inclusionai/ling-3.1-flash",
+    "metrics": "/api/v1/models/inclusionai%2Fling-3.1-flash/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "hermes-agent",
+     "model_name": "inclusionai/ling-3.1-flash",
+     "llm_provider": "hermes-agent",
+     "pricing": {
+      "input_per_1m": 0.075,
+      "output_per_1m": 0.225,
+      "input_cache_read_per_1m": 0.015
+     },
+     "context": {
+      "max_length": 262144
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "novita-byok",
+     "model_name": "inclusionai/ling-3.1-flash",
+     "llm_provider": "novita-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 262144,
+      "max_completion_tokens": 32768
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "inclusionai/ling-3.1-flash",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 262144,
+      "max_completion_tokens": 32768
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "frequency_penalty",
+      "presence_penalty",
+      "seed",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "commandcode-byok",
+     "model_name": "inclusionai/ling-3.1-flash:free",
+     "llm_provider": "commandcode-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 262144
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "vercel-byok",
+     "model_name": "inclusionai/ling-3.1-flash-free",
+     "llm_provider": "vercel-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 262144,
+      "max_completion_tokens": 32768
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "reasoning": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "minimax/minimax-m3.1-flash",
+   "object": "model",
+   "canonical_slug": "minimax/minimax-m3.1-flash",
+   "owned_by": "minimax",
+   "hugging_face_id": null,
+   "name": "MiniMax M3.1 Flash",
+   "display_name": "MiniMax M3.1 Flash",
+   "provider": "minimax",
+   "providers": [
+    "hue",
+    "kilo",
+    "minimax-byok",
+    "openrouter-byok",
+    "vercel-byok",
+    "aihubmix-byok",
+    "opencode-go-byok",
+    "cline-byok",
+    "ollama-byok"
+   ],
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "coding",
+    "reasoning",
+    "agentic",
+    "vision",
+    "function-calling",
+    "structured-output",
+    "streaming"
+   ],
+   "created": 1792368000,
+   "description": "MiniMax-M3.1-Flash is a multimodal model from MiniMax. Compared with M3, it improves across benchmarks, particularly complex agentic tasks, coding and cybersecurity. It is built for multi-step co-work automation, understanding real codebases, fixing bugs and building features, and for visual understanding and creation, including frontend and presentation work. It has a 1M token context window and always-on reasoning with adjustable effort.",
+   "context_length": 1000000,
+   "architecture": {
+    "modality": "text+image->text",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Minimax",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   },
+   "top_provider": {
+    "context_length": 1000000,
+    "max_completion_tokens": 524288,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "include_reasoning",
+    "max_tokens",
+    "reasoning",
+    "reasoning_effort",
+    "response_format",
+    "temperature",
+    "tool_choice",
+    "tools",
+    "top_p"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/minimax/minimax-m3.1-flash",
+    "metrics": "/api/v1/models/minimax%2Fminimax-m3.1-flash/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "hue",
+     "model_name": "minimax/minimax-m3.1-flash:free",
+     "llm_provider": "hue",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 524288
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "include_reasoning",
+      "max_tokens",
+      "reasoning",
+      "reasoning_effort",
+      "response_format",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_p"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "kilo",
+     "model_name": "minimax/minimax-m3.1-flash:free",
+     "llm_provider": "kilo",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 524288
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "minimax-byok",
+     "model_name": "MiniMax-M3.1-Flash",
+     "llm_provider": "minimax-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.6
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "minimax/minimax-m3.1-flash:free",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 524288
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "include_reasoning",
+      "max_tokens",
+      "reasoning",
+      "reasoning_effort",
+      "response_format",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_p"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "vercel-byok",
+     "model_name": "minimax/minimax-m3.1-flash",
+     "llm_provider": "vercel-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 524288
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "aihubmix-byok",
+     "model_name": "minimax-m3.1-flash",
+     "llm_provider": "aihubmix-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "opencode-go-byok",
+     "model_name": "minimax-m3.1-flash-free",
+     "llm_provider": "opencode-go-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "cline-byok",
+     "model_name": "minimax/minimax-m3.1-flash:free",
+     "llm_provider": "cline-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    },
+    {
+     "backend": "ollama-byok",
+     "model_name": "minimax-m3.1-flash",
+     "llm_provider": "ollama-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "moonshotai/kimi-k3",
+   "object": "model",
+   "canonical_slug": "moonshotai/kimi-k3",
+   "owned_by": "moonshot ai",
+   "hugging_face_id": null,
+   "name": "Kimi K3",
+   "display_name": "Kimi K3",
+   "provider": "Moonshot AI",
+   "providers": [
+    "aihubmix-byok",
+    "nvidia",
+    "nvidia-byok",
+    "moonshotai-byok",
+    "zenmux-byok",
+    "openrouter-byok",
+    "orcarouter-byok",
+    "cline-byok",
+    "novita-byok",
+    "fireworks-byok",
+    "baseten-byok",
+    "siliconflow-byok",
+    "gmicloud-byok",
+    "nousresearch-byok",
+    "venice-byok",
+    "commandcode-byok",
+    "opencode-go-byok",
+    "router-byok",
+    "vercel-byok"
+   ],
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "reasoning",
+    "streaming",
+    "function-calling",
+    "vision",
+    "coding",
+    "agentic"
+   ],
+   "created": 1784160000,
+   "description": "Kimi K3 is an open-source multimodal reasoning model from Moonshot AI with a 1M-token context window and native visual understanding. It accepts text, image, and video inputs and is built for long-horizon software engineering, knowledge work, and deep reasoning, with particular strength where code meets visual and spatial reasoning \u2014 frontend, game development, and CAD workflows. Its architecture uses KDA and Attention Residuals for computational efficiency, and its thinking mode is always on.",
+   "context_length": 1050000,
+   "architecture": {
+    "modality": "text+image->text",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Moonshotai",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   },
+   "top_provider": {
+    "context_length": 1050000,
+    "max_completion_tokens": 131072,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "stop",
+    "tools",
+    "tool_choice",
+    "response_format",
+    "reasoning",
+    "reasoning_effort",
+    "seed",
+    "structured_outputs",
+    "include_reasoning"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/moonshotai/kimi-k3",
+    "metrics": "/api/v1/models/moonshotai%2Fkimi-k3/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "aihubmix-byok",
+     "model_name": "coding-kimi-k3",
+     "llm_provider": "aihubmix-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "nvidia",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "nvidia",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice",
+      "response_format"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "nvidia-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "nvidia-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice",
+      "response_format"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "moonshotai-byok",
+     "model_name": "kimi-k3",
+     "llm_provider": "moonshotai-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "zenmux-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "zenmux-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 131072
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice",
+      "response_format"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "orcarouter-byok",
+     "model_name": "kimi/kimi-k3",
+     "llm_provider": "orcarouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 131072
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice",
+      "response_format"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "cline-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "cline-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "novita-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "novita-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "fireworks-byok",
+     "model_name": "accounts/fireworks/models/kimi-k3",
+     "llm_provider": "fireworks-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "baseten-byok",
+     "model_name": "moonshotai/Kimi-K3",
+     "llm_provider": "baseten-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "siliconflow-byok",
+     "model_name": "moonshotai/Kimi-K3",
+     "llm_provider": "siliconflow-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 262144
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "gmicloud-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "gmicloud-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 262144
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "nousresearch-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "nousresearch-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice",
+      "response_format",
+      "reasoning",
+      "reasoning_effort",
+      "seed",
+      "structured_outputs"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "venice-byok",
+     "model_name": "kimi-k3",
+     "llm_provider": "venice-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "commandcode-byok",
+     "model_name": "moonshotai/Kimi-K3",
+     "llm_provider": "commandcode-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "opencode-go-byok",
+     "model_name": "kimi-k3",
+     "llm_provider": "opencode-go-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0,
+      "input_cache_read_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1048576
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "router-byok",
+     "model_name": "kimi-k3",
+     "llm_provider": "router-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1050000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "features": {
+      "streaming": true,
+      "function_calling": true
+     }
+    },
+    {
+     "backend": "vercel-byok",
+     "model_name": "moonshotai/kimi-k3",
+     "llm_provider": "vercel-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 3,
+      "output_per_1m": 15
+     },
+     "context": {
+      "max_length": 1000000,
+      "max_completion_tokens": 131072
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "stop",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "include_reasoning",
+      "response_format",
+      "structured_outputs"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "nace-ai/drex-v2.0",
+   "object": "model",
+   "canonical_slug": "nace-ai/drex-v2.0",
+   "owned_by": "nace-ai",
+   "hugging_face_id": null,
+   "name": "Drex v2.0",
+   "display_name": "Drex v2.0",
+   "provider": "nace-ai",
+   "providers": [
+    "nace-ai",
+    "nace-ai-byok",
+    "openrouter-byok"
+   ],
+   "category": "text",
+   "capabilities": [
+    "systemone"
+   ],
+   "created": 1791244800,
+   "description": "Drex v2.0 is a 35B mixture-of-experts decision model (3B active) from Nace AI, the larger successor to Drex v1.5. Send application state (text or JSON) and typed questions (noul / choice / score) and get back a calibrated probability for every answer option in a single forward pass, with no text generation. It is TypeSafe System One compatible and suits routing, classification and policy checks that need a scored answer instead of prose. Call POST /api/v1/decisions (POST /api/v1/systemone is the same handler).",
+   "context_length": 131072,
+   "architecture": {
+    "modality": "text->text",
+    "input_modalities": [
+     "text"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Nace-ai",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0.06",
+    "completion": "0",
+    "input_per_1m": 0.06,
+    "output_per_1m": 0
+   },
+   "top_provider": {
+    "context_length": 131072,
+    "max_completion_tokens": null,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "state",
+    "model",
+    "questions"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/nace-ai/drex-v2.0",
+    "metrics": "/api/v1/models/nace-ai%2Fdrex-v2.0/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "nace-ai",
+     "model_name": "drex-v2.0",
+     "llm_provider": "nace-ai",
+     "pricing": {
+      "input_per_1m": 0.06,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 8192
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "state",
+      "model",
+      "questions"
+     ]
+    },
+    {
+     "backend": "nace-ai-byok",
+     "model_name": "drex-v2.0",
+     "llm_provider": "nace-ai-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.06,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 8192
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "state",
+      "model",
+      "questions"
+     ]
+    },
+    {
+     "backend": "openrouter-byok",
+     "model_name": "nace-ai/drex-v2.0",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "list_pricing": {
+      "input_per_1m": 0.06,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 131072
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "state",
+      "model",
+      "questions"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nex-agi/nex-n2.5-mini",
+   "object": "model",
+   "canonical_slug": "nex-agi/nex-n2.5-mini",
+   "owned_by": "nex-agi",
+   "hugging_face_id": null,
+   "name": "Nex-N2.5-Mini",
+   "display_name": "Nex-N2.5-Mini",
+   "provider": "nex-agi",
+   "providers": [
+    "openrouter-byok"
+   ],
+   "category": "text",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "reasoning",
+    "vision",
+    "coding",
+    "agentic"
+   ],
+   "created": 1788825600,
+   "description": "Nex-N2.5-Mini is Nex AGI's smaller agentic coding model (35B total / 3B active MoE), built for high-speed instruction following, real-time tool execution, and visually assisted computer use. Distinct from Nex-N2.5-Pro and the retired Nex-N2-Pro listing. OpenRouter withdrew the :free SKU in September 2026, so the platform free pool is gone and this listing is BYOK-only; both the paid OpenRouter slug and the old :free id resolve here.",
+   "context_length": 262144,
+   "architecture": {
+    "modality": "text->text",
+    "input_modalities": [
+     "text",
+     "image"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Nex-agi",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0,
+    "billing": "byok"
+   },
+   "top_provider": {
+    "context_length": 262144,
+    "max_completion_tokens": 235929,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "tools",
+    "tool_choice",
+    "reasoning",
+    "response_format"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/nex-agi/nex-n2.5-mini",
+    "metrics": "/api/v1/models/nex-agi%2Fnex-n2.5-mini/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "openrouter-byok",
+     "model_name": "nex-agi/nex-n2.5-mini",
+     "llm_provider": "openrouter-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "billing": "byok",
+     "context": {
+      "max_length": 262144,
+      "max_completion_tokens": 235929
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "tools",
+      "tool_choice",
+      "reasoning",
+      "response_format"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true,
+      "reasoning": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "object": "model",
+   "canonical_slug": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "owned_by": "nvidia",
+   "hugging_face_id": null,
+   "name": "Nemotron 3.5 Super VL 120B A12B",
+   "display_name": "Nemotron 3.5 Super VL 120B A12B",
+   "provider": "nvidia",
+   "providers": [
+    "nvidia",
+    "nvidia-byok"
+   ],
+   "category": "multimodal",
+   "capabilities": [
+    "chat",
+    "streaming",
+    "function-calling",
+    "vision",
+    "reasoning",
+    "coding"
+   ],
+   "created": 1792022400,
+   "description": "NVIDIA Nemotron 3.5 Super VL is a vision-language model for reasoning, coding, tool use, document understanding and video understanding. A hybrid Mamba-2 and Transformer mixture-of-experts with 120B total and 12B active parameters, and up to 1M tokens of context.",
+   "context_length": 1000000,
+   "architecture": {
+    "modality": "text+image->text",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "tokenizer": "Nvidia",
+    "instruct_type": null
+   },
+   "pricing": {
+    "prompt": "0",
+    "completion": "0",
+    "input_per_1m": 0,
+    "output_per_1m": 0
+   },
+   "top_provider": {
+    "context_length": 1000000,
+    "max_completion_tokens": null,
+    "is_moderated": false
+   },
+   "per_request_limits": null,
+   "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "top_p",
+    "stop",
+    "tools",
+    "tool_choice"
+   ],
+   "default_parameters": {
+    "temperature": null,
+    "top_p": null,
+    "top_k": null,
+    "frequency_penalty": null,
+    "presence_penalty": null,
+    "repetition_penalty": null
+   },
+   "knowledge_cutoff": null,
+   "expiration_date": null,
+   "links": {
+    "details": "/api/v1/models/nvidia/nemotron-3.5-super-vl-120b-a12b",
+    "metrics": "/api/v1/models/nvidia%2Fnemotron-3.5-super-vl-120b-a12b/metrics"
+   },
+   "per_upstream": [
+    {
+     "backend": "nvidia",
+     "model_name": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "llm_provider": "nvidia",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    },
+    {
+     "backend": "nvidia-byok",
+     "model_name": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "llm_provider": "nvidia-byok",
+     "pricing": {
+      "input_per_1m": 0,
+      "output_per_1m": 0
+     },
+     "context": {
+      "max_length": 1000000
+     },
+     "data_policy": {
+      "zdr": false
+     },
+     "supported_parameters": [
+      "max_tokens",
+      "temperature",
+      "top_p",
+      "stop",
+      "tools",
+      "tool_choice"
+     ],
+     "features": {
+      "streaming": true,
+      "function_calling": true,
+      "vision": true
+     }
+    }
+   ]
+  }
+ ]
+}

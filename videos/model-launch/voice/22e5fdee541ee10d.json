@@ -1,0 +1,13 @@
+{
+  "spoken": "Keys from seventeen providers run it.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 2.155,
+  "start": 0.1,
+  "end": 2.05,
+  "heard": "Keys from 17 providers run it."
+}

@@ -1,0 +1,13 @@
+{
+  "spoken": "It runs on your own provider key. Any Router adds no markup.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 3.712,
+  "start": 0.03,
+  "end": 3.71,
+  "heard": "It runs on your own provider key. Any router adds no markup."
+}

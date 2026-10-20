@@ -1,0 +1,13 @@
+{
+  "spoken": "Find it on any router dot dev.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 1.899,
+  "start": 0.14,
+  "end": 1.8,
+  "heard": "Find it on any router.dev."
+}

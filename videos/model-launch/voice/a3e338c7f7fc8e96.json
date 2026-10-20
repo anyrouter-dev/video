@@ -1,0 +1,13 @@
+{
+  "spoken": "It reads text and images, with a one point zero five million token context.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 5.099,
+  "start": 0.03,
+  "end": 5,
+  "heard": "It reads text and images with a 1.05 million token context."
+}

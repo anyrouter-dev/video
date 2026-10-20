@@ -1,0 +1,13 @@
+{
+  "spoken": "MiniMax M three point one Flash, from MiniMax, is new on Any Router.",
+  "voice": {
+    "engine": "kokoro",
+    "id": "af_heart",
+    "speed": 1,
+    "lang": "en-us"
+  },
+  "duration": 4.587,
+  "start": 0.03,
+  "end": 4.46,
+  "heard": "Minimax M 3.1 Flash from Minimax is new on any router."
+}
