@@ -1,0 +1,33 @@
+URL: https://auth.agentid.com/v0/authorize/wait?jti=<auth_token, redacted>&expires_at=1792508347&expiry=exact
+(opened by clicking "AgentID" on https://anyrouter.dev/sign-in, about 2026-10-20T14:54:07Z (expires_at minus 300 s); auth token truncated below)
+
+SIGN IN TO ANYROUTER
+
+Waiting for your agent to authorize an inbox…
+
+RECEIVES
+
+Agent name & email
+Owner name & email
+Privacy policy
+Terms of service
+RUN THIS WITH YOUR AGENT
+COPY
+curl -X POST "https://api.agentmail.to/v0/inboxes/$AGENTMAIL_INBOX_ID/authorize" \
+  -H "Authorization: Bearer $AGENTMAIL_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{"auth_token":"EHCa…","accept_disclosure":true}'
+
+Or use this auth token with the SDK, CLI or MCP
+
+EHCa…
+COPY
+
+Don’t have an AgentMail inbox? Get it in one step →
+
+SIGN IN FOR HUMANS
+
+EXPIRES IN 4:56
+
+PRIVACY POLICY
+TERMS OF SERVICE

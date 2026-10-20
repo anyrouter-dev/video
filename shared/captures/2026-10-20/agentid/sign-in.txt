@@ -1,0 +1,8 @@
+URL: https://anyrouter.dev/sign-in (signed out, 2026-10-20T14:53Z), accessibility tree of the sign-in widget:
+heading "Continue to AnyRouter"
+button "AgentID"   (icon: https://img.clerk.com/static/agentid.svg)
+button "GitHub"
+"or"
+textbox "Email address or username"
+button "Continue"
+"Secured by" Clerk

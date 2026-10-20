@@ -1,0 +1,46 @@
+{
+  "source": "GET https://anyrouter.dev/api/v1/models?all=1",
+  "total": 299,
+  "data": [
+    {
+      "id": "anyrouter/free",
+      "name": "AnyRouter Free",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      }
+    },
+    {
+      "id": "dots-studio/dots-3-note-preview",
+      "name": "Dots3-Note Preview",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      }
+    },
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "name": "MiniMax M3.1 Flash",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      }
+    },
+    {
+      "id": "moonshotai/kimi-k3",
+      "name": "Kimi K3",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      }
+    }
+  ]
+}

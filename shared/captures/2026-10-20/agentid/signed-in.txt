@@ -1,0 +1,9 @@
+URL: https://anyrouter.dev/ (2026-10-20T14:54:38Z, about 15 s after the authorize call at 14:54:23Z)
+button "Account menu for AgentMail"
+Account menu, opened:
+AgentMail
+duyetbot@agentmail.to
+Free
+$0.00
+Top up
+Dashboard / API keys / BYOK keys / Usage and logs / Billing / Settings / Language / Theme / Sign out
