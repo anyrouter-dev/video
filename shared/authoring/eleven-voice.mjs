@@ -26,6 +26,8 @@ export const SAY = {
   '270': 'two hundred and seventy',
   '50': 'fifty',
   'openrouter/free': 'open router slash free',
+  AgentID: 'Agent I D',
+  AgentMail: 'Agent Mail',
 };
 
 /** SCRIPT.md → [{ frame, text }]: a `## … (Frame N)` heading, then its indented spoken block. */

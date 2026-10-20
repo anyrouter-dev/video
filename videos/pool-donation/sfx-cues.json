@@ -1,0 +1,16 @@
+[
+  {"frame": 1, "sound": "pop", "word": "key", "volume": 0.2},
+  {"frame": 1, "sound": "whoosh-short", "word": "Share", "offset": -0.2, "volume": 0.22},
+  {"frame": 2, "sound": "pop", "word": "key,", "volume": 0.2},
+  {"frame": 2, "sound": "click", "word": "Donate", "volume": 0.3},
+  {"frame": 3, "sound": "ping", "word": "run", "volume": 0.18},
+  {"frame": 3, "sound": "click-soft", "word": "first.", "volume": 0.22},
+  {"frame": 4, "sound": "pop", "word": "Go", "volume": 0.2},
+  {"frame": 4, "sound": "pop", "word": "four", "volume": 0.2},
+  {"frame": 4, "sound": "pop", "word": "five", "volume": 0.2},
+  {"frame": 5, "sound": "click-soft", "word": "quota.", "volume": 0.2},
+  {"frame": 5, "sound": "pop", "word": "Check", "volume": 0.2},
+  {"frame": 6, "sound": "click", "word": "off", "volume": 0.3},
+  {"frame": 7, "sound": "chime", "word": "Share", "volume": 0.16},
+  {"frame": 7, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]

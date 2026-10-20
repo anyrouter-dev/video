@@ -55,6 +55,9 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
+| `sign-in-with-anyrouter` | the narrated guide for app builders: a Sign in with AnyRouter button, usage billed to each user | its own files | on demand |
+| `pool-donation` | the narrated guide to donating an idle provider key to the shared pool | its own files | on demand |
+| `sign-in-with-agentid` | the narrated announcement: an agent signs in to AnyRouter with AgentID from its own AgentMail inbox | its own files | on demand |
 | `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page. Each use case is its own release | `/use-cases.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.

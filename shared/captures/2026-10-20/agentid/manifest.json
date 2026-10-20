@@ -1,0 +1,153 @@
+[
+  {
+    "file": "sign-in.txt",
+    "kind": "page",
+    "url": "https://anyrouter.dev/sign-in",
+    "tool": "agent-browser --session agentid-film (headless), signed out",
+    "shows": "The sign-in widget: \"Continue to AnyRouter\", then \"AgentID\", \"GitHub\", \"or\", \"Email address or username\", \"Continue\".",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:53:30Z"
+  },
+  {
+    "file": "sign-in.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/sign-in",
+    "viewport": "1440x1000",
+    "shows": "Reference only for layout and order of the providers. Not embedded in the film.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:53:30Z"
+  },
+  {
+    "file": "agentid-mark-clerk.svg",
+    "kind": "brand-mark",
+    "url": "https://img.clerk.com/static/agentid.svg",
+    "foundOn": "https://anyrouter.dev/sign-in, CSS mask-image of .cl-providerIcon__agentid in the AgentID button",
+    "shows": "The AgentID mark as AnyRouter's sign-in button draws it.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:53:40Z"
+  },
+  {
+    "file": "agentid-mark-wait-page.svg",
+    "kind": "brand-mark",
+    "url": "https://auth.agentid.com/v0/authorize/wait",
+    "foundOn": "the first <svg data-agentid-logo> on the AgentID waiting page (a second, unused waiting page opened from a signed-out session, agentid-film-anon)",
+    "shows": "The AgentID mark as AgentID's own page draws it. Its blur glow layer is dropped when redrawn (no glows in the Monolith look).",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:59:40Z"
+  },
+  {
+    "file": "wait-page.txt",
+    "kind": "page",
+    "url": "https://auth.agentid.com/v0/authorize/wait?jti=<redacted>&expires_at=1792508347&expiry=exact",
+    "tool": "agent-browser --session agentid-film, after clicking AgentID on anyrouter.dev/sign-in",
+    "shows": "SIGN IN TO ANYROUTER, \"Waiting for your agent to authorize an inbox…\", the RECEIVES list, the RUN THIS WITH YOUR AGENT curl, the auth token line, SIGN IN FOR HUMANS, EXPIRES IN 4:56.",
+    "redacted": "auth_token truncated to its first 4 characters; the full-page screenshot that shows it is kept out of the repo",
+    "capturedAt": "2026-10-20T14:54:11Z"
+  },
+  {
+    "file": "authorize-response.txt",
+    "kind": "api",
+    "request": "POST https://api.agentmail.to/v0/inboxes/$AGENTMAIL_INBOX_ID/authorize with the waiting page's auth_token and accept_disclosure: true, bearer key from ~/.config/agentmail/env, inbox duyetbot@agentmail.to",
+    "shows": "HTTP 202, {\"api_key_id\":\"…\",\"instructions\":\"Authorization complete. Return to browser.\"}",
+    "redacted": "api_key_id truncated to 6 characters; bearer key never printed",
+    "capturedAt": "2026-10-20T14:54:23Z"
+  },
+  {
+    "file": "signed-in.txt",
+    "kind": "page",
+    "url": "https://anyrouter.dev/",
+    "tool": "agent-browser --session agentid-film, polled every 2 s after the authorize call",
+    "shows": "The waiting browser landed on anyrouter.dev signed in by 14:54:38Z, about 15 s after the authorize call. \"Account menu for AgentMail\"; the menu reads AgentMail, duyetbot@agentmail.to, Free, $0.00.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:54:38Z"
+  },
+  {
+    "file": "signed-in.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/",
+    "viewport": "1440x1000",
+    "shows": "Reference only. Not embedded in the film.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:54:41Z"
+  },
+  {
+    "file": "account-menu.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/",
+    "viewport": "1440x1000",
+    "shows": "Reference only: the open account menu, AgentMail, duyetbot@agentmail.to, Free, $0.00. Not embedded in the film.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:55:10Z"
+  },
+  {
+    "file": "settings.txt",
+    "kind": "page",
+    "url": "https://anyrouter.dev/dashboard/settings",
+    "shows": "Profile AgentMail, Primary Email duyetbot@agentmail.to, Password \"No password (OAuth only)\", Verified emails 1, Connected accounts \"Agentid duyetbot@agentmail.to Linked\".",
+    "redacted": "the Clerk user id is truncated",
+    "capturedAt": "2026-10-20T14:59:20Z"
+  },
+  {
+    "file": "keys-before.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/keys",
+    "viewport": "1440x1000",
+    "shows": "Reference only: the new account has no API keys yet. Not embedded in the film.",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:55:30Z"
+  },
+  {
+    "file": "keys-after-call.txt",
+    "kind": "page",
+    "url": "https://anyrouter.dev/dashboard/keys",
+    "shows": "One key, \"agentid-film\", created by the agent account in the dashboard (Create key, name agentid-film, default permissions).",
+    "redacted": "key value never printed or saved in the repo; the page's own masked form only",
+    "capturedAt": "2026-10-20T14:59:15Z"
+  },
+  {
+    "file": "chat-request.json",
+    "kind": "api",
+    "request": "the body of POST https://anyrouter.dev/api/v1/chat/completions sent with the agentid-film key",
+    "shows": "model anyrouter/free, the user message \"You just signed in to AnyRouter with your own inbox. Say hello in one short sentence.\"",
+    "redacted": "the key is not in the body",
+    "capturedAt": "2026-10-20T14:57:58Z"
+  },
+  {
+    "file": "chat-response.txt",
+    "kind": "api",
+    "request": "POST https://anyrouter.dev/api/v1/chat/completions, Authorization: Bearer sk-ar-v1-… (agentid-film)",
+    "shows": "HTTP 200. content \"Hello! I'm here and ready to help.\", served by dots-studio/dots-3-note-preview via hue, usage.cost 0, 154 tokens. Earlier tries on minimax/minimax-m3.1-flash, moonshotai/kimi-k3, openai/gpt-oss-20b and google/gemma-4-31b returned 402 insufficient_balance on the Free plan with $0.00, so the film shows anyrouter/free, which llms.txt says works on every plan, Free included.",
+    "redacted": "no secret in the response",
+    "capturedAt": "2026-10-20T14:58:04Z"
+  },
+  {
+    "file": "chat-headers.txt",
+    "kind": "api",
+    "shows": "x-anyrouter-model dots-studio/dots-3-note-preview, x-anyrouter-credential-source platform.",
+    "redacted": "no cookies or secrets present",
+    "capturedAt": "2026-10-20T14:58:04Z"
+  },
+  {
+    "file": "models-subset.json",
+    "kind": "api",
+    "url": "https://anyrouter.dev/api/v1/models?all=1",
+    "shows": "anyrouter/free and dots-studio/dots-3-note-preview have pricing 0 and no billing: \"byok\", so both run without the user's own provider key.",
+    "redacted": "trimmed to four entries",
+    "capturedAt": "2026-10-20T14:56:30Z"
+  },
+  {
+    "file": "key-revoked-check.txt",
+    "kind": "api",
+    "shows": "The agentid-film key was deleted from the dashboard (DELETE /api/v1/keys/<id> 200 at 15:00Z); the same chat call with it then returned HTTP 401.",
+    "redacted": "key never printed; the local copy was deleted",
+    "capturedAt": "2026-10-20T15:00:30Z"
+  },
+  {
+    "file": "agentmail-docs-agentid-sign-in.md",
+    "kind": "docs",
+    "url": "https://docs.agentmail.to/agentid-sign-in.md",
+    "shows": "\"AgentID lets agents sign in to apps using an AgentMail inbox as their identity.\" Authorize Inbox returns \"Authorization complete. Return to browser.\" and \"Nothing further is required from the agent\". magic_url \"single-use and valid for five minutes\". \"An active sign-in key expires 30 days after activation.\"",
+    "redacted": "none needed",
+    "capturedAt": "2026-10-20T14:58:40Z"
+  }
+]

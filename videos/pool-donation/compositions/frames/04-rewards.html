@@ -1,0 +1,262 @@
+<template>
+  <style>
+    /* kit:css */
+/* The AnyRouter film kit, frame.md v3 "Monolith", pasted into every frame by tools/kit.mjs and
+   scoped to it. Safe areas: landscape x 96..1824, y 88..880; portrait x 60..960, y 200..1220.
+   No stage sizes here or in a frame: portrait.mjs refuses a literal landscape width or height. */
+@font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+[data-composition-id="04-rewards"] {
+  --bg: #FFFFFF; --ink: #0A0A0A; --ink-2: #27272A; --muted: #6B6B6B; --hair: #E7E7E7; --surface: #F5F5F5;
+  --accent: #BB4D00; --on-ink: #FFFFFF; --on-ink-muted: #A3A3A3; --accent-on-ink: #F0915A;
+  --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+[data-composition-id="04-rewards"] .k-bg { position: absolute; inset: 0; background: var(--bg); }
+[data-composition-id="04-rewards"] .k-stage { position: absolute; inset: 0; overflow: hidden; }
+/* the camera: everything in a frame sits in it */
+[data-composition-id="04-rewards"] .k-cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+[data-composition-id="04-rewards"] p, [data-composition-id="04-rewards"] h1, [data-composition-id="04-rewards"] h2 { margin: 0; }
+
+/* the brand, top-left frame chrome */
+[data-composition-id="04-rewards"] .k-brand { position: absolute; left: 96px; top: 88px; display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; white-space: nowrap; color: var(--ink); }
+[data-composition-id="04-rewards"] .k-brand img { width: 40px; height: 40px; display: block; }
+
+/* type */
+[data-composition-id="04-rewards"] .k-display { font-size: 184px; font-weight: 600; line-height: 0.98; letter-spacing: -0.055em; }
+[data-composition-id="04-rewards"] .k-headline, [data-composition-id="04-rewards"] .k-h1 { font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -0.05em; }
+[data-composition-id="04-rewards"] .k-h2 { font-size: 88px; font-weight: 600; line-height: 1.04; letter-spacing: -0.045em; }
+[data-composition-id="04-rewards"] .k-title { font-size: 64px; font-weight: 600; line-height: 1.1; letter-spacing: -0.035em; }
+[data-composition-id="04-rewards"] .k-body { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.035em; color: var(--ink-2); }
+[data-composition-id="04-rewards"] .k-label { font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+[data-composition-id="04-rewards"] .k-small { font-size: 36px; font-weight: 500; line-height: 1.1; color: var(--muted); }
+[data-composition-id="04-rewards"] .k-stat { font-size: 360px; font-weight: 600; line-height: 0.9; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+[data-composition-id="04-rewards"] .k-num { font-size: 52px; font-weight: 600; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+[data-composition-id="04-rewards"] .k-muted { color: var(--muted); }
+/* a headline line, revealed on its own by K.headline */
+[data-composition-id="04-rewards"] .k-line { display: block; }
+
+/* surfaces */
+[data-composition-id="04-rewards"] .k-card { box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; }
+[data-composition-id="04-rewards"] .k-card.is-ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="04-rewards"] .k-card.is-ink .k-muted { color: var(--on-ink-muted); }
+/* a provider or brand mark as an <img>, drawn as a black silhouette (white on the ink card):
+   Monolith has one colour, and some marks ship their own */
+[data-composition-id="04-rewards"] .k-mark { display: block; flex: none; filter: brightness(0); }
+[data-composition-id="04-rewards"] .k-card.is-ink .k-mark { filter: brightness(0) invert(1); }
+
+[data-composition-id="04-rewards"] .k-badge { display: inline-flex; align-items: center; gap: 14px; height: 64px; box-sizing: border-box; padding: 0 26px; border-radius: 999px; border: 2px solid var(--hair); background: var(--bg); color: var(--ink-2); font-size: 36px; font-weight: 500; line-height: 1; white-space: nowrap; }
+[data-composition-id="04-rewards"] .k-badge.is-ink, [data-composition-id="04-rewards"] .k-badge.is-free { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+[data-composition-id="04-rewards"] .k-badge.is-muted, [data-composition-id="04-rewards"] .k-badge.is-danger { background: var(--surface); border-color: var(--surface); color: var(--muted); }
+[data-composition-id="04-rewards"] .k-badge.is-outline { background: var(--bg); }
+[data-composition-id="04-rewards"] .k-badge.is-big { height: 96px; padding: 0 40px; font-size: 52px; gap: 18px; }
+[data-composition-id="04-rewards"] .k-badge svg { width: 1em; height: 1em; flex: none; }
+
+[data-composition-id="04-rewards"] .k-btn { display: inline-flex; align-items: center; justify-content: center; gap: 16px; height: 104px; box-sizing: border-box; padding: 0 48px; border-radius: 20px; background: var(--ink); color: var(--on-ink); font-size: 48px; font-weight: 500; line-height: 1; white-space: nowrap; }
+
+/* the ring: only where inking would misdraw a real control (frame.md, ring) */
+[data-composition-id="04-rewards"] .k-ring { position: absolute; border-radius: 32px; border: 4px solid var(--accent); pointer-events: none; opacity: 0; }
+
+/* a company: its mark and its name */
+[data-composition-id="04-rewards"] .k-chip { display: inline-flex; align-items: center; gap: 16px; height: 88px; box-sizing: border-box; padding: 0 32px 0 24px; border-radius: 999px; background: var(--bg); border: 2px solid var(--hair); font-size: 40px; font-weight: 500; white-space: nowrap; }
+[data-composition-id="04-rewards"] .k-chip img { width: 44px; height: 44px; flex: none; }
+[data-composition-id="04-rewards"] .k-chip.is-more { color: var(--muted); padding-left: 32px; }
+
+/* a window around redrawn product UI */
+[data-composition-id="04-rewards"] .k-browser { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-rewards"] .k-browser-bar { position: relative; height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; justify-content: center; }
+[data-composition-id="04-rewards"] .k-browser-dots { position: absolute; left: 28px; top: 29px; display: flex; gap: 10px; }
+[data-composition-id="04-rewards"] .k-browser-dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--hair); }
+[data-composition-id="04-rewards"] .k-url { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 36px; line-height: 1; color: var(--muted); white-space: nowrap; }
+[data-composition-id="04-rewards"] .k-view { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow: hidden; }
+[data-composition-id="04-rewards"] .k-shot { position: absolute; left: 0; top: 0; display: block; max-width: none; transform-origin: 0 0; }
+
+/* code card: a hairline editor with a file tab */
+[data-composition-id="04-rewards"] .k-code { position: absolute; box-sizing: border-box; background: var(--bg); border: 2px solid var(--hair); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-rewards"] .k-code-bar { height: 72px; box-sizing: border-box; border-bottom: 2px solid var(--hair); display: flex; align-items: center; padding-left: 108px; position: relative; }
+[data-composition-id="04-rewards"] .k-code-body { padding: 44px 56px 52px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--ink); white-space: pre; }
+[data-composition-id="04-rewards"] .k-code-body .kw { color: inherit; }
+[data-composition-id="04-rewards"] .k-code-body .cm { color: var(--muted); }
+[data-composition-id="04-rewards"] .k-ln { display: block; }
+
+/* terminal: an ink card */
+[data-composition-id="04-rewards"] .k-term { position: absolute; box-sizing: border-box; background: var(--ink); border-radius: 32px; overflow: hidden; }
+[data-composition-id="04-rewards"] .k-term-bar { position: relative; height: 72px; border-bottom: 2px solid var(--ink-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 36px; color: var(--on-ink-muted); }
+[data-composition-id="04-rewards"] .k-term .k-browser-dots i { background: var(--ink-2); }
+[data-composition-id="04-rewards"] .k-term-body { padding: 48px 56px 56px; font-family: var(--mono); font-size: 60px; line-height: 1.4; letter-spacing: -0.02em; color: var(--on-ink); white-space: pre; }
+[data-composition-id="04-rewards"] .k-term-body .p { color: var(--on-ink-muted); }
+[data-composition-id="04-rewards"] .k-term-body .id { color: var(--accent-on-ink); }
+[data-composition-id="04-rewards"] .k-caret { display: inline-block; width: 30px; height: 68px; vertical-align: -12px; background: var(--on-ink); }
+
+/* a value that rolls in place: one slot, each value stacked in it, as wide as the one on show.
+   A value that rolls in is an arrival, so it takes the accent (frame.md, colors). */
+[data-composition-id="04-rewards"] .k-roll { position: relative; display: inline-block; height: 1.4em; vertical-align: top; }
+[data-composition-id="04-rewards"] .k-roll > span { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0; }
+[data-composition-id="04-rewards"] .k-roll > span:first-child { opacity: 1; }
+[data-composition-id="04-rewards"] .k-roll > span + span, [data-composition-id="04-rewards"] .k-roll.is-arriving > span { color: var(--accent); }
+[data-composition-id="04-rewards"] .k-term .k-roll > span { color: var(--accent-on-ink); }
+
+/* portrait-only line break inside code */
+[data-composition-id="04-rewards"] .k-pbr { display: none; }
+
+@media (orientation: portrait) {
+  [data-composition-id="04-rewards"] .k-cam { transform-origin: 510px 710px; }
+  [data-composition-id="04-rewards"] .k-brand { left: 60px; top: 110px; }
+  [data-composition-id="04-rewards"] .k-display { font-size: 148px; }
+  [data-composition-id="04-rewards"] .k-headline, [data-composition-id="04-rewards"] .k-h1 { font-size: 104px; }
+  [data-composition-id="04-rewards"] .k-h2 { font-size: 76px; }
+  [data-composition-id="04-rewards"] .k-title { font-size: 56px; }
+  [data-composition-id="04-rewards"] .k-body { font-size: 48px; }
+  [data-composition-id="04-rewards"] .k-stat { font-size: 280px; }
+  [data-composition-id="04-rewards"] .k-card { border-radius: 28px; }
+  [data-composition-id="04-rewards"] .k-code-body, [data-composition-id="04-rewards"] .k-term-body { font-size: 52px; padding: 36px 40px 44px; }
+  [data-composition-id="04-rewards"] .k-caret { width: 26px; height: 60px; vertical-align: -10px; }
+  [data-composition-id="04-rewards"] .k-pbr { display: inline; }
+  [data-composition-id="04-rewards"] .k-lbr { display: none; }
+}
+    /* /kit:css */
+    /* what the owner gets: three cards, the one the voice names is inked; the daily cap under the row */
+    [data-composition-id="04-rewards"] .f04-group { position: absolute; left: 96px; right: 96px; top: 200px; height: 600px; transform-origin: 50% 50%; }
+    [data-composition-id="04-rewards"] .f04-row { display: flex; gap: 40px; height: 440px; }
+    [data-composition-id="04-rewards"] .f04-card { flex: 1; min-width: 0; padding: 52px 44px; display: flex; flex-direction: column; justify-content: space-between; }
+    [data-composition-id="04-rewards"] .f04-val { white-space: nowrap; }
+    [data-composition-id="04-rewards"] .f04-sub { color: inherit; text-wrap: balance; }
+    [data-composition-id="04-rewards"] .f04-cap { margin-top: 64px; }
+
+    @media (orientation: portrait) {
+      [data-composition-id="04-rewards"] .f04-group { left: 60px; right: 120px; top: 220px; height: 990px; }
+      [data-composition-id="04-rewards"] .f04-row { flex-direction: column; gap: 28px; height: 834px; }
+      [data-composition-id="04-rewards"] .f04-card { padding: 40px 44px; }
+      [data-composition-id="04-rewards"] .f04-cap { margin-top: 48px; }
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-rewards" data-width="1920" data-height="1080" data-duration="6.5">
+    <div id="f04-bg" class="k-bg clip" data-start="0" data-duration="6.5" data-track-index="0"></div>
+    <div id="f04-stage" class="k-stage clip" data-start="0" data-duration="6.5" data-track-index="1">
+      <div class="k-brand" data-outside-safe-area><img src="assets/anyrouter-logo-black.svg" alt="" />AnyRouter</div>
+      <div id="f04-cam" class="k-cam">
+        <div id="f04-group" class="f04-group">
+          <div class="f04-row">
+            <div id="f04-go" class="k-card f04-card"><span class="k-headline f04-val">Go plan</span><span class="k-body f04-sub">Free</span></div>
+            <div id="f04-credit" class="k-card f04-card"><span class="k-headline f04-val">$4</span><span class="k-body f04-sub">credit a month</span></div>
+            <div id="f04-back" class="k-card f04-card"><span class="k-headline f04-val">5% back</span><span class="k-body f04-sub">8% on Pro and Max</span></div>
+          </div>
+          <p id="f04-cap" class="k-body k-muted f04-cap">Up to $1 per key a day</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      // kit:js
+// The film kit's motion (frame.md v3, Motion). tools/kit.mjs pastes this between the kit:js markers.
+const K = {
+  INK: "#0A0A0A", ON_INK: "#FFFFFF", ON_INK_MUTED: "#A3A3A3", HAIR: "#E7E7E7", MUTED: "#6B6B6B", ACCENT: "#BB4D00",
+
+  /** One object arrives: up 50px from 1.04, expo.out. */
+  rise(tl, el, t, { y = 50, d = 1.0, scale = 1.04 } = {}) {
+    tl.fromTo(el, { y, opacity: 0, scale }, { y: 0, opacity: 1, scale: 1, duration: d, ease: "expo.out" }, t);
+  },
+  /** A headline settles from a push of 1.08 while its .k-line children rise in a stagger. */
+  headline(tl, el, t) {
+    const lines = el.querySelectorAll('[class~="k-line"]');
+    tl.fromTo(el, { scale: 1.08 }, { scale: 1, duration: 2.2, ease: "expo.out" }, t);
+    tl.fromTo(lines.length ? lines : el, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.4, ease: "expo.out", stagger: 0.14 }, t);
+  },
+  /** A card set arrives: the group eases out of a 1.1 close-up while the cards rise in a stagger. */
+  cards(tl, group, cards, t) {
+    tl.fromTo(group, { scale: 1.1 }, { scale: 1, duration: 2.1, ease: "power4.inOut" }, t);
+    tl.fromTo(cards, { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 1.3, ease: "expo.out", stagger: 0.14 }, t + 0.05);
+  },
+  /** A beat leaves, up and out, before the next one arrives. */
+  exit(tl, el, t, { y = -80, d = 0.75 } = {}) {
+    tl.to(el, { y, opacity: 0, duration: d, ease: "power4.inOut" }, t);
+  },
+  /** A card becomes (or stops being) the one ink card: fill, border, text and marks together. */
+  ink(tl, card, t, on = true, d = 0.6) {
+    const ease = "power2.inOut";
+    tl.to(card, { backgroundColor: on ? K.INK : "#FFFFFF", borderColor: on ? K.INK : K.HAIR, color: on ? K.ON_INK : K.INK, duration: d, ease }, t);
+    const muted = card.querySelectorAll('[class~="k-muted"]');
+    if (muted.length) tl.to(muted, { color: on ? K.ON_INK_MUTED : K.MUTED, duration: d, ease }, t);
+    const marks = card.querySelectorAll('[class~="k-mark"]');
+    if (marks.length) tl.fromTo(marks, { filter: `brightness(0) invert(${on ? 0 : 1})` }, { filter: `brightness(0) invert(${on ? 1 : 0})`, duration: d, ease, immediateRender: false }, t);
+  },
+  /** The accent on a value that just changed, for `span` seconds, then back to its own colour. */
+  wash(tl, el, t, span = 0.6) {
+    const own = getComputedStyle(el).color;
+    tl.set(el, { color: K.ACCENT }, t);
+    tl.to(el, { color: own, duration: Math.min(0.4, span * 0.5), ease: "power2.inOut" }, t + span * 0.5);
+  },
+  /** Roll a .k-roll slot to its next value at each time in `at`: the old value leaves up, the
+      new one comes up from below in the slot, power4.inOut, 0.7s or half the gap to the next. */
+  roll(tl, slot, at) {
+    const items = [...slot.children];
+    slot.style.overflow = "hidden";
+    slot.style.width = items[0].offsetWidth + "px";
+    at.forEach((t, i) => {
+      const out = items[i], into = items[i + 1];
+      // half the gap to the next roll, so each value rests as long as it moves
+      const d = Math.min(0.7, Math.max(0.25, ((at[i + 1] ?? Infinity) - t) * 0.5));
+      tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -100, opacity: 0, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.fromTo(into, { yPercent: 100, opacity: 1 }, { yPercent: 0, opacity: 1, duration: d, ease: "power4.inOut", immediateRender: false }, t);
+      tl.to(slot, { width: into.offsetWidth, duration: d, ease: "power4.inOut" }, t);
+    });
+  },
+  /** Where a ring around `el` goes, in the coordinates of the ring's offset parent: tween to it, or set it. */
+  box(ring, el, pad = 12) {
+    const a = el.getBoundingClientRect(), p = ring.offsetParent.getBoundingClientRect();
+    const k = ring.offsetParent.offsetWidth / p.width;
+    return { left: (a.left - p.left) * k - pad, top: (a.top - p.top) * k - pad, width: a.width * k + 2 * pad, height: a.height * k + 2 * pad };
+  },
+  /** The transform that shows rectangle `r` (capture px) of a .k-shot centred in its view at `scale`. */
+  fit(view, r, scale) {
+    const w = view.clientWidth, h = view.clientHeight;
+    return { scale, x: w / 2 - (r.x + r.w / 2) * scale, y: h / 2 - (r.y + r.h / 2) * scale };
+  },
+  /** The largest scale (up to `max`) at which rectangle `r` fits its view with a margin. */
+  scaleFor(view, r, max, margin = 48) {
+    return Math.min(max, (view.clientWidth - margin) / r.w, (view.clientHeight - margin) / r.h);
+  },
+  /** The camera drift: a slow push across a span, so a long beat never holds still. Portrait
+      pushes half as far, about the middle of its safe area, so text on the safe edge stays in it. */
+  push(tl, cam, dur, { from = 1, to = 1.03, x = 0, y = 0, x0 = 0, y0 = 0, ease = "sine.inOut", at = 0 } = {}) {
+    const k = matchMedia("(orientation: portrait)").matches ? 0.5 : 1;
+    const s = (v) => 1 + (v - 1) * k;
+    tl.fromTo(cam, { scale: s(from), x: x0 * k, y: y0 * k }, { scale: s(to), x: x * k, y: y * k, duration: dur, ease }, at);
+  },
+};
+      // /kit:js
+      const $ = (s) => document.getElementById("f04-" + s);
+      const DURATION = 6.5;
+      // Word starts from audio_meta.json frame 4: "Go" 0.46, "four" 1.56, "five" 3.26, "back" 3.81, "serves." 4.62.
+      const GO = 0.38, FOUR = 1.46, FIVE = 3.1, CAP = 3.8;
+
+      document.fonts.ready.then(() => {
+        const tl = gsap.timeline({ paused: true });
+        K.push(tl, $("cam"), DURATION, { to: 1.03, ease: "none" });
+        K.cards(tl, $("group"), [$("go"), $("credit"), $("back")], 0.02);
+        tl.set($("cap"), { opacity: 0 }, 0);
+
+        // one ink card at a time, on the word that names it
+        // a quick 0.4s swap, so text and fill are never long at the same mid grey
+        K.ink(tl, $("go"), GO, true, 0.4);
+        K.ink(tl, $("go"), FOUR, false, 0.4);
+        K.ink(tl, $("credit"), FOUR, true, 0.4);
+        K.ink(tl, $("credit"), FIVE, false, 0.4);
+        K.ink(tl, $("back"), FIVE, true, 0.4);
+        K.rise(tl, $("cap"), CAP, { y: 30 });
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["04-rewards"] = tl;
+      });
+    })();
+  </script>
+</template>

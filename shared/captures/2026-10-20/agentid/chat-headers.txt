@@ -1,0 +1,34 @@
+HTTP/2 200 
+date: Tue, 20 Oct 2026 14:58:04 GMT
+content-type: application/json
+content-length: 2531
+access-control-allow-origin: *
+access-control-expose-headers: X-Request-Id,X-AnyRouter-Trace-Id,X-AnyRouter-Handler,X-AnyRouter-Model,X-AnyRouter-Upstream-Model,X-AnyRouter-Provider-Chain,X-AnyRouter-Credential-Source,X-AnyRouter-Hedge,X-AnyRouter-Fallback,X-AnyRouter-Fallback-Reason,X-AnyRouter-Requested-Model,X-AnyRouter-Credits-Balance-At-Admission,X-AnyRouter-Credits-Balance-After-Debit,X-AnyRouter-Credits-Charged,X-AnyRouter-Credits-Balance,Server-Timing,X-RateLimit-Limit,X-RateLimit-Remaining,X-RateLimit-Reset,X-RateLimit-Tier,X-RateLimit-Window,RateLimit-Limit,RateLimit-Policy,RateLimit-Remaining,RateLimit-Reset,Retry-After,x-d1-bookmark,x-d1-served-by-region,x-d1-served-by-primary
+ratelimit-limit: 2400
+ratelimit-policy: 2400;w=60
+server-timing: gw;dur=589, gw-auth;dur=6, gw-ctx;dur=234, gw-rl;dur=1, gw-prep;dur=44, gw-route;dur=304, upstream;dur=2108, upstream;dur=2108;desc="hue", post;dur=1852, total;dur=4549
+x-anyrouter-credential-source: platform
+x-anyrouter-model: dots-studio/dots-3-note-preview
+x-anyrouter-provider: hue
+x-anyrouter-provider-chain: hue
+x-anyrouter-trace-id: req_a5336420d6294450b87795e7
+x-anyrouter-upstream-model: dots-studio/dots-3-note-preview:free
+x-ratelimit-limit: 2400
+x-ratelimit-tier: free-model
+x-ratelimit-window: 60
+x-request-id: req_a5336420d6294450b87795e7
+x-anyrouter-handler: api
+x-d1-bookmark: 00000bdd-00000d14-0000510a-1e35860a92bdbd375237dd521dfc7753
+x-d1-served-by-primary: true
+x-d1-served-by-region: APAC
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=Walz8UuJna1UQpOFSMlBEFDJfwo%2BByB1WZrvH1qEK2lMPdrlKxD6QQ%2B7ILNZ%2BBxUTJ7rcJrXCt7DoY6u5IpMNrXxKcH7iJ19Zr%2BS8cl%2B06CDjfNjsjRKmS98Y5TgVPZG29e0j2zyhxObmklm"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+expect-ct: max-age=86400, enforce
+referrer-policy: same-origin
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+server: cloudflare
+cf-ray: a4d8e0c7aeb202d2-HKG
+alt-svc: h3=":443"; ma=86400
+
