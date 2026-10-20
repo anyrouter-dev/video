@@ -269,6 +269,9 @@ export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, 
     await page.goto(preview.url, { waitUntil: 'load', timeout: 120000 });
     await page.waitForFunction(() => typeof window.__hf?.seek === 'function' || typeof window.__player?.renderSeek === 'function', { timeout: 60000 });
     await page.evaluate(() => document.fonts.ready);
+    // a scene registers its timeline once its fonts are in; sampled before that, it is measured unanimated
+    await page.waitForFunction(() => [...document.querySelectorAll('[data-composition-src]')]
+      .every(el => window.__timelines?.[el.getAttribute('data-composition-id')]), { timeout: 60000 });
     const duration = await page.evaluate(() => window.__hf?.duration
       || Number(document.querySelector('[data-composition-id][data-duration]')?.getAttribute('data-duration')) || 0);
     if (!(duration > 0)) throw new Error('could not read the film duration');

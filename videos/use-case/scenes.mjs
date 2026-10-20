@@ -495,8 +495,9 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.fromTo(cam, { scale: 1 }, { scale: LEAN, duration: T1, ease: "none" }, 0);
 
     // 1 → 2 · the headline falls back into the page as the steps begin, and the camera squares up to them.
-    tl.to([hero, h], { z: -700, rotationX: 24, y: "-=140", opacity: 0, duration: 0.8, ease: "power3.in" }, T1 - 0.35);
-    tl.to(cam, { scale: 1, duration: 0.8, ease: "power3.inOut" }, T1 - 0.35);
+    // it is gone before the first step comes in where it stood
+    tl.to([hero, h], { z: -700, rotationX: 24, y: "-=140", opacity: 0, duration: 0.6, ease: "power3.in" }, T1 - 0.65);
+    tl.to(cam, { scale: 1, duration: 0.8, ease: "power3.inOut" }, T1 - 0.65);
 
     // 2 · the steps. Each tilts in from deep in the page and settles flat to read; a step done shrinks to a
     // row above the next, a layer back, so the camera's slow dolly moves it less than the step in front.
@@ -512,9 +513,11 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     STEPS.forEach((st, k) => {
       const el = stp[k], at = place(k).top, next = STEPS[k + 1];
       tl.set(el, { y: at }, 0);
+      // a later step comes in once the one before has made room, so the two never cross
+      const enter = st.at + (k ? 0.45 : 0);
       tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90, opacity: 0 },
-        { z: 0, rotationX: 0, rotationY: 0, y: at, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: false }, st.at);
-      el.querySelectorAll(".sl .w > span").forEach(w => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, st.at + 0.15));
+        { z: 0, rotationX: 0, rotationY: 0, y: at, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
+      el.querySelectorAll(".sl .w > span").forEach(w => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, enter + 0.15));
       // the page's sentence rises a row at a time while the step is said and after, and goes once the step is done
       const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : END) - 0.5;
       if (dw.length) {
@@ -529,11 +532,11 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       const ring = el.querySelector(".ring"), until = (next ? next.at : END) - 0.3;
       for (let r = st.voiceAt + 1.6; r + 0.9 < until; r += 1.2) tl.fromTo(ring, { scale: 1, opacity: 0.45 }, { scale: 2.6, opacity: 0, duration: 0.5, ease: "power2.out", immediateRender: false }, r);
       if (next) {
-        tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.8, ease: "power4.inOut" }, next.at);
+        tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
         tl.to(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}", duration: 0.4, ease: "none" }, next.at);
       }
     });
-    tl.to(stp, { z: -600, y: "-=120", opacity: 0, duration: 0.6, stagger: 0.05, ease: "power3.in" }, END - 0.1);
+    tl.to(stp, { z: -600, y: "-=120", opacity: 0, duration: 0.5, stagger: 0.04, ease: "power3.in" }, END - 0.55);
 
     // The window comes in with the first step that shows it, follows its steps down, and drops back out.
     const firstWin = STEPS.findIndex(st => st.shows);
@@ -541,8 +544,8 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.set(win, { autoAlpha: 1 }, W_IN + 0.15);
     tl.fromTo(win, { z: -420, rotationX: 18, y: place(firstWin).win + 160 }, { z: 0, rotationX: 0, y: place(firstWin).win, duration: 1.1, ease: "expo.out", immediateRender: false }, W_IN + 0.15);
     STEPS.forEach((st, k) => { if (st.shows && k > firstWin) tl.to(win, { y: place(k).win, duration: 0.8, ease: "power4.inOut" }, st.at); });
-    tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.5, ease: "power3.in" }, W_OUT - 0.1);
-    tl.set(win, { autoAlpha: 0 }, W_OUT + 0.4);
+    tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.4, ease: "power3.in" }, W_OUT - 0.1);
+    tl.set(win, { autoAlpha: 0 }, W_OUT + 0.3);
 
     // Lines of context paste in with the window; lines before the command are typed on their step, the command on its own.
     if (R(".ln.ctx, .ln.keep").length) tl.fromTo(R(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, W_IN + 0.5);
@@ -598,8 +601,6 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.to(glow, { opacity: 1, duration: 0.3, ease: "power2.out" }, CMD_AT);
       // and flashes as the typing ends, so the line just typed is the one to read
       tl.fromTo(glow, { opacity: 0.2 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
-      // each id that rolls in flashes the line it lands on
-      for (const p of GLOW_PULSES) tl.fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, p);
       for (let t = POINT_AT + 0.3, k = first + 1; t < W_OUT - 0.3; t += 1.1, k++) {
         if (lit.length > 1) tl.to(glow, { ...to(lit[k % lit.length]), duration: 0.5, ease: "power3.inOut" }, t);
         else tl.to(glow, { opacity: k % 2 ? 0.45 : 1, duration: 0.5, ease: "sine.inOut" }, t);
@@ -610,21 +611,24 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     const s3 = v("--cap3") / fs, cap3 = SY + (SH - hH * s3 - G - end.offsetHeight) / 2;
     end.style.top = cap3 + hH * s3 + G + "px";
     tl.set(h, { y: cap3 - (top1 + heroH + G), scale: s3, rotationX: 0 }, END);
-    tl.fromTo(h, { z: -500, opacity: 0 }, { z: 0, opacity: 1, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.1);
+    tl.fromTo(h, { z: -500, opacity: 0 }, { z: 0, opacity: 1, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.2);
     tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.35);
     tl.fromTo(Q(".lock b"), { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.45);
-    tl.fromTo(Q(".url"), { y: 40, z: -200, opacity: 0 }, { y: 0, z: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.6);
+    // the ink pill never fades (half faded it reads as grey): it shows whole and flies forward from the page
+    tl.set(Q(".url"), { opacity: 0 }, 0);
+    tl.set(Q(".url"), { opacity: 1 }, END + 0.6);
+    tl.fromTo(Q(".url"), { y: 40, z: -200 }, { y: 0, z: 0, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.6);
     // the lockup holds while the camera keeps leaning in, at an even speed to the last frame: an eased lean
     // comes to rest, and a frame at rest reads as dead air
     tl.fromTo(cam, { scale: 1 }, { scale: END_LEAN, duration: D - END, ease: "none", immediateRender: false }, END);
 
-    // The captions: one phrase at a time, whole, under the picture; back to back they swap with no gap.
+    // The captions: one phrase at a time, whole, under the picture, cut on and off as subtitles are:
+    // a chip half faded in is grey text on grey
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
     $$(".cap").forEach((cap, i) => {
-      const [at, end] = CAPS[i], next = CAPS[i + 1];
-      tl.fromTo(cap, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none", immediateRender: false }, at);
-      if (next && next[0] - end < 0.05) tl.set(cap, { opacity: 0 }, next[0]);
-      else tl.to(cap, { opacity: 0, duration: 0.12, ease: "none" }, end - 0.12);
+      const [at, end] = CAPS[i];
+      tl.set(cap, { opacity: 1 }, at);
+      tl.set(cap, { opacity: 0 }, end);
     });`;
   const cues = [
     { at: 0.15, kind: 'tick', gain: 0.45 },
@@ -659,7 +663,8 @@ export const CSS = `
   .film .sm{flex:none;width:${STEP.mark}px;height:${STEP.mark}px;border-radius:50%;display:grid;place-items:center;background:${C.accent};border:3px solid ${C.accent};color:${C.onInk};font-size:68px;font-weight:600;line-height:1;letter-spacing:-.04em}
   .film .sm{position:relative}
   .film .sm b{font-weight:600}
-  .film .ring{position:absolute;inset:-3px;border-radius:50%;background:${C.accent};opacity:0;z-index:-1}
+  .film .ring{position:absolute;inset:-3px;border-radius:50%;background:${C.accent};opacity:0}
+  .film .sm b{position:relative}
   .film .sl{font-size:var(--ls);font-weight:600;line-height:${STEP.lh};letter-spacing:-.035em;white-space:nowrap;padding-top:calc((${STEP.mark}px - var(--ls) * ${STEP.lh}) / 2)}
   .film .sl .bp{display:none}
   .film .hero,.film .h,.film .end{position:absolute;left:var(--sl);right:var(--sr);top:0;text-align:center}
@@ -703,9 +708,11 @@ export const CSS = `
   .film em.ri{opacity:0}
   /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
-  .film .rows{position:relative;z-index:0}
+  .film .rows{position:relative}
+  /* a line sits over the tint that points it out, which comes first in the rows */
+  .film .rows > .ln{position:relative}
   .film .rows.rp{display:none}
-  .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none;z-index:-1}
+  .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none}
   .film .is-ink .glow{background:rgba(240,145,90,.24)}
   .film .ln.out{position:absolute;left:0;right:0;top:100%;padding-top:.3em;border-top:2px solid ${C.line};opacity:0}
   .film .is-ink .ln.out{border-top-color:${C.ink2}}
