@@ -82,15 +82,18 @@ ${R} .lf-plate .lf-corner { left: 24px; bottom: 22px; color: var(--ink-2); }
   ${R} .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   ${R} .lf-shot-land { display: none; }
   ${R} .lf-shot-port { display: block; }
-  ${R} .lf-term { width: 900px; margin-left: -450px; transform: translateY(-70%); }
-  ${R} .lf-term-body { padding: 44px 40px 52px; font-size: 38px; }
+  ${R} .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  ${R} .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   ${R} .lf-term-body .lf-pbr { display: inline; }
-  ${R} .lf-close-head { top: 240px; }
+  ${R} .lf-term-body .lf-lsp { display: none; }
   ${R} .lf-close-line { font-size: 60px; }
   ${R} .lf-lockup { font-size: 104px; gap: 24px; }
   ${R} .lf-lockup img { width: 92px; height: 92px; }
-  ${R} .lf-plates { left: 60px; right: 60px; top: 520px; height: 760px; flex-direction: column; gap: 24px; }
-  ${R} .lf-plate .iso { left: 18%; right: 18%; }
+  ${R} .lf-close-head { top: 330px; }
+  ${R} .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
+  ${R} .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
+  ${R} .lf-plate .lf-corner { left: 18px; bottom: 18px; }
+  ${R} .lf-plate .lf-title { display: none; }
 }
 ${ISO_CSS}
 ${FILM_CSS}`;
@@ -103,17 +106,17 @@ function captureHtml(id, o) {
   const top = Math.round(56 + (824 - lh) / 2 - 24);
   let port;
   if (o.panels) {
-    const pw = o.w / o.panels, y0 = 372, ph = o.h - y0, scale = 900 / pw;
+    const pw = o.w / o.panels, y0 = 418, ph = o.h - y0, scale = 860 / pw;
     const crops = Array.from({ length: o.panels }, (_, i) => `<div class="lf-crop" style="height: ${Math.round(ph * scale)}px"><img src="${o.src}" alt="" style="width: ${Math.round(o.w * scale)}px; left: ${-Math.round(i * pw * scale)}px; top: ${-Math.round(y0 * scale)}px" /></div>`).join("");
-    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 900px; margin-left: -450px; top: 250px">${crops}</div>`;
+    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 250px">${crops}</div>`;
   } else {
-    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 900px; margin-left: -450px; top: 260px"><img src="${o.src}" alt="" /></div>`;
+    port = `<div id="lf${id}-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 260px"><img src="${o.src}" alt="" /></div>`;
   }
   return `<div id="lf${id}-shot" class="lf-shot lf-shot-land" style="width: ${lw}px; margin-left: ${-lw / 2}px; top: ${top}px"><img src="${o.src}" alt="" /></div>${port}`;
 }
 
 function termHtml(id, o) {
-  const line = esc(o.lines[0]).replace(" | bash", `<span class="lf-pbr">\n  </span> | bash`).replace("https://anyrouter.dev/setup.sh", '<span data-one-row>https://anyrouter.dev/setup.sh</span>');
+  const line = esc(o.lines[0]).replace(" https://", `<span class="lf-pbr"> \\\n  </span><span class="lf-lsp"> </span>https://`).replace("https://anyrouter.dev/setup.sh", '<span data-one-row>https://anyrouter.dev/setup.sh</span>');
   return `<div id="lf${id}-term" class="lf-term"><div class="lf-term-bar">${esc(o.title)}</div><div class="lf-term-body"><span class="lf-prompt">$ </span>${line}</div></div>`;
 }
 

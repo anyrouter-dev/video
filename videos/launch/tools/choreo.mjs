@@ -211,7 +211,6 @@ function turretFrames() {
   const index = (a, t0, j) => {
     const goal = norm(a.now("rot"), -60 * j);
     a.move("pull", t0, 0.14, 1);
-    a.sound(t0, "click-soft", 0.16, -3);
     a.set("lit", t0 + 0.14, -1);
     a.move("rot", t0 + 0.14, 0.38, goal);
     a.sound(t0 + 0.14, "whoosh-short", 0.07, 5);

@@ -47,15 +47,18 @@
   [data-composition-id="10-install"] .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   [data-composition-id="10-install"] .lf-shot-land { display: none; }
   [data-composition-id="10-install"] .lf-shot-port { display: block; }
-  [data-composition-id="10-install"] .lf-term { width: 900px; margin-left: -450px; transform: translateY(-70%); }
-  [data-composition-id="10-install"] .lf-term-body { padding: 44px 40px 52px; font-size: 38px; }
+  [data-composition-id="10-install"] .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  [data-composition-id="10-install"] .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   [data-composition-id="10-install"] .lf-term-body .lf-pbr { display: inline; }
-  [data-composition-id="10-install"] .lf-close-head { top: 240px; }
+  [data-composition-id="10-install"] .lf-term-body .lf-lsp { display: none; }
   [data-composition-id="10-install"] .lf-close-line { font-size: 60px; }
   [data-composition-id="10-install"] .lf-lockup { font-size: 104px; gap: 24px; }
   [data-composition-id="10-install"] .lf-lockup img { width: 92px; height: 92px; }
-  [data-composition-id="10-install"] .lf-plates { left: 60px; right: 60px; top: 520px; height: 760px; flex-direction: column; gap: 24px; }
-  [data-composition-id="10-install"] .lf-plate .iso { left: 18%; right: 18%; }
+  [data-composition-id="10-install"] .lf-close-head { top: 330px; }
+  [data-composition-id="10-install"] .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
+  [data-composition-id="10-install"] .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
+  [data-composition-id="10-install"] .lf-plate .lf-corner { left: 18px; bottom: 18px; }
+  [data-composition-id="10-install"] .lf-plate .lf-title { display: none; }
 }
 .iso{
   --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
@@ -178,8 +181,8 @@
         <div id="lf10-install-card" class="lf-card">
           
           
-          <div id="lf10-install-term" class="lf-term"><div class="lf-term-bar">Install · macOS and Linux</div><div class="lf-term-body"><span class="lf-prompt">$ </span>curl -fsSL <span data-one-row>https://anyrouter.dev/setup.sh</span><span class="lf-pbr">
-  </span> | bash</div></div>
+          <div id="lf10-install-term" class="lf-term"><div class="lf-term-bar">Install · macOS and Linux</div><div class="lf-term-body"><span class="lf-prompt">$ </span>curl -fsSL<span class="lf-pbr"> \
+  </span><span class="lf-lsp"> </span><span data-one-row>https://anyrouter.dev/setup.sh</span> | bash</div></div>
           <div id="lf10-install-st" class="lf-statement"><span id="lf10-install-stt">Install anyr with one command.</span></div>
           <div id="lf10-install-ro" class="lf-readout">macOS and Linux</div>
         </div>

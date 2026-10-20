@@ -47,15 +47,18 @@
   [data-composition-id="03-proof"] .lf-readout { left: 36px; right: auto; bottom: 40px; font-size: 32px; }
   [data-composition-id="03-proof"] .lf-shot-land { display: none; }
   [data-composition-id="03-proof"] .lf-shot-port { display: block; }
-  [data-composition-id="03-proof"] .lf-term { width: 900px; margin-left: -450px; transform: translateY(-70%); }
-  [data-composition-id="03-proof"] .lf-term-body { padding: 44px 40px 52px; font-size: 38px; }
+  [data-composition-id="03-proof"] .lf-term { left: 36px; width: 860px; margin-left: 0; transform: translateY(-90%); }
+  [data-composition-id="03-proof"] .lf-term-body { padding: 44px 32px 52px; font-size: 33px; }
   [data-composition-id="03-proof"] .lf-term-body .lf-pbr { display: inline; }
-  [data-composition-id="03-proof"] .lf-close-head { top: 240px; }
+  [data-composition-id="03-proof"] .lf-term-body .lf-lsp { display: none; }
   [data-composition-id="03-proof"] .lf-close-line { font-size: 60px; }
   [data-composition-id="03-proof"] .lf-lockup { font-size: 104px; gap: 24px; }
   [data-composition-id="03-proof"] .lf-lockup img { width: 92px; height: 92px; }
-  [data-composition-id="03-proof"] .lf-plates { left: 60px; right: 60px; top: 520px; height: 760px; flex-direction: column; gap: 24px; }
-  [data-composition-id="03-proof"] .lf-plate .iso { left: 18%; right: 18%; }
+  [data-composition-id="03-proof"] .lf-close-head { top: 330px; }
+  [data-composition-id="03-proof"] .lf-plates { left: 60px; right: 60px; top: 640px; height: 300px; gap: 20px; }
+  [data-composition-id="03-proof"] .lf-plate .iso { left: 3%; right: 3%; top: 40px; }
+  [data-composition-id="03-proof"] .lf-plate .lf-corner { left: 18px; bottom: 18px; }
+  [data-composition-id="03-proof"] .lf-plate .lf-title { display: none; }
 }
 .iso{
   --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
@@ -182,7 +185,7 @@
           <div id="lf03-proof-st" class="lf-statement"><span id="lf03-proof-stt">One prompt. Three models.</span></div>
           <div id="lf03-proof-ro" class="lf-readout">POST /api/v1/chat/completions</div>
         </div>
-        <div id="lf03-proof-shot" class="lf-shot lf-shot-land" style="width: 1500px; margin-left: -750px; top: 192px"><img src="assets/captures/playground-three-models.png" alt="" /></div><div id="lf03-proof-shotp" class="lf-shot lf-shot-port" style="width: 900px; margin-left: -450px; top: 250px"><div class="lf-crop" style="height: 269px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2700px; left: 0px; top: -641px" /></div><div class="lf-crop" style="height: 269px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2700px; left: -900px; top: -641px" /></div><div class="lf-crop" style="height: 269px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2700px; left: -1800px; top: -641px" /></div></div>
+        <div id="lf03-proof-shot" class="lf-shot lf-shot-land" style="width: 1500px; margin-left: -750px; top: 192px"><img src="assets/captures/playground-three-models.png" alt="" /></div><div id="lf03-proof-shotp" class="lf-shot lf-shot-port" style="width: 860px; left: 80px; top: 250px"><div class="lf-crop" style="height: 181px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2580px; left: 0px; top: -688px" /></div><div class="lf-crop" style="height: 181px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2580px; left: -860px; top: -688px" /></div><div class="lf-crop" style="height: 181px"><img src="assets/captures/playground-three-models.png" alt="" style="width: 2580px; left: -1720px; top: -688px" /></div></div>
       </div>
     </div>
   </div>

@@ -389,13 +389,6 @@
  },
  {
   "frame": 11,
-  "sound": "click-soft",
-  "at": 1.593,
-  "volume": 0.16,
-  "pitch": -3
- },
- {
-  "frame": 11,
   "sound": "whoosh-short",
   "at": 1.733,
   "volume": 0.07,
@@ -406,13 +399,6 @@
   "sound": "click",
   "at": 2.193,
   "volume": 0.2
- },
- {
-  "frame": 11,
-  "sound": "click-soft",
-  "at": 2.119,
-  "volume": 0.16,
-  "pitch": -3
  },
  {
   "frame": 11,
@@ -430,13 +416,6 @@
  },
  {
   "frame": 12,
-  "sound": "click-soft",
-  "at": 0,
-  "volume": 0.16,
-  "pitch": -3
- },
- {
-  "frame": 12,
   "sound": "whoosh-short",
   "at": 0.14,
   "volume": 0.07,
@@ -448,13 +427,6 @@
   "at": 0.6,
   "volume": 0.2,
   "pitch": 4
- },
- {
-  "frame": 12,
-  "sound": "click-soft",
-  "at": 0.634,
-  "volume": 0.16,
-  "pitch": -3
  },
  {
   "frame": 12,
