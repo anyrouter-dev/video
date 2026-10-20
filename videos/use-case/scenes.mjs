@@ -363,6 +363,8 @@ export const CAP = {
 };
 const capFits = text => ['landscape', 'portrait'].every(o => widthOf(text, { px: CAP[o].px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4);
 // a word that is part of a name, as named() reads one: past a sentence's first word, any capitalised word
+// pairs read as one term, so a phrase never ends between them
+const BOUND = /^(base URL|API key|rate limited|typed answer|more than|model id|catalog id)[,.]?$/i;
 const HANGING = /^(a|an|the|to|of|its|your|by|on|in|for|with|and|or|at|from|than|that)$/i;
 const isName = (w, first) => (first ? /^[A-Z0-9].*[A-Z]/ : /^[A-Z0-9]/).test(w);
 
@@ -394,7 +396,8 @@ export function captionsOf(said = []) {
       if (from === ws.length) {
         const parts = [0, ...cuts].map((c, i, a) => ws.slice(c, a[i + 1] ?? ws.length));
         // a command stays whole too: "anyr claude" is one thing to type
-        const named = cuts.filter(c => (!/[,;:]$/.test(ws[c - 1].text) && isName(ws[c - 1].text, ws[c - 1].sentenceStart) && isName(ws[c].text, false)) || ws[c - 1].text === 'anyr').length;
+        const named = cuts.filter(c => (!/[,;:]$/.test(ws[c - 1].text) && isName(ws[c - 1].text, ws[c - 1].sentenceStart) && isName(ws[c].text, false))
+          || ws[c - 1].text === 'anyr' || BOUND.test(`${ws[c - 1].text} ${ws[c].text}`)).length;
         const plain = cuts.filter(c => !/[,;:]$/.test(ws[c - 1].text)).length;
         // a phrase that ends on "the", "to" or "its" leaves its reader hanging
         const hanging = cuts.filter(c => HANGING.test(ws[c - 1].text)).length;
@@ -540,7 +543,7 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     // A tint comes up under the command as it is typed (t is where the typing ended). Once all is said and shown, it points out
     // each line the page changes in turn until the window leaves; a lone line breathes, so the
     // frame never stands still.
-    const lit = $$(".ln.keep, .ln.focus, .sh .ln.typed"), first = Math.max(0, lit.indexOf($(".ln.focus")));
+    const lit = $$(".ln.keep, .ln.focus, .sh .ln.typed, .ln.out"), first = Math.max(0, lit.indexOf($(".ln.focus")));
     if (lit.length) {
       const glow = document.createElement("div");
       glow.className = "glow";
