@@ -9,1943 +9,977 @@
     {
       "frame": 1,
       "path": "assets/voice/01.wav",
-      "duration_s": 8.248,
+      "duration_s": 4.559,
+      "raw_s": 3.994,
+      "text": "Every AI company has its own account, its own key and its own bill.",
+      "say": "Every AI company has its own account, its own key and its own bill.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "There",
-          "start": 0.13,
-          "end": 0.28
+          "text": "Every",
+          "start": 0,
+          "end": 0.29
         },
         {
           "id": "w1",
-          "text": "are",
-          "start": 0.28,
-          "end": 0.45
+          "text": "AI",
+          "start": 0.36,
+          "end": 0.58
         },
         {
           "id": "w2",
-          "text": "dozens",
-          "start": 0.45,
-          "end": 0.79
+          "text": "company",
+          "start": 0.65,
+          "end": 0.975
         },
         {
           "id": "w3",
-          "text": "of",
-          "start": 0.79,
-          "end": 0.9
+          "text": "has",
+          "start": 1.01,
+          "end": 1.126
         },
         {
           "id": "w4",
-          "text": "AI",
-          "start": 0.9,
-          "end": 1.01
+          "text": "its",
+          "start": 1.184,
+          "end": 1.3
         },
         {
           "id": "w5",
-          "text": "companies,",
-          "start": 1.01,
-          "end": 1.639
+          "text": "own",
+          "start": 1.347,
+          "end": 1.463
         },
         {
           "id": "w6",
-          "text": "and",
-          "start": 1.639,
-          "end": 1.769
+          "text": "account,",
+          "start": 1.498,
+          "end": 1.916
         },
         {
           "id": "w7",
-          "text": "each",
-          "start": 1.769,
-          "end": 1.949
+          "text": "its",
+          "start": 2.299,
+          "end": 2.461
         },
         {
           "id": "w8",
-          "text": "one",
-          "start": 1.949,
-          "end": 2.099
+          "text": "own",
+          "start": 2.519,
+          "end": 2.647
         },
         {
           "id": "w9",
-          "text": "has",
-          "start": 2.099,
-          "end": 2.239
+          "text": "key",
+          "start": 2.717,
+          "end": 2.902
         },
         {
           "id": "w10",
-          "text": "its",
-          "start": 2.239,
-          "end": 2.369
+          "text": "and",
+          "start": 2.937,
+          "end": 3.007
         },
         {
           "id": "w11",
-          "text": "own",
-          "start": 2.379,
-          "end": 2.519
+          "text": "its",
+          "start": 3.053,
+          "end": 3.17
         },
         {
           "id": "w12",
-          "text": "key",
-          "start": 2.519,
-          "end": 2.969
+          "text": "own",
+          "start": 3.216,
+          "end": 3.344
         },
         {
           "id": "w13",
-          "text": "and",
-          "start": 3.288,
-          "end": 3.378
-        },
-        {
-          "id": "w14",
-          "text": "its",
-          "start": 3.378,
-          "end": 3.548
-        },
-        {
-          "id": "w15",
-          "text": "own",
-          "start": 3.558,
-          "end": 3.738
-        },
-        {
-          "id": "w16",
           "text": "bill.",
-          "start": 3.738,
-          "end": 3.974
-        },
-        {
-          "id": "w17",
-          "text": "Use",
-          "start": 4.982,
-          "end": 5.042
-        },
-        {
-          "id": "w18",
-          "text": "three,",
-          "start": 5.042,
-          "end": 5.297
-        },
-        {
-          "id": "w19",
-          "text": "and",
-          "start": 5.297,
-          "end": 5.452
-        },
-        {
-          "id": "w20",
-          "text": "you",
-          "start": 5.452,
-          "end": 5.607
-        },
-        {
-          "id": "w21",
-          "text": "have",
-          "start": 5.607,
-          "end": 5.779
-        },
-        {
-          "id": "w22",
-          "text": "three",
-          "start": 5.843,
-          "end": 6.062
-        },
-        {
-          "id": "w23",
-          "text": "keys",
-          "start": 6.062,
-          "end": 6.262
-        },
-        {
-          "id": "w24",
-          "text": "and",
-          "start": 6.262,
-          "end": 6.417
-        },
-        {
-          "id": "w25",
-          "text": "three",
-          "start": 6.417,
-          "end": 6.671
-        },
-        {
-          "id": "w26",
-          "text": "bills",
-          "start": 6.671,
-          "end": 6.899
-        },
-        {
-          "id": "w27",
-          "text": "to",
-          "start": 6.944,
-          "end": 7.026
-        },
-        {
-          "id": "w28",
-          "text": "manage.",
-          "start": 7.026,
-          "end": 7.491
+          "start": 3.39,
+          "end": 3.994
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.565
     },
     {
       "frame": 2,
       "path": "assets/voice/02.wav",
-      "duration_s": 4.858,
+      "duration_s": 4.5,
+      "raw_s": 3.947,
+      "text": "AnyRouter puts more than 270 models behind one API.",
+      "say": "AnyRouter puts more than two hundred and seventy models behind one API.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
-          "id": "w0-0",
+          "id": "w0",
           "text": "AnyRouter",
-          "start": 0.049,
-          "end": 0.539
+          "start": 0,
+          "end": 0.546
+        },
+        {
+          "id": "w1",
+          "text": "puts",
+          "start": 0.615,
+          "end": 0.836
         },
         {
           "id": "w2",
-          "text": "gives",
-          "start": 0.559,
-          "end": 0.862
+          "text": "more",
+          "start": 0.894,
+          "end": 1.057
         },
         {
           "id": "w3",
-          "text": "you",
-          "start": 0.862,
-          "end": 1.049
+          "text": "than",
+          "start": 1.091,
+          "end": 1.254
         },
         {
           "id": "w4",
-          "text": "one",
-          "start": 1.049,
-          "end": 1.235
+          "text": "270",
+          "start": 1.312,
+          "end": 2.183
         },
         {
           "id": "w5",
-          "text": "account",
-          "start": 1.235,
-          "end": 1.353
+          "text": "models",
+          "start": 2.241,
+          "end": 2.531
         },
         {
           "id": "w6",
-          "text": "and",
-          "start": 1.745,
-          "end": 1.901
+          "text": "behind",
+          "start": 2.589,
+          "end": 2.891
         },
         {
           "id": "w7",
           "text": "one",
-          "start": 1.901,
-          "end": 2.107
+          "start": 2.972,
+          "end": 3.146
         },
         {
           "id": "w8",
-          "text": "key",
-          "start": 2.107,
-          "end": 2.333
-        },
-        {
-          "id": "w9",
-          "text": "for",
-          "start": 2.411,
-          "end": 2.471
-        },
-        {
-          "id": "w10",
-          "text": "more",
-          "start": 2.471,
-          "end": 2.734
-        },
-        {
-          "id": "w11",
-          "text": "than",
-          "start": 2.734,
-          "end": 2.999
-        },
-        {
-          "id": "w12",
-          "text": "260",
-          "start": 2.999,
-          "end": 3.607
-        },
-        {
-          "id": "w13",
-          "text": "models.",
-          "start": 3.607,
-          "end": 4.116
+          "text": "API.",
+          "start": 3.17,
+          "end": 3.947
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.553
     },
     {
       "frame": 3,
       "path": "assets/voice/03.wav",
-      "duration_s": 12.521,
+      "duration_s": 5,
+      "raw_s": 4.69,
+      "text": "Your code barely changes. Swap the base URL and the key, and keep the rest.",
+      "say": "Your code barely changes. Swap the base URL and the key, and keep the rest.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "It",
-          "start": 0.074,
-          "end": 0.134
+          "text": "Your",
+          "start": 0,
+          "end": 0.209
         },
         {
           "id": "w1",
-          "text": "works",
-          "start": 0.134,
-          "end": 0.455
+          "text": "code",
+          "start": 0.255,
+          "end": 0.488
         },
         {
           "id": "w2",
-          "text": "like",
-          "start": 0.455,
-          "end": 0.715
+          "text": "barely",
+          "start": 0.522,
+          "end": 0.813
         },
         {
           "id": "w3",
-          "text": "a",
-          "start": 0.715,
-          "end": 0.78
+          "text": "changes.",
+          "start": 0.871,
+          "end": 1.463
         },
         {
           "id": "w4",
-          "text": "power",
-          "start": 0.78,
-          "end": 1.095
+          "text": "Swap",
+          "start": 1.741,
+          "end": 2.043
         },
         {
           "id": "w5",
-          "text": "strip",
-          "start": 1.244,
-          "end": 1.429
+          "text": "the",
+          "start": 2.101,
+          "end": 2.171
         },
         {
           "id": "w6",
-          "text": "for",
-          "start": 1.429,
-          "end": 1.615
+          "text": "base",
+          "start": 2.206,
+          "end": 2.403
         },
         {
           "id": "w7",
-          "text": "AI.",
-          "start": 1.615,
-          "end": 1.824
+          "text": "URL",
+          "start": 2.45,
+          "end": 2.902
         },
         {
           "id": "w8",
-          "text": "Your",
-          "start": 2.222,
-          "end": 2.282
+          "text": "and",
+          "start": 2.972,
+          "end": 3.088
         },
         {
           "id": "w9",
-          "text": "app",
-          "start": 2.307,
-          "end": 2.562
+          "text": "the",
+          "start": 3.135,
+          "end": 3.204
         },
         {
           "id": "w10",
-          "text": "or",
-          "start": 2.562,
-          "end": 2.723
+          "text": "key,",
+          "start": 3.239,
+          "end": 3.518
         },
         {
           "id": "w11",
-          "text": "your",
-          "start": 2.913,
-          "end": 3.054
+          "text": "and",
+          "start": 3.553,
+          "end": 3.68
         },
         {
           "id": "w12",
-          "text": "coding",
-          "start": 3.054,
-          "end": 3.556
+          "text": "keep",
+          "start": 3.727,
+          "end": 3.901
         },
         {
           "id": "w13",
-          "text": "tool",
-          "start": 3.556,
-          "end": 3.688
+          "text": "the",
+          "start": 3.936,
+          "end": 4.005
         },
         {
           "id": "w14",
-          "text": "plugs",
-          "start": 4.265,
-          "end": 4.398
-        },
-        {
-          "id": "w15",
-          "text": "into",
-          "start": 4.398,
-          "end": 4.767
-        },
-        {
-          "id": "w16-0",
-          "text": "AnyRouter.",
-          "start": 4.767,
-          "end": 5.329
-        },
-        {
-          "id": "w18-0",
-          "text": "AnyRouter",
-          "start": 6.314,
-          "end": 6.487
-        },
-        {
-          "id": "w20",
-          "text": "sends",
-          "start": 6.487,
-          "end": 6.817
-        },
-        {
-          "id": "w21",
-          "text": "each",
-          "start": 6.817,
-          "end": 7.085
-        },
-        {
-          "id": "w22",
-          "text": "request",
-          "start": 7.085,
-          "end": 7.58
-        },
-        {
-          "id": "w23",
-          "text": "to",
-          "start": 7.58,
-          "end": 7.683
-        },
-        {
-          "id": "w24",
-          "text": "a",
-          "start": 7.694,
-          "end": 7.754
-        },
-        {
-          "id": "w25",
-          "text": "provider",
-          "start": 8.178,
-          "end": 8.292
-        },
-        {
-          "id": "w26",
-          "text": "that",
-          "start": 8.385,
-          "end": 8.622
-        },
-        {
-          "id": "w27",
-          "text": "is",
-          "start": 8.622,
-          "end": 8.682
-        },
-        {
-          "id": "w28",
-          "text": "ready.",
-          "start": 8.89,
-          "end": 9.227
-        },
-        {
-          "id": "w29",
-          "text": "If",
-          "start": 9.811,
-          "end": 9.871
-        },
-        {
-          "id": "w30",
-          "text": "one",
-          "start": 9.871,
-          "end": 9.931
-        },
-        {
-          "id": "w31",
-          "text": "goes",
-          "start": 9.931,
-          "end": 9.997
-        },
-        {
-          "id": "w32",
-          "text": "down,",
-          "start": 10.048,
-          "end": 10.413
-        },
-        {
-          "id": "w33",
-          "text": "it",
-          "start": 10.413,
-          "end": 10.495
-        },
-        {
-          "id": "w34",
-          "text": "tries",
-          "start": 10.556,
-          "end": 10.85
-        },
-        {
-          "id": "w35",
-          "text": "the",
-          "start": 10.85,
-          "end": 11.033
-        },
-        {
-          "id": "w36",
-          "text": "next",
-          "start": 11.033,
-          "end": 11.246
-        },
-        {
-          "id": "w37",
-          "text": "one.",
-          "start": 11.246,
-          "end": 11.714
+          "text": "rest.",
+          "start": 4.052,
+          "end": 4.69
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.31
     },
     {
       "frame": 4,
       "path": "assets/voice/04.wav",
-      "duration_s": 11.638,
+      "duration_s": 6,
+      "raw_s": 4.737,
+      "text": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
+      "say": "Call a model by its name. DeepSeek, Kimi, MiniMax, Nemotron. Switching is one word.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "There",
-          "start": 0.11,
-          "end": 0.357
+          "text": "Call",
+          "start": 0,
+          "end": 0.221
         },
         {
           "id": "w1",
-          "text": "is",
-          "start": 0.357,
-          "end": 0.485
+          "text": "a",
+          "start": 0.267,
+          "end": 0.29
         },
         {
           "id": "w2",
-          "text": "also",
-          "start": 0.494,
-          "end": 0.777
+          "text": "model",
+          "start": 0.325,
+          "end": 0.546
         },
         {
           "id": "w3",
-          "text": "a",
-          "start": 0.777,
-          "end": 0.841
+          "text": "by",
+          "start": 0.592,
+          "end": 0.685
         },
         {
           "id": "w4",
-          "text": "shared",
-          "start": 0.841,
-          "end": 1.262
+          "text": "its",
+          "start": 0.731,
+          "end": 0.836
         },
         {
           "id": "w5",
-          "text": "pool.",
-          "start": 1.262,
-          "end": 1.459
+          "text": "name.",
+          "start": 0.882,
+          "end": 1.103
         },
         {
           "id": "w6",
-          "text": "An",
-          "start": 1.843,
-          "end": 1.903
+          "text": "DeepSeek,",
+          "start": 1.126,
+          "end": 1.637
         },
         {
           "id": "w7",
-          "text": "API",
-          "start": 1.903,
-          "end": 2.07
+          "text": "Kimi,",
+          "start": 1.695,
+          "end": 2.043
         },
         {
           "id": "w8",
-          "text": "key",
-          "start": 2.07,
-          "end": 2.357
+          "text": "MiniMax,",
+          "start": 2.078,
+          "end": 2.624
         },
         {
           "id": "w9",
-          "text": "is",
-          "start": 2.357,
-          "end": 2.495
+          "text": "Nemotron.",
+          "start": 2.659,
+          "end": 3.239
         },
         {
           "id": "w10",
-          "text": "like",
-          "start": 2.495,
-          "end": 2.613
+          "text": "Switching",
+          "start": 3.39,
+          "end": 3.785
         },
         {
           "id": "w11",
-          "text": "a",
-          "start": 2.663,
-          "end": 2.723
+          "text": "is",
+          "start": 3.831,
+          "end": 3.901
         },
         {
           "id": "w12",
-          "text": "password",
-          "start": 2.723,
-          "end": 3.225
+          "text": "one",
+          "start": 3.971,
+          "end": 4.122
         },
         {
           "id": "w13",
-          "text": "that",
-          "start": 3.225,
-          "end": 3.393
-        },
-        {
-          "id": "w14",
-          "text": "lets",
-          "start": 3.453,
-          "end": 3.66
-        },
-        {
-          "id": "w15",
-          "text": "software",
-          "start": 3.66,
-          "end": 4.213
-        },
-        {
-          "id": "w16",
-          "text": "use",
-          "start": 4.213,
-          "end": 4.469
-        },
-        {
-          "id": "w17",
-          "text": "an",
-          "start": 4.469,
-          "end": 4.608
-        },
-        {
-          "id": "w18",
-          "text": "AI",
-          "start": 4.608,
-          "end": 5.002
-        },
-        {
-          "id": "w19",
-          "text": "service.",
-          "start": 5.002,
-          "end": 5.774
-        },
-        {
-          "id": "w20",
-          "text": "Members",
-          "start": 6.403,
-          "end": 6.466
-        },
-        {
-          "id": "w21",
-          "text": "share",
-          "start": 6.466,
-          "end": 6.776
-        },
-        {
-          "id": "w22",
-          "text": "keys",
-          "start": 6.776,
-          "end": 7.017
-        },
-        {
-          "id": "w23",
-          "text": "they",
-          "start": 7.017,
-          "end": 7.259
-        },
-        {
-          "id": "w24",
-          "text": "are",
-          "start": 7.259,
-          "end": 7.385
-        },
-        {
-          "id": "w25",
-          "text": "not",
-          "start": 7.434,
-          "end": 7.494
-        },
-        {
-          "id": "w26",
-          "text": "using,",
-          "start": 7.821,
-          "end": 8.024
-        },
-        {
-          "id": "w27",
-          "text": "and",
-          "start": 8.092,
-          "end": 8.314
-        },
-        {
-          "id": "w28",
-          "text": "those",
-          "start": 8.314,
-          "end": 8.673
-        },
-        {
-          "id": "w29",
-          "text": "keys",
-          "start": 8.673,
-          "end": 8.953
-        },
-        {
-          "id": "w30",
-          "text": "make",
-          "start": 8.953,
-          "end": 9.234
-        },
-        {
-          "id": "w31",
-          "text": "up",
-          "start": 9.234,
-          "end": 9.37
-        },
-        {
-          "id": "w32",
-          "text": "a",
-          "start": 9.37,
-          "end": 9.437
-        },
-        {
-          "id": "w33",
-          "text": "pool",
-          "start": 9.437,
-          "end": 9.718
-        },
-        {
-          "id": "w34",
-          "text": "of",
-          "start": 9.718,
-          "end": 9.844
-        },
-        {
-          "id": "w35",
-          "text": "free",
-          "start": 9.853,
-          "end": 10.134
-        },
-        {
-          "id": "w36",
-          "text": "AI",
-          "start": 10.134,
-          "end": 10.27
-        },
-        {
-          "id": "w37",
-          "text": "usage.",
-          "start": 10.27,
-          "end": 10.909
+          "text": "word.",
+          "start": 4.156,
+          "end": 4.737
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 1.263
     },
     {
       "frame": 5,
       "path": "assets/voice/05.wav",
-      "duration_s": 13.125,
+      "duration_s": 5,
+      "raw_s": 4.551,
+      "text": "Already pay for Claude or OpenAI? Add your own key and use them here too, at no markup.",
+      "say": "Already pay for Claude or OpenAI? Add your own key and use them here too, at no markup.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "Some",
-          "start": 0.051,
-          "end": 0.23
+          "text": "Already",
+          "start": 0,
+          "end": 0.302
         },
         {
           "id": "w1",
-          "text": "free",
-          "start": 0.306,
-          "end": 0.527
+          "text": "pay",
+          "start": 0.348,
+          "end": 0.464
         },
         {
           "id": "w2",
-          "text": "models",
-          "start": 0.527,
-          "end": 0.859
+          "text": "for",
+          "start": 0.511,
+          "end": 0.604
         },
         {
           "id": "w3",
-          "text": "work",
-          "start": 1.021,
-          "end": 1.174
+          "text": "Claude",
+          "start": 0.662,
+          "end": 0.929
         },
         {
           "id": "w4",
-          "text": "as",
-          "start": 1.216,
-          "end": 1.31
+          "text": "or",
+          "start": 0.952,
+          "end": 1.022
         },
         {
           "id": "w5",
-          "text": "soon",
-          "start": 1.31,
-          "end": 1.574
+          "text": "OpenAI?",
+          "start": 1.08,
+          "end": 1.741
         },
         {
           "id": "w6",
-          "text": "as",
-          "start": 1.574,
-          "end": 1.701
+          "text": "Add",
+          "start": 1.95,
+          "end": 2.136
         },
         {
           "id": "w7",
-          "text": "you",
-          "start": 1.701,
-          "end": 1.761
+          "text": "your",
+          "start": 2.171,
+          "end": 2.287
         },
         {
           "id": "w8",
-          "text": "sign",
-          "start": 1.897,
-          "end": 2.092
+          "text": "own",
+          "start": 2.322,
+          "end": 2.415
         },
         {
           "id": "w9",
-          "text": "up.",
-          "start": 2.092,
-          "end": 2.152
+          "text": "key",
+          "start": 2.461,
+          "end": 2.589
         },
         {
           "id": "w10",
-          "text": "To",
-          "start": 2.998,
-          "end": 3.058
+          "text": "and",
+          "start": 2.624,
+          "end": 2.694
         },
         {
           "id": "w11",
-          "text": "unlock",
-          "start": 3.058,
-          "end": 3.22
+          "text": "use",
+          "start": 2.752,
+          "end": 2.891
         },
         {
           "id": "w12",
-          "text": "the",
-          "start": 3.22,
-          "end": 3.481
+          "text": "them",
+          "start": 2.914,
+          "end": 3.019
         },
         {
           "id": "w13",
-          "text": "whole",
-          "start": 3.481,
-          "end": 3.706
+          "text": "here",
+          "start": 3.053,
+          "end": 3.193
         },
         {
           "id": "w14",
-          "text": "pool,",
-          "start": 3.932,
-          "end": 4.297
+          "text": "too,",
+          "start": 3.228,
+          "end": 3.448
         },
         {
           "id": "w15",
-          "text": "share",
-          "start": 4.658,
-          "end": 4.828
+          "text": "at",
+          "start": 3.483,
+          "end": 3.553
         },
         {
           "id": "w16",
-          "text": "one",
-          "start": 4.978,
-          "end": 5.223
+          "text": "no",
+          "start": 3.622,
+          "end": 3.738
         },
         {
           "id": "w17",
-          "text": "free",
-          "start": 5.644,
-          "end": 5.704
-        },
-        {
-          "id": "w18",
-          "text": "key.",
-          "start": 5.704,
-          "end": 5.915
-        },
-        {
-          "id": "w19",
-          "text": "Step",
-          "start": 6.706,
-          "end": 6.766
-        },
-        {
-          "id": "w20",
-          "text": "one,",
-          "start": 6.766,
-          "end": 7.108
-        },
-        {
-          "id": "w21",
-          "text": "sign",
-          "start": 7.108,
-          "end": 7.313
-        },
-        {
-          "id": "w22",
-          "text": "in",
-          "start": 7.507,
-          "end": 7.66
-        },
-        {
-          "id": "w23",
-          "text": "at",
-          "start": 7.742,
-          "end": 7.844
-        },
-        {
-          "id": "w24-0",
-          "text": "OpenRouter",
-          "start": 7.844,
-          "end": 8.396
-        },
-        {
-          "id": "w26",
-          "text": "and",
-          "start": 8.396,
-          "end": 9.03
-        },
-        {
-          "id": "w27",
-          "text": "open",
-          "start": 9.336,
-          "end": 9.408
-        },
-        {
-          "id": "w28",
-          "text": "Keys.",
-          "start": 9.408,
-          "end": 9.833
-        },
-        {
-          "id": "w29",
-          "text": "Click",
-          "start": 10.476,
-          "end": 10.536
-        },
-        {
-          "id": "w30",
-          "text": "Create",
-          "start": 10.536,
-          "end": 11.028
-        },
-        {
-          "id": "w31",
-          "text": "Key",
-          "start": 11.028,
-          "end": 11.196
-        },
-        {
-          "id": "w32",
-          "text": "and",
-          "start": 11.385,
-          "end": 11.451
-        },
-        {
-          "id": "w33",
-          "text": "copy",
-          "start": 11.732,
-          "end": 11.87
-        },
-        {
-          "id": "w34",
-          "text": "it.",
-          "start": 11.87,
-          "end": 12.291
+          "text": "markup.",
+          "start": 3.808,
+          "end": 4.551
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.449
     },
     {
       "frame": 6,
       "path": "assets/voice/06.wav",
-      "duration_s": 17.536,
+      "duration_s": 2.5,
+      "raw_s": 1.858,
+      "text": "Or let AnyRouter pick one for you.",
+      "say": "Or let AnyRouter pick one for you.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "Step",
-          "start": 0.031,
-          "end": 0.381
+          "text": "Or",
+          "start": 0,
+          "end": 0.151
         },
         {
           "id": "w1",
-          "text": "two,",
-          "start": 0.381,
-          "end": 0.689
+          "text": "let",
+          "start": 0.209,
+          "end": 0.337
         },
         {
           "id": "w2",
-          "text": "sign",
-          "start": 1.131,
-          "end": 1.255
+          "text": "AnyRouter",
+          "start": 0.383,
+          "end": 0.801
         },
         {
           "id": "w3",
-          "text": "in",
-          "start": 1.255,
-          "end": 1.449
+          "text": "pick",
+          "start": 0.848,
+          "end": 0.998
         },
         {
           "id": "w4",
-          "text": "at",
-          "start": 1.459,
-          "end": 1.664
+          "text": "one",
+          "start": 1.057,
+          "end": 1.173
         },
         {
           "id": "w5",
-          "text": "anyrouter.dev",
-          "start": 1.664,
-          "end": 3.026
+          "text": "for",
+          "start": 1.219,
+          "end": 1.358
         },
         {
           "id": "w6",
-          "text": "and",
-          "start": 3.32,
-          "end": 3.42
-        },
-        {
-          "id": "w7",
-          "text": "open",
-          "start": 3.528,
-          "end": 3.83
-        },
-        {
-          "id": "w8",
-          "text": "the",
-          "start": 3.83,
-          "end": 3.959
-        },
-        {
-          "id": "w9",
-          "text": "shared",
-          "start": 3.97,
-          "end": 4.25
-        },
-        {
-          "id": "w10",
-          "text": "pool.",
-          "start": 4.325,
-          "end": 4.617
-        },
-        {
-          "id": "w11",
-          "text": "Click",
-          "start": 5.456,
-          "end": 5.516
-        },
-        {
-          "id": "w12",
-          "text": "Donate",
-          "start": 5.516,
-          "end": 5.967
-        },
-        {
-          "id": "w13",
-          "text": "next",
-          "start": 5.967,
-          "end": 6.089
-        },
-        {
-          "id": "w14",
-          "text": "to",
-          "start": 6.089,
-          "end": 6.568
-        },
-        {
-          "id": "w15-0",
-          "text": "OpenRouter,",
-          "start": 6.568,
-          "end": 7.24
-        },
-        {
-          "id": "w17",
-          "text": "paste",
-          "start": 7.495,
-          "end": 7.748
-        },
-        {
-          "id": "w18",
-          "text": "your",
-          "start": 7.756,
-          "end": 7.951
-        },
-        {
-          "id": "w19",
-          "text": "key",
-          "start": 7.951,
-          "end": 8.205
-        },
-        {
-          "id": "w20",
-          "text": "and",
-          "start": 8.513,
-          "end": 8.573
-        },
-        {
-          "id": "w21",
-          "text": "press",
-          "start": 8.573,
-          "end": 8.968
-        },
-        {
-          "id": "w22",
-          "text": "Donate.",
-          "start": 8.968,
-          "end": 9.343
-        },
-        {
-          "id": "w23-0",
-          "text": "AnyRouter",
-          "start": 10.166,
-          "end": 10.42
-        },
-        {
-          "id": "w25",
-          "text": "encrypts",
-          "start": 10.932,
-          "end": 11.362
-        },
-        {
-          "id": "w26",
-          "text": "your",
-          "start": 11.362,
-          "end": 11.752
-        },
-        {
-          "id": "w27",
-          "text": "key",
-          "start": 11.752,
-          "end": 11.976
-        },
-        {
-          "id": "w28",
-          "text": "and",
-          "start": 12.11,
-          "end": 12.17
-        },
-        {
-          "id": "w29",
-          "text": "you",
-          "start": 12.465,
-          "end": 12.53
-        },
-        {
-          "id": "w30",
-          "text": "can",
-          "start": 12.54,
-          "end": 12.755
-        },
-        {
-          "id": "w31",
-          "text": "stop",
-          "start": 12.755,
-          "end": 12.815
-        },
-        {
-          "id": "w32",
-          "text": "sharing",
-          "start": 13.277,
-          "end": 13.656
-        },
-        {
-          "id": "w33",
-          "text": "any",
-          "start": 13.656,
-          "end": 13.779
-        },
-        {
-          "id": "w34",
-          "text": "time.",
-          "start": 13.902,
-          "end": 14.195
-        },
-        {
-          "id": "w35",
-          "text": "A",
-          "start": 14.807,
-          "end": 14.867
-        },
-        {
-          "id": "w36",
-          "text": "key",
-          "start": 14.867,
-          "end": 14.927
-        },
-        {
-          "id": "w37",
-          "text": "from",
-          "start": 14.927,
-          "end": 15.06
-        },
-        {
-          "id": "w38",
-          "text": "NVIDIA",
-          "start": 15.06,
-          "end": 15.183
-        },
-        {
-          "id": "w39",
-          "text": "works",
-          "start": 15.686,
-          "end": 15.851
-        },
-        {
-          "id": "w40",
-          "text": "the",
-          "start": 15.851,
-          "end": 16.066
-        },
-        {
-          "id": "w41",
-          "text": "same",
-          "start": 16.066,
-          "end": 16.353
-        },
-        {
-          "id": "w42",
-          "text": "way.",
-          "start": 16.353,
-          "end": 16.805
+          "text": "you.",
+          "start": 1.416,
+          "end": 1.858
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.642
     },
     {
       "frame": 7,
       "path": "assets/voice/07.wav",
-      "duration_s": 12.103,
-      "words": [
-        {
-          "id": "w0",
-          "text": "Step",
-          "start": 0.032,
-          "end": 0.264
-        },
-        {
-          "id": "w1",
-          "text": "three,",
-          "start": 0.344,
-          "end": 0.719
-        },
-        {
-          "id": "w2",
-          "text": "use",
-          "start": 1.239,
-          "end": 1.299
-        },
-        {
-          "id": "w3",
-          "text": "the",
-          "start": 1.299,
-          "end": 1.546
-        },
-        {
-          "id": "w4",
-          "text": "free",
-          "start": 1.546,
-          "end": 1.907
-        },
-        {
-          "id": "w5",
-          "text": "models.",
-          "start": 1.907,
-          "end": 2.327
-        },
-        {
-          "id": "w6",
-          "text": "While",
-          "start": 3.345,
-          "end": 3.405
-        },
-        {
-          "id": "w7",
-          "text": "your",
-          "start": 3.405,
-          "end": 3.566
-        },
-        {
-          "id": "w8",
-          "text": "key",
-          "start": 3.566,
-          "end": 3.635
-        },
-        {
-          "id": "w9",
-          "text": "is",
-          "start": 3.795,
-          "end": 3.979
-        },
-        {
-          "id": "w10",
-          "text": "shared,",
-          "start": 4.244,
-          "end": 4.39
-        },
-        {
-          "id": "w11",
-          "text": "you",
-          "start": 4.81,
-          "end": 4.87
-        },
-        {
-          "id": "w12",
-          "text": "get",
-          "start": 4.87,
-          "end": 4.93
-        },
-        {
-          "id": "w13",
-          "text": "the",
-          "start": 4.93,
-          "end": 5.084
-        },
-        {
-          "id": "w14",
-          "text": "pool's",
-          "start": 5.084,
-          "end": 5.389
-        },
-        {
-          "id": "w15",
-          "text": "free",
-          "start": 5.389,
-          "end": 5.788
-        },
-        {
-          "id": "w16",
-          "text": "models",
-          "start": 5.788,
-          "end": 6.293
-        },
-        {
-          "id": "w17",
-          "text": "with",
-          "start": 6.325,
-          "end": 6.64
-        },
-        {
-          "id": "w18",
-          "text": "no",
-          "start": 6.756,
-          "end": 6.84
-        },
-        {
-          "id": "w19",
-          "text": "daily",
-          "start": 6.84,
-          "end": 7.04
-        },
-        {
-          "id": "w20",
-          "text": "cap,",
-          "start": 7.565,
-          "end": 7.625
-        },
-        {
-          "id": "w21",
-          "text": "the",
-          "start": 7.919,
-          "end": 8.048
-        },
-        {
-          "id": "w22-0-0",
-          "text": "Go",
-          "start": 8.048,
-          "end": 8.311
-        },
-        {
-          "id": "w22-0-1",
-          "text": "plan",
-          "start": 8.311,
-          "end": 8.573
-        },
-        {
-          "id": "w24",
-          "text": "at",
-          "start": 8.573,
-          "end": 8.671
-        },
-        {
-          "id": "w25",
-          "text": "no",
-          "start": 8.671,
-          "end": 8.982
-        },
-        {
-          "id": "w26",
-          "text": "cost,",
-          "start": 8.982,
-          "end": 9.239
-        },
-        {
-          "id": "w27",
-          "text": "and",
-          "start": 9.602,
-          "end": 9.662
-        },
-        {
-          "id": "w28",
-          "text": "$4",
-          "start": 9.662,
-          "end": 9.861
-        },
-        {
-          "id": "w29",
-          "text": "of",
-          "start": 9.861,
-          "end": 9.992
-        },
-        {
-          "id": "w30",
-          "text": "credit",
-          "start": 9.992,
-          "end": 10.067
-        },
-        {
-          "id": "w31",
-          "text": "every",
-          "start": 10.563,
-          "end": 10.713
-        },
-        {
-          "id": "w32",
-          "text": "month.",
-          "start": 10.713,
-          "end": 11.256
-        }
-      ],
-      "padded_s": 0.4,
-      "aligned": true
-    },
-    {
-      "frame": 8,
-      "path": "assets/voice/08.wav",
-      "duration_s": 10.988,
+      "duration_s": 6,
+      "raw_s": 5.387,
+      "text": "If a provider goes down, AnyRouter retries on another, and your app still gets its answer.",
+      "say": "If a provider goes down, AnyRouter retries on another, and your app still gets its answer.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
           "text": "If",
-          "start": 0.055,
-          "end": 0.115
+          "start": 0,
+          "end": 0.139
         },
         {
           "id": "w1",
-          "text": "you",
-          "start": 0.115,
-          "end": 0.248
+          "text": "a",
+          "start": 0.209,
+          "end": 0.244
         },
         {
           "id": "w2",
-          "text": "write",
-          "start": 0.248,
-          "end": 0.451
+          "text": "provider",
+          "start": 0.302,
+          "end": 0.72
         },
         {
           "id": "w3",
-          "text": "code,",
-          "start": 0.515,
-          "end": 0.809
+          "text": "goes",
+          "start": 0.778,
+          "end": 0.964
         },
         {
           "id": "w4",
-          "text": "here",
-          "start": 0.809,
-          "end": 1.012
+          "text": "down,",
+          "start": 1.01,
+          "end": 1.428
         },
         {
           "id": "w5",
-          "text": "is",
-          "start": 1.012,
-          "end": 1.094
+          "text": "AnyRouter",
+          "start": 1.602,
+          "end": 2.113
         },
         {
           "id": "w6",
-          "text": "how",
-          "start": 1.131,
-          "end": 1.269
+          "text": "retries",
+          "start": 2.171,
+          "end": 2.601
         },
         {
           "id": "w7",
-          "text": "to",
-          "start": 1.269,
-          "end": 1.37
+          "text": "on",
+          "start": 2.67,
+          "end": 2.763
         },
         {
           "id": "w8",
-          "text": "use",
-          "start": 1.37,
-          "end": 1.49
+          "text": "another,",
+          "start": 2.821,
+          "end": 3.332
         },
         {
-          "id": "w9-0",
-          "text": "AnyRouter",
-          "start": 1.618,
-          "end": 2.161
+          "id": "w9",
+          "text": "and",
+          "start": 3.541,
+          "end": 3.704
+        },
+        {
+          "id": "w10",
+          "text": "your",
+          "start": 3.75,
+          "end": 3.866
         },
         {
           "id": "w11",
-          "text": "with",
-          "start": 2.161,
-          "end": 2.28
+          "text": "app",
+          "start": 3.901,
+          "end": 4.017
         },
         {
           "id": "w12",
-          "text": "Claude",
-          "start": 2.382,
-          "end": 2.694
+          "text": "still",
+          "start": 4.075,
+          "end": 4.284
         },
         {
           "id": "w13",
-          "text": "Code.",
-          "start": 2.722,
-          "end": 3.307
+          "text": "gets",
+          "start": 4.331,
+          "end": 4.505
         },
         {
           "id": "w14",
-          "text": "Install",
-          "start": 3.884,
-          "end": 4.055
+          "text": "its",
+          "start": 4.551,
+          "end": 4.679
         },
         {
           "id": "w15",
-          "text": "the",
-          "start": 4.125,
-          "end": 4.294
-        },
-        {
-          "id": "w16-0",
-          "text": "AnyRouter",
-          "start": 4.294,
-          "end": 4.953
-        },
-        {
-          "id": "w18",
-          "text": "command",
-          "start": 4.953,
-          "end": 5.462
-        },
-        {
-          "id": "w19",
-          "text": "line",
-          "start": 5.462,
-          "end": 5.752
-        },
-        {
-          "id": "w20",
-          "text": "tool",
-          "start": 5.752,
-          "end": 6.041
-        },
-        {
-          "id": "w21",
-          "text": "and",
-          "start": 6.151,
-          "end": 6.48
-        },
-        {
-          "id": "w22",
-          "text": "run",
-          "start": 6.48,
-          "end": 6.79
-        },
-        {
-          "id": "w23-0",
-          "text": "anyr",
-          "start": 6.79,
-          "end": 7.454
-        },
-        {
-          "id": "w23-1",
-          "text": "login,",
-          "start": 7.454,
-          "end": 7.767
-        },
-        {
-          "id": "w25",
-          "text": "then",
-          "start": 8.468,
-          "end": 8.528
-        },
-        {
-          "id": "w26",
-          "text": "run",
-          "start": 8.528,
-          "end": 8.642
-        },
-        {
-          "id": "w27-0",
-          "text": "anyr",
-          "start": 8.642,
-          "end": 9.016
-        },
-        {
-          "id": "w27-1",
-          "text": "claude",
-          "start": 9.016,
-          "end": 9.39
-        },
-        {
-          "id": "w30",
-          "text": "with",
-          "start": 9.524,
-          "end": 9.68
-        },
-        {
-          "id": "w31",
-          "text": "a",
-          "start": 9.68,
-          "end": 9.747
-        },
-        {
-          "id": "w32",
-          "text": "model.",
-          "start": 9.747,
-          "end": 10.216
+          "text": "answer.",
+          "start": 4.725,
+          "end": 5.387
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.613
+    },
+    {
+      "frame": 8,
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.5,
+      "raw_s": 3.065,
+      "text": "Free models work on every plan, with no daily cap.",
+      "say": "Free models work on every plan, with no daily cap.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Free",
+          "start": 0,
+          "end": 0.232
+        },
+        {
+          "id": "w1",
+          "text": "models",
+          "start": 0.267,
+          "end": 0.592
+        },
+        {
+          "id": "w2",
+          "text": "work",
+          "start": 0.639,
+          "end": 0.824
+        },
+        {
+          "id": "w3",
+          "text": "on",
+          "start": 0.882,
+          "end": 0.975
+        },
+        {
+          "id": "w4",
+          "text": "every",
+          "start": 1.057,
+          "end": 1.265
+        },
+        {
+          "id": "w5",
+          "text": "plan,",
+          "start": 1.312,
+          "end": 1.625
+        },
+        {
+          "id": "w6",
+          "text": "with",
+          "start": 1.66,
+          "end": 1.8
+        },
+        {
+          "id": "w7",
+          "text": "no",
+          "start": 1.881,
+          "end": 2.02
+        },
+        {
+          "id": "w8",
+          "text": "daily",
+          "start": 2.09,
+          "end": 2.334
+        },
+        {
+          "id": "w9",
+          "text": "cap.",
+          "start": 2.38,
+          "end": 3.065
+        }
+      ],
+      "padded_s": 0.435
     },
     {
       "frame": 9,
       "path": "assets/voice/09.wav",
-      "duration_s": 9.409,
+      "duration_s": 4.5,
+      "raw_s": 3.762,
+      "text": "Using Claude Code? Run anyr claude, with any model you like.",
+      "say": "Using Claude Code? Run any R claude, with any model you like.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
-          "text": "Change",
-          "start": 0.076,
-          "end": 0.322
+          "text": "Using",
+          "start": 0,
+          "end": 0.279
         },
         {
           "id": "w1",
-          "text": "the",
-          "start": 0.322,
-          "end": 0.483
+          "text": "Claude",
+          "start": 0.313,
+          "end": 0.569
         },
         {
           "id": "w2",
-          "text": "model",
-          "start": 0.483,
-          "end": 0.753
+          "text": "Code?",
+          "start": 0.604,
+          "end": 0.998
         },
         {
           "id": "w3",
-          "text": "whenever",
-          "start": 0.753,
-          "end": 1.16
+          "text": "Run",
+          "start": 1.44,
+          "end": 1.602
         },
         {
           "id": "w4",
-          "text": "you",
-          "start": 1.16,
-          "end": 1.244
+          "text": "anyr",
+          "start": 1.649,
+          "end": 1.974
         },
         {
           "id": "w5",
-          "text": "like.",
-          "start": 1.591,
-          "end": 1.651
+          "text": "claude,",
+          "start": 2.032,
+          "end": 2.38
         },
         {
           "id": "w6",
-          "text": "Free",
-          "start": 1.946,
-          "end": 2.006
+          "text": "with",
+          "start": 2.403,
+          "end": 2.543
         },
         {
           "id": "w7",
-          "text": "uses",
-          "start": 2.006,
-          "end": 2.372
+          "text": "any",
+          "start": 2.577,
+          "end": 2.705
         },
         {
           "id": "w8",
-          "text": "free",
-          "start": 2.372,
-          "end": 2.649
+          "text": "model",
+          "start": 2.763,
+          "end": 3.019
         },
         {
           "id": "w9",
-          "text": "models",
-          "start": 2.649,
-          "end": 3.076
+          "text": "you",
+          "start": 3.077,
+          "end": 3.146
         },
         {
           "id": "w10",
-          "text": "only.",
-          "start": 3.076,
-          "end": 3.42
-        },
-        {
-          "id": "w11",
-          "text": "Auto",
-          "start": 3.749,
-          "end": 3.898
-        },
-        {
-          "id": "w12",
-          "text": "lets",
-          "start": 3.898,
-          "end": 4.183
-        },
-        {
-          "id": "w13-0",
-          "text": "AnyRouter",
-          "start": 4.183,
-          "end": 4.819
-        },
-        {
-          "id": "w15",
-          "text": "pick",
-          "start": 4.819,
-          "end": 4.966
-        },
-        {
-          "id": "w16",
-          "text": "the",
-          "start": 4.966,
-          "end": 5.455
-        },
-        {
-          "id": "w17",
-          "text": "best",
-          "start": 5.455,
-          "end": 5.602
-        },
-        {
-          "id": "w18",
-          "text": "one.",
-          "start": 5.867,
-          "end": 5.982
-        },
-        {
-          "id": "w19",
-          "text": "Coding",
-          "start": 6.144,
-          "end": 6.326
-        },
-        {
-          "id": "w20",
-          "text": "picks",
-          "start": 6.326,
-          "end": 6.567
-        },
-        {
-          "id": "w21",
-          "text": "the",
-          "start": 6.567,
-          "end": 6.709
-        },
-        {
-          "id": "w22",
-          "text": "best",
-          "start": 6.709,
-          "end": 6.907
-        },
-        {
-          "id": "w23",
-          "text": "coding",
-          "start": 6.907,
-          "end": 7.202
-        },
-        {
-          "id": "w24",
-          "text": "model",
-          "start": 7.202,
-          "end": 7.487
-        },
-        {
-          "id": "w25",
-          "text": "from",
-          "start": 7.487,
-          "end": 7.652
-        },
-        {
-          "id": "w26",
-          "text": "the",
-          "start": 7.652,
-          "end": 7.729
-        },
-        {
-          "id": "w27",
-          "text": "keys",
-          "start": 7.729,
-          "end": 7.986
-        },
-        {
-          "id": "w28",
-          "text": "you",
-          "start": 7.986,
-          "end": 8.244
-        },
-        {
-          "id": "w29",
-          "text": "added.",
-          "start": 8.244,
-          "end": 8.671
+          "text": "like.",
+          "start": 3.204,
+          "end": 3.762
         }
       ],
-      "padded_s": 0.4,
-      "aligned": true
+      "padded_s": 0.738
     },
     {
       "frame": 10,
       "path": "assets/voice/10.wav",
-      "duration_s": 7.933,
+      "duration_s": 5.937,
+      "raw_s": 3.437,
+      "text": "One API for every model. Start free at anyrouter.dev.",
+      "say": "One API for every model. Start free at any router dot dev.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
       "words": [
         {
           "id": "w0",
           "text": "One",
-          "start": 0.008,
+          "start": 0,
           "end": 0.174
         },
         {
           "id": "w1",
-          "text": "key",
-          "start": 0.249,
-          "end": 0.34
+          "text": "API",
+          "start": 0.197,
+          "end": 0.546
         },
         {
           "id": "w2",
           "text": "for",
-          "start": 0.407,
-          "end": 0.573
+          "start": 0.615,
+          "end": 0.72
         },
         {
           "id": "w3",
           "text": "every",
-          "start": 0.573,
-          "end": 0.855
+          "start": 0.766,
+          "end": 0.94
         },
         {
           "id": "w4",
-          "text": "model,",
-          "start": 0.88,
-          "end": 1.128
+          "text": "model.",
+          "start": 0.987,
+          "end": 1.324
         },
         {
           "id": "w5",
-          "text": "and",
-          "start": 1.496,
-          "end": 1.556
+          "text": "Start",
+          "start": 1.416,
+          "end": 1.672
         },
         {
           "id": "w6",
-          "text": "a",
-          "start": 1.556,
-          "end": 1.616
+          "text": "free",
+          "start": 1.718,
+          "end": 1.881
         },
         {
           "id": "w7",
-          "text": "shared",
-          "start": 1.616,
-          "end": 1.846
+          "text": "at",
+          "start": 1.916,
+          "end": 1.962
         },
         {
           "id": "w8",
-          "text": "pool",
-          "start": 1.846,
-          "end": 2.056
-        },
-        {
-          "id": "w9",
-          "text": "for",
-          "start": 2.15,
-          "end": 2.36
-        },
-        {
-          "id": "w10",
-          "text": "free",
-          "start": 2.36,
-          "end": 2.695
-        },
-        {
-          "id": "w11",
-          "text": "models.",
-          "start": 2.716,
-          "end": 3.141
-        },
-        {
-          "id": "w12",
-          "text": "Start",
-          "start": 3.475,
-          "end": 3.708
-        },
-        {
-          "id": "w13",
-          "text": "at",
-          "start": 3.708,
-          "end": 3.87
-        },
-        {
-          "id": "w14",
           "text": "anyrouter.dev.",
-          "start": 3.87,
-          "end": 5.126
+          "start": 2.02,
+          "end": 3.437
         }
       ],
-      "padded_s": 2.5,
-      "aligned": true
+      "padded_s": 2.5
     }
   ],
   "sfx": [
     {
       "frame": 1,
       "file": "assets/sfx/pop.mp3",
+      "offset_s": 0.06,
+      "duration_s": 0.72,
+      "volume": 0.2,
+      "source": "bundled"
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 1.498,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 2.717,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 3.39,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/whoosh-short.mp3",
       "offset_s": 0.08,
-      "duration_s": 0.72,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 1,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 2.519,
-      "duration_s": 0.366,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 1,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 3.738,
-      "duration_s": 0.366,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 1,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 4.982,
-      "duration_s": 0.366,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 2,
-      "file": "assets/sfx/whoosh-short.mp3",
-      "offset_s": 0.12,
       "duration_s": 0.575,
-      "volume": 0.3,
-      "source": "bundled"
-    },
-    {
-      "frame": 2,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 1.235,
-      "duration_s": 0.72,
-      "volume": 0.25,
-      "source": "bundled"
-    },
-    {
-      "frame": 2,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 2.107,
-      "duration_s": 0.72,
-      "volume": 0.25,
+      "volume": 0.28,
       "source": "bundled"
     },
     {
       "frame": 2,
       "file": "assets/sfx/ping.mp3",
-      "offset_s": 3.607,
+      "offset_s": 2.241,
       "duration_s": 1.32,
       "volume": 0.2,
       "source": "bundled"
@@ -1953,15 +987,23 @@
     {
       "frame": 2,
       "file": "assets/sfx/pop.mp3",
-      "offset_s": 0.559,
+      "offset_s": 2.972,
       "duration_s": 0.72,
       "volume": 0.22,
       "source": "bundled"
     },
     {
       "frame": 3,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 0.04,
+      "duration_s": 0.575,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 3,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 2.307,
+      "offset_s": 2.206,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
@@ -1969,223 +1011,135 @@
     {
       "frame": 3,
       "file": "assets/sfx/click.mp3",
-      "offset_s": 3.556,
+      "offset_s": 3.239,
       "duration_s": 0.366,
       "volume": 0.3,
       "source": "bundled"
     },
     {
       "frame": 3,
-      "file": "assets/sfx/ping.mp3",
-      "offset_s": 8.89,
-      "duration_s": 1.32,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 3.977,
+      "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
     },
     {
-      "frame": 3,
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 1.126,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 1.695,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 2.078,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 2.659,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/ping.mp3",
+      "offset_s": 3.971,
+      "duration_s": 1.32,
+      "volume": 0.18,
+      "source": "bundled"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 1.03,
+      "duration_s": 0.575,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 2.5,
+      "duration_s": 0.366,
+      "volume": 0.32,
+      "source": "bundled"
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 3.808,
+      "duration_s": 0.72,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/click-soft.mp3",
+      "offset_s": 0.848,
+      "duration_s": 0.366,
+      "volume": 0.22,
+      "source": "bundled"
+    },
+    {
+      "frame": 7,
       "file": "assets/sfx/error.mp3",
-      "offset_s": 10.048,
+      "offset_s": 1.01,
       "duration_s": 1.62,
-      "volume": 0.16,
+      "volume": 0.15,
       "source": "bundled"
     },
     {
-      "frame": 3,
+      "frame": 7,
       "file": "assets/sfx/ping.mp3",
-      "offset_s": 10.856,
+      "offset_s": 2.821,
       "duration_s": 1.32,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 4,
-      "file": "assets/sfx/whoosh-short.mp3",
-      "offset_s": 6.403,
-      "duration_s": 0.575,
-      "volume": 0.25,
-      "source": "bundled"
-    },
-    {
-      "frame": 4,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 8.953,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 4,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 8.314,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 4,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 8.673,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 0.051,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 2.998,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 10.536,
-      "duration_s": 0.366,
-      "volume": 0.35,
-      "source": "bundled"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 11.036,
-      "duration_s": 0.366,
-      "volume": 0.3,
-      "source": "bundled"
-    },
-    {
-      "frame": 5,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 11.732,
-      "duration_s": 0.366,
-      "volume": 0.35,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 2.424,
-      "duration_s": 0.366,
-      "volume": 0.3,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 6.568,
-      "duration_s": 0.366,
-      "volume": 0.35,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 7.756,
-      "duration_s": 0.366,
-      "volume": 0.25,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/click.mp3",
-      "offset_s": 8.968,
-      "duration_s": 0.366,
-      "volume": 0.35,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/chime.mp3",
-      "offset_s": 9.788,
-      "duration_s": 2.5,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 6,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 15.06,
-      "duration_s": 0.72,
-      "volume": 0.2,
+      "volume": 0.18,
       "source": "bundled"
     },
     {
       "frame": 7,
       "file": "assets/sfx/chime.mp3",
-      "offset_s": 1.239,
+      "offset_s": 4.075,
       "duration_s": 2.5,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 5.084,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 8.048,
-      "duration_s": 0.72,
-      "volume": 0.2,
-      "source": "bundled"
-    },
-    {
-      "frame": 7,
-      "file": "assets/sfx/pop.mp3",
-      "offset_s": 9.662,
-      "duration_s": 0.72,
       "volume": 0.2,
       "source": "bundled"
     },
     {
       "frame": 8,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 3.884,
-      "duration_s": 0.366,
-      "volume": 0.22,
-      "source": "bundled"
-    },
-    {
-      "frame": 8,
-      "file": "assets/sfx/key-press.mp3",
-      "offset_s": 4.454,
-      "duration_s": 0.4,
-      "volume": 0.25,
-      "source": "bundled"
-    },
-    {
-      "frame": 8,
-      "file": "assets/sfx/typing.mp3",
-      "offset_s": 6.79,
-      "duration_s": 1.5,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 1.057,
+      "duration_s": 2.5,
       "volume": 0.18,
       "source": "bundled"
     },
     {
       "frame": 8,
-      "file": "assets/sfx/key-press.mp3",
-      "offset_s": 7.754,
-      "duration_s": 0.4,
-      "volume": 0.25,
+      "file": "assets/sfx/pop.mp3",
+      "offset_s": 1.881,
+      "duration_s": 0.72,
+      "volume": 0.2,
       "source": "bundled"
     },
     {
-      "frame": 8,
+      "frame": 9,
       "file": "assets/sfx/typing.mp3",
-      "offset_s": 8.642,
+      "offset_s": 0.704,
       "duration_s": 1.5,
       "volume": 0.18,
       "source": "bundled"
@@ -2193,7 +1147,7 @@
     {
       "frame": 9,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 3.6,
+      "offset_s": 2.577,
       "duration_s": 0.366,
       "volume": 0.18,
       "source": "bundled"
@@ -2201,31 +1155,7 @@
     {
       "frame": 9,
       "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 6,
-      "duration_s": 0.366,
-      "volume": 0.18,
-      "source": "bundled"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 7.3,
-      "duration_s": 0.366,
-      "volume": 0.18,
-      "source": "bundled"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 8,
-      "duration_s": 0.366,
-      "volume": 0.18,
-      "source": "bundled"
-    },
-    {
-      "frame": 9,
-      "file": "assets/sfx/click-soft.mp3",
-      "offset_s": 8.7,
+      "offset_s": 3.077,
       "duration_s": 0.366,
       "volume": 0.18,
       "source": "bundled"
@@ -2233,7 +1163,7 @@
     {
       "frame": 10,
       "file": "assets/sfx/sparkle.mp3",
-      "offset_s": 3.575,
+      "offset_s": 1.416,
       "duration_s": 1.802,
       "volume": 0.2,
       "source": "bundled"

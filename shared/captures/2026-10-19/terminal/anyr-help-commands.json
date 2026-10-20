@@ -1,0 +1,14 @@
+{
+  "command": "anyr help commands",
+  "startedAt": "2026-10-19T14:59:37.764Z",
+  "durationMs": 3,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 3,
+      "stream": "stdout",
+      "text": "▲ anyr  ▄█▄▀█████████▄  AnyRouter CLI v0.1.20  https://anyrouter.dev\nOne key. Every coding agent.\n\nUSAGE\n  anyr                  Confirm account / model / agent, then pick an action\n  anyr <command> [flags]\n  anyr <command> --help\n\nCORE COMMANDS\n  menu:       Compact HUD launcher (default on a TTY)\n  auth:       Authenticate with AnyRouter\n  config:     Print current settings (`--pick` for the TUI)\n  keys:       Manage API keys\n  byok:       Provider keys (BYOK); --donate shares one with the pool\n  models:     List catalog and set the default (`--pick` to choose)\n  usage:      Credits remaining\n  api:        Dashboard from the terminal (keys, credits, logs, presets…)\n  completion: Shell completion (bash, zsh, fish, powershell)\n  onboard:    Paste-ready prompts for coding agents\n  impl|plan|fix|deploy|cp\n              Shortcuts for onboard modes\n\nSTRUCTURED DECISIONS\n  decision:   POST typed decisions (not chat); aliases: decisions, systemone\n\nLAUNCH\n  claude    Claude Code\n  cc        Alias of claude\n  codex     Codex\n  grok      Grok Build\n  opencode  OpenCode\n  pi        Pi\n  pool      Poolside\n  poolside  Alias of pool\n\n  anyr                 Sign in if needed, then open the HUD\n  anyr auth login      Sign in\n  anyr onboard impl    Agent paste prompt to wire AnyRouter\n  anyr decision        Typed decisions via POST /api/v1/decisions\n  anyr claude          Launch Claude Code\n"
+    }
+  ]
+}

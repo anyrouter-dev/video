@@ -1,191 +1,188 @@
 ---
-version: 2
-name: AnyRouter Clear — Frame (video / frame layer)
+version: 3
+name: AnyRouter Monolith (video / frame layer)
 description: >
-  Bespoke frame system for the AnyRouter newcomer explainer, built from anyrouter.dev's own
-  tokens (captured 2026-10-18): a true white canvas, near-black ink, one burnt-orange accent
-  (the site's --primary), the site's success green for "free", hairline greys, and the site's
-  own faces, Geist and Geist Mono. Quiet, product-grade, readable by anyone. It deliberately
-  shares nothing with the repo's older print / dither films.
-unit: the frame — 1920×1080
-principle: white space does the work · one accent per frame · every word on screen is real
+  The shared frame system for every AnyRouter film, v3 "Monolith". Pure white, near-black ink,
+  oversized Geist, and one object in focus at a time: a sentence, a line of code, a dialog, a
+  list, a set of cards with the one that matters inked. Motion is slow and weighty, like a
+  keynote: a headline settles from a push, cards arrive under a camera that eases out of a
+  close-up, and a scene leaves before the next one speaks. Built from anyrouter.dev's own
+  tokens (Geist, Geist Mono, the site's burnt orange). Replaces v2 "Clear", whose small cards
+  sat in a large empty frame.
+unit: the frame, 1920x1080 (portrait 1080x1920 from the same source)
+principle: one object in focus · fill the frame · one accent, on the thing that just changed · every word on screen is real
 
 colors:
   bg: "#FFFFFF"
-  surface: "#FAFAFA"
-  surface-2: "#F5F5F5"
   ink: "#0A0A0A"
-  ink-2: "#3F3F46"
-  muted: "#636363"
-  line: "#E5E5E5"
-  line-strong: "#D4D4D8"
-  primary: "#BB4D00"
-  primary-tint: "#FFF4EC"
-  free: "#007E55"
-  free-tint: "#ECFDF5"
-  info: "#1761D3"
-  danger: "#C0262D"
-  terminal-bg: "#0A0A0A"
-  terminal-ink: "#F4F4F5"
-  terminal-dim: "#A1A1AA"
+  ink-2: "#27272A"
+  muted: "#6B6B6B"
+  hairline: "#E7E7E7"
+  surface: "#F5F5F5"
+  accent: "#BB4D00"
+  on-ink: "#FFFFFF"
+  on-ink-muted: "#A3A3A3"
+  accent-on-ink: "#F0915A"
 
 radii:
-  card: "24px"
-  ui: "16px"
-  badge: "12px"
-  chip: "999px"
-  key: "12px"
+  card: "32px"
+  card-portrait: "28px"
+  control: "20px"
+  pill: "999px"
 
-# The frame is a 2x shadcn page: one CSS px on anyrouter.dev = 2 film px.
-# shadcn's text-sm (14px) would be 28px here, which is unreadable on a phone,
-# so the type scale below is phone-first, not 2x.
 typography:
-  display:  { fontFamily: "Geist", px: 140, weight: 600, lineHeight: 1.0, tracking: "-0.04em", color: "ink" }
-  h1:       { fontFamily: "Geist", px: 104, weight: 600, lineHeight: 1.02, tracking: "-0.035em", color: "ink" }
-  h2:       { fontFamily: "Geist", px: 76, weight: 600, lineHeight: 1.08, tracking: "-0.03em", color: "ink" }
-  title:    { fontFamily: "Geist", px: 56, weight: 600, lineHeight: 1.1, tracking: "-0.025em", color: "ink" }
-  body:     { fontFamily: "Geist", px: 44, weight: 400, lineHeight: 1.3, color: "muted" }
-  label:    { fontFamily: "Geist", px: 40, weight: 500, lineHeight: 1.2, color: "ink" }
-  small:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.2, color: "muted" }
-  badge:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.0, color: "ink" }
-  code:     { fontFamily: "Geist Mono", px: 48, weight: 400, lineHeight: 1.45, color: "terminal-ink" }
-  code-sm:  { fontFamily: "Geist Mono", px: 40, weight: 400, lineHeight: 1.45, color: "ink" }
-  stat:     { fontFamily: "Geist", px: 200, weight: 600, lineHeight: 1.0, tracking: "-0.05em", color: "ink", numeric: "tabular-nums" }
-  floor:    "36px for any word a viewer must read, 32px for incidental mono metadata (URL pills). Enforced by shared/authoring/type-audit.mjs on the rendered frame, transforms included."
+  display:  { fontFamily: "Geist", px: 184, portraitPx: 148, weight: 600, lineHeight: 0.98, tracking: "-0.055em", color: "ink" }
+  headline: { fontFamily: "Geist", px: 120, portraitPx: 104, weight: 600, lineHeight: 1.0, tracking: "-0.05em", color: "ink" }
+  title:    { fontFamily: "Geist", px: 64, portraitPx: 56, weight: 600, lineHeight: 1.1, tracking: "-0.035em", color: "ink" }
+  body:     { fontFamily: "Geist", px: 56, portraitPx: 48, weight: 500, lineHeight: 1.1, tracking: "-0.035em", color: "ink-2" }
+  label:    { fontFamily: "Geist", px: 40, weight: 600, lineHeight: 1.2, tracking: "-0.025em", color: "ink" }
+  small:    { fontFamily: "Geist", px: 36, weight: 500, lineHeight: 1.1, color: "muted" }
+  stat:     { fontFamily: "Geist", px: 52, weight: 600, lineHeight: 1.0, tracking: "-0.04em", numeric: "tabular-nums" }
+  stat-hero: { fontFamily: "Geist", px: 360, portraitPx: 280, weight: 600, lineHeight: 0.9, tracking: "-0.06em", numeric: "tabular-nums" }
+  code:     { fontFamily: "Geist Mono", px: 60, portraitPx: 52, weight: 400, lineHeight: 1.4, tracking: "-0.02em", color: "ink" }
+  code-tight: { fontFamily: "Geist Mono", px: 52, portraitPx: 40, description: "only where a real line would overflow at code size: a 30-plus-character URL or id on the 900px portrait width" }
+  caption:  { fontFamily: "Geist", px: 52, portraitPx: 46, weight: 500, lineHeight: 1.2, tracking: "-0.02em", color: "ink" }
+  floor:    "36px for any word a viewer must read. Enforced by shared/authoring/type-audit.mjs --floor=36 on the rendered frame, transforms included."
 
 spacing:
   pad-x: "96px"
   pad-top: "88px"
-  gap: "32px"
-  caption-band: "bottom 200px kept clear"
+  gap: "40px"
+  gap-portrait: "28px"
+  caption-band: "landscape y 900-1080; portrait y 1240-1480"
 
 components:
   card:
     backgroundColor: "{colors.bg}"
-    border: "2px solid {colors.line}"
+    border: "2px solid {colors.hairline}"
     rounded: "{radii.card}"
-    shadow: "0 2px 4px rgba(0,0,0,.05)"
-    description: "shadcn Card at 2x: hairline border, shadow-sm, padding 48px. Header = title (title type) + description (body type, muted). No big soft drop shadows."
-  browser-frame:
-    backgroundColor: "{colors.bg}"
-    border: "2px solid {colors.line}"
-    rounded: "{radii.card}"
-    description: "Wraps a real screenshot. Top bar 56px, surface fill, URL pill in Geist Mono 32px muted. The screenshot inside is cropped to the region the voice names and shown at >= 0.9 of its captured pixels, never the whole page shrunk."
-  button:
+    shadow: none
+    description: "Padding 52px (portrait 40px 44px). No shadow, ever. A card is big: in a row of three it is a third of the safe width and at least half the safe height."
+  ink-card:
     backgroundColor: "{colors.ink}"
-    textColor: "#FFFFFF"
-    rounded: "{radii.ui}"
-    description: "shadcn default Button: ink fill, label type in white, height 88px, padding 0 40px. Use the orange variant only when it mirrors a real orange button on anyrouter.dev."
-  button-outline:
-    backgroundColor: "{colors.bg}"
-    border: "2px solid {colors.line}"
-    rounded: "{radii.ui}"
+    textColor: "{colors.on-ink}"
+    description: "The focused item. Exactly one per moment. Its secondary text is on-ink-muted, its marks turn white. A card becomes the ink card by tweening its fill, border and text together, 0.6s power2.inOut."
+  ring:
+    description: "Monolith points by inking, not by ringing. Use the ring (4px accent line, 12px off the target, radius of the target + 12) only where inking would lie about the UI, such as a real button that keeps its own fill."
   badge:
-    backgroundColor: "{colors.surface-2}"
-    textColor: "{colors.ink}"
-    rounded: "{radii.badge}"
-    description: "shadcn Badge: height 56px, padding 0 20px, badge type. Variants: secondary (surface-2), outline (2px line border, bg), free (free-tint / free), accent (primary-tint / primary)."
-  step-header:
-    description: "Replaces the tiny four-dot rail. Top-left: an outline Badge 'Step 2 of 4', then the step name in h2 under it. One step on screen, big."
-  callout:
-    description: "shadcn Alert: card with a 40px icon left, a label-type title and body-type text. Use for one side note at a time; never a floating 26px annotation."
-  focus-ring:
-    description: "shadcn focus ring at 2x: 6px ring in primary at 35% alpha around the control the voice names, plus a 2px primary border. The way the film points at things."
-  demo-badge:
-    description: "Outline Badge reading 'Demo' pinned top-right of every frame that shows a third-party site (openrouter.ai, build.nvidia.com). Third-party screens are shown for demonstration only."
+    description: "A quiet label: 64px tall pill, 2px hairline, label type in ink-2. Variants: ink (ink fill, white text: the one that matters), outline (default), muted (surface fill, muted text: a thing that stopped)."
+  button:
+    description: "Real product buttons keep the site's look: ink fill and white text, or the site's orange where the site's button is orange. Disabled: hairline border, muted text."
+  code:
+    description: "A code card: hairline card, a 72px tab bar with the file name in small mono, code type inside. A line the voice names is the only ink line; the others are muted. The value that rolls in takes the accent."
   terminal:
-    backgroundColor: "{colors.terminal-bg}"
-    textColor: "{colors.terminal-ink}"
-    rounded: "{radii.card}"
-    description: "The only dark surface. code type (48px). At most 6 lines and 52 characters visible: crop long logs, never shrink them. Prompt `$` in terminal-dim, model ids in #F0915A."
-  key-pill:
-    backgroundColor: "{colors.surface}"
-    border: "2px dashed {colors.line-strong}"
-    rounded: "{radii.key}"
-    typography: "{typography.code-sm}"
-    description: "An API key, always redacted: prefix + bullets, e.g. sk-or-v1-••••••••. Never a real key."
+    description: "The terminal is an ink card: on-ink text, the prompt in on-ink-muted, the arriving id in accent-on-ink."
+  brand:
+    description: "The AnyRouter mark and word, 40px and 36px, top-left at x 96 y 88 (portrait x 60 y 110). Frame chrome: it carries data-outside-safe-area. On every frame except the close, where the lockup is the subject."
+  caption:
+    description: "Ink on white, Geist 500, one line, centred in the caption band. No chip, no outline, no word highlight. Each phrase rises 12px and fades in over 0.3s expo.out; the next replaces it with no gap."
 ---
 
 ## Overview
 
-A calm, white explainer for people who have never heard of AnyRouter. The canvas is
-the site's own white page; everything else is ink, hairlines and one accent. The film
-should feel like the product: clean, exact, unhurried.
+Monolith is quiet and expensive-looking because it shows less. Each beat has one object
+on stage, set very large, and nothing else competes with it. White does the framing; the
+frame itself is never empty, because the object fills it.
 
-## The Frame
+## The frame
 
-1920×1080, white. Content sits in the top ~81%; the bottom 200px stays clear for
-captions. Margins 96px. One idea per frame, one focal element per moment.
+1920x1080, white. Content sits in x 96-1824, y 88-880; the bottom band (y 900-1080) belongs
+to the captions. One object in focus per beat. "Object" means a headline, one line of code,
+one card set, one dialog, one list. Two objects share a frame only as a lockup with a clear
+lead (a title over a terminal, a headline beside its list), and the lead is at least twice
+the size of the other.
 
-**Phone first.** Most viewers watch on a phone, where the frame is 390 to 844px
-wide: a 1920px frame shrinks 2.3 to 5 times. So the focal element fills the frame
-(at least 55% of the safe width), text is never below the floor, and a frame
-says one thing in at most 12 on-screen words besides the caption. If a detail
-cannot be read at 640px wide, enlarge it, crop to it, or cut it; the caption
-already carries the words.
+**Fill the frame.** The focal object spans at least 70% of the safe width, or 70% of the
+safe height when it is a column. A row of three cards fills the safe width with 40px gaps.
+A dialog is at least 1100px wide. If an object looks small, it is: enlarge it, cut what is
+around it, or split the beat.
+
+**Phone first.** Most viewers watch on a phone, where the frame shrinks 2.3 to 5 times. The
+type scale starts at 36px and the body sits at 56px, so every word survives the shrink.
+At most 12 words on screen besides the caption.
 
 ## Two renditions: landscape and portrait
 
-Every film ships twice from one source: **landscape** 1920×1080 (YouTube) and
-**portrait** 1080×1920 (Reels, Shorts, TikTok). Same timeline, same voice, same
-captions; only layout changes.
+Every film ships twice from one source: landscape 1920x1080 and portrait 1080x1920. Same
+timeline, same voice, same captions; only layout changes.
 
-- Author at 1920×1080. Put each frame's portrait layout under
-  `@media (orientation: portrait) { … }` in the same file. Tweens animate
-  transforms and opacity, so one timeline drives both layouts.
-- Never hard-code the stage size outside the root declarations. Sizes that follow
-  the stage use `%`, `vw/vh`, `xPercent/yPercent`, or a value read from the root's
-  box at runtime. `shared/authoring/portrait.mjs` writes the portrait project and
-  fails on any leftover literal 1920/1080 (an SVG `viewBox="0 0 1920 1080"`, a
-  point computed in landscape px).
-- Portrait safe area: content between y 200 and y 1220, x 60 to 960 (the
-  platforms draw buttons on the right and over the bottom quarter). Captions sit in
-  the band 1240–1480. Stack what landscape puts side by side; the focal element
-  takes the full 960px width. The type floor is the same in px, which reads larger
-  on a phone held upright.
-- Check both: `type-audit.mjs` and a phone sheet on the portrait project too.
+- Author at 1920x1080. Each frame's portrait layout lives under
+  `@media (orientation: portrait) { ... }` in the same file. Tweens move transforms and
+  opacity, so one timeline drives both.
+- Never write a stage size outside the root declarations. `shared/authoring/portrait.mjs`
+  writes the portrait project and fails on a leftover literal 1920 or 1080.
+- Portrait safe area: content in x 60-960, y 200-1220. The platforms draw buttons on the
+  right and over the bottom quarter. Captions sit in y 1240-1480. The brand sits above the
+  safe area at y 110, as chrome.
+- Portrait stacks what landscape sets side by side. The focal object takes the full 900px
+  width; a row of three cards becomes a column of three, each a third of the safe height.
+- Type steps down to the portrait sizes in the frontmatter (display 148, body 48, code 52).
+  A code line that still overflows uses code-tight, never a size under 36px.
 
 ## Colors
 
-- `bg` white is the ground for every frame. Never a gradient, never a tint field.
-- `ink` for headlines and marks. `ink-2` / `muted` for supporting copy.
-- `primary` (burnt orange, 5.0:1 on white) is the single accent: the AnyRouter node,
-  the active step, the button being pressed, the key being moved. One use per moment.
-- `free` (green, 5.1:1) only ever means "free" / "$0" / "works".
-- `danger` only for a provider going down in the failover beat.
-- The terminal is the one dark surface.
+- `bg` white is the ground of every frame. No gradient, no tint field, no texture.
+- `ink` for type and for the one focused card. `ink-2` for body copy, `muted` for labels
+  and for lines the voice is not naming. `hairline` for card borders and rules.
+- `accent` (#BB4D00, 5.0:1 on white) is the only colour. It goes on the model id that just
+  arrived, or the one value that just changed, and nowhere else. On the ink card use
+  `accent-on-ink` (#F0915A, 8:1 on ink).
+- Monolith has no green and no red. "Free", "$0" and "works" are said in words and shown
+  by inking; a thing that fails turns `surface` with muted text.
+- Every pair passes 4.5:1. Muted on white is 5.3:1; on-ink-muted on ink is 7.9:1.
 
 ## Typography
 
-Geist for everything spoken as words; Geist Mono for anything typed: ids, URLs, keys,
-commands. Sentence case everywhere; no uppercase eyebrows (shadcn uses none, and
-caps tracking reads as noise when small). Two weights only: 600 for headings and
-titles, 400/500 for the rest. Numbers use `font-variant-numeric: tabular-nums`.
-Every text element sets `-webkit-font-smoothing: antialiased` and
-`text-rendering: geometricPrecision`. Nothing a viewer must read below 36px.
+Geist for words, Geist Mono for anything typed (ids, URLs, keys, commands). Sentence case;
+no uppercase eyebrows. Two weights: 600 for display, headlines, titles and stats; 500 for
+body, labels and captions. Mono stays 400. Tight tracking scales with size (-0.055em at
+display, -0.02em on captions). Numbers use `tabular-nums`. Every text element sets
+`-webkit-font-smoothing: antialiased` and `text-rendering: geometricPrecision`.
 
-## Depth & Surface
+## Depth and surface
 
-Flat white, shadcn surfaces: 2px hairline borders and shadow-sm, nothing deeper. No glow, no blur fields, no bokeh, no
-noise, no dither, no halftone, no 3D tilt of real screenshots beyond a gentle push.
+Flat. Cards are 2px hairline with a 32px radius and no shadow. Depth comes from motion, not
+from shading: a camera that eases out of a close-up, a headline that settles from 1.08,
+cards that rise 120px in a stagger. No glow, blur, noise, dither, bokeh or 3D tilt.
 
-## Approved Entities
+## Motion
 
-AnyRouter mark (`anyrouter-logo-black.svg`), official provider marks (`provider-*.svg`),
-real screenshots of anyrouter.dev and openrouter.ai, Geist faces. Say and caption
-"OpenRouter", never the domain "openrouter.ai". Every third-party screen carries
-the Demo badge.
+The film moves like a keynote: few moves, each slow and certain, with one hero move per beat.
 
-## Numerals & Claims (hard rule)
+| Move | From | Ease | Duration |
+| --- | --- | --- | --- |
+| Headline push-out | scale 1.08 | expo.out | 2.2s |
+| Headline lines | y 60, opacity 0, stagger 0.14 | expo.out | 1.4s |
+| Card camera (the group) | scale 1.1 | power4.inOut | 2.1s |
+| Cards | y 120, opacity 0, stagger 0.14 | expo.out | 1.3s |
+| Code or a single object in | y 50, opacity 0, scale 1.04 | expo.out | 1.0s |
+| Roll (a value changes in place) | yPercent 100 | power4.inOut | 0.7s, or 0.45s when the next comes sooner |
+| Inking a card | white to ink | power2.inOut | 0.6s |
+| Exit | to y -80, opacity 0 | power4.inOut | 0.7-0.8s |
 
-Only numbers from BRIEF.md's claims ledger: 260+ models, 17+ providers, $4 credit a
-month, the live pool table as captured. Never "unlimited": say "no daily cap".
-API keys on screen are always redacted.
+- A beat leaves before the next one arrives; two objects never cross at full opacity.
+- Reveals land on the spoken word (`audio_meta.json`), 0.05s ahead of it.
+- No bounce, no back or elastic ease, no spring, no `repeat` or `yoyo`, no randomness.
+- No still span over 1.5s outside the closing card (`pace-audit.mjs`). A long beat earns its
+  motion from a slow camera drift (`K.push`, scale +0.03 over the beat), never from a wiggle.
 
-## Pre-Render Self-Audit
+## Approved entities
 
-- Is there exactly one accent-colored thing per moment?
-- Could a non-technical viewer read every word on screen in the time it holds?
-- Is anything in the bottom 200px?
-- Does `node ../../shared/authoring/type-audit.mjs` pass?
-- Does the phone sheet (frames scaled to 640px wide) read without zooming?
+The AnyRouter mark (`assets/providers/anyrouter.svg`), official provider marks
+(`provider-*.svg`, `assets/providers/*.svg`), Geist faces. Product UI is redrawn from real
+values, never shown as a screenshot. Say and caption "OpenRouter", never the domain.
+
+## Numerals and claims (hard rule)
+
+Only numbers from BRIEF.md's claims ledger and values captured from the product (the
+playground run, the catalog). Never "unlimited": say "no daily cap". API keys on screen are
+always redacted or read from `process.env`.
+
+## Pre-render self-audit
+
+- Is there one object in focus in every beat, and does it fill the frame?
+- Is there at most one accent-coloured thing and one ink card per moment?
+- Does every move use the eases above, with no bounce?
+- Is anything in the caption band?
+- Does `type-audit.mjs --floor=36` pass on both renditions?
+- Do the contact sheets of both renditions read at phone size without zooming?

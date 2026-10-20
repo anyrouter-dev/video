@@ -63,6 +63,160 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/openrouter-unblock-003-20261019-v1-4cd8137dbb"
       }
+    },
+    {
+      "id": "004-20261019-v2-7e3d460a1a",
+      "hash": "7e3d460a1a",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 35.285,
+      "renderedAt": "2026-10-19T16:27:56.149Z",
+      "commit": "3b32372",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-004-20261019-v2-7e3d460a1a.mp4",
+          "cover": "renders/openrouter-unblock-004-20261019-v2-7e3d460a1a.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-004-20261019-v2-7e3d460a1a-portrait.mp4",
+          "cover": "renders/openrouter-unblock-004-20261019-v2-7e3d460a1a-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T16:27:56.278Z"
+    },
+    {
+      "id": "005-20261019-v2-71237d6d5b",
+      "hash": "71237d6d5b",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T16:42:42.263Z",
+      "commit": "3ef73e1",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-005-20261019-v2-71237d6d5b.mp4",
+          "cover": "renders/openrouter-unblock-005-20261019-v2-71237d6d5b.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-005-20261019-v2-71237d6d5b-portrait.mp4",
+          "cover": "renders/openrouter-unblock-005-20261019-v2-71237d6d5b-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T16:42:42.336Z"
+    },
+    {
+      "id": "006-20261019-v2-9ce3f1f618",
+      "hash": "9ce3f1f618",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T16:53:07.087Z",
+      "commit": "0f0a431",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-006-20261019-v2-9ce3f1f618.mp4",
+          "cover": "renders/openrouter-unblock-006-20261019-v2-9ce3f1f618.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-006-20261019-v2-9ce3f1f618-portrait.mp4",
+          "cover": "renders/openrouter-unblock-006-20261019-v2-9ce3f1f618-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T16:53:07.119Z"
+    },
+    {
+      "id": "007-20261019-v2-70cac31052",
+      "hash": "70cac31052",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T17:01:08.406Z",
+      "commit": "0678a70",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-007-20261019-v2-70cac31052.mp4",
+          "cover": "renders/openrouter-unblock-007-20261019-v2-70cac31052.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-007-20261019-v2-70cac31052-portrait.mp4",
+          "cover": "renders/openrouter-unblock-007-20261019-v2-70cac31052-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T17:01:08.433Z"
+    },
+    {
+      "id": "008-20261019-v2-0a6f4c0a06",
+      "hash": "0a6f4c0a06",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T18:06:18.487Z",
+      "commit": "9725ea0",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-008-20261019-v2-0a6f4c0a06.mp4",
+          "cover": "renders/openrouter-unblock-008-20261019-v2-0a6f4c0a06.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-008-20261019-v2-0a6f4c0a06-portrait.mp4",
+          "cover": "renders/openrouter-unblock-008-20261019-v2-0a6f4c0a06-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T18:06:18.514Z"
+    },
+    {
+      "id": "009-20261019-v2-490759a783",
+      "hash": "490759a783",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T18:18:23.136Z",
+      "commit": "66a6116",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-009-20261019-v2-490759a783.mp4",
+          "cover": "renders/openrouter-unblock-009-20261019-v2-490759a783.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-009-20261019-v2-490759a783-portrait.mp4",
+          "cover": "renders/openrouter-unblock-009-20261019-v2-490759a783-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T18:18:23.160Z"
+    },
+    {
+      "id": "010-20261019-v2-f199cd4eaa",
+      "hash": "f199cd4eaa",
+      "kind": "openrouter-unblock",
+      "label": "v2",
+      "title": "OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool",
+      "seconds": 39.714,
+      "renderedAt": "2026-10-19T18:22:17.283Z",
+      "commit": "7d473f4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/openrouter-unblock-010-20261019-v2-f199cd4eaa.mp4",
+          "cover": "renders/openrouter-unblock-010-20261019-v2-f199cd4eaa.png"
+        },
+        "portrait": {
+          "artifact": "renders/openrouter-unblock-010-20261019-v2-f199cd4eaa-portrait.mp4",
+          "cover": "renders/openrouter-unblock-010-20261019-v2-f199cd4eaa-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-19T18:22:17.306Z"
     }
   ]
 }

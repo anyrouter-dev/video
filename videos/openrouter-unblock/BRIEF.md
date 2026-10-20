@@ -2,39 +2,44 @@
 workflow: product-launch-video
 flow: automation
 storyboard: no
-message: "Your OpenRouter free models stop at OpenRouter's limit. Add your key to AnyRouter and share it with the pool, and you can send more requests than that limit allows."
+message: "OpenRouter's free models stop at 50 requests a day. Add your key to AnyRouter and share it with the pool, and your requests can go through keys other members share."
 destination: youtube
 aspect: 1920x1080
 language: en
 audience: "someone already using OpenRouter's free models, technical or not"
-length: 60s
-angle: tutorial-walkthrough
+length: 35s
+angle: benefit-first
 voice: elevenlabs "Eric - Smooth, Trustworthy" (cjVigY5qzO86Huf0OWal)
 ---
 
 ## Intent
 
-A short narrated tutorial for someone who already uses OpenRouter's free models
-and keeps hitting OpenRouter's rate limit. It shows the wall, the reason (one key,
-one limit), the fix in three steps, how a request moves once the fix is on, and a
-close. White, calm, the same look as the sibling explainer film.
+A short narrated film for a developer whose app or agent keeps hitting OpenRouter's
+free-model limit (HTTP 429). v2 shows the benefit and how little changes, not the
+setup clicks: the wall, add and share the key, what the pool does, the two values
+that change in the app, what sharing costs you, and a close. White, calm, the same
+look as the explainer (frame.md v3, "Monolith").
 
 The user's words: "I have OpenRouter but free. OpenRouter has :free models but with
 rate limit. By adding the OpenRouter key as a BYOK key and enabling the pool, the
 user can unblock the rate limit by using the keys pool."
 
+The owner on v1 (106.6s): too slow, too much step-by-step and internal mechanics.
+
 ## Customizations
 
 - Shares the explainer's design truth (`frame.md` is a symlink to
-  `../explainer/frame.md`, v2) and its components (step header, browser frame,
-  focus ring, callout, key pill, terminal, Demo badge). The step header carries
-  this film's own steps: `Create a key`, `Add it to AnyRouter`,
-  `Share with the pool`, `Use it in your app`.
+  `../explainer/frame.md`, v3) and its kit (`tools/kit` links the explainer's;
+  `node ../explainer/tools/kit.mjs .` pastes it into this film's frames).
 - Ships landscape (1920x1080) and portrait (1080x1920) from the same frames; each
   frame's portrait layout sits under `@media (orientation: portrait)`.
-- Dashboard screens are rebuilt in HTML from the product's UI source, labels
-  exact (`tools/ui-labels.md`). Keys are always redacted.
-- Does not reuse or open the repo's older films (intro, teaser, `lib/film.mjs`).
+- No anyrouter.dev screenshot is embedded (owner direction: some site UI is being
+  redesigned, duyet/anyrouter #5800-#5803). The Add key dialog in Frame 2 is redrawn in
+  the kit from the real one, with its real labels (`shared/captures/2026-10-19/screens/signed-in/`
+  `byok-add-openrouter-key.png`, `byok-openrouter-key-routing.png`, reference only). The one
+  surface that is not real UI (Frame 5, your account's quota card) carries the "Illustration" badge.
+- "32 routed" and "198 routed" are on-screen labels of that dialog, not narration claims.
+- Keys are always redacted.
 
 ## Claims ledger
 
@@ -52,7 +57,7 @@ Every number or claim on screen is one of these. Sources were read 2026-10-18.
 | C8 | Create the key: openrouter.ai → Keys → Create Key → copy. Keys start `sk-or-`. | docs/guides/unblock-free-model-rate-limits-openrouter-key.md |
 | C9 | Add it: Dashboard → BYOK → OpenRouter → paste into "API key". AnyRouter makes one live call to OpenRouter before it stores the key; encrypted at rest, never shown again. Base URL `https://openrouter.ai/api/v1` is the default. | same guide + docs/features/byok-providers/openrouter.md |
 | C10 | Donating: per-key switch; AnyRouter verifies the key ("Key verified"); your own requests always come first; turn it off any time; earn 5% (Go or no plan) / 8% (Pro, Max) of the token cost of requests it serves, capped at $1 per key per UTC day. On the Free plan, donating an eligible key unlocks the shared pool's free models. | docs/features/shared-pool.md + the guide |
-| C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | `assets/anyrouter-pool.png` (real screenshot) |
+| C11 | Live pool (anyrouter.dev/pool, captured 2026-10-18): OpenRouter, Free, 74 keys, 1.2B tokens; NVIDIA NIM, 33 keys. | the real /pool screenshot `assets/anyrouter-pool.png`, used by v1 only; v2 shows no site screenshot |
 | C13 | The limit belongs to the account: more keys on one account do not raise it ("One account. One limit."). | openrouter.ai/docs/api-reference/limits.md (live 2026-10-19: "Making additional accounts or API keys will not affect your rate limits") |
 | C14 | Shared-pool traffic on your donated key runs on your OpenRouter account and uses its quota (its 20/min and 50/day). Your own requests are tried first. | anyrouter.dev/docs/features/shared-pool.md (live 2026-10-19: "route other users' matching requests through your provider account, exactly as if you'd made the call yourself"; "You always keep first call on your own key") + the dashboard consent line "the usage appears on your OpenRouter account" (`tools/ui-labels.md`) + C13 (limit per account) |
 | C15 | Check that OpenRouter's terms allow sharing before you donate; the dialog calls sharing "donating". | docs/guides/unblock-free-model-rate-limits-openrouter-key.md (live 2026-10-19: "Check that OpenRouter's terms allow sharing your key before you donate") + shared-pool.md ("You're responsible for confirming that before you donate") |
@@ -75,10 +80,6 @@ narration uses plain words true for both ("pick OpenRouter", "paste your key",
 - Never "unlimited". Never a number outside the ledger.
 - Voice: ElevenLabs "Eric - Smooth, Trustworthy" (`cjVigY5qzO86Huf0OWal`), model
   `eleven_multilingual_v2`, stability 0.5, similarity_boost 0.8, style 0.15, speaker
-  boost on, the same for every line. Each mp3 is converted to 24 kHz mono wav.
-- Music bed: `assets/bgm/track-108s.mp3`, made from the explainer's 68s `track.mp3` (60 BPM) for the 106.6s film.
-  A plain loop let the track's outro fade to silence at 68s and restart mid-film. The bed
-  instead jumps back twice on the bar, each with a 3s crossfade: 16s (4 bars), then 24s
-  (6 bars). 0–40s, then 21–56s, then 29s to the real outro, 108s in all, so the bed runs
-  1.4s past the film's end and the film closes inside the real outro:
-  `ffmpeg -i track.mp3 -filter_complex "[0:a]asplit=3[a][b][c];[a]atrim=0:40,asetpts=PTS-STARTPTS[x];[b]atrim=21:56,asetpts=PTS-STARTPTS[y];[c]atrim=29:68,asetpts=PTS-STARTPTS[z];[x][y]acrossfade=d=3:c1=tri:c2=tri[xy];[xy][z]acrossfade=d=3:c1=tri:c2=tri" -b:a 192k track-108s.mp3`
+  boost on, the same for every line. `shared/authoring/eleven-voice.mjs` voices each line and writes 44.1 kHz mono wav.
+- Music bed: `assets/bgm/track.mp3`, the explainer's 68s track (120 bpm, first beat 0.059s), trimmed to
+  the film. Each line is padded to the beat (`pad-voices.mjs --beat=0.5 --phase=0.059`), so cuts land on it.

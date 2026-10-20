@@ -1,2153 +1,905 @@
 {
-  "total_duration_s": 108.359,
+  "total_duration_s": 47.496,
   "width": 1920,
   "height": 1080,
   "groups": [
     {
       "id": "caption-group-0",
       "frame": 1,
-      "start": 0.13,
-      "end": 1.639,
-      "text": "There are dozens of AI companies,",
+      "start": 0,
+      "end": 1.916,
+      "text": "Every AI company has its own account,",
       "words": [
         {
           "id": "caption-word-0-0",
-          "text": "There",
-          "start": 0.13,
-          "end": 0.28
+          "text": "Every",
+          "start": 0,
+          "end": 0.29
         },
         {
           "id": "caption-word-0-1",
-          "text": "are",
-          "start": 0.28,
-          "end": 0.45
+          "text": "AI",
+          "start": 0.36,
+          "end": 0.58
         },
         {
           "id": "caption-word-0-2",
-          "text": "dozens",
-          "start": 0.45,
-          "end": 0.79
+          "text": "company",
+          "start": 0.65,
+          "end": 0.975
         },
         {
           "id": "caption-word-0-3",
-          "text": "of",
-          "start": 0.79,
-          "end": 0.9
+          "text": "has",
+          "start": 1.01,
+          "end": 1.126
         },
         {
           "id": "caption-word-0-4",
-          "text": "AI",
-          "start": 0.9,
-          "end": 1.01
+          "text": "its",
+          "start": 1.184,
+          "end": 1.3
         },
         {
           "id": "caption-word-0-5",
-          "text": "companies,",
-          "start": 1.01,
-          "end": 1.639
+          "text": "own",
+          "start": 1.347,
+          "end": 1.463
+        },
+        {
+          "id": "caption-word-0-6",
+          "text": "account,",
+          "start": 1.498,
+          "end": 1.916
         }
       ]
     },
     {
       "id": "caption-group-1",
       "frame": 1,
-      "start": 1.639,
-      "end": 3.974,
-      "text": "and each one has its own key and its own bill.",
+      "start": 2.299,
+      "end": 3.994,
+      "text": "its own key and its own bill.",
       "words": [
         {
           "id": "caption-word-1-0",
-          "text": "and",
-          "start": 1.639,
-          "end": 1.769
+          "text": "its",
+          "start": 2.299,
+          "end": 2.461
         },
         {
           "id": "caption-word-1-1",
-          "text": "each",
-          "start": 1.769,
-          "end": 1.949
+          "text": "own",
+          "start": 2.519,
+          "end": 2.647
         },
         {
           "id": "caption-word-1-2",
-          "text": "one",
-          "start": 1.949,
-          "end": 2.099
+          "text": "key",
+          "start": 2.717,
+          "end": 2.902
         },
         {
           "id": "caption-word-1-3",
-          "text": "has",
-          "start": 2.099,
-          "end": 2.239
+          "text": "and",
+          "start": 2.937,
+          "end": 3.007
         },
         {
           "id": "caption-word-1-4",
           "text": "its",
-          "start": 2.239,
-          "end": 2.369
+          "start": 3.053,
+          "end": 3.17
         },
         {
           "id": "caption-word-1-5",
           "text": "own",
-          "start": 2.379,
-          "end": 2.519
+          "start": 3.216,
+          "end": 3.344
         },
         {
           "id": "caption-word-1-6",
-          "text": "key",
-          "start": 2.519,
-          "end": 2.969
-        },
-        {
-          "id": "caption-word-1-7",
-          "text": "and",
-          "start": 3.288,
-          "end": 3.378
-        },
-        {
-          "id": "caption-word-1-8",
-          "text": "its",
-          "start": 3.378,
-          "end": 3.548
-        },
-        {
-          "id": "caption-word-1-9",
-          "text": "own",
-          "start": 3.558,
-          "end": 3.738
-        },
-        {
-          "id": "caption-word-1-10",
           "text": "bill.",
-          "start": 3.738,
-          "end": 3.974
+          "start": 3.39,
+          "end": 3.994
         }
       ]
     },
     {
       "id": "caption-group-2",
-      "frame": 1,
-      "start": 4.982,
-      "end": 7.491,
-      "text": "Use three, and you have three keys and three bills to manage.",
+      "frame": 2,
+      "start": 4.559,
+      "end": 8.506,
+      "text": "AnyRouter puts more than 270 models behind one API.",
       "words": [
         {
           "id": "caption-word-2-0",
-          "text": "Use",
-          "start": 4.982,
-          "end": 5.042
+          "text": "AnyRouter",
+          "start": 4.559,
+          "end": 5.105
         },
         {
           "id": "caption-word-2-1",
-          "text": "three,",
-          "start": 5.042,
-          "end": 5.297
+          "text": "puts",
+          "start": 5.174,
+          "end": 5.395
         },
         {
           "id": "caption-word-2-2",
-          "text": "and",
-          "start": 5.297,
-          "end": 5.452
+          "text": "more",
+          "start": 5.453,
+          "end": 5.616
         },
         {
           "id": "caption-word-2-3",
-          "text": "you",
-          "start": 5.452,
-          "end": 5.607
+          "text": "than",
+          "start": 5.65,
+          "end": 5.813
         },
         {
           "id": "caption-word-2-4",
-          "text": "have",
-          "start": 5.607,
-          "end": 5.779
+          "text": "270",
+          "start": 5.871,
+          "end": 6.742
         },
         {
           "id": "caption-word-2-5",
-          "text": "three",
-          "start": 5.843,
-          "end": 6.062
+          "text": "models",
+          "start": 6.8,
+          "end": 7.09
         },
         {
           "id": "caption-word-2-6",
-          "text": "keys",
-          "start": 6.062,
-          "end": 6.262
+          "text": "behind",
+          "start": 7.148,
+          "end": 7.45
         },
         {
           "id": "caption-word-2-7",
-          "text": "and",
-          "start": 6.262,
-          "end": 6.417
+          "text": "one",
+          "start": 7.531,
+          "end": 7.705
         },
         {
           "id": "caption-word-2-8",
-          "text": "three",
-          "start": 6.417,
-          "end": 6.671
-        },
-        {
-          "id": "caption-word-2-9",
-          "text": "bills",
-          "start": 6.671,
-          "end": 6.899
-        },
-        {
-          "id": "caption-word-2-10",
-          "text": "to",
-          "start": 6.944,
-          "end": 7.026
-        },
-        {
-          "id": "caption-word-2-11",
-          "text": "manage.",
-          "start": 7.026,
-          "end": 7.491
+          "text": "API.",
+          "start": 7.729,
+          "end": 8.506
         }
       ]
     },
     {
       "id": "caption-group-3",
-      "frame": 2,
-      "start": 8.297,
-      "end": 9.601,
-      "text": "AnyRouter gives you one account",
+      "frame": 3,
+      "start": 9.059,
+      "end": 10.522,
+      "text": "Your code barely changes.",
       "words": [
         {
           "id": "caption-word-3-0",
-          "text": "AnyRouter",
-          "start": 8.297,
-          "end": 8.787
+          "text": "Your",
+          "start": 9.059,
+          "end": 9.268
         },
         {
           "id": "caption-word-3-1",
-          "text": "gives",
-          "start": 8.807,
-          "end": 9.11
+          "text": "code",
+          "start": 9.314,
+          "end": 9.547
         },
         {
           "id": "caption-word-3-2",
-          "text": "you",
-          "start": 9.11,
-          "end": 9.297
+          "text": "barely",
+          "start": 9.581,
+          "end": 9.872
         },
         {
           "id": "caption-word-3-3",
-          "text": "one",
-          "start": 9.297,
-          "end": 9.483
-        },
-        {
-          "id": "caption-word-3-4",
-          "text": "account",
-          "start": 9.483,
-          "end": 9.601
+          "text": "changes.",
+          "start": 9.93,
+          "end": 10.522
         }
       ]
     },
     {
       "id": "caption-group-4",
-      "frame": 2,
-      "start": 9.993,
-      "end": 12.364,
-      "text": "and one key for more than 260 models.",
+      "frame": 3,
+      "start": 10.8,
+      "end": 13.749,
+      "text": "Swap the base URL and the key, and keep the rest.",
       "words": [
         {
           "id": "caption-word-4-0",
-          "text": "and",
-          "start": 9.993,
-          "end": 10.149
+          "text": "Swap",
+          "start": 10.8,
+          "end": 11.102
         },
         {
           "id": "caption-word-4-1",
-          "text": "one",
-          "start": 10.149,
-          "end": 10.355
+          "text": "the",
+          "start": 11.16,
+          "end": 11.23
         },
         {
           "id": "caption-word-4-2",
-          "text": "key",
-          "start": 10.355,
-          "end": 10.581
+          "text": "base",
+          "start": 11.265,
+          "end": 11.462
         },
         {
           "id": "caption-word-4-3",
-          "text": "for",
-          "start": 10.659,
-          "end": 10.719
+          "text": "URL",
+          "start": 11.509,
+          "end": 11.961
         },
         {
           "id": "caption-word-4-4",
-          "text": "more",
-          "start": 10.719,
-          "end": 10.982
+          "text": "and",
+          "start": 12.031,
+          "end": 12.147
         },
         {
           "id": "caption-word-4-5",
-          "text": "than",
-          "start": 10.982,
-          "end": 11.247
+          "text": "the",
+          "start": 12.194,
+          "end": 12.263
         },
         {
           "id": "caption-word-4-6",
-          "text": "260",
-          "start": 11.247,
-          "end": 11.855
+          "text": "key,",
+          "start": 12.298,
+          "end": 12.577
         },
         {
           "id": "caption-word-4-7",
-          "text": "models.",
-          "start": 11.855,
-          "end": 12.364
+          "text": "and",
+          "start": 12.612,
+          "end": 12.739
+        },
+        {
+          "id": "caption-word-4-8",
+          "text": "keep",
+          "start": 12.786,
+          "end": 12.96
+        },
+        {
+          "id": "caption-word-4-9",
+          "text": "the",
+          "start": 12.995,
+          "end": 13.064
+        },
+        {
+          "id": "caption-word-4-10",
+          "text": "rest.",
+          "start": 13.111,
+          "end": 13.749
         }
       ]
     },
     {
       "id": "caption-group-5",
-      "frame": 3,
-      "start": 13.18,
-      "end": 14.93,
-      "text": "It works like a power strip for AI.",
+      "frame": 4,
+      "start": 14.059,
+      "end": 15.162,
+      "text": "Call a model by its name.",
       "words": [
         {
           "id": "caption-word-5-0",
-          "text": "It",
-          "start": 13.18,
-          "end": 13.24
+          "text": "Call",
+          "start": 14.059,
+          "end": 14.28
         },
         {
           "id": "caption-word-5-1",
-          "text": "works",
-          "start": 13.24,
-          "end": 13.561
+          "text": "a",
+          "start": 14.326,
+          "end": 14.349
         },
         {
           "id": "caption-word-5-2",
-          "text": "like",
-          "start": 13.561,
-          "end": 13.821
+          "text": "model",
+          "start": 14.384,
+          "end": 14.605
         },
         {
           "id": "caption-word-5-3",
-          "text": "a",
-          "start": 13.821,
-          "end": 13.886
+          "text": "by",
+          "start": 14.651,
+          "end": 14.744
         },
         {
           "id": "caption-word-5-4",
-          "text": "power",
-          "start": 13.886,
-          "end": 14.201
+          "text": "its",
+          "start": 14.79,
+          "end": 14.895
         },
         {
           "id": "caption-word-5-5",
-          "text": "strip",
-          "start": 14.35,
-          "end": 14.535
-        },
-        {
-          "id": "caption-word-5-6",
-          "text": "for",
-          "start": 14.535,
-          "end": 14.721
-        },
-        {
-          "id": "caption-word-5-7",
-          "text": "AI.",
-          "start": 14.721,
-          "end": 14.93
+          "text": "name.",
+          "start": 14.941,
+          "end": 15.162
         }
       ]
     },
     {
       "id": "caption-group-6",
-      "frame": 3,
-      "start": 15.328,
-      "end": 18.435,
-      "text": "Your app or your coding tool plugs into AnyRouter.",
+      "frame": 4,
+      "start": 15.185,
+      "end": 17.298,
+      "text": "DeepSeek, Kimi, MiniMax, Nemotron.",
       "words": [
         {
           "id": "caption-word-6-0",
-          "text": "Your",
-          "start": 15.328,
-          "end": 15.388
+          "text": "DeepSeek,",
+          "start": 15.185,
+          "end": 15.696
         },
         {
           "id": "caption-word-6-1",
-          "text": "app",
-          "start": 15.413,
-          "end": 15.668
+          "text": "Kimi,",
+          "start": 15.754,
+          "end": 16.102
         },
         {
           "id": "caption-word-6-2",
-          "text": "or",
-          "start": 15.668,
-          "end": 15.829
+          "text": "MiniMax,",
+          "start": 16.137,
+          "end": 16.683
         },
         {
           "id": "caption-word-6-3",
-          "text": "your",
-          "start": 16.019,
-          "end": 16.16
-        },
-        {
-          "id": "caption-word-6-4",
-          "text": "coding",
-          "start": 16.16,
-          "end": 16.662
-        },
-        {
-          "id": "caption-word-6-5",
-          "text": "tool",
-          "start": 16.662,
-          "end": 16.794
-        },
-        {
-          "id": "caption-word-6-6",
-          "text": "plugs",
-          "start": 17.371,
-          "end": 17.504
-        },
-        {
-          "id": "caption-word-6-7",
-          "text": "into",
-          "start": 17.504,
-          "end": 17.873
-        },
-        {
-          "id": "caption-word-6-8",
-          "text": "AnyRouter.",
-          "start": 17.873,
-          "end": 18.435
+          "text": "Nemotron.",
+          "start": 16.718,
+          "end": 17.298
         }
       ]
     },
     {
       "id": "caption-group-7",
-      "frame": 3,
-      "start": 19.42,
-      "end": 22.333,
-      "text": "AnyRouter sends each request to a provider that is ready.",
+      "frame": 4,
+      "start": 17.449,
+      "end": 18.796,
+      "text": "Switching is one word.",
       "words": [
         {
           "id": "caption-word-7-0",
-          "text": "AnyRouter",
-          "start": 19.42,
-          "end": 19.593
+          "text": "Switching",
+          "start": 17.449,
+          "end": 17.844
         },
         {
           "id": "caption-word-7-1",
-          "text": "sends",
-          "start": 19.593,
-          "end": 19.923
+          "text": "is",
+          "start": 17.89,
+          "end": 17.96
         },
         {
           "id": "caption-word-7-2",
-          "text": "each",
-          "start": 19.923,
-          "end": 20.191
+          "text": "one",
+          "start": 18.03,
+          "end": 18.181
         },
         {
           "id": "caption-word-7-3",
-          "text": "request",
-          "start": 20.191,
-          "end": 20.686
-        },
-        {
-          "id": "caption-word-7-4",
-          "text": "to",
-          "start": 20.686,
-          "end": 20.789
-        },
-        {
-          "id": "caption-word-7-5",
-          "text": "a",
-          "start": 20.8,
-          "end": 20.86
-        },
-        {
-          "id": "caption-word-7-6",
-          "text": "provider",
-          "start": 21.284,
-          "end": 21.398
-        },
-        {
-          "id": "caption-word-7-7",
-          "text": "that",
-          "start": 21.491,
-          "end": 21.728
-        },
-        {
-          "id": "caption-word-7-8",
-          "text": "is",
-          "start": 21.728,
-          "end": 21.788
-        },
-        {
-          "id": "caption-word-7-9",
-          "text": "ready.",
-          "start": 21.996,
-          "end": 22.333
+          "text": "word.",
+          "start": 18.215,
+          "end": 18.796
         }
       ]
     },
     {
       "id": "caption-group-8",
-      "frame": 3,
-      "start": 22.917,
-      "end": 24.82,
-      "text": "If one goes down, it tries the next one.",
+      "frame": 5,
+      "start": 20.059,
+      "end": 21.8,
+      "text": "Already pay for Claude or OpenAI?",
       "words": [
         {
           "id": "caption-word-8-0",
-          "text": "If",
-          "start": 22.917,
-          "end": 22.977
+          "text": "Already",
+          "start": 20.059,
+          "end": 20.361
         },
         {
           "id": "caption-word-8-1",
-          "text": "one",
-          "start": 22.977,
-          "end": 23.037
+          "text": "pay",
+          "start": 20.407,
+          "end": 20.523
         },
         {
           "id": "caption-word-8-2",
-          "text": "goes",
-          "start": 23.037,
-          "end": 23.103
+          "text": "for",
+          "start": 20.57,
+          "end": 20.663
         },
         {
           "id": "caption-word-8-3",
-          "text": "down,",
-          "start": 23.154,
-          "end": 23.519
+          "text": "Claude",
+          "start": 20.721,
+          "end": 20.988
         },
         {
           "id": "caption-word-8-4",
-          "text": "it",
-          "start": 23.519,
-          "end": 23.601
+          "text": "or",
+          "start": 21.011,
+          "end": 21.081
         },
         {
           "id": "caption-word-8-5",
-          "text": "tries",
-          "start": 23.662,
-          "end": 23.956
-        },
-        {
-          "id": "caption-word-8-6",
-          "text": "the",
-          "start": 23.956,
-          "end": 24.139
-        },
-        {
-          "id": "caption-word-8-7",
-          "text": "next",
-          "start": 24.139,
-          "end": 24.352
-        },
-        {
-          "id": "caption-word-8-8",
-          "text": "one.",
-          "start": 24.352,
-          "end": 24.82
+          "text": "OpenAI?",
+          "start": 21.139,
+          "end": 21.8
         }
       ]
     },
     {
       "id": "caption-group-9",
-      "frame": 4,
-      "start": 25.737,
-      "end": 27.086,
-      "text": "There is also a shared pool.",
+      "frame": 5,
+      "start": 22.009,
+      "end": 24.61,
+      "text": "Add your own key and use them here too, at no markup.",
       "words": [
         {
           "id": "caption-word-9-0",
-          "text": "There",
-          "start": 25.737,
-          "end": 25.984
+          "text": "Add",
+          "start": 22.009,
+          "end": 22.195
         },
         {
           "id": "caption-word-9-1",
-          "text": "is",
-          "start": 25.984,
-          "end": 26.112
+          "text": "your",
+          "start": 22.23,
+          "end": 22.346
         },
         {
           "id": "caption-word-9-2",
-          "text": "also",
-          "start": 26.121,
-          "end": 26.404
+          "text": "own",
+          "start": 22.381,
+          "end": 22.474
         },
         {
           "id": "caption-word-9-3",
-          "text": "a",
-          "start": 26.404,
-          "end": 26.468
+          "text": "key",
+          "start": 22.52,
+          "end": 22.648
         },
         {
           "id": "caption-word-9-4",
-          "text": "shared",
-          "start": 26.468,
-          "end": 26.889
+          "text": "and",
+          "start": 22.683,
+          "end": 22.753
         },
         {
           "id": "caption-word-9-5",
-          "text": "pool.",
-          "start": 26.889,
-          "end": 27.086
+          "text": "use",
+          "start": 22.811,
+          "end": 22.95
+        },
+        {
+          "id": "caption-word-9-6",
+          "text": "them",
+          "start": 22.973,
+          "end": 23.078
+        },
+        {
+          "id": "caption-word-9-7",
+          "text": "here",
+          "start": 23.112,
+          "end": 23.252
+        },
+        {
+          "id": "caption-word-9-8",
+          "text": "too,",
+          "start": 23.287,
+          "end": 23.507
+        },
+        {
+          "id": "caption-word-9-9",
+          "text": "at",
+          "start": 23.542,
+          "end": 23.612
+        },
+        {
+          "id": "caption-word-9-10",
+          "text": "no",
+          "start": 23.681,
+          "end": 23.797
+        },
+        {
+          "id": "caption-word-9-11",
+          "text": "markup.",
+          "start": 23.867,
+          "end": 24.61
         }
       ]
     },
     {
       "id": "caption-group-10",
-      "frame": 4,
-      "start": 27.47,
-      "end": 28.852,
-      "text": "An API key is like a password",
+      "frame": 6,
+      "start": 25.059,
+      "end": 26.917,
+      "text": "Or let AnyRouter pick one for you.",
       "words": [
         {
           "id": "caption-word-10-0",
-          "text": "An",
-          "start": 27.47,
-          "end": 27.53
+          "text": "Or",
+          "start": 25.059,
+          "end": 25.21
         },
         {
           "id": "caption-word-10-1",
-          "text": "API",
-          "start": 27.53,
-          "end": 27.697
+          "text": "let",
+          "start": 25.268,
+          "end": 25.396
         },
         {
           "id": "caption-word-10-2",
-          "text": "key",
-          "start": 27.697,
-          "end": 27.984
+          "text": "AnyRouter",
+          "start": 25.442,
+          "end": 25.86
         },
         {
           "id": "caption-word-10-3",
-          "text": "is",
-          "start": 27.984,
-          "end": 28.122
+          "text": "pick",
+          "start": 25.907,
+          "end": 26.057
         },
         {
           "id": "caption-word-10-4",
-          "text": "like",
-          "start": 28.122,
-          "end": 28.24
+          "text": "one",
+          "start": 26.116,
+          "end": 26.232
         },
         {
           "id": "caption-word-10-5",
-          "text": "a",
-          "start": 28.29,
-          "end": 28.35
+          "text": "for",
+          "start": 26.278,
+          "end": 26.417
         },
         {
           "id": "caption-word-10-6",
-          "text": "password",
-          "start": 28.35,
-          "end": 28.852
+          "text": "you.",
+          "start": 26.475,
+          "end": 26.917
         }
       ]
     },
     {
       "id": "caption-group-11",
-      "frame": 4,
-      "start": 28.852,
-      "end": 31.401,
-      "text": "that lets software use an AI service.",
+      "frame": 7,
+      "start": 27.559,
+      "end": 30.891,
+      "text": "If a provider goes down, AnyRouter retries on another,",
       "words": [
         {
           "id": "caption-word-11-0",
-          "text": "that",
-          "start": 28.852,
-          "end": 29.02
+          "text": "If",
+          "start": 27.559,
+          "end": 27.698
         },
         {
           "id": "caption-word-11-1",
-          "text": "lets",
-          "start": 29.08,
-          "end": 29.287
+          "text": "a",
+          "start": 27.768,
+          "end": 27.803
         },
         {
           "id": "caption-word-11-2",
-          "text": "software",
-          "start": 29.287,
-          "end": 29.84
+          "text": "provider",
+          "start": 27.861,
+          "end": 28.279
         },
         {
           "id": "caption-word-11-3",
-          "text": "use",
-          "start": 29.84,
-          "end": 30.096
+          "text": "goes",
+          "start": 28.337,
+          "end": 28.523
         },
         {
           "id": "caption-word-11-4",
-          "text": "an",
-          "start": 30.096,
-          "end": 30.235
+          "text": "down,",
+          "start": 28.569,
+          "end": 28.987
         },
         {
           "id": "caption-word-11-5",
-          "text": "AI",
-          "start": 30.235,
-          "end": 30.629
+          "text": "AnyRouter",
+          "start": 29.161,
+          "end": 29.672
         },
         {
           "id": "caption-word-11-6",
-          "text": "service.",
-          "start": 30.629,
-          "end": 31.401
+          "text": "retries",
+          "start": 29.73,
+          "end": 30.16
+        },
+        {
+          "id": "caption-word-11-7",
+          "text": "on",
+          "start": 30.229,
+          "end": 30.322
+        },
+        {
+          "id": "caption-word-11-8",
+          "text": "another,",
+          "start": 30.38,
+          "end": 30.891
         }
       ]
     },
     {
       "id": "caption-group-12",
-      "frame": 4,
-      "start": 32.03,
-      "end": 33.651,
-      "text": "Members share keys they are not using,",
+      "frame": 7,
+      "start": 31.1,
+      "end": 32.946,
+      "text": "and your app still gets its answer.",
       "words": [
         {
           "id": "caption-word-12-0",
-          "text": "Members",
-          "start": 32.03,
-          "end": 32.093
+          "text": "and",
+          "start": 31.1,
+          "end": 31.263
         },
         {
           "id": "caption-word-12-1",
-          "text": "share",
-          "start": 32.093,
-          "end": 32.403
+          "text": "your",
+          "start": 31.309,
+          "end": 31.425
         },
         {
           "id": "caption-word-12-2",
-          "text": "keys",
-          "start": 32.403,
-          "end": 32.644
+          "text": "app",
+          "start": 31.46,
+          "end": 31.576
         },
         {
           "id": "caption-word-12-3",
-          "text": "they",
-          "start": 32.644,
-          "end": 32.886
+          "text": "still",
+          "start": 31.634,
+          "end": 31.843
         },
         {
           "id": "caption-word-12-4",
-          "text": "are",
-          "start": 32.886,
-          "end": 33.012
+          "text": "gets",
+          "start": 31.89,
+          "end": 32.064
         },
         {
           "id": "caption-word-12-5",
-          "text": "not",
-          "start": 33.061,
-          "end": 33.121
+          "text": "its",
+          "start": 32.11,
+          "end": 32.238
         },
         {
           "id": "caption-word-12-6",
-          "text": "using,",
-          "start": 33.448,
-          "end": 33.651
+          "text": "answer.",
+          "start": 32.284,
+          "end": 32.946
         }
       ]
     },
     {
       "id": "caption-group-13",
-      "frame": 4,
-      "start": 33.719,
-      "end": 36.536,
-      "text": "and those keys make up a pool of free AI usage.",
+      "frame": 8,
+      "start": 33.559,
+      "end": 36.624,
+      "text": "Free models work on every plan, with no daily cap.",
       "words": [
         {
           "id": "caption-word-13-0",
-          "text": "and",
-          "start": 33.719,
-          "end": 33.941
+          "text": "Free",
+          "start": 33.559,
+          "end": 33.791
         },
         {
           "id": "caption-word-13-1",
-          "text": "those",
-          "start": 33.941,
-          "end": 34.3
+          "text": "models",
+          "start": 33.826,
+          "end": 34.151
         },
         {
           "id": "caption-word-13-2",
-          "text": "keys",
-          "start": 34.3,
-          "end": 34.58
+          "text": "work",
+          "start": 34.198,
+          "end": 34.383
         },
         {
           "id": "caption-word-13-3",
-          "text": "make",
-          "start": 34.58,
-          "end": 34.861
+          "text": "on",
+          "start": 34.441,
+          "end": 34.534
         },
         {
           "id": "caption-word-13-4",
-          "text": "up",
-          "start": 34.861,
-          "end": 34.997
+          "text": "every",
+          "start": 34.616,
+          "end": 34.824
         },
         {
           "id": "caption-word-13-5",
-          "text": "a",
-          "start": 34.997,
-          "end": 35.064
+          "text": "plan,",
+          "start": 34.871,
+          "end": 35.184
         },
         {
           "id": "caption-word-13-6",
-          "text": "pool",
-          "start": 35.064,
-          "end": 35.345
+          "text": "with",
+          "start": 35.219,
+          "end": 35.359
         },
         {
           "id": "caption-word-13-7",
-          "text": "of",
-          "start": 35.345,
-          "end": 35.471
+          "text": "no",
+          "start": 35.44,
+          "end": 35.579
         },
         {
           "id": "caption-word-13-8",
-          "text": "free",
-          "start": 35.48,
-          "end": 35.761
+          "text": "daily",
+          "start": 35.649,
+          "end": 35.893
         },
         {
           "id": "caption-word-13-9",
-          "text": "AI",
-          "start": 35.761,
-          "end": 35.897
-        },
-        {
-          "id": "caption-word-13-10",
-          "text": "usage.",
-          "start": 35.897,
-          "end": 36.536
+          "text": "cap.",
+          "start": 35.939,
+          "end": 36.624
         }
       ]
     },
     {
       "id": "caption-group-14",
-      "frame": 5,
-      "start": 37.316,
-      "end": 39.417,
-      "text": "Some free models work as soon as you sign up.",
+      "frame": 9,
+      "start": 37.059,
+      "end": 38.057,
+      "text": "Using Claude Code?",
       "words": [
         {
           "id": "caption-word-14-0",
-          "text": "Some",
-          "start": 37.316,
-          "end": 37.495
+          "text": "Using",
+          "start": 37.059,
+          "end": 37.338
         },
         {
           "id": "caption-word-14-1",
-          "text": "free",
-          "start": 37.571,
-          "end": 37.792
+          "text": "Claude",
+          "start": 37.372,
+          "end": 37.628
         },
         {
           "id": "caption-word-14-2",
-          "text": "models",
-          "start": 37.792,
-          "end": 38.124
-        },
-        {
-          "id": "caption-word-14-3",
-          "text": "work",
-          "start": 38.286,
-          "end": 38.439
-        },
-        {
-          "id": "caption-word-14-4",
-          "text": "as",
-          "start": 38.481,
-          "end": 38.575
-        },
-        {
-          "id": "caption-word-14-5",
-          "text": "soon",
-          "start": 38.575,
-          "end": 38.839
-        },
-        {
-          "id": "caption-word-14-6",
-          "text": "as",
-          "start": 38.839,
-          "end": 38.966
-        },
-        {
-          "id": "caption-word-14-7",
-          "text": "you",
-          "start": 38.966,
-          "end": 39.026
-        },
-        {
-          "id": "caption-word-14-8",
-          "text": "sign",
-          "start": 39.162,
-          "end": 39.357
-        },
-        {
-          "id": "caption-word-14-9",
-          "text": "up.",
-          "start": 39.357,
-          "end": 39.417
+          "text": "Code?",
+          "start": 37.663,
+          "end": 38.057
         }
       ]
     },
     {
       "id": "caption-group-15",
-      "frame": 5,
-      "start": 40.263,
-      "end": 41.562,
-      "text": "To unlock the whole pool,",
+      "frame": 9,
+      "start": 38.499,
+      "end": 40.821,
+      "text": "Run anyr claude, with any model you like.",
       "words": [
         {
           "id": "caption-word-15-0",
-          "text": "To",
-          "start": 40.263,
-          "end": 40.323
+          "text": "Run",
+          "start": 38.499,
+          "end": 38.661
         },
         {
           "id": "caption-word-15-1",
-          "text": "unlock",
-          "start": 40.323,
-          "end": 40.485
+          "text": "anyr",
+          "start": 38.708,
+          "end": 39.033
         },
         {
           "id": "caption-word-15-2",
-          "text": "the",
-          "start": 40.485,
-          "end": 40.746
+          "text": "claude,",
+          "start": 39.091,
+          "end": 39.439
         },
         {
           "id": "caption-word-15-3",
-          "text": "whole",
-          "start": 40.746,
-          "end": 40.971
+          "text": "with",
+          "start": 39.462,
+          "end": 39.602
         },
         {
           "id": "caption-word-15-4",
-          "text": "pool,",
-          "start": 41.197,
-          "end": 41.562
+          "text": "any",
+          "start": 39.636,
+          "end": 39.764
+        },
+        {
+          "id": "caption-word-15-5",
+          "text": "model",
+          "start": 39.822,
+          "end": 40.078
+        },
+        {
+          "id": "caption-word-15-6",
+          "text": "you",
+          "start": 40.136,
+          "end": 40.205
+        },
+        {
+          "id": "caption-word-15-7",
+          "text": "like.",
+          "start": 40.263,
+          "end": 40.821
         }
       ]
     },
     {
       "id": "caption-group-16",
-      "frame": 5,
-      "start": 41.923,
-      "end": 43.18,
-      "text": "share one free key.",
+      "frame": 10,
+      "start": 41.559,
+      "end": 42.883,
+      "text": "One API for every model.",
       "words": [
         {
           "id": "caption-word-16-0",
-          "text": "share",
-          "start": 41.923,
-          "end": 42.093
+          "text": "One",
+          "start": 41.559,
+          "end": 41.733
         },
         {
           "id": "caption-word-16-1",
-          "text": "one",
-          "start": 42.243,
-          "end": 42.488
+          "text": "API",
+          "start": 41.756,
+          "end": 42.105
         },
         {
           "id": "caption-word-16-2",
-          "text": "free",
-          "start": 42.909,
-          "end": 42.969
+          "text": "for",
+          "start": 42.174,
+          "end": 42.279
         },
         {
           "id": "caption-word-16-3",
-          "text": "key.",
-          "start": 42.969,
-          "end": 43.18
+          "text": "every",
+          "start": 42.325,
+          "end": 42.499
+        },
+        {
+          "id": "caption-word-16-4",
+          "text": "model.",
+          "start": 42.546,
+          "end": 42.883
         }
       ]
     },
     {
       "id": "caption-group-17",
-      "frame": 5,
-      "start": 43.971,
-      "end": 47.098,
-      "text": "Step one, sign in at OpenRouter and open Keys.",
+      "frame": 10,
+      "start": 42.975,
+      "end": 44.996,
+      "text": "Start free at anyrouter.dev.",
       "words": [
         {
           "id": "caption-word-17-0",
-          "text": "Step",
-          "start": 43.971,
-          "end": 44.031
+          "text": "Start",
+          "start": 42.975,
+          "end": 43.231
         },
         {
           "id": "caption-word-17-1",
-          "text": "one,",
-          "start": 44.031,
-          "end": 44.373
+          "text": "free",
+          "start": 43.277,
+          "end": 43.44
         },
         {
           "id": "caption-word-17-2",
-          "text": "sign",
-          "start": 44.373,
-          "end": 44.578
+          "text": "at",
+          "start": 43.475,
+          "end": 43.521
         },
         {
           "id": "caption-word-17-3",
-          "text": "in",
-          "start": 44.772,
-          "end": 44.925
-        },
-        {
-          "id": "caption-word-17-4",
-          "text": "at",
-          "start": 45.007,
-          "end": 45.109
-        },
-        {
-          "id": "caption-word-17-5",
-          "text": "OpenRouter",
-          "start": 45.109,
-          "end": 45.661
-        },
-        {
-          "id": "caption-word-17-6",
-          "text": "and",
-          "start": 45.661,
-          "end": 46.295
-        },
-        {
-          "id": "caption-word-17-7",
-          "text": "open",
-          "start": 46.601,
-          "end": 46.673
-        },
-        {
-          "id": "caption-word-17-8",
-          "text": "Keys.",
-          "start": 46.673,
-          "end": 47.098
-        }
-      ]
-    },
-    {
-      "id": "caption-group-18",
-      "frame": 5,
-      "start": 47.741,
-      "end": 49.556,
-      "text": "Click Create Key and copy it.",
-      "words": [
-        {
-          "id": "caption-word-18-0",
-          "text": "Click",
-          "start": 47.741,
-          "end": 47.801
-        },
-        {
-          "id": "caption-word-18-1",
-          "text": "Create",
-          "start": 47.801,
-          "end": 48.293
-        },
-        {
-          "id": "caption-word-18-2",
-          "text": "Key",
-          "start": 48.293,
-          "end": 48.461
-        },
-        {
-          "id": "caption-word-18-3",
-          "text": "and",
-          "start": 48.65,
-          "end": 48.716
-        },
-        {
-          "id": "caption-word-18-4",
-          "text": "copy",
-          "start": 48.997,
-          "end": 49.135
-        },
-        {
-          "id": "caption-word-18-5",
-          "text": "it.",
-          "start": 49.135,
-          "end": 49.556
-        }
-      ]
-    },
-    {
-      "id": "caption-group-19",
-      "frame": 6,
-      "start": 50.421,
-      "end": 55.007,
-      "text": "Step two, sign in at anyrouter.dev and open the shared pool.",
-      "words": [
-        {
-          "id": "caption-word-19-0",
-          "text": "Step",
-          "start": 50.421,
-          "end": 50.771
-        },
-        {
-          "id": "caption-word-19-1",
-          "text": "two,",
-          "start": 50.771,
-          "end": 51.079
-        },
-        {
-          "id": "caption-word-19-2",
-          "text": "sign",
-          "start": 51.521,
-          "end": 51.645
-        },
-        {
-          "id": "caption-word-19-3",
-          "text": "in",
-          "start": 51.645,
-          "end": 51.839
-        },
-        {
-          "id": "caption-word-19-4",
-          "text": "at",
-          "start": 51.849,
-          "end": 52.054
-        },
-        {
-          "id": "caption-word-19-5",
-          "text": "anyrouter.dev",
-          "start": 52.054,
-          "end": 53.416
-        },
-        {
-          "id": "caption-word-19-6",
-          "text": "and",
-          "start": 53.71,
-          "end": 53.81
-        },
-        {
-          "id": "caption-word-19-7",
-          "text": "open",
-          "start": 53.918,
-          "end": 54.22
-        },
-        {
-          "id": "caption-word-19-8",
-          "text": "the",
-          "start": 54.22,
-          "end": 54.349
-        },
-        {
-          "id": "caption-word-19-9",
-          "text": "shared",
-          "start": 54.36,
-          "end": 54.64
-        },
-        {
-          "id": "caption-word-19-10",
-          "text": "pool.",
-          "start": 54.715,
-          "end": 55.007
-        }
-      ]
-    },
-    {
-      "id": "caption-group-20",
-      "frame": 6,
-      "start": 55.846,
-      "end": 57.63,
-      "text": "Click Donate next to OpenRouter,",
-      "words": [
-        {
-          "id": "caption-word-20-0",
-          "text": "Click",
-          "start": 55.846,
-          "end": 55.906
-        },
-        {
-          "id": "caption-word-20-1",
-          "text": "Donate",
-          "start": 55.906,
-          "end": 56.357
-        },
-        {
-          "id": "caption-word-20-2",
-          "text": "next",
-          "start": 56.357,
-          "end": 56.479
-        },
-        {
-          "id": "caption-word-20-3",
-          "text": "to",
-          "start": 56.479,
-          "end": 56.958
-        },
-        {
-          "id": "caption-word-20-4",
-          "text": "OpenRouter,",
-          "start": 56.958,
-          "end": 57.63
-        }
-      ]
-    },
-    {
-      "id": "caption-group-21",
-      "frame": 6,
-      "start": 57.885,
-      "end": 59.733,
-      "text": "paste your key and press Donate.",
-      "words": [
-        {
-          "id": "caption-word-21-0",
-          "text": "paste",
-          "start": 57.885,
-          "end": 58.138
-        },
-        {
-          "id": "caption-word-21-1",
-          "text": "your",
-          "start": 58.146,
-          "end": 58.341
-        },
-        {
-          "id": "caption-word-21-2",
-          "text": "key",
-          "start": 58.341,
-          "end": 58.595
-        },
-        {
-          "id": "caption-word-21-3",
-          "text": "and",
-          "start": 58.903,
-          "end": 58.963
-        },
-        {
-          "id": "caption-word-21-4",
-          "text": "press",
-          "start": 58.963,
-          "end": 59.358
-        },
-        {
-          "id": "caption-word-21-5",
-          "text": "Donate.",
-          "start": 59.358,
-          "end": 59.733
-        }
-      ]
-    },
-    {
-      "id": "caption-group-22",
-      "frame": 6,
-      "start": 60.556,
-      "end": 62.366,
-      "text": "AnyRouter encrypts your key",
-      "words": [
-        {
-          "id": "caption-word-22-0",
-          "text": "AnyRouter",
-          "start": 60.556,
-          "end": 60.81
-        },
-        {
-          "id": "caption-word-22-1",
-          "text": "encrypts",
-          "start": 61.322,
-          "end": 61.752
-        },
-        {
-          "id": "caption-word-22-2",
-          "text": "your",
-          "start": 61.752,
-          "end": 62.142
-        },
-        {
-          "id": "caption-word-22-3",
-          "text": "key",
-          "start": 62.142,
-          "end": 62.366
-        }
-      ]
-    },
-    {
-      "id": "caption-group-23",
-      "frame": 6,
-      "start": 62.5,
-      "end": 64.585,
-      "text": "and you can stop sharing any time.",
-      "words": [
-        {
-          "id": "caption-word-23-0",
-          "text": "and",
-          "start": 62.5,
-          "end": 62.56
-        },
-        {
-          "id": "caption-word-23-1",
-          "text": "you",
-          "start": 62.855,
-          "end": 62.92
-        },
-        {
-          "id": "caption-word-23-2",
-          "text": "can",
-          "start": 62.93,
-          "end": 63.145
-        },
-        {
-          "id": "caption-word-23-3",
-          "text": "stop",
-          "start": 63.145,
-          "end": 63.205
-        },
-        {
-          "id": "caption-word-23-4",
-          "text": "sharing",
-          "start": 63.667,
-          "end": 64.046
-        },
-        {
-          "id": "caption-word-23-5",
-          "text": "any",
-          "start": 64.046,
-          "end": 64.169
-        },
-        {
-          "id": "caption-word-23-6",
-          "text": "time.",
-          "start": 64.292,
-          "end": 64.585
-        }
-      ]
-    },
-    {
-      "id": "caption-group-24",
-      "frame": 6,
-      "start": 65.197,
-      "end": 67.195,
-      "text": "A key from NVIDIA works the same way.",
-      "words": [
-        {
-          "id": "caption-word-24-0",
-          "text": "A",
-          "start": 65.197,
-          "end": 65.257
-        },
-        {
-          "id": "caption-word-24-1",
-          "text": "key",
-          "start": 65.257,
-          "end": 65.317
-        },
-        {
-          "id": "caption-word-24-2",
-          "text": "from",
-          "start": 65.317,
-          "end": 65.45
-        },
-        {
-          "id": "caption-word-24-3",
-          "text": "NVIDIA",
-          "start": 65.45,
-          "end": 65.573
-        },
-        {
-          "id": "caption-word-24-4",
-          "text": "works",
-          "start": 66.076,
-          "end": 66.241
-        },
-        {
-          "id": "caption-word-24-5",
-          "text": "the",
-          "start": 66.241,
-          "end": 66.456
-        },
-        {
-          "id": "caption-word-24-6",
-          "text": "same",
-          "start": 66.456,
-          "end": 66.743
-        },
-        {
-          "id": "caption-word-24-7",
-          "text": "way.",
-          "start": 66.743,
-          "end": 67.195
-        }
-      ]
-    },
-    {
-      "id": "caption-group-25",
-      "frame": 7,
-      "start": 67.958,
-      "end": 70.253,
-      "text": "Step three, use the free models.",
-      "words": [
-        {
-          "id": "caption-word-25-0",
-          "text": "Step",
-          "start": 67.958,
-          "end": 68.19
-        },
-        {
-          "id": "caption-word-25-1",
-          "text": "three,",
-          "start": 68.27,
-          "end": 68.645
-        },
-        {
-          "id": "caption-word-25-2",
-          "text": "use",
-          "start": 69.165,
-          "end": 69.225
-        },
-        {
-          "id": "caption-word-25-3",
-          "text": "the",
-          "start": 69.225,
-          "end": 69.472
-        },
-        {
-          "id": "caption-word-25-4",
-          "text": "free",
-          "start": 69.472,
-          "end": 69.833
-        },
-        {
-          "id": "caption-word-25-5",
-          "text": "models.",
-          "start": 69.833,
-          "end": 70.253
-        }
-      ]
-    },
-    {
-      "id": "caption-group-26",
-      "frame": 7,
-      "start": 71.271,
-      "end": 72.316,
-      "text": "While your key is shared,",
-      "words": [
-        {
-          "id": "caption-word-26-0",
-          "text": "While",
-          "start": 71.271,
-          "end": 71.331
-        },
-        {
-          "id": "caption-word-26-1",
-          "text": "your",
-          "start": 71.331,
-          "end": 71.492
-        },
-        {
-          "id": "caption-word-26-2",
-          "text": "key",
-          "start": 71.492,
-          "end": 71.561
-        },
-        {
-          "id": "caption-word-26-3",
-          "text": "is",
-          "start": 71.721,
-          "end": 71.905
-        },
-        {
-          "id": "caption-word-26-4",
-          "text": "shared,",
-          "start": 72.17,
-          "end": 72.316
-        }
-      ]
-    },
-    {
-      "id": "caption-group-27",
-      "frame": 7,
-      "start": 72.736,
-      "end": 75.551,
-      "text": "you get the pool's free models with no daily cap,",
-      "words": [
-        {
-          "id": "caption-word-27-0",
-          "text": "you",
-          "start": 72.736,
-          "end": 72.796
-        },
-        {
-          "id": "caption-word-27-1",
-          "text": "get",
-          "start": 72.796,
-          "end": 72.856
-        },
-        {
-          "id": "caption-word-27-2",
-          "text": "the",
-          "start": 72.856,
-          "end": 73.01
-        },
-        {
-          "id": "caption-word-27-3",
-          "text": "pool's",
-          "start": 73.01,
-          "end": 73.315
-        },
-        {
-          "id": "caption-word-27-4",
-          "text": "free",
-          "start": 73.315,
-          "end": 73.714
-        },
-        {
-          "id": "caption-word-27-5",
-          "text": "models",
-          "start": 73.714,
-          "end": 74.219
-        },
-        {
-          "id": "caption-word-27-6",
-          "text": "with",
-          "start": 74.251,
-          "end": 74.566
-        },
-        {
-          "id": "caption-word-27-7",
-          "text": "no",
-          "start": 74.682,
-          "end": 74.766
-        },
-        {
-          "id": "caption-word-27-8",
-          "text": "daily",
-          "start": 74.766,
-          "end": 74.966
-        },
-        {
-          "id": "caption-word-27-9",
-          "text": "cap,",
-          "start": 75.491,
-          "end": 75.551
-        }
-      ]
-    },
-    {
-      "id": "caption-group-28",
-      "frame": 7,
-      "start": 75.845,
-      "end": 77.165,
-      "text": "the Go plan at no cost,",
-      "words": [
-        {
-          "id": "caption-word-28-0",
-          "text": "the",
-          "start": 75.845,
-          "end": 75.974
-        },
-        {
-          "id": "caption-word-28-1",
-          "text": "Go",
-          "start": 75.974,
-          "end": 76.237
-        },
-        {
-          "id": "caption-word-28-2",
-          "text": "plan",
-          "start": 76.237,
-          "end": 76.499
-        },
-        {
-          "id": "caption-word-28-3",
-          "text": "at",
-          "start": 76.499,
-          "end": 76.597
-        },
-        {
-          "id": "caption-word-28-4",
-          "text": "no",
-          "start": 76.597,
-          "end": 76.908
-        },
-        {
-          "id": "caption-word-28-5",
-          "text": "cost,",
-          "start": 76.908,
-          "end": 77.165
-        }
-      ]
-    },
-    {
-      "id": "caption-group-29",
-      "frame": 7,
-      "start": 77.528,
-      "end": 79.182,
-      "text": "and $4 of credit every month.",
-      "words": [
-        {
-          "id": "caption-word-29-0",
-          "text": "and",
-          "start": 77.528,
-          "end": 77.588
-        },
-        {
-          "id": "caption-word-29-1",
-          "text": "$4",
-          "start": 77.588,
-          "end": 77.787
-        },
-        {
-          "id": "caption-word-29-2",
-          "text": "of",
-          "start": 77.787,
-          "end": 77.918
-        },
-        {
-          "id": "caption-word-29-3",
-          "text": "credit",
-          "start": 77.918,
-          "end": 77.993
-        },
-        {
-          "id": "caption-word-29-4",
-          "text": "every",
-          "start": 78.489,
-          "end": 78.639
-        },
-        {
-          "id": "caption-word-29-5",
-          "text": "month.",
-          "start": 78.639,
-          "end": 79.182
-        }
-      ]
-    },
-    {
-      "id": "caption-group-30",
-      "frame": 8,
-      "start": 80.084,
-      "end": 83.336,
-      "text": "If you write code, here is how to use AnyRouter with Claude Code.",
-      "words": [
-        {
-          "id": "caption-word-30-0",
-          "text": "If",
-          "start": 80.084,
-          "end": 80.144
-        },
-        {
-          "id": "caption-word-30-1",
-          "text": "you",
-          "start": 80.144,
-          "end": 80.277
-        },
-        {
-          "id": "caption-word-30-2",
-          "text": "write",
-          "start": 80.277,
-          "end": 80.48
-        },
-        {
-          "id": "caption-word-30-3",
-          "text": "code,",
-          "start": 80.544,
-          "end": 80.838
-        },
-        {
-          "id": "caption-word-30-4",
-          "text": "here",
-          "start": 80.838,
-          "end": 81.041
-        },
-        {
-          "id": "caption-word-30-5",
-          "text": "is",
-          "start": 81.041,
-          "end": 81.123
-        },
-        {
-          "id": "caption-word-30-6",
-          "text": "how",
-          "start": 81.16,
-          "end": 81.298
-        },
-        {
-          "id": "caption-word-30-7",
-          "text": "to",
-          "start": 81.298,
-          "end": 81.399
-        },
-        {
-          "id": "caption-word-30-8",
-          "text": "use",
-          "start": 81.399,
-          "end": 81.519
-        },
-        {
-          "id": "caption-word-30-9",
-          "text": "AnyRouter",
-          "start": 81.647,
-          "end": 82.19
-        },
-        {
-          "id": "caption-word-30-10",
-          "text": "with",
-          "start": 82.19,
-          "end": 82.309
-        },
-        {
-          "id": "caption-word-30-11",
-          "text": "Claude",
-          "start": 82.411,
-          "end": 82.723
-        },
-        {
-          "id": "caption-word-30-12",
-          "text": "Code.",
-          "start": 82.751,
-          "end": 83.336
-        }
-      ]
-    },
-    {
-      "id": "caption-group-31",
-      "frame": 8,
-      "start": 83.913,
-      "end": 87.796,
-      "text": "Install the AnyRouter command line tool and run anyr login,",
-      "words": [
-        {
-          "id": "caption-word-31-0",
-          "text": "Install",
-          "start": 83.913,
-          "end": 84.084
-        },
-        {
-          "id": "caption-word-31-1",
-          "text": "the",
-          "start": 84.154,
-          "end": 84.323
-        },
-        {
-          "id": "caption-word-31-2",
-          "text": "AnyRouter",
-          "start": 84.323,
-          "end": 84.982
-        },
-        {
-          "id": "caption-word-31-3",
-          "text": "command",
-          "start": 84.982,
-          "end": 85.491
-        },
-        {
-          "id": "caption-word-31-4",
-          "text": "line",
-          "start": 85.491,
-          "end": 85.781
-        },
-        {
-          "id": "caption-word-31-5",
-          "text": "tool",
-          "start": 85.781,
-          "end": 86.07
-        },
-        {
-          "id": "caption-word-31-6",
-          "text": "and",
-          "start": 86.18,
-          "end": 86.509
-        },
-        {
-          "id": "caption-word-31-7",
-          "text": "run",
-          "start": 86.509,
-          "end": 86.819
-        },
-        {
-          "id": "caption-word-31-8",
-          "text": "anyr",
-          "start": 86.819,
-          "end": 87.483
-        },
-        {
-          "id": "caption-word-31-9",
-          "text": "login,",
-          "start": 87.483,
-          "end": 87.796
-        }
-      ]
-    },
-    {
-      "id": "caption-group-32",
-      "frame": 8,
-      "start": 88.497,
-      "end": 90.245,
-      "text": "then run anyr claude with a model.",
-      "words": [
-        {
-          "id": "caption-word-32-0",
-          "text": "then",
-          "start": 88.497,
-          "end": 88.557
-        },
-        {
-          "id": "caption-word-32-1",
-          "text": "run",
-          "start": 88.557,
-          "end": 88.671
-        },
-        {
-          "id": "caption-word-32-2",
-          "text": "anyr",
-          "start": 88.671,
-          "end": 89.045
-        },
-        {
-          "id": "caption-word-32-3",
-          "text": "claude",
-          "start": 89.045,
-          "end": 89.419
-        },
-        {
-          "id": "caption-word-32-4",
-          "text": "with",
-          "start": 89.553,
-          "end": 89.709
-        },
-        {
-          "id": "caption-word-32-5",
-          "text": "a",
-          "start": 89.709,
-          "end": 89.776
-        },
-        {
-          "id": "caption-word-32-6",
-          "text": "model.",
-          "start": 89.776,
-          "end": 90.245
-        }
-      ]
-    },
-    {
-      "id": "caption-group-33",
-      "frame": 9,
-      "start": 91.093,
-      "end": 92.668,
-      "text": "Change the model whenever you like.",
-      "words": [
-        {
-          "id": "caption-word-33-0",
-          "text": "Change",
-          "start": 91.093,
-          "end": 91.339
-        },
-        {
-          "id": "caption-word-33-1",
-          "text": "the",
-          "start": 91.339,
-          "end": 91.5
-        },
-        {
-          "id": "caption-word-33-2",
-          "text": "model",
-          "start": 91.5,
-          "end": 91.77
-        },
-        {
-          "id": "caption-word-33-3",
-          "text": "whenever",
-          "start": 91.77,
-          "end": 92.177
-        },
-        {
-          "id": "caption-word-33-4",
-          "text": "you",
-          "start": 92.177,
-          "end": 92.261
-        },
-        {
-          "id": "caption-word-33-5",
-          "text": "like.",
-          "start": 92.608,
-          "end": 92.668
-        }
-      ]
-    },
-    {
-      "id": "caption-group-34",
-      "frame": 9,
-      "start": 92.963,
-      "end": 94.437,
-      "text": "Free uses free models only.",
-      "words": [
-        {
-          "id": "caption-word-34-0",
-          "text": "Free",
-          "start": 92.963,
-          "end": 93.023
-        },
-        {
-          "id": "caption-word-34-1",
-          "text": "uses",
-          "start": 93.023,
-          "end": 93.389
-        },
-        {
-          "id": "caption-word-34-2",
-          "text": "free",
-          "start": 93.389,
-          "end": 93.666
-        },
-        {
-          "id": "caption-word-34-3",
-          "text": "models",
-          "start": 93.666,
-          "end": 94.093
-        },
-        {
-          "id": "caption-word-34-4",
-          "text": "only.",
-          "start": 94.093,
-          "end": 94.437
-        }
-      ]
-    },
-    {
-      "id": "caption-group-35",
-      "frame": 9,
-      "start": 94.766,
-      "end": 96.999,
-      "text": "Auto lets AnyRouter pick the best one.",
-      "words": [
-        {
-          "id": "caption-word-35-0",
-          "text": "Auto",
-          "start": 94.766,
-          "end": 94.915
-        },
-        {
-          "id": "caption-word-35-1",
-          "text": "lets",
-          "start": 94.915,
-          "end": 95.2
-        },
-        {
-          "id": "caption-word-35-2",
-          "text": "AnyRouter",
-          "start": 95.2,
-          "end": 95.836
-        },
-        {
-          "id": "caption-word-35-3",
-          "text": "pick",
-          "start": 95.836,
-          "end": 95.983
-        },
-        {
-          "id": "caption-word-35-4",
-          "text": "the",
-          "start": 95.983,
-          "end": 96.472
-        },
-        {
-          "id": "caption-word-35-5",
-          "text": "best",
-          "start": 96.472,
-          "end": 96.619
-        },
-        {
-          "id": "caption-word-35-6",
-          "text": "one.",
-          "start": 96.884,
-          "end": 96.999
-        }
-      ]
-    },
-    {
-      "id": "caption-group-36",
-      "frame": 9,
-      "start": 97.161,
-      "end": 99.688,
-      "text": "Coding picks the best coding model from the keys you added.",
-      "words": [
-        {
-          "id": "caption-word-36-0",
-          "text": "Coding",
-          "start": 97.161,
-          "end": 97.343
-        },
-        {
-          "id": "caption-word-36-1",
-          "text": "picks",
-          "start": 97.343,
-          "end": 97.584
-        },
-        {
-          "id": "caption-word-36-2",
-          "text": "the",
-          "start": 97.584,
-          "end": 97.726
-        },
-        {
-          "id": "caption-word-36-3",
-          "text": "best",
-          "start": 97.726,
-          "end": 97.924
-        },
-        {
-          "id": "caption-word-36-4",
-          "text": "coding",
-          "start": 97.924,
-          "end": 98.219
-        },
-        {
-          "id": "caption-word-36-5",
-          "text": "model",
-          "start": 98.219,
-          "end": 98.504
-        },
-        {
-          "id": "caption-word-36-6",
-          "text": "from",
-          "start": 98.504,
-          "end": 98.669
-        },
-        {
-          "id": "caption-word-36-7",
-          "text": "the",
-          "start": 98.669,
-          "end": 98.746
-        },
-        {
-          "id": "caption-word-36-8",
-          "text": "keys",
-          "start": 98.746,
-          "end": 99.003
-        },
-        {
-          "id": "caption-word-36-9",
-          "text": "you",
-          "start": 99.003,
-          "end": 99.261
-        },
-        {
-          "id": "caption-word-36-10",
-          "text": "added.",
-          "start": 99.261,
-          "end": 99.688
-        }
-      ]
-    },
-    {
-      "id": "caption-group-37",
-      "frame": 10,
-      "start": 100.434,
-      "end": 101.554,
-      "text": "One key for every model,",
-      "words": [
-        {
-          "id": "caption-word-37-0",
-          "text": "One",
-          "start": 100.434,
-          "end": 100.6
-        },
-        {
-          "id": "caption-word-37-1",
-          "text": "key",
-          "start": 100.675,
-          "end": 100.766
-        },
-        {
-          "id": "caption-word-37-2",
-          "text": "for",
-          "start": 100.833,
-          "end": 100.999
-        },
-        {
-          "id": "caption-word-37-3",
-          "text": "every",
-          "start": 100.999,
-          "end": 101.281
-        },
-        {
-          "id": "caption-word-37-4",
-          "text": "model,",
-          "start": 101.306,
-          "end": 101.554
-        }
-      ]
-    },
-    {
-      "id": "caption-group-38",
-      "frame": 10,
-      "start": 101.922,
-      "end": 103.567,
-      "text": "and a shared pool for free models.",
-      "words": [
-        {
-          "id": "caption-word-38-0",
-          "text": "and",
-          "start": 101.922,
-          "end": 101.982
-        },
-        {
-          "id": "caption-word-38-1",
-          "text": "a",
-          "start": 101.982,
-          "end": 102.042
-        },
-        {
-          "id": "caption-word-38-2",
-          "text": "shared",
-          "start": 102.042,
-          "end": 102.272
-        },
-        {
-          "id": "caption-word-38-3",
-          "text": "pool",
-          "start": 102.272,
-          "end": 102.482
-        },
-        {
-          "id": "caption-word-38-4",
-          "text": "for",
-          "start": 102.576,
-          "end": 102.786
-        },
-        {
-          "id": "caption-word-38-5",
-          "text": "free",
-          "start": 102.786,
-          "end": 103.121
-        },
-        {
-          "id": "caption-word-38-6",
-          "text": "models.",
-          "start": 103.142,
-          "end": 103.567
-        }
-      ]
-    },
-    {
-      "id": "caption-group-39",
-      "frame": 10,
-      "start": 103.901,
-      "end": 105.552,
-      "text": "Start at anyrouter.dev.",
-      "words": [
-        {
-          "id": "caption-word-39-0",
-          "text": "Start",
-          "start": 103.901,
-          "end": 104.134
-        },
-        {
-          "id": "caption-word-39-1",
-          "text": "at",
-          "start": 104.134,
-          "end": 104.296
-        },
-        {
-          "id": "caption-word-39-2",
           "text": "anyrouter.dev.",
-          "start": 104.296,
-          "end": 105.552
+          "start": 43.579,
+          "end": 44.996
         }
       ]
     }

@@ -1,0 +1,329 @@
+[
+  {
+    "file": "screens/home-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The anyrouter.dev home hero with the live cURL example and the top of the model table.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:00.549Z"
+  },
+  {
+    "file": "screens/home-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The anyrouter.dev home hero with the live cURL example and the top of the model table.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:44.504Z"
+  },
+  {
+    "file": "screens/model-claude-opus-5-5-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/anthropic/claude-opus-5-5",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The public detail page for anthropic/claude-opus-5-5.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:14.396Z"
+  },
+  {
+    "file": "screens/model-claude-opus-5-5-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/anthropic/claude-opus-5-5",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The public detail page for anthropic/claude-opus-5-5.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:58.342Z"
+  },
+  {
+    "file": "screens/model-deepseek-v4-pro-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/deepseek/deepseek-v4-pro",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The public detail page for deepseek/deepseek-v4-pro.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:28.234Z"
+  },
+  {
+    "file": "screens/model-deepseek-v4-pro-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/deepseek/deepseek-v4-pro",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The public detail page for deepseek/deepseek-v4-pro.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:57:11.882Z"
+  },
+  {
+    "file": "screens/model-gemini-3-1-pro-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/google/gemini-3.1-pro",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The public detail page for google/gemini-3.1-pro.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:23.638Z"
+  },
+  {
+    "file": "screens/model-gemini-3-1-pro-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/google/gemini-3.1-pro",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The public detail page for google/gemini-3.1-pro.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:57:07.257Z"
+  },
+  {
+    "file": "screens/model-gpt-5-5-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/openai/gpt-5.5",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The public detail page for openai/gpt-5.5.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:19.117Z"
+  },
+  {
+    "file": "screens/model-gpt-5-5-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/model/openai/gpt-5.5",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The public detail page for openai/gpt-5.5.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:57:02.810Z"
+  },
+  {
+    "file": "screens/models-free-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/models?free=true",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The /models catalog with the free filter on.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:09.932Z"
+  },
+  {
+    "file": "screens/models-free-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/models?free=true",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The /models catalog with the free filter on.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:53.892Z"
+  },
+  {
+    "file": "screens/models-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/models",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The top of the /models catalog.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:05.310Z"
+  },
+  {
+    "file": "screens/models-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/models",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The top of the /models catalog.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:49.284Z"
+  },
+  {
+    "file": "screens/use-cases-landscape.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/use-cases",
+    "viewport": "1920x1080",
+    "scale": 2,
+    "shows": "The /use-cases index.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:56:33.299Z"
+  },
+  {
+    "file": "screens/use-cases-portrait.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/use-cases",
+    "viewport": "1080x1920",
+    "scale": 2,
+    "shows": "The /use-cases index.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:57:16.290Z"
+  },
+  {
+    "file": "scrolls/models-scroll.mp4",
+    "kind": "scroll",
+    "url": "https://anyrouter.dev/models",
+    "viewport": "1920x1080",
+    "scale": 1,
+    "shows": "An eased 9s scroll at 60 fps from the top of /models through about three and a half screens of the catalog.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:58:13.301Z"
+  },
+  {
+    "file": "terminal/anyr-claude-dry-run.json",
+    "kind": "terminal",
+    "command": "anyr claude --model anthropic/claude-sonnet-5-5 --dry-run",
+    "viewport": null,
+    "scale": null,
+    "shows": "The handoff anyr claude --model anthropic/claude-sonnet-5-5 makes: the claude command and the AnyRouter env it launches with.",
+    "redacted": "API key tail",
+    "capturedAt": "2026-10-19T14:59:38.358Z"
+  },
+  {
+    "file": "terminal/anyr-claude-dry-run.txt",
+    "kind": "terminal",
+    "command": "anyr claude --model anthropic/claude-sonnet-5-5 --dry-run",
+    "viewport": null,
+    "scale": null,
+    "shows": "The handoff anyr claude --model anthropic/claude-sonnet-5-5 makes: the claude command and the AnyRouter env it launches with.",
+    "redacted": "API key tail",
+    "capturedAt": "2026-10-19T14:59:38.358Z"
+  },
+  {
+    "file": "terminal/anyr-help-commands.json",
+    "kind": "terminal",
+    "command": "anyr help commands",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr help commands, the full command map.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.764Z"
+  },
+  {
+    "file": "terminal/anyr-help-commands.txt",
+    "kind": "terminal",
+    "command": "anyr help commands",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr help commands, the full command map.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.764Z"
+  },
+  {
+    "file": "terminal/anyr-help.json",
+    "kind": "terminal",
+    "command": "anyr --help",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr --help.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.746Z"
+  },
+  {
+    "file": "terminal/anyr-help.txt",
+    "kind": "terminal",
+    "command": "anyr --help",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr --help.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.746Z"
+  },
+  {
+    "file": "terminal/anyr-models.json",
+    "kind": "terminal",
+    "command": "anyr models",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr models, every model id usable with --model.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.768Z"
+  },
+  {
+    "file": "terminal/anyr-models.txt",
+    "kind": "terminal",
+    "command": "anyr models",
+    "viewport": null,
+    "scale": null,
+    "shows": "The real output of anyr models, every model id usable with --model.",
+    "redacted": "none found",
+    "capturedAt": "2026-10-19T14:59:37.768Z"
+  },
+  {
+    "file": "screens/signed-in/playground-three-models.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "One prompt (\"Say hello in five words.\") answered side by side by deepseek/deepseek-v4-flash, nvidia/nemotron-3-super-120b-a12b and minimax/minimax-m3.1-flash, each at $0 cost, with real TTFT and speed. Downscaled to 1568 px wide.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-deepseek-v4-flash.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The DeepSeek V4 Flash panel of the same run at 2x: 5.81s TTFT, 96.9 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-nemotron-3-super.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Nemotron 3 Super 120B panel at 2x: 13.95s TTFT, 42.4 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/playground-minimax-m3-1-flash.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/playground",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The MiniMax M3.1 Flash panel at 2x: 4.35s TTFT, 142.9 t/s, $0 cost.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-add-provider-list.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Add a provider key dialog: search 68 providers, Anthropic and others listed, Free tier badges.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-add-openrouter-key.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "The Add key dialog with OpenRouter chosen: an empty sk-or-... field (placeholder, no key), \"Keys are encrypted at rest\", Add key.",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  },
+  {
+    "file": "screens/signed-in/byok-openrouter-key-routing.png",
+    "kind": "screen",
+    "url": "https://anyrouter.dev/dashboard/byok?add=true",
+    "viewport": "1920x925 CSS, region zoom",
+    "scale": 2,
+    "shows": "Key routing for an OpenRouter key: Free models only (32 routed) or All models (198 routed, 32 free + 166 paid; paid SKUs bill your OpenRouter account).",
+    "redacted": "none needed: region excludes balance, email and keys",
+    "capturedAt": "2026-10-19",
+    "via": "Claude in Chrome region zoom, owner account signed in"
+  }
+]

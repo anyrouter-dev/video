@@ -16,19 +16,15 @@ export default {
   id: 'openrouter-unblock',
   title: 'Unblock OpenRouter free models',
   scheduled: false,
-  // The portrait cut fails shared/authoring/stage-audit.mjs in 04-step-1-key (26.5s) and 05-step-2-add (32.5s): the zoomed
-  // screen leaves the stage bare.
-  // Captions also need data-outside-safe-area. Delete this once `check openrouter-unblock` passes without it.
-  renditions: ['landscape'],
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 
   headline: () => 'OpenRouter free models rate limited? Add your key to AnyRouter and share it with the pool',
 
   notes: data => [
-    `A ${Math.round(data.seconds)}-second narrated tutorial for people who use OpenRouter's free models.`,
-    'It shows why your OpenRouter account hits its free limit. Then it adds a new OpenRouter key to AnyRouter as a BYOK key, shares it with the pool, and points the app at an AnyRouter key.',
-    'When your key hits the limit, AnyRouter sends the next requests through keys other members shared, and those requests use their quota.',
+    `A ${Math.round(data.seconds)}-second narrated film for people whose apps hit the daily limit on OpenRouter's free models.`,
+    'Add your OpenRouter key to AnyRouter and share it with the pool. When your key hits its limit, AnyRouter can send your requests through keys other members share. Shared keys have their own limits, so how much more room you get can vary.',
+    'In your app, switch the base URL and the key to AnyRouter\'s and keep the model, openrouter/free. Sharing lets other members use your OpenRouter quota too, and you can stop any time.',
     `Film version v${data.version}.`,
   ],
 

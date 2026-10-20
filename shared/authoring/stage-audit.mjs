@@ -4,9 +4,9 @@
 //
 //   node shared/authoring/stage-audit.mjs <project-dir> [--safe=x0,y0,x1,y1] [--step=0.5] [--json]
 //
-//   layers  a canvas, svg, img or video that spans the stage one way is a full-bleed layer,
-//           and must span it the other way too
-//   safe    with --safe, readable text stays inside that box. Frame chrome and captions sit
+//   layers  a canvas, svg, img or video whose visible part (cut to the ancestors that clip it)
+//           spans the stage one way is a full-bleed layer, and must span it the other way too
+//   safe    with --safe, readable text stays inside that box (the part of it not clipped away). Frame chrome and captions sit
 //           outside it on purpose: they carry data-outside-safe-area and only have to stay
 //           on the stage.
 //
@@ -75,11 +75,24 @@ async function seekAndMeasure(t, frame, safe, tol) {
     return opacity > 0.5;
   };
   const box = r => [r.left, r.top, r.right, r.bottom].map(Math.round);
+  // What of an element can be seen: its box cut to every ancestor that clips. A capture larger
+  // than its browser frame is cropped by the frame, and only the crop is on stage.
+  const clipped = el => {
+    let { left, top, right, bottom } = el.getBoundingClientRect();
+    for (let e = el.parentElement; e; e = e.parentElement) {
+      const cs = getComputedStyle(e);
+      if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+      const c = e.getBoundingClientRect();
+      left = Math.max(left, c.left); top = Math.max(top, c.top);
+      right = Math.min(right, c.right); bottom = Math.min(bottom, c.bottom);
+    }
+    return { left, top, right, bottom, width: Math.max(0, right - left), height: Math.max(0, bottom - top) };
+  };
   const found = [];
 
   for (const el of document.querySelectorAll('canvas, svg, img, video')) {
     if (el.ownerSVGElement) continue;
-    const r = el.getBoundingClientRect();
+    const r = clipped(el);
     if (!shown(el, r)) continue;
     const spans = r.width >= frame.w - 2 || r.height >= frame.h - 2;
     const covers = r.left <= 1 && r.top <= 1 && r.right >= frame.w - 1 && r.bottom >= frame.h - 1;
@@ -96,7 +109,7 @@ async function seekAndMeasure(t, frame, safe, tol) {
     if (p && n.nodeValue.trim() && !p.closest('script,style,template,noscript,title')) holders.add(p);
   }
   for (const el of holders) {
-    const r = el.getBoundingClientRect();
+    const r = clipped(el);
     if (!shown(el, r)) continue;
     const free = el.closest('[data-outside-safe-area]');
     const [x0, y0, x1, y1] = free || !safe ? [0, 0, frame.w, frame.h] : safe;

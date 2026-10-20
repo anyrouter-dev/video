@@ -1,0 +1,14 @@
+{
+  "command": "anyr --help",
+  "startedAt": "2026-10-19T14:59:37.746Z",
+  "durationMs": 9,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 9,
+      "stream": "stdout",
+      "text": "anyr – point any coding agent at AnyRouter\n\nStart\n  $ curl -fsSL https://anyrouter.dev/setup.sh | bash\n  $ anyr auth login\n  $ anyr claude                 # default model: anyrouter/auto\n\nSwap the model, keep the agent\n  $ anyr claude --model z-ai/glm-4.7-flash\n  $ anyr claude --yolo --model anyrouter/auto[1m]\n  $ anyr claude --model anyrouter/free[1m]\n  $ anyr claude --model anyrouter/auto[500k]\n  $ anyr claude --model auto --effort high\n\nSame key, other agents\n  $ anyr codex --model anthropic/claude-sonnet-4.6\n  $ anyr grok --effort high\n\nStructured decisions (not chat)\n  $ anyr decision --model typesafe/jev --state 'A payout is failing' --questions '{\"urgent\":{\"type\":\"noul\"}}'\n\nDashboard from the terminal\n  $ anyr api credits\n  $ anyr api keys create ci-bot\n\nPreflight: bare anyr confirms account / model / agent, then launches.\nanyr help commands for the full map.\n"
+    }
+  ]
+}
