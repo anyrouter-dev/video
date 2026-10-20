@@ -6,7 +6,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import kind, { FILM, parseDoc, redact, rollPools, fallbackOf } from './kind.mjs';
-import { linesOf, TYPE, windowSpan } from './scenes.mjs';
+import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
 
@@ -33,6 +33,8 @@ const html = film => film.scenes.map(s => s.body).join('\n');
 // line breaks is one string.
 const shown = h => h
   .replace(/<(script|style|svg)[\s\S]*?<\/\1>/g, '\n')
+  // the lockup's URL as each frame sets it
+  .replace(/<span class="u[lp]">/g, '\n')
   .replace(/<br[^>]*>/g, ' ')
   .replace(/<\/?span[^>]*>|<wbr>/g, '')
   .replace(/<[^>]+>/g, '\n')
@@ -148,7 +150,9 @@ test('the film opens on the page title and closes on its URL', () => {
   for (const [u, film] of films()) {
     const text = shown(html(film));
     assert.equal(text.filter(t => t === u.title).length, 1, `${u.slug}: the headline is one element, carried through every beat`);
-    assert.ok(text.includes(u.url.replace(/^https:\/\//, '')), `${u.slug}: the page URL`);
+    const card = html(film).match(/<div class="url[^>]*>([\s\S]*?)<\/div>/)[1], page = u.url.replace(/^https:\/\//, '');
+    // portrait names the list the page is on when the page's own URL would not sit on one row
+    assert.ok(shown(card).length === 1 ? shown(card)[0] === page : shown(card)[0] === page && shown(card)[1] === 'anyrouter.dev/use-cases', `${u.slug}: the page URL`);
     assert.ok(text.includes(u.kicker), `${u.slug}: the kicker`);
   }
 });
@@ -181,11 +185,14 @@ test('a preset rolls through real ids one key runs, then comes back to the page\
   assert.ok(seen >= 8, 'most pages that name a preset roll it');
 });
 
-test('a roll id that cannot sit whole on a portrait row with the code around it is left out', () => {
-  // anyrouter("deepseek/deepseek-v4-flash"), is 40 characters: at 40px it wraps inside a 900px window,
-  // so the line would reflow as the id rolls in
-  assert.deepEqual(rolled(html(filmOf(doc(), 'ai-sdk'))), []);
-  assert.ok(rolled(html(filmOf(doc(), 'free-llm-api'))).length > 2, '"deepseek/deepseek-v4-flash", sits whole on a row');
+test('a roll id that cannot sit whole on a portrait row is left out, and one that can takes a row of its own', () => {
+  // a token is never cut, so an id wider than a row at the smallest code size would reflow the line as it rolls in
+  const line = { text: 'model: anyrouter("anyrouter/free"),', focus: true };
+  assert.ok(idFitsRow(line, 'anyrouter/free', 'deepseek/deepseek-v4-flash', false));
+  assert.ok(!idFitsRow(line, 'anyrouter/free', `deepseek/${'deepseek-v4-flash-'.repeat(3)}`, false));
+  // anyrouter("deepseek/deepseek-v4-flash"), is 40 characters: in portrait it sits on a row under "model:", for every id
+  const h = html(filmOf(doc(), 'ai-sdk'));
+  assert.ok(rolled(h).length > 2 && /class="code ed[^"]* brk-p/.test(h), 'ai-sdk rolls each id on a row of its own in portrait');
 });
 
 test('a page that promises $0 or free never rolls an id billed to credits', () => {
@@ -250,8 +257,8 @@ test('the headline fills the frame and the code reads from across the room', () 
     assert.ok(+p >= 120 && +p <= 148, `${u.slug}: portrait headline ${p}px`);
     const [, cl, cp] = h.match(/--cs:(\d+)px;--cs-p:(\d+)px/);
     assert.ok(+cl >= 48 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
-    // 36px only where a line the page changes, shown whole, leaves nothing larger room
-    assert.ok(+cp >= (/class="ln keep"/.test(h) ? 36 : 40) && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
+    // never under the 32px a phone reads, and that small only where a whole token needs the row
+    assert.ok(+cp >= 32 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 52) large++;
   }
   assert.ok(large >= films().length * 0.75, `${large} of ${films().length} at 52px or more: 48px is only for a line that would wrap or a tall editor`);
@@ -304,11 +311,12 @@ test('the kicker is a quarter larger than frame.md\'s badge, so it reads on a ph
   assert.ok(px('height') >= 64 * 1.25, `kicker pill ${px('height')}px tall`);
 });
 
-test('a portrait window pushed in all the way stays inside the safe area across', () => {
-  // the camera leans in and the window pushes in about the safe area's centre, so a window as wide as
-  // the safe area grows past x 960, which a phone shows as a card cut by the edge
-  const { left, right } = windowSpan('portrait');
-  assert.ok(left >= PORTRAIT_SAFE.left && right <= PORTRAIT_SAFE.right, `the window spans x ${left.toFixed(1)} to ${right.toFixed(1)}`);
+test('portrait code leaned in all the way stays inside the safe area across', () => {
+  // the window spans the safe width, so its code has the room for a whole URL; the camera leans in about
+  // the safe area's centre, so the code stays inside it and only the card's edge passes it, by a hair
+  const code = codeSpan('portrait'), win = windowSpan('portrait');
+  assert.ok(code.left >= PORTRAIT_SAFE.left && code.right <= PORTRAIT_SAFE.right, `the code spans x ${code.left.toFixed(1)} to ${code.right.toFixed(1)}`);
+  assert.ok(win.left >= PORTRAIT_SAFE.left - 12 && win.right <= PORTRAIT_SAFE.right + 12, `the window spans x ${win.left.toFixed(1)} to ${win.right.toFixed(1)}`);
 });
 
 // The headline's lines in one frame, as the film breaks them.

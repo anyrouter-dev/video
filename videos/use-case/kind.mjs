@@ -155,6 +155,8 @@ export function windowOf(u) {
     to = Math.min(all.length, from + EDITOR_LINES);
   }
   const shown = all.slice(from, to);
+  // a terminal ends on the page's command, so a "\" that carries it onto lines the window does not show goes
+  if (u.command.shell) shown[shown.length - 1] = shown.at(-1).replace(/ +\\$/, '');
   const indent = Math.min(...shown.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
   return {
     shell: u.command.shell,
@@ -170,13 +172,13 @@ export function copyOf(u, pools) {
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text), keep: !l.focus && CHANGED.test(l.text) }));
   const roll = rollOf(u, pools);
-  // a window too tall for the frame drops its last lines of context, never the command or a line
-  // it changes, and only then steps its code down to the last-resort size
-  const fit = least => {
-    let shown = lines, code;
-    while (!(code = codeSizes(shown, roll, win.shell, title, least)) && !(win.shell || shown.at(-1).focus || shown.at(-1).keep)) shown = shown.slice(0, -1);
-    return code && { shown, code };
-  };
+  // A window may drop its last lines of context, never the command or a line it changes. Larger
+  // code wins over a line of context: of the cuts, the one whose code is set largest, then the
+  // one that keeps the most lines. Only when none fits does it step down to the last-resort size.
+  const cuts = [lines];
+  while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
+  const fit = least => cuts.map(shown => ({ shown, code: codeSizes(shown, roll, win.shell, title, least) })).filter(c => c.code)
+    .reduce((best, c) => (!best || c.code.landscape + c.code.portrait > best.code.landscape + best.code.portrait ? c : best), null);
   const { shown, code } = fit(false) ?? fit(true) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
   return {
     slug: u.slug,
@@ -266,6 +268,8 @@ export default {
   id: 'use-case',
   title: 'Use case',
   scheduled: false,
+  // a film embedded on its page is read on a phone in both shapes: every rendition passes the stage audit
+  audited: true,
 
   async collect({ flags }) {
     const doc = flags.from ? readJson(path.resolve(flags.from)) : await fetchJson(API);

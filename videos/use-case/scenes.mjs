@@ -122,18 +122,20 @@ export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
 // The code window: as wide as the safe area, its text inside the padding. In
-// portrait it is narrower, so leaned and pushed in all the way it still fits
-// across the safe area: on a phone an edge past it reads as cropped. In
 // beat 2 the caption and the window share the safe area's height (`sh`); the
 // caption is the headline scaled down, never below `capMin`. The camera leans in
 // over beat 1 (`lean`) and the window pushes in over beat 2, both about the
 // middle, so a beat's column is sized to stay in the safe area at full scale.
 // The push is at least `push`, which the code's room allows for, and as far as
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
-// Portrait steps down to `least` only when nothing larger has room for the lines the page changes.
+// A row of code ends only at a space, so the longest token of a line sets how
+// small its code may go. Portrait has the least room: its window spans the
+// whole safe width, never pushes in, and sets its code a hair tighter (`adv`
+// is a glyph's advance in em), which fits the API's 45-character URL whole at
+// 32px. It steps down to `least` only when nothing larger has room.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], wrap: 52, width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02 },
-  portrait: { sizes: [44, 40], wrap: 40, least: 36, width: 840, padX: 28, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.02, pushMax: 1.04 },
+  landscape: { sizes: [56, 52, 48], width: 1728, padX: 48, padTop: 52, padBottom: 60, sh: 888, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
+  portrait: { sizes: [44, 40, 36], least: 32, width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.02, push: 1, pushMax: 1, adv: 0.57 },
 };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
@@ -142,15 +144,44 @@ export function windowSpan(o) {
   const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = w.width * w.lean * w.pushMax / 2;
   return { left: mid - half, right: mid + half };
 }
+/** The text inside the window's padding at its fullest, leaned and pushed in all the way. */
+export function codeSpan(o) {
+  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = (w.width - EDGE - 2 * w.padX) * w.lean * w.pushMax / 2;
+  return { left: mid - half, right: mid + half };
+}
 const winLeft = o => ACROSS[o].left + (ACROSS[o].width - WIN[o].width) / 2;
 // the window's 2px border, both sides
 const BAR = 72, EDGE = 4, CODE_LH = 1.45, TITLE_LH = 0.98;
 // a couple of px short of the box, so rounding in the browser can never add a row
 const textWidth = o => WIN[o].width - EDGE - 2 * WIN[o].padX - 2;
-const monoWidth = (text, px) => [...text].length * 0.6 * px;
 const indentOf = text => text.match(/^ */)[0].length;
 // the caret, as .caret draws it
 const caretWidth = px => 0.56 * px + 4;
+
+/**
+ * Rows `text` takes at `px` in frame `o`, wrapping only at spaces as the browser
+ * does in a .ln: its first row starts `lead` characters in (a prompt), and
+ * every row after it `hang` characters in. With `caret`, the caret sits after
+ * the last token, inside it. Infinity when a token is wider than its row.
+ */
+export function rowsOf(text, px, o, { lead = 0, hang = 0, caret = false } = {}) {
+  const adv = WIN[o].adv * px, room = textWidth(o) / adv + 1e-9, tail = caret ? caretWidth(px) / adv : 0;
+  const parts = tokensOf(text), last = parts.findLastIndex(p => p.trim());
+  let rows = 1, x = lead, start = lead;
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2) { x += parts[i].length; continue; }
+    if (!parts[i]) continue;
+    const w = parts[i].length + (i === last ? tail : 0);
+    if (x + w > room) {
+      // spaces at the end of a row hang past it; a token too wide for a fresh row never fits
+      if (x - (parts[i - 1]?.length ?? 0) <= start) return Infinity;
+      rows++; x = start = hang;
+      if (x + w > room) return Infinity;
+    }
+    x += w;
+  }
+  return rows;
+}
 
 /**
  * A roll line cut where the id's own row starts: before the token that holds the
@@ -162,78 +193,58 @@ const slotOf = (text, preset) => {
   return { before: text.slice(0, start), row: id => text.slice(start, at) + id + text.slice(at + preset.length) };
 };
 
+// Where a line's rows start: a shell line after its "$ " prompt, and wraps back to the
+// left edge as a terminal does; a line of code at its indent, and wraps two past it, or
+// at its indent when a token needs those two characters.
+const leadOf = shell => (shell ? 2 : 0);
+const hangsOf = (l, shell) => (shell ? [0] : [indentOf(l.text) + 2, indentOf(l.text)]);
+// an id on a row of its own sits where a wrapped row of its line does, or two in from the edge in code
+const idLead = shell => (shell ? 0 : 2);
+
 /**
  * Whether `id`, rolled into the preset's place in `line`, sits whole on a row
  * of its own in both frames at their smallest code size. An id that needs more
  * would break mid-roll, so it does not roll.
  */
 export function idFitsRow(line, preset, id, shell) {
-  const row = `${shell ? '$ ' : '  '}${slotOf(line.text, preset).row(id)}`;
-  return Object.keys(WIN).every(o => { const px = WIN[o].sizes.at(-1); return monoWidth(row, px) + caretWidth(px) <= textWidth(o); });
+  const row = slotOf(line.text, preset).row(id);
+  return Object.keys(WIN).every(o => rowsOf(row, WIN[o].least ?? WIN[o].sizes.at(-1), o, { lead: idLead(shell), caret: true }) === 1);
 }
 
 /**
  * The headline and code sizes per orientation. The headline is the largest that
  * fits its line budget and leaves the window room for the code at its largest
  * size, since the caption keeps the headline's lines. The code is the largest at
- * which every typed line fits on one line, each roll id in place, with its
- * prompt and caret, and the window still leaves room for the caption at its
- * smallest. A line too long for every
- * size is wrapped between tokens, at the `wrap` size or smaller. So is a line
- * that sets what the page changes (`keep`): it is shown whole. Only a line of
- * context may run past the window; it is clipped with a fade. When the longest
- * roll id does not fit, the id moves to a line of its own, for every id, so the
- * line never reflows mid-roll. With `least`, portrait may step down to its
- * last-resort size. Null when no size leaves the caption its room.
+ * which every line, each roll id in place, wraps only at spaces with its prompt
+ * and caret, and the window still leaves room for the caption at its smallest.
+ * A size that sets the command, and each line it changes, on one row wins over a larger one that wraps them.
+ * When the longest roll id does not fit its line, the id moves to a row of its
+ * own, for every id, so the line never reflows mid-roll. With `least`, portrait
+ * may step down to its last-resort size. Null when no size leaves the caption its room.
  */
 export function codeSizes(lines, roll, shell, title, least = false) {
-  const prompt = shell ? '$ ' : '';
-  const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
   const isTyped = l => shell || l.focus;
-  // a line that sets what the page changes is shown whole, as a typed line is
-  const isWhole = l => isTyped(l) || l.keep;
-  const fits = (t, px, o) => monoWidth(`${prompt}${t}`, px) + caretWidth(px) <= textWidth(o);
-  // a wrapped row hangs two characters past the line's indent, so it is measured that much short
-  const rowsOf = (t, px, o) => (fits(t, px, o) ? 1 : linesOf(`${prompt}${t}█`, { px, width: textWidth(o) - (indentOf(t) + 2) * 0.6 * px, weight: 'mono' }));
-  // a whole line of context is plain text: it breaks after a space or where breaksIn says, and a
-  // piece too long for a row anywhere; past the first row it hangs past its indent
-  const plainRows = (t, px, o) => {
-    const full = Math.floor(textWidth(o) / (0.6 * px)), hang = full - indentOf(t) - 2, after = breaksIn(t);
-    const pieces = [];
-    for (let i = 0, from = 0; i < t.length; i++) if (t[i] === ' ' || after(i) || i === t.length - 1) { pieces.push(t.slice(from, i + 1)); from = i + 1; }
-    let n = 1, x = 0, width = full;
-    for (const p of pieces) {
-      // a space at the end of a row hangs past it
-      const ink = p.trimEnd().length;
-      if (x > 0 && x + ink > width) { n++; x = 0; width = hang; }
-      x += p.length;
-      while (x - (p.length - ink) > width) { n++; x -= width; width = hang; }
-    }
-    return n;
-  };
-  const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => !fits(t, px, o)));
+  const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
+  const rowsWith = (l, t, px, o, hang) => rowsOf(t, px, o, { lead: leadOf(shell), hang, caret: isTyped(l) });
+  // the first hang every variant of the line fits with
+  const hangOf = (l, px, o) => hangsOf(l, shell).find(h => variants(l).every(t => rowsWith(l, t, px, o, h) < Infinity)) ?? hangsOf(l, shell)[0];
+  const rowsAt = (l, t, px, o) => rowsWith(l, t, px, o, hangOf(l, px, o));
+  const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => rowsAt(l, t, px, o) > 1));
   const rows = (px, o) => lines.reduce((n, l) => {
-    if (!isWhole(l)) return n + 1;
-    if (!isTyped(l)) return n + plainRows(l.text, px, o);
-    if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsOf(t, px, o)));
-    const slot = slotOf(l.text, roll.preset);
-    // the id's own row starts two characters in, where a shell line's prompt ends
-    const lead = shell ? '' : '  ';
-    return n + rowsOf(slot.before, px, o) + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(lead + slot.row(id), px, o)));
+    if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsAt(l, t, px, o)));
+    const slot = slotOf(l.text, roll.preset), hang = hangOf(l, px, o);
+    const before = rowsOf(slot.before, px, o, { lead: leadOf(shell), hang });
+    return n + before + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(slot.row(id), px, o, { lead: idLead(shell), hang, caret: true })));
   }, 0);
   const codeFor = (o, tLines) => {
     const w = WIN[o];
     // the window pushes in about its own middle, so its bottom edge drops by half its growth
     const room = px => (EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
-    // a line is set clean on one line, or, in a roll, with each id whole on a row of its own
-    // a whole line of context has no caret after it
-    const clean = (l, px) => (l.keep && !isTyped(l) ? monoWidth(l.text, px) <= textWidth(o) : variants(l).every(t => fits(t, px, o))) || (l.focus && !!roll && (() => {
-      const slot = slotOf(l.text, roll.preset), lead = shell ? '' : '  ';
-      return fits(slot.before, px, o) && [roll.preset, ...roll.ids].every(id => fits(lead + slot.row(id), px, o));
-    })());
-    // a clean line at a smaller size reads better than a wrapped one at a larger
-    return w.sizes.find(px => lines.filter(isWhole).every(l => clean(l, px)) && room(px)) ?? w.sizes.find(px => px <= w.wrap && room(px))
-      ?? (least && w.least && room(w.least) ? w.least : null);
+    const sizes = least && w.least ? [...w.sizes, w.least] : w.sizes;
+    // a command, or a line it changes, on one row at a smaller size reads better than wrapped at a larger;
+    // a line of context may wrap
+    const clean = px => lines.filter(l => isTyped(l) || l.keep).every(l => variants(l).every(t => rowsAt(l, t, px, o) === 1));
+    return sizes.find(px => clean(px) && room(px)) ?? sizes.find(px => room(px)) ?? null;
   };
   // the code reads first: the largest code size, then the largest headline that leaves it its room
   const pick = o => TYPE.title[o].sizes.map(px => {
@@ -242,9 +253,11 @@ export function codeSizes(lines, roll, shell, title, least = false) {
   }).filter(c => c.code).reduce((best, c) => (!best || c.code > best.code ? c : best), null);
   const l = pick('landscape'), p = pick('portrait');
   if (!l || !p) return null;
-  const landscape = l.code, portrait = p.code;
-  const clipped = (px, o) => lines.map(l => !isWhole(l) && monoWidth(l.text, px) > textWidth(o));
-  return { title: { landscape: l.title, portrait: p.title }, landscape, portrait, breaks: { landscape: breaks(landscape, 'landscape'), portrait: breaks(portrait, 'portrait') }, clipped: { landscape: clipped(landscape, 'landscape'), portrait: clipped(portrait, 'portrait') } };
+  return {
+    title: { landscape: l.title, portrait: p.title }, landscape: l.code, portrait: p.code,
+    breaks: { landscape: breaks(l.code, 'landscape'), portrait: breaks(p.code, 'portrait') },
+    hangs: { landscape: lines.map(x => hangOf(x, l.code, 'landscape')), portrait: lines.map(x => hangOf(x, p.code, 'portrait')) },
+  };
 }
 
 // ── pieces ─────────────────────────────────────────────────────────────────
@@ -262,46 +275,37 @@ const PLUS = '<svg class="plus" viewBox="0 0 24 24" aria-hidden="true"><path d="
 // the one accent in the window. Not a path or a URL: nothing word-like before it.
 const MODEL_ID = /(?<![\w/.:~-])[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9.:[\]-]*/gi;
 
-const URL_AT = /https?:\/\/\S+/g;
 const spans = (text, re) => {
   const at = new Set();
   for (const m of text.matchAll(re)) for (let i = m.index; i < m.index + m[0].length; i++) at.add(i);
   return at;
 };
-/**
- * The characters of `text` a row may break after: an "=", a path's "/", or the
- * "." of a property chain outside a URL (process.env.|ANYROUTER_API_KEY), never
- * inside a model id.
- */
-function breaksIn(text) {
-  const ids = spans(text, MODEL_ID), urls = spans(text, URL_AT);
-  return i => !ids.has(i) && (text[i] === '=' || (text[i] === '/' && text[i + 1] !== '/' && text[i - 1] !== '/')
-    || (text[i] === '.' && !urls.has(i) && /\w/.test(text[i - 1] ?? '') && /[A-Za-z_$]/.test(text[i + 1] ?? '')));
-}
 
 /**
- * Characters as spans a typist reveals one by one; in the command, model ids in
- * the accent, since the id is what arrives there. A token too long for its line
- * breaks where breaksIn says.
+ * A line of code as its tokens and the spaces between them: [token, gap, token, …],
+ * the first token empty when the line is indented. A row ends only at a gap, so
+ * a token is never cut. A pipe stays with the command it feeds, and a closing
+ * "\" with the word before it, so neither sits on a row alone.
  */
+export const tokensOf = text => String(text).split(/(?<!(?:^| )\|)( +)(?!\\$)/);
+
+/** Characters as spans a typist reveals one by one; in the command, model ids in the accent, since the id is what arrives there. */
 function typedChars(text, focus) {
-  const accents = focus ? spans(text, MODEL_ID) : new Set(), breakAfter = breaksIn(text);
-  return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>${breakAfter(at + k) ? '<wbr>' : ''}`).join('');
+  const accents = focus ? spans(text, MODEL_ID) : new Set();
+  return (s, at) => [...s].map((ch, k) => `<span class="c${accents.has(at + k) ? ' m' : ''}">${esc(ch)}</span>`).join('');
 }
 
 const CARET = '<span class="caret"></span>';
 
 /**
- * One typed line, split at spaces into tokens that never break inside: a model
- * id cut at "gemma-4-" reads as two things. In the focus line of a roll, the
+ * One typed line, its tokens each in a box that never breaks inside: a model id
+ * cut at "gemma-4-" reads as two things. In the focus line of a roll, the
  * preset is a slot holding every id, stacked, the first typed with the line.
  */
 function typedLine(line, roll) {
   const chars = typedChars(line.text, line.focus);
   const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
-  // a pipe stays with the command it feeds, and a closing "\" with the word before it,
-  // so neither sits on a row alone
-  const parts = line.text.split(/(?<!(?:^| )\|)( +)(?!\\$)/);
+  const parts = tokensOf(line.text);
   // the caret sits in the last token, after its last character: after the token, it takes a row of its own once the token wraps
   const last = parts.findLastIndex(p => p.trim());
   if (last < 0) return `${chars(line.text, 0)}${CARET}`;
@@ -318,34 +322,48 @@ function typedLine(line, roll) {
   }).join('');
 }
 
-/** A line set whole as it is, wrapping where breaksIn says. */
-const wrapped = text => {
-  const breakAfter = breaksIn(text);
-  return [...text].map((ch, i) => `${esc(ch)}${breakAfter(i) ? '<wbr>' : ''}`).join('');
-};
+/** A line shown whole as it is, its tokens boxed as a typed line's are, so it wraps where codeSizes measured it. */
+const wholeLine = text => tokensOf(text).map(part => (part.trim() ? `<span class="tok">${esc(part)}</span>` : esc(part))).join('');
+
+// The window's bar holds its title on one row between the dots and as much room again, or not at all.
+const TTL_PX = 36, TTL_PAD = 110;
+const ttlFits = (title, o) => [...title].length * 0.6 * TTL_PX <= WIN[o].width - EDGE - 2 * TTL_PAD;
 
 /**
  * The window: a terminal for shell commands, an editor for a line of code. An
  * answer waits under the last row, hidden, until the code scrolls up to it, so
- * the window is sized by its code alone.
+ * the window is sized by its code alone. Every line is shown whole: a row ends
+ * only at a space, and the sizes in `code` leave every token its row.
  */
 function windowHtml(win) {
   const { shell, title, lines, roll, answer, code } = win;
   const cls = [shell ? 'sh' : 'ed', answer && 'ans', code.breaks.landscape && 'brk-l', code.breaks.portrait && 'brk-p'].filter(Boolean).join(' ');
   const body = lines.map((l, k) => {
-    const typed = shell || l.focus;
-    const clip = ['landscape', 'portrait'].filter(o => code.clipped[o][k]).map(o => ` clip-${o[0]}`).join('');
-    if (typed) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="--in:${indentOf(l.text)}">${typedLine(l, roll)}</div>`;
-    return l.keep
-      ? `<div class="ln keep" style="--in:${indentOf(l.text)}">${wrapped(l.text)}</div>`
-      : `<div class="ln ctx${clip}" data-layout-allow-overflow>${esc(l.text)}</div>`;
+    const vars = `--in:${indentOf(l.text)};--hang:${code.hangs.landscape[k]};--hang-p:${code.hangs.portrait[k]}`;
+    if (shell || l.focus) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="${vars}">${typedLine(l, roll)}</div>`;
+    return `<div class="ln ${l.keep ? 'keep' : 'ctx'}" style="${vars}">${wholeLine(l.text)}</div>`;
   }).join('');
   // the value the header reads is the id that answered, so it takes the accent
   const value = answer && answer.indexOf(': ') + 2;
   const out = answer ? `<div class="ln out" data-layout-allow-overflow>${esc(answer.slice(0, value))}<span class="m">${esc(answer.slice(value))}</span></div>` : '';
+  const ttl = title && ['landscape', 'portrait'].filter(o => !ttlFits(title, o)).map(o => ` off-${o[0]}`).join('');
   return `<div class="win"><div class="push"><div class="term ${shell ? 'is-ink' : 'card'}">
-      <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl" data-layout-allow-overflow>${esc(title)}</span>` : ''}</div>
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl${ttl}">${esc(title)}</span>` : ''}</div>
       <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows">${body}${out}</div></div></div></div></div>`;
+}
+
+// The page's URL on the lockup sits on one row, as large as fits the safe width once the
+// camera has leaned in. Where a long slug would set it under URL_SIZES, the card names the
+// list every use case is on instead: a URL cut across rows reads as two addresses.
+const URL_SIZES = { landscape: [48], portrait: [44, 40, 36] }, URL_PAD = { landscape: 44, portrait: 36 };
+const LIST = 'anyrouter.dev/use-cases';
+export function urlSet(href) {
+  const page = href.replace(/^https:\/\//, '');
+  const set = o => {
+    const room = ACROSS[o].width / (2 * WIN[o].lean - 1) - 2 * URL_PAD[o], fit = t => URL_SIZES[o].find(px => [...t].length * 0.6 * px <= room);
+    return fit(page) ? { text: page, px: fit(page) } : { text: LIST, px: fit(LIST) };
+  };
+  return { landscape: set('landscape'), portrait: set('portrait') };
 }
 
 // ── the shot ───────────────────────────────────────────────────────────────
@@ -355,8 +373,7 @@ export const ROLL_EVERY = 0.9;
 /** The film's one sub-composition: { cls, body, inner, cues }. */
 export function filmScene({ copy, beats, duration, timing }) {
   const [, doing, lockup] = beats;
-  const shown = copy.url.replace(/^https:\/\//, '');
-  const cut = shown.lastIndexOf('/') + 1;
+  const url = urlSet(copy.url);
   const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
   const { roll } = copy.window;
   const rolls = roll ? roll.ids.length + 1 : 0;
@@ -367,7 +384,8 @@ export function filmScene({ copy, beats, duration, timing }) {
     <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1>
     ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-      <div class="url mono"><span>${esc(shown.slice(0, cut))}</span><wbr><span>${esc(shown.slice(cut))}</span></div></div></div>`;
+      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${url.landscape.text === url.portrait.text ? esc(url.landscape.text)
+        : `<span class="ul">${esc(url.landscape.text)}</span><span class="up">${esc(url.portrait.text)}</span>`}</div></div></div>`;
   const inner = `
     const T1 = ${doing.start}, T2 = ${lockup.start};
     const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt};
@@ -496,23 +514,22 @@ export const CSS = `
   .film .term{overflow:hidden;border-radius:32px}
   .film .term.is-ink{background:${C.ink};border:2px solid ${C.ink};color:${C.onInk}}
   .film .term.card{color:${C.ink}}
-  .film .bar{position:relative;height:${BAR}px;display:flex;align-items:center;justify-content:center;padding:0 110px;border-bottom:2px solid ${C.line}}
+  .film .bar{position:relative;height:${BAR}px;display:flex;align-items:center;justify-content:center;padding:0 ${TTL_PAD}px;border-bottom:2px solid ${C.line}}
   .film .is-ink .bar{border-bottom-color:${C.ink2}}
   .film .dots{position:absolute;left:30px;top:50%;margin-top:-7px;display:flex;gap:10px}
   .film .dots i{width:14px;height:14px;border-radius:50%;background:${C.line};flex:none}
   .film .is-ink .dots i{background:${C.ink2}}
-  .film .ttl{flex:1;min-width:0;overflow:hidden;text-align:center;font-family:'Geist Mono',ui-monospace,monospace;font-size:36px;color:${C.muted};white-space:nowrap;
-    -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 64px),transparent)}
+  .film .ttl{text-align:center;font-family:'Geist Mono',ui-monospace,monospace;font-size:${TTL_PX}px;color:${C.muted};white-space:pre}
+  .film .ttl.off-l{display:none}
   .film .is-ink .ttl{color:${C.onInkMuted}}
-  .film .code{padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
-  /* a wrapped line hangs past its prompt and its own indent, so it reads as one command; a blank line keeps its row */
-  .film .ln{min-height:${CODE_LH}em;white-space:pre-wrap;padding:0 0 0 calc((var(--in, 0) + 2) * 1ch);text-indent:calc((var(--in, 0) + 2) * -1ch)}
-  .film .ln.ctx{white-space:pre;overflow:hidden;color:${C.muted}}
-  .film .ln.keep{overflow-wrap:anywhere}
+  /* --adv is a glyph's advance: the unit rowsOf measures rows in */
+  .film .code{--adv:${WIN.landscape.adv}em;padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
+  /* a row ends only at a space; a wrapped row of code hangs past its indent, a terminal's wraps to the edge; a blank line keeps its row */
+  .film .ln{min-height:${CODE_LH}em;white-space:pre-wrap;padding:0 0 0 calc(var(--hang, 0) * var(--adv));text-indent:calc(var(--hang, 0) * var(--adv) * -1)}
+  .film .ln.ctx{color:${C.muted}}
   .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}
-  .film .ln.clip-l{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 120px),transparent)}
   .film .sh .ln::before{content:"$ ";color:${C.onInkMuted}}
-  .film .tok{display:inline-block;max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap;vertical-align:top;text-indent:0}
+  .film .tok{display:inline-block;white-space:pre;vertical-align:top;text-indent:0}
   .film .c{opacity:0}
   .film .m{color:${C.accent}}
   .film .is-ink .m{color:${C.accentOnInk}}
@@ -521,8 +538,8 @@ export const CSS = `
   .film em.ri{opacity:0}
   .film .brk{display:none}
   .film .brk-l .brk{display:block}
-  /* an id on its own row hangs two characters in, not past the line's indent: the longest id needs the width */
-  .film .brk-l .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
+  /* in code an id on its own row sits two characters in, not past the line's indent: the longest id needs the width */
+  .film .ed.brk-l .brk + .tok{margin-left:calc(var(--in, 0) * var(--adv) * -1)}
   /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
   .film .rows{position:relative}
@@ -536,8 +553,8 @@ export const CSS = `
   .film .lock svg{width:144px;height:144px;display:block}
   .film .lock b{font-size:144px;font-weight:600;letter-spacing:-.055em;line-height:1}
   /* the one thing to do next, so it is the ink card */
-  .film .url{font-size:48px;color:${C.onInk};background:${C.ink};padding:24px 44px;border-radius:32px}
-  .film .url span{white-space:nowrap}
+  .film .url{font-size:var(--us);color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
+  .film .url .up{display:none}
 
   @media (orientation: portrait){
     .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--push:${WIN.portrait.push};--push-max:${WIN.portrait.pushMax};--lean:${WIN.portrait.lean}}
@@ -549,14 +566,18 @@ export const CSS = `
     .film .h .bp{display:inline}
     .film .win{left:${winLeft('portrait')}px}
     .film .term{border-radius:28px}
-    .film .code{font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
-    .film .ln.clip-l{-webkit-mask-image:none;mask-image:none}
-    .film .ln.clip-p{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 96px),transparent)}
+    /* a hair tighter than the font's own advance, so a 45-character URL sits whole across the safe width */
+    .film .code{--adv:${WIN.portrait.adv}em;letter-spacing:${(WIN.portrait.adv - 0.6).toFixed(2)}em;font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
+    .film .ln{padding-left:calc(var(--hang-p, 0) * var(--adv));text-indent:calc(var(--hang-p, 0) * var(--adv) * -1)}
+    .film .ttl.off-l{display:block}
+    .film .ttl.off-p{display:none}
     .film .brk-l .brk{display:none}
     .film .brk-p .brk{display:block}
-    .film .brk-l .brk + .tok{margin-left:0;max-width:100%}
-    .film .brk-p .brk + .tok{margin-left:calc(var(--in, 0) * -1ch);max-width:calc(100% + var(--in, 0) * 1ch)}
+    .film .ed.brk-l .brk + .tok{margin-left:0}
+    .film .ed.brk-p .brk + .tok{margin-left:calc(var(--in, 0) * var(--adv) * -1)}
     .film .lock svg{width:120px;height:120px}
     .film .lock b{font-size:120px}
-    .film .url{font-size:44px;padding:24px 36px;border-radius:28px}
+    .film .url{font-size:var(--us-p);padding:24px ${URL_PAD.portrait}px;border-radius:28px}
+    .film .url .ul{display:none}
+    .film .url .up{display:inline}
   }`;
