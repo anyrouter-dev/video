@@ -1,0 +1,22 @@
+{
+  "id": "001-20261019-v1-d9f691c6c6",
+  "hash": "d9f691c6c6",
+  "kind": "sign-in-with-anyrouter",
+  "label": "v1",
+  "title": "Sign in with AnyRouter: your users bring their own AnyRouter account, and their AI usage is billed to them",
+  "seconds": 33.356,
+  "renderedAt": "2026-10-19T20:23:08.972Z",
+  "commit": "eef124e",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/sign-in-with-anyrouter-001-20261019-v1-d9f691c6c6.mp4",
+      "cover": "renders/sign-in-with-anyrouter-001-20261019-v1-d9f691c6c6.png"
+    },
+    "portrait": {
+      "artifact": "renders/sign-in-with-anyrouter-001-20261019-v1-d9f691c6c6-portrait.mp4",
+      "cover": "renders/sign-in-with-anyrouter-001-20261019-v1-d9f691c6c6-portrait.png"
+    }
+  },
+  "source": null,
+  "createdAt": "2026-10-19T20:23:08.992Z"
+}
