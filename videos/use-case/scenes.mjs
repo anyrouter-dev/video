@@ -130,12 +130,12 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
 // A row of code ends only at a space, so the longest token of a line sets how
 // small its code may go. Portrait has the least room: its window spans the
-// whole safe width, never pushes in, and sets its code a hair tighter (`adv`
+// whole safe width, pushes in only as far as its code stays inside it, and sets its code a hair tighter (`adv`
 // is a glyph's advance in em), which fits the API's 45-character URL whole at
 // 32px. It steps down to `least` only when nothing larger has room.
 const WIN = {
   landscape: { sizes: [56, 52, 48], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
-  portrait: { sizes: [44, 40, 36], least: 32, width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.02, push: 1, pushMax: 1, adv: 0.57 },
+  portrait: { sizes: [44, 40, 36], least: 32, width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.01, pushMax: 1.01, adv: 0.57 },
 };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
@@ -359,7 +359,7 @@ function windowHtml(win) {
 export const CAP = {
   landscape: { px: 52, top: 924, height: 120 },
   portrait: { px: 60, top: 1240, height: 240 },
-  padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 },
+  padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 }, say: 1.35,
 };
 const capFits = text => ['landscape', 'portrait'].every(o => widthOf(text, { px: CAP[o].px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4);
 // a word that is part of a name, as named() reads one: past a sentence's first word, any capitalised word
@@ -385,14 +385,16 @@ export function captionsOf(said = []) {
     stretches.at(-1).push({ ...w, sentenceStart: fresh });
   });
   const width = ws => widthOf(ws.map(w => w.text).join(' '), { px: CAP.portrait.px, weight: 500, tracking: -0.005 });
-  const ok = ws => ws.length <= 6 && capFits(ws.map(w => w.text).join(' '));
+  // a phrase is said in at most CAP.say seconds: a caption that sits longer reads as a still frame
+  const ok = ws => ws.length === 1 || (ws.length <= 6 && ws.at(-1).end - ws[0].at <= CAP.say && capFits(ws.map(w => w.text).join(' ')));
   const phrases = stretches.flatMap(ws => {
     // the cut that holds: no name split, no phrase hanging on a small word, the fewest phrases, then commas, then the most even
     let best = null;
     const walk = (from, cuts) => {
       if (from === ws.length) {
         const parts = [0, ...cuts].map((c, i, a) => ws.slice(c, a[i + 1] ?? ws.length));
-        const named = cuts.filter(c => !/[,;:]$/.test(ws[c - 1].text) && isName(ws[c - 1].text, ws[c - 1].sentenceStart) && isName(ws[c].text, false)).length;
+        // a command stays whole too: "anyr claude" is one thing to type
+        const named = cuts.filter(c => (!/[,;:]$/.test(ws[c - 1].text) && isName(ws[c - 1].text, ws[c - 1].sentenceStart) && isName(ws[c].text, false)) || ws[c - 1].text === 'anyr').length;
         const plain = cuts.filter(c => !/[,;:]$/.test(ws[c - 1].text)).length;
         // a phrase that ends on "the", "to" or "its" leaves its reader hanging
         const hanging = cuts.filter(c => HANGING.test(ws[c - 1].text)).length;
@@ -452,7 +454,7 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span>${esc(c.text)}</span></div>`).join('')}</div>`;
   const inner = `
     const T1 = ${doing.start}, T2 = ${lockup.start};
-    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt};
+    const TYPE_AT = ${timing.typeAt}, EACH = ${timing.each}, LINE_PAUSE = ${timing.linePause}, ROLL_AT = ${timing.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${timing.answerAt}, POINT_AT = ${timing.pointAt};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
     const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), LEAN = v("--lean");
     const hero = $(".hero"), h = $(".h"), win = $(".win"), end = $(".end");
@@ -497,7 +499,8 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.fromTo(win, { y: below }, { y: 0, duration: 0.9, ease: "expo.out" }, T1 + 0.35);
 
     // 2 · doing it. Lines of context paste in, the command is typed, the camera pushes in.
-    tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: T2 - T1 - 0.4, ease: "none" }, T1 + 0.4);
+    // it reaches its fullest when all is said and shown, and the tint takes over the motion from there
+    tl.fromTo(Q(".push"), { scale: 1 }, { scale: PUSH, duration: Math.max(1, Math.min(POINT_AT, T2) - T1 - 0.4), ease: "none" }, T1 + 0.4);
     if (has(".ln.ctx, .ln.keep")) tl.fromTo(Q(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, T1 + 0.6);
     let t = TYPE_AT;
     $$(".typed").forEach((ln, k) => {
@@ -534,6 +537,23 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       }
     }
 
+    // A tint comes up under the command as it is typed (t is where the typing ended). Once all is said and shown, it points out
+    // each line the page changes in turn until the window leaves; a lone line breathes, so the
+    // frame never stands still.
+    const lit = $$(".ln.keep, .ln.focus, .sh .ln.typed"), first = Math.max(0, lit.indexOf($(".ln.focus")));
+    if (lit.length) {
+      const glow = document.createElement("div");
+      glow.className = "glow";
+      $(".rows").prepend(glow);
+      const to = ln => ({ y: ln.offsetTop, height: ln.offsetHeight });
+      tl.set(glow, { ...to(lit[first]), opacity: 0 }, 0);
+      tl.to(glow, { opacity: 1, duration: Math.max(0.6, t - TYPE_AT), ease: "none" }, TYPE_AT);
+      for (let t = POINT_AT + 0.3, k = first + 1; t < T2 - 0.3; t += 1.1, k++) {
+        if (lit.length > 1) tl.to(glow, { ...to(lit[k % lit.length]), duration: 0.5, ease: "power3.inOut" }, t);
+        else tl.to(glow, { opacity: k % 2 ? 0.45 : 1, duration: 0.5, ease: "sine.inOut" }, t);
+      }
+    }
+
     // 2 → 3 · the window drops away; the headline settles above the lockup.
     tl.to(win, { y: below, duration: 0.5, ease: "power4.inOut" }, T2);
     tl.set(win, { autoAlpha: 0 }, T2 + 0.5);
@@ -543,7 +563,8 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.fromTo(Q(".url"), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, T2 + 0.6);
 
     // 3 · the lockup holds while the camera keeps leaning in.
-    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "power1.out", immediateRender: false }, T2);
+    // at an even speed to the last frame: an eased lean comes to rest, and a frame at rest reads as dead air
+    tl.fromTo(Q(".cam"), { scale: v("--lean") }, { scale: 2 * v("--lean") - 1, duration: D - T2, ease: "none", immediateRender: false }, T2);
 
     // The captions: one phrase at a time, whole, under the picture; back to back they swap with no gap.
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
@@ -615,7 +636,9 @@ export const CSS = `
   .film .ed.brk-l .brk + .tok{margin-left:calc(var(--in, 0) * var(--adv) * -1)}
   /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
-  .film .rows{position:relative}
+  .film .rows{position:relative;z-index:0}
+  .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none;z-index:-1}
+  .film .is-ink .glow{background:rgba(240,145,90,.24)}
   .film .ln.out{position:absolute;left:0;right:0;top:100%;padding-top:.3em;border-top:2px solid ${C.line};opacity:0}
   .film .is-ink .ln.out{border-top-color:${C.ink2}}
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}

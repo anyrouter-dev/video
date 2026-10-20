@@ -245,6 +245,8 @@ export function storyOf(u, pools) {
   if (voice.then) ends.push(thenAt + spoken(voice.then));
   if (roll) ends.push(rollAt + rolling);
   if (answer) ends.push(answerAt + read(answer));
+  // once everything is said and shown, the lines the page changes are pointed out in turn until the window leaves
+  const settled = Math.max(said2, typed2, voice.then ? thenAt + spoken(voice.then) : 0, roll ? rollAt + rolling : 0, answer ? answerAt + 0.8 : 0) + 0.2;
 
   const base = {
     outcome: Math.max(2.4, read(`${copy.kicker} ${copy.title}`) - 0.4, VOICE_AT.outcome + spoken(voice.outcome) + AFTER),
@@ -273,6 +275,7 @@ export function storyOf(u, pools) {
     timing: {
       each: +each.toFixed(4), typeAt: at('doing', typeAt), typing: +typing.toFixed(2), linePause: LINE_PAUSE,
       rollAt: rollAt == null ? null : at('doing', rollAt), answerAt: answerAt == null ? null : at('doing', answerAt),
+      pointAt: at('doing', settled),
     },
   };
 }

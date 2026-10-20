@@ -320,7 +320,7 @@ test('portrait code leaned in all the way stays inside the safe area across', ()
   // the safe area's centre, so the code stays inside it and only the card's edge passes it, by a hair
   const code = codeSpan('portrait'), win = windowSpan('portrait');
   assert.ok(code.left >= PORTRAIT_SAFE.left && code.right <= PORTRAIT_SAFE.right, `the code spans x ${code.left.toFixed(1)} to ${code.right.toFixed(1)}`);
-  assert.ok(win.left >= PORTRAIT_SAFE.left - 12 && win.right <= PORTRAIT_SAFE.right + 12, `the window spans x ${win.left.toFixed(1)} to ${win.right.toFixed(1)}`);
+  assert.ok(win.left >= PORTRAIT_SAFE.left - 20 && win.right <= PORTRAIT_SAFE.right + 20, `the window spans x ${win.left.toFixed(1)} to ${win.right.toFixed(1)}`);
 });
 
 // The headline's lines in one frame, as the film breaks them.
