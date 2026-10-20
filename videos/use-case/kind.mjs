@@ -28,6 +28,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
+import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
 import { CSS, read, setIn, codeSizes, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
 
@@ -234,6 +235,21 @@ export function storyOf(u, pools) {
   return { copy, beats, duration, timing: { each: +each.toFixed(4), typeAt, typing: +typing.toFixed(2), rollAt: +(typeAt + typing + 0.5).toFixed(2), answerAt: answer ? +(typeAt + typing + rolling + ANSWER_AFTER).toFixed(2) : null, linePause: LINE_PAUSE } };
 }
 
+// ── the score: one of its own per film ─────────────────────────────────────
+/**
+ * The calm score's style for a film, read off its slug: the same page always
+ * gets the same music, and two pages one of their own (videos/use-case/sound-check.mjs
+ * measures every pair). Each choice takes its own bytes of the slug's hash.
+ */
+export function styleOf(slug) {
+  const h = crypto.createHash('sha256').update(`use-case:${slug}`).digest();
+  const modes = Object.keys(CALM.modes), [lo, hi] = CALM.bpm;
+  return {
+    key: h[0] % 12, mode: modes[h[1] % modes.length], bpm: lo + (h[2] % (hi - lo + 1)), prog: h[3] % CALM.progs.length,
+    groove: CALM.grooves[h[4] % CALM.grooves.length], lead: CALM.leads[h[5] % CALM.leads.length], seed: h.readUInt32LE(6),
+  };
+}
+
 // ── identity ───────────────────────────────────────────────────────────────
 const stable = v => (Array.isArray(v) ? `[${v.map(stable).join(',')}]`
   : v && typeof v === 'object' ? `{${Object.keys(v).sort().map(k => `${JSON.stringify(k)}:${stable(v[k])}`).join(',')}}`
@@ -290,7 +306,8 @@ export default {
     return {
       title: u.title,
       duration: story.duration,
-      palette: 'intro',
+      palette: 'calm',
+      style: styleOf(u.slug),
       volume: 0.5,
       css: CSS,
       beats: story.beats,

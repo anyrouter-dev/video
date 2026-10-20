@@ -128,6 +128,14 @@ function assertBackToBack(scenes, duration) {
   });
 }
 
+/** What lib/sound.mjs renders for a film: its score, and its scenes' cues on the film's clock. */
+export function soundOf(film) {
+  const { duration } = film;
+  const cues = film.scenes.flatMap(s => (s.cues ?? []).map(c => ({ ...c, at: +(s.start + c.at).toFixed(3) })))
+    .filter(c => c.at >= 0 && c.at < duration).sort((a, b) => a.at - b.at);
+  return { duration, palette: film.palette ?? 'intro', style: film.style, cues, voice: film.voice ?? [] };
+}
+
 /**
  * Write the project. `dir` is wiped first: a build is a freeze, not a merge.
  * Same arguments and result as lib/film.mjs's writeFilm, so the CLI can use either.
@@ -149,9 +157,8 @@ export function writeProject(dir, id, spec) {
     fs.copyFileSync(path.join(MARKS_DIR, f), path.join(dir, 'assets/providers', f));
   }
 
-  const cues = scenes.flatMap(s => (s.cues ?? []).map(c => ({ ...c, at: +(s.start + c.at).toFixed(3) })))
-    .filter(c => c.at >= 0 && c.at < duration).sort((a, b) => a.at - b.at);
-  const sound = writeSound(path.join(dir, 'audio', 'mix.wav'), { duration, palette: film.palette, cues });
+  const opts = soundOf(film);
+  const sound = writeSound(path.join(dir, 'audio', 'mix.wav'), opts);
 
   fs.writeFileSync(path.join(dir, 'hyperframes.json'), JSON.stringify({
     $schema: 'https://hyperframes.heygen.com/schema/hyperframes.json',
@@ -159,5 +166,5 @@ export function writeProject(dir, id, spec) {
     media: { autoProxy: true },
   }, null, 2) + '\n');
   fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({ id, name: id }, null, 2) + '\n');
-  return { ...film, cues, sound };
+  return { ...film, cues: opts.cues, sound };
 }

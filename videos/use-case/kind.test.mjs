@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, rollPools, fallbackOf } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, styleOf } from './kind.mjs';
 import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
@@ -374,4 +374,16 @@ test('a page about a fallback shows its request answered through it, as the page
   const at = Number(f.scenes[0].inner.match(/ANSWER_AT = ([\d.]+)/)[1]);
   assert.ok(at > f.beats[1].start && at + 1.5 <= f.beats[2].start, `the answer at ${at}s, beat 3 at ${f.beats[2].start}s`);
   for (const [v, g] of films()) if (v.slug !== u.slug) assert.ok(!html(g).includes('class="ln out"'), `${v.slug} shows no fallback`);
+});
+
+test('every film has a score of its own, read off its slug', () => {
+  // all 29 films shared the intro score; videos/use-case/sound-check.mjs measures how far apart they sound
+  const styles = parseDoc(doc()).map(u => [u.slug, styleOf(u.slug)]);
+  assert.deepEqual(styleOf('claude-code'), styleOf('claude-code'), 'the same page always gets the same music');
+  for (const [, f] of films()) assert.equal(f.palette, 'calm');
+  const sig = s => `${s.key} ${s.mode} ${s.groove} ${s.lead} ${s.prog}`;
+  for (let i = 0; i < styles.length; i++) for (let j = i + 1; j < styles.length; j++) {
+    const [a, x] = styles[i], [b, y] = styles[j];
+    assert.ok(sig(x) !== sig(y) || Math.abs(x.bpm - y.bpm) > 6, `${a} and ${b} share key, mode, groove, motif voice and chords`);
+  }
 });
