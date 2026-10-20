@@ -33,7 +33,8 @@ import { markFor } from '../../lib/marks.mjs';
 import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, PORTRAIT_SIZES, idFitsRow, titleSet, filmScene, ROLL_EVERY } from './scenes.mjs';
+import { reflow, standsAlone } from './reflow.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
@@ -175,15 +176,29 @@ export function copyOf(u, pools) {
   if (!setIn(title)) fail(`${u.slug}.title`, `"${title}" does not fit the headline in either frame`);
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text), keep: !l.focus && CHANGED.test(l.text) }));
-  const roll = rollOf(u, pools);
-  // A window may drop its last lines of context, never the command or a line it changes. Larger
-  // code wins over a line of context: of the cuts, the one whose code is set largest, then the
-  // one that keeps the most lines. Only when none fits does it step down to the last-resort size.
-  const cuts = [lines];
-  while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
-  const fit = least => cuts.map(shown => ({ shown, code: codeSizes(shown, roll, win.shell, title, least) })).filter(c => c.code)
-    .reduce((best, c) => (!best || c.code.landscape + c.code.portrait > best.code.landscape + best.code.portrait ? c : best), null);
-  const { shown, code } = fit(false) ?? fit(true) ?? fail(`${u.slug}.command`, 'its code is too tall to sit under the caption in either frame');
+  const rolled = rollOf(u, pools);
+  const roll = rolled && { ...rolled, extra: Math.max(...rolled.ids.map(id => id.length)) - rolled.preset.length };
+  // Every line of code sits on one row. Portrait is the narrow frame: its code takes the largest size,
+  // down to the floor, at which every line fits as the page wrote it; only past the floor are lines
+  // rewritten narrower (reflow.mjs). Landscape shows the same lines. A window too tall drops its
+  // trailing context, then context that stands alone, never the command or a line it changes; of the
+  // cuts, the one whose landscape code is set largest wins, then the one keeping most lines.
+  const P = PORTRAIT_SIZES();
+  const fitAt = (px, narrower) => {
+    const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (roll && l.focus && t.includes(roll.preset) ? roll.extra : 0)
+      + (win.shell || l.focus ? caretCols('portrait', px) : 0);
+    const set = narrower ? reflow(lines, codeCols('portrait', px), { shell: win.shell, width }) : lines.every(l => width(l, l.text) <= codeCols('portrait', px)) && lines;
+    if (!set) return null;
+    const cuts = [set];
+    while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
+    // then, top down, lines of context that stand alone, so the code around them stays whole
+    const alone = (ls, i) => !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
+    for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
+    return cuts.map(shown => ({ shown, code: codeSizes(shown, roll, win.shell, title, { portrait: [px] }) })).filter(c => c.code)
+      .reduce((best, c) => (!best || c.code.landscape > best.code.landscape || (c.code.landscape === best.code.landscape && c.shown.length > best.shown.length) ? c : best), null);
+  };
+  // a smaller size, down to the floor, before any line is rewritten
+  const { shown, code } = [false, true].flatMap(narrower => P.map(px => [px, narrower])).map(([px, n]) => fitAt(px, n)).find(Boolean) ?? fail(`${u.slug}.command`, 'its code does not fit under the caption in either frame, one row a line');
   return {
     slug: u.slug,
     url: u.url,

@@ -128,14 +128,13 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // middle, so a beat's column is sized to stay in the safe area at full scale.
 // The push is at least `push`, which the code's room allows for, and as far as
 // `pushMax` where the column leaves room: a slow push on a short window reads as a still.
-// A row of code ends only at a space, so the longest token of a line sets how
-// small its code may go. Portrait has the least room: its window spans the
+// A line of code is one row, so the longest line sets how small its code may go. Portrait has the least room: its window spans the
 // whole safe width, pushes in only as far as its code stays inside it, and sets its code a hair tighter (`adv`
 // is a glyph's advance in em), which fits the API's 45-character URL whole at
-// 32px. It steps down to `least` only when nothing larger has room.
+// 32px, the floor.
 const WIN = {
-  landscape: { sizes: [56, 52, 48], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
-  portrait: { sizes: [44, 40, 36], least: 32, width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.01, pushMax: 1.01, adv: 0.57 },
+  landscape: { sizes: [56, 52, 48, 44, 40], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
+  portrait: { sizes: [44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.01, pushMax: 1.01, adv: 0.57 },
 };
 // The safe area across each frame. The camera leans and the window pushes in about its centre.
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
@@ -183,68 +182,46 @@ export function rowsOf(text, px, o, { lead = 0, hang = 0, caret = false } = {}) 
   return rows;
 }
 
-/**
- * A roll line cut where the id's own row starts: before the token that holds the
- * preset, as typedLine breaks it, so `anyrouter("anyrouter/free"),` keeps its
- * `anyrouter("` on the id's row.
- */
-const slotOf = (text, preset) => {
-  const at = text.indexOf(preset), start = text.lastIndexOf(' ', at - 1) + 1;
-  return { before: text.slice(0, start), row: id => text.slice(start, at) + id + text.slice(at + preset.length) };
-};
+// A shell line's first row starts after its "$ " prompt; a row that continues a command has none.
+const leadOf = (l, shell) => (shell && !l.cont ? 2 : 0);
 
-// Where a line's rows start: a shell line after its "$ " prompt, and wraps back to the
-// left edge as a terminal does; a line of code at its indent, and wraps two past it, or
-// at its indent when a token needs those two characters.
-const leadOf = shell => (shell ? 2 : 0);
-const hangsOf = (l, shell) => (shell ? [0] : [indentOf(l.text) + 2, indentOf(l.text)]);
-// an id on a row of its own sits where a wrapped row of its line does, or two in from the edge in code
-const idLead = shell => (shell ? 0 : 2);
+/** Characters a row of code holds at `px` in frame `o`, and how many the caret takes. */
+export const PORTRAIT_SIZES = () => WIN.portrait.sizes;
+export const codeCols = (o, px) => textWidth(o) / (WIN[o].adv * px);
+export const caretCols = (o, px) => caretWidth(px) / (WIN[o].adv * px);
+
+/** The preset's line with `id` rolled into its place. */
+const rolledIn = (l, roll, id) => l.text.replace(roll.preset, id);
 
 /**
- * Whether `id`, rolled into the preset's place in `line`, sits whole on a row
- * of its own in both frames at their smallest code size. An id that needs more
- * would break mid-roll, so it does not roll.
+ * Whether `id`, rolled into the preset's place in `line`, sits on one row in
+ * both frames at their smallest code size. An id that needs more would cut the
+ * line mid-roll, so it does not roll.
  */
 export function idFitsRow(line, preset, id, shell) {
-  const row = slotOf(line.text, preset).row(id);
-  return Object.keys(WIN).every(o => rowsOf(row, WIN[o].least ?? WIN[o].sizes.at(-1), o, { lead: idLead(shell), caret: true }) === 1);
+  // a shell command can be continued onto a row of its own for the id's word (reflow.mjs); a line of code cannot
+  const text = line.text.replace(preset, id), at = text.indexOf(id);
+  const row = shell ? text.slice(text.lastIndexOf(' ', at) + 1).split(' ')[0] : text.trim();
+  return Object.keys(WIN).every(o => rowsOf(row, WIN[o].sizes.at(-1), o, { lead: shell ? 2 : 0, caret: true }) === 1);
 }
 
 /**
- * The headline and code sizes per orientation. The headline is the largest that
- * fits its line budget and leaves the window room for the code at its largest
- * size, since the caption keeps the headline's lines. The code is the largest at
- * which every line, each roll id in place, wraps only at spaces with its prompt
- * and caret, and the window still leaves room for the caption at its smallest.
- * A size that sets the command, and each line it changes, on one row wins over a larger one that wraps them.
- * When the longest roll id does not fit its line, the id moves to a row of its
- * own, for every id, so the line never reflows mid-roll. With `least`, portrait
- * may step down to its last-resort size. Null when no size leaves the caption its room.
+ * The headline and code sizes per orientation. Every line of code sits on one
+ * row, each roll id in place, with its prompt and caret: a line of code never
+ * wraps (reflow.mjs rewrites one that is too wide). The code is the largest
+ * size at which it does and the window still leaves room for the caption at its
+ * smallest; the headline is then the largest that leaves the window that room.
+ * `sizes` narrows the code sizes a frame may take. Null when none fits.
  */
-export function codeSizes(lines, roll, shell, title, least = false) {
+export function codeSizes(lines, roll, shell, title, sizes = {}) {
   const isTyped = l => shell || l.focus;
-  const variants = l => (roll && l.focus ? [roll.preset, ...roll.ids].map(id => l.text.replace(roll.preset, id)) : [l.text]);
-  const rowsWith = (l, t, px, o, hang) => rowsOf(t, px, o, { lead: leadOf(shell), hang, caret: isTyped(l) });
-  // the first hang every variant of the line fits with
-  const hangOf = (l, px, o) => hangsOf(l, shell).find(h => variants(l).every(t => rowsWith(l, t, px, o, h) < Infinity)) ?? hangsOf(l, shell)[0];
-  const rowsAt = (l, t, px, o) => rowsWith(l, t, px, o, hangOf(l, px, o));
-  const breaks = (px, o) => !!roll && lines.some(l => l.focus && variants(l).some(t => rowsAt(l, t, px, o) > 1));
-  const rows = (px, o) => lines.reduce((n, l) => {
-    if (!(l.focus && breaks(px, o))) return n + Math.max(...variants(l).map(t => rowsAt(l, t, px, o)));
-    const slot = slotOf(l.text, roll.preset), hang = hangOf(l, px, o);
-    const before = rowsOf(slot.before, px, o, { lead: leadOf(shell), hang });
-    return n + before + Math.max(...[roll.preset, ...roll.ids].map(id => rowsOf(slot.row(id), px, o, { lead: idLead(shell), hang, caret: true })));
-  }, 0);
+  const variants = l => (roll && l.focus && l.text.includes(roll.preset) ? [roll.preset, ...roll.ids].map(id => rolledIn(l, roll, id)) : [l.text]);
+  const oneRow = (px, o) => lines.every(l => variants(l).every(t => rowsOf(t, px, o, { lead: leadOf(l, shell), caret: isTyped(l) }) === 1));
   const codeFor = (o, tLines) => {
     const w = WIN[o];
     // the window pushes in about its own middle, so its bottom edge drops by half its growth
-    const room = px => (EDGE + BAR + w.padTop + w.padBottom + rows(px, o) * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
-    const sizes = least && w.least ? [...w.sizes, w.least] : w.sizes;
-    // a command, or a line it changes, on one row at a smaller size reads better than wrapped at a larger;
-    // a line of context may wrap
-    const clean = px => lines.filter(l => isTyped(l) || l.keep).every(l => variants(l).every(t => rowsAt(l, t, px, o) === 1));
-    return sizes.find(px => clean(px) && room(px)) ?? sizes.find(px => room(px)) ?? null;
+    const room = px => (EDGE + BAR + w.padTop + w.padBottom + lines.length * px * CODE_LH) * w.push + w.gap + tLines * TITLE_LH * w.capMin <= w.sh / w.lean;
+    return (sizes[o] ?? w.sizes).find(px => oneRow(px, o) && room(px)) ?? null;
   };
   // the code reads first: the largest code size, then the largest headline that leaves it its room
   const pick = o => TYPE.title[o].sizes.map(px => {
@@ -253,11 +230,7 @@ export function codeSizes(lines, roll, shell, title, least = false) {
   }).filter(c => c.code).reduce((best, c) => (!best || c.code > best.code ? c : best), null);
   const l = pick('landscape'), p = pick('portrait');
   if (!l || !p) return null;
-  return {
-    title: { landscape: l.title, portrait: p.title }, landscape: l.code, portrait: p.code,
-    breaks: { landscape: breaks(l.code, 'landscape'), portrait: breaks(p.code, 'portrait') },
-    hangs: { landscape: lines.map(x => hangOf(x, l.code, 'landscape')), portrait: lines.map(x => hangOf(x, p.code, 'portrait')) },
-  };
+  return { title: { landscape: l.title, portrait: p.title }, landscape: l.code, portrait: p.code };
 }
 
 // ── pieces ─────────────────────────────────────────────────────────────────
@@ -318,7 +291,7 @@ function typedLine(line, roll) {
     const k = slotAt - at, ids = [...roll.ids, roll.preset];
     // the rolled-in ids are their own elements: each is read as a whole id, never typed
     const slot = `<span class="roll" data-layout-allow-overlap><span class="ri" data-layout-allow-overlap>${chars(roll.preset, slotAt)}</span>${ids.map(id => `<em class="ri m" data-layout-allow-overlap>${esc(id)}</em>`).join('')}</span>`;
-    return `<span class="brk"></span><span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}${caret}</span>`;
+    return `<span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}${caret}</span>`;
   }).join('');
 }
 
@@ -337,11 +310,12 @@ const ttlFits = (title, o) => [...title].length * 0.6 * TTL_PX <= WIN[o].width -
  */
 function windowHtml(win) {
   const { shell, title, lines, roll, answer, code } = win;
-  const cls = [shell ? 'sh' : 'ed', answer && 'ans', code.breaks.landscape && 'brk-l', code.breaks.portrait && 'brk-p'].filter(Boolean).join(' ');
-  const body = lines.map((l, k) => {
-    const vars = `--in:${indentOf(l.text)};--hang:${code.hangs.landscape[k]};--hang-p:${code.hangs.portrait[k]}`;
-    if (shell || l.focus) return `<div class="ln typed${l.focus ? ' focus' : ''}" style="${vars}">${typedLine(l, roll)}</div>`;
-    return `<div class="ln ${l.keep ? 'keep' : 'ctx'}" style="${vars}">${wholeLine(l.text)}</div>`;
+  const cls = [shell ? 'sh' : 'ed', answer && 'ans'].filter(Boolean).join(' ');
+  // each line is one row (codeSizes): the audit holds it to that with data-one-row
+  const body = lines.map(l => {
+    const cls = `ln${l.cont ? ' cont' : ''}`;
+    if (shell || l.focus) return `<div class="${cls} typed${l.focus ? ' focus' : ''}" data-one-row>${typedLine(l, roll)}</div>`;
+    return `<div class="${cls} ${l.keep ? 'keep' : 'ctx'}" data-one-row>${wholeLine(l.text)}</div>`;
   }).join('');
   // the value the header reads is the id that answered, so it takes the accent
   const value = answer && answer.indexOf(': ') + 2;
@@ -621,11 +595,12 @@ export const CSS = `
   .film .is-ink .ttl{color:${C.onInkMuted}}
   /* --adv is a glyph's advance: the unit rowsOf measures rows in */
   .film .code{--adv:${WIN.landscape.adv}em;padding:${WIN.landscape.padTop}px ${WIN.landscape.padX}px ${WIN.landscape.padBottom}px;font-family:'Geist Mono',ui-monospace,monospace;font-size:var(--cs);line-height:${CODE_LH}}
-  /* a row ends only at a space; a wrapped row of code hangs past its indent, a terminal's wraps to the edge; a blank line keeps its row */
-  .film .ln{min-height:${CODE_LH}em;white-space:pre-wrap;padding:0 0 0 calc(var(--hang, 0) * var(--adv));text-indent:calc(var(--hang, 0) * var(--adv) * -1)}
+  /* a line of code is one row and never wraps; a blank line keeps its row */
+  .film .ln{min-height:${CODE_LH}em;white-space:pre}
   .film .ln.ctx{color:${C.muted}}
   .film .sh .ln.typed:not(.focus){color:${C.onInkMuted}}
   .film .sh .ln::before{content:"$ ";color:${C.onInkMuted}}
+  .film .sh .ln.cont::before{content:none}
   .film .tok{display:inline-block;white-space:pre;vertical-align:top;text-indent:0}
   .film .c{opacity:0}
   .film .m{color:${C.accent}}
@@ -633,10 +608,6 @@ export const CSS = `
   .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top}
   .film .ri{position:absolute;left:0;top:0;white-space:pre;font-style:normal}
   .film em.ri{opacity:0}
-  .film .brk{display:none}
-  .film .brk-l .brk{display:block}
-  /* in code an id on its own row sits two characters in, not past the line's indent: the longest id needs the width */
-  .film .ed.brk-l .brk + .tok{margin-left:calc(var(--in, 0) * var(--adv) * -1)}
   /* the answer: under the last row, behind a hairline, until the code scrolls up to it */
   .film .ans{overflow:hidden}
   .film .rows{position:relative;z-index:0}
@@ -671,13 +642,8 @@ export const CSS = `
     .film .term{border-radius:28px}
     /* a hair tighter than the font's own advance, so a 45-character URL sits whole across the safe width */
     .film .code{--adv:${WIN.portrait.adv}em;letter-spacing:${(WIN.portrait.adv - 0.6).toFixed(2)}em;font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
-    .film .ln{padding-left:calc(var(--hang-p, 0) * var(--adv));text-indent:calc(var(--hang-p, 0) * var(--adv) * -1)}
     .film .ttl.off-l{display:block}
     .film .ttl.off-p{display:none}
-    .film .brk-l .brk{display:none}
-    .film .brk-p .brk{display:block}
-    .film .ed.brk-l .brk + .tok{margin-left:0}
-    .film .ed.brk-p .brk + .tok{margin-left:calc(var(--in, 0) * var(--adv) * -1)}
     .film .lock svg{width:120px;height:120px}
     .film .lock b{font-size:120px}
     .film .url{font-size:var(--us-p);padding:24px ${URL_PAD.portrait}px;border-radius:28px}
