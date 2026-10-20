@@ -138,10 +138,13 @@ export function css(accent) {
     .pane{left:30px;right:30px;top:30px;bottom:28px}
     .row{padding:12px 0}
     .row .v{font-size:40px}
-    .stamp .big{font-size:150px}
-    .sub{margin-top:22px;font-size:44px}
+    .stamp .big{font-size:116px}
+    .stamp{border-width:6px}
+    .sub{margin-top:16px;font-size:40px}
     .facts{margin-top:14px}
-    .facts .f{font-size:36px;padding:6px 0}
+    .facts .f{font-size:34px;padding:4px 0}
+    .chips{gap:10px;margin-top:12px}
+    .chip{padding:4px 16px}
     .bubble{margin-top:40px;font-size:36px}
     .who{margin-top:34px}
     .reply{font-size:46px}
