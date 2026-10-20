@@ -61,6 +61,7 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `cli-agents`, `cli-everyday` | the narrated `anyr` CLI guides (any agent on any model; models, credits and keys), same series look and tools | their own files | on demand |
 | `why-gateway` | the narrated short on why a unified LLM gateway, same series look and tools | its own files | on demand |
 | `byok-upstreams` | the narrated short on bringing your own provider keys, same series look and tools | its own files | on demand |
+| `launch` | the narrated launch film: one key for many models, the shared key pool and the anyr CLI, each explained by a machine drawn in the anatomy light style (`videos/launch/CONCEPT.md`) | its own files, model counts from `/api/v1/stats` | on demand |
 | `use-case` | one short narrated film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup, with a voice, captions and a score of its own. Each use case is its own release | `/use-cases.json`, the ids a preset rolls through from `/api/v1/models?all=1`, and its script in `videos/use-case/narration.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.

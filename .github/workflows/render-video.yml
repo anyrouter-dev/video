@@ -18,7 +18,7 @@ on:
         description: 'Which film — auto = every nightly kind that has something new'
         type: choice
         default: auto
-        options: [auto, model-drop, release, changelog, intro, teaser, explainer, openrouter-unblock, sign-in-with-anyrouter, pool-donation, sign-in-with-agentid, why-gateway, byok-upstreams]
+        options: [auto, model-drop, release, changelog, intro, teaser, explainer, openrouter-unblock, sign-in-with-anyrouter, pool-donation, sign-in-with-agentid, why-gateway, byok-upstreams, launch]
       force:
         description: 'Render even if this release is already in the ledger'
         type: boolean

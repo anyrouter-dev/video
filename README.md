@@ -27,6 +27,7 @@ Output lands in `films/<YYYY-MM-DD>/<kind>/`, one folder per day.
 | `cli-everyday` | narrated guide: models, credits and API keys from the terminal with `anyr` | `videos/cli-everyday/` | on demand |
 | `why-gateway` | narrated short: why one LLM gateway, one address and one key for models from many providers | `videos/why-gateway/` | on demand |
 | `byok-upstreams` | narrated short: bring your own provider keys, one endpoint, billed on your accounts with no markup | `videos/byok-upstreams/` | on demand |
+| `launch` | narrated launch film: one key for many models, the shared pool and the anyr CLI, told with three drawn machines | `videos/launch/` | on demand |
 | `release` | one product release, e.g. "AnyRouter 1.6" | [`/changelog/rss.xml`](https://anyrouter.dev/changelog/rss.xml) | nightly |
 | `model-drop` | models added to the catalog, and price moves | [`/api/v1/models`](https://anyrouter.dev/api/v1/models?all=1), diffed against a baseline | nightly |
 | `changelog` | one day of changelog entries | the *Model releases* section of [`/llms.txt`](https://anyrouter.dev/llms.txt) | nightly |

@@ -66,6 +66,8 @@ jobs:
             args: ''
           - kind: pool-donation
             args: ''
+          - kind: launch
+            args: ''
           - kind: sign-in-with-agentid
             args: ''
           - kind: cli-agents
