@@ -242,6 +242,7 @@
         if (DATA.overlay === "capture") {
           for (const el of [$("shot"), $("shotp")]) {
             tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, 0.1);
+            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur, ease: "none" }, 0);
             tl.to(el, { y: -60, opacity: 0, duration: 0.45, ease: "power3.in" }, DATA.dur - 0.5);
           }
           const art = card.querySelector(".lf-art");

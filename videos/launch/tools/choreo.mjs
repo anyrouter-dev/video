@@ -174,6 +174,7 @@ function carouselFrames() {
     a.say(0, "the shared pool");
     a.sound(0.05, "whoosh-short", 0.14, -5);
     const p = a.w("pool");
+    a.move("turn", 0.4, 2.0, -14);
     serve(a, p - 0.6, 0);
     serve(a, p + 0.45, 1);
   }));
@@ -188,6 +189,7 @@ function carouselFrames() {
     }
     a.say(a.w("spare") + 0.45, "slots filled · 11 of 12");
     const e = a.w("Each");
+    a.move("turn", 1.05, e - 1.15, a.now("turn") + 10);
     a.say(e, "each request → the key idle longest");
     let t = serve(a, e, 2);
     t = serve(a, t + 0.05, 3);
