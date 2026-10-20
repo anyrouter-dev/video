@@ -10,7 +10,7 @@ npm run kinds                  # what can be made
 npm run video -- model-drop    # collect → decide → generate → check → render → cover → record
 ```
 
-Output lands in `renders/`.
+Output lands in `films/<YYYY-MM-DD>/<kind>/`, one folder per day.
 
 ## Kinds
 
@@ -46,7 +46,7 @@ hand; the engine renders and releases it.
 collect  →  .build/<kind>/data.json     the facts, from a public endpoint
 gen      →  .build/<kind>/film/          a HyperFrames project, 1920x1080
 check    →  lint + runtime + layout + motion + contrast — a hard gate, per rendition
-render   →  renders/<kind>-<id>.mp4      + -portrait.mp4, a cover each, + the generated source
+render   →  films/<day>/<kind>/<kind>-<id>.mp4      + -portrait.mp4, a cover each, + the generated source
 publish  →  a GitHub Release tagged <kind>-<id>, and a YouTube video per rendition
 ```
 
@@ -248,7 +248,7 @@ shared/            fonts, scores, brand marks, 141 vendored provider marks
 videos/<kind>/     kind.mjs, fixtures/, kind.test.mjs
 ci/                what the CI agent may decide, and its prompt
 .build/<kind>/     scratch (gitignored)
-renders/           output (gitignored — it ships on the GitHub Release)
+films/<day>/<kind>/ output, one folder per day (gitignored — it ships on the GitHub Release)
 releases/<kind>/   the ledger and each film's inputs
 ```
 

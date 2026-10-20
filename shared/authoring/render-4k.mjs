@@ -2,7 +2,8 @@
 // portrait copy. The compositions are authored at 1920x1080, and `hyperframes render
 // --resolution` draws them at device scale 2, so nothing in the film changes.
 //
-//   node shared/authoring/render-4k.mjs <project> --out=<dir> [--name=<stem>] [--ref=<commit>]
+//   node shared/authoring/render-4k.mjs <project> [--out=<dir>] [--name=<stem>] [--ref=<commit>]
+//   (--out defaults to films/<today>/4k-masters/)
 //     [--only=landscape|portrait] [--quality=delivery]
 //
 // <project> is a film folder (videos/explainer) or a generated one (.build/use-case/film).
@@ -14,6 +15,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { writePortrait } from './portrait.mjs';
+import { filmsDir } from '../../lib/paths.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 
@@ -37,8 +39,8 @@ function main() {
   const argv = process.argv.slice(2);
   const flag = k => argv.find(a => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=');
   const project = argv.find(a => !a.startsWith('--'));
-  const out = flag('out') && path.resolve(flag('out'));
-  if (!project || !out) throw new Error('usage: render-4k.mjs <project> --out=<dir> [--name=<stem>] [--ref=<commit>] [--only=landscape|portrait]');
+  const out = flag('out') ? path.resolve(flag('out')) : filmsDir('4k-masters');
+  if (!project) throw new Error('usage: render-4k.mjs <project> [--out=<dir>] [--name=<stem>] [--ref=<commit>] [--only=landscape|portrait]');
   const ref = flag('ref');
   const name = flag('name') ?? path.basename(project);
   const masters = MASTERS.filter(m => !flag('only') || m.id === flag('only'));

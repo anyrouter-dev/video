@@ -11,7 +11,7 @@ AnyRouter repo, and every fact on screen comes from a public AnyRouter endpoint.
 collect  →  .build/<kind>/data.json     (the facts, from a live public source)
 gen      →  .build/<kind>/film/          (a HyperFrames project, 1920x1080)
 check    →  lint + runtime + layout + motion + contrast, for every rendition
-render   →  renders/<kind>-<id>.mp4      (+ -portrait.mp4, a cover each, + source tarball)
+render   →  films/<day>/<kind>/<kind>-<id>.mp4      (+ -portrait.mp4, a cover each, + source tarball)
 publish  →  a GitHub Release tagged <kind>-<id>, and one YouTube video per rendition
 ```
 
@@ -40,7 +40,7 @@ lib/               the engine — no kind knows about another
 shared/            fonts, brand marks, provider marks
 videos/<kind>/     kind.mjs, its inputs, fixtures/, kind.test.mjs
 .build/<kind>/     scratch — never committed
-renders/           output — never committed, it ships on the GitHub Release
+films/<day>/<kind>/ output, one folder per day — never committed, it ships on the GitHub Release
 releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 ```
 

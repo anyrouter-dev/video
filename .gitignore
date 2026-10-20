@@ -2,8 +2,10 @@
 # Rebuilt by `npm run gen -- <kind>`.
 /.build/
 
-# rendered output. The mp4s, covers and source tarballs are NOT tracked — they
-# ship on the GitHub Release, which is the durable public copy.
+# rendered output, one folder per day: films/<YYYY-MM-DD>/<kind>/. The mp4s,
+# covers and source tarballs are NOT tracked — they ship on the GitHub Release,
+# which is the durable public copy.
+/films/
 /renders/
 
 node_modules/

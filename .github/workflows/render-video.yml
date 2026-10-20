@@ -224,13 +224,13 @@ jobs:
 
       # The GitHub Release is the store. This copy is for branch runs, which do
       # not publish, and for debugging a run that failed.
-      - name: Keep the renders
+      - name: Keep the films
         if: always() && steps.decide.outputs.kinds != '' && (env.SHIP != 'true' || failure())
         uses: actions/upload-artifact@v4
         with:
-          name: renders
+          name: films
           path: |
-            renders/
+            films/
             agent-*.json
           if-no-files-found: ignore
           retention-days: 7
