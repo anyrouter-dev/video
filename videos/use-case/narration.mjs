@@ -27,18 +27,30 @@ export const loadNarration = (file = NARRATION) => JSON.parse(fs.readFileSync(fi
 export const shortLinkOf = (slug, published) => (published ?? `anyrouter.dev/u/${slug}`).replace(/^https?:\/\//, '');
 
 /**
- * The lines one film speaks, in order, as { id, beat, text, step?, shows?, say? }:
- * its outcome, then "Step 1. …" for each step, then its short link. The link
- * is spoken as `close` says it ("any router dot dev slash u slash open code").
+ * The lines one film speaks, in order, as { id, beat, text, step?, more?, shows?, say? }:
+ * what this is (intro), the problem it removes, "Step 1. …" for each step and
+ * the line that explains it (`more`), the result, then its short link. The
+ * `outcome` take plays the beat `role` names, intro or problem, so a line voiced
+ * before keeps its recording. The link is spoken as `close` says it ("any router
+ * dot dev slash u slash open code").
  */
 export function scriptOf(narration, slug, published) {
   const film = narration.films[slug];
   if (!film) throw new Error(`narration.json has no script for "${slug}": write one before this film can be built`);
   const link = shortLinkOf(slug, published);
   if (link !== `anyrouter.dev/u/${slug}`) throw new Error(`${slug} ends on ${link}, and its close is written for anyrouter.dev/u/${slug}: rewrite it`);
+  if (!['intro', 'problem'].includes(film.role)) throw new Error(`${slug}: role must say which beat the outcome take plays, intro or problem`);
+  const other = film.role === 'intro' ? 'problem' : 'intro';
+  if (!film[other] || !film.result) throw new Error(`${slug}: a film says what it is, its problem and its result`);
+  const opening = { [film.role]: { id: `${slug}-outcome`, text: film.outcome }, [other]: { id: `${slug}-${other}`, text: film[other] } };
   return [
-    { id: `${slug}-outcome`, beat: 'outcome', text: film.outcome },
-    ...film.steps.map((st, i) => ({ id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, text: `Step ${i + 1}. ${st.text}` })),
+    { ...opening.intro, beat: 'intro' },
+    { ...opening.problem, beat: 'problem' },
+    ...film.steps.flatMap((st, i) => [
+      { id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, text: `Step ${i + 1}. ${st.text}` },
+      ...(st.more ? [{ id: `${slug}-step-${i + 1}-more`, beat: 'step', step: i + 1, more: true, text: st.more }] : []),
+    ]),
+    { id: `${slug}-result`, beat: 'result', text: film.result },
     { id: `${slug}-close`, beat: 'close', text: link, say: { [link]: `any router dot dev slash u slash ${film.close}.` } },
   ];
 }

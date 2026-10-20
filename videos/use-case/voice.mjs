@@ -20,11 +20,26 @@ const narration = loadNarration();
 const slugs = flags.slug ? String(flags.slug).split(',') : Object.keys(narration.films);
 
 const lines = [...new Map(slugs.flatMap(s => scriptOf(narration, s)).map(l => [l.id, l])).values()];
+const recorded = id => {
+  const meta = path.join(VOICE_DIR, `${id}.json`);
+  return fs.existsSync(meta) && fs.existsSync(path.join(VOICE_DIR, `${id}.mp3`)) && JSON.parse(fs.readFileSync(meta, 'utf8'));
+};
+// a recording of the same words in the same voice, under any line's name, is that line's take
+const takes = new Map(fs.existsSync(VOICE_DIR) ? fs.readdirSync(VOICE_DIR).filter(f => f.endsWith('.json'))
+  .map(f => [recorded(f.slice(0, -5))?.hash, f.slice(0, -5)]).filter(([h]) => h) : []);
+let shared = 0;
 const todo = lines.map(l => ({ ...l, spoken: parseLine(l.text, { ...narration.say, ...l.say }).spoken })).map(l => ({ ...l, hash: hashOf(narration.voice, l.spoken) }))
   .filter(l => {
-    const meta = path.join(VOICE_DIR, `${l.id}.json`);
-    return !(fs.existsSync(meta) && JSON.parse(fs.readFileSync(meta, 'utf8')).hash === l.hash && fs.existsSync(path.join(VOICE_DIR, `${l.id}.mp3`)));
-  });
+    if (recorded(l.id)?.hash === l.hash) return false;
+    const from = takes.get(l.hash);
+    if (!from || flags['dry-run']) return !from;
+    for (const ext of ['mp3', 'json']) fs.copyFileSync(path.join(VOICE_DIR, `${from}.${ext}`), path.join(VOICE_DIR, `${l.id}.${ext}`));
+    shared++;
+    return false;
+  })
+  // a line said twice in one run is voiced once, and the second copies the first
+  .filter((l, i, all) => all.findIndex(m => m.hash === l.hash) === i);
+if (shared) console.log(`${shared} lines take a recording another line already has`);
 const chars = todo.reduce((n, l) => n + l.spoken.length, 0);
 console.log(`${lines.length} lines, ${lines.length - todo.length} already voiced, ${todo.length} to voice: ${chars} characters`);
 for (const l of todo) console.log(`  ${l.id.padEnd(38)} ${String(l.spoken.length).padStart(4)}  ${l.spoken}`);
@@ -72,6 +87,12 @@ for (const l of todo) {
     alignment: { start: alignment.character_start_times_seconds, end: alignment.character_end_times_seconds },
   }) + '\n');
   console.log(`  voiced ${l.id}  ${duration.toFixed(2)}s`);
+}
+// the lines that say what a line voiced in this run says take its recording
+for (const l of lines) {
+  const spoken = parseLine(l.text, { ...narration.say, ...l.say }).spoken, hash = hashOf(narration.voice, spoken);
+  const from = todo.find(t => t.hash === hash && t.id !== l.id);
+  if (from && recorded(l.id)?.hash !== hash) for (const ext of ['mp3', 'json']) fs.copyFileSync(path.join(VOICE_DIR, `${from.id}.${ext}`), path.join(VOICE_DIR, `${l.id}.${ext}`));
 }
 const after = await quota();
 console.log(`voiced ${chars} characters; the account had ${before} left and has ${after} now (${before - after} used)`);
