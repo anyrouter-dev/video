@@ -134,6 +134,8 @@ export function fallbackOf(u) {
 // key is bullets. The site's copy only ever shows prefixes; this guards the day it doesn't.
 const KEY = /\b(sk-ar-v1-|sk-ar-|sk-or-v1-|sk-ant-|sk-proj-|sk-|nvapi-|xai-|gsk_|ghp_|AIza)[A-Za-z0-9_-]{8,}/g;
 export const redact = s => String(s).replace(KEY, (_, prefix) => `${prefix}••••••••`);
+// The films never show a long dash: in the page's own sentences one becomes a sentence break.
+export const undash = s => String(s).replace(/\s+—\s+(\w)/g, (_, c) => `. ${c.toUpperCase()}`);
 
 // A line that sets what a page changes: the AnyRouter base URL, the key, the model.
 // Around the command it is shown whole; only the other lines are context that may fade.
@@ -141,6 +143,8 @@ const CHANGED = /https:\/\/anyrouter\.dev\/api|ANYROUTER_API_KEY|sk-ar-|\bmodels
 
 // A shell snippet up to this many lines is typed whole; a longer one up to the command.
 const SHELL_LINES = 3;
+// A request or a file up to this many lines is shown whole.
+const WHOLE_LINES = 12;
 
 /**
  * The code a film types: the page's command, inside the snippet that holds it.
@@ -162,6 +166,8 @@ export function windowOf(u) {
     from = 0;
     to = at + 1;
     while (to < all.length && CHANGED.test(all[to])) to++;
+    // a short request is shown whole: what it sends after its model is part of the point
+    if (all.length <= WHOLE_LINES) to = all.length;
   }
   const shown = all.slice(from, to);
   // a terminal ends on the page's command, so a "\" that carries it onto lines the window does not show goes
@@ -187,7 +193,7 @@ export function copyOf(u, pools) {
   };
   // a page sentence that opens by repeating the label shows only what follows it
   const beyond = (label, t) => (t && t.toLowerCase().startsWith(`${label.toLowerCase()}.`) ? t.slice(label.length + 1).trim() || null : t);
-  const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? redact(beyond(l.label, pageStep(l.label)) ?? '') || null : null }));
+  const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? undash(redact(beyond(l.label, pageStep(l.label)) ?? '')) || null : null }));
   const shown = steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
   if (!shown.length || !steps.some(st => st.shows === 'command')) fail(u.slug, 'no step shows the command');
   const detailSizes = { landscape: TYPE.detail.landscape.sizes, portrait: TYPE.detail.portrait.sizes };
@@ -200,32 +206,41 @@ export function copyOf(u, pools) {
   // to the floor, at which every line fits as the page wrote it; only past the floor are lines rewritten
   // narrower (reflow.mjs). A window too tall drops its trailing context, then context that stands alone,
   // never the command or a line it changes; of the cuts, the one set largest wins, then the one keeping most lines.
-  const fitIn = (o, head) => {
-    const fitAt = (px, narrower) => {
+  const fitIn = (o, head, mode) => {
+    const fitAt = (px, narrower, mode = 'cut') => {
       const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (win.shell || l.focus ? caretCols(o, px) : 0);
       const set = narrower ? reflow(lines, codeCols(o, px), { shell: win.shell, width }) : lines.every(l => width(l, l.text) <= codeCols(o, px)) && lines;
       if (!set) return null;
       const cuts = [set];
       while (!(win.shell || cuts.at(-1).at(-1).focus || cuts.at(-1).at(-1).keep)) cuts.push(cuts.at(-1).slice(0, -1));
       // then, top down, lines of context that stand alone, so the code around them stays whole
-      const alone = (ls, i) => !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
-      for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
+      const alone = (ls, i) => !!ls[i] && !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
+      // lines left out of the middle are marked "…", which takes a row, so that is worth it for two or more;
+      // a lone line goes unmarked only when nothing else fits
+      for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k) && alone(ls, k + 1))) >= 0;) cuts.push(ls = [...ls.slice(0, i), { text: ls[i].text.match(/^ */)[0] + '…', ctx: true }, ...ls.slice(i + 2)]);
+      if (mode === 'loose') for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
       // then without what leads into the call, shown as a "…" row
       for (const cut of [...cuts]) { const h = headless(cut); if (h) cuts.push(h); }
       // a window that stops inside its request or call shows "…" and closes what is still open
       const trim = ls => { let a = 0, b = ls.length; while (a < b && !ls[a].text.trim()) a++; while (b > a && !ls[b - 1].text.trim()) b--; return ls.slice(a, b); };
       const whole = ls => (win.shell ? ls : closed(trim(ls)));
-      const fits = cuts.map(whole).filter(ls => ls.every(l => width(l, l.text) <= codeCols(o, px)) && codeSizes(ls, roll, win.shell, { [o]: head }, { [o]: [px] }, o));
+      const fits = (mode === 'whole' ? cuts.slice(0, 1) : cuts).map(whole).filter(ls => ls.every(l => width(l, l.text) <= codeCols(o, px)) && codeSizes(ls, roll, win.shell, { [o]: head }, { [o]: [px] }, o));
       return fits.length ? { lines: fits.reduce((a, b) => (b.length > a.length ? b : a)), px } : null;
     };
-    return [false, true].flatMap(narrower => SIZES[o].map(px => [px, narrower])).map(([px, n]) => fitAt(px, n)).find(Boolean) ?? null;
+    // every line the page wrote, at any size it fits, before a larger size that leaves lines out
+    const tries = [false, true].flatMap(narrower => SIZES[o].map(px => [px, narrower]));
+    return tries.map(([px, n]) => fitAt(px, n, mode)).find(Boolean) ?? null;
   };
   // The step labels take the largest size at which the window still fits under whichever of its steps
   // has the most above it.
+  // every line the page wrote, then lines left out under a "…", and only then a lone line left out unmarked:
+  // the labels step down before the code loses a line
   const fitWith = o => {
-    for (const px of TYPE.step[o].sizes.filter(x => labels.every(l => labelSet(l, o, x)))) {
-      const head = Math.max(...shown.map(k => headOf(labels, k, { [o]: px })[o])), fit = fitIn(o, head);
-      if (fit) { stepT[o] = px; return fit; }
+    for (const mode of ['whole', 'cut', 'loose']) {
+      for (const px of TYPE.step[o].sizes.filter(x => labels.every(l => labelSet(l, o, x)))) {
+        const head = Math.max(...shown.map(k => headOf(labels, k, { [o]: px })[o])), fit = fitIn(o, head, mode);
+        if (fit) { stepT[o] = px; return fit; }
+      }
     }
     return null;
   };
@@ -301,6 +316,13 @@ export function voiceOf(u) {
   return { intro: one('intro'), problem: one('problem'), steps, result: one('result'), close: one('close') };
 }
 const spoken = line => line.words.at(-1).end;
+// A line that says the headline again, give or take its small words, needs no caption under it.
+const SMALL = new Set(['a', 'an', 'the', 'and', 'or', 'to', 'of', 'with', 'for', 'on', 'in', 'through']);
+export const restates = (line, title) => {
+  const words = t => t.toLowerCase().match(/[a-z0-9/]+/g).filter(w => !SMALL.has(w));
+  const said = words(line), shown = new Set(words(title));
+  return said.filter(w => shown.has(w)).length >= 0.75 * said.length;
+};
 const typingOf = lines => {
   const chars = lines.reduce((n, l) => n + [...l.text].length, 0);
   const each = chars ? Math.min(TYPE_EACH, TYPE_MAX / chars) : 0;
@@ -340,7 +362,8 @@ export function storyOf(u, pools) {
     const v = voice.steps[k], first = VOICE_AT.step + spoken(v.line), lands = { moreAt: v.more ? first + MORE_GAP : null };
     const said = v.more ? lands.moreAt + spoken(v.more) : first;
     // a step with no window holds until its page sentence is read
-    let need = Math.max(STEP_MIN, said + AFTER, st.detail ? VOICE_AT.step + 0.4 + read(st.detail.text) : 0);
+    // a step with no window holds while its page sentence is read, up to a couple of seconds past its voice
+    let need = Math.max(STEP_MIN, said + AFTER, st.detail ? Math.min(VOICE_AT.step + 0.4 + read(st.detail.text), said + AFTER + 2.0) : 0);
     if (st.shows === 'install') { lands.preAt = TYPE_AT; need = Math.max(need, TYPE_AT + pre.dur + 0.6); }
     if (st.shows === 'command') {
       lands.cmdAt = TYPE_AT;
@@ -388,7 +411,7 @@ export function storyOf(u, pools) {
   const beatAt = key => beats.find(b => b.key === key).start;
   // a line on screen as kinetic type is its own caption; the others are captioned under the picture
   const said = [
-    { ...voice.intro, at: VOICE_AT.intro, cap: true },
+    { ...voice.intro, at: VOICE_AT.intro, cap: !restates(voice.intro.text, copy.title) },
     { ...voice.problem, at: +(beatAt('problem') + VOICE_AT.problem).toFixed(2), cap: false },
     ...voice.steps.flatMap((v, k) => [
       { ...v.line, at: at(k, VOICE_AT.step), cap: false },

@@ -115,7 +115,7 @@
   "grokbot": {
    "outcome": "Run a live coding agent when cloud agents are blocked. Grok Bot assigns the goal, and Herdr shows the terminal.",
    "role": "intro",
-   "problem": "Cloud agents can be exhausted or blocked. You still need a live terminal.",
+   "problem": "Your cloud agent quota can run out or be blocked. You still need a live terminal.",
    "steps": [
     {
      "text": "Open a Herdr space on your repo."
@@ -152,7 +152,7 @@
      "from": "use-cases.json grokbot.problem, hook, title (the outcome: what it is and why)"
     },
     {
-     "says": "Cloud agents can be exhausted or blocked. You still need a live terminal.",
+     "says": "Your cloud agent quota can run out or be blocked. You still need a live terminal.",
      "from": "use-cases.json grokbot.problem"
     },
     {
@@ -359,7 +359,7 @@
    ]
   },
   "hermes-agent": {
-   "outcome": "Hermes Agent runs long tool loops. With one upstream model, its outages stop the loop.",
+   "outcome": "Hermes Agent runs long tool loops. One upstream model means its outages are yours. A model that cannot call tools breaks the loop.",
    "role": "problem",
    "intro": "Run Hermes Agent on AnyRouter, with one plugin.",
    "steps": [
@@ -393,7 +393,7 @@
    "close": "hermes agent",
    "claims": [
     {
-     "says": "Hermes Agent runs long tool loops; one upstream model means its outages",
+     "says": "Hermes Agent runs long tool loops. One upstream model means its outages are yours. A model that cannot call tools breaks the loop.",
      "from": "use-cases.json hermes-agent.problem"
     },
     {
@@ -462,7 +462,8 @@
      "Agent SDK"
     ],
     "right": [
-     "anyrouter/auto"
+     "anyrouter/auto",
+     "deepseek/deepseek-v4-flash"
     ]
    },
    "close": "claude agent S D K",
@@ -496,7 +497,7 @@
      "from": "use-cases.json claude-agent-sdk.problem"
     },
     {
-     "says": "result picture: Agent SDK | anyrouter/auto",
+     "says": "result picture: Agent SDK | anyrouter/auto | deepseek/deepseek-v4-flash",
      "from": "use-cases.json claude-agent-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -1032,7 +1033,7 @@
   "nvidia-free-key": {
    "outcome": "NVIDIA issues free API keys.",
    "role": "intro",
-   "problem": "On its own, that key only works in NVIDIA's client, with no failover.",
+   "problem": "Other apps still need their own keys, and you get no failover if NIM is down.",
    "steps": [
     {
      "text": "Create a free NVIDIA key."
@@ -1041,16 +1042,17 @@
      "text": "Add it under BYOK."
     },
     {
-     "text": "Call AnyRouter with your key.",
-     "shows": "command"
+     "text": "Call AnyRouter with your AnyRouter key.",
+     "shows": "command",
+     "more": "Use anyrouter/free for the shared free chain instead."
     }
    ],
    "result": "Every OpenAI-compatible app you own can use it through AnyRouter.",
    "motif": {
     "kind": "single",
-    "a": "NVIDIA key",
-    "b": "NVIDIA's client",
-    "tag": "only"
+    "a": "Your app",
+    "b": "NIM",
+    "fail": "down"
    },
    "flow": {
     "left": [
@@ -1068,7 +1070,7 @@
      "from": "use-cases.json nvidia-free-key.hook"
     },
     {
-     "says": "On its own, that key only works in NVIDIA's client, with no failover.",
+     "says": "Other apps still need their own keys, and you get no failover if NIM is down.",
      "from": "use-cases.json nvidia-free-key.problem"
     },
     {
@@ -1080,7 +1082,7 @@
      "from": "use-cases.json nvidia-free-key.steps"
     },
     {
-     "says": "Call AnyRouter with your key.",
+     "says": "Call AnyRouter with your AnyRouter key.",
      "from": "use-cases.json nvidia-free-key.steps"
     },
     {
@@ -1088,12 +1090,16 @@
      "from": "use-cases.json nvidia-free-key.hook"
     },
     {
-     "says": "problem picture: NVIDIA key | NVIDIA's client | only",
+     "says": "problem picture: Your app | NIM | down",
      "from": "use-cases.json nvidia-free-key.problem"
     },
     {
      "says": "result picture: Your apps | NVIDIA key | anyrouter/free",
      "from": "use-cases.json nvidia-free-key.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
+    },
+    {
+     "says": "Use anyrouter/free for the shared free chain instead.",
+     "from": "use-cases.json nvidia-free-key.steps"
     },
     {
      "says": "anyrouter.dev/u/nvidia-free-key",
@@ -1355,7 +1361,8 @@
      "Your app"
     ],
     "right": [
-     "anyrouter/auto"
+     "anyrouter/auto",
+     "deepseek/deepseek-v4-flash"
     ]
    },
    "close": "cheapest L L M A P I",
@@ -1393,7 +1400,7 @@
      "from": "use-cases.json cheapest-llm-api.problem"
     },
     {
-     "says": "result picture: Your app | anyrouter/auto",
+     "says": "result picture: Your app | anyrouter/auto | deepseek/deepseek-v4-flash",
      "from": "use-cases.json cheapest-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -1428,7 +1435,8 @@
      "AI SDK"
     ],
     "right": [
-     "anyrouter/free"
+     "anyrouter/free",
+     "deepseek/deepseek-v4-flash"
     ]
    },
    "close": "A I S D K",
@@ -1462,7 +1470,7 @@
      "from": "use-cases.json ai-sdk.problem"
     },
     {
-     "says": "result picture: AI SDK | anyrouter/free",
+     "says": "result picture: AI SDK | anyrouter/free | deepseek/deepseek-v4-flash",
      "from": "use-cases.json ai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -1472,7 +1480,7 @@
    ]
   },
   "openai-sdk": {
-   "outcome": "The official OpenAI package is not locked to one vendor.",
+   "outcome": "The official OpenAI package looks locked to one vendor.",
    "role": "problem",
    "intro": "Keep the OpenAI SDK, and change two fields.",
    "steps": [
@@ -1499,13 +1507,14 @@
      "openai"
     ],
     "right": [
-     "anyrouter/free"
+     "anyrouter/free",
+     "deepseek/deepseek-v4-flash"
     ]
    },
    "close": "open A I S D K",
    "claims": [
     {
-     "says": "the official openai package is not vendor-locked",
+     "says": "The official OpenAI package looks locked to one vendor.",
      "from": "use-cases.json openai-sdk.problem"
     },
     {
@@ -1533,7 +1542,7 @@
      "from": "use-cases.json openai-sdk.problem"
     },
     {
-     "says": "result picture: openai | anyrouter/free",
+     "says": "result picture: openai | anyrouter/free | deepseek/deepseek-v4-flash",
      "from": "use-cases.json openai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -1573,7 +1582,8 @@
      "Your app"
     ],
     "right": [
-     "anyrouter/auto"
+     "anyrouter/auto",
+     "deepseek/deepseek-v4-flash"
     ]
    },
    "close": "unify A P I",
@@ -1607,7 +1617,7 @@
      "from": "use-cases.json unify-api.problem"
     },
     {
-     "says": "result picture: Your app | anyrouter/auto",
+     "says": "result picture: Your app | anyrouter/auto | deepseek/deepseek-v4-flash",
      "from": "use-cases.json unify-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -1868,7 +1878,7 @@
      "more": "Matching models go out on your own key."
     }
    ],
-   "result": "Requests bill your provider. AnyRouter takes no per-token cut.",
+   "result": "Matching models bill your provider, with no per-token cut.",
    "motif": {
     "kind": "chips",
     "items": [
@@ -1908,8 +1918,8 @@
      "from": "use-cases.json byok.steps"
     },
     {
-     "says": "Requests bill your provider. AnyRouter takes no per-token cut.",
-     "from": "use-cases.json byok.hook"
+     "says": "Matching models bill your provider, with no per-token cut.",
+     "from": "use-cases.json byok.steps and .hook"
     },
     {
      "says": "problem picture: one URL | logs | failover",
@@ -2177,7 +2187,7 @@
      "Your agents"
     ],
     "right": [
-     "anyrouter/auto"
+     "MCP tools"
     ]
    },
    "close": "M C P for agents",
@@ -2207,7 +2217,7 @@
      "from": "use-cases.json mcp-for-agents.problem"
     },
     {
-     "says": "result picture: Claude Desktop | Cursor | Your agents | anyrouter/auto",
+     "says": "result picture: Claude Desktop | Cursor | Your agents | MCP tools",
      "from": "use-cases.json mcp-for-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
@@ -2358,7 +2368,7 @@
    ]
   },
   "embeddings-search": {
-   "outcome": "Search and RAG pipelines need embeddings next to chat.",
+   "outcome": "Search and RAG need embeddings next to chat. A second provider means a second key and base URL.",
    "role": "problem",
    "intro": "Embed text for search and RAG.",
    "steps": [
@@ -2399,7 +2409,7 @@
    "close": "embeddings search",
    "claims": [
     {
-     "says": "a retrieval pipeline needs an embeddings endpoint next to the chat one",
+     "says": "Search and RAG need embeddings next to chat. A second provider means a second key and base URL.",
      "from": "use-cases.json embeddings-search.problem"
     },
     {
@@ -2446,7 +2456,8 @@
    "problem": "With a chat model, you prompt for JSON, then parse it.",
    "steps": [
     {
-     "text": "Send the ticket as state."
+     "text": "Send the ticket as state.",
+     "shows": "install"
     },
     {
      "text": "Use anyrouter/decision.",

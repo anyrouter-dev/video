@@ -75,7 +75,8 @@ const sceneFile = (s, css) => `<!doctype html>
   Promise.all(["600 100px Geist", "400 100px Geist", "400 48px 'Geist Mono'"].map(f => document.fonts.load(f))).then(() => {
     const ID = "${s.id}", D = ${s.dur};
     // Animate children, never the clip host: the framework owns clip visibility.
-    const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+    // 2D tweens stay 2D (force3D off): a word on its own 3D layer escapes the mask that hides it
+    const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out", force3D: false } });
     ${HELPERS}
     ${s.inner}
     window.__timelines[ID] = tl;

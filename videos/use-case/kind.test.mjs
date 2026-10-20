@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, rollPools, fallbackOf, narrate } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, undash, restates, rollPools, fallbackOf, narrate } from './kind.mjs';
 import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
@@ -49,7 +49,7 @@ const rolled = h => [...(h.match(/<div class="also">[\s\S]*?<\/div>/)?.[0] ?? ''
 // The strings a use case states, redacted the way the film redacts them, the ids the catalog gave, and
 // the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
 const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/u/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
-  ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
+  ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).flatMap(f => [redact(f), undash(redact(f))]).map(f => f.replace(/\s+/g, ' '));
 // Chrome, not copy: the brand, the line over the ids the same key runs, the "…" that marks code left
 // out, and the badges over the problem and the result.
 const CHROME = s => ['AnyRouter', 'The same key also runs', '…', 'The problem', 'The result'].includes(s);
@@ -422,7 +422,9 @@ test('the captions are the narration, word for word, in the order it is said', (
   for (const [u, f] of films()) {
     // the lines not on screen as kinetic type or in the window are captioned: what it is, and how each step works
     const n = narration.films[u.slug];
-    const lines = [n.role === 'intro' ? n.outcome : n.intro, ...n.steps.map(st => st.more).filter(Boolean)];
+    // the intro too, unless it says the headline again
+    const intro = n.role === 'intro' ? n.outcome : n.intro;
+    const lines = [...(restates(intro, u.title) ? [] : [intro]), ...n.steps.map(st => st.more).filter(Boolean)];
     assert.equal(captions(html(f)).join(' '), lines.join(' '), u.slug);
   }
 });

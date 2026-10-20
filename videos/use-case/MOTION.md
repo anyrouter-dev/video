@@ -64,23 +64,27 @@ that panel sits at 1:1. Between beats it travels, pulling back in depth on the w
 
 ## Sound events
 
-Mixed in `mix.mjs`. Voice is the reference at 0 dB. Music sits 18 to 25 dB under the voice
-while it speaks and comes up 6 to 8 dB between lines, with 80 ms attack and 450 ms release
+Mixed in `mix.mjs`, whose `SFX` table is the one source for these numbers. Voice is the
+reference at 0 dB. Music sits 24 dB under the voice's loudness while it speaks and comes up
+to 17 dB under between lines, with 80 ms attack and 450 ms release
 ([CapCut ducking](https://www.capcut.com/create/audio-ducking-for-clear-dialogue-in-video),
-[Pixflow mixing](https://pixflow.net/blog/audio-mixing-premiere-pro/)). Three sound families
-only, pitch and gain varied on repeats ([skills directory](https://www.skillsdirectory.com/skills/razee4315-sound-design)).
+[Pixflow mixing](https://pixflow.net/blog/audio-mixing-premiere-pro/)). Few sound families,
+pitch and gain varied on repeats, never the same sample twice in a row at the same pitch
+([skills directory](https://www.skillsdirectory.com/skills/razee4315-sound-design)).
 
-| Motion event | Sound | Level vs voice | Rule |
+| Motion event | Sound | Peak vs voice peak | Rule |
 |---|---|---|---|
-| Camera travel | air whoosh | -16 dB | peak on the fastest frame of the travel |
-| Card or window tilts in | soft short whoosh | -20 dB | first card of a group only |
-| Step marker lights | tonal tick, up a step per step | -18 dB | pitch rises with the step number |
-| Command typed | key press | -24 dB | only while text is typed, one every 2 to 3 characters |
-| Response or result arrives | soft pop | -18 dB | once per arrival |
-| End card | chime | -14 dB | the loudest effect, once |
+| Camera travel | air whoosh, 3 semitones down | -17 dB | starts 0.12 s early so its peak meets the fastest frame |
+| Card or window tilts in | short whoosh, 2 up | -24 dB | the film's first card and the code window |
+| A diagram card lands | soft click | -19 dB | the problem's first card, and the AnyRouter card |
+| Step marker lights | tonal ping, 2 semitones higher each step | -21 dB | on the step's voice |
+| Command typed | key press, pitch wandering by a semitone | -25 dB | only while text is typed, one every 3 characters |
+| Response or result arrives | soft pop, alternating a semitone up and down | -20 dB | the fallback header, each rolled id, the first request reaching its model |
+| End card | chime | -13 dB | the loudest effect, once |
 
-Never two effects of -18 dB or louder within 0.3 s. The mix is normalised to -14 LUFS
-integrated with a true peak at or under -1 dBTP ([Youlean on YouTube loudness](https://youlean.co/?p=30813),
+Of two effects marked big (travel, step, arrive, end) closer than 0.3 s, the later goes.
+The mix is normalised to -14 LUFS integrated with a true peak at -2 dBTP, so it stays under
+-1 dBTP after a re-encode ([Youlean on YouTube loudness](https://youlean.co/?p=30813),
 [Soundbridge](https://www.soundbridge.io/loudness-normalization-a-mixing-and-mastering-guide)).
 
 ## Portrait (1080 x 1920)

@@ -1,7 +1,7 @@
 /**
  * mix: a use-case film's soundtrack, one file: its music bed, its voice, and a
  * sound effect for each motion event the picture makes, mixed by ffmpeg and
- * normalised to -14 LUFS integrated with a true peak under -1 dBTP (MOTION.md,
+ * normalised to -14 LUFS integrated with a true peak at -2 dBTP, so it stays under -1 after a re-encode (MOTION.md,
  * sound events). Same inputs, same file.
  *
  *   music   a licensed track per film (audio/music.json, ledger in audio/LICENSES.md),
@@ -34,8 +34,8 @@ export const SFX = {
   end: { file: 'chime.mp3', db: -13, semi: () => 0, big: true },
 };
 // Music under a spoken line sits this far under the voice's loudness, and comes up between lines.
-const BED = { under: -21, between: -14, attack: 0.08, release: 0.45, fadeIn: 0.8, fadeOut: 2.6 };
-const TARGET = { I: -14, TP: -1.5, LRA: 11 };
+const BED = { under: -24, between: -17, attack: 0.08, release: 0.45, fadeIn: 0.8, fadeOut: 2.6 };
+const TARGET = { I: -14, TP: -2, LRA: 11 };
 
 const run = args => execFileSync('ffmpeg', ['-hide_banner', '-nostdin', ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 26 });
 const stderrOf = args => spawnSync('ffmpeg', ['-hide_banner', '-nostdin', ...args], { encoding: 'utf8', maxBuffer: 1 << 28 }).stderr;

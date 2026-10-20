@@ -32,6 +32,8 @@ export const ASSIGN = {
   'byok-anthropic': 'fresh-air-macleod', 'sign-in': 'preamble-airtone',
   'mcp-gateway': 'shimmer-airtone', 'mcp-for-agents': 'wisps-of-whorls-macleod',
 };
+// Tracks whose excerpt still opens quietly start a few seconds in, so the bed is there from the first frame.
+const LATE = { 'facile-macleod': 3, 'avec-soin-macleod': 3, 'fresh-air-macleod': 3, 'sapphire-isle-macleod': 3 };
 // An excerpt is as long as the longest film can be, and a little more for its fade.
 const EXCERPT = 64;
 const OK_LICENSE = /^CC (BY [34]\.0|0)$/;
@@ -70,7 +72,7 @@ function main() {
     out.tracks[id] = { file: `${id}.mp3`, title: t.title, artist: t.artist, from: at, source: t.source_url, license: t.license, licenseUrl: t.license_url, attribution: t.attribution, evidence: t.youtube_ok_evidence, notes: t.notes };
     console.log(`  ${id.padEnd(30)} from ${String(at).padStart(3)}s  ${t.license}`);
   }
-  for (const [slug, id] of Object.entries(ASSIGN).sort()) out.films[slug] = { track: id, start: 0 };
+  for (const [slug, id] of Object.entries(ASSIGN).sort()) out.films[slug] = { track: id, start: LATE[id] ?? 0 };
   fs.writeFileSync(path.join(AUDIO, 'music.json'), JSON.stringify(out, null, 1) + '\n');
 
   const md = [

@@ -109,7 +109,9 @@ function breakSet(text, { px, width, weight, tracking, room }) {
   const words = text.split(/\s+/).filter(Boolean);
   const fewest = linesOf(text, { px, width, weight, tracking, breakWords: false });
   const wide = (a, b) => widthOf(words.slice(a, b).join(' '), { px, weight, tracking });
-  const splits = k => (named(words[k - 1], k - 1) && named(words[k], k) && !/[,.:;]$/.test(words[k - 1]) ? 1 : 0);
+  // a break inside parentheses cuts a command or an aside in two, as costly as a split name
+  const open = words.map((_, k) => words.slice(0, k).join(' ').split('(').length - words.slice(0, k).join(' ').split(')').length);
+  const splits = k => (named(words[k - 1], k - 1) && named(words[k], k) && !/[,.:;]$/.test(words[k - 1]) ? 1 : 0) + (open[k] > 0 ? 1 : 0);
   // a split name costs more than an extra line, and an extra line more than any unevenness
   let best = null;
   const walk = (from, left, starts) => {
@@ -365,7 +367,7 @@ function windowHtml(win) {
 export const CAP = {
   landscape: { px: 52, top: 924, height: 120 },
   portrait: { px: 60, top: PORTRAIT_CAPTION_BAND.top, height: PORTRAIT_CAPTION_BAND.height },
-  padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 }, say: 1.35,
+  padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 }, say: 2.0,
 };
 const capFitsAt = (text, o, px) => widthOf(text, { px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4;
 const capFits = text => ['landscape', 'portrait'].every(o => capFitsAt(text, o, CAP[o].px));
@@ -373,7 +375,7 @@ const capFits = text => ['landscape', 'portrait'].every(o => capFitsAt(text, o, 
 const capPx = (text, o) => [CAP[o].px, 56, 52, 48, 44, 40, 36, 32].filter(px => px <= CAP[o].px).find(px => capFitsAt(text, o, px)) ?? 32;
 // a word that is part of a name, as named() reads one: past a sentence's first word, any capitalised word
 // pairs read as one term, so a phrase never ends between them
-const BOUND = /^(base URL|API key|rate limited|typed answer|more than|model id|catalog id)[,.]?$/i;
+const BOUND = /^(base URL|API key|AnyRouter key|decision model|free model|request logs?|rate limited|typed answer|more than|model id|catalog id)[,.]?$/i;
 const HANGING = /^(a|an|the|to|of|its|your|by|on|in|for|with|and|or|at|from|than|that)$/i;
 const isName = (w, first) => (first ? /^[A-Z0-9].*[A-Z]/ : /^[A-Z0-9]/).test(w);
 
@@ -448,7 +450,7 @@ export function urlSet(link) {
 // The problem and the result are set as kinetic type: the line the voice says, each word rising
 // as it is spoken. It is its own caption, so no caption chip runs under it.
 TYPE.say = { weight: 600, tracking: -0.04,
-  landscape: { sizes: [112, 104, 96, 88, 80, 72, 64], width: SAFE.landscape, lines: 2 },
+  landscape: { sizes: [112, 104, 96, 88, 80, 72, 64, 60, 56], width: SAFE.landscape, lines: 3 },
   portrait: { sizes: [100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56], width: SAFE.portrait, lines: 4 } };
 
 /** How a spoken line is set as kinetic type, per frame: { px, breaks, lines }, or null when it sets in neither. */
@@ -783,7 +785,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
         path.setAttribute("class", dashed ? "ed dash" : "ed");
         svg.appendChild(path);
         const len = path.getTotalLength();
-        return { path, len, mid: path.getPointAtLength(len / 2), end: path.getPointAtLength(len) };
+        return { path, a, b, len, mid: path.getPointAtLength(len / 2), end: path.getPointAtLength(len) };
       };
       const lands = (els, times, z) => els.forEach((e, k) => tl.fromTo(e, { z, rotationX: 22, y: 60, opacity: 0 }, { z: 0, rotationX: 0, y: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: true }, times[k]));
       lands(left, L.left, -520);
@@ -831,21 +833,25 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       const dot = document.createElementNS(svgNS, "circle");
       dot.setAttribute("r", 13); dot.setAttribute("class", "pulse");
       pResult.querySelector(".edges").appendChild(dot);
-      const legs = [route.edges[0], route.edges.find(e => !e.path.classList.contains("dash")) ?? route.edges.at(-1)].filter((e, i, a) => a.indexOf(e) === i);
+      const into = route.edges.find(e => e.b === route.hub), out = route.edges.filter(e => e.a === route.hub);
+      const primary = out.find(e => !e.path.classList.contains("dash")) ?? out[0], backup = out.find(e => e.path.classList.contains("dash"));
       let t0 = Math.max(LAND.result.right.at(-1) + 0.4, RWORDS[0] ?? 0);
       tl.set(dot, { opacity: 0 }, 0);
       // set frame by frame along the path: a seek renders a set, where a callback may be skipped
       const ease = gsap.parseEase("power2.inOut");
-      const answered = Array.from(pResult.querySelectorAll('.col.r .nd')).find(n => n.dataset.role === "r");
-      // a request runs the route again and again while the result holds, so the frame keeps its pulse
-      for (let run = 0; t0 + legs.length * 0.75 < END - 0.4; run++) {
+      // a request runs the route again and again while the result holds, so the frame keeps its pulse.
+      // Where the route has a fallback, the first request is answered by the model asked for; then that
+      // model goes down, and the next requests run the dashed edge to the fallback, which answers.
+      for (let run = 0; t0 + 1.5 < END - 0.4; run++) {
+        const leg = backup && run ? backup : primary;
+        if (backup && run === 1) { tl.set(primary.b, { attr: { "data-state": "off" } }, t0); tl.set(primary.path, { attr: { class: "ed broke" }, strokeDasharray: "4 14" }, t0); }
         tl.set(dot, { opacity: 1 }, t0);
-        legs.forEach(leg => {
-          for (let f = 0; f <= 21; f++) { const q = leg.path.getPointAtLength(ease(f / 21) * leg.len); tl.set(dot, { attr: { cx: q.x, cy: q.y } }, t0 + f / 30); }
+        [into, leg].filter(Boolean).forEach(l => {
+          for (let f = 0; f <= 21; f++) { const q = l.path.getPointAtLength(ease(f / 21) * l.len); tl.set(dot, { attr: { cx: q.x, cy: q.y } }, t0 + f / 30); }
           t0 += 0.75;
         });
         // the card that answered takes the accent as the request reaches it
-        if (answered && !run) tl.set(answered, { attr: { "data-state": "on" } }, t0 - 0.05);
+        if (run < 2) tl.set(leg.b, { attr: { "data-state": "on" } }, t0 - 0.05);
         tl.set(dot, { opacity: 0 }, t0);
         t0 += 0.45;
       }
@@ -866,8 +872,10 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       tl.set(el, { opacity: 1 }, enter);
       tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90 },
         { z: 0, rotationX: 0, rotationY: 0, y: at, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
-      // the label's words rise as the voice says them, after "Step N."
-      el.querySelectorAll(".sl .w > span").forEach((w, i) => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, Math.max(enter + 0.1, (st.words[i + 2] ?? st.words.at(-1)) - 0.08)));
+      // the label rises with its card, word after word, and is whole before the voice reads it
+      const lw = Array.from(el.querySelectorAll(".sl .w > span"));
+      tl.set(lw, { yPercent: 110 }, 0);
+      tl.fromTo(lw, { yPercent: 110 }, { yPercent: 0, duration: 0.5, stagger: Math.min(0.06, 0.3 / lw.length), ease: "expo.out", immediateRender: false }, enter + 0.12);
       const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : RESULT) - 0.5;
       if (dw.length) {
         const rowsOfDt = Object.values(Object.groupBy(dw, w => w.offsetTop)).map(ws => ws.map(w => w.firstElementChild));
@@ -877,7 +885,8 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       }
       tl.fromTo(el.querySelector(".sm"), { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, st.voiceAt);
       const ring = el.querySelector(".ring"), until = (next ? next.at : RESULT) - 0.3;
-      for (let r = st.voiceAt + 1.2; r + 0.5 < until; r += 1.0) tl.fromTo(ring, { scale: 1, opacity: 0.7 }, { scale: 3, opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, r);
+      // once its line is said, a ring breathes out of the marker: this is the step to do
+      if (st.voiceAt + 1.2 + 0.5 < until) tl.fromTo(ring, { scale: 1, opacity: 0.7 }, { scale: 3, opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, st.voiceAt + 1.2);
       if (next) {
         tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
         tl.set(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}" }, next.at);
