@@ -571,7 +571,7 @@ function diagramHtml(d) {
       <div class="col r${d.tall.right ? ' tall' : ''}">${d.right.map((l, i) => nodeHtml(l, d, d.fallback && i > 0 ? 'fb' : 'r')).join('')}</div>
       ${d.tag ? `<div class="tg mono">${esc(d.tag)}</div>` : ''}
       ${d.fail ? `<div class="fl">${esc(d.fail)}</div>` : ''}
-      ${d.note ? `<div class="nt mono">${esc(d.note)}</div>` : ''}
+      ${d.note ? `<div class="nt mono"><span>${esc(d.note)}</span></div>` : ''}
     </div>`;
 }
 
