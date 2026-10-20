@@ -422,7 +422,7 @@ export function captionsOf(said = []) {
     const next = phrases[i + 1];
     const at = +(p[0].at - 0.05).toFixed(2);
     // held a beat past its last word, until the next phrase, and long enough to read
-    const end = Math.min(next ? next[0].at - 0.05 : Infinity, Math.max(p.at(-1).end + 0.3, at + 0.8));
+    const end = Math.min(next ? next[0].at - 0.05 : Infinity, Math.max(p.at(-1).end + 0.15, at + 0.8));
     const text = p.map(w => w.text).join(' ');
     return { text, at, end: +end.toFixed(2), px: { landscape: capPx(text, 'landscape'), portrait: capPx(text, 'portrait') } };
   });
@@ -515,8 +515,10 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.set(el, { y: at }, 0);
       // a later step comes in once the one before has made room, so the two never cross
       const enter = st.at + (k ? 0.45 : 0);
-      tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90, opacity: 0 },
-        { z: 0, rotationX: 0, rotationY: 0, y: at, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
+      // it shows whole from deep in the page and flies forward: a step half faded is pale text on white
+      tl.set(el, { opacity: 1 }, enter);
+      tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90 },
+        { z: 0, rotationX: 0, rotationY: 0, y: at, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
       el.querySelectorAll(".sl .w > span").forEach(w => tl.fromTo(w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, enter + 0.15));
       // the page's sentence rises a row at a time while the step is said and after, and goes once the step is done
       const dw = Array.from(el.querySelectorAll(".dt .w")), until0 = (next ? next.at : END) - 0.5;
@@ -524,19 +526,21 @@ export function filmScene({ copy, beats, duration, timing, said }) {
         const rowsOfDt = Object.values(Object.groupBy(dw, w => w.offsetTop)).map(ws => ws.map(w => w.firstElementChild));
         const gap = Math.min(1.2, Math.max(0.3, (until0 - st.voiceAt - 0.6) / rowsOfDt.length));
         rowsOfDt.forEach((ws, r) => tl.fromTo(ws, { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, st.voiceAt + 0.3 + r * gap));
-        if (next) tl.to(el.querySelector(".dt"), { opacity: 0, duration: 0.3, ease: "none" }, next.at);
+        if (next) tl.set(el.querySelector(".dt"), { opacity: 0 }, next.at);
       }
       // the marker lights as its step is said, and goes to ink once the next one comes
       tl.fromTo(el.querySelector(".sm"), { scale: 0.6 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, st.voiceAt);
       // once its line is said, a ring breathes out of the marker until the next step: the step is still the one to do
       const ring = el.querySelector(".ring"), until = (next ? next.at : END) - 0.3;
-      for (let r = st.voiceAt + 1.6; r + 0.9 < until; r += 1.2) tl.fromTo(ring, { scale: 1, opacity: 0.45 }, { scale: 2.6, opacity: 0, duration: 0.5, ease: "power2.out", immediateRender: false }, r);
+      for (let r = st.voiceAt + 1.2; r + 0.5 < until; r += 1.0) tl.fromTo(ring, { scale: 1, opacity: 0.7 }, { scale: 3, opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, r);
       if (next) {
         tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
-        tl.to(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}", duration: 0.4, ease: "none" }, next.at);
+        // at once: a marker half way from accent to ink is pale text on a pale disk
+        tl.set(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}" }, next.at);
       }
     });
-    tl.to(stp, { z: -600, y: "-=120", opacity: 0, duration: 0.5, stagger: 0.04, ease: "power3.in" }, END - 0.55);
+    tl.to(stp, { z: -600, y: "-=120", duration: 0.5, stagger: 0.04, ease: "power3.in" }, END - 0.55);
+    tl.set(stp, { opacity: 0 }, END - 0.02);
 
     // The window comes in with the first step that shows it, follows its steps down, and drops back out.
     const firstWin = STEPS.findIndex(st => st.shows);
@@ -579,7 +583,8 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     if (ROLLS) {
       const also = $(".also"), slot = also.querySelector(".roll"), items = Array.from(slot.children);
       slot.style.width = Math.max(...items.map(x => x.offsetWidth)) + "px";
-      tl.fromTo(also, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, ROLL_AT - 0.3);
+      tl.set(also, { opacity: 1 }, ROLL_AT - 0.3);
+      tl.fromTo(also, { y: 20 }, { y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, ROLL_AT - 0.3);
       items.forEach((into, i) => {
         const at = ROLL_AT + i * ROLL_EVERY, out = items[i - 1];
         // the old id is gone before the new one shows, so two ids are never drawn over each other
@@ -601,10 +606,23 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.to(glow, { opacity: 1, duration: 0.3, ease: "power2.out" }, CMD_AT);
       // and flashes as the typing ends, so the line just typed is the one to read
       tl.fromTo(glow, { opacity: 0.2 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
-      for (let t = POINT_AT + 0.3, k = first + 1; t < W_OUT - 0.3; t += 1.1, k++) {
-        if (lit.length > 1) tl.to(glow, { ...to(lit[k % lit.length]), duration: 0.5, ease: "power3.inOut" }, t);
-        else tl.to(glow, { opacity: k % 2 ? 0.45 : 1, duration: 0.5, ease: "sine.inOut" }, t);
+      // then each line in turn is selected, as an editor selects it: the accent behind it, its text white
+      const sel = document.createElement("div");
+      sel.className = "sel";
+      rows.prepend(sel);
+      tl.set(sel, { opacity: 0 }, 0);
+      let on = null;
+      for (let t = POINT_AT + 0.3, k = first; t < W_OUT - 0.4; t += 1.1, k++) {
+        const ln = lit[k % lit.length];
+        if (on) tl.set(on, { attr: { "data-on": "0" } }, t);
+        tl.set(sel, { ...to(ln), opacity: 1 }, t);
+        tl.set(ln, { attr: { "data-on": "1" } }, t);
+        // a lone line is let go between selections, so the selection reads as a beat
+        if (lit.length === 1) { tl.set(sel, { opacity: 0 }, t + 0.8); tl.set(ln, { attr: { "data-on": "0" } }, t + 0.8); }
+        on = ln;
       }
+      tl.set(sel, { opacity: 0 }, W_OUT - 0.2);
+      if (on) tl.set(on, { attr: { "data-on": "0" } }, W_OUT - 0.2);
     }
 
     // 3 · the lockup: the headline comes back above it, small, and the short link lands under it.
@@ -714,6 +732,8 @@ export const CSS = `
   .film .rows.rp{display:none}
   .film .glow{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:rgba(187,77,0,.14);pointer-events:none}
   .film .is-ink .glow{background:rgba(240,145,90,.24)}
+  .film .sel{position:absolute;left:calc(var(--adv) * -1);right:calc(var(--adv) * -1);top:0;border-radius:10px;background:${C.accent};pointer-events:none}
+  .film .ln[data-on="1"],.film .ln[data-on="1"] *{color:${C.onInk}}
   .film .ln.out{position:absolute;left:0;right:0;top:100%;padding-top:.3em;border-top:2px solid ${C.line};opacity:0}
   .film .is-ink .ln.out{border-top-color:${C.ink2}}
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}

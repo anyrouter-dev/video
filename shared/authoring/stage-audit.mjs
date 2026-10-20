@@ -21,6 +21,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import net from 'node:net';
+import http from 'node:http';
 import path from 'node:path';
 import { spawn, execFileSync } from 'node:child_process';
 import puppeteer from 'puppeteer-core';
@@ -41,14 +42,24 @@ const freePort = () => new Promise((resolve, reject) => {
   }).on('error', reject);
 });
 
+// node:http, not fetch: under load Node's fetch can throw from inside its socket (setTypeOfService
+// EINVAL), past any catch, and take the whole audit down with it.
+const getJson = url => new Promise(resolve => {
+  http.get(url, res => {
+    let body = '';
+    res.on('data', c => { body += c; });
+    res.on('end', () => { try { resolve(res.statusCode === 200 ? JSON.parse(body) : null); } catch { resolve(null); } });
+  }).on('error', () => resolve(null));
+});
+
 export async function startPreview(dir) {
   const port = await freePort();
   const child = spawn(process.execPath, [CLI, 'preview', '--no-open', '--foreground', '--force-new', `--port=${port}`, dir], { stdio: 'ignore' });
   const base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 240; i++) {
-    const res = await fetch(`${base}/api/projects`).catch(() => null);
-    if (res?.ok) {
-      const { projects } = await res.json();
+    const res = await getJson(`${base}/api/projects`);
+    if (res) {
+      const { projects } = res;
       const project = projects.find(p => fs.realpathSync(p.dir) === dir);
       if (!project) break;
       return { child, url: `${base}/api/projects/${encodeURIComponent(project.id)}/preview` };

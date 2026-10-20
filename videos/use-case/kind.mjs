@@ -1,22 +1,22 @@
 /**
  * use-case: one short narrated film per use case on anyrouter.dev/use-cases,
- * embedded on that page above the steps. The page carries the steps; the film
- * shows the outcome and how little it takes, in three beats on one shot, each
- * held while its line of the narration (narration.mjs) is said, with captions
- * under the picture and a score of its own:
+ * embedded on that page above the steps. It says what this is and why you
+ * would want it, walks the page's steps one by one, and ends on the page's
+ * short link, each beat held while its line of the narration (narration.mjs)
+ * is said, with captions under the picture and a score of its own:
  *
  *   outcome  the page's title as a headline, with the tool's mark and AnyRouter's
- *   doing it the page's own command or code, typed into a terminal or an editor
- *   lockup   the headline again, the AnyRouter lockup and the page's URL
- *
- * The headline is the one element on screen the whole time: it shrinks into the
- * caption over the code, then settles above the lockup.
+ *   step-N   a numbered step card that tilts in and settles flat to read, the
+ *            page's own sentence for it under the label; the step that shows
+ *            the code brings in the window and types the page's command
+ *   close    the headline again, the AnyRouter lockup and anyrouter.dev/u/<slug>
  *
  * Facts come from https://anyrouter.dev/use-cases.json, and the model ids a film
- * rolls through from https://anyrouter.dev/api/v1/models?all=1. Every word on screen is
- * a fact taken verbatim, with API keys redacted. Where the page's command names an
- * `anyrouter/*` preset, the id rolls through a few real ids the same key runs and
- * comes back to the preset, so the film never implies the presets are all there is.
+ * rolls through from https://anyrouter.dev/api/v1/models?all=1. Every word on screen
+ * that is not the narration is a fact taken verbatim, with API keys redacted. Where
+ * the page's command names an `anyrouter/*` preset, the request keeps it, and a line
+ * under the window rolls through a few real ids the same key runs, so the film
+ * never implies the presets are all there is.
  *
  * One collect holds every use case; `split` makes each its own release, whose
  * identity is the hash of the facts its film shows. Editing one use case
@@ -270,7 +270,7 @@ const TYPE_EACH = 0.05, TYPE_MAX = 1.4, LINE_PAUSE = 0.3;
 // The voice starts once the headline is up, a step has tilted in, the lockup has landed.
 const VOICE_AT = { outcome: 0.4, step: 0.45, close: 0.7 };
 // A step reads for this long at least; the beat after its last word before the next one comes.
-const STEP_MIN = 2.6, AFTER = 0.7;
+const STEP_MIN = 2.0, AFTER = 0.7;
 // The window has settled before its code is typed; the lockup holds once the link is said.
 const TYPE_AT = 0.9, END_HOLD = 2.2, END_MIN = 4.5;
 // The typed line is read before its answer arrives.

@@ -151,11 +151,15 @@ never a borrowed logo.
 `use-case` is the exception. It brings its own `write` (`videos/use-case/project.mjs`)
 in the Monolith look of `videos/explainer/frame.md` (v3): white, near-black ink,
 display-size Geist, flat hairline cards, the terminal as the ink surface, and one
-accent, on the model id in the command. A film is one sub-composition in three beats, its
-headline carried through all three; it carries its portrait layout, so
+accent, on what is being said or changed. A film is one sub-composition: the headline,
+then numbered step cards in CSS 3D depth (each tilts in and settles flat to read),
+the code window on the step that shows it, and an end card with the page's short
+link `anyrouter.dev/u/<slug>`; it carries its portrait layout, so
 `shared/authoring/portrait.mjs` cuts the 1080x1920 rendition from the same project.
-Where the page's command names an `anyrouter/*` preset, the id rolls through a
-few hand-picked ids (`ROLL_IDS` in its `kind.mjs`) and comes back to the preset.
+Every line of code sits on one row and the window shows whole code
+(`videos/use-case/reflow.mjs`). Where the page's command names an `anyrouter/*`
+preset, the request keeps it, and a line under the window rolls through a few
+hand-picked ids (`ROLL_IDS` in its `kind.mjs`) the same key runs.
 An id rolls only while `/api/v1/models?all=1` lists it as a chat model whose
 `pricing.billing` is not `"byok"`: a byok id needs the user's own provider key,
 so under a preset it would read as included. `anyrouter/free` rolls only ids
@@ -168,7 +172,7 @@ lines and a claims ledger naming the source of every spoken claim;
 `node videos/use-case/voice.mjs --budget=N` voices a line with ElevenLabs only
 when its spoken text changes, into `videos/use-case/voice/`, so the render never
 calls a voice service. A film with no script fails to build. The voice sets the
-timing (25 to 45 s), captions run in a band under the picture, and each film's
+timing (from 22 s), captions run in a band under the picture, and each film's
 calm score (`lib/sound.mjs`) is read off its slug and steps down under the voice.
 `node videos/use-case/audit-all.mjs` puts every film, both renditions, through
 the stage audit; `node videos/use-case/sound-check.mjs` fails when two films'
