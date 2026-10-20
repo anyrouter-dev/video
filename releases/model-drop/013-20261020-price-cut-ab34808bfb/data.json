@@ -1,0 +1,209 @@
+{
+  "generatedAt": "2026-10-20T12:44:11.434Z",
+  "mode": "diff",
+  "kind": "price-cut",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 299,
+    "listed": 290,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 64,
+    "providerBackends": 64,
+    "free": 70
+  },
+  "pool": {
+    "keys": 197,
+    "donors": 103,
+    "requests": 45762
+  },
+  "added": [],
+  "changed": [
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "from": "0.042448/0.084896@1050000",
+      "to": "0/0@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "google/gemma-4-31b",
+      "from": "0.1/0.34@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "jaredpalmer/kev-4b",
+      "from": "0.042/0@8192",
+      "to": "0/0@8192",
+      "kind": "price-cut"
+    },
+    {
+      "id": "liquid/d1",
+      "from": "0.04/0@32000",
+      "to": "0/0@32000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "meituan/longcat-2.5-preview",
+      "from": "0.3/1.2@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "meta/muse-glimmer-30b",
+      "from": "0.3/1.2@131072",
+      "to": "0/0@131072",
+      "kind": "price-cut"
+    },
+    {
+      "id": "microsoft/microsoft-decision-1",
+      "from": "0.042/0@32768",
+      "to": "0/0@32768",
+      "kind": "price-cut"
+    },
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "from": "0.15/0.6@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "moonshotai/kimi-k3",
+      "from": "3/15@1050000",
+      "to": "0/0@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "from": "0.085/0.4@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "from": "0.5/2.2@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "from": "0.025/0.12@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "from": "0.018/0.09@131072",
+      "to": "0/0@131072",
+      "kind": "price-cut"
+    },
+    {
+      "id": "perplexity/pplx-decider-v1.1-27b",
+      "from": "0.02/0@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "poolside/laguna-s-2.1",
+      "from": "0.1/0.2@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "poolside/laguna-xs-2.1",
+      "from": "0.1/0.2@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "respan/span-01",
+      "from": "0.02/0@x",
+      "to": "0/0@x",
+      "kind": "price-cut"
+    },
+    {
+      "id": "thinkingmachines/inkling-small",
+      "from": "0.45/1.2@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "thinkingmachines/inkling",
+      "from": "0.95/4.05@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "typesafe/jev",
+      "from": "0.042/0@64000",
+      "to": "0/0@64000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "upstage/solar-decide-flash",
+      "from": "0.05/0@524288",
+      "to": "0/0@524288",
+      "kind": "price-cut"
+    },
+    {
+      "id": "upstage/solar-decide",
+      "from": "0.05/0@524288",
+      "to": "0/0@524288",
+      "kind": "price-cut"
+    },
+    {
+      "id": "google/gemma-latest",
+      "from": "0.1/0.34@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "moonshotai/kimi-latest",
+      "from": "3/15@1050000",
+      "to": "0/0@1050000",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "deepseek/deepseek-v4-flash",
+    "name": "DeepSeek-V4-Flash",
+    "provider": "DeepSeek",
+    "logo": "deepseek-color.svg",
+    "context": 1050000,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1783468800,
+    "category": "text",
+    "excerpt": "Fast and cheap DeepSeek-V4 MoE variant via SiliconFlow free tier for high-throughput chat and coding."
+  },
+  "notable": true,
+  "label": "price-cut",
+  "parts": [
+    "~deepseek/deepseek-v4-flash 0.042448/0.084896@1050000->0/0@1050000",
+    "~google/gemma-4-31b 0.1/0.34@262144->0/0@262144",
+    "~jaredpalmer/kev-4b 0.042/0@8192->0/0@8192",
+    "~liquid/d1 0.04/0@32000->0/0@32000",
+    "~meituan/longcat-2.5-preview 0.3/1.2@1048576->0/0@1048576",
+    "~meta/muse-glimmer-30b 0.3/1.2@131072->0/0@131072",
+    "~microsoft/microsoft-decision-1 0.042/0@32768->0/0@32768",
+    "~minimax/minimax-m3.1-flash 0.15/0.6@1000000->0/0@1000000",
+    "~moonshotai/kimi-k3 3/15@1050000->0/0@1050000",
+    "~nvidia/nemotron-3-super-120b-a12b 0.085/0.4@262144->0/0@262144",
+    "~nvidia/nemotron-3-ultra-550b-a55b 0.5/2.2@1000000->0/0@1000000",
+    "~nvidia/nemotron-3.5-lightning-30b-a3b 0.025/0.12@1000000->0/0@1000000",
+    "~openai/gpt-oss-20b 0.018/0.09@131072->0/0@131072",
+    "~perplexity/pplx-decider-v1.1-27b 0.02/0@262144->0/0@262144",
+    "~poolside/laguna-s-2.1 0.1/0.2@1048576->0/0@1048576",
+    "~poolside/laguna-xs-2.1 0.1/0.2@262144->0/0@262144",
+    "~respan/span-01 0.02/0@x->0/0@x",
+    "~thinkingmachines/inkling-small 0.45/1.2@1048576->0/0@1048576",
+    "~thinkingmachines/inkling 0.95/4.05@1048576->0/0@1048576",
+    "~typesafe/jev 0.042/0@64000->0/0@64000",
+    "~upstage/solar-decide-flash 0.05/0@524288->0/0@524288",
+    "~upstage/solar-decide 0.05/0@524288->0/0@524288",
+    "~google/gemma-latest 0.1/0.34@262144->0/0@262144",
+    "~moonshotai/kimi-latest 3/15@1050000->0/0@1050000"
+  ]
+}

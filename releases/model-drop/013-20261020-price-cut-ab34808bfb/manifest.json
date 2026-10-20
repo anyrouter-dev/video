@@ -1,0 +1,22 @@
+{
+  "id": "013-20261020-price-cut-ab34808bfb",
+  "hash": "ab34808bfb",
+  "kind": "model-drop",
+  "label": "price-cut",
+  "title": "Price drop: deepseek-v4-flash down 100%",
+  "seconds": 20,
+  "renderedAt": "2026-10-20T12:45:48.997Z",
+  "commit": "5b6a295",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-013-20261020-price-cut-ab34808bfb.mp4",
+      "cover": "renders/model-drop-013-20261020-price-cut-ab34808bfb.png",
+      "youtube": "https://youtu.be/fK4DC5sN9l8"
+    }
+  },
+  "source": "renders/model-drop-013-20261020-price-cut-ab34808bfb-source.tar.gz",
+  "createdAt": "2026-10-20T12:45:49.005Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-013-20261020-price-cut-ab34808bfb"
+  }
+}

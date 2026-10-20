@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-19T14:41:46.690Z",
+  "acceptedAt": "2026-10-20T12:44:11.434Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -559,8 +559,8 @@
     },
     {
       "id": "deepseek/deepseek-v4-flash",
-      "inPrice": 0.042448,
-      "outPrice": 0.084896,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1050000
     },
     {
@@ -691,8 +691,8 @@
     },
     {
       "id": "google/gemma-4-31b",
-      "inPrice": 0.1,
-      "outPrice": 0.34,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {
@@ -781,13 +781,13 @@
     },
     {
       "id": "jaredpalmer/kev-4b",
-      "inPrice": 0.042,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 8192
     },
     {
       "id": "liquid/d1",
-      "inPrice": 0.04,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 32000
     },
@@ -811,8 +811,8 @@
     },
     {
       "id": "meituan/longcat-2.5-preview",
-      "inPrice": 0.3,
-      "outPrice": 1.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
@@ -847,8 +847,8 @@
     },
     {
       "id": "meta/muse-glimmer-30b",
-      "inPrice": 0.3,
-      "outPrice": 1.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 131072
     },
     {
@@ -901,7 +901,7 @@
     },
     {
       "id": "microsoft/microsoft-decision-1",
-      "inPrice": 0.042,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 32768
     },
@@ -931,8 +931,8 @@
     },
     {
       "id": "minimax/minimax-m3.1-flash",
-      "inPrice": 0.15,
-      "outPrice": 0.6,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1000000
     },
     {
@@ -985,8 +985,8 @@
     },
     {
       "id": "moonshotai/kimi-k3",
-      "inPrice": 3,
-      "outPrice": 15,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1050000
     },
     {
@@ -1045,14 +1045,14 @@
     },
     {
       "id": "nvidia/nemotron-3-super-120b-a12b",
-      "inPrice": 0.085,
-      "outPrice": 0.4,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {
       "id": "nvidia/nemotron-3-ultra-550b-a55b",
-      "inPrice": 0.5,
-      "outPrice": 2.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1000000
     },
     {
@@ -1063,8 +1063,8 @@
     },
     {
       "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
-      "inPrice": 0.025,
-      "outPrice": 0.12,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1000000
     },
     {
@@ -1309,8 +1309,8 @@
     },
     {
       "id": "openai/gpt-oss-20b",
-      "inPrice": 0.018,
-      "outPrice": 0.09,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 131072
     },
     {
@@ -1363,7 +1363,7 @@
     },
     {
       "id": "perplexity/pplx-decider-v1.1-27b",
-      "inPrice": 0.02,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 262144
     },
@@ -1375,14 +1375,14 @@
     },
     {
       "id": "poolside/laguna-s-2.1",
-      "inPrice": 0.1,
-      "outPrice": 0.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
       "id": "poolside/laguna-xs-2.1",
-      "inPrice": 0.1,
-      "outPrice": 0.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {
@@ -1537,7 +1537,7 @@
     },
     {
       "id": "respan/span-01",
-      "inPrice": 0.02,
+      "inPrice": 0,
       "outPrice": 0,
       "context": null
     },
@@ -1669,19 +1669,19 @@
     },
     {
       "id": "thinkingmachines/inkling-small",
-      "inPrice": 0.45,
-      "outPrice": 1.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
       "id": "thinkingmachines/inkling",
-      "inPrice": 0.95,
-      "outPrice": 4.05,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
       "id": "typesafe/jev",
-      "inPrice": 0.042,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 64000
     },
@@ -1693,13 +1693,13 @@
     },
     {
       "id": "upstage/solar-decide-flash",
-      "inPrice": 0.05,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 524288
     },
     {
       "id": "upstage/solar-decide",
-      "inPrice": 0.05,
+      "inPrice": 0,
       "outPrice": 0,
       "context": 524288
     },
@@ -1939,8 +1939,8 @@
     },
     {
       "id": "google/gemma-latest",
-      "inPrice": 0.1,
-      "outPrice": 0.34,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {
@@ -2023,8 +2023,8 @@
     },
     {
       "id": "moonshotai/kimi-latest",
-      "inPrice": 3,
-      "outPrice": 15,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1050000
     },
     {
