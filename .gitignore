@@ -6,7 +6,6 @@
 # covers and source tarballs are NOT tracked — they ship on the GitHub Release,
 # which is the durable public copy.
 /films/
-/renders/
 
 node_modules/
 
