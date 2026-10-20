@@ -1,0 +1,26 @@
+{
+  "releases": [
+    {
+      "id": "001-20261020-v1-5c4dc0cabe",
+      "hash": "5c4dc0cabe",
+      "kind": "sign-in-with-agentid",
+      "label": "v1",
+      "title": "Sign in with AgentID: your agent signs in to AnyRouter from its own AgentMail inbox and gets its own account",
+      "seconds": 32.296,
+      "renderedAt": "2026-10-20T15:34:04.076Z",
+      "commit": "9f5cf14",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/sign-in-with-agentid-001-20261020-v1-5c4dc0cabe.mp4",
+          "cover": "renders/sign-in-with-agentid-001-20261020-v1-5c4dc0cabe.png"
+        },
+        "portrait": {
+          "artifact": "renders/sign-in-with-agentid-001-20261020-v1-5c4dc0cabe-portrait.mp4",
+          "cover": "renders/sign-in-with-agentid-001-20261020-v1-5c4dc0cabe-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-20T15:34:04.103Z"
+    }
+  ]
+}
