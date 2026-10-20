@@ -159,8 +159,6 @@ const T = {
   url: w(8, 'anyrouter.dev/cli'),
 };
 T.sameModel = w(6, 'same', 2);
-const PUSH_ORIGIN = at([TURRET.x, TURRET.y, 270]).map((v) => +v.toFixed(1));
-DATA_EXTRA.PUSH_ORIGIN = PUSH_ORIGIN;
 
 // ── Markup ──
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -182,7 +180,7 @@ const screen = `
     </div>
     <div class="pane pane-login"><div class="row" data-one-row><span class="p">$</span> anyr login</div></div>
     <div class="pane pane-run">
-      <div class="row" data-one-row><span class="p">$</span> anyr <span class="agent">${AGENTS.map((a) => `<span class="sel sel-${a.id}">${chars(a.id, `c-${a.id}`)}</span>`).join('')}</span><span class="caret"></span></div>
+      <div class="row"><span class="p">$</span> anyr <span class="agent">${AGENTS.map((a) => `<span class="sel sel-${a.id}">${chars(a.id, `c-${a.id}`)}</span>`).join('')}</span><span class="caret"></span></div>
       <div class="row model" data-one-row>--model anyrouter/free</div>
       ${AGENTS.map((a) => `<div class="note note-${a.id}"><div class="row" data-one-row># launch ${esc(a.name)}</div><div class="row" data-one-row># through AnyRouter</div></div>`).join('\n      ')}
     </div>
@@ -230,21 +228,20 @@ const html = `<template>
     ${k.ISO_CSS.replace(/\.iso\b/g, '[data-composition-id="machine"] .iso')}
     ${F.FIG_CSS.split('\n').filter(Boolean).map((r) => `[data-composition-id="machine"] ${r}`).join('\n    ')}
     [data-composition-id="machine"] .iso {
-      --anatomy-paper: #151515; --anatomy-face: #262626; --anatomy-top: #1d1d1d;
-      --anatomy-shade-0: #101010; --anatomy-shade-1: #141414; --anatomy-shade-2: #181818; --anatomy-shade-3: #1c1c1c;
-      --anatomy-lit-top: #3b3b3b; --anatomy-lit-shade: #2e2e2e;
-      --anatomy-hi: #e4e4e4; --anatomy-mid: #8e8e8e; --anatomy-lo: #585858; --anatomy-faint: #383838; --anatomy-lit: #ffffff;
+      --anatomy-paper: #181818; --anatomy-face: #2c2c2c; --anatomy-top: #242424;
+      --anatomy-shade-0: #121212; --anatomy-shade-1: #171717; --anatomy-shade-2: #1c1c1c; --anatomy-shade-3: #212121;
+      --anatomy-lit-top: #444444; --anatomy-lit-shade: #353535;
+      --anatomy-hi: #ececec; --anatomy-mid: #9a9a9a; --anatomy-lo: #626262; --anatomy-faint: #3e3e3e; --anatomy-lit: #ffffff;
       --anatomy-weight: 1.5px;
       --ink: #e6e6e6; --muted: #8a8a8a; --term: #cfe9dc; --term-dim: #7f9a8d;
       position: absolute; inset: 0; overflow: hidden; background: #0d0d0d;
       font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
     }
     [data-composition-id="machine"] .cam { position: absolute; left: 0; top: 0; width: 1px; height: 1px; transform-origin: 0 0; }
-    [data-composition-id="machine"] .push { position: absolute; left: 0; top: 0; width: 1px; height: 1px; }
     [data-composition-id="machine"] .fig { position: absolute; display: block; overflow: visible; }
     [data-composition-id="machine"] .tf { display: none; }
     [data-composition-id="machine"] .tf[data-tf="0"] { display: inline; }
-    [data-composition-id="machine"] .beam path { fill: #ffffff; opacity: 0.09; }
+    [data-composition-id="machine"] .beam path { fill: #ffffff; opacity: 0.16; }
     [data-composition-id="machine"] .beam { opacity: 0; }
     [data-composition-id="machine"] .cs-glow { opacity: 0.35; }
     [data-composition-id="machine"] .term { position: absolute; left: 0; top: 0; width: ${G0.x1 - G0.x0}px; height: ${G0.z1 - G0.z0}px; transform-origin: 0 0; }
@@ -276,17 +273,17 @@ const html = `<template>
       [data-composition-id="machine"] .chrome { top: 110px; font-size: 32px; }
       [data-composition-id="machine"] .fig-no { left: 60px; }
       [data-composition-id="machine"] .readout { right: 60px; }
-      [data-composition-id="machine"] .endcard { left: 60px; right: 60px; width: auto; top: 1010px; text-align: center; }
+      [data-composition-id="machine"] .endcard { left: 60px; right: 120px; width: auto; top: 1010px; text-align: center; }
       [data-composition-id="machine"] .endcard img { margin: 0 auto 36px; }
       [data-composition-id="machine"] .endcard .url { font-size: 60px; }
     }
   </style>
   <div id="root" data-composition-id="machine" data-width="1920" data-height="1080" data-duration="${DURATION}">
     <div id="mc-stage" class="iso mc clip" data-on="" data-start="0" data-duration="${DURATION}" data-track-index="0">
-      <div class="cam" data-layout-allow-overflow><div class="push" style="transform-origin: ${PUSH_ORIGIN[0]}px ${PUSH_ORIGIN[1]}px">${figure}${screen}</div></div>
+      <div class="cam" data-layout-allow-overflow>${figure}${screen}</div>
       <div class="chrome fig-no" data-outside-safe-area>Fig. 1<b>anyr</b></div>
       <div class="chrome readout" data-outside-safe-area>${readouts.map(([id, text]) => `<span class="ro-${id}">${esc(text)}</span>`).join('')}</div>
-      <div class="endcard"><img src="assets/anyrouter-logo-black.svg" alt="" /><div class="url">anyrouter.dev/cli</div><div class="sub">One key for every agent.</div></div>
+      <div class="endcard"><img src="assets/anyrouter-logo-black.svg" alt="" /><div class="url">anyrouter.dev/cli</div><div class="sub">One key, six coding agents.</div></div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>

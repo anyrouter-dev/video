@@ -8,7 +8,6 @@
   const T = D.T;
   const mc = $('.mc');
   const cam = $('.cam');
-  const push = $('.push');
 
   const tl = gsap.timeline({ paused: true });
 
@@ -31,19 +30,33 @@
   drift(C.lamp, T.lampOn + 0.45, T.claude - 0.45, 1.03);
   const lampEnd = grown(C.lamp, 1.03);
   tl.fromTo(cam, { x: lampEnd.x, y: lampEnd.y, scale: lampEnd.s }, { x: C.swap.x, y: C.swap.y, scale: C.swap.s, duration: 0.85, ease: 'power2.inOut', immediateRender: false }, T.claude - 0.45);
-  drift(C.swap, T.claude + 0.4, T.three - 0.3, 1.04);
-  const swapEnd = grown(C.swap, 1.04);
+  // The swap shot holds the screen and the stage; for each turn the camera rises to the turret
+  // and comes back down once the new objective has landed.
+  const [t1, t2] = D.TURNS;
+  const up = (turn) => turn.at - 0.42;
+  const down = (turn) => turn.lands + 0.32;
+  const swapAt = (k) => grown(C.swap, k);
+  const legs = [[T.claude + 0.4, up(t1)], [down(t1) + 0.6, up(t2)], [down(t2) + 0.6, T.three - 0.3]];
+  legs.forEach(([from, until], i) => {
+    const start = swapAt(1 + i * 0.012);
+    const end = swapAt(1 + i * 0.012 + 0.012);
+    tl.fromTo(cam, { x: start.x, y: start.y, scale: start.s }, { x: end.x, y: end.y, scale: end.s, duration: until - from, ease: 'sine.inOut', immediateRender: false }, from);
+  });
+  [t1, t2].forEach((turn, i) => {
+    const from = swapAt(1 + i * 0.012 + 0.012);
+    const back = swapAt(1 + (i + 1) * 0.012);
+    const close = grown(C.turret, 0.94);
+    tl.fromTo(cam, { x: from.x, y: from.y, scale: from.s }, { x: close.x, y: close.y, scale: close.s, duration: 0.42, ease: 'power3.inOut', immediateRender: false }, up(turn));
+    tl.fromTo(cam, { x: close.x, y: close.y, scale: close.s }, { x: C.turret.x, y: C.turret.y, scale: C.turret.s, duration: down(turn) - up(turn) - 0.42, ease: 'sine.out', immediateRender: false }, up(turn) + 0.42);
+    tl.fromTo(cam, { x: C.turret.x, y: C.turret.y, scale: C.turret.s }, { x: back.x, y: back.y, scale: back.s, duration: 0.6, ease: 'power2.inOut', immediateRender: false }, down(turn));
+  });
+  const swapEnd = swapAt(1.036);
   tl.fromTo(cam, { x: swapEnd.x, y: swapEnd.y, scale: swapEnd.s }, { x: C.turret.x, y: C.turret.y, scale: C.turret.s, duration: 1.0, ease: 'power2.inOut', immediateRender: false }, T.three - 0.3);
   drift(C.turret, T.three + 0.7, T.end - 0.3, 1.06);
   const turretEnd = grown(C.turret, 1.06);
   tl.fromTo(cam, { x: turretEnd.x, y: turretEnd.y, scale: turretEnd.s }, { x: C.end.x, y: C.end.y, scale: C.end.s, duration: 1.3, ease: 'power3.inOut', immediateRender: false }, T.end - 0.3);
   drift(C.end, T.end + 1.0, D.DURATION, 1.03);
 
-  // Each turn leans the camera in toward the turret and back.
-  for (const turn of D.TURNS.slice(0, 2)) {
-    tl.fromTo(push, { scale: 1 }, { scale: 1.06, duration: 0.55, ease: 'sine.out', immediateRender: false }, turn.at - 0.1);
-    tl.to(push, { scale: 1, duration: 0.9, ease: 'sine.inOut' }, turn.at + 0.6);
-  }
 
   // The turret: one prebuilt frame per angle, shown on the video frame that needs it.
   const frames = $$('.tf');
@@ -94,6 +107,10 @@
   tl.set(pane('login'), { opacity: 1 }, T.login);
   tl.to(pane('login'), { opacity: 0, duration: 0.2 }, T.lampOn - 0.3);
   tl.set(pane('run'), { opacity: 1 }, T.claude);
+  for (const turn of [t1, t2]) {
+    tl.to(pane('run'), { opacity: 0, duration: 0.12 }, up(turn));
+    tl.to(pane('run'), { opacity: 1, duration: 0.25 }, down(turn) + 0.35);
+  }
   tl.to(pane('run'), { opacity: 0, duration: 0.25 }, T.three - 0.3);
 
   const typeWord = (id, from, step) => $$('.c-' + id).forEach((c, i) => tl.set(c, { attr: { class: `ch c-${id} on` } }, from + i * step));
@@ -119,8 +136,8 @@
     tl.to($('.note-' + id), { opacity: 0, duration: 0.2 }, off);
   };
   note('claude', T.claudeNote, T.change);
-  note('pi', T.piNote, T.select2 - 0.05);
-  note('opencode', T.ocNote, T.three - 0.3);
+  note('pi', Math.max(T.piNote, down(t1) + 0.45), T.select2 - 0.05);
+  note('opencode', Math.max(T.ocNote, down(t2) + 0.45), T.three - 0.3);
 
   const caret = $('.caret');
   for (let t = T.claude; t < T.three; t += 0.5) {

@@ -25,5 +25,24 @@ fs.writeFileSync(caps, fs.readFileSync(caps, 'utf8').replace(/[ \t]*@font-face\s
   return norm(path.basename(src).replace(/\.(woff2?|ttf|otf)$/i, '')) === norm(family) ? rule : '';
 }));
 
+// A product name never breaks across caption rows: join its words with a no-break space.
+const NAMES = ['Claude Code'];
+const html = fs.readFileSync(caps, 'utf8');
+const m = /var GROUPS = (\[.*?\]);\n/s.exec(html);
+const groups = JSON.parse(m[1]).map((g) => {
+  for (const name of NAMES) {
+    const parts = name.split(' ');
+    for (let i = 0; i + parts.length <= g.words.length; i++) {
+      if (parts.every((p, j) => g.words[i + j].text.replace(/[.,]$/, '') === p)) {
+        const last = g.words[i + parts.length - 1];
+        g.words.splice(i, parts.length, { ...g.words[i], text: g.words.slice(i, i + parts.length).map((x) => x.text).join('\u00a0'), end: last.end });
+      }
+    }
+    g.text = g.text.split(name).join(name.replace(/ /g, '\u00a0'));
+  }
+  return g;
+});
+fs.writeFileSync(caps, html.replace(m[0], `var GROUPS = ${JSON.stringify(groups)};\n`));
+
 run('tools/compose.mjs');
 run('tools/mix.mjs', process.argv.slice(2));

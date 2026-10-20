@@ -160,6 +160,13 @@ function scene(R, { turn, lamp, lit }) {
   can('back', 0, OY, 12, FOOT_TOP + 3, 2, { tone: 'mid' }, { steps: 40, name: 'scope.lamp-ring', extra: L(k.ring(0, OY, 9.6, FOOT_TOP + 5, P, 40), { tone: 'lo' }) });
   put('back', [0, OY, FOOT_TOP + 5.4], `<g data-part="lamp">${S(k.cylinder(0, OY, 8.6, FOOT_TOP + 5, 0.8, P, 40), { tone: lamp > 0.5 ? 'hi' : 'lo', lit: lit === 'lamp' })}<path class="cs-lamp" d="${k.pathOf(k.circleRing(0, OY, 7, 32).map(([x, y]) => at([x, y, FOOT_TOP + 5.8])), true)}" style="opacity:${lamp.toFixed(3)}"/></g>`, [A.cylinder(0, OY, 8.6, FOOT_TOP + 5, 0.8, { name: 'scope.lamp' })], 'scope.lamp');
 
+  // The lamp's field lever, and the console's power rocker on its side.
+  const FLV = G.frameAlong([16, OY, FOOT_TOP + 1.5], [1, 0, 0]);
+  turned('back', FLV, [[0, 0.8], [9, 0.8]], { tone: 'mid' }, { name: 'scope.field-lever' });
+  put('back', G.pointOf(FLV, 10.4, 0, 0), S(G.sphereOf(G.pointOf(FLV, 10.4, 0, 0), 1.4, P), { tone: 'hi' }), [A.ball(G.pointOf(FLV, 10.4, 0, 0), 1.4, { name: 'scope.field-lever-ball' })], 'scope.field-lever-ball');
+  slab('back', { x: SIDE, y: CONSOLE.y + 156, w: 1.2, d: 14, r: 1 }, 18, 18, { tone: 'mid' }, { steps: 3, name: 'console.rocker-bezel' });
+  slab('back', { x: SIDE + 1.2, y: CONSOLE.y + 158, w: 2.2, d: 10, r: 0.6 }, 20, 7, { tone: 'hi' }, { steps: 2, name: 'console.rocker' });
+
   // The cable from the foot's side to the socket on the deck.
   const CABLE_R = 2.2;
   const cableStart = [FOOT.x + FOOT.w + 2.6, -66, DECK + 13];
@@ -182,6 +189,11 @@ function scene(R, { turn, lamp, lit }) {
   const FK2 = G.frameAlong([COLUMN.x, KNOB[1], KNOB[2]], [-1, 0, 0]);
   turned('back', FK2, [[0, 5], [2, 5], [2, 16], [9, 16], [9, 14.4], [10, 14.4]], { tone: 'mid' }, { name: 'scope.coarse-knob-left' });
   slab('back', { x: COLUMN.x + COLUMN.w, y: COLUMN.y + 4, w: 3, d: 7, r: 1 }, KNOB[2] + 22, 5, { tone: 'mid' }, { steps: 2, name: 'scope.focus-lock' });
+
+  for (const z of [FOOT_TOP + 110, FOOT_TOP + 130]) {
+    const FS = G.frameAlong([0, COLUMN.y + COLUMN.d, z], [0, 1, 0]);
+    turned('back', FS, [[0, 2.2], [0.8, 2.2]], { tone: 'mid' }, { name: 'scope.column-screw', extra: L(G.circleOf(FS, 0.8, 1.2, P, 12), { tone: 'faint' }) });
+  }
 
   // The condenser under the stage, on its bracket.
   const CB = { x: -10, y: COLUMN.y + COLUMN.d, w: 20, d: OY - 13 - COLUMN.y - COLUMN.d, r: 2 };
@@ -246,6 +258,10 @@ function scene(R, { turn, lamp, lit }) {
 
   // The column head over the turret, and the detent plunger that rides the revolver's top face.
   slab('front', HEAD, HEAD_Z, HEAD_TOP - HEAD_Z, { tone: 'mid' }, { steps: 6, bevel: 1.2, name: 'scope.head', extra: L(k.planOutline(k.insetPlan(HEAD, 5), HEAD_TOP, P, 6), { tone: 'faint' }) + D([[0, HEAD.y + 10], [0, HEAD.y + HEAD.d - 10]].map(([x, y]) => at([x, y, HEAD_TOP])), { size: 0.5 }) });
+  for (const y of [HEAD.y + 30, HEAD.y + 60]) {
+    const FH = G.frameAlong([HEAD.x + HEAD.w, y, (HEAD_Z + HEAD_TOP) / 2], [1, 0, 0]);
+    turned('front', FH, [[0, 2.2], [0.8, 2.2]], { tone: 'mid' }, { name: 'scope.head-screw', extra: L(G.circleOf(FH, 0.8, 1.2, P, 12), { tone: 'faint' }) });
+  }
   const headPlate = { x: -14, y: HEAD.y + 46, w: 28, d: 12, r: 1.2 };
   slab('front', headPlate, HEAD_TOP, 0.8, { tone: 'lo', crease: 'none' }, { steps: 3, name: 'scope.head-label', extra: L([18, 11].map((w, i) => k.lineOnTop([headPlate.x + 4, headPlate.y + 3.6 + i * 3.6], [headPlate.x + 4 + w, headPlate.y + 3.6 + i * 3.6], HEAD_TOP + 0.8, P)).join(''), { tone: 'lo', free: true }) });
   const BINO = { x: -20, y: HEAD.y + 6, w: 40, d: 34, r: 6 };
@@ -397,7 +413,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const argv = process.argv.slice(2);
   if (argv.includes('--audit')) {
     let failed = 0;
-    for (const turn of [0, -36, -72, -74, -108, -144, -146]) {
+    for (const turn of [0, -36, -72, -74, -108, -144, -146, -180, -216, -218]) {
       const { R, count, solids } = build({ turn });
       console.log(`\n── turret at ${turn}° (${count} items, ${solids} solids)`);
       A.auditOrExit(R, P, { argv: ['--audit'] });

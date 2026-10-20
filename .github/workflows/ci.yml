@@ -76,6 +76,8 @@ jobs:
             args: ''
           - kind: byok-upstreams
             args: ''
+          - kind: cli-swap
+            args: ''
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

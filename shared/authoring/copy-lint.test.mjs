@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const NARRATED = ['explainer', 'openrouter-unblock', 'sign-in-with-anyrouter', 'pool-donation', 'sign-in-with-agentid', 'cli-agents', 'cli-everyday', 'why-gateway', 'byok-upstreams', 'mcp', 'api-keys'];
+const NARRATED = ['explainer', 'openrouter-unblock', 'sign-in-with-anyrouter', 'pool-donation', 'sign-in-with-agentid', 'cli-agents', 'cli-everyday', 'why-gateway', 'byok-upstreams', 'mcp', 'api-keys', 'cli-swap'];
 
 const RULES = [
   [/[—–]/, 'a long or short dash'],
@@ -36,8 +36,10 @@ for (const kind of NARRATED) {
   });
 
   test(`${kind}: the words on screen read plainly`, () => {
-    const dir = path.join(ROOT, 'videos', kind, 'compositions/frames');
-    const found = fs.readdirSync(dir).flatMap(f => offences(screenText(fs.readFileSync(path.join(dir, f), 'utf8')), f));
+    // A film drawn as one shot (cli-swap) keeps its screen words in compositions/*.html.
+    const frames = path.join(ROOT, 'videos', kind, 'compositions/frames');
+    const dir = fs.existsSync(frames) ? frames : path.join(ROOT, 'videos', kind, 'compositions');
+    const found = fs.readdirSync(dir).filter(f => f.endsWith('.html')).flatMap(f => offences(screenText(fs.readFileSync(path.join(dir, f), 'utf8')), f));
     assert.deepEqual(found, []);
   });
 }
