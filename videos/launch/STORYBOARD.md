@@ -70,7 +70,7 @@ music: none
 - transition_in: cut
 - type: problem
 - beat: why a pool
-- voiceover: "Free models run on someone's quota. The AnyRouter pool spreads that load."
+- voiceover: "Some free models run on donated keys. The AnyRouter pool spreads that load."
 - asset_candidates: none
 - status: animated
 
