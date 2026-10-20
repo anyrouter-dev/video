@@ -55,7 +55,7 @@ releases/<kind>/   the ledger, and the facts each film was cut from (committed)
 | `teaser` | the 20s brand film, two themes — its own generator in `videos/teaser/release/` | its own files | on demand |
 | `explainer` | the narrated newcomer explainer, built with the HyperFrames product-launch workflow; tools in `shared/authoring/` | its own files | on demand |
 | `openrouter-unblock` | the narrated OpenRouter rate-limit tutorial, same series look and tools | its own files | on demand |
-| `use-case` | one short silent film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup. Each use case is its own release | `/use-cases.json`, and the ids a preset rolls through from `/api/v1/models?all=1` | on demand |
+| `use-case` | one short narrated film per use case, embedded on its anyrouter.dev/use-cases page: the outcome, the page's command typed, the lockup, with a voice, captions and a score of its own. Each use case is its own release | `/use-cases.json`, the ids a preset rolls through from `/api/v1/models?all=1`, and its script in `videos/use-case/narration.json` | on demand |
 
 A **generated** kind has a `film()` and is built into `.build/<kind>/film/`.
 An **authored** kind has none: `videos/<kind>/index.html` is rendered as it is,
@@ -162,6 +162,17 @@ so under a preset it would read as included. `anyrouter/free` rolls only ids
 priced 0, and no credit id rolls under a page that promises "$0" or "free".
 No film shows a screenshot of anyrouter.dev: any UI on screen is drawn in the
 film's kit from real facts.
+
+A use-case film is narrated. `videos/use-case/narration.json` holds each film's
+lines and a claims ledger naming the source of every spoken claim;
+`node videos/use-case/voice.mjs --budget=N` voices a line with ElevenLabs only
+when its spoken text changes, into `videos/use-case/voice/`, so the render never
+calls a voice service. A film with no script fails to build. The voice sets the
+timing (25 to 45 s), captions run in a band under the picture, and each film's
+calm score (`lib/sound.mjs`) is read off its slug and steps down under the voice.
+`node videos/use-case/audit-all.mjs` puts every film, both renditions, through
+the stage audit; `node videos/use-case/sound-check.mjs` fails when two films'
+scores sound alike.
 
 ## Rules every generated film obeys
 

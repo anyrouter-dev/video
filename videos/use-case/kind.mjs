@@ -1,7 +1,9 @@
 /**
- * use-case: one short silent film per use case on anyrouter.dev/use-cases,
+ * use-case: one short narrated film per use case on anyrouter.dev/use-cases,
  * embedded on that page above the steps. The page carries the steps; the film
- * shows the outcome and how little it takes, in three beats on one shot:
+ * shows the outcome and how little it takes, in three beats on one shot, each
+ * held while its line of the narration (narration.mjs) is said, with captions
+ * under the picture and a score of its own:
  *
  *   outcome  the page's title as a headline, with the tool's mark and AnyRouter's
  *   doing it the page's own command or code, typed into a terminal or an editor
