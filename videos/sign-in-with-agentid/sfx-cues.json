@@ -1,0 +1,13 @@
+[
+  {"frame": 1, "sound": "pop", "word": "access.", "volume": 0.2},
+  {"frame": 1, "sound": "whoosh-short", "word": "pastes", "offset": -0.1, "volume": 0.22},
+  {"frame": 2, "sound": "click", "word": "AgentID.", "volume": 0.28},
+  {"frame": 3, "sound": "click-soft", "word": "authorizes", "volume": 0.2},
+  {"frame": 3, "sound": "pop", "word": "inbox.", "offset": 0.3, "volume": 0.2},
+  {"frame": 4, "sound": "chime", "word": "signed", "volume": 0.14},
+  {"frame": 4, "sound": "click-soft", "word": "password.", "volume": 0.2},
+  {"frame": 5, "sound": "pop", "word": "first", "volume": 0.2},
+  {"frame": 5, "sound": "click-soft", "word": "free", "volume": 0.2},
+  {"frame": 6, "sound": "chime", "word": "Give", "volume": 0.16},
+  {"frame": 6, "sound": "sparkle", "word": "Start", "volume": 0.2}
+]
