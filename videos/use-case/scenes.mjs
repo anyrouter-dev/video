@@ -706,14 +706,20 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // the travel pulls back further on a long move, and swings a little to the side on the way
     const PULL = 420, SWING = TALL ? 4 : 8, LIFT = TALL ? 10 : 16;
     // between travels the camera pushes in at an even speed: a frame at rest reads as dead air
-    const PUSH = 40, rests = [0, ...CUTS.map(c => c + TRAVEL / 2)], restEnds = [...CUTS.map(c => c - TRAVEL / 2), D];
-    rests.forEach((a, i) => tl.fromTo(cpush, { z: 0 }, { z: PUSH, duration: Math.max(0.1, restEnds[i] - a), ease: "none", immediateRender: false }, a));
+    // it breathes, in on one beat and out on the next, so every step of the steps panel moves too
+    const PUSH = 48, rests = [0, ...CUTS.map(c => c + TRAVEL / 2)], restEnds = [...CUTS.map(c => c - TRAVEL / 2), D];
+    const endPush = [];
+    rests.forEach((a, i) => {
+      const marks = [a, ...STEPS.map(st => st.at).filter(t => t > a + 0.5 && t < restEnds[i] - 0.5), restEnds[i]];
+      for (let k = 0; k + 1 < marks.length; k++) tl.fromTo(cpush, { z: k % 2 ? PUSH : 0 }, { z: k % 2 ? 0 : PUSH, duration: Math.max(0.1, marks[k + 1] - marks[k]), ease: "none", immediateRender: false }, marks[k]);
+      endPush.push((marks.length - 1) % 2 ? PUSH : 0);
+    });
     CUTS.forEach((c, i) => {
       const a = c - TRAVEL / 2, from = at(i), to = at(i + 1), side = i % 2 ? -1 : 1;
       tl.fromTo(cpos, from.pos, { ...to.pos, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(crotx, from.rx, { ...to.rx, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(croty, from.ry, { ...to.ry, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
-      tl.fromTo(cpush, { z: PUSH }, { z: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(cpush, { z: endPush[i] }, { z: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       // the audit reads no text while the camera carries it (stage-audit.mjs, flight)
       tl.set(cpull, { attr: { "data-in-flight": "1" } }, a);
       tl.set(cpull, { attr: { "data-in-flight": "0" } }, a + TRAVEL);
