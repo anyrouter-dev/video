@@ -22,6 +22,7 @@ export const VOICE = {
 
 export const SAY = {
   'anyrouter.dev': 'any router dot dev',
+  'anyrouter.dev/cli': 'any router dot dev slash C L I',
   anyr: 'any R',
   '270': 'two hundred and seventy',
   '50': 'fifty',

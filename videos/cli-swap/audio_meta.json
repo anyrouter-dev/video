@@ -1,0 +1,564 @@
+{
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 6.507,
+      "raw_s": 5.526,
+      "text": "Every coding agent wants its own provider, key and setup. With anyr, one sign-in serves them all.",
+      "say": "Every coding agent wants its own provider, key and setup. With any R, one sign-in serves them all.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Every",
+          "start": 0,
+          "end": 0.255
+        },
+        {
+          "id": "w1",
+          "text": "coding",
+          "start": 0.302,
+          "end": 0.58
+        },
+        {
+          "id": "w2",
+          "text": "agent",
+          "start": 0.65,
+          "end": 0.906
+        },
+        {
+          "id": "w3",
+          "text": "wants",
+          "start": 0.952,
+          "end": 1.173
+        },
+        {
+          "id": "w4",
+          "text": "its",
+          "start": 1.207,
+          "end": 1.324
+        },
+        {
+          "id": "w5",
+          "text": "own",
+          "start": 1.358,
+          "end": 1.474
+        },
+        {
+          "id": "w6",
+          "text": "provider,",
+          "start": 1.521,
+          "end": 1.985
+        },
+        {
+          "id": "w7",
+          "text": "key",
+          "start": 2.02,
+          "end": 2.183
+        },
+        {
+          "id": "w8",
+          "text": "and",
+          "start": 2.206,
+          "end": 2.287
+        },
+        {
+          "id": "w9",
+          "text": "setup.",
+          "start": 2.334,
+          "end": 2.798
+        },
+        {
+          "id": "w10",
+          "text": "With",
+          "start": 3.123,
+          "end": 3.297
+        },
+        {
+          "id": "w11",
+          "text": "anyr,",
+          "start": 3.344,
+          "end": 3.831
+        },
+        {
+          "id": "w12",
+          "text": "one",
+          "start": 3.878,
+          "end": 4.052
+        },
+        {
+          "id": "w13",
+          "text": "sign-in",
+          "start": 4.11,
+          "end": 4.481
+        },
+        {
+          "id": "w14",
+          "text": "serves",
+          "start": 4.54,
+          "end": 4.795
+        },
+        {
+          "id": "w15",
+          "text": "them",
+          "start": 4.818,
+          "end": 4.934
+        },
+        {
+          "id": "w16",
+          "text": "all.",
+          "start": 4.981,
+          "end": 5.526
+        }
+      ],
+      "padded_s": 0.981
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 1.8,
+      "raw_s": 1.44,
+      "text": "Install it with one line.",
+      "say": "Install it with one line.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Install",
+          "start": 0,
+          "end": 0.395
+        },
+        {
+          "id": "w1",
+          "text": "it",
+          "start": 0.441,
+          "end": 0.499
+        },
+        {
+          "id": "w2",
+          "text": "with",
+          "start": 0.522,
+          "end": 0.627
+        },
+        {
+          "id": "w3",
+          "text": "one",
+          "start": 0.697,
+          "end": 0.836
+        },
+        {
+          "id": "w4",
+          "text": "line.",
+          "start": 0.882,
+          "end": 1.44
+        }
+      ],
+      "padded_s": 0.36
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 3,
+      "raw_s": 1.811,
+      "text": "Sign in once with anyr login.",
+      "say": "Sign in once with any R login.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Sign",
+          "start": 0,
+          "end": 0.29
+        },
+        {
+          "id": "w1",
+          "text": "in",
+          "start": 0.325,
+          "end": 0.395
+        },
+        {
+          "id": "w2",
+          "text": "once",
+          "start": 0.488,
+          "end": 0.673
+        },
+        {
+          "id": "w3",
+          "text": "with",
+          "start": 0.697,
+          "end": 0.813
+        },
+        {
+          "id": "w4",
+          "text": "anyr",
+          "start": 0.859,
+          "end": 1.161
+        },
+        {
+          "id": "w5",
+          "text": "login.",
+          "start": 1.231,
+          "end": 1.811
+        }
+      ],
+      "padded_s": 1.189
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 4.2,
+      "raw_s": 3.251,
+      "text": "anyr claude starts Claude Code on the model you pick.",
+      "say": "any R claude starts Claude Code on the model you pick.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.499
+        },
+        {
+          "id": "w1",
+          "text": "claude",
+          "start": 0.557,
+          "end": 0.871
+        },
+        {
+          "id": "w2",
+          "text": "starts",
+          "start": 0.906,
+          "end": 1.173
+        },
+        {
+          "id": "w3",
+          "text": "Claude",
+          "start": 1.231,
+          "end": 1.533
+        },
+        {
+          "id": "w4",
+          "text": "Code",
+          "start": 1.567,
+          "end": 1.869
+        },
+        {
+          "id": "w5",
+          "text": "on",
+          "start": 1.927,
+          "end": 2.055
+        },
+        {
+          "id": "w6",
+          "text": "the",
+          "start": 2.09,
+          "end": 2.159
+        },
+        {
+          "id": "w7",
+          "text": "model",
+          "start": 2.194,
+          "end": 2.45
+        },
+        {
+          "id": "w8",
+          "text": "you",
+          "start": 2.508,
+          "end": 2.601
+        },
+        {
+          "id": "w9",
+          "text": "pick.",
+          "start": 2.659,
+          "end": 3.251
+        }
+      ],
+      "padded_s": 0.949
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.2,
+      "raw_s": 2.647,
+      "text": "Change one word. anyr pi starts Pi.",
+      "say": "Change one word. any R pi starts Pi.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Change",
+          "start": 0,
+          "end": 0.313
+        },
+        {
+          "id": "w1",
+          "text": "one",
+          "start": 0.36,
+          "end": 0.488
+        },
+        {
+          "id": "w2",
+          "text": "word.",
+          "start": 0.522,
+          "end": 0.848
+        },
+        {
+          "id": "w3",
+          "text": "anyr",
+          "start": 1.126,
+          "end": 1.498
+        },
+        {
+          "id": "w4",
+          "text": "pi",
+          "start": 1.567,
+          "end": 1.741
+        },
+        {
+          "id": "w5",
+          "text": "starts",
+          "start": 1.811,
+          "end": 2.078
+        },
+        {
+          "id": "w6",
+          "text": "Pi.",
+          "start": 2.136,
+          "end": 2.647
+        }
+      ],
+      "padded_s": 1.553
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 4.8,
+      "raw_s": 3.39,
+      "text": "anyr opencode starts OpenCode. Same key, same model.",
+      "say": "any R opencode starts OpenCode. Same key, same model.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "anyr",
+          "start": 0,
+          "end": 0.383
+        },
+        {
+          "id": "w1",
+          "text": "opencode",
+          "start": 0.441,
+          "end": 0.894
+        },
+        {
+          "id": "w2",
+          "text": "starts",
+          "start": 0.917,
+          "end": 1.173
+        },
+        {
+          "id": "w3",
+          "text": "OpenCode.",
+          "start": 1.242,
+          "end": 1.823
+        },
+        {
+          "id": "w4",
+          "text": "Same",
+          "start": 1.997,
+          "end": 2.241
+        },
+        {
+          "id": "w5",
+          "text": "key,",
+          "start": 2.287,
+          "end": 2.485
+        },
+        {
+          "id": "w6",
+          "text": "same",
+          "start": 2.508,
+          "end": 2.705
+        },
+        {
+          "id": "w7",
+          "text": "model.",
+          "start": 2.74,
+          "end": 3.39
+        }
+      ],
+      "padded_s": 1.41
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.2,
+      "raw_s": 3.019,
+      "text": "Three agents on one key, and more, like Codex and Grok.",
+      "say": "Three agents on one key, and more, like Codex and Grok.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Three",
+          "start": 0,
+          "end": 0.267
+        },
+        {
+          "id": "w1",
+          "text": "agents",
+          "start": 0.313,
+          "end": 0.604
+        },
+        {
+          "id": "w2",
+          "text": "on",
+          "start": 0.65,
+          "end": 0.743
+        },
+        {
+          "id": "w3",
+          "text": "one",
+          "start": 0.813,
+          "end": 0.975
+        },
+        {
+          "id": "w4",
+          "text": "key,",
+          "start": 1.022,
+          "end": 1.207
+        },
+        {
+          "id": "w5",
+          "text": "and",
+          "start": 1.231,
+          "end": 1.3
+        },
+        {
+          "id": "w6",
+          "text": "more,",
+          "start": 1.347,
+          "end": 1.591
+        },
+        {
+          "id": "w7",
+          "text": "like",
+          "start": 1.625,
+          "end": 1.8
+        },
+        {
+          "id": "w8",
+          "text": "Codex",
+          "start": 1.834,
+          "end": 2.183
+        },
+        {
+          "id": "w9",
+          "text": "and",
+          "start": 2.229,
+          "end": 2.31
+        },
+        {
+          "id": "w10",
+          "text": "Grok.",
+          "start": 2.357,
+          "end": 3.019
+        }
+      ],
+      "padded_s": 1.181
+    },
+    {
+      "frame": 8,
+      "path": "assets/voice/08.wav",
+      "duration_s": 5.147,
+      "raw_s": 2.647,
+      "text": "Get it at anyrouter.dev/cli.",
+      "say": "Get it at any router dot dev slash C L I.",
+      "voice": "cjVigY5qzO86Huf0OWal",
+      "model": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.15,
+        "use_speaker_boost": true
+      },
+      "words": [
+        {
+          "id": "w0",
+          "text": "Get",
+          "start": 0,
+          "end": 0.209
+        },
+        {
+          "id": "w1",
+          "text": "it",
+          "start": 0.244,
+          "end": 0.313
+        },
+        {
+          "id": "w2",
+          "text": "at",
+          "start": 0.372,
+          "end": 0.453
+        },
+        {
+          "id": "w3",
+          "text": "anyrouter.dev/cli.",
+          "start": 0.522,
+          "end": 2.647
+        }
+      ],
+      "padded_s": 2.5
+    }
+  ]
+}
