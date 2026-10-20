@@ -847,7 +847,7 @@
       "outcome": "An agent pinned to one model stops when its provider goes down.",
       "steps": [
         {
-          "text": "Keep your primary model."
+          "text": "Keep your primary model, here on your own key."
         },
         {
           "text": "Add backup models in order.",
@@ -864,8 +864,8 @@
           "from": "use-cases.json agent-fallback.problem"
         },
         {
-          "says": "Keep your primary model.",
-          "from": "use-cases.json agent-fallback.steps"
+          "says": "Keep your primary model, here on your own key.",
+          "from": "use-cases.json agent-fallback.steps[0]; z-ai/glm-4.7-flash, the snippet's primary, is billing byok in /api/v1/models?all=1"
         },
         {
           "says": "Add backup models in order.",

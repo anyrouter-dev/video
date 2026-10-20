@@ -34,13 +34,13 @@ import { CALM } from '../../lib/sound.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
 import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY } from './scenes.mjs';
-import { reflow, standsAlone } from './reflow.mjs';
+import { reflow, standsAlone, closed, headless } from './reflow.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
 export const MODELS_API = 'https://anyrouter.dev/api/v1/models?all=1';
 // The voice sets a film's length; a page with little to say still runs long enough to read.
-export const FILM = { min: 35, max: 60 };
+export const FILM = { min: 22, max: 60 };
 
 // ── facts: parsed at the boundary, trusted after ───────────────────────────
 const fail = (where, what) => { throw new Error(`use-cases.json: ${where}: ${what}`); };
@@ -101,16 +101,16 @@ const PRICE = /\$0\b|\bfree\b/i;
 /**
  * The ids a use case's film rolls through, or null when its command names no
  * preset. Ids billed to credits never roll under a page that promises "$0" or
- * "free": a viewer would read the promise as covering them. An id too long to
- * sit whole on a row of the window is left out of that film's roll.
+ * "free": a viewer would read the promise as covering them. They roll on a line
+ * under the window ("The same key also runs …"): the request keeps the page's own
+ * model. An id too long for that line is left out.
  */
 export function rollOf(u, pools) {
   const preset = u.command?.text.match(PRESET)?.[0];
   if (!preset || !pools) return null;
   const free = preset === 'anyrouter/free';
   if (!free && PRICE.test(`${u.kicker} ${u.title} ${u.summary}`)) return null;
-  const focus = windowOf(u).lines.find(l => l.focus);
-  const ids = (free ? pools.free : pools.credit).filter(id => idFitsRow(focus, preset, id, u.command.shell));
+  const ids = (free ? pools.free : pools.credit).filter(idFitsRow);
   return ids.length >= 2 ? { preset, ids } : null;
 }
 
@@ -140,8 +140,6 @@ const CHANGED = /https:\/\/anyrouter\.dev\/api|ANYROUTER_API_KEY|sk-ar-|\bmodels
 
 // A shell snippet up to this many lines is typed whole; a longer one up to the command.
 const SHELL_LINES = 3;
-// Lines of code an editor shows: from the snippet's top, so a call keeps its URL and its key header.
-const EDITOR_LINES = 6;
 
 /**
  * The code a film types: the page's command, inside the snippet that holds it.
@@ -158,9 +156,11 @@ export function windowOf(u) {
   let from, to;
   if (u.command.shell) [from, to] = all.length <= SHELL_LINES ? [0, all.length] : [Math.max(0, at - SHELL_LINES + 1), at + 1];
   else {
-    // the line after the command too, when there is one: the command is not the last thing in a file
-    from = Math.max(0, Math.min(at, at + 2 - EDITOR_LINES));
-    to = Math.min(all.length, from + EDITOR_LINES);
+    // a request or a file from its top, so it reads as whole code, through the command and the lines
+    // right after it that set what the page changes; reflow.mjs closes what is left open
+    from = 0;
+    to = at + 1;
+    while (to < all.length && CHANGED.test(all[to])) to++;
   }
   const shown = all.slice(from, to);
   // a terminal ends on the page's command, so a "\" that carries it onto lines the window does not show goes
@@ -194,16 +194,14 @@ export function copyOf(u, pools) {
   const labels = steps.map(st => st.label), stepT = {};
   const win = windowOf(u);
   const lines = win.lines.map(l => ({ ...l, text: redact(l.text), keep: !l.focus && CHANGED.test(l.text) }));
-  const rolled = rollOf(u, pools);
-  const roll = rolled && { ...rolled, extra: Math.max(...rolled.ids.map(id => id.length)) - rolled.preset.length };
+  let roll = rollOf(u, pools);
   // Every line of code sits on one row, in each frame on its own: the code takes the largest size, down
   // to the floor, at which every line fits as the page wrote it; only past the floor are lines rewritten
   // narrower (reflow.mjs). A window too tall drops its trailing context, then context that stands alone,
   // never the command or a line it changes; of the cuts, the one set largest wins, then the one keeping most lines.
   const fitIn = (o, head) => {
     const fitAt = (px, narrower) => {
-      const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (roll && l.focus && t.includes(roll.preset) ? roll.extra : 0)
-        + (win.shell || l.focus ? caretCols(o, px) : 0);
+      const width = (l, t) => (win.shell && !l.cont ? 2 : 0) + t.length + (win.shell || l.focus ? caretCols(o, px) : 0);
       const set = narrower ? reflow(lines, codeCols(o, px), { shell: win.shell, width }) : lines.every(l => width(l, l.text) <= codeCols(o, px)) && lines;
       if (!set) return null;
       const cuts = [set];
@@ -211,7 +209,12 @@ export function copyOf(u, pools) {
       // then, top down, lines of context that stand alone, so the code around them stays whole
       const alone = (ls, i) => !ls[i].focus && !ls[i].keep && !ls[i].cont && !ls[i + 1]?.cont && standsAlone(ls[i].text);
       for (const cut of [...cuts]) for (let ls = cut, i; (i = ls.findIndex((_, k) => alone(ls, k))) >= 0;) cuts.push(ls = ls.filter((_, k) => k !== i));
-      const fits = cuts.filter(ls => codeSizes(ls, roll, win.shell, { [o]: head }, { [o]: [px] }, o));
+      // then without what leads into the call, shown as a "…" row
+      for (const cut of [...cuts]) { const h = headless(cut); if (h) cuts.push(h); }
+      // a window that stops inside its request or call shows "…" and closes what is still open
+      const trim = ls => { let a = 0, b = ls.length; while (a < b && !ls[a].text.trim()) a++; while (b > a && !ls[b - 1].text.trim()) b--; return ls.slice(a, b); };
+      const whole = ls => (win.shell ? ls : closed(trim(ls)));
+      const fits = cuts.map(whole).filter(ls => ls.every(l => width(l, l.text) <= codeCols(o, px)) && codeSizes(ls, roll, win.shell, { [o]: head }, { [o]: [px] }, o));
       return fits.length ? { lines: fits.reduce((a, b) => (b.length > a.length ? b : a)), px } : null;
     };
     return [false, true].flatMap(narrower => SIZES[o].map(px => [px, narrower])).map(([px, n]) => fitAt(px, n)).find(Boolean) ?? null;
@@ -223,9 +226,12 @@ export function copyOf(u, pools) {
       const head = Math.max(...shown.map(k => headOf(labels, k, { [o]: px })[o])), fit = fitIn(o, head);
       if (fit) { stepT[o] = px; return fit; }
     }
-    return fail(`${u.slug}.command`, `its code does not fit under its step in the ${o} frame, one row a line`);
+    return null;
   };
-  const fitL = fitWith('landscape'), fitP = fitWith('portrait');
+  // the line of ids the same key runs goes before the code would
+  let fitL = fitWith('landscape'), fitP = fitL && fitWith('portrait');
+  if (!(fitL && fitP) && roll) { roll = null; fitL = fitWith('landscape'); fitP = fitL && fitWith('portrait'); }
+  if (!(fitL && fitP)) fail(`${u.slug}.command`, `its code does not fit under its step in the ${fitL ? 'portrait' : 'landscape'} frame, one row a line`);
   // a detail too long for the room under its step at the smallest size is left out
   const roomFor = (k, o, px) => {
     const set = detailSet(steps[k].detail, o, px), above = headOf(steps.map(st => st.label), k, stepT)[o] - STEP.headGap;
@@ -309,7 +315,7 @@ export function storyOf(u, pools) {
   const pre = typingOf(groups.pre), cmd = typingOf(groups.cmd);
   for (const g of sets) { pre.dur = Math.max(pre.dur, typingOf(g.pre).dur); cmd.dur = Math.max(cmd.dur, typingOf(g.cmd).dur); }
   const each = Math.max(pre.each, cmd.each) || TYPE_EACH;
-  const rolling = roll ? (roll.ids.length + 1) * ROLL_EVERY : 0;
+  const rolling = roll ? roll.ids.length * ROLL_EVERY : 0;
 
   // each step, in seconds from its start: how long it needs, and what lands in it
   const plan = copy.steps.map((st, k) => {

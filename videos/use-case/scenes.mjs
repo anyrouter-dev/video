@@ -21,6 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SHARED } from '../../lib/paths.mjs';
 import { esc, C } from './project.mjs';
+import { PORTRAIT_CAPTION_BAND } from '../../shared/authoring/portrait.mjs';
 
 // ── reading pace ────────────────────────────────────────────────────────────
 export const READ_WPS = 3.5;
@@ -156,36 +157,32 @@ export const stepType = labels => Object.fromEntries(['landscape', 'portrait'].m
 export const setIn = text => ['landscape', 'portrait'].every(o => TYPE.title[o].sizes.some(px => titleSet(text, o, px)));
 const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:${fs_.portrait}px`;
 
-// The code window: as wide as the safe area, its text inside the padding. In
-// beat 2 the caption and the window share the safe area's height (`sh`); the
-// caption is the headline scaled down, never below `capMin`. The camera leans in
-// over beat 1 (`lean`) and the window pushes in over beat 2, both about the
-// middle, so a beat's column is sized to stay in the safe area at full scale.
-// The push is at least `push`, which the code's room allows for, and as far as
-// `pushMax` where the column leaves room: a slow push on a short window reads as a still.
-// A line of code is one row, so the longest line sets how small its code may go. Portrait has the least room: its window spans the
-// whole safe width, pushes in only as far as its code stays inside it, and sets its code a hair tighter (`adv`
-// is a glyph's advance in em), which fits the API's 45-character URL whole at
-// 32px, the floor.
+// The code window sits under the step that shows it, in the safe area's height (`sh`) left below the
+// steps above it. The camera leans in over beat 1 (`lean`) and dollies in over the steps, which grows
+// the window by `push` about its middle, so the window is sized to stay in the safe area at full scale.
+// A line of code is one row, so the longest line sets how small its code may go. Portrait has the
+// least room: its window is as wide as stays inside the safe width leaned and dollied in, and sets its
+// code a hair tighter (`adv` is a glyph's advance in em), which fits the API's 45-character URL whole
+// at 32px, the floor.
 const WIN = {
-  landscape: { sizes: [56, 52, 48, 44, 40], width: 1728, padX: 48, padTop: 52, padBottom: 60, sy: 64, sh: 836, gap: 56, capMin: 64, lean: 1.02, push: 1.02, pushMax: 1.02, adv: 0.6 },
-  portrait: { sizes: [44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1020, gap: 48, capMin: 56, lean: 1.03, push: 1.01, pushMax: 1.01, adv: 0.57 },
+  landscape: { sizes: [56, 52, 48, 44, 40], width: 1728, padX: 48, padTop: 40, padBottom: 44, sy: 64, sh: 836, gap: 56, lean: 1.02, pushMax: 1.02, adv: 0.6 },
+  portrait: { sizes: [44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1100, gap: 48, lean: 1.015, pushMax: 1.01, adv: 0.57 },
 };
 // The camera's perspective, and how far the deep layer dollies in so the window grows by `pushMax` at most.
 const PERSPECTIVE = 2000;
 const dollyOf = o => +(PERSPECTIVE * (1 - 1 / WIN[o].pushMax)).toFixed(1);
-// The safe area's height each frame's steps have, the camera leaned in.
-export const WIN_SH = { landscape: WIN.landscape.sh / WIN.landscape.lean, portrait: WIN.portrait.sh / WIN.portrait.lean };
-// The safe area across each frame. The camera leans and the window pushes in about its centre.
+// The safe area's height each frame's steps have: the camera is square to them.
+export const WIN_SH = { landscape: WIN.landscape.sh, portrait: WIN.portrait.sh };
+// The safe area across each frame. The window is drawn at its own size while it is up (see .flat).
 const ACROSS = { landscape: { left: 96, width: 1728 }, portrait: { left: 60, width: 900 } };
-/** The window's left and right edges at its fullest, leaned and pushed in all the way. */
+/** The window's left and right edges. */
 export function windowSpan(o) {
-  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = w.width * w.lean * w.pushMax / 2;
-  return { left: mid - half, right: mid + half };
+  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2;
+  return { left: mid - w.width / 2, right: mid + w.width / 2 };
 }
-/** The text inside the window's padding at its fullest, leaned and pushed in all the way. */
+/** The text inside the window's padding. */
 export function codeSpan(o) {
-  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = (w.width - EDGE - 2 * w.padX) * w.lean * w.pushMax / 2;
+  const w = WIN[o], a = ACROSS[o], mid = a.left + a.width / 2, half = (w.width - EDGE - 2 * w.padX) / 2;
   return { left: mid - half, right: mid + half };
 }
 const winLeft = o => ACROSS[o].left + (ACROSS[o].width - WIN[o].width) / 2;
@@ -230,24 +227,17 @@ export const SIZES = { landscape: WIN.landscape.sizes, portrait: WIN.portrait.si
 export const codeCols = (o, px) => textWidth(o) / (WIN[o].adv * px);
 export const caretCols = (o, px) => caretWidth(px) / (WIN[o].adv * px);
 
-/** The preset's line with `id` rolled into its place. */
-const rolledIn = (l, roll, id) => l.text.replace(roll.preset, id);
+// Under a window whose command names a preset, a line says the same key runs other ids, and rolls
+// through them: the request keeps the page's own model, so the window never reads as calling another.
+export const ALSO = { gap: 24, h: 64, label: 'The same key also runs', px: { landscape: 36, portrait: 32 } };
 
-/**
- * Whether `id`, rolled into the preset's place in `line`, sits on one row in
- * both frames at their smallest code size. An id that needs more would cut the
- * line mid-roll, so it does not roll.
- */
-export function idFitsRow(line, preset, id, shell) {
-  // a shell command can be continued onto a row of its own for the id's word (reflow.mjs); a line of code cannot
-  const text = line.text.replace(preset, id), at = text.indexOf(id);
-  const row = shell ? text.slice(text.lastIndexOf(' ', at) + 1).split(' ')[0] : text.trim();
-  return Object.keys(WIN).every(o => rowsOf(row, WIN[o].sizes.at(-1), o, { lead: shell ? 2 : 0, caret: true }) === 1);
+/** Whether `id` sits beside the label on that line, on one row, in both frames. */
+export function idFitsRow(id) {
+  return Object.keys(WIN).every(o => widthOf(`${ALSO.label} `, { px: ALSO.px[o], weight: 500 }) + [...id].length * 0.6 * ALSO.px[o] <= WIN[o].width - 8);
 }
 
 /**
- * The code size per frame. Every line of code sits on one row, each roll id in
- * place, with its prompt and caret: a line of code never wraps (reflow.mjs
+ * The code size per frame. Every line of code sits on one row, with its prompt and caret: a line of code never wraps (reflow.mjs
  * rewrites one that is too wide). The code is the largest size at which it
  * does and the window fits the safe area under the step it shows on, `head[o]`
  * px of steps above it. `sizes` narrows the sizes a frame may take; with `only`, just that
@@ -255,12 +245,11 @@ export function idFitsRow(line, preset, id, shell) {
  */
 export function codeSizes(lines, roll, shell, head, sizes = {}, only = null) {
   const isTyped = l => shell || l.focus;
-  const variants = l => (roll && l.focus && l.text.includes(roll.preset) ? [roll.preset, ...roll.ids].map(id => rolledIn(l, roll, id)) : [l.text]);
-  const oneRow = (px, o) => lines.every(l => variants(l).every(t => rowsOf(t, px, o, { lead: leadOf(l, shell), caret: isTyped(l) }) === 1));
+  const oneRow = (px, o) => lines.every(l => rowsOf(l.text, px, o, { lead: leadOf(l, shell), caret: isTyped(l) }) === 1);
   const codeFor = o => {
     const w = WIN[o];
-    // the window grows with the camera's dolly about its own middle, so its bottom edge drops by half its growth
-    const room = px => (EDGE + BAR + w.padTop + w.padBottom + lines.length * px * CODE_LH) * w.push + head[o] <= w.sh / w.lean;
+    // the camera stands square to the steps (lean 1) and the window stays out of its dolly, so it is drawn at its own size
+    const room = px => EDGE + BAR + w.padTop + w.padBottom + lines.length * px * CODE_LH + (roll ? ALSO.gap + ALSO.h : 0) + head[o] <= w.sh;
     return (sizes[o] ?? w.sizes).find(px => oneRow(px, o) && room(px)) ?? null;
   };
   if (only) return codeFor(only);
@@ -319,9 +308,8 @@ const CARET = '<span class="caret"></span>';
  * cut at "gemma-4-" reads as two things. In the focus line of a roll, the
  * preset is a slot holding every id, stacked, the first typed with the line.
  */
-function typedLine(line, roll) {
+function typedLine(line) {
   const chars = typedChars(line.text, line.focus);
-  const slotAt = roll && line.focus ? line.text.indexOf(roll.preset) : -1;
   const parts = tokensOf(line.text);
   // the caret sits in the last token, after its last character: after the token, it takes a row of its own once the token wraps
   const last = parts.findLastIndex(p => p.trim());
@@ -331,11 +319,7 @@ function typedLine(line, roll) {
     const at = i, caret = n === last ? CARET : '';
     i += part.length;
     if (!part.trim()) return chars(part, at);
-    if (slotAt < at || slotAt >= at + part.length) return `<span class="tok">${chars(part, at)}${caret}</span>`;
-    const k = slotAt - at, ids = [...roll.ids, roll.preset];
-    // the rolled-in ids are their own elements: each is read as a whole id, never typed
-    const slot = `<span class="roll" data-layout-allow-overlap><span class="ri" data-layout-allow-overlap>${chars(roll.preset, slotAt)}</span>${ids.map(id => `<em class="ri m" data-layout-allow-overlap>${esc(id)}</em>`).join('')}</span>`;
-    return `<span class="tok">${chars(part.slice(0, k), at)}${slot}${chars(part.slice(k + roll.preset.length), slotAt + roll.preset.length)}${caret}</span>`;
+    return `<span class="tok">${chars(part, at)}${caret}</span>`;
   }).join('');
 }
 
@@ -358,7 +342,7 @@ function windowHtml(win) {
   // each line is one row (codeSizes): the audit holds it to that with data-one-row
   const rowsOf = set => set.map(l => {
     const cls = `ln${l.cont ? ' cont' : ''}`;
-    if (shell || l.focus) return `<div class="${cls} typed${l.focus ? ' focus' : ''}" data-one-row>${typedLine(l, roll)}</div>`;
+    if (shell || l.focus) return `<div class="${cls} typed${l.focus ? ' focus' : ''}" data-one-row>${typedLine(l)}</div>`;
     return `<div class="${cls} ${l.keep ? 'keep' : 'ctx'}" data-one-row>${wholeLine(l.text)}</div>`;
   }).join('');
   // the value the header reads is the id that answered, so it takes the accent
@@ -366,9 +350,11 @@ function windowHtml(win) {
   const out = answer ? `<div class="ln out" data-layout-allow-overflow>${esc(answer.slice(0, value))}<span class="m">${esc(answer.slice(value))}</span></div>` : '';
   const ttl = title && ['landscape', 'portrait'].filter(o => !ttlFits(title, o)).map(o => ` off-${o[0]}`).join('');
   // each frame sets the code as fits it: the lines landscape shows, and portrait's, rewritten narrower where they must be
+  // the ids the same key runs roll in beside the label, each read whole, never typed
+  const also = roll ? `<div class="also"><span class="al">${esc(ALSO.label)}</span> <span class="roll mono" data-layout-allow-overlap>${roll.ids.map(id => `<em class="ri m" data-layout-allow-overlap>${esc(id)}</em>`).join('')}</span></div>` : '';
   return `<div class="win"><div class="term ${shell ? 'is-ink' : 'card'}">
       <div class="bar"><span class="dots"><i></i><i></i><i></i></span>${title ? `<span class="ttl${ttl}">${esc(title)}</span>` : ''}</div>
-      <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows rl">${rowsOf(lines.landscape)}${out}</div><div class="rows rp">${rowsOf(lines.portrait)}${out}</div></div></div></div>`;
+      <div class="code ${cls}" style="${fsVars(code, 'cs')}"><div class="rows rl">${rowsOf(lines.landscape)}${out}</div><div class="rows rp">${rowsOf(lines.portrait)}${out}</div></div></div>${also}</div>`;
 }
 
 // ── captions ───────────────────────────────────────────────────────────────
@@ -377,7 +363,7 @@ function windowHtml(win) {
 // both frames; portrait's is the narrower, so it decides where a phrase ends.
 export const CAP = {
   landscape: { px: 52, top: 924, height: 120 },
-  portrait: { px: 60, top: 1240, height: 240 },
+  portrait: { px: 60, top: PORTRAIT_CAPTION_BAND.top, height: PORTRAIT_CAPTION_BAND.height },
   padX: 28, room: { landscape: 1920 * 0.84, portrait: 900 }, say: 1.35,
 };
 const capFitsAt = (text, o, px) => widthOf(text, { px, weight: 500, tracking: -0.005 }) <= CAP.room[o] - 2 * CAP.padX - 4;
@@ -467,7 +453,7 @@ export function filmScene({ copy, beats, duration, timing, said }) {
   const url = urlSet(copy.link);
   const tiles = copy.marks.map(f => `<div class="tile card">${mark(f)}</div>`).join('');
   const { roll } = copy.window;
-  const rolls = roll ? roll.ids.length + 1 : 0;
+  const rolls = roll ? roll.ids.length : 0;
   const steps = copy.steps.map((st, k) => `<div class="stp" style="${fsVars(copy.type.step, 'ls')};${fsVars(copy.type.detail, 'ds')}">
       <div class="head"><span class="sm"><i class="ring"></i><b>${k + 1}</b></span><div class="sl">${masked(st.label, st.breaks)}</div></div>
       ${st.detail ? `<p class="dt">${masked(st.detail.text, st.detail.breaks)}</p>` : ''}</div>`).join('');
@@ -477,9 +463,9 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       <div class="badge kick">${esc(copy.kicker)}</div></div>
     <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1>
     ${steps}
-    ${windowHtml(copy.window)}
     <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div></div>
+      <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div>
+    <div class="flat">${windowHtml(copy.window)}</div></div>
     <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span style="${fsVars(c.px, 'cf')}">${esc(c.text)}</span></div>`).join('')}</div>`;
   const T = timing, S = T.steps;
   const inner = `
@@ -508,8 +494,9 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.fromTo(words, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.05, 0.2 / words.length), ease: "expo.out" }, 0.05);
     tl.fromTo(cam, { scale: 1 }, { scale: LEAN, duration: T1, ease: "none" }, 0);
 
-    // 1 → 2 · the headline falls back into the page as the steps begin.
+    // 1 → 2 · the headline falls back into the page as the steps begin, and the camera squares up to them.
     tl.to([hero, h], { z: -700, rotationX: 24, y: "-=140", opacity: 0, duration: 0.8, ease: "power3.in" }, T1 - 0.35);
+    tl.to(cam, { scale: 1, duration: 0.8, ease: "power3.inOut" }, T1 - 0.35);
 
     // 2 · the steps. Each tilts in from deep in the page and settles flat to read; a step done shrinks to a
     // row above the next, a layer back, so the camera's slow dolly moves it less than the step in front.
@@ -585,19 +572,18 @@ export function filmScene({ copy, beats, duration, timing, said }) {
       tl.fromTo(out, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "expo.out" }, ANSWER_AT + 0.25);
     }
 
-    // The preset rolls through real ids one key runs, then comes back to the page's own.
+    // Under the window, the ids the same key runs come in one after another.
     if (ROLLS) {
-      const slot = R(".roll")[0], items = Array.from(slot.children);
-      slot.style.width = items[0].offsetWidth + "px";
-      for (let i = 0; i < ROLLS; i++) {
-        const at = ROLL_AT + i * ROLL_EVERY, out = items[i], into = items[i + 1];
+      const also = $(".also"), slot = also.querySelector(".roll"), items = Array.from(slot.children);
+      slot.style.width = Math.max(...items.map(x => x.offsetWidth)) + "px";
+      tl.fromTo(also, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, ROLL_AT - 0.3);
+      items.forEach((into, i) => {
+        const at = ROLL_AT + i * ROLL_EVERY, out = items[i - 1];
         // the old id is gone before the new one shows, so two ids are never drawn over each other
-        tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, at);
+        if (out) tl.fromTo(out, { y: 0, opacity: 1 }, { y: "-0.7em", opacity: 0, duration: 0.2, ease: "power4.in", immediateRender: false }, at);
         tl.fromTo(into, { y: "0.7em", opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, at + 0.2);
-        tl.to(slot, { width: into.offsetWidth, duration: 0.45, ease: "power4.inOut" }, at + 0.05);
-      }
+      });
     }
-    const GLOW_PULSES = ROLLS ? Array.from({ length: ROLLS }, (_, i) => ROLL_AT + i * ROLL_EVERY + 0.2) : [];
 
     // A tint comes up under the command as it starts to be typed (t is where the typing ended). Once all is said and
     // shown, it points out each line the page changes in turn until the window leaves; a lone line
@@ -630,7 +616,7 @@ export function filmScene({ copy, beats, duration, timing, said }) {
     tl.fromTo(Q(".url"), { y: 40, z: -200, opacity: 0 }, { y: 0, z: 0, opacity: 1, duration: 1.0, ease: "expo.out" }, END + 0.6);
     // the lockup holds while the camera keeps leaning in, at an even speed to the last frame: an eased lean
     // comes to rest, and a frame at rest reads as dead air
-    tl.fromTo(cam, { scale: LEAN }, { scale: END_LEAN, duration: D - END, ease: "none", immediateRender: false }, END);
+    tl.fromTo(cam, { scale: 1 }, { scale: END_LEAN, duration: D - END, ease: "none", immediateRender: false }, END);
 
     // The captions: one phrase at a time, whole, under the picture; back to back they swap with no gap.
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
@@ -657,11 +643,13 @@ export function filmScene({ copy, beats, duration, timing, said }) {
 // the line in focus: on the ink it is white, its other lines muted; in the
 // editor it is ink, its context muted. The accent is on the id in the command.
 export const CSS = `
-  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap2:184px;--cap3:96px;--tw:${WIN.landscape.width}px;--lean:${WIN.landscape.lean};--dolly:${dollyOf('landscape')}px;--end:var(--end-l)}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:96px;--tw:${WIN.landscape.width}px;--lean:${WIN.landscape.lean};--dolly:${dollyOf('landscape')}px;--end:var(--end-l)}
   /* the camera leans in about the safe area's centre, so nothing drifts out of it, and looks into the page:
      the deep layer dollies in, so what sits further back moves less (parallax) */
   .film .cam{position:absolute;inset:0;transform-origin:50% 50%;perspective:${PERSPECTIVE}px;perspective-origin:50% 50%}
   .film .deep{position:absolute;inset:0;transform-style:preserve-3d}
+  /* the window is drawn at its own size, out of the dolly: it fills the safe width and must not grow past it */
+  .film .flat{position:absolute;inset:0;transform-style:preserve-3d}
   .film .hero,.film .h,.film .stp,.film .win,.film .end{backface-visibility:hidden}
   /* a step: its number in a marker, its label beside it; the marker is the accent while its step is said */
   .film .stp{position:absolute;left:var(--sl);right:var(--sr);top:0;transform-origin:0 0;opacity:0}
@@ -709,6 +697,7 @@ export const CSS = `
   .film .c{opacity:0}
   .film .m{color:${C.accent}}
   .film .is-ink .m{color:${C.accentOnInk}}
+  .film .also{margin-top:${ALSO.gap}px;height:${ALSO.h}px;display:flex;align-items:center;gap:.4em;font-size:${ALSO.px.landscape}px;font-weight:500;color:${C.ink2};white-space:pre;opacity:0}
   .film .roll{position:relative;display:inline-block;height:1.45em;vertical-align:top}
   .film .ri{position:absolute;left:0;top:0;white-space:pre;font-style:normal}
   .film em.ri{opacity:0}
@@ -736,8 +725,8 @@ export const CSS = `
   .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:var(--cf);font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap2:148px;--cap3:80px;--tw:${WIN.portrait.width}px;--lean:${WIN.portrait.lean};--dolly:${dollyOf('portrait')}px;--end:var(--end-p)}
-    .film .cam{transform-origin:510px 710px;perspective-origin:510px 710px}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:80px;--tw:${WIN.portrait.width}px;--lean:${WIN.portrait.lean};--dolly:${dollyOf('portrait')}px;--end:var(--end-p)}
+    .film .cam{transform-origin:510px 750px;perspective-origin:510px 750px}
     .film .sl{font-size:var(--ls-p);padding-top:calc((${STEP.mark}px - var(--ls-p) * ${STEP.lh}) / 2)}
     .film .sl .bl,.film .dt .bl{display:none}
     .film .sl .bp,.film .dt .bp{display:inline}
@@ -751,6 +740,7 @@ export const CSS = `
     .film .term{border-radius:28px}
     /* a hair tighter than the font's own advance, so a 45-character URL sits whole across the safe width */
     .film .code{--adv:${WIN.portrait.adv}em;letter-spacing:${(WIN.portrait.adv - 0.6).toFixed(2)}em;font-size:var(--cs-p);padding:${WIN.portrait.padTop}px ${WIN.portrait.padX}px ${WIN.portrait.padBottom}px}
+    .film .also{font-size:${ALSO.px.portrait}px}
     .film .rows.rl{display:none}
     .film .rows.rp{display:block}
     .film .ttl.off-l{display:block}

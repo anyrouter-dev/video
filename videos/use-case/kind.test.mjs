@@ -44,14 +44,14 @@ const shown = h => h
   .split('\n').map(s => s.replace(/\s+/g, ' ').trim()).filter(Boolean);
 // The ids that roll into the preset's place, in order.
 // (the landscape rows: each frame sets the same code in rows of its own)
-const rolled = h => [...(h.match(/<div class="rows rl">[\s\S]*?<div class="rows rp">/)?.[0] ?? '').matchAll(/<em class="ri[^"]*"[^>]*>([^<]*)<\/em>/g)].map(m => m[1]);
+const rolled = h => [...(h.match(/<div class="also">[\s\S]*?<\/div>/)?.[0] ?? '').matchAll(/<em class="ri[^"]*"[^>]*>([^<]*)<\/em>/g)].map(m => m[1]);
 
 // The strings a use case states, redacted the way the film redacts them, the ids the catalog gave, and
 // the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
 const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/u/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
   ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).map(redact).map(f => f.replace(/\s+/g, ' '));
-// Chrome, not copy: the brand.
-const CHROME = s => s === 'AnyRouter';
+// Chrome, not copy: the brand, the line over the ids the same key runs, and the "…" that marks code left out.
+const CHROME = s => ['AnyRouter', 'The same key also runs', '…'].includes(s);
 
 // ── one release per use case ───────────────────────────────────────────────
 
@@ -183,40 +183,36 @@ test('the page\'s own command is typed, in a terminal when it runs in a shell', 
   }
 });
 
-test('a preset rolls through real ids one key runs, then comes back to the page\'s own', () => {
+test('a preset keeps its own id in the request, and the ids the same key runs roll on a line under it', () => {
+  // the title read "curl · anyrouter/free" over a request rolling "deepseek/…": a viewer reads that as a contradiction
   const credit = new Set(pools.credit), free = new Set(pools.free);
   let seen = 0;
   for (const [u, film] of films()) {
     const preset = u.command.text.match(/anyrouter\/[a-z0-9-]+/)?.[0];
     const ids = rolled(html(film));
     if (!preset) { assert.deepEqual(ids, [], `${u.slug} names no preset, so nothing rolls`); continue; }
+    assert.ok(!/<div class="rows rl">[\s\S]*<em class="ri/.test(html(film).split('<div class="also">')[0]), `${u.slug}: no id rolls inside the request`);
     if (!ids.length) continue;
     seen++;
-    assert.equal(ids.at(-1), preset, `${u.slug}: the roll ends on the page's own id`);
-    const real = ids.slice(0, -1);
-    assert.ok(real.length >= 2, `${u.slug}: more than one other id`);
-    assert.ok(real.every(id => (preset === 'anyrouter/free' ? free : credit).has(id)), `${u.slug}: every id from the catalog's ${preset === 'anyrouter/free' ? 'free' : 'credit'} pool`);
+    assert.ok(ids.length >= 2, `${u.slug}: more than one other id`);
+    assert.ok(ids.every(id => (preset === 'anyrouter/free' ? free : credit).has(id)), `${u.slug}: every id from the catalog's ${preset === 'anyrouter/free' ? 'free' : 'credit'} pool`);
   }
   assert.ok(seen >= 8, 'most pages that name a preset roll it');
 });
 
-test('a roll id that cannot sit whole on a portrait row is left out, and one that can rolls in place', () => {
-  // a token is never cut, so an id wider than a row at the smallest code size would reflow the line as it rolls in
-  const line = { text: '"model": "anyrouter/free",', focus: true };
-  assert.ok(idFitsRow(line, 'anyrouter/free', 'deepseek/deepseek-v4-flash', false));
-  assert.ok(!idFitsRow(line, 'anyrouter/free', `deepseek/${'deepseek-v4-flash-'.repeat(3)}`, false));
-  // model: anyrouter("deepseek/deepseek-v4-flash"), is 47 characters: with the caret it is one past a portrait
-  // row at 32px, and a line of code is never cut, so ai-sdk shows its own id and rolls nothing
-  assert.deepEqual(rolled(html(filmOf(doc(), 'ai-sdk'))), []);
-  assert.ok(rolled(html(filmOf(doc(), 'free-llm-api'))).length > 2, 'a JSON model line rolls in place');
+test('an id too long for the line under the window is left out, and ai-sdk keeps its roll', () => {
+  assert.ok(idFitsRow('deepseek/deepseek-v4-flash'));
+  assert.ok(!idFitsRow(`deepseek/${'deepseek-v4-flash-'.repeat(3)}`));
+  // its code line is 47 characters, one past a portrait row with the caret: the ids roll beside it, not in it
+  assert.ok(rolled(html(filmOf(doc(), 'ai-sdk'))).length >= 2, 'ai-sdk rolls');
 });
 
 test('a page that promises $0 or free never rolls an id billed to credits', () => {
   // "Bring your own keys, $0 markup" over grok and kimi reads as "these are free"
   assert.deepEqual(rolled(html(filmOf(doc(), 'byok'))), []);
-  assert.ok(rolled(html(filmOf(doc(), 'cheapest-llm-api'))).length > 2, 'the same preset rolls where the page names no price');
+  assert.ok(rolled(html(filmOf(doc(), 'go-plan'))).length >= 2, 'the same preset rolls where the page names no price');
   const free = rolled(html(filmOf(doc(), 'free-llm-api')));
-  assert.ok(free.length > 2 && free.slice(0, -1).every(id => pools.free.includes(id)), 'a free preset rolls free ids');
+  assert.ok(free.length >= 2 && free.every(id => pools.free.includes(id)), 'a free preset rolls free ids');
 });
 
 test('a roll never shows an id that needs the user\'s own key, and a free roll never a paid one', () => {
@@ -336,7 +332,7 @@ test('portrait code leaned in all the way stays inside the safe area across', ()
   // the safe area's centre, so the code stays inside it and only the card's edge passes it, by a hair
   const code = codeSpan('portrait'), win = windowSpan('portrait');
   assert.ok(code.left >= PORTRAIT_SAFE.left && code.right <= PORTRAIT_SAFE.right, `the code spans x ${code.left.toFixed(1)} to ${code.right.toFixed(1)}`);
-  assert.ok(win.left >= PORTRAIT_SAFE.left - 20 && win.right <= PORTRAIT_SAFE.right + 20, `the window spans x ${win.left.toFixed(1)} to ${win.right.toFixed(1)}`);
+  assert.ok(win.left >= PORTRAIT_SAFE.left && win.right <= PORTRAIT_SAFE.right, `the window spans x ${win.left.toFixed(1)} to ${win.right.toFixed(1)}`);
 });
 
 // The headline's lines in one frame, as the film breaks them.
