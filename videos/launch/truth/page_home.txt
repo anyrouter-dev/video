@@ -1,0 +1,105 @@
+AnyRouter · Universal AI Model Router 
+Skip to content 
+AnyRouter 
+Models 
+Features 
+Pricing 
+Docs 
+Playground 
+Console 
+Every LLM. 
+One API. 
+OpenAI- and Anthropic-compatible. Switch models, keep your code. 
+Quickstart 
+Browse 271 models 
+43 free models 
+Docs 
+Pricing 
+agents.md 
+POST /v1 /chat/completions 
+cURL 
+curl https://anyrouter.dev/api/v1/chat/completions \ -H "Authorization: Bearer $ANYROUTER_API_KEY" \ -H "Content-Type: application/json" \ -d '{"model": "anyrouter/auto", "messages": [{"role": "user", "content": "Hi"}]}' 
+Hi! I'm here and ready to help. What can I do for you today? Ask me anything, from code and writing to quick facts. 
+Price per 1 million tokens (USD) Bring your own key Zero data retention Live speed last 24h Capabilities 
+Expand Model Via Context Price 
+MiniMax M3.1 Flash Free 
++ 5 1M Pool 
+DeepSeek V4.1 Flash 1017 
++ 3 1M BYOK $0.15 in · $0.60 out 
+Muse Spark Open 1M BYOK $1.25 in · $4.25 out 
+Nemotron 3.5 Super VL 120B A12B Free 1M Pool 
+LFM 2.5 24B A2B 128K BYOK $0.05 in · $0.70 out 
+Muse Wonder 
++ 2 1M BYOK $4.00 in · $20.00 out 
+Amos 1 Large Free 131K Upstream 
+Amos 1 Small Free 262K Upstream 
+Browse all 271 models 
+How a request routes 
+Your app sends one request to AnyRouter. AnyRouter checks the key, picks a route and, if an upstream fails, falls back to the next one. You are billed once. 
+Fig. 1 POST /v1/chat/completions 
+CLI 
+IDE 
+Your app 
+AnyRouter key · route · fallback 
+Workers AI 429 → fallback 
+OpenRouter 200 
+CLI 
+IDE 
+Your app 
+AnyRouter key · route · fallback 
+Workers AI 429 → fallback 
+OpenRouter 200 
+1 Apps send POST /v1/chat/completions 
+2 AnyRouter checks the key, picks a route by model 
+3 Upstream 1 fails, falls back to upstream 2 
+4 The answer streams back 
+Replay Simulate failure 429 → fallback · 200 · billed once 
+FAQ 
+What is AnyRouter? 
+OpenAI-compatible gateway. 271 models, 17 providers. Free models, $4 credit on Go, $0 markup on your own keys. How do I call models through AnyRouter? 
+Point your SDK at one base URL and reference models as provider/model, as in the code above. The table lists every model with its price per 1 million tokens. Do you take a cut if I bring my own keys? 
+No. Route through your own provider keys and the markup is $0: what you pay upstream is exactly what you pay. How do I get started? 
+Sign up in seconds, no card required. Free models cost nothing, Go adds $4 credit, and the table above shows what every other model costs. 
+AnyRouter 
+One OpenAI-compatible API, CLI and MCP gateway in front of every provider. 
+https://anyrouter.dev/api/v1 
+Product 
+Features 
+Data 
+Company 
+For agents 
+Models 
+Playground 
+Pricing 
+Free tier 
+Docs 
+Changelog 
+CLI 
+Unify LLM API 
+Sign in with AnyRouter 
+MCP 
+BYOK 
+Donate keys 
+Shared pool 
+Claude Code guide 
+Overview 
+Top models 
+Benchmarks 
+Compare 
+Apps 
+Network usage 
+Pool analytics 
+About 
+Contact 
+Ecosystem 
+Works with 
+Blog 
+Brand 
+Terms 
+Privacy 
+agents.md 
+llms.txt 
+Checking status 
+© 2026 AnyRouter, Universal AI Model Router Built 2026-10-20 
+Toggle theme 
+

@@ -1,0 +1,9 @@
+{
+  "fetchedAt": "2026-10-20",
+  "models": 271,
+  "providers": 17,
+  "routeModels": [
+    "deepseek/deepseek-v4-flash",
+    "minimax/minimax-m3.1-flash"
+  ]
+}

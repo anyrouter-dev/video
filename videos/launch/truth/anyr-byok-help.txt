@@ -1,0 +1,21 @@
+anyr byok — bring your own provider keys
+
+Usage:
+  anyr byok [list]                     Keys with a BYOK or DONATED badge
+  anyr byok add <provider>             Keep the key private to your account
+  anyr byok add <provider> --donate    Share it with the community pool
+  anyr byok --donate <provider>        Same as add --donate
+
+The key is read from $ANYR_BYOK_KEY, else stdin when piped, else a hidden
+prompt. It is never accepted as an argument and never printed.
+--donate shows the pool terms and asks to confirm; scripts pass --yes.
+Without a terminal and without --yes, --donate exits 2 and sends nothing.
+
+Needs a management key (ak_…) with read:byok and write:byok:
+  export ANYROUTER_MANAGEMENT_KEY=ak_…
+
+Options:
+  --donate          Donate the key to the community pool
+  --yes             Accept the pool terms without a prompt
+  --json            Print JSON (kind: byok | donated | unknown)
+  --profile <name>  Use another account

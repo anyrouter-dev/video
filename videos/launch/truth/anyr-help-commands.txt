@@ -1,0 +1,40 @@
+▲ anyr  ▄█▄▀█████████▄  AnyRouter CLI v0.1.20  https://anyrouter.dev
+One key. Every coding agent.
+
+USAGE
+  anyr                  Confirm account / model / agent, then pick an action
+  anyr <command> [flags]
+  anyr <command> --help
+
+CORE COMMANDS
+  menu:       Compact HUD launcher (default on a TTY)
+  auth:       Authenticate with AnyRouter
+  config:     Print current settings (`--pick` for the TUI)
+  keys:       Manage API keys
+  byok:       Provider keys (BYOK); --donate shares one with the pool
+  models:     List catalog and set the default (`--pick` to choose)
+  usage:      Credits remaining
+  api:        Dashboard from the terminal (keys, credits, logs, presets…)
+  completion: Shell completion (bash, zsh, fish, powershell)
+  onboard:    Paste-ready prompts for coding agents
+  impl|plan|fix|deploy|cp
+              Shortcuts for onboard modes
+
+STRUCTURED DECISIONS
+  decision:   POST typed decisions (not chat); aliases: decisions, systemone
+
+LAUNCH
+  claude    Claude Code
+  cc        Alias of claude
+  codex     Codex
+  grok      Grok Build
+  opencode  OpenCode
+  pi        Pi
+  pool      Poolside
+  poolside  Alias of pool
+
+  anyr                 Sign in if needed, then open the HUD
+  anyr auth login      Sign in
+  anyr onboard impl    Agent paste prompt to wire AnyRouter
+  anyr decision        Typed decisions via POST /api/v1/decisions
+  anyr claude          Launch Claude Code

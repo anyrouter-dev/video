@@ -1,0 +1,209 @@
+Shared pool · AnyRouter 
+Skip to content 
+AnyRouter 
+Models Mô hình 模型 
+Features Tính năng 功能 
+Pricing Bảng giá 价格 
+Docs Trợ giúp 文档 
+Playground Sân chơi Playground 
+Console Bảng điều khiển 控制台 
+Shared pool Pool chung 共享池 
+Add a provider key and it joins the shared pool. You get Go free, $4 credit a month and 5% back (8% on Pro and Max). Thêm key provider và nó vào pool chung. Bạn nhận Go miễn phí, $4 credit mỗi tháng và hoàn 5% (8% với Pro và Max). 添加供应商 Key，它就加入共享池。你免费用 Go，每月另得 $4 额度，并返还 5%（Pro 和 Max 为 8%）。 
+Share a spare provider key with the pool and earn credits when others use it. Chia sẻ key provider dư vào pool và nhận credit khi người khác dùng. 把闲置的供应商 Key 共享进池子，别人使用时你获得额度。 
+How it works → Cách hoạt động → 了解做法 → 
+Columns Cột 列 
+Overview Tổng quan 概览 
+Health Sức khỏe 健康 
+Usage Sử dụng 用量 
+Provider Provider 供应商 
+Status Trạng thái 状态 
+Keys Key Key 
+This week Tuần này 本周 
+Tokens all Token tổng Token 总计 Action Hành động 操作 
+AIHubMix Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 AIHubMix 
+Cerebras Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Cerebras 
+Freebuff Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Freebuff 
+Google AI Studio Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Google AI Studio 
+Groq Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Groq 
+Hugging Face Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Hugging Face 
+Mistral Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Mistral 
+NVIDIA NIM Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 NVIDIA NIM 
+Ollama Cloud Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Ollama Cloud 
+OpenCode Zen Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 OpenCode Zen 
+OpenRouter Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 OpenRouter 
+QwenCloud Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 QwenCloud 
+Ramp Router Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 Ramp Router 
+ZenMux Free Miễn phí 免费 — — — — 
+Donate Góp 捐出 ZenMux 
+AI/ML API — — — — 
+Donate Góp 捐出 AI/ML API 
+Amazon Bedrock — — — — 
+Donate Góp 捐出 Amazon Bedrock 
+Anthropic — — — — 
+Donate Góp 捐出 Anthropic 
+Antigravity (Google) — — — — 
+Donate Góp 捐出 Antigravity (Google) 
+AutoJev — — — — 
+Donate Góp 捐出 AutoJev 
+Azure — — — — 
+Donate Góp 捐出 Azure 
+Azure Foundry (Claude) — — — — 
+Donate Góp 捐出 Azure Foundry (Claude) 
+Baseten — — — — 
+Donate Góp 捐出 Baseten 
+Chutes — — — — 
+Donate Góp 捐出 Chutes 
+Cline — — — — 
+Donate Góp 捐出 Cline 
+Cohere — — — — 
+Donate Góp 捐出 Cohere 
+CommandCode — — — — 
+Donate Góp 捐出 CommandCode 
+DeepInfra — — — — 
+Donate Góp 捐出 DeepInfra 
+DeepSeek — — — — 
+Donate Góp 捐出 DeepSeek 
+Experiential — — — — 
+Donate Góp 捐出 Experiential 
+Fastino — — — — 
+Donate Góp 捐出 Fastino 
+Fireworks — — — — 
+Donate Góp 捐出 Fireworks 
+FPT Cloud — — — — 
+Donate Góp 捐出 FPT Cloud 
+GMICloud — — — — 
+Donate Góp 捐出 GMICloud 
+Google Vertex — — — — 
+Donate Góp 捐出 Google Vertex 
+Google Vertex AI (Claude) — — — — 
+Donate Góp 捐出 Google Vertex AI (Claude) 
+Liquid — — — — 
+Donate Góp 捐出 Liquid 
+LLM Gateway — — — — 
+Donate Góp 捐出 LLM Gateway 
+LongCat — — — — 
+Donate Góp 捐出 LongCat 
+Meta — — — — 
+Donate Góp 捐出 Meta 
+MiniMax — — — — 
+Donate Góp 捐出 MiniMax 
+Moonshot AI — — — — 
+Donate Góp 捐出 Moonshot AI 
+MuleRouter — — — — 
+Donate Góp 捐出 MuleRouter 
+Nace AI — — — — 
+Donate Góp 捐出 Nace AI 
+Nous Research — — — — 
+Donate Góp 捐出 Nous Research 
+NovitaAI — — — — 
+Donate Góp 捐出 NovitaAI 
+OneToken — — — — 
+Donate Góp 捐出 OneToken 
+OpenAI — — — — 
+Donate Góp 捐出 OpenAI 
+OpenCode Zen Go — — — — 
+Donate Góp 捐出 OpenCode Zen Go 
+OrcaRouter — — — — 
+Donate Góp 捐出 OrcaRouter 
+OVHcloud — — — — 
+Donate Góp 捐出 OVHcloud 
+Perplexity — — — — 
+Donate Góp 捐出 Perplexity 
+Poolside — — — — 
+Donate Góp 捐出 Poolside 
+Respan — — — — 
+Donate Góp 捐出 Respan 
+Sakana AI — — — — 
+Donate Góp 捐出 Sakana AI 
+SambaNova — — — — 
+Donate Góp 捐出 SambaNova 
+SiliconFlow — — — — 
+Donate Góp 捐出 SiliconFlow 
+StepFun — — — — 
+Donate Góp 捐出 StepFun 
+StepFun Step Plan — — — — 
+Donate Góp 捐出 StepFun Step Plan 
+Strands Decider — — — — 
+Donate Góp 捐出 Strands Decider 
+SubQ — — — — 
+Donate Góp 捐出 SubQ 
+TypeSafe — — — — 
+Donate Góp 捐出 TypeSafe 
+Unbiased — — — — 
+Donate Góp 捐出 Unbiased 
+Venice — — — — 
+Donate Góp 捐出 Venice 
+Vercel AI Gateway — — — — 
+Donate Góp 捐出 Vercel AI Gateway 
+Wafer — — — — 
+Donate Góp 捐出 Wafer 
+xAI — — — — 
+Donate Góp 捐出 xAI 
+Z.ai — — — — 
+Donate Góp 捐出 Z.ai 
+Z.ai (Coding Plan) — — — — 
+Donate Góp 捐出 Z.ai (Coding Plan) 
+Donate a key Góp một key 捐一把 Key 
+Docs Tài liệu 文档 
+FAQ FAQ 常见问题 
+Is my key safe? Key của tôi có an toàn không? 我的 Key 安全吗？ 
+Encrypted at rest, never logged. It serves other members' requests, never yours. Key được mã hóa khi lưu và không bao giờ ghi log. Nó chỉ phục vụ request của thành viên khác, không bao giờ của bạn. Key 加密存储，从不写入日志。它只处理其他成员的请求，从不处理你自己的。 Can I stop? Tôi có thể dừng không? 可以随时停止吗？ 
+Yes. Turn off Donate to pool and the key leaves at once. Withdrawing your last key ends free Go and claws back this month's $4. Được. Tắt Donate to pool và key rời pool ngay. Rút key cuối cùng sẽ kết thúc Go miễn phí và thu hồi $4 credit của tháng này. 可以。关闭 Donate to pool，Key 立即退出共享池。撤回最后一把 Key 会结束免费 Go，并收回本月 $4 额度。 What if the key stops working? Nếu key ngừng hoạt động? Key 失效了怎么办？ 
+It is paused until a health check passes. If it was your only key, free Go ends. Key bị tạm dừng và rời pool cho đến khi kiểm tra sức khỏe đạt. Nếu đó là key duy nhất, Go miễn phí kết thúc. Key 会被暂停并退出共享池，直到健康检查通过。若它是你唯一的 Key，免费 Go 随之结束。 Do donated keys spend my credits? Key đóng góp có trừ credit của tôi không? 捐出的 Key 会消耗我的额度吗？ 
+No. They pass through your own provider account. Check its terms first. Không. Chúng đi qua tài khoản provider của bạn, không trừ credit. Hãy xem điều khoản của provider trước. 不会。请求直通你自己的供应商账户，不消耗额度。请先查看该供应商的条款。 
+AnyRouter 
+One OpenAI-compatible API, CLI and MCP gateway in front of every provider. Một API OpenAI-compatible, CLI và MCP gateway đứng trước mọi provider. 一个 OpenAI 兼容 API、CLI 和 MCP 网关，挡在每家供应商前面。 
+https://anyrouter.dev/api/v1 
+Product Sản phẩm 产品 
+Features Tính năng 功能 
+Data Dữ liệu 数据 
+Company Công ty 公司 
+For agents Cho agent 给 Agent 
+Models Models 模型 
+Playground Playground Playground 
+Pricing Bảng giá 价格 
+Free tier Miễn phí 免费档 
+Docs Tài liệu 文档 
+Changelog Changelog 更新日志 
+CLI CLI CLI 
+Unify LLM API Unify LLM API 统一 LLM API 
+Sign in with AnyRouter Đăng nhập với AnyRouter 用 AnyRouter 登录 
+MCP MCP MCP 
+BYOK BYOK 自带 Key 
+Donate keys Đóng góp key 捐 Key 
+Shared pool Pool chung 共享池 
+Claude Code guide Hướng dẫn Claude Code Claude Code 指南 
+Overview Tổng quan 概览 
+Top models Top models 热门模型 
+Benchmarks Benchmarks 基准 
+Compare So sánh 对比 
+Apps Apps 应用 
+Network usage Sử dụng mạng 全网用量 
+Pool analytics Phân tích pool 池分析 
+About Giới thiệu 关于 
+Contact Liên hệ 联系 
+Ecosystem Hệ sinh thái 生态 
+Works with Tương thích 兼容工具 
+Blog Blog 博客 
+Brand Thương hiệu 品牌 
+Terms Điều khoản 条款 
+Privacy Quyền riêng tư 隐私 
+agents.md agents.md agents.md 
+llms.txt llms.txt llms.txt 
+Checking status Đang kiểm tra 检查中 
+© 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter，通用 AI 模型网关 Built 2026-10-20 Bản dựng 2026-10-20 构建于 2026-10-20 
+Toggle theme 
+

@@ -1,0 +1,97 @@
+Pricing · AnyRouter 
+Skip to content 
+AnyRouter 
+Models Mô hình 模型 
+Features Tính năng 功能 
+Pricing Bảng giá 价格 
+Docs Trợ giúp 文档 
+Playground Sân chơi Playground 
+Console Bảng điều khiển 控制台 
+Pricing Bảng giá 价格 
+Start free with unlimited free-model requests. Every paid plan gives you more credit than it costs. Bắt đầu miễn phí với request model miễn phí không giới hạn. Mọi gói trả phí đều tặng credit nhiều hơn giá gói. 免费起步，免费模型请求不限量。每个付费套餐赠送的额度都高于其价格。 
+Plans Gói 套餐 
+Go 
+$2 per month · $2.63 charged mỗi tháng · tính phí $2.63 每月 · 实收 $2.63 or $0 with one donated key hoặc $0 khi góp một key 或捐一把 Key 即 $0 
+$4 credit every month $4 credit mỗi tháng 每月 $4 额度 
+1 workspace · 7-day logs · 60 req/min 1 workspace · log 7 ngày · 60 req/phút 1 个工作区 · 7 天日志 · 60 次/分钟 
+Usage capped per 5-hour window (upgrade for unlimited) Giới hạn theo cửa sổ 5 giờ (nâng cấp để bỏ) 每 5 小时窗口限额（升级可取消） 
+Free, unlimited decision models Model quyết định miễn phí, không giới hạn (anyrouter/decision) 决策模型免费且不限量（anyrouter/decision） 
+Subscribe Đăng ký 订阅 
+Donate 1 key Góp 1 key 捐 1 把 Key 
+Pro 
+$10 per month · $11.05 charged mỗi tháng · tính phí $11.05 每月 · 实收 $11.05 
+$20 credit every month $20 credit mỗi tháng 每月 $20 额度 
+Unlimited usage — no 5-hour window limits Không giới hạn cửa sổ 5 giờ 不限量 — 没有 5 小时窗口 
+3 workspaces · 30-day logs · 1200 req/min 3 workspace · log 30 ngày · 1200 req/phút 3 个工作区 · 30 天日志 · 1200 次/分钟 
+Free, unlimited decision models Model quyết định miễn phí, không giới hạn (anyrouter/decision) 决策模型免费且不限量（anyrouter/decision） 
+Upgrade to Pro Nâng lên Pro 升级到 Pro 
+Pro+ Best value Đáng giá nhất 最超值 
+$45 per month · $47.89 charged mỗi tháng · tính phí $47.89 每月 · 实收 $47.89 
+$100 credit every month $100 credit mỗi tháng 每月 $100 额度 
+1800 req/min — our highest rate ceiling 1800 req/phút — trần cao nhất 1800 次/分钟 — 最高速率上限 
+Free, unlimited decision models Model quyết định miễn phí, không giới hạn (anyrouter/decision) 决策模型免费且不限量（anyrouter/decision） 
+Upgrade to Pro+ Nâng lên Pro+ 升级到 Pro+ 
+Max 
+$100 per month · $105.79 charged mỗi tháng · tính phí $105.79 每月 · 实收 $105.79 
+$300 credit every month $300 credit mỗi tháng 每月 $300 额度 
+1800 req/min — our highest rate ceiling 1800 req/phút — trần cao nhất 1800 次/分钟 — 最高速率上限 
+Free, unlimited decision models Model quyết định miễn phí, không giới hạn (anyrouter/decision) 决策模型免费且不限量（anyrouter/decision） 
+Upgrade to Max Nâng lên Max 升级到 Max 
+Prices in USD. Payment provider fee and tax may apply. Free plan: $0, no daily limit on free models. Giá bằng USD. Có thể phát sinh phí nhà thanh toán và thuế. Gói Free: $0, model miễn phí không giới hạn theo ngày. 价格以美元计，可能另收支付通道费和税费。Free 套餐：$0，免费模型没有每日限额。 
+Terms Điều khoản 条款 
+Privacy Bảo mật 隐私 
+FAQ FAQ 常见问题 
+How do credits work? Credit hoạt động thế nào? 额度如何运作？ 
+Monthly credits come from AnyRouter: $4 on Go, $20/$100/$300 on Pro/Pro+/Max, plus referral bonuses. Top-up credits are ones you buy and never expire. Usage draws monthly credits first, so top-ups last longer. Credit hàng tháng do AnyRouter cấp: Go $4, Pro/Pro+/Max $20/$100/$300, cùng thưởng giới thiệu. Credit nạp thêm do bạn mua, không hết hạn. Usage trừ credit hàng tháng trước, nên phần nạp thêm dùng được lâu hơn. 每月额度由 AnyRouter 发放：Go $4，Pro/Pro+/Max $20/$100/$300，另有推荐奖励。充值额度由你购买，永不过期。用量先扣每月额度，让充值用得更久。 How am I charged? Tôi bị tính phí thế nào? 如何扣费？ 
+Each request is metered per token from the upstream that served it, deducted after the response streams. Top-ups and subscriptions run through Polar.sh, our Merchant of Record, so we never see your card. Polar keeps a 5% + 50¢ fee; AnyRouter takes none. A signed webhook credits your account instantly, with a receipt and invoice. Mỗi request đo theo token của upstream phục vụ, trừ sau khi stream xong. Nạp thêm và đăng ký đi qua Polar.sh, Merchant of Record, nên chúng tôi không thấy thẻ. Polar giữ phí 5% + 50¢; AnyRouter không lấy. Webhook có chữ ký cộng credit ngay, kèm biên nhận và hóa đơn. 每次请求按实际服务的上游按 token 计量，响应流结束后扣减。充值与订阅走 Polar.sh（Merchant of Record），我们看不到你的卡号。Polar 收取 5% + 50¢ 通道费，AnyRouter 不抽成。签名 webhook 即时入账，附收据和发票。 What does BYOK cost? BYOK tốn bao nhiêu? BYOK 要花多少钱？ 
+Your own provider keys pay the provider at list price, with no AnyRouter fee. BYOK and donated keys are pass-through and never spend credits. Key provider của bạn trả thẳng provider theo giá niêm yết, AnyRouter không cộng phí. BYOK và key đóng góp luôn pass-through, không trừ credit. 自带供应商 Key 按标价直付给供应商，AnyRouter 不加收费用。BYOK 与捐献 Key 始终直通，从不消耗额度。 
+Quickstart Bắt đầu nhanh 快速开始 
+API reference Tài liệu API API 参考 
+CLI CLI CLI 
+MCP server MCP server MCP 服务 
+SDK SDK SDK 
+Browse models Xem models 浏览模型 
+OpenRouter alternative Thay thế OpenRouter OpenRouter 替代 
+AnyRouter 
+One OpenAI-compatible API, CLI and MCP gateway in front of every provider. Một API OpenAI-compatible, CLI và MCP gateway đứng trước mọi provider. 一个 OpenAI 兼容 API、CLI 和 MCP 网关，挡在每家供应商前面。 
+https://anyrouter.dev/api/v1 
+Product Sản phẩm 产品 
+Features Tính năng 功能 
+Data Dữ liệu 数据 
+Company Công ty 公司 
+For agents Cho agent 给 Agent 
+Models Models 模型 
+Playground Playground Playground 
+Pricing Bảng giá 价格 
+Free tier Miễn phí 免费档 
+Docs Tài liệu 文档 
+Changelog Changelog 更新日志 
+CLI CLI CLI 
+Unify LLM API Unify LLM API 统一 LLM API 
+Sign in with AnyRouter Đăng nhập với AnyRouter 用 AnyRouter 登录 
+MCP MCP MCP 
+BYOK BYOK 自带 Key 
+Donate keys Đóng góp key 捐 Key 
+Shared pool Pool chung 共享池 
+Claude Code guide Hướng dẫn Claude Code Claude Code 指南 
+Overview Tổng quan 概览 
+Top models Top models 热门模型 
+Benchmarks Benchmarks 基准 
+Compare So sánh 对比 
+Apps Apps 应用 
+Network usage Sử dụng mạng 全网用量 
+Pool analytics Phân tích pool 池分析 
+About Giới thiệu 关于 
+Contact Liên hệ 联系 
+Ecosystem Hệ sinh thái 生态 
+Works with Tương thích 兼容工具 
+Blog Blog 博客 
+Brand Thương hiệu 品牌 
+Terms Điều khoản 条款 
+Privacy Quyền riêng tư 隐私 
+agents.md agents.md agents.md 
+llms.txt llms.txt llms.txt 
+Checking status Đang kiểm tra 检查中 
+© 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter，通用 AI 模型网关 Built 2026-10-20 Bản dựng 2026-10-20 构建于 2026-10-20 
+Toggle theme 
+

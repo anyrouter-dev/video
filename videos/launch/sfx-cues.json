@@ -1,0 +1,87 @@
+[
+ {
+  "frame": 1,
+  "sound": "click",
+  "at": 2.706,
+  "volume": 0.28
+ },
+ {
+  "frame": 1,
+  "sound": "ping",
+  "at": 3.206,
+  "volume": 0.14,
+  "pitch": 2
+ },
+ {
+  "frame": 1,
+  "sound": "ping",
+  "at": 3.762,
+  "volume": 0.14,
+  "pitch": 5
+ },
+ {
+  "frame": 2,
+  "sound": "whoosh-short",
+  "at": 0.15,
+  "volume": 0.12
+ },
+ {
+  "frame": 2,
+  "sound": "click-soft",
+  "at": 1.014,
+  "volume": 0.2,
+  "pitch": -2
+ },
+ {
+  "frame": 2,
+  "sound": "whoosh-short",
+  "at": 1.164,
+  "volume": 0.1,
+  "pitch": -3
+ },
+ {
+  "frame": 2,
+  "sound": "click-soft",
+  "at": 1.864,
+  "volume": 0.24
+ },
+ {
+  "frame": 2,
+  "sound": "click",
+  "at": 3.065,
+  "volume": 0.2,
+  "pitch": 3
+ },
+ {
+  "frame": 2,
+  "sound": "whoosh-short",
+  "at": 3.165,
+  "volume": 0.1,
+  "pitch": -3
+ },
+ {
+  "frame": 2,
+  "sound": "click-soft",
+  "at": 4.365,
+  "volume": 0.24
+ },
+ {
+  "frame": 2,
+  "sound": "whoosh-short",
+  "at": 4.465,
+  "volume": 0.12
+ },
+ {
+  "frame": 2,
+  "sound": "pop",
+  "at": 5.688,
+  "volume": 0.22
+ },
+ {
+  "frame": 2,
+  "sound": "ping",
+  "at": 5.778,
+  "volume": 0.14,
+  "pitch": 7
+ }
+]

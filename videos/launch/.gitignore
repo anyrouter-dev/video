@@ -1,0 +1,18 @@
+# Outputs and scratch — regenerated, never source.
+renders/
+renders-log.txt
+snapshots/
+verify/
+.hyperframes/
+.thumbnails/
+node_modules/
+.DS_Store
+# Raw site capture: the frames read only the files staged into assets/.
+capture/
+capture-extra/
+capture.log.json
+capture.err.log
+.media/
+audio_request.json
+audio_engine_meta.json
+/.figures/

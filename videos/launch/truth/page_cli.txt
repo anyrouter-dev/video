@@ -1,0 +1,89 @@
+AnyRouter CLI 
+Skip to content 
+AnyRouter 
+Models Mô hình 模型 
+Features Tính năng 功能 
+Pricing Bảng giá 价格 
+Docs Trợ giúp 文档 
+Playground Sân chơi Playground 
+Console Bảng điều khiển 控制台 
+The anyr CLI CLI anyr anyr 命令行 
+Launch Claude Code, opencode or Codex through AnyRouter with one key and automatic failover. Chạy Claude Code, opencode hoặc Codex qua AnyRouter với một key và failover tự động. 用一把 Key 通过 AnyRouter 启动 Claude Code、opencode 或 Codex，自动故障转移。 
+Install · macOS and Linux Cài đặt · macOS và Linux 安装 · macOS 与 Linux 
+Copy Chép 复制 
+$ 
+curl -fsSL https://anyrouter.dev/setup.sh | bash 
+Log in and run Đăng nhập và chạy 登录并运行 
+Copy Chép 复制 
+$ 
+anyr login
+anyr claude 
+Installs anyr and ar into ~/.local/bin. No Node required. Windows is not supported yet. Cài anyr và ar vào ~/.local/bin. Không cần Node. Chưa hỗ trợ Windows. 把 anyr 和 ar 装到 ~/.local/bin，不需要 Node。暂不支持 Windows。 
+Use your coding agent through AnyRouter Dùng coding agent của bạn qua AnyRouter 让你的 coding agent 走 AnyRouter 
+Claude Code 
+anyr claude --model anyrouter/auto 
+Launch Claude Code routed through AnyRouter. anyrouter/auto picks from top models and fails over. Chạy Claude Code qua AnyRouter. anyrouter/auto chọn từ các model hàng đầu và tự failover. 通过 AnyRouter 启动 Claude Code。anyrouter/auto 从热门模型中选择并自动故障转移。 
+opencode 
+anyr opencode --model anyrouter/free 
+Launch opencode routed through AnyRouter. anyrouter/free stays on $0 models. Chạy opencode qua AnyRouter. anyrouter/free chỉ dùng model $0. 通过 AnyRouter 启动 opencode。anyrouter/free 只用 $0 模型。 
+Codex 
+anyr codex --model anyrouter/auto 
+Launch Codex routed through AnyRouter. Same key, same presets. Chạy Codex qua AnyRouter. Cùng key, cùng preset. 通过 AnyRouter 启动 Codex。同一把 Key，同样的预设。 
+How it works Cách hoạt động 工作方式 
+01 
+Log in Đăng nhập 登录 
+anyr login opens your browser. Over SSH it switches to a device code. anyr login mở trình duyệt. Qua SSH, nó chuyển sang device code. anyr login 会打开浏览器；SSH 下自动改用 device code。 
+02 
+Key saved Lưu key 保存 Key 
+The CLI gets a key and stores it locally, in the OS keychain by default. CLI nhận một key và lưu cục bộ, mặc định trong keychain của hệ điều hành. CLI 拿到 Key 并存在本地，默认放进系统钥匙串。 
+03 
+Agent launched Chạy agent 启动 agent 
+anyr claude, anyr opencode or anyr codex starts the real agent pointed at AnyRouter. anyr claude, opencode hoặc codex chạy agent thật, trỏ về AnyRouter. anyr claude、opencode 或 codex 会启动真正的 agent，并指向 AnyRouter。 
+First time? Run Lần đầu? Chạy 第一次用？运行 
+anyr login 
+Docs Tài liệu 文档 
+Changelog Changelog 更新日志 
+Models Model 模型 
+AnyRouter 
+One OpenAI-compatible API, CLI and MCP gateway in front of every provider. Một API OpenAI-compatible, CLI và MCP gateway đứng trước mọi provider. 一个 OpenAI 兼容 API、CLI 和 MCP 网关，挡在每家供应商前面。 
+https://anyrouter.dev/api/v1 
+Product Sản phẩm 产品 
+Features Tính năng 功能 
+Data Dữ liệu 数据 
+Company Công ty 公司 
+For agents Cho agent 给 Agent 
+Models Models 模型 
+Playground Playground Playground 
+Pricing Bảng giá 价格 
+Free tier Miễn phí 免费档 
+Docs Tài liệu 文档 
+Changelog Changelog 更新日志 
+CLI CLI CLI 
+Unify LLM API Unify LLM API 统一 LLM API 
+Sign in with AnyRouter Đăng nhập với AnyRouter 用 AnyRouter 登录 
+MCP MCP MCP 
+BYOK BYOK 自带 Key 
+Donate keys Đóng góp key 捐 Key 
+Shared pool Pool chung 共享池 
+Claude Code guide Hướng dẫn Claude Code Claude Code 指南 
+Overview Tổng quan 概览 
+Top models Top models 热门模型 
+Benchmarks Benchmarks 基准 
+Compare So sánh 对比 
+Apps Apps 应用 
+Network usage Sử dụng mạng 全网用量 
+Pool analytics Phân tích pool 池分析 
+About Giới thiệu 关于 
+Contact Liên hệ 联系 
+Ecosystem Hệ sinh thái 生态 
+Works with Tương thích 兼容工具 
+Blog Blog 博客 
+Brand Thương hiệu 品牌 
+Terms Điều khoản 条款 
+Privacy Quyền riêng tư 隐私 
+agents.md agents.md agents.md 
+llms.txt llms.txt llms.txt 
+Checking status Đang kiểm tra 检查中 
+© 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter, Universal AI Model Router © 2026 AnyRouter，通用 AI 模型网关 Built 2026-10-20 Bản dựng 2026-10-20 构建于 2026-10-20 
+Toggle theme 
+

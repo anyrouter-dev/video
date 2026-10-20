@@ -5,6 +5,7 @@
 //
 //   { "frame": 5, "sound": "click", "word": "create", "nth": 1, "offset": 0.0, "volume": 0.35 }
 //   { "frame": 2, "sound": "whoosh", "at": 0.05 }
+//   { "frame": 3, "sound": "click-soft", "at": 1.2, "pitch": 3 }   (semitones; a repeat at another pitch)
 //
 // Sounds are the bundled library in media-use (click, click-soft, pop, ping, chime, error,
 // whoosh, whoosh-short, typing, key-press, sparkle, notification, riser). This tool owns
@@ -38,15 +39,19 @@ meta.sfx = cues.map(cue => {
   if (t == null) throw new Error(`cue ${JSON.stringify(cue)}: needs "word" or "at"`);
   const src = path.join(LIBRARY, `${cue.sound}.mp3`);
   if (!fs.existsSync(src)) throw new Error(`cue ${JSON.stringify(cue)}: no sound "${cue.sound}" in ${LIBRARY}`);
-  const file = `assets/sfx/${cue.sound}.mp3`;
-  fs.copyFileSync(src, file);
+  const file = cue.pitch ? `assets/sfx/${cue.sound}-p${cue.pitch}.mp3` : `assets/sfx/${cue.sound}.mp3`;
+  if (cue.pitch) {
+    // resample to shift pitch (and length, as a real faster or slower strike would)
+    const rate = Math.round(44100 * 2 ** (cue.pitch / 12));
+    if (!fs.existsSync(file)) execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', src, '-af', `asetrate=${rate},aresample=44100`, file]);
+  } else fs.copyFileSync(src, file);
   const offset = Math.max(0, +(t + (cue.offset ?? 0)).toFixed(3));
   if (offset >= voice.duration_s) throw new Error(`cue ${JSON.stringify(cue)}: lands at ${offset}s, after frame ${cue.frame} ends (${voice.duration_s}s)`);
   return {
     frame: cue.frame,
     file,
     offset_s: offset,
-    duration_s: +seconds(src).toFixed(3),
+    duration_s: +seconds(file).toFixed(3),
     volume: cue.volume ?? DEFAULT_VOLUME,
     source: 'bundled',
   };
