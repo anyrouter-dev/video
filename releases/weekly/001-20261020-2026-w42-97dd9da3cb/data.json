@@ -1,0 +1,169 @@
+{
+  "notable": true,
+  "label": "2026-W42",
+  "parts": [
+    "week:2026-W42"
+  ],
+  "week": "2026-W42",
+  "from": "2026-10-12",
+  "to": "2026-10-18",
+  "days": [
+    {
+      "day": "2026-10-12",
+      "weekday": "MON",
+      "n": 12,
+      "models": 3,
+      "entries": 1
+    },
+    {
+      "day": "2026-10-13",
+      "weekday": "TUE",
+      "n": 13,
+      "models": 1,
+      "entries": 2
+    },
+    {
+      "day": "2026-10-14",
+      "weekday": "WED",
+      "n": 14,
+      "models": 0,
+      "entries": 0
+    },
+    {
+      "day": "2026-10-15",
+      "weekday": "THU",
+      "n": 15,
+      "models": 2,
+      "entries": 1
+    },
+    {
+      "day": "2026-10-16",
+      "weekday": "FRI",
+      "n": 16,
+      "models": 0,
+      "entries": 1
+    },
+    {
+      "day": "2026-10-17",
+      "weekday": "SAT",
+      "n": 17,
+      "models": 1,
+      "entries": 3
+    },
+    {
+      "day": "2026-10-18",
+      "weekday": "SUN",
+      "n": 18,
+      "models": 0,
+      "entries": 0
+    }
+  ],
+  "models": [
+    {
+      "id": "deepseek/deepseek-v4.1-flash-1017",
+      "day": "2026-10-17",
+      "name": "DeepSeek V4.1 Flash 1017",
+      "maker": "DeepSeek",
+      "billing": "byok",
+      "type": "chat"
+    },
+    {
+      "id": "meta/muse-spark-open",
+      "day": "2026-10-15",
+      "name": "Muse Spark Open",
+      "maker": "Meta",
+      "billing": "byok",
+      "type": "chat"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+      "day": "2026-10-15",
+      "name": "Nemotron 3.5 Super VL 120B A12B",
+      "maker": "NVIDIA",
+      "billing": "free",
+      "type": "chat"
+    },
+    {
+      "id": "liquid/lfm-2.5-24b-a2b",
+      "day": "2026-10-13",
+      "name": "LFM 2.5 24B A2B",
+      "maker": "Liquid AI",
+      "billing": "byok",
+      "type": "chat"
+    },
+    {
+      "id": "meta/muse-wonder",
+      "day": "2026-10-12",
+      "name": "Muse Wonder",
+      "maker": "Meta",
+      "billing": "byok",
+      "type": "chat"
+    },
+    {
+      "id": "scira/amos-1-large",
+      "day": "2026-10-12",
+      "name": "Amos 1 Large",
+      "maker": "Scira",
+      "billing": "free",
+      "type": "decision"
+    },
+    {
+      "id": "scira/amos-1-small",
+      "day": "2026-10-12",
+      "name": "Amos 1 Small",
+      "maker": "Scira",
+      "billing": "free",
+      "type": "decision"
+    }
+  ],
+  "entries": [
+    {
+      "date": "2026-10-17",
+      "title": "LFM 2.5 24B A2B",
+      "type": "added",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-17-lfm-2-5-24b"
+    },
+    {
+      "date": "2026-10-17",
+      "title": "Xing4.0 29B A4B",
+      "type": "added",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-17-xing4-0"
+    },
+    {
+      "date": "2026-10-17",
+      "title": "GLM-5.3-Flash disabled",
+      "type": "retired",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-17-disabled"
+    },
+    {
+      "date": "2026-10-16",
+      "title": "Amos 1 Medium disabled",
+      "type": "retired",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-16-disabled"
+    },
+    {
+      "date": "2026-10-15",
+      "title": "Novita routes for DeepSeek V4 Flash removed",
+      "type": "changed",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-15-upstream"
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Amos 1",
+      "type": "added",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-13-amos-1"
+    },
+    {
+      "date": "2026-10-13",
+      "title": "Drex v2.0",
+      "type": "added",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-13-drex-v2"
+    },
+    {
+      "date": "2026-10-12",
+      "title": "Trinity Large Thinking, BGE Base EN v1.5, DeepSeek V4.1 Flash 1017 and 21 more added",
+      "type": "added",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-12-catalog"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "releases": [
+    {
+      "id": "001-20261020-deepseek-deepseek-v4-flash-22ebd7b429",
+      "hash": "22ebd7b429",
+      "kind": "model-launch",
+      "label": "deepseek-deepseek-v4-flash",
+      "title": "DeepSeek-V4-Flash: free on AnyRouter",
+      "seconds": 29.5,
+      "renderedAt": "2026-10-20T22:42:39.219Z",
+      "commit": "22a97a8",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-portrait.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-source.tar.gz",
+      "createdAt": "2026-10-20T22:04:08.473Z"
+    },
+    {
+      "id": "002-20261020-minimax-minimax-m3.1-flash-a12e7892ed",
+      "hash": "a12e7892ed",
+      "kind": "model-launch",
+      "label": "minimax-minimax-m3.1-flash",
+      "title": "MiniMax M3.1 Flash: free on AnyRouter",
+      "seconds": 31.5,
+      "renderedAt": "2026-10-20T22:47:38.669Z",
+      "commit": "22a97a8",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-portrait.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-source.tar.gz",
+      "createdAt": "2026-10-20T22:08:37.484Z"
+    },
+    {
+      "id": "003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb",
+      "hash": "0d6fccf2cb",
+      "kind": "model-launch",
+      "label": "inclusionai-ling-3.1-flash",
+      "title": "Ling-3.1-flash: bring your own key",
+      "seconds": 31.5,
+      "renderedAt": "2026-10-20T22:57:12.476Z",
+      "commit": "22a97a8",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-portrait.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-source.tar.gz",
+      "createdAt": "2026-10-20T22:15:31.925Z"
+    },
+    {
+      "id": "004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3",
+      "hash": "ebf8535fa3",
+      "kind": "model-launch",
+      "label": "deepseek-deepseek-v4.1-flash",
+      "title": "DeepSeek V4.1 Flash: bring your own key",
+      "seconds": 31.2,
+      "renderedAt": "2026-10-20T23:08:29.614Z",
+      "commit": "22a97a8",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-portrait.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-source.tar.gz",
+      "createdAt": "2026-10-20T23:08:29.661Z"
+    },
+    {
+      "id": "005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e",
+      "hash": "d0d6ed4e1e",
+      "kind": "model-launch",
+      "label": "nvidia-nemotron-3.5-super-vl-120b-a12b",
+      "title": "Nemotron 3.5 Super VL 120B A12B: free on AnyRouter",
+      "seconds": 29.7,
+      "renderedAt": "2026-10-20T23:34:48.530Z",
+      "commit": "ab200fb",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-portrait.mp4",
+          "cover": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-source.tar.gz",
+      "createdAt": "2026-10-20T23:34:48.556Z"
+    }
+  ]
+}

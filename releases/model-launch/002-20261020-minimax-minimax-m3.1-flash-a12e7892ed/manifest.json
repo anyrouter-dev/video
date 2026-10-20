@@ -1,0 +1,22 @@
+{
+  "id": "002-20261020-minimax-minimax-m3.1-flash-a12e7892ed",
+  "hash": "a12e7892ed",
+  "kind": "model-launch",
+  "label": "minimax-minimax-m3.1-flash",
+  "title": "MiniMax M3.1 Flash: free on AnyRouter",
+  "seconds": 31.5,
+  "renderedAt": "2026-10-20T22:47:38.669Z",
+  "commit": "22a97a8",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-portrait.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/model-launch/model-launch-002-20261020-minimax-minimax-m3.1-flash-a12e7892ed-source.tar.gz",
+  "createdAt": "2026-10-20T22:08:37.484Z"
+}

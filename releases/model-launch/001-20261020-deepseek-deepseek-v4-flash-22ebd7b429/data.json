@@ -1,0 +1,45 @@
+{
+  "notable": true,
+  "label": "deepseek-deepseek-v4-flash",
+  "parts": [
+    "deepseek/deepseek-v4-flash:bf2538e32e40d8e0e9c00db84f9fd1a1e0f57a3547051d8ef4846c8a21963199"
+  ],
+  "films": [
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "name": "DeepSeek-V4-Flash",
+      "maker": "DeepSeek",
+      "mark": "deepseek-color.svg",
+      "accent": "#8EA2FF",
+      "day": "2026-07-08",
+      "dateLabel": "Jul 8, 2026",
+      "dateWords": "July 8",
+      "isNew": false,
+      "window": 45,
+      "billing": "free",
+      "price": {
+        "in": 0,
+        "out": 0
+      },
+      "context": 1050000,
+      "contextLabel": "1.05M",
+      "inputs": [
+        "text",
+        "image"
+      ],
+      "inputsLabel": "Text, image",
+      "outputsLabel": "Text",
+      "keyNames": [],
+      "capture": {
+        "file": "shared/captures/2026-10-19/screens/signed-in/playground-deepseek-v4-flash.png",
+        "date": "2026-10-19",
+        "model": "DeepSeek-V4-Flash",
+        "prompt": "Say hello in five words.",
+        "reply": "Hello! How can I help you today?",
+        "cost": "$0",
+        "meta": "5.81s TTFT · 96.9 t/s · $0 cost",
+        "dateLabel": "Oct 19, 2026"
+      }
+    }
+  ]
+}

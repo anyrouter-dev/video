@@ -1,0 +1,22 @@
+{
+  "id": "001-20261020-deepseek-deepseek-v4-flash-22ebd7b429",
+  "hash": "22ebd7b429",
+  "kind": "model-launch",
+  "label": "deepseek-deepseek-v4-flash",
+  "title": "DeepSeek-V4-Flash: free on AnyRouter",
+  "seconds": 29.5,
+  "renderedAt": "2026-10-20T22:42:39.219Z",
+  "commit": "22a97a8",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-portrait.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/model-launch/model-launch-001-20261020-deepseek-deepseek-v4-flash-22ebd7b429-source.tar.gz",
+  "createdAt": "2026-10-20T22:04:08.473Z"
+}

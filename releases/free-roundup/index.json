@@ -1,0 +1,26 @@
+{
+  "releases": [
+    {
+      "id": "001-20261020-2026-10-21-6ae328c3d6",
+      "hash": "6ae328c3d6",
+      "kind": "free-roundup",
+      "label": "2026-10-21",
+      "title": "18 free models created in the last 30 days",
+      "seconds": 44.6,
+      "renderedAt": "2026-10-20T22:26:40.478Z",
+      "commit": "5afa439",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/free-roundup/free-roundup-001-20261020-2026-10-21-6ae328c3d6.mp4",
+          "cover": "films/2026-10-21/free-roundup/free-roundup-001-20261020-2026-10-21-6ae328c3d6.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/free-roundup/free-roundup-001-20261020-2026-10-21-6ae328c3d6-portrait.mp4",
+          "cover": "films/2026-10-21/free-roundup/free-roundup-001-20261020-2026-10-21-6ae328c3d6-portrait.png"
+        }
+      },
+      "source": "films/2026-10-21/free-roundup/free-roundup-001-20261020-2026-10-21-6ae328c3d6-source.tar.gz",
+      "createdAt": "2026-10-20T22:26:40.511Z"
+    }
+  ]
+}

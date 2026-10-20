@@ -1,0 +1,22 @@
+{
+  "id": "001-20261020-2026-w42-97dd9da3cb",
+  "hash": "97dd9da3cb",
+  "kind": "weekly",
+  "label": "2026-W42",
+  "title": "This week on AnyRouter: October 12 to 18, 2026",
+  "seconds": 34.6,
+  "renderedAt": "2026-10-20T22:34:09.093Z",
+  "commit": "5afa439",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/weekly/weekly-001-20261020-2026-w42-97dd9da3cb.mp4",
+      "cover": "films/2026-10-21/weekly/weekly-001-20261020-2026-w42-97dd9da3cb.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/weekly/weekly-001-20261020-2026-w42-97dd9da3cb-portrait.mp4",
+      "cover": "films/2026-10-21/weekly/weekly-001-20261020-2026-w42-97dd9da3cb-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/weekly/weekly-001-20261020-2026-w42-97dd9da3cb-source.tar.gz",
+  "createdAt": "2026-10-20T22:34:09.173Z"
+}

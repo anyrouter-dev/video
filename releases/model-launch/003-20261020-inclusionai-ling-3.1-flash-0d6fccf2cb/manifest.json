@@ -1,0 +1,22 @@
+{
+  "id": "003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb",
+  "hash": "0d6fccf2cb",
+  "kind": "model-launch",
+  "label": "inclusionai-ling-3.1-flash",
+  "title": "Ling-3.1-flash: bring your own key",
+  "seconds": 31.5,
+  "renderedAt": "2026-10-20T22:57:12.476Z",
+  "commit": "22a97a8",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-portrait.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/model-launch/model-launch-003-20261020-inclusionai-ling-3.1-flash-0d6fccf2cb-source.tar.gz",
+  "createdAt": "2026-10-20T22:15:31.925Z"
+}

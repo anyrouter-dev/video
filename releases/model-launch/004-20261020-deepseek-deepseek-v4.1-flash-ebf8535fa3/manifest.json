@@ -1,0 +1,22 @@
+{
+  "id": "004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3",
+  "hash": "ebf8535fa3",
+  "kind": "model-launch",
+  "label": "deepseek-deepseek-v4.1-flash",
+  "title": "DeepSeek V4.1 Flash: bring your own key",
+  "seconds": 31.2,
+  "renderedAt": "2026-10-20T23:08:29.614Z",
+  "commit": "22a97a8",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-portrait.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/model-launch/model-launch-004-20261020-deepseek-deepseek-v4.1-flash-ebf8535fa3-source.tar.gz",
+  "createdAt": "2026-10-20T23:08:29.661Z"
+}

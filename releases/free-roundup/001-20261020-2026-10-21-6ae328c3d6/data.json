@@ -1,0 +1,155 @@
+{
+  "notable": true,
+  "label": "2026-10-21",
+  "parts": [
+    "2026-10-21:e8f3ad704be273addd488c0b97c7e7a1f81e329ad4486a66654cd231ce409b09"
+  ],
+  "asOf": "2026-10-21",
+  "days": 30,
+  "entries": [
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "day": "2026-10-19",
+      "date": "OCT 19",
+      "maker": "MiniMax",
+      "name": "MiniMax M3.1 Flash",
+      "type": "chat"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+      "day": "2026-10-15",
+      "date": "OCT 15",
+      "maker": "NVIDIA",
+      "name": "Nemotron 3.5 Super VL 120B A12B",
+      "type": "chat"
+    },
+    {
+      "id": "scira/amos-1-large",
+      "day": "2026-10-12",
+      "date": "OCT 12",
+      "maker": "Scira",
+      "name": "Amos 1 Large",
+      "type": "decision"
+    },
+    {
+      "id": "scira/amos-1-small",
+      "day": "2026-10-12",
+      "date": "OCT 12",
+      "maker": "Scira",
+      "name": "Amos 1 Small",
+      "type": "decision"
+    },
+    {
+      "id": "hal-x/thx-01",
+      "day": "2026-10-11",
+      "date": "OCT 11",
+      "maker": "HAL-X",
+      "name": "THX-01",
+      "type": "decision"
+    },
+    {
+      "id": "microsoft/microsoft-decision-1",
+      "day": "2026-10-09",
+      "date": "OCT 09",
+      "maker": "Microsoft",
+      "name": "Microsoft-Decision-1",
+      "type": "decision"
+    },
+    {
+      "id": "upstage/solar-decide-flash",
+      "day": "2026-10-08",
+      "date": "OCT 08",
+      "maker": "Upstage",
+      "name": "Solar Decide Flash",
+      "type": "decision"
+    },
+    {
+      "id": "stealth/glyph-cluster",
+      "day": "2026-10-07",
+      "date": "OCT 07",
+      "maker": "Stealth",
+      "name": "Glyph Cluster",
+      "type": "chat"
+    },
+    {
+      "id": "perplexity/pplx-decider-v1.1-27b",
+      "day": "2026-10-06",
+      "date": "OCT 06",
+      "maker": "Perplexity",
+      "name": "PPLX Decider v1.1 (27B)",
+      "type": "decision"
+    },
+    {
+      "id": "reflection/beam-1.0",
+      "day": "2026-10-05",
+      "date": "OCT 05",
+      "maker": "Reflection",
+      "name": "Beam 1.0",
+      "type": "chat"
+    },
+    {
+      "id": "scira/amos-1-mini",
+      "day": "2026-10-02",
+      "date": "OCT 02",
+      "maker": "Scira",
+      "name": "Amos 1 Mini",
+      "type": "decision"
+    },
+    {
+      "id": "inception/mercury-decide",
+      "day": "2026-09-30",
+      "date": "SEP 30",
+      "maker": "Inception",
+      "name": "Mercury Decide",
+      "type": "decision"
+    },
+    {
+      "id": "liquid/d1",
+      "day": "2026-09-29",
+      "date": "SEP 29",
+      "maker": "Liquid AI",
+      "name": "Liquid d1",
+      "type": "decision"
+    },
+    {
+      "id": "upstage/solar-decide",
+      "day": "2026-09-28",
+      "date": "SEP 28",
+      "maker": "Upstage",
+      "name": "Solar Decide",
+      "type": "decision"
+    },
+    {
+      "id": "respan/span-01",
+      "day": "2026-09-26",
+      "date": "SEP 26",
+      "maker": "Respan",
+      "name": "Span-01",
+      "type": "decision"
+    },
+    {
+      "id": "respan/span-01-lite",
+      "day": "2026-09-26",
+      "date": "SEP 26",
+      "maker": "Respan",
+      "name": "Span-01 Lite",
+      "type": "decision"
+    },
+    {
+      "id": "jaredpalmer/kev-4b",
+      "day": "2026-09-25",
+      "date": "SEP 25",
+      "maker": "Jared Palmer",
+      "name": "Kev 4B",
+      "type": "decision"
+    },
+    {
+      "id": "meituan/longcat-2.5-preview",
+      "day": "2026-09-25",
+      "date": "SEP 25",
+      "maker": "Meituan",
+      "name": "LongCat-2.5-Preview",
+      "type": "chat"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e",
+  "hash": "d0d6ed4e1e",
+  "kind": "model-launch",
+  "label": "nvidia-nemotron-3.5-super-vl-120b-a12b",
+  "title": "Nemotron 3.5 Super VL 120B A12B: free on AnyRouter",
+  "seconds": 29.7,
+  "renderedAt": "2026-10-20T23:34:48.530Z",
+  "commit": "ab200fb",
+  "renditions": {
+    "landscape": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e.png"
+    },
+    "portrait": {
+      "artifact": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-portrait.mp4",
+      "cover": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-portrait.png"
+    }
+  },
+  "source": "films/2026-10-21/model-launch/model-launch-005-20261020-nvidia-nemotron-3.5-super-vl-120b-a12b-d0d6ed4e1e-source.tar.gz",
+  "createdAt": "2026-10-20T23:34:48.556Z"
+}

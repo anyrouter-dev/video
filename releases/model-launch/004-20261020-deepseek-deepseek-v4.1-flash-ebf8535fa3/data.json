@@ -1,0 +1,105 @@
+{
+  "notable": true,
+  "label": "deepseek-deepseek-v4.1-flash",
+  "parts": [
+    "deepseek/deepseek-v4.1-flash:519cb8b8332687226325df6631fba898bb4b93fe61ed5feb4d61bd79d4ffe1f4"
+  ],
+  "films": [
+    {
+      "id": "deepseek/deepseek-v4.1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "maker": "DeepSeek",
+      "mark": "deepseek-color.svg",
+      "accent": "#8EA2FF",
+      "day": "2026-09-10",
+      "dateLabel": "Sep 10, 2026",
+      "dateWords": "September 10",
+      "isNew": true,
+      "window": 45,
+      "billing": "byok",
+      "price": {
+        "in": 0.04,
+        "out": 0.144
+      },
+      "context": 1050000,
+      "contextLabel": "1.05M",
+      "inputs": [
+        "text",
+        "image"
+      ],
+      "inputsLabel": "Text, image",
+      "outputsLabel": "Text",
+      "keyNames": [
+        {
+          "name": "NVIDIA",
+          "named": true
+        },
+        {
+          "name": "OpenRouter",
+          "named": true
+        },
+        {
+          "name": "Ollama",
+          "named": true
+        },
+        {
+          "name": "AIHubMix",
+          "named": true
+        },
+        {
+          "name": "DeepInfra",
+          "named": true
+        },
+        {
+          "name": "router",
+          "named": false
+        },
+        {
+          "name": "Vercel",
+          "named": true
+        },
+        {
+          "name": "Novita",
+          "named": true
+        },
+        {
+          "name": "SiliconFlow",
+          "named": true
+        },
+        {
+          "name": "GMI Cloud",
+          "named": true
+        },
+        {
+          "name": "Hugging Face",
+          "named": true
+        },
+        {
+          "name": "Venice",
+          "named": true
+        },
+        {
+          "name": "Nous Research",
+          "named": true
+        },
+        {
+          "name": "Baseten",
+          "named": true
+        },
+        {
+          "name": "Fireworks",
+          "named": true
+        },
+        {
+          "name": "Wafer",
+          "named": true
+        },
+        {
+          "name": "OneToken",
+          "named": true
+        }
+      ],
+      "capture": null
+    }
+  ]
+}

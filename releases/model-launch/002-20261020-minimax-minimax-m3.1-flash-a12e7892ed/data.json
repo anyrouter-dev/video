@@ -1,0 +1,46 @@
+{
+  "notable": true,
+  "label": "minimax-minimax-m3.1-flash",
+  "parts": [
+    "minimax/minimax-m3.1-flash:26da2dba7f02a7d495a1f2fe7ca826b12767dcda580901a70b95c5b9b40baa77"
+  ],
+  "films": [
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "name": "MiniMax M3.1 Flash",
+      "maker": "MiniMax",
+      "mark": "minimax-color.svg",
+      "accent": "#FF6B86",
+      "day": "2026-10-19",
+      "dateLabel": "Oct 19, 2026",
+      "dateWords": "October 19",
+      "isNew": true,
+      "window": 45,
+      "billing": "free",
+      "price": {
+        "in": 0,
+        "out": 0
+      },
+      "context": 1000000,
+      "contextLabel": "1M",
+      "inputs": [
+        "text",
+        "image",
+        "video"
+      ],
+      "inputsLabel": "Text, image, video",
+      "outputsLabel": "Text",
+      "keyNames": [],
+      "capture": {
+        "file": "shared/captures/2026-10-19/screens/signed-in/playground-minimax-m3-1-flash.png",
+        "date": "2026-10-19",
+        "model": "MiniMax M3.1 Flash",
+        "prompt": "Say hello in five words.",
+        "reply": "Hello! How are you today?",
+        "cost": "$0",
+        "meta": "4.35s TTFT · 142.9 t/s · $0 cost",
+        "dateLabel": "Oct 19, 2026"
+      }
+    }
+  ]
+}

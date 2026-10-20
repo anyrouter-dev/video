@@ -1,0 +1,52 @@
+{
+  "notable": true,
+  "label": "inclusionai-ling-3.1-flash",
+  "parts": [
+    "inclusionai/ling-3.1-flash:1e4ab9d79cdfd467522c60bad8d2fa97977ab032f9ec5a6a663bab49981f3831"
+  ],
+  "films": [
+    {
+      "id": "inclusionai/ling-3.1-flash",
+      "name": "Ling-3.1-flash",
+      "maker": "inclusionAI",
+      "mark": "inclusionai.svg",
+      "accent": "#B9A4FF",
+      "day": "2026-10-02",
+      "dateLabel": "Oct 2, 2026",
+      "dateWords": "October 2",
+      "isNew": true,
+      "window": 45,
+      "billing": "byok",
+      "price": {
+        "in": 0.075,
+        "out": 0.225
+      },
+      "context": 262144,
+      "contextLabel": "262K",
+      "inputs": [
+        "text"
+      ],
+      "inputsLabel": "Text",
+      "outputsLabel": "Text",
+      "keyNames": [
+        {
+          "name": "Novita",
+          "named": true
+        },
+        {
+          "name": "OpenRouter",
+          "named": true
+        },
+        {
+          "name": "Command Code",
+          "named": true
+        },
+        {
+          "name": "Vercel",
+          "named": true
+        }
+      ],
+      "capture": null
+    }
+  ]
+}
