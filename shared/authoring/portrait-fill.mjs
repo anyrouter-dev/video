@@ -27,9 +27,10 @@ export const SHORTS = { bottom: 1540, right: 960, rightFrom: 900 };
 // The content block spans at least `min` of the height from `top` to `bottom`, outside travels,
 // in all but `maxShort` of the frames.
 export const FILL = { top: 200, bottom: 1540, min: 0.7, maxShort: 0.2 };
-// What counts as ink in a rendered frame: darker than the background dots (#DCDCDC) and hairlines
-// (#E7E7E7), in at least `row` px of a row.
-const INK = { below: 200, row: 4, zone: 24 };
+// What counts as ink in a rendered frame: a pixel `contrast` away from the frame's commonest value,
+// so a light page's background dots (#DCDCDC) and hairlines (#E7E7E7) are not ink, and a dark stage
+// reads the same as a light one; in at least `row` px of a row.
+const INK = { contrast: 56, row: 4, zone: 24 };
 // A crop edge runs through text when, for `run` px along it (gaps up to `bridge` px between
 // strokes bridged), there is ink within `reach` px on both sides, ignoring the `rule` px either
 // side of the edge where a hairline border may sit. A side edge reaches past a word gap, so a cut
@@ -89,13 +90,16 @@ export function cropCuts(img, region, cropped = { left: true, right: true, top: 
  * (null when the frame is blank) and `zone` counts ink pixels in the Shorts zones.
  */
 export function frameInk(img, masks = []) {
+  const hist = new Uint32Array(256);
+  for (let i = 0; i < img.px.length; i++) hist[img.px[i]]++;
+  const bg = hist.indexOf(Math.max(...hist));
   let top = null, bottom = null, zone = 0;
   for (let y = 0; y < img.h; y++) {
     const off = masks.filter(m => y >= m.y0 && y < m.y1);
     const row = y * img.w, low = y > SHORTS.bottom, side = y > SHORTS.rightFrom;
     let n = 0;
     for (let x = 0; x < img.w; x++) {
-      if (img.px[row + x] >= INK.below) continue;
+      if (Math.abs(img.px[row + x] - bg) < INK.contrast) continue;
       if (off.length && off.some(m => x >= m.x0 && x < m.x1)) continue;
       n++;
       if (low || (side && x > SHORTS.right)) zone++;
@@ -206,8 +210,8 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
 
 /** Samples a rendered portrait mp4, scaled to 1080x1920, the caption band masked across. */
 export function sampleVideo(file, { step = 0.5, band = [PORTRAIT_CAPTION_BAND.top, PORTRAIT_CAPTION_BAND.top + PORTRAIT_CAPTION_BAND.height] } = {}) {
-  const { w, h } = PORTRAIT, size = w * h;
-  const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-vf', `fps=${1 / step},scale=${w}:${h}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { maxBuffer: 1 << 31 });
+  const { width: w, height: h } = PORTRAIT, size = w * h;
+  const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-vf', `fps=${1 / step},scale=${w}:${h}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { maxBuffer: 2 ** 31 });
   const mask = [{ x0: 0, y0: band[0], x1: w, y1: band[1] }], samples = [];
   for (let i = 0; (i + 1) * size <= raw.length; i++) {
     samples.push({ t: +(i * step).toFixed(3), travel: false, ink: frameInk({ w, h, px: raw.subarray(i * size, (i + 1) * size) }, mask) });

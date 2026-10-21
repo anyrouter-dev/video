@@ -67,6 +67,16 @@ test('a caption under the picture does not count as content', () => {
   assert.ok(fillOf(frameInk(f, [{ x0: 190, y0: 1410, x1: 890, y1: 1530 }])) < FILL.min, 'masked, it does not');
 });
 
+test('a dark stage is judged by what differs from it, not by how dark it is', () => {
+  const f = frame();
+  f.px.fill(11);
+  paint(f, 100, 220, 900, 900, 240);
+  assert.ok(fillOf(frameInk(f)) < FILL.min, 'the dark background itself is not content');
+  assert.equal(frameInk(f).zone, 0, 'nor is it ink under the Shorts UI');
+  paint(f, 100, 1200, 900, 1300, 240);
+  assert.ok(fillOf(frameInk(f)) >= FILL.min);
+});
+
 const sample = (t, f, travel = false) => ({ t, travel, ink: frameInk(f) });
 
 test('a film fails when more than a fifth of its frames are short, and travels are not judged', () => {
