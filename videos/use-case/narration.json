@@ -322,7 +322,7 @@
     },
     {
      "text": "Start on anyrouter/auto.",
-     "capture": "shared/surfaces/ar-docs-presets.png"
+     "capture": "shared/surfaces/ar-model-auto.png"
     }
    ],
    "result": "Every agent shares one balance and one request log.",
@@ -396,8 +396,8 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
-     "from": "https://docs.anyrouter.dev/features/presets"
+     "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
      "says": "capture: coding-agents/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -506,11 +506,11 @@
    "steps": [
     {
      "text": "Install the Agent SDK.",
-     "capture": "shared/surfaces/tp-claude-agent-sdk.png"
+     "capture": "shared/surfaces/tp-npm-claude-agent-sdk.png"
     },
     {
      "text": "Point the base URL and key at AnyRouter.",
-     "capture": "shared/surfaces/ar-docs-messages.png"
+     "capture": "shared/surfaces/ar-unify-messages.png"
     },
     {
      "text": "Pass a model, such as anyrouter/auto.",
@@ -568,12 +568,12 @@
      "from": "use-cases.json claude-agent-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/tp-claude-agent-sdk.png (Claude Agent SDK docs, overview (the install command is further down the page).)",
-     "from": "https://code.claude.com/docs/en/agent-sdk/overview"
+     "says": "capture: shared/surfaces/tp-npm-claude-agent-sdk.png (npm: @anthropic-ai/claude-agent-sdk.)",
+     "from": "https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-messages.png (AnyRouter API reference: Anthropic-compatible /messages at https://anyrouter.dev/api.)",
-     "from": "https://docs.anyrouter.dev/api-reference/messages"
+     "says": "capture: shared/surfaces/ar-unify-messages.png (anyrouter.dev/unify-api/messages: the Anthropic-compatible endpoint.)",
+     "from": "https://anyrouter.dev/unify-api/messages"
     },
     {
      "says": "capture: claude-agent-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -601,7 +601,7 @@
     },
     {
      "text": "Switch models when a task needs more.",
-     "capture": "shared/surfaces/ar-docs-presets.png"
+     "capture": "shared/surfaces/ar-docs-cli-claude-model.png"
     }
    ],
    "result": "It codes on whichever free model is answering.",
@@ -662,8 +662,8 @@
      "from": "use-cases.json claude-code-free-models.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
-     "from": "https://docs.anyrouter.dev/features/presets"
+     "says": "capture: shared/surfaces/ar-docs-cli-claude-model.png (AnyRouter docs, CLI → Claude Code: pinning a model with --model. Scrolled to: \"# Pin a model for the session anyr claude)",
+     "from": "https://docs.anyrouter.dev/cli/claude-code"
     },
     {
      "says": "capture: claude-code-free-models/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -767,7 +767,7 @@
     {
      "text": "Set a free model id.",
      "more": "If its route runs out, AnyRouter answers through anyrouter/free.",
-     "capture": "shared/surfaces/tp-opencode-providers.png"
+     "capture": "shared/surfaces/ar-docs-opencode.png"
     }
    ],
    "result": "The tool needs no other setup.",
@@ -835,8 +835,8 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
-     "says": "capture: shared/surfaces/tp-opencode-providers.png (OpenCode docs, providers: adding an OpenAI-compatible provider. Scrolled to: \"Custom provider\".)",
-     "from": "https://opencode.ai/docs/providers/"
+     "says": "capture: shared/surfaces/ar-docs-opencode.png (AnyRouter guide: OpenCode, the opencode.json provider block. Scrolled to: \"Drop-in. Zero code changes. The fastest path )",
+     "from": "https://docs.anyrouter.dev/guides/opencode"
     },
     {
      "says": "capture: openrouter-free-in-your-tools/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -931,7 +931,7 @@
    "steps": [
     {
      "text": "Save a Google key in AnyRouter.",
-     "capture": "shared/surfaces/tp-google-api-key.png"
+     "capture": "shared/surfaces/ar-docs-byok-google.png"
     },
     {
      "text": "Run anyr claude with a Gemini model.",
@@ -991,8 +991,8 @@
      "from": "use-cases.json gemini-in-claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/tp-google-api-key.png (Gemini API docs: getting an API key in Google AI Studio.)",
-     "from": "https://ai.google.dev/gemini-api/docs/api-key"
+     "says": "capture: shared/surfaces/ar-docs-byok-google.png (AnyRouter docs, BYOK providers: Google AI Studio.)",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/google-ai-studio"
     },
     {
      "says": "capture: gemini-in-claude-code/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1011,7 +1011,7 @@
    "steps": [
     {
      "text": "Save keys for two providers.",
-     "capture": "shared/dashboard/byok.png"
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png"
     },
     {
      "text": "Keep the Fallback strategy.",
@@ -1079,8 +1079,8 @@
      "from": "use-cases.json claude-code-multiple-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
-     "from": "https://anyrouter.dev/dashboard/byok"
+     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png (The Add a provider key dialog: search 68 providers, Anthropic and others listed, Free tier badges.)",
+     "from": "https://anyrouter.dev/dashboard/byok?add=true"
     },
     {
      "says": "capture: shared/surfaces/ar-docs-credential-selection.png (AnyRouter docs: credential selection (Fallback, Round Robin, Weighted).)",
@@ -1111,7 +1111,7 @@
     },
     {
      "text": "Read which model answered.",
-     "capture": "shared/surfaces/ar-docs-chat-completions.png"
+     "capture": "shared/surfaces/ar-docs-fallbacks-header.png"
     }
    ],
    "result": "Free failover on every plan, and stable paid failover.",
@@ -1169,8 +1169,8 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-chat-completions.png (AnyRouter API reference: POST /api/v1/chat/completions.)",
-     "from": "https://docs.anyrouter.dev/api-reference/chat-completions"
+     "says": "capture: shared/surfaces/ar-docs-fallbacks-header.png (AnyRouter guide, model fallbacks: telling which model answered. Scrolled to: \"Requests are priced using the model that a)",
+     "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
     },
     {
      "says": "capture: virtual-presets/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1193,7 +1193,7 @@
     },
     {
      "text": "Add it under BYOK.",
-     "capture": "shared/dashboard/byok.png"
+     "capture": "shared/surfaces/ar-docs-byok-nvidia.png"
     },
     {
      "text": "Call AnyRouter with your AnyRouter key.",
@@ -1260,8 +1260,8 @@
      "from": "https://build.nvidia.com/"
     },
     {
-     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
-     "from": "https://anyrouter.dev/dashboard/byok"
+     "says": "capture: shared/surfaces/ar-docs-byok-nvidia.png (AnyRouter docs, BYOK providers: NVIDIA NIM (nvapi- keys, Always use → Strict).)",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/nvidia"
     },
     {
      "says": "capture: nvidia-free-key/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1289,7 +1289,7 @@
     },
     {
      "text": "Call anyrouter/free any time.",
-     "capture": "shared/surfaces/ar-model-free.png"
+     "capture": "shared/surfaces/ar-free.png"
     }
    ],
    "result": "You do not need Go to call free models.",
@@ -1352,8 +1352,8 @@
      "from": "https://anyrouter.dev/pricing"
     },
     {
-     "says": "capture: shared/surfaces/ar-model-free.png (Model page: anyrouter/free.)",
-     "from": "https://anyrouter.dev/model/anyrouter/free"
+     "says": "capture: shared/surfaces/ar-free.png (anyrouter.dev/free: free models and anyrouter/free.)",
+     "from": "https://anyrouter.dev/free"
     },
     {
      "says": "capture: go-plan/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1547,7 +1547,7 @@
    "steps": [
     {
      "text": "Compare list prices in the catalog.",
-     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/models-landscape.png"
+     "capture": "shared/surfaces/ar-compare.png"
     },
     {
      "text": "Start on anyrouter/auto.",
@@ -1556,7 +1556,7 @@
     },
     {
      "text": "Pin an id once you have measured it.",
-     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/model-deepseek-v4-pro-landscape.png"
+     "capture": "shared/surfaces/ar-model-auto.png"
     }
    ],
    "result": "Switching models is now a string change.",
@@ -1614,12 +1614,12 @@
      "from": "use-cases.json cheapest-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/models-landscape.png (The top of the /models catalog.)",
-     "from": "https://anyrouter.dev/models"
+     "says": "capture: shared/surfaces/ar-compare.png (anyrouter.dev/compare: side-by-side model list prices.)",
+     "from": "https://anyrouter.dev/compare"
     },
     {
-     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/model-deepseek-v4-pro-landscape.png (The public detail page for deepseek/deepseek-v4-pro.)",
-     "from": "https://anyrouter.dev/model/deepseek/deepseek-v4-pro"
+     "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
      "says": "capture: cheapest-llm-api/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1638,7 +1638,7 @@
    "steps": [
     {
      "text": "Install the AnyRouter provider.",
-     "capture": "shared/surfaces/ar-docs-sdk.png"
+     "capture": "shared/surfaces/tp-npm-ai-sdk-provider.png"
     },
     {
      "text": "Pass a catalog id.",
@@ -1697,8 +1697,8 @@
      "from": "use-cases.json ai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-sdk.png (AnyRouter docs, SDK: the @anyr/ai-sdk-provider package for the Vercel AI SDK.)",
-     "from": "https://docs.anyrouter.dev/sdk"
+     "says": "capture: shared/surfaces/tp-npm-ai-sdk-provider.png (npm: @anyr/ai-sdk-provider.)",
+     "from": "https://www.npmjs.com/package/@anyr/ai-sdk-provider"
     },
     {
      "says": "capture: ai-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1725,7 +1725,7 @@
     },
     {
      "text": "Use anyrouter/free for the first call.",
-     "capture": "shared/surfaces/ar-model-free.png"
+     "capture": "shared/surfaces/ar-free.png"
     }
    ],
    "result": "Same client, same calls, across the whole catalog.",
@@ -1783,8 +1783,8 @@
      "from": "https://github.com/openai/openai-node"
     },
     {
-     "says": "capture: shared/surfaces/ar-model-free.png (Model page: anyrouter/free.)",
-     "from": "https://anyrouter.dev/model/anyrouter/free"
+     "says": "capture: shared/surfaces/ar-free.png (anyrouter.dev/free: free models and anyrouter/free.)",
+     "from": "https://anyrouter.dev/free"
     },
     {
      "says": "capture: openai-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1811,7 +1811,7 @@
     },
     {
      "text": "Start with anyrouter/auto.",
-     "capture": "shared/surfaces/ar-docs-presets.png"
+     "capture": "shared/surfaces/ar-model-auto.png"
     }
    ],
    "result": "Chat completions, messages and responses. Same key, same catalog.",
@@ -1872,8 +1872,8 @@
      "from": "https://anyrouter.dev/unify-api/messages"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
-     "from": "https://docs.anyrouter.dev/features/presets"
+     "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
      "says": "capture: unify-api/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1896,12 +1896,12 @@
     },
     {
      "text": "Send each the same prompt.",
-     "capture": "shared/surfaces/ar-docs-vercel.png"
+     "capture": "shared/surfaces/ar-compare.png"
     },
     {
      "text": "Compare answers, latency and cost.",
      "more": "Cost per request is in the dashboard logs.",
-     "capture": "shared/dashboard/logs.png"
+     "capture": "shared/surfaces/ar-docs-request-logs.png"
     }
    ],
    "result": "One key and one client for every model you test.",
@@ -1970,12 +1970,12 @@
      "from": "use-cases.json model-evals.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-vercel.png (AnyRouter guide: Vercel AI SDK with @anyr/ai-sdk-provider.)",
-     "from": "https://docs.anyrouter.dev/guides/vercel-ai-sdk"
+     "says": "capture: shared/surfaces/ar-compare.png (anyrouter.dev/compare: side-by-side model list prices.)",
+     "from": "https://anyrouter.dev/compare"
     },
     {
-     "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
-     "from": "https://anyrouter.dev/dashboard/logs"
+     "says": "capture: shared/surfaces/ar-docs-request-logs.png (AnyRouter docs: request logs (Dashboard → Logs), model and cost per request.)",
+     "from": "https://docs.anyrouter.dev/features/request-logs"
     },
     {
      "says": "capture: model-evals/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -1994,7 +1994,7 @@
    "steps": [
     {
      "text": "Keep your primary model, here on your own key.",
-     "capture": "shared/surfaces/ar-docs-chat-completions.png"
+     "capture": "shared/surfaces/ar-byok.png"
     },
     {
      "text": "Add backup models in order.",
@@ -2057,8 +2057,8 @@
      "from": "use-cases.json agent-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-chat-completions.png (AnyRouter API reference: POST /api/v1/chat/completions.)",
-     "from": "https://docs.anyrouter.dev/api-reference/chat-completions"
+     "says": "capture: shared/surfaces/ar-byok.png (anyrouter.dev/byok: bring your own provider keys.)",
+     "from": "https://anyrouter.dev/byok"
     },
     {
      "says": "capture: shared/surfaces/ar-docs-fallbacks-header.png (AnyRouter guide, model fallbacks: telling which model answered. Scrolled to: \"Requests are priced using the model that a)",
@@ -2081,7 +2081,7 @@
    "steps": [
     {
      "text": "Add the key under BYOK.",
-     "capture": "shared/dashboard/byok.png"
+     "capture": "shared/surfaces/ar-docs-byok.png"
     },
     {
      "text": "Turn on donate.",
@@ -2148,8 +2148,8 @@
      "from": "use-cases.json donate-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
-     "from": "https://anyrouter.dev/dashboard/byok"
+     "says": "capture: shared/surfaces/ar-docs-byok.png (AnyRouter docs: BYOK, your provider keys behind your sk-ar key.)",
+     "from": "https://docs.anyrouter.dev/features/byok"
     },
     {
      "says": "capture: shared/surfaces/ar-docs-shared-pool-credits.png (AnyRouter docs, shared pool: credits earned from donated keys. Scrolled to: \"Features Account Settings AnyRouter Agent M)",
@@ -2252,7 +2252,7 @@
    "steps": [
     {
      "text": "Add your Anthropic key in BYOK.",
-     "capture": "shared/dashboard/byok.png"
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png"
     },
     {
      "text": "Test the key, and save it.",
@@ -2315,8 +2315,8 @@
      "from": "use-cases.json byok-anthropic.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
-     "from": "https://anyrouter.dev/dashboard/byok"
+     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png (The Add a provider key dialog: search 68 providers, Anthropic and others listed, Free tier badges.)",
+     "from": "https://anyrouter.dev/dashboard/byok?add=true"
     },
     {
      "says": "capture: shared/surfaces/ar-docs-byok-anthropic.png (AnyRouter docs, BYOK providers: Anthropic (sk-ant-… keys).)",
@@ -2343,11 +2343,11 @@
     },
     {
      "text": "Exchange the code for a short-lived key.",
-     "capture": "shared/surfaces/ar-docs-oauth-api.png"
+     "capture": "shared/surfaces/ar-docs-siwa.png"
     },
     {
      "text": "Call models on their behalf.",
-     "capture": "shared/surfaces/ar-docs-siwa.png"
+     "capture": "shared/surfaces/ar-siwa.png"
     }
    ],
    "result": "You never store a raw provider secret.",
@@ -2402,12 +2402,12 @@
      "from": "use-cases.json sign-in.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-oauth-api.png (AnyRouter API reference: OAuth code exchange for a scoped sk-ar-v1 key.)",
-     "from": "https://docs.anyrouter.dev/api-reference/oauth"
-    },
-    {
      "says": "capture: shared/surfaces/ar-docs-siwa.png (AnyRouter guide: Sign in with AnyRouter.)",
      "from": "https://docs.anyrouter.dev/guides/sign-in-with-anyrouter"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-siwa.png (anyrouter.dev/sign-in-with-anyrouter landing page.)",
+     "from": "https://anyrouter.dev/sign-in-with-anyrouter"
     },
     {
      "says": "capture: sign-in/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
@@ -2507,7 +2507,7 @@
     },
     {
      "text": "Keep model calls on anyrouter/auto.",
-     "capture": "shared/surfaces/ar-docs-presets.png"
+     "capture": "shared/surfaces/ar-model-auto.png"
     }
    ],
    "result": "One endpoint, instead of a new config in every app.",
@@ -2569,8 +2569,8 @@
      "from": "use-cases.json mcp-for-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
-     "from": "https://docs.anyrouter.dev/features/presets"
+     "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
      "says": "capture: mcp-for-agents/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",

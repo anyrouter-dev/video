@@ -434,11 +434,11 @@ export function captionsOf(said = []) {
 // The link on the lockup sits on one row, in Geist, as large as fits the safe width; a link that
 // fits no size fails the build: a link cut across rows reads as two addresses.
 const URL_SIZES = { landscape: [48, 44, 40, 36, 32], portrait: [44, 40, 36, 32] }, URL_PAD = { landscape: 36, portrait: 20 };
-// Landscape sets the lockup beside the live page (.pagef, CLOSE.page px wide), so its link has the rest.
-const CLOSE = { page: 640, gap: 64 };
+// Landscape sets the headline and lockup beside the live page (.pagef, CLOSE.page px wide), the link under both.
+const CLOSE = { page: 860, gap: 64 };
 export function urlSet(link) {
   const set = o => {
-    const room = (o === 'landscape' ? ACROSS[o].width - CLOSE.page - CLOSE.gap : ACROSS[o].width) - 2 * URL_PAD[o] - 8, px = URL_SIZES[o].find(x => widthOf(link, { px: x, weight: 500, tracking: -0.01 }) <= room);
+    const room = ACROSS[o].width - 2 * URL_PAD[o] - 8, px = URL_SIZES[o].find(x => widthOf(link, { px: x, weight: 500, tracking: -0.01 }) <= room);
     if (!px) throw new Error(`the link ${link} does not sit on one row of the ${o} lockup`);
     return { text: link, px };
   };
@@ -540,8 +540,10 @@ const fitsBar = t => widthOf(t, { px: BAR_PX, weight: 500 }) <= BAR_ROOM;
 /** The words in a real screen's bar: its address without the scheme, or the command it ran. */
 export function barOf(c) {
   if (c.kind === 'terminal') return fitsBar(`$ ${c.command}`) ? `$ ${c.command}` : c.command.split(' ').slice(0, 2).join(' ');
-  const u = new URL(c.url), full = `${u.host}${u.pathname.replace(/\/$/, '')}`;
-  return fitsBar(full) ? full : u.host;
+  // too long for the bar, it keeps its host and its last part, the elided middle marked
+  const u = new URL(c.url), path = u.pathname.replace(/\/$/, ''), full = `${u.host}${path}${u.search}`;
+  const short = `${u.host}/…/${path.split('/').at(-1)}`;
+  return [full, `${u.host}${path}`, short].find(fitsBar) ?? u.host;
 }
 const frameHtml = (c, cls, img = `<img class="si" src="assets/captures/${esc(c.name)}" alt="">`) => `<div class="sf ${cls}${c.kind === 'terminal' ? ' tm' : ''}" data-layout-allow-overflow>
       <div class="sb"><span class="dots"><i></i><i></i><i></i></span><span class="su">${esc(c.bar)}</span></div><div class="sv">${img}</div></div>`;
@@ -683,11 +685,11 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     <section class="pn p-problem">${back}<div class="blk"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}</div></section>
     <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) : '')).join('')}</div></section>
     <section class="pn p-result">${back}<div class="blk"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}</div></section>
-    <section class="pn p-close">${back}<div class="cblk">
-      ${frameHtml({ ...copy.page.landscape, bar: '' }, 'pagef', `<img class="si il" src="assets/captures/${esc(copy.page.landscape.name)}" alt=""><img class="si ip" src="assets/captures/${esc(copy.page.portrait.name)}" alt="">`)}
+    <section class="pn p-close">${back}<div class="cblk"><div class="crow">
+      ${frameHtml(copy.page.landscape, 'pagef', `<img class="si il" src="assets/captures/${esc(copy.page.landscape.name)}" alt=""><img class="si ip" src="assets/captures/${esc(copy.page.portrait.name)}" alt="">`)}
       <div class="ccol"><p class="h2" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</p>
-      <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-        <div class="url" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div></div></section>
+      <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div></div></div></div>
+      <div class="url" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></section>
     </div></div></div></div></div></div></div>
     <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span style="${fsVars(c.px, 'cf')}">${esc(c.text)}</span></div>`).join('')}</div>`;
 
@@ -879,16 +881,17 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // a step's real screen spans the safe width under its step and shows the screen zoomed in, as
     // much of its top as the room under the step allows: the part the capture was scrolled to
     const sk = STEPS.map((_, k) => $(".sk.s" + k));
-    const SF_W = TALL ? 900 : 1500, ZOOM = 1.45;
+    // a phone reads the screen zoomed further in, and taller
+    const SF_W = TALL ? 900 : 1500, ZOOM = TALL ? 2.0 : 1.45, SF_H = TALL ? 760 : SF_W * 0.5625;
     const skH = sk.map((f, k) => {
       if (!f) return 0;
-      const bar = f.querySelector(".sb").offsetHeight, room = SY + SH - doneY(k) - hs[k] - HG - 8;
+      const bar = f.querySelector(".sb").offsetHeight, room = SY + SH - doneY(k) - hs[k] - HG - 24;
       f.style.width = SF_W + "px";
       f.style.left = (W - SF_W) / 2 + "px";
-      f.querySelector(".sv").style.height = Math.max(240, Math.min(room - bar - 4, SF_W * 0.5625)) + "px";
+      f.querySelector(".sv").style.height = Math.max(240, Math.min(room - bar - 20, SF_H)) + "px";
       const img = f.querySelector(".si");
       img.style.width = SF_W * ZOOM + "px";
-      img.style.marginLeft = -SF_W * (ZOOM - 1) * 0.35 + "px";
+      img.style.marginLeft = -SF_W * ZOOM * (TALL ? 0.2 : 0.12) + "px";
       return f.offsetHeight;
     });
     const place = k => {
@@ -899,7 +902,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     STEPS.forEach((st, k) => {
       const f = sk[k];
       if (!f) return;
-      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win;
+      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win + 16;
       tl.set(f, { autoAlpha: 0, y }, 0);
       tl.set(f, { autoAlpha: 1 }, at);
       // the audit reads its bar once it has landed, and not while it leaves (stage-audit.mjs, flight)
@@ -1069,7 +1072,7 @@ function cuesOf({ timing: T, cuts, land, rolls, copy }) {
 // Behind every panel a field of dots on a far plane drifts, so depth reads while the text holds still.
 const DOTS = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Ccircle cx='24' cy='24' r='2.4' fill='%23DCDCDC'/%3E%3C/svg%3E")`;
 export const CSS = `
-  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:72px;--tw:${WIN.landscape.width}px}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:64px;--tw:${WIN.landscape.width}px}
   /* the camera: a perspective, then one wrapper per move (pull back, swing, push in, turn, travel) */
   .film .cam{position:absolute;inset:0;perspective:var(--persp);perspective-origin:50% 50%}
   .film .cpull,.film .carc,.film .cpush,.film .crotx,.film .croty,.film .cpos{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50% 0}
@@ -1176,11 +1179,12 @@ export const CSS = `
   .film .sf.tm .sb{border-bottom-color:${C.ink2}}
   .film .sf.tm .su{color:${C.onInkMuted}}
   /* the end card: the live page beside the lockup, or over it in portrait */
-  .film .cblk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:row-reverse;align-items:center;justify-content:center;gap:${CLOSE.gap}px;transform-style:preserve-3d}
+  .film .cblk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:column;align-items:center;gap:48px;transform-style:preserve-3d}
+  .film .crow{display:flex;flex-direction:row-reverse;align-items:center;justify-content:center;gap:${CLOSE.gap}px;width:100%;transform-style:preserve-3d}
   .film .pagef{position:relative;flex:none;width:${CLOSE.page}px}
   .film .pagef .ip{display:none}
   /* the page's own column, zoomed past its margins; the link is in the pill beside it */
-  .film .pagef .sv{aspect-ratio:4/3}
+  .film .pagef .sv{aspect-ratio:16/10}
   .film .pagef .il{width:140%;margin-left:-23%}
   .film .ccol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:40px;transform-style:preserve-3d}
   .film .ccol .h2,.film .ccol .end{position:relative;left:auto;right:auto;top:auto}
@@ -1198,7 +1202,8 @@ export const CSS = `
 
   @media (orientation: portrait){
     .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:64px;--tw:${WIN.portrait.width}px}
-    .film .cblk{flex-direction:column;gap:40px}
+    .film .cblk{gap:36px}
+    .film .crow{flex-direction:column;gap:36px}
     .film .pagef{width:900px}
     .film .pagef .sv{aspect-ratio:12/5}
     .film .pagef .ip{width:100%;margin-left:0}

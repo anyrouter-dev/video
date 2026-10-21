@@ -61,7 +61,7 @@ const scriptedOf = slug => {
   const f = NARRATION().films[slug], m = f.motif, fl = f.flow;
   const labels = { single: [m.a, m.b, m.tag, m.fail], rows: (m.rows ?? []).flat(), sprawl: [m.a, ...(m.rows ?? [])], chips: m.items }[m.kind];
   // a real screen's bar names where it came from: the address or the command its manifest row records
-  const bars = f.steps.filter(st => st.capture).map(st => barOf(captureOf(st.capture)));
+  const bars = [...f.steps.filter(st => st.capture).map(st => st.capture), `${slug}/page/viewport-landscape.png`].map(ref => barOf(captureOf(ref)));
   return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note, ...bars].filter(Boolean);
 };
 
