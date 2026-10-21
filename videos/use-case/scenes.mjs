@@ -934,7 +934,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       // once its line is said, a ring breathes out of the marker: this is the step to do
       if (st.voiceAt + 1.2 + 0.5 < until) tl.fromTo(ring, { scale: 1, opacity: 0.7 }, { scale: 3, opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, st.voiceAt + 1.2);
       if (next) {
-        tl.to(el, { y: doneY(k), z: -70, scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
+        tl.to(el, { y: doneY(k), scale: DONE, duration: 0.6, ease: "power4.inOut" }, next.at - 0.1);
         tl.set(el.querySelector(".sm"), { backgroundColor: "${C.bg}", borderColor: "${C.ink}", color: "${C.ink}" }, next.at);
       }
     });
