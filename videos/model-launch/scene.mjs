@@ -123,39 +123,57 @@ export function css(accent) {
   .close .pill{margin-top:44px}
   .cap{position:absolute;left:110px;right:110px;top:928px;height:110px}
   .cap span{position:absolute;left:0;right:0;top:0;text-align:center;font:500 40px/1.35 'Geist';color:${C.ink};opacity:0}
+  .hero{display:none}
   @media (orientation: portrait){
     .rings{left:-330px;top:-260px;width:1300px;height:1300px}
+    .hero{display:flex;position:absolute;left:0;top:0;width:260px;height:260px;align-items:center;justify-content:center;opacity:0}
+    .hero .hmk,.hero .mono-mark{width:260px;height:260px}
+    .hero .hmk{background:center/contain no-repeat}
+    .hero .hmk.inv{filter:brightness(0) invert(1)}
+    .hero .mono-mark{border-width:6px;border-radius:56px;font-size:110px}
     .id{left:60px;top:200px;width:900px}
     .mk,.mono-mark{width:84px;height:84px}
-    .kicker{margin-top:24px}
+    .kicker{margin-top:24px;font-size:36px}
     .name.l{display:none}
     .name.p{display:block;margin-top:14px}
-    .name .nl{font-size:108px}
-    .name.long .nl{font-size:80px}
+    .name .nl{font-size:112px}
+    .name.long .nl{font-size:84px}
     .rule{margin-top:22px;height:6px}
-    .pill{height:56px;margin-top:22px;font-size:32px}
-    .panel{left:60px;top:690px;width:900px;height:610px}
-    .pane{left:30px;right:30px;top:30px;bottom:28px}
+    .pill{height:60px;margin-top:22px;font-size:34px}
+    .panel{left:60px;top:690px;width:900px;height:710px}
+    .pane{left:30px;right:30px;top:36px;bottom:30px}
+    .pane.spec{display:flex;flex-direction:column;justify-content:space-between}
     .row{padding:12px 0}
-    .row .v{font-size:40px}
-    .stamp .big{font-size:116px}
-    .stamp{border-width:6px}
-    .sub{margin-top:16px;font-size:40px}
-    .facts{margin-top:14px}
-    .facts .f{font-size:34px;padding:4px 0}
-    .chips{gap:10px;margin-top:12px}
-    .chip{padding:4px 16px}
-    .bubble{margin-top:40px;font-size:36px}
-    .who{margin-top:34px}
-    .reply{font-size:46px}
-    .meta{margin-top:30px}
-    .code,.term{padding:16px 20px;margin-top:14px}
-    .use.tight .code,.use.tight .term{padding:12px 18px;margin-top:10px}
-    .use.tight .ln{line-height:1.35}
-    .close{bottom:640px;top:160px}
-    .close .logo{width:400px}
-    .close .url div{font-size:32px}
-    .cap{left:60px;right:60px;top:1336px;height:170px}
+    .row .k{font-size:34px}
+    .row .v{font-size:50px}
+    .row.idrow .v{margin-top:14px;font-size:36px}
+    .stamp .big{font-size:170px}
+    .stamp{border-width:8px}
+    .stamp.byok .big{font-size:136px}
+    .stamp.byok~.facts .f{padding:6px 0}
+    .stamp.byok~.facts{margin-top:14px}
+    .sub{margin-top:22px;font-size:52px}
+    .facts{margin-top:26px}
+    .facts .f{font-size:44px;padding:14px 0}
+    .chips{gap:12px;margin-top:14px}
+    .chip{padding:6px 18px}
+    .pg-head span{font-size:34px}
+    .bubble{margin-top:64px;font-size:46px;padding:22px 34px}
+    .who{margin-top:64px;font-size:38px}
+    .reply{margin-top:18px;font-size:66px}
+    .meta{margin-top:48px;font-size:34px}
+    .lbl{font-size:34px}
+    .ln{line-height:1.6}
+    .code,.term{padding:22px 22px;margin-top:20px}
+    .use .lbl+.code+.lbl{margin-top:56px !important}
+    .use.tight .code,.use.tight .term{padding:14px 14px;margin-top:14px}
+    .use.tight .ln{line-height:1.4}
+    .close{left:60px;right:120px;top:360px;bottom:520px;justify-content:flex-start}
+    .close .logo{width:520px;height:520px}
+    .close .url{margin-top:190px}
+    .close .url div{font-size:38px}
+    .close .pill{margin-top:44px;height:72px;font-size:40px;padding:0 34px}
+    .cap{left:60px;right:60px;top:1420px;height:120px}
     .cap span{font-size:40px}
   }`;
 }
@@ -167,6 +185,8 @@ export function body(f, t) {
   const pill = { free: 'Free on AnyRouter', byok: 'Bring your own key', credits: 'AnyRouter credits' }[f.billing];
   // a one-colour mark is drawn in ink, so it reads on the dark stage; a colour mark keeps its colours
   const mark = f.mark ? markImg(f.mark, /-color\.svg$/.test(f.mark) ? 'mk' : 'mk inv') : `<span class="mono-mark">${esc(f.maker.slice(0, 2).toUpperCase())}</span>`;
+  // the portrait opening's big mark: drawn as a background, so the film loads each mark once
+  const hero = f.mark ? `<span class="hmk${/-color\.svg$/.test(f.mark) ? '' : ' inv'}" style="background-image:url(assets/providers/${esc(f.mark)})"></span>` : mark;
   const rings = [170, 250, 340, 440, 560].map((r, k) => `<circle cx="630" cy="630" r="${r}" stroke-dasharray="${k % 2 ? '6 14' : '180 50'}" opacity="${(0.6 - k * 0.07).toFixed(2)}"/>`).join('');
 
   const spec = [
@@ -199,6 +219,7 @@ export function body(f, t) {
   const caps = t.captions.map((c, k) => `<span data-k="${k}">${esc(c.text)}</span>`).join('');
   return `<div class="cam" data-layout-allow-overflow>
     <svg class="rings" viewBox="0 0 1260 1260">${rings}</svg>
+    <div class="hero">${hero}</div>
     <div class="id">${mark}<div class="kicker">${f.isNew ? 'NEW MODEL' : 'ON ANYROUTER'}</div>${name(nameL, 'l')}${name(nameP, 'p')}
       <div class="rule"></div><div><span class="pill ${f.billing}">${pill}</span></div></div>
     <div class="panel"><div class="card"></div>${specPane}${pricePane}${replyPane}${usePane}</div>
@@ -213,11 +234,36 @@ export function inner(t) {
   return `
     const T = ${JSON.stringify(t)};
     fit($$(".name .nl > span").map(s => s.parentElement));
-    // in portrait the card starts under the identity block, however many rows the name takes
+    fit($$(".reply, .bubble"));
+    // in portrait the card fills the height from under the identity block, however many rows the name takes
     if (PORTRAIT) {
       const idBox = $(".id"), panel = $(".panel");
       const bottom = idBox.offsetTop + idBox.offsetHeight + 28;
-      if (bottom > panel.offsetTop) { panel.style.height = (panel.offsetTop + panel.offsetHeight - bottom) + "px"; panel.style.top = bottom + "px"; }
+      panel.style.height = (panel.offsetTop + panel.offsetHeight - bottom) + "px"; panel.style.top = bottom + "px";
+    }
+    // in portrait the opening and the close are hero shots that fill the height: the rings,
+    // centred, round the maker's mark (the AnyRouter mark at the close), the name set low
+    if (PORTRAIT) {
+      const rings = $(".rings"), hero = $(".hero"), idBox = $(".id"), idMark = $(".id .mk, .id .mono-mark");
+      // an <svg> has no offset box: its place is read from its style
+      const rs = getComputedStyle(rings), size = parseFloat(rs.width), outer = 560 / 1260 * size;
+      const at = (cx, cy, r) => ({ x: cx - (parseFloat(rs.left) + size / 2), y: cy - (parseFloat(rs.top) + size / 2), scale: r / outer });
+      const rule = $(".rule"), kicker = $(".kicker");
+      const low = 1400 - (idBox.offsetTop + rule.offsetTop + rule.offsetHeight);
+      const free = idBox.offsetTop + kicker.offsetTop + low - 60;
+      const open = { cx: 510, cy: (200 + free) / 2, r: (free - 200) / 2 };
+      const close = $(".close"), logo = $(".close .logo");
+      const shut = { cx: close.offsetLeft + logo.offsetLeft + logo.offsetWidth / 2, cy: close.offsetTop + logo.offsetTop + logo.offsetHeight / 2, r: 410 };
+      const S = T.beats.spec.at - 0.1, X = T.beats.close.at;
+      tl.set(rings, { transformOrigin: "50% 50%", ...at(open.cx, open.cy, open.r) }, 0);
+      tl.set(hero, { x: open.cx - hero.offsetWidth / 2, y: open.cy - hero.offsetHeight / 2 }, 0);
+      tl.fromTo(hero, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, T.beats.reveal.at + T.at.mark);
+      tl.set(idMark, { opacity: 0 }, 0);
+      tl.fromTo(idBox, { y: low }, { y: 0, duration: 0.8, ease: "expo.inOut", immediateRender: true }, S);
+      tl.to(rings, { x: 0, y: 0, scale: 1, duration: 0.8, ease: "expo.inOut" }, S);
+      tl.to(hero, { opacity: 0, scale: 0.32, x: idBox.offsetLeft + idMark.offsetLeft + idMark.offsetWidth / 2 - hero.offsetWidth / 2, y: idBox.offsetTop + idMark.offsetTop + idMark.offsetHeight / 2 - hero.offsetHeight / 2, duration: 0.8, ease: "expo.inOut" }, S);
+      tl.to(idMark, { opacity: 1, duration: 0.3 }, S + 0.5);
+      tl.to(rings, { ...at(shut.cx, shut.cy, shut.r), duration: 0.9, ease: "expo.inOut" }, X);
     }
     // the camera never rests: a slow push and the rings turning
     tl.fromTo($(".cam"), { scale: 1 }, { scale: PORTRAIT ? 1.02 : 1.05, duration: D, ease: "none" }, 0);
@@ -227,7 +273,7 @@ export function inner(t) {
 
     // reveal: the mark, the kicker, the name rising out of its rows, the rule
     const R = T.beats.reveal.at;
-    tl.from($(".id .mk, .id .mono-mark"), { scale: 0.4, opacity: 0, duration: 0.6, ease: "back.out(2)" }, R + T.at.mark);
+    if (!PORTRAIT) tl.from($(".id .mk, .id .mono-mark"), { scale: 0.4, opacity: 0, duration: 0.6, ease: "back.out(2)" }, R + T.at.mark);
     tl.from($(".kicker"), { opacity: 0, x: -40, duration: 0.7 }, R + T.at.kicker);
     tl.from($$(".name .nl > span"), { yPercent: 115, duration: 0.8, stagger: 0.12, ease: "expo.out" }, R + T.at.name);
     tl.from($(".rule"), { scaleX: 0, duration: 0.7, ease: "power4.inOut" }, R + T.at.rule);
