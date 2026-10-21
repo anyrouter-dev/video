@@ -1,0 +1,9 @@
+$ anyr opencode --dry-run
+command: opencode
+args: []
+env:
+ANYROUTER_MODEL_MODE=concrete
+ANYROUTER_PINNED_PRESET=@preset/coding-stack
+API_TIMEOUT_MS=3000000
+OPENAI_API_KEY=sk-ar-••••••••
+OPENCODE_CONFIG_CONTENT={"$schema":"https://opencode.ai/config.json","model":"anyrouter/anthropic/claude-sonnet-5-5","provider":{"anyrouter":{"models":{"anthropic/claude-sonnet-5-5":{"name":"anthropic/claude-sonnet-5-5"}},"name":"AnyRouter","npm":"@ai-sdk/openai-compatible","options":{"apiKey":"{env:OPENAI_API_KEY}","baseURL":"https://anyrouter.dev/api/v1"}}}}

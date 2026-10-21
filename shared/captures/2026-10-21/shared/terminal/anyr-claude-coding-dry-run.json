@@ -1,0 +1,14 @@
+{
+  "command": "anyr claude --model anyrouter/coding --dry-run",
+  "startedAt": "2026-10-20T19:09:27.829Z",
+  "durationMs": 4,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 4,
+      "stream": "stdout",
+      "text": "command: claude\nargs: []\nenv:\nANTHROPIC_API_KEY=sk-ar-••••••••\nANTHROPIC_AUTH_TOKEN=sk-ar-••••••••\nANTHROPIC_BASE_URL=https://anyrouter.dev/api\nANTHROPIC_DEFAULT_FABLE_MODEL=anyrouter/auto\nANTHROPIC_DEFAULT_FABLE_MODEL_DESCRIPTION=Fable alias + fallback\nANTHROPIC_DEFAULT_HAIKU_MODEL=anthropic/claude-haiku-4.5\nANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION=Background & subagents\nANTHROPIC_DEFAULT_OPUS_MODEL=anthropic/claude-opus-4.6\nANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION=Opus alias\nANTHROPIC_DEFAULT_SONNET_MODEL=anyrouter/auto\nANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION=Sonnet alias\nANTHROPIC_MODEL=anyrouter/coding\nANYROUTER_MODEL_MODE=concrete\nANYROUTER_PINNED_PRESET=@preset/coding-stack\nAPI_TIMEOUT_MS=3000000\nCLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=0\nCLAUDE_CODE_SUBAGENT_MODEL=anthropic/claude-haiku-4.5\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "command": "anyr codex --help",
+  "startedAt": "2026-10-20T19:09:27.756Z",
+  "durationMs": 3,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 3,
+      "stream": "stdout",
+      "text": "anyr codex — launch Codex through AnyRouter\n\nUsage:\n  anyr codex [options] [-- <codex-args>]\n\nLaunches the coding agent through AnyRouter (signs in first if needed).\n\nOptions:\n  --yes, --ok           Skip confirmation prompts (login / install)\n  --model auto|<id>     Session model. auto / anyrouter/auto; [1m] and [500k] are min-context floors on auto (not catalog SKUs).\n  --haiku <id>          Claude /model haiku and subagents\n  --sonnet <id>         Claude /model sonnet\n  --opus <id>           Claude /model opus\n  --fable <id>          Claude /model fable (also the auto-fallback target)\n  --effort <level>      Reasoning effort: minimal | low | medium | high | xhigh | max\n  --yolo                Claude only: launch with --dangerously-skip-permissions\n  --hub <slug>          Load a hub: sync ~/.anyrouter/hubs + claude --plugin-dir\n  --profile <name>      Use a named profile\n  --command-path <path> Explicit path to the agent executable\n  --install             Install a missing agent without prompting (implied on a TTY)\n  --config <path>       Override the config file path\n  --dry-run             Print the child command and env (secrets redacted)\n  --device              Force the device-code flow (headless / SSH)\n  --device-code         Alias of --device\n  --paste               Force the paste-a-key flow, skipping auto-detection\n\nFirst run with no config auto-detects the best way to sign in — browser first,\nfalling back to the device-code flow automatically.\n"
+    }
+  ]
+}

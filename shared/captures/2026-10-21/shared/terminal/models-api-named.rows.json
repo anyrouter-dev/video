@@ -1,0 +1,240 @@
+{
+  "url": "https://anyrouter.dev/api/v1/models?all=1",
+  "capturedAt": "2026-10-20T19:10:17.734Z",
+  "catalogSize": 299,
+  "rows": [
+    {
+      "id": "anthropic/claude-sonnet-4-6",
+      "name": "Claude Sonnet 4.6",
+      "pricing": {
+        "prompt": "3",
+        "completion": "15",
+        "input_per_1m": 3,
+        "output_per_1m": 15,
+        "billing": "byok",
+        "list_pricing": {
+          "input_per_1m": 3,
+          "output_per_1m": 15
+        }
+      },
+      "usedBy": [
+        "opencode",
+        "byok-anthropic"
+      ]
+    },
+    {
+      "id": "anyrouter/auto",
+      "name": "AnyRouter Auto",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "claude-code",
+        "coding-agents",
+        "claude-agent-sdk",
+        "claude-code-free-models",
+        "virtual-presets",
+        "go-plan",
+        "cheapest-llm-api",
+        "ai-sdk",
+        "openai-sdk",
+        "unify-api",
+        "agent-fallback",
+        "byok",
+        "sign-in",
+        "mcp-for-agents"
+      ]
+    },
+    {
+      "id": "anyrouter/coding",
+      "name": "AnyRouter Coding",
+      "pricing": {
+        "prompt": "0.042448",
+        "completion": "0.084896",
+        "input_per_1m": 0.042448,
+        "output_per_1m": 0.084896,
+        "billing": "byok",
+        "list_pricing": {
+          "input_per_1m": 0.042448,
+          "output_per_1m": 0.084896
+        }
+      },
+      "usedBy": [
+        "claude-code-multiple-keys"
+      ]
+    },
+    {
+      "id": "anyrouter/decision",
+      "name": "AnyRouter Decision",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "decisions"
+      ]
+    },
+    {
+      "id": "anyrouter/free",
+      "name": "AnyRouter Free",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "claude-code-free-models",
+        "openrouter-free-fallback",
+        "openrouter-free-in-your-tools",
+        "virtual-presets",
+        "nvidia-free-key",
+        "go-plan",
+        "free-llm-api",
+        "free-chatbot",
+        "ai-sdk",
+        "openai-sdk",
+        "sign-in"
+      ]
+    },
+    {
+      "id": "anyrouter/hermes",
+      "name": "AnyRouter Hermes",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "hermes-agent"
+      ]
+    },
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "name": "DeepSeek-V4-Flash",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "model-evals",
+        "agent-fallback"
+      ]
+    },
+    {
+      "id": "google/gemini-2.5-pro",
+      "name": "Gemini 2.5 Pro",
+      "pricing": {
+        "prompt": "1.25",
+        "completion": "10",
+        "input_per_1m": 1.25,
+        "output_per_1m": 10,
+        "billing": "byok",
+        "list_pricing": {
+          "input_per_1m": 1.25,
+          "output_per_1m": 10
+        }
+      },
+      "usedBy": [
+        "gemini-in-claude-code"
+      ]
+    },
+    {
+      "id": "google/gemma-4-31b",
+      "name": "Gemma 4 31B",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "model-evals",
+        "agent-fallback"
+      ]
+    },
+    {
+      "id": "google/gemma-4-31b:free",
+      "inCatalog": false,
+      "note": "not listed by ?all=1 (alias or unknown id)",
+      "usedBy": [
+        "openrouter-free-fallback",
+        "openrouter-free-in-your-tools"
+      ]
+    },
+    {
+      "id": "minimax/minimax-m3.1-flash:free",
+      "inCatalog": false,
+      "note": "not listed by ?all=1 (alias or unknown id)",
+      "usedBy": [
+        "free-coding-agent"
+      ]
+    },
+    {
+      "id": "nvidia/nemotron-3-embed-1b",
+      "name": "Nemotron 3 Embed 1B",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "embeddings-search"
+      ]
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "name": "Nemotron-3 Super 120B",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "nvidia-nim-models"
+      ]
+    },
+    {
+      "id": "poolside/laguna-s-2.1",
+      "name": "Laguna S 2.1",
+      "pricing": {
+        "prompt": "0",
+        "completion": "0",
+        "input_per_1m": 0,
+        "output_per_1m": 0
+      },
+      "usedBy": [
+        "grokbot"
+      ]
+    },
+    {
+      "id": "z-ai/glm-4.7-flash",
+      "name": "GLM-4.7 Flash",
+      "pricing": {
+        "prompt": "0.06",
+        "completion": "0.4",
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.4,
+        "billing": "byok",
+        "list_pricing": {
+          "input_per_1m": 0.06,
+          "output_per_1m": 0.4
+        }
+      },
+      "usedBy": [
+        "model-evals",
+        "agent-fallback"
+      ]
+    }
+  ]
+}

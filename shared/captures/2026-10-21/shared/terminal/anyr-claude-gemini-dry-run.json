@@ -1,0 +1,14 @@
+{
+  "command": "anyr claude --model google/gemini-2.5-pro --dry-run",
+  "startedAt": "2026-10-20T19:09:30.552Z",
+  "durationMs": 2718,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 2717,
+      "stream": "stdout",
+      "text": "command: claude\nargs: []\nenv:\nANTHROPIC_API_KEY=sk-ar-••••••••\nANTHROPIC_AUTH_TOKEN=sk-ar-••••••••\nANTHROPIC_BASE_URL=https://anyrouter.dev/api\nANTHROPIC_DEFAULT_FABLE_MODEL=anyrouter/auto\nANTHROPIC_DEFAULT_FABLE_MODEL_DESCRIPTION=Fable alias + fallback\nANTHROPIC_DEFAULT_HAIKU_MODEL=google/gemini-2.5-pro\nANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION=Background & subagents\nANTHROPIC_DEFAULT_OPUS_MODEL=google/gemini-2.5-pro\nANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION=Opus alias\nANTHROPIC_DEFAULT_SONNET_MODEL=anyrouter/auto\nANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION=Sonnet alias\nANTHROPIC_MODEL=google/gemini-2.5-pro\nANYROUTER_MODEL_MODE=concrete\nANYROUTER_PINNED_PRESET=@preset/coding-stack\nAPI_TIMEOUT_MS=3000000\nCLAUDE_CODE_AUTO_COMPACT_WINDOW=1000000\nCLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1\nCLAUDE_CODE_SUBAGENT_MODEL=google/gemini-2.5-pro\n"
+    }
+  ]
+}

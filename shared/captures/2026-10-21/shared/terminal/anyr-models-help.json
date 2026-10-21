@@ -1,0 +1,14 @@
+{
+  "command": "anyr models --help",
+  "startedAt": "2026-10-20T19:09:27.795Z",
+  "durationMs": 3,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 3,
+      "stream": "stdout",
+      "text": "anyr models — list catalog model ids\n\nUsage:\n  anyr models [list|ls] [options]     (alias: anyr model)\n  anyr models use <id>\n  anyr models use <id> --agent <claude|codex|grok|opencode|pi|pool>\n  anyr models use --haiku|--sonnet|--opus|--fable <id>\n  anyr models --pick\n  anyr models --dump-tui\n\nLists every model id usable with --model. `use` / `--pick` persist the session\ndefault, or Claude Code's opus / sonnet / haiku / fable aliases. `--agent`\npins the launch model for that coding agent only (the id must already be known —\nthis command does not invent catalog ids).\n\nThe inline picker pins `anyrouter/auto` as a selectable preset. Type to\nfilter catalog ids. It does not dump a most-used / usage ranking.\n\nOptions:\n  --json            Print as JSON\n  --pick            Interactive picker (TTY) — default / haiku / sonnet / opus / fable\n  --agent <id>     Pin the model on one coding agent instead of the session default\n  --dump-tui        Print one picker frame (pins anyrouter/auto) and exit\n  --haiku <id>      Persist Claude haiku alias\n  --sonnet <id>     Persist Claude sonnet alias\n  --opus <id>       Persist Claude opus alias\n  --fable <id>      Persist Claude fable alias (auto-fallback target)\n  --key sk-ar-v1-…  Optional inference key\n"
+    }
+  ]
+}

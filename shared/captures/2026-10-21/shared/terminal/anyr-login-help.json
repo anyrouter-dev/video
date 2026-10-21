@@ -1,0 +1,14 @@
+{
+  "command": "anyr login --help",
+  "startedAt": "2026-10-20T19:09:27.787Z",
+  "durationMs": 3,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 3,
+      "stream": "stdout",
+      "text": "Log in to an AnyRouter account.\n\nUSAGE\n  anyr auth login [flags]\n\nInteractive (TTY): opens a login URL with the code already in it (browser\nwhen one is reachable). Falls back to printing that URL over SSH / CI.\nForce a route with --device or --paste.\n\nNon-interactive: pipe the key (`echo $KEY | anyr auth login --key -`) or set\nANYROUTER_API_KEY. A literal `--key sk-...` works but is visible in `ps` and\nshell history.\n\nAfter login, `anyr claude` starts Claude Code (the default agent).\n\nFLAGS\n  --key -                  Read the API key from stdin (safest non-interactive)\n  --key sk-ar-v1-...       AnyRouter API key as an argument (warns: visible in argv)\n  --device, --device-code  Force the device-code flow (headless / SSH)\n  --paste                  Force the paste-a-key flow\n\nAlso available as `anyr login`.\n"
+    }
+  ]
+}

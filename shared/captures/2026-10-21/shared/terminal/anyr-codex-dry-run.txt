@@ -1,0 +1,10 @@
+$ anyr codex --dry-run
+command: codex
+args: ["-c","model_provider=\"anyrouter\"","-c","model_providers.anyrouter.name=\"AnyRouter\"","-c","model_providers.anyrouter.base_url=\"https://anyrouter.dev/api/v1\"","-c","model_providers.anyrouter.env_key=\"OPENAI_API_KEY\"","-c","model_providers.anyrouter.wire_api=\"responses\"","-c","model_providers.anyrouter.requires_openai_auth=false","-c","model_providers.anyrouter.http_headers={ \"X-AnyRouter-App\" = \"codex\" }","-c","model=\"anthropic/claude-sonnet-5-5\""]
+env:
+ANYROUTER_MODEL_MODE=concrete
+ANYROUTER_PINNED_PRESET=@preset/coding-stack
+API_TIMEOUT_MS=3000000
+OPENAI_API_KEY=sk-ar-••••••••
+OPENAI_BASE_URL=https://anyrouter.dev/api/v1
+OPENAI_MODEL=anthropic/claude-sonnet-5-5

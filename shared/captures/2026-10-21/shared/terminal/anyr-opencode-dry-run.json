@@ -1,0 +1,14 @@
+{
+  "command": "anyr opencode --dry-run",
+  "startedAt": "2026-10-20T19:09:33.144Z",
+  "durationMs": 370,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 368,
+      "stream": "stdout",
+      "text": "command: opencode\nargs: []\nenv:\nANYROUTER_MODEL_MODE=concrete\nANYROUTER_PINNED_PRESET=@preset/coding-stack\nAPI_TIMEOUT_MS=3000000\nOPENAI_API_KEY=sk-ar-••••••••\nOPENCODE_CONFIG_CONTENT={\"$schema\":\"https://opencode.ai/config.json\",\"model\":\"anyrouter/anthropic/claude-sonnet-5-5\",\"provider\":{\"anyrouter\":{\"models\":{\"anthropic/claude-sonnet-5-5\":{\"name\":\"anthropic/claude-sonnet-5-5\"}},\"name\":\"AnyRouter\",\"npm\":\"@ai-sdk/openai-compatible\",\"options\":{\"apiKey\":\"{env:OPENAI_API_KEY}\",\"baseURL\":\"https://anyrouter.dev/api/v1\"}}}}\n"
+    }
+  ]
+}

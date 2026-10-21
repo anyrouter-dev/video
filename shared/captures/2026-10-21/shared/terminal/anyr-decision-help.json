@@ -1,0 +1,14 @@
+{
+  "command": "anyr decision --help",
+  "startedAt": "2026-10-20T19:09:27.802Z",
+  "durationMs": 3,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 3,
+      "stream": "stdout",
+      "text": "anyr decision — call the typed Decisions API (not chat)\n\nUSAGE\n  anyr decision --model <id> --state <text|json> --questions <json> [flags]\n  cat request.json | anyr decision [flags]\n\nSends a POST request to `/api/v1/decisions` with `model`, `state`, and a\nquestion object map. Responses contain structured `answers`, not chat text.\nDecision models such as `typesafe/jev`, `fastino/gliner2.5-multi-v1`, and\n`anyrouter/decision` cannot be launched through the chat-agent commands.\n\nFLAGS\n  --model <id>         Decision model id (required unless stdin supplies it)\n  --state <text|json>  Application state; plain text or JSON object/array\n  --questions <json>   Non-empty question map (noul / choice / score)\n  --stdin              Read and merge a JSON object from stdin\n  --json               Print compact JSON (default: pretty JSON)\n  --key sk-ar-v1-…     Use this key instead of the saved profile\n  --profile <name>     Use a named account/profile\n  --base-url <url>     Override the configured API base URL\n  --config <path>      Override the config file path\n\nEXAMPLE\n  anyr decision --model typesafe/jev \\\n    --state 'Help! My payouts have been failing for 3 days.' \\\n    --questions '{\"is_urgent\":{\"type\":\"noul\",\"instructions\":\"Is this urgent?\"}}'\n\nALIASES\n  decisions, systemone\n"
+    }
+  ]
+}

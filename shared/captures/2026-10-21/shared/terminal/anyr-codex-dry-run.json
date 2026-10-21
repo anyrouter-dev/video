@@ -1,0 +1,14 @@
+{
+  "command": "anyr codex --dry-run",
+  "startedAt": "2026-10-20T19:09:32.202Z",
+  "durationMs": 422,
+  "exitCode": 0,
+  "signal": null,
+  "chunks": [
+    {
+      "t": 421,
+      "stream": "stdout",
+      "text": "command: codex\nargs: [\"-c\",\"model_provider=\\\"anyrouter\\\"\",\"-c\",\"model_providers.anyrouter.name=\\\"AnyRouter\\\"\",\"-c\",\"model_providers.anyrouter.base_url=\\\"https://anyrouter.dev/api/v1\\\"\",\"-c\",\"model_providers.anyrouter.env_key=\\\"OPENAI_API_KEY\\\"\",\"-c\",\"model_providers.anyrouter.wire_api=\\\"responses\\\"\",\"-c\",\"model_providers.anyrouter.requires_openai_auth=false\",\"-c\",\"model_providers.anyrouter.http_headers={ \\\"X-AnyRouter-App\\\" = \\\"codex\\\" }\",\"-c\",\"model=\\\"anthropic/claude-sonnet-5-5\\\"\"]\nenv:\nANYROUTER_MODEL_MODE=concrete\nANYROUTER_PINNED_PRESET=@preset/coding-stack\nAPI_TIMEOUT_MS=3000000\nOPENAI_API_KEY=sk-ar-••••••••\nOPENAI_BASE_URL=https://anyrouter.dev/api/v1\nOPENAI_MODEL=anthropic/claude-sonnet-5-5\n"
+    }
+  ]
+}
