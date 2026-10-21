@@ -606,7 +606,7 @@ export const boardOf = group => ({ 'coding-agents': 'row', sdks: 'climb', 'free-
 
 const words = (text, set) => masked(text, { landscape: set.landscape.breaks, portrait: set.portrait.breaks });
 // each word waits in its mask until it is said, which a layout check would read as covered text
-const kineticHtml = (cls, line) => `<p class="kt ${cls}" style="${fsVars({ landscape: line.type.landscape.px, portrait: line.type.portrait.px }, 'ks')}">${words(line.text, line.type).replaceAll('class="w" data-layout-allow-overflow', 'class="w" data-layout-allow-overflow data-layout-allow-occlusion')}</p>`;
+const kineticHtml = (cls, line) => `<p class="kt ${cls}" style="${fsVars({ landscape: line.type.landscape.px, portrait: line.type.portrait.px }, 'ks')}">${words(line.text, line.type).replaceAll('class="w" data-layout-allow-overflow><span>', 'class="w" data-layout-allow-overflow><span data-layout-allow-occlusion>')}</p>`;
 
 function nodeHtml(label, d, role) {
   const m = d.marks[label];
