@@ -1,0 +1,217 @@
+{
+  "generatedAt": "2026-10-21T12:56:45.320Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 300,
+    "listed": 291,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 64,
+    "providerBackends": 64,
+    "free": 55
+  },
+  "pool": {
+    "keys": 197,
+    "donors": 103,
+    "requests": 46253
+  },
+  "added": [
+    {
+      "id": "perplexity/pplx-embed-v1-4b",
+      "name": "pplx-embed v1 4B",
+      "provider": "perplexity",
+      "logo": null,
+      "context": 32000,
+      "inPrice": 0.03,
+      "outPrice": 0,
+      "free": false,
+      "created": 1768867200,
+      "category": "embedding",
+      "excerpt": "pplx-embed-v1-4b is Perplexity's larger text embedding model for web-scale dense retrieval, with 2560-dimension vectors."
+    }
+  ],
+  "changed": [
+    {
+      "id": "cohere/command-a-plus",
+      "from": "0/0@131072",
+      "to": "0.3/1.5@192000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "google/gemma-4-31b",
+      "from": "0/0@262144",
+      "to": "0.1/0.34@262144",
+      "kind": "price-rise"
+    },
+    {
+      "id": "jaredpalmer/kev-4b",
+      "from": "0/0@8192",
+      "to": "0.042/0@8192",
+      "kind": "price-rise"
+    },
+    {
+      "id": "microsoft/microsoft-decision-1",
+      "from": "0/0@32768",
+      "to": "0.042/0@32768",
+      "kind": "price-rise"
+    },
+    {
+      "id": "minimax/m2",
+      "from": "0.3/1.2@205000",
+      "to": "0.255/1.02@205000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "mistralai/mistral-small-3.2-24b-instruct",
+      "from": "0.09375/0.25@256000",
+      "to": "0.075/0.2@256000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "from": "0/0@262144",
+      "to": "0.085/0.4@262144",
+      "kind": "price-rise"
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "from": "0/0@1000000",
+      "to": "0.5/2.2@1000000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "from": "0/0@1000000",
+      "to": "0.025/0.12@1000000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "from": "0.037/0.17@131072",
+      "to": "0.03/0.15@131072",
+      "kind": "price-cut"
+    },
+    {
+      "id": "perplexity/pplx-decider-v1.1-27b",
+      "from": "0/0@262144",
+      "to": "0.02/0@262144",
+      "kind": "price-rise"
+    },
+    {
+      "id": "qwen/qwen3-14b",
+      "from": "0.12/0.24@128000",
+      "to": "0.1/0.22@128000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "from": "0.04/2.3@1048575",
+      "to": "0.02/0.5@1048575",
+      "kind": "price-cut"
+    },
+    {
+      "id": "reflection/beam-1.0",
+      "from": "0/0@262144",
+      "to": "0/0@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "respan/span-01",
+      "from": "0/0@x",
+      "to": "0.02/0@x",
+      "kind": "price-rise"
+    },
+    {
+      "id": "stepfun-ai/step-3.7-flash",
+      "from": "0.2/1.15@256000",
+      "to": "0.2/1.15@262144",
+      "kind": "context"
+    },
+    {
+      "id": "thinkingmachines/inkling-small",
+      "from": "0/0@1048576",
+      "to": "0.45/1.2@1048576",
+      "kind": "price-rise"
+    },
+    {
+      "id": "thinkingmachines/inkling",
+      "from": "0/0@1048576",
+      "to": "0.95/4.05@1048576",
+      "kind": "price-rise"
+    },
+    {
+      "id": "typesafe/jev",
+      "from": "0/0@64000",
+      "to": "0.042/0@64000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "upstage/solar-decide-flash",
+      "from": "0/0@524288",
+      "to": "0.05/0@524288",
+      "kind": "price-rise"
+    },
+    {
+      "id": "upstage/solar-decide",
+      "from": "0/0@524288",
+      "to": "0.05/0@524288",
+      "kind": "price-rise"
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "from": "0.43/0.87@1050000",
+      "to": "0.387/0.783@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "google/gemma-latest",
+      "from": "0/0@262144",
+      "to": "0.1/0.34@262144",
+      "kind": "price-rise"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "perplexity/pplx-embed-v1-4b",
+    "name": "pplx-embed v1 4B",
+    "provider": "perplexity",
+    "logo": null,
+    "context": 32000,
+    "inPrice": 0.03,
+    "outPrice": 0,
+    "free": false,
+    "created": 1768867200,
+    "category": "embedding",
+    "excerpt": "pplx-embed-v1-4b is Perplexity's larger text embedding model for web-scale dense retrieval, with 2560-dimension vectors."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+perplexity/pplx-embed-v1-4b@0.03/0@32000",
+    "~cohere/command-a-plus 0/0@131072->0.3/1.5@192000",
+    "~google/gemma-4-31b 0/0@262144->0.1/0.34@262144",
+    "~jaredpalmer/kev-4b 0/0@8192->0.042/0@8192",
+    "~microsoft/microsoft-decision-1 0/0@32768->0.042/0@32768",
+    "~minimax/m2 0.3/1.2@205000->0.255/1.02@205000",
+    "~mistralai/mistral-small-3.2-24b-instruct 0.09375/0.25@256000->0.075/0.2@256000",
+    "~nvidia/nemotron-3-super-120b-a12b 0/0@262144->0.085/0.4@262144",
+    "~nvidia/nemotron-3-ultra-550b-a55b 0/0@1000000->0.5/2.2@1000000",
+    "~nvidia/nemotron-3.5-lightning-30b-a3b 0/0@1000000->0.025/0.12@1000000",
+    "~openai/gpt-oss-120b 0.037/0.17@131072->0.03/0.15@131072",
+    "~perplexity/pplx-decider-v1.1-27b 0/0@262144->0.02/0@262144",
+    "~qwen/qwen3-14b 0.12/0.24@128000->0.1/0.22@128000",
+    "~qwen/qwen3.8-27b 0.04/2.3@1048575->0.02/0.5@1048575",
+    "~reflection/beam-1.0 0/0@262144->0/0@1048576",
+    "~respan/span-01 0/0@x->0.02/0@x",
+    "~stepfun-ai/step-3.7-flash 0.2/1.15@256000->0.2/1.15@262144",
+    "~thinkingmachines/inkling-small 0/0@1048576->0.45/1.2@1048576",
+    "~thinkingmachines/inkling 0/0@1048576->0.95/4.05@1048576",
+    "~typesafe/jev 0/0@64000->0.042/0@64000",
+    "~upstage/solar-decide-flash 0/0@524288->0.05/0@524288",
+    "~upstage/solar-decide 0/0@524288->0.05/0@524288",
+    "~xiaomi/mimo-v2.6-pro 0.43/0.87@1050000->0.387/0.783@1050000",
+    "~google/gemma-latest 0/0@262144->0.1/0.34@262144"
+  ]
+}

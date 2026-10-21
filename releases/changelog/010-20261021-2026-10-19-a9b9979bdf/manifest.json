@@ -1,0 +1,27 @@
+{
+  "id": "010-20261021-2026-10-19-a9b9979bdf",
+  "hash": "a9b9979bdf",
+  "kind": "changelog",
+  "label": "2026-10-19",
+  "title": "2 changelog updates: pplx-embed v1 4B added, MiniMax M3.1 Flash",
+  "seconds": 18.5,
+  "renderedAt": "2026-10-21T12:59:45.775Z",
+  "commit": "192b07a",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-010-20261021-2026-10-19-a9b9979bdf.mp4",
+      "cover": "renders/changelog-010-20261021-2026-10-19-a9b9979bdf.png",
+      "youtube": "https://youtu.be/HNUkAFs75us"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-010-20261021-2026-10-19-a9b9979bdf-portrait.mp4",
+      "cover": "renders/changelog-010-20261021-2026-10-19-a9b9979bdf-portrait.png",
+      "youtube": "https://youtu.be/G6A0g-KM5o0"
+    }
+  },
+  "source": "renders/changelog-010-20261021-2026-10-19-a9b9979bdf-source.tar.gz",
+  "createdAt": "2026-10-21T12:59:45.782Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-010-20261021-2026-10-19-a9b9979bdf"
+  }
+}

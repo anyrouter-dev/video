@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-20T12:44:11.434Z",
+  "acceptedAt": "2026-10-21T12:56:45.320Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -181,6 +181,7 @@
     "perplexity/pplx-decider-v1-27b",
     "perplexity/pplx-decider-v1.1-27b",
     "perplexity/pplx-embed-v1-0.6b",
+    "perplexity/pplx-embed-v1-4b",
     "poolside/laguna-s-2.1",
     "poolside/laguna-xs-2.1",
     "prism-ml/ternary-bonsai-2-27b",
@@ -493,9 +494,9 @@
     },
     {
       "id": "cohere/command-a-plus",
-      "inPrice": 0,
-      "outPrice": 0,
-      "context": 131072
+      "inPrice": 0.3,
+      "outPrice": 1.5,
+      "context": 192000
     },
     {
       "id": "cohere/command-a",
@@ -691,8 +692,8 @@
     },
     {
       "id": "google/gemma-4-31b",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.1,
+      "outPrice": 0.34,
       "context": 262144
     },
     {
@@ -781,7 +782,7 @@
     },
     {
       "id": "jaredpalmer/kev-4b",
-      "inPrice": 0,
+      "inPrice": 0.042,
       "outPrice": 0,
       "context": 8192
     },
@@ -901,7 +902,7 @@
     },
     {
       "id": "microsoft/microsoft-decision-1",
-      "inPrice": 0,
+      "inPrice": 0.042,
       "outPrice": 0,
       "context": 32768
     },
@@ -919,8 +920,8 @@
     },
     {
       "id": "minimax/m2",
-      "inPrice": 0.3,
-      "outPrice": 1.2,
+      "inPrice": 0.255,
+      "outPrice": 1.02,
       "context": 205000
     },
     {
@@ -955,8 +956,8 @@
     },
     {
       "id": "mistralai/mistral-small-3.2-24b-instruct",
-      "inPrice": 0.09375,
-      "outPrice": 0.25,
+      "inPrice": 0.075,
+      "outPrice": 0.2,
       "context": 256000
     },
     {
@@ -1045,14 +1046,14 @@
     },
     {
       "id": "nvidia/nemotron-3-super-120b-a12b",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.085,
+      "outPrice": 0.4,
       "context": 262144
     },
     {
       "id": "nvidia/nemotron-3-ultra-550b-a55b",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.5,
+      "outPrice": 2.2,
       "context": 1000000
     },
     {
@@ -1063,8 +1064,8 @@
     },
     {
       "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.025,
+      "outPrice": 0.12,
       "context": 1000000
     },
     {
@@ -1303,8 +1304,8 @@
     },
     {
       "id": "openai/gpt-oss-120b",
-      "inPrice": 0.037,
-      "outPrice": 0.17,
+      "inPrice": 0.03,
+      "outPrice": 0.15,
       "context": 131072
     },
     {
@@ -1363,13 +1364,19 @@
     },
     {
       "id": "perplexity/pplx-decider-v1.1-27b",
-      "inPrice": 0,
+      "inPrice": 0.02,
       "outPrice": 0,
       "context": 262144
     },
     {
       "id": "perplexity/pplx-embed-v1-0.6b",
       "inPrice": 0.004,
+      "outPrice": 0,
+      "context": 32000
+    },
+    {
+      "id": "perplexity/pplx-embed-v1-4b",
+      "inPrice": 0.03,
       "outPrice": 0,
       "context": 32000
     },
@@ -1411,8 +1418,8 @@
     },
     {
       "id": "qwen/qwen3-14b",
-      "inPrice": 0.12,
-      "outPrice": 0.24,
+      "inPrice": 0.1,
+      "outPrice": 0.22,
       "context": 128000
     },
     {
@@ -1495,8 +1502,8 @@
     },
     {
       "id": "qwen/qwen3.8-27b",
-      "inPrice": 0.04,
-      "outPrice": 2.3,
+      "inPrice": 0.02,
+      "outPrice": 0.5,
       "context": 1048575
     },
     {
@@ -1527,7 +1534,7 @@
       "id": "reflection/beam-1.0",
       "inPrice": 0,
       "outPrice": 0,
-      "context": 262144
+      "context": 1048576
     },
     {
       "id": "respan/span-01-lite",
@@ -1537,7 +1544,7 @@
     },
     {
       "id": "respan/span-01",
-      "inPrice": 0,
+      "inPrice": 0.02,
       "outPrice": 0,
       "context": null
     },
@@ -1629,7 +1636,7 @@
       "id": "stepfun-ai/step-3.7-flash",
       "inPrice": 0.2,
       "outPrice": 1.15,
-      "context": 256000
+      "context": 262144
     },
     {
       "id": "strandsagents/strands-decider-2b",
@@ -1669,19 +1676,19 @@
     },
     {
       "id": "thinkingmachines/inkling-small",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.45,
+      "outPrice": 1.2,
       "context": 1048576
     },
     {
       "id": "thinkingmachines/inkling",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.95,
+      "outPrice": 4.05,
       "context": 1048576
     },
     {
       "id": "typesafe/jev",
-      "inPrice": 0,
+      "inPrice": 0.042,
       "outPrice": 0,
       "context": 64000
     },
@@ -1693,13 +1700,13 @@
     },
     {
       "id": "upstage/solar-decide-flash",
-      "inPrice": 0,
+      "inPrice": 0.05,
       "outPrice": 0,
       "context": 524288
     },
     {
       "id": "upstage/solar-decide",
-      "inPrice": 0,
+      "inPrice": 0.05,
       "outPrice": 0,
       "context": 524288
     },
@@ -1837,8 +1844,8 @@
     },
     {
       "id": "xiaomi/mimo-v2.6-pro",
-      "inPrice": 0.43,
-      "outPrice": 0.87,
+      "inPrice": 0.387,
+      "outPrice": 0.783,
       "context": 1050000
     },
     {
@@ -1939,8 +1946,8 @@
     },
     {
       "id": "google/gemma-latest",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.1,
+      "outPrice": 0.34,
       "context": 262144
     },
     {

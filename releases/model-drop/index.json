@@ -274,6 +274,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-013-20261020-price-cut-ab34808bfb"
       }
+    },
+    {
+      "id": "014-20261021-models-pricing-24d849e1a9",
+      "hash": "24d849e1a9",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "perplexity/pplx-embed-v1-4b is live on AnyRouter",
+      "seconds": 20,
+      "renderedAt": "2026-10-21T13:01:13.818Z",
+      "commit": "192b07a",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-014-20261021-models-pricing-24d849e1a9.mp4",
+          "cover": "renders/model-drop-014-20261021-models-pricing-24d849e1a9.png",
+          "youtube": "https://youtu.be/QbGF_gKZgiE"
+        }
+      },
+      "source": "renders/model-drop-014-20261021-models-pricing-24d849e1a9-source.tar.gz",
+      "createdAt": "2026-10-21T13:01:13.827Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-014-20261021-models-pricing-24d849e1a9"
+      }
     }
   ]
 }
