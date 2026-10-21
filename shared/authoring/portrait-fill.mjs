@@ -156,9 +156,11 @@ export const PLAN = { contrast: 24, used: 3, gutter: 24, margin: 40, gap: 12, ro
 /**
  * Where to crop a captured page so its edges fall in whitespace: { x0, x1, gaps, text } in the
  * image's own px. x0..x1 is the column that holds `focus` (a box, the line the step is about), or
- * the inkiest column without one, its sides in the gutters around it; with `whole`, the full width. `gaps` are the rows a top or
- * bottom edge may sit on (the middle of each blank band across the column, and the image's own
- * top and bottom). `text` is the median height of a line of text in the column.
+ * the inkiest column without one, its sides in the gutters around it; with `whole`, the full width.
+ * `gaps` are the rows a top or bottom edge may sit on (the middle of each blank band across the
+ * column, and the image's own top and bottom), only in the rows around the focus where neither side
+ * has text close on both sides of it: past them another column may reach across a side. `text` is
+ * the median height of a line of text in the column.
  */
 export function planCrop(img, { focus = null, whole = false } = {}, p = PLAN) {
   const hist = new Uint32Array(256);
@@ -201,8 +203,15 @@ export function planCrop(img, { focus = null, whole = false } = {}, p = PLAN) {
   }
   if (blankRun >= p.gap) gaps.push(img.h - Math.ceil(blankRun / 2));
   gaps.push(img.h);
+  // a side is clear in a row with no ink within CROP's reach on both sides of it
+  const near = (e, y, sign) => { for (let o = CROP.rule + 1; o <= CROP.reach.side; o++) { const x = e + sign * o; if (x >= 0 && x < img.w && ink(x, y)) return true; } return false; };
+  const clear = y => [x0, x1].every(e => e <= 0 || e >= img.w || !(near(e, y, -1) && near(e, y, 1)));
+  let lo = Math.min(ya, fy), hi = Math.max(yb, fy);
+  while (lo > 0 && clear(lo - 1)) lo--;
+  while (hi < img.h && clear(hi)) hi++;
+  const inBand = whole ? gaps : gaps.filter(y => y >= lo && y <= hi);
   const lines = runs.filter(h => h >= 10 && h <= 90).sort((a, b) => a - b);
-  return { x0, x1, gaps: [...new Set(gaps)], text: lines.length ? lines[lines.length >> 1] : 0 };
+  return { x0, x1, gaps: [...new Set(inBand)], text: lines.length ? lines[lines.length >> 1] : 0 };
 }
 
 /**
