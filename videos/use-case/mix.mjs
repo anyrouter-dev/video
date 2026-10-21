@@ -117,7 +117,15 @@ export function writeMix(file, { slug, duration, voice, cues }) {
   run(['-y', ...inputs, '-filter_complex', `${mixed}[out]`, '-map', '[out]', '-ar', '48000', '-c:a', 'pcm_s24le', pre]);
   const json = /\{[\s\S]*?"target_offset"[\s\S]*?\}/.exec(stderrOf(['-i', pre, '-af', `loudnorm=I=${TARGET.I}:TP=${TARGET.TP}:LRA=${TARGET.LRA}:print_format=json`, '-f', 'null', '-']))?.[0];
   if (!json) throw new Error(`mix: ${slug}: loudnorm measured nothing`);
-  const m = JSON.parse(json);
+  // a mix whose peaks sit high above its loudness cannot reach the target in one linear gain under the
+  // true-peak ceiling: such a mix is first brought to the target and its peaks held by a limiter
+  let m = JSON.parse(json);
+  if (Number(m.input_tp) + Number(m.target_offset) + (TARGET.I - Number(m.input_i)) > TARGET.TP) {
+    const held = `${file}.held.wav`;
+    run(['-y', '-i', pre, '-af', `volume=${(TARGET.I - Number(m.input_i)).toFixed(2)}dB,alimiter=limit=${(10 ** ((TARGET.TP - 1.5) / 20)).toFixed(4)}:attack=2:release=80:level=false`, '-c:a', 'pcm_s24le', held]);
+    fs.renameSync(held, pre);
+    m = JSON.parse(/\{[\s\S]*?"target_offset"[\s\S]*?\}/.exec(stderrOf(['-i', pre, '-af', `loudnorm=I=${TARGET.I}:TP=${TARGET.TP}:LRA=${TARGET.LRA}:print_format=json`, '-f', 'null', '-']))[0]);
+  }
   run(['-y', '-i', pre, '-af', `loudnorm=I=${TARGET.I}:TP=${TARGET.TP}:LRA=${TARGET.LRA}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000`, '-c:a', 'pcm_s16le', file]);
   fs.rmSync(pre);
   return { track: MUSIC.films[slug].track, cues: kept, dropped: cues.length - kept.length, measuredIn: m };
