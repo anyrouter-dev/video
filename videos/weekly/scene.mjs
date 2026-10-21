@@ -183,6 +183,8 @@ export function inner(t) {
       tl.fromTo($(s.sel), { opacity: 0, rotationY: -50, x: 160, transformPerspective: 1800 }, { opacity: 1, rotationY: 0, x: 0, duration: 0.7, ease: "power3.out" }, s.at);
       const next = T.sections[k + 1];
       if (next) tl.to($(s.sel), { opacity: 0, rotationY: 60, x: -140, transformPerspective: 1800, duration: 0.45, ease: "power2.in" }, next.at - 0.45);
+      // while one page turns away and the next turns in, the page is in flight, not read
+      if (k) { tl.set($(".cam"), { attr: { "data-in-flight": "1" } }, s.at - 0.45); tl.set($(".cam"), { attr: { "data-in-flight": "0" } }, s.at + 0.7); }
     });
 
     // the calendar: each day presses in, its dots after it
