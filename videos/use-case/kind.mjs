@@ -510,6 +510,8 @@ export default {
   scheduled: false,
   // a film embedded on its page is read on a phone in both shapes: every rendition passes the stage audit
   audited: true,
+  // and its portrait fills the phone's height, its real screens cropped clear of their text
+  portraitFill: true,
 
   async collect({ flags }) {
     const doc = flags.from ? readJson(path.resolve(flags.from)) : await fetchJson(API);
