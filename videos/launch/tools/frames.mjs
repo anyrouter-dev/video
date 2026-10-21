@@ -108,7 +108,7 @@ function captureHtml(id, o) {
     const k = w / vw;
     return `style="width: ${w}px; height: ${Math.round(vh * k)}px; ${extra}"><img src="${o.src}" alt="" style="position: absolute; max-width: none; width: ${Math.round(o.w * k)}px; left: ${-Math.round(cl * k)}px; top: ${-Math.round(ct * k)}px" />`;
   };
-  const lw = o.panels ? 1500 : 780;
+  const lw = o.lw ?? (o.panels ? 1500 : 780);
   const lh = Math.round((lw * vh) / vw);
   const top = Math.round(56 + (700 - lh) / 2);
   let port;
@@ -155,6 +155,7 @@ function html(f, i, all) {
     statements: f.statement,
     firstIn: !(sameAct && prevLast === f.statement[0][1]),
     overlay: f.overlay?.type ?? null,
+    overlayAt: f.overlay?.at ?? 0.1,
     push: f.push ?? [1, 1.03],
   };
   const art = fig ? `<div class="lf-art iso lf-fig" data-theme="light"><div class="lf-land" data-fig="${f.fig}" data-view="land"></div><div class="lf-port" data-fig="${f.fig}" data-view="port"></div></div>` : "";
@@ -237,12 +238,12 @@ function html(f, i, all) {
         }
         if (DATA.overlay === "capture") {
           for (const el of [$("shot"), $("shotp")]) {
-            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, 0.1);
-            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur, ease: "none" }, 0);
+            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, DATA.overlayAt);
+            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur - DATA.overlayAt, ease: "none" }, DATA.overlayAt);
             tl.to(el, { y: -60, opacity: 0, duration: 0.45, ease: "power3.in" }, DATA.dur - 0.5);
           }
           const art = card.querySelector(".lf-art");
-          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, 0.1);
+          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, DATA.overlayAt);
           tl.to(art, { opacity: 1, duration: 0.45, ease: "power2.in" }, DATA.dur - 0.5);
         }
         if (DATA.overlay === "term") tl.fromTo($("term"), { y: 50 }, { y: 0, duration: 1.0, ease: "expo.out" }, 0.15);

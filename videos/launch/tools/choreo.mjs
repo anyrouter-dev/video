@@ -48,6 +48,7 @@ function act(initial) {
     };
     script(api);
     for (const key of Object.keys(state)) track(key);
+    if (typeof spec.overlay?.at === "string") spec.overlay = { ...spec.overlay, at: +(api.w(spec.overlay.at) - 0.25).toFixed(3) };
     const statement = (Array.isArray(spec.statement) ? spec.statement : [[0, spec.statement ?? ""]])
       .map(([t, text]) => [typeof t === "string" ? +(api.w(t) - 0.1).toFixed(3) : t, text]);
     return { n, ...spec, statement, dur: voice.duration_s, tracks, events, readout };
@@ -208,7 +209,7 @@ function carouselFrames() {
     serve(a, o + 0.3, 5);
     serve(a, o + 1.3, 6);
   }));
-  out.push(frame(8, { id: "08-reward", fig: "carousel", statement: "Go free · $4 credit a month · 5% of what your key serves" }, (a) => {
+  out.push(frame(8, { id: "08-reward", fig: "carousel", statement: "Go free · $4 credit a month · 5% of what your key serves", overlay: { type: "capture", src: "assets/captures/pool-dashboard.png", w: 3136, h: 1510, crop: [350, 26, 90, 470], lw: 1300, at: "and" } }, (a) => {
     a.say(0, "8% on Pro and Max · up to $1/key/day");
     serve(a, a.w("Go") - 0.55, 7, { token: true });
     serve(a, a.w("four") - 0.45, 8, { token: true });

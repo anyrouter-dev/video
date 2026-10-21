@@ -1,0 +1,18 @@
+[
+  {
+    "file": "shared/dashboard/pool.png",
+    "kind": "dashboard",
+    "slug": "shared",
+    "source": "owner's signed-in Chrome via Claude in Chrome; text redacted in the DOM before capture, four 2x zoom tiles stitched",
+    "url": "https://anyrouter.dev/dashboard/byok/pool",
+    "viewport": "3136x1510 (four 1568x755 tiles)",
+    "scale": 2,
+    "shows": "Dashboard → BYOK → Shared Pool: the 'earn up to 8% back' rule, pool stats and Your donations with per-key Pooled / Paused toggles (nothing toggled).",
+    "redacted": "Credits rewarded, credits earned, per-key 'earned' amounts and the account balance replaced with $•.••; an email-named pooled key label replaced with ••••@••••; account name replaced with 'owner'; avatar blurred. Left visible: pool counts (198 donors, 846 requests today, 65 providers, 10 pooled keys, 3,937 requests served) and provider key labels.",
+    "capturedAt": "2026-10-20T19:15:47.648Z",
+    "usedBy": [
+      "donate-keys",
+      "launch"
+    ]
+  }
+]

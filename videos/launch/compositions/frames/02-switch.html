@@ -195,7 +195,7 @@
     (function () {
       const { k, G, TRAVERSER, CAROUSEL, TURRET } = window.LF || {};
       const ID = "02-switch";
-      const DATA = {"dur":6.687,"tracks":{"carX":{"init":-200,"segs":[[0.15,0.914,-54],[4.515,1.263,168.8]]},"lamp:entry":{"init":1,"segs":[[1.064,0.2,0]]},"lamp:bridge":{"init":0,"segs":[[1.064,0.2,1],[5.778,0.2,0]]},"yc":{"init":0,"segs":[[1.164,0.75,45],[3.215,1.25,-45]]},"lamp:exit1":{"init":0,"segs":[[5.778,0.2,1]]},"key":{"init":1,"segs":[]},"lamp:key":{"init":0,"segs":[]},"lamp:exit0":{"init":0,"segs":[]},"lamp:exit2":{"init":0,"segs":[]},"lamp:exit3":{"init":0,"segs":[]},"lamp:exit4":{"init":0,"segs":[]},"lamp:exit5":{"init":0,"segs":[]}},"readout":[[0,"deepseek/deepseek-v4-flash"],[3.065,"minimax/minimax-m3.1-flash"],[5.778,"minimax/minimax-m3.1-flash · 200"]],"P":[{"origin":[320,157.99278648679027],"scale":0.9129909057091006,"azimuth":56,"elevation":36},{"origin":[300,254.40876578491824],"scale":0.9879985281984668,"azimuth":36,"elevation":34}],"cardIn":false,"cardOut":false,"statements":[[0,"Works with OpenAI and Anthropic clients."]],"firstIn":true,"overlay":null,"push":[1.00853,1.01797]};
+      const DATA = {"dur":6.687,"tracks":{"carX":{"init":-200,"segs":[[0.15,0.914,-54],[4.515,1.263,168.8]]},"lamp:entry":{"init":1,"segs":[[1.064,0.2,0]]},"lamp:bridge":{"init":0,"segs":[[1.064,0.2,1],[5.778,0.2,0]]},"yc":{"init":0,"segs":[[1.164,0.75,45],[3.215,1.25,-45]]},"lamp:exit1":{"init":0,"segs":[[5.778,0.2,1]]},"key":{"init":1,"segs":[]},"lamp:key":{"init":0,"segs":[]},"lamp:exit0":{"init":0,"segs":[]},"lamp:exit2":{"init":0,"segs":[]},"lamp:exit3":{"init":0,"segs":[]},"lamp:exit4":{"init":0,"segs":[]},"lamp:exit5":{"init":0,"segs":[]}},"readout":[[0,"deepseek/deepseek-v4-flash"],[3.065,"minimax/minimax-m3.1-flash"],[5.778,"minimax/minimax-m3.1-flash · 200"]],"P":[{"origin":[320,157.99278648679027],"scale":0.9129909057091006,"azimuth":56,"elevation":36},{"origin":[300,254.40876578491824],"scale":0.9879985281984668,"azimuth":36,"elevation":34}],"cardIn":false,"cardOut":false,"statements":[[0,"Works with OpenAI and Anthropic clients."]],"firstIn":true,"overlay":null,"overlayAt":0.1,"push":[1.00853,1.01797]};
       const $ = (s) => document.getElementById("lf" + ID + "-" + s);
       const ease = (x) => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
       function value(track, t) {
@@ -248,12 +248,12 @@
         }
         if (DATA.overlay === "capture") {
           for (const el of [$("shot"), $("shotp")]) {
-            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, 0.1);
-            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur, ease: "none" }, 0);
+            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, DATA.overlayAt);
+            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur - DATA.overlayAt, ease: "none" }, DATA.overlayAt);
             tl.to(el, { y: -60, opacity: 0, duration: 0.45, ease: "power3.in" }, DATA.dur - 0.5);
           }
           const art = card.querySelector(".lf-art");
-          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, 0.1);
+          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, DATA.overlayAt);
           tl.to(art, { opacity: 1, duration: 0.45, ease: "power2.in" }, DATA.dur - 0.5);
         }
         if (DATA.overlay === "term") tl.fromTo($("term"), { y: 50 }, { y: 0, duration: 1.0, ease: "expo.out" }, 0.15);

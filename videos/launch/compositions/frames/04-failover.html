@@ -195,7 +195,7 @@
     (function () {
       const { k, G, TRAVERSER, CAROUSEL, TURRET } = window.LF || {};
       const ID = "04-failover";
-      const DATA = {"dur":4.811,"tracks":{"carX":{"init":-54,"segs":[[0.05,0.946,168.8],[1.346,0.946,-54],[2.976,0.946,168.8]]},"lamp:fault-exit2":{"segs":[[0.996,0.1,1],[1.596,0.3,0]]},"yc":{"init":-15,"segs":[[2.342,0.583,15]]},"lamp:exit3":{"init":0,"segs":[[3.922,0.2,1]]},"key":{"init":1,"segs":[]},"lamp:key":{"init":0,"segs":[]},"lamp:entry":{"init":0,"segs":[]},"lamp:bridge":{"init":0,"segs":[]},"lamp:exit0":{"init":0,"segs":[]},"lamp:exit1":{"init":0,"segs":[]},"lamp:exit2":{"init":0,"segs":[]},"lamp:exit4":{"init":0,"segs":[]},"lamp:exit5":{"init":0,"segs":[]}},"readout":[[0,"minimax/minimax-m3.1-flash · upstream 1"],[0.996,"minimax/minimax-m3.1-flash · upstream 1 · 429"],[2.292,"minimax/minimax-m3.1-flash · upstream 2"],[3.922,"minimax/minimax-m3.1-flash · upstream 2 · 200"]],"P":[{"origin":[320,157.99278648679027],"scale":0.9129909057091006,"azimuth":56,"elevation":36},{"origin":[300,254.40876578491824],"scale":0.9879985281984668,"azimuth":36,"elevation":34}],"cardIn":false,"cardOut":true,"statements":[[0,"If a provider fails, the next one answers."],[3.922,"One request. Billed once."]],"firstIn":true,"overlay":null,"push":[1.02321,1.03]};
+      const DATA = {"dur":4.811,"tracks":{"carX":{"init":-54,"segs":[[0.05,0.946,168.8],[1.346,0.946,-54],[2.976,0.946,168.8]]},"lamp:fault-exit2":{"segs":[[0.996,0.1,1],[1.596,0.3,0]]},"yc":{"init":-15,"segs":[[2.342,0.583,15]]},"lamp:exit3":{"init":0,"segs":[[3.922,0.2,1]]},"key":{"init":1,"segs":[]},"lamp:key":{"init":0,"segs":[]},"lamp:entry":{"init":0,"segs":[]},"lamp:bridge":{"init":0,"segs":[]},"lamp:exit0":{"init":0,"segs":[]},"lamp:exit1":{"init":0,"segs":[]},"lamp:exit2":{"init":0,"segs":[]},"lamp:exit4":{"init":0,"segs":[]},"lamp:exit5":{"init":0,"segs":[]}},"readout":[[0,"minimax/minimax-m3.1-flash · upstream 1"],[0.996,"minimax/minimax-m3.1-flash · upstream 1 · 429"],[2.292,"minimax/minimax-m3.1-flash · upstream 2"],[3.922,"minimax/minimax-m3.1-flash · upstream 2 · 200"]],"P":[{"origin":[320,157.99278648679027],"scale":0.9129909057091006,"azimuth":56,"elevation":36},{"origin":[300,254.40876578491824],"scale":0.9879985281984668,"azimuth":36,"elevation":34}],"cardIn":false,"cardOut":true,"statements":[[0,"If a provider fails, the next one answers."],[3.922,"One request. Billed once."]],"firstIn":true,"overlay":null,"overlayAt":0.1,"push":[1.02321,1.03]};
       const $ = (s) => document.getElementById("lf" + ID + "-" + s);
       const ease = (x) => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
       function value(track, t) {
@@ -248,12 +248,12 @@
         }
         if (DATA.overlay === "capture") {
           for (const el of [$("shot"), $("shotp")]) {
-            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, 0.1);
-            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur, ease: "none" }, 0);
+            tl.fromTo(el, { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out" }, DATA.overlayAt);
+            tl.fromTo(el, { scale: 1 }, { scale: 1.05, duration: DATA.dur - DATA.overlayAt, ease: "none" }, DATA.overlayAt);
             tl.to(el, { y: -60, opacity: 0, duration: 0.45, ease: "power3.in" }, DATA.dur - 0.5);
           }
           const art = card.querySelector(".lf-art");
-          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, 0.1);
+          tl.to(art, { opacity: 0.16, duration: 0.6, ease: "power2.out" }, DATA.overlayAt);
           tl.to(art, { opacity: 1, duration: 0.45, ease: "power2.in" }, DATA.dur - 0.5);
         }
         if (DATA.overlay === "term") tl.fromTo($("term"), { y: 50 }, { y: 0, duration: 1.0, ease: "expo.out" }, 0.15);
