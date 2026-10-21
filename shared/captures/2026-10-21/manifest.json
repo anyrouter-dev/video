@@ -1,0 +1,68 @@
+[
+ {
+  "file": "shared/terminal/anyr-claude-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "model-launch",
+   "free-roundup"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr claude --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr claude --help: --model, --yolo, --effort, --dry-run and the first-run sign-in note.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.748Z"
+ },
+ {
+  "file": "shared/terminal/anyr-decision-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "free-roundup"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr decision --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr decision --help: the typed Decisions API from the terminal.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.802Z"
+ },
+ {
+  "file": "shared/terminal/anyr-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "model-launch",
+   "free-roundup"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "The real output of anyr --help.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.724Z"
+ },
+ {
+  "file": "shared/terminal/models-api-named.rows.json",
+  "kind": "api",
+  "slug": "shared",
+  "usedBy": [
+   "model-launch",
+   "free-roundup"
+  ],
+  "source": "curl",
+  "url": "https://anyrouter.dev/api/v1/models?all=1",
+  "viewport": null,
+  "scale": null,
+  "shows": "Per-film model rows from the public catalog; ids missing from ?all=1 are flagged inCatalog:false.",
+  "redacted": "none needed (public endpoint)",
+  "capturedAt": "2026-10-20T19:10:17.734Z"
+ }
+]
