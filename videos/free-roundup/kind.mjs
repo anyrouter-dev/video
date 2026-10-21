@@ -216,7 +216,8 @@ export default {
         { family: 'Barlow Condensed', file: 'barlow-condensed-700.woff2', weight: 700 }],
       assets: [{ from: path.join(SHARED, 'assets/brand/anyrouter-logo-black.svg'), to: 'assets/brand/anyrouter-logo-black.svg' }],
       scenes: [{ id: 's01-board', start: 0, dur: s.duration, body: body(facts, t), inner: inner(t) }],
-      sound: { music: MUSIC, voice: s.said.map(l => ({ file: l.file, at: l.at, start: l.start, end: l.end })), sfx: cuesOf(s) },
+      // the flaps are sharp clicks: a lower ceiling leaves room for the AAC encode's overshoot
+      sound: { music: MUSIC, voice: s.said.map(l => ({ file: l.file, at: l.at, start: l.start, end: l.end })), sfx: cuesOf(s), ceiling: -5 },
       beats: s.beats,
       claims: s.said.map(l => ({ says: l.text, at: l.at, from: l.from })),
       summary: `free-roundup ${d.asOf}: ${d.entries.length} models, ${s.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,

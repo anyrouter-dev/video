@@ -6,6 +6,9 @@
 //   mixdown({ out, duration, music, voice, sfx }) → { lufs, truePeak, lra }
 //
 //   music  { file, offset, gain, fadeIn, fadeOut, duck }   gain and duck in dB
+//   ceiling  dBFS the limiter holds sample peaks to (default 0.3 under the true-peak target). A mix
+//            of sharp clicks needs more room: the render's AAC encode overshoots them by up to 3.5 dB
+//            and the render then turns the whole film down.
 //   sfxDuck  dB the effects step down while a line is spoken (default 5), so no effect sits on a word
 //   voice  [{ file, at, start, end }]   start/end: when speech runs inside the file
 //   sfx    [{ file, at, gain, rate, from, dur }]   rate repitches (1.04 is a little higher)
@@ -69,7 +72,7 @@ export function parseLoudness(text) {
   return { lufs: pick(/I:\s+(-?[\d.]+) LUFS/), lra: pick(/LRA:\s+(-?[\d.]+) LU/), truePeak: pick(/Peak:\s+(-?[\d.]+) dBFS/) };
 }
 
-export function mixdown({ out, duration, music, voice = [], sfx = [], sfxDuck = 5 }) {
+export function mixdown({ out, duration, music, voice = [], sfx = [], sfxDuck = 5, ceiling = TARGET.truePeak - 0.3 }) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const inputs = [], chains = [], mix = [];
   const add = (args) => { inputs.push(...args); return inputs.filter(a => a === '-i').length - 1; };
@@ -116,7 +119,7 @@ export function mixdown({ out, duration, music, voice = [], sfx = [], sfxDuck = 
   for (let pass = 0; pass < 3; pass++) {
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', raw, '-af',
       `loudnorm=I=${TARGET.lufs}:TP=${TARGET.truePeak}:LRA=11:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,`
-      + `volume=${r3(gain)}dB,alimiter=limit=${r3(db(TARGET.truePeak - 0.3))}:attack=1:release=50:level=false,aresample=48000`,
+      + `volume=${r3(gain)}dB,alimiter=limit=${r3(db(ceiling))}:attack=1:release=50:level=false,aresample=48000`,
       '-ar', '48000', '-c:a', 'pcm_s16le', out]);
     got = loudness(out);
     if (Math.abs(got.lufs - TARGET.lufs) <= 0.3) break;
