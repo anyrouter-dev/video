@@ -131,7 +131,7 @@ export function css(accent) {
     .hero .hmk{background:center/contain no-repeat}
     .hero .hmk.inv{filter:brightness(0) invert(1)}
     .hero .mono-mark{border-width:6px;border-radius:56px;font-size:110px}
-    .id{left:60px;top:200px;width:900px}
+    .id{left:60px;top:200px;width:860px}
     .mk,.mono-mark{width:84px;height:84px}
     .kicker{margin-top:24px;font-size:36px}
     .name.l{display:none}
@@ -158,20 +158,21 @@ export function css(accent) {
     .chips{gap:12px;margin-top:14px}
     .chip{padding:6px 18px}
     .pg-head span{font-size:34px}
-    .bubble{margin-top:64px;font-size:46px;padding:22px 34px}
-    .who{margin-top:64px;font-size:38px}
+    .pane.reply-pane{display:flex;flex-direction:column}
+    .bubble{margin-top:120px;font-size:46px;padding:22px 34px}
+    .who{margin-top:auto;font-size:38px}
     .reply{margin-top:18px;font-size:66px}
-    .meta{margin-top:48px;font-size:34px}
+    .meta{margin-top:40px;margin-bottom:24px;font-size:34px}
     .lbl{font-size:34px}
     .ln{line-height:1.6}
     .code,.term{padding:22px 22px;margin-top:20px}
     .use .lbl+.code+.lbl{margin-top:56px !important}
     .use.tight .code,.use.tight .term{padding:14px 14px;margin-top:14px}
     .use.tight .ln{line-height:1.4}
-    .close{left:60px;right:120px;top:360px;bottom:520px;justify-content:flex-start}
-    .close .logo{width:520px;height:520px}
-    .close .url{margin-top:190px}
-    .close .url div{font-size:38px}
+    .close{left:60px;right:120px;top:230px;bottom:520px;justify-content:flex-start}
+    .close .logo{width:640px;height:640px}
+    .close .url{margin-top:210px;width:840px}
+    .close .url div{font-size:40px}
     .close .pill{margin-top:44px;height:72px;font-size:40px;padding:0 34px}
     .cap{left:60px;right:60px;top:1420px;height:120px}
     .cap span{font-size:40px}
@@ -234,7 +235,7 @@ export function inner(t) {
   return `
     const T = ${JSON.stringify(t)};
     fit($$(".name .nl > span").map(s => s.parentElement));
-    fit($$(".reply, .bubble"));
+    fit($$(".reply, .bubble, .close .url div"));
     // in portrait the card fills the height from under the identity block, however many rows the name takes
     if (PORTRAIT) {
       const idBox = $(".id"), panel = $(".panel");
@@ -251,9 +252,10 @@ export function inner(t) {
       const rule = $(".rule"), kicker = $(".kicker");
       const low = 1400 - (idBox.offsetTop + rule.offsetTop + rule.offsetHeight);
       const free = idBox.offsetTop + kicker.offsetTop + low - 60;
-      const open = { cx: 510, cy: (200 + free) / 2, r: (free - 200) / 2 };
+      // at most 420 px across from the middle, so the rings stay clear of the Shorts strip on the right
+      const open = { cx: 510, cy: (200 + free) / 2, r: Math.min(420, (free - 200) / 2) };
       const close = $(".close"), logo = $(".close .logo");
-      const shut = { cx: close.offsetLeft + logo.offsetLeft + logo.offsetWidth / 2, cy: close.offsetTop + logo.offsetTop + logo.offsetHeight / 2, r: 410 };
+      const shut = { cx: close.offsetLeft + logo.offsetLeft + logo.offsetWidth / 2, cy: close.offsetTop + logo.offsetTop + logo.offsetHeight / 2, r: 440 };
       const S = T.beats.spec.at - 0.1, X = T.beats.close.at;
       tl.set(rings, { transformOrigin: "50% 50%", ...at(open.cx, open.cy, open.r) }, 0);
       tl.set(hero, { x: open.cx - hero.offsetWidth / 2, y: open.cy - hero.offsetHeight / 2 }, 0);
@@ -286,9 +288,14 @@ export function inner(t) {
     const turnOut = (sel, at) => tl.to($(sel), { opacity: 0, x: -70, rotationY: 12, duration: 0.4, ease: "power2.in" }, at);
     const panes = T.panes;
     panes.forEach((p, k) => { turnIn(".pane." + p.cls, p.at); if (k < panes.length - 1) turnOut(".pane." + p.cls, panes[k + 1].at - 0.4); });
+    // a turn between panes, and the move into the close, are in flight: the frame is between layouts
+    const flight = (from, to) => { tl.set($(".cam"), { attr: { "data-in-flight": "1" } }, from); tl.set($(".cam"), { attr: { "data-in-flight": "0" } }, to); };
+    panes.slice(1).forEach(p => flight(p.at - 0.4, p.at + 0.6));
+    flight(T.beats.close.at, T.beats.close.at + 1.0);
 
     // spec rows press in one by one
-    $$(".pane.spec .row").forEach((row, k) => tl.from(row, { opacity: 0, scale: 1.12, transformOrigin: "0% 50%", duration: 0.3, ease: "power4.out" }, T.at.rows[k]));
+    // (in portrait the sheet's labels come in with the card, so the tall card is a form from the start, and each value presses in)
+    $$(".pane.spec .row").forEach((row, k) => tl.from(PORTRAIT ? row.querySelector(".v") : row, { opacity: 0, scale: 1.12, transformOrigin: "0% 50%", duration: 0.3, ease: "power4.out" }, T.at.rows[k]));
 
     // the price lands as a stamp, then its facts, and the pill joins the name
     tl.from($(".pane.price .stamp, .pane.price .sub"), { scale: 1.9, opacity: 0, rotation: -12, duration: 0.42, ease: "power4.in" }, T.at.stamp - 0.42);
