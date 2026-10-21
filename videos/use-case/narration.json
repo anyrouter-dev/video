@@ -128,7 +128,7 @@
    "steps": [
     {
      "text": "Open a Herdr space on your repo.",
-     "capture": "shared/surfaces/tp-herdr.png"
+     "capture": "shared/surfaces/ar-docs-grokbot.png"
     },
     {
      "text": "Launch anyr claude in that space.",
@@ -136,8 +136,7 @@
      "more": "It sets the base URL, the key and the model for you."
     },
     {
-     "text": "Paste the goal into Grok Bot.",
-     "capture": "shared/surfaces/ar-docs-grokbot.png"
+     "text": "Paste the goal into Grok Bot."
     }
    ],
    "result": "Grok Bot drives the agent. You review the pull request it opens.",
@@ -193,10 +192,6 @@
     {
      "says": "result picture: Claude Code | poolside/laguna-s-2.1 | Grok Bot assigns the goal",
      "from": "use-cases.json grokbot.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
-     "says": "capture: shared/surfaces/tp-herdr.png (herdr.dev, the terminal multiplexer for coding agents.)",
-     "from": "https://herdr.dev"
     },
     {
      "says": "capture: shared/surfaces/ar-docs-grokbot.png (AnyRouter guide: Grok Bot driving anyr claude inside a Herdr space.)",
