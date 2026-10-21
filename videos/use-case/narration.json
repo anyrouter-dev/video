@@ -105,14 +105,6 @@
      "from": "use-cases.json claude-code.diagram"
     },
     {
-     "says": "problem picture: Claude Code | Anthropic | by default",
-     "from": "use-cases.json claude-code.problem"
-    },
-    {
-     "says": "result picture: Claude Code | anyrouter/auto | anyr claude --model anyrouter/auto",
-     "from": "use-cases.json claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: shared/surfaces/ar-docs-cli-claude-model.png (AnyRouter docs, CLI → Claude Code: pinning a model with --model. Scrolled to: \"# Pin a model for the session anyr claude)",
      "from": "https://docs.anyrouter.dev/cli/claude-code"
     },
@@ -127,6 +119,10 @@
     {
      "says": "anyrouter.dev/use-cases/claude-code",
      "from": "https://anyrouter.dev/use-cases/claude-code answers 200 (checked at collect); the short link /u/claude-code answers 404"
+    },
+    {
+     "says": "figure: a transfer table. Claude Code's requests take one default exit; installing anyr turns the key switch, anyr claude lights the entry (base URL and key), and pinning a model slides the bridge to that model's exit, where every request then goes",
+     "from": "use-cases.json claude-code.problem, .steps and .diagram.label (Claude Code sends requests to AnyRouter, which forwards them to the model you picked)"
     }
    ]
   },
@@ -425,14 +421,6 @@
      "from": "use-cases.json coding-agents.hook"
     },
     {
-     "says": "problem picture: Claude Code | key + base URL | Codex | key + base URL | OpenCode | key + base URL",
-     "from": "use-cases.json coding-agents.problem"
-    },
-    {
-     "says": "result picture: Claude Code | Codex | OpenCode | anyrouter/auto",
-     "from": "use-cases.json coding-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: shared/dashboard/keys.png (Dashboard → API Keys: the key list with status, last used, 7-day spend, limits and top models.)",
      "from": "https://anyrouter.dev/dashboard/keys"
     },
@@ -455,6 +443,10 @@
     {
      "says": "anyrouter.dev/use-cases/coding-agents",
      "from": "https://anyrouter.dev/use-cases/coding-agents answers 200 (checked at collect); the short link /u/coding-agents answers 404"
+    },
+    {
+     "says": "figure: a turret head. Each coding agent is a station on one head; the drive that carries one AnyRouter key and the model lights once, and every station is turned to the same drive",
+     "from": "use-cases.json coding-agents.title, .problem, .steps and .hook (one balance and one request log)"
     }
    ]
   },
@@ -534,14 +526,6 @@
      "from": "use-cases.json hermes-agent.hook"
     },
     {
-     "says": "problem picture: Hermes Agent | One model | outage",
-     "from": "use-cases.json hermes-agent.problem"
-    },
-    {
-     "says": "result picture: Hermes Agent | anyrouter/hermes",
-     "from": "use-cases.json hermes-agent.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: shared/surfaces/ar-docs-hermes-env.png (AnyRouter guide, Hermes Agent: the key in ~/.hermes/.env. Scrolled to: \"ANYROUTER_API_KEY=sk-ar-your-anyrouter-key\".)",
      "from": "https://docs.anyrouter.dev/guides/hermes-agent"
     },
@@ -564,6 +548,10 @@
     {
      "says": "anyrouter.dev/use-cases/hermes-agent",
      "from": "https://anyrouter.dev/use-cases/hermes-agent answers 200 (checked at collect); the short link /u/hermes-agent answers 404"
+    },
+    {
+     "says": "figure: a changeover drive. The tool loop is a flywheel; the one motor driving it stops (an outage) and the loop stops; the plugin is seated and keyed, a motor drives again, and when it stops the next live motor slides in so the loop keeps turning",
+     "from": "use-cases.json hermes-agent.problem and .steps (anyrouter/hermes auto-routes across the top tool-calling models with fallback)"
     }
    ]
   },
@@ -829,20 +817,16 @@
      "from": "use-cases.json openrouter-free-fallback.steps"
     },
     {
-     "says": "problem picture: Your script | :free model | rate limited",
-     "from": "use-cases.json openrouter-free-fallback.problem"
-    },
-    {
-     "says": "result picture: Your app | Your :free model | Other free model",
-     "from": "use-cases.json openrouter-free-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: openrouter-free-fallback/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/openrouter-free-fallback"
     },
     {
      "says": "anyrouter.dev/use-cases/openrouter-free-fallback",
      "from": "https://anyrouter.dev/use-cases/openrouter-free-fallback answers 200 (checked at collect); the short link /u/openrouter-free-fallback answers 404"
+    },
+    {
+     "says": "figure: a transfer table. A request runs to its :free model's exit, which is rate limited (a fault lamp) and fails again on retry; with AnyRouter the bridge sends it to another free model's exit, which answers",
+     "from": "use-cases.json openrouter-free-fallback.problem and .diagram.label (If that model's routes are rate limited, AnyRouter answers with a different free model through anyrouter/free)"
     }
    ]
   },
@@ -1951,14 +1935,6 @@
      "from": "use-cases.json ai-sdk.problem"
     },
     {
-     "says": "problem picture: AI SDK provider | One vendor | locked",
-     "from": "use-cases.json ai-sdk.problem"
-    },
-    {
-     "says": "result picture: AI SDK | anyrouter/free | deepseek/deepseek-v4-flash",
-     "from": "use-cases.json ai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: shared/surfaces/tp-npm-ai-sdk-provider.png (npm: @anyr/ai-sdk-provider.)",
      "from": "https://www.npmjs.com/package/@anyr/ai-sdk-provider"
     },
@@ -1973,6 +1949,10 @@
     {
      "says": "anyrouter.dev/use-cases/ai-sdk",
      "from": "https://anyrouter.dev/use-cases/ai-sdk answers 200 (checked at collect); the short link /u/ai-sdk answers 404"
+    },
+    {
+     "says": "figure: a cartridge reader. One reader head on one shuttle is held to the first cartridge (one vendor); the AnyRouter provider frees it, a catalog id sends the same head to another cartridge, and switching models moves the same head again",
+     "from": "use-cases.json ai-sdk.problem and .steps"
     }
    ]
   },
@@ -2488,14 +2468,6 @@
      "from": "use-cases.json donate-keys.hook"
     },
     {
-     "says": "problem picture: Idle key | Month end | unused",
-     "from": "use-cases.json donate-keys.problem"
-    },
-    {
-     "says": "result picture: Your key | Shared pool | credits back",
-     "from": "use-cases.json donate-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
-    },
-    {
      "says": "capture: shared/surfaces/ar-docs-byok.png (AnyRouter docs: BYOK, your provider keys behind your sk-ar key.)",
      "from": "https://docs.anyrouter.dev/features/byok"
     },
@@ -2518,6 +2490,10 @@
     {
      "says": "anyrouter.dev/use-cases/donate-keys",
      "from": "https://anyrouter.dev/use-cases/donate-keys answers 200 (checked at collect); the short link /u/donate-keys answers 404"
+    },
+    {
+     "says": "figure: a key carousel (Fig. key carousel). Keys stand idle on the table at month end and nothing serves them; a key is added to an empty slot, donated so the service arm serves it, and a credit token drops into its cup as it serves other requests",
+     "from": "use-cases.json donate-keys.problem, .steps and .hook"
     }
    ]
   },
