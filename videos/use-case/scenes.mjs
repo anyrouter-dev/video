@@ -772,7 +772,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       const left = Array.from(dg.querySelectorAll('.col.l .nd')), right = Array.from(dg.querySelectorAll('.col.r .nd')), hub = dg.querySelector(".hub");
       // an edge leaves the side of a card that faces the next one: across in landscape, down a stacked portrait
       // a column of cards one under another is reached by a trunk down its left side, never through a card
-      const stackedCol = e => { const c = Array.from(e.parentElement.children); return c.length > 1 && c[1].offsetTop > c[0].offsetTop + 4; };
+      const stackedCol = e => { const c = Array.from(e.parentElement.children); return c.length > 1 && c[1].offsetTop >= c[0].offsetTop + c[0].offsetHeight - 2; };
       const trunk = e => Math.min(...Array.from(e.parentElement.children).map(c => box(c).x)) - 40;
       const link = (a, b, dashed) => {
         const A = box(a), B = box(b), across = B.x >= A.x + A.w - 1;
