@@ -6,7 +6,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import kind, { FILM, parseDoc, redact, undash, restates, rollPools, fallbackOf, narrate } from './kind.mjs';
-import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow } from './scenes.mjs';
+import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow, barOf } from './scenes.mjs';
+import { captureOf } from './captures.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
 import { writePortrait, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
 
@@ -19,7 +20,7 @@ const pools = rollPools(catalog());
 const collect = async (d = doc(), flags = {}) => {
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'use-case-')), 'use-cases.json');
   fs.writeFileSync(file, JSON.stringify(d));
-  return kind.collect({ flags: { 'models-from': MODELS, ...flags, from: file } });
+  return kind.collect({ flags: { 'models-from': MODELS, 'skip-link-check': true, ...flags, from: file } });
 };
 const releases = async d => kind.split(await collect(d));
 const byLabel = rs => Object.fromEntries(rs.map(r => [r.label, fingerprint(r.parts)]));
@@ -48,7 +49,7 @@ const rolled = h => [...(h.match(/<div class="also">[\s\S]*?<\/div>/)?.[0] ?? ''
 
 // The strings a use case states, redacted the way the film redacts them, the ids the catalog gave, and
 // the line the page's curl prints when its fallback answers, with runs of spaces read as one, as `shown` reads them.
-const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/u/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
+const factsOf = u => [u.kicker, u.title, u.url, `anyrouter.dev/use-cases/${u.slug}`, u.command?.text, ...u.steps, ...u.snippets.flatMap(s => [s.title, ...s.code.split('\n')]),
   ...pools.credit, ...pools.free, fallbackOf(u)].filter(Boolean).flatMap(f => [redact(f), undash(redact(f))]).map(f => f.replace(/\s+/g, ' '));
 // Chrome, not copy: the brand, the line over the ids the same key runs, the "…" that marks code left
 // out, and the badges over the problem and the result.
@@ -59,7 +60,9 @@ const NARRATION = () => JSON.parse(fs.readFileSync(path.join(dir, 'narration.jso
 const scriptedOf = slug => {
   const f = NARRATION().films[slug], m = f.motif, fl = f.flow;
   const labels = { single: [m.a, m.b, m.tag, m.fail], rows: (m.rows ?? []).flat(), sprawl: [m.a, ...(m.rows ?? [])], chips: m.items }[m.kind];
-  return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note].filter(Boolean);
+  // a real screen's bar names where it came from: the address or the command its manifest row records
+  const bars = f.steps.filter(st => st.capture).map(st => barOf(captureOf(st.capture)));
+  return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note, ...bars].filter(Boolean);
 };
 
 // ── one release per use case ───────────────────────────────────────────────
@@ -165,14 +168,14 @@ test('an API key never reaches the screen, only its prefix', () => {
   assert.ok(shown(h).some(t => t.includes('sk-ar-v1-••••••••')), 'the prefix stays, so a viewer knows which key');
 });
 
-test('the film opens on the page title and closes on its short link', () => {
+test('the film opens on the page title and closes on its live page', () => {
   for (const [u, film] of films()) {
     const text = shown(html(film));
     assert.equal(text.filter(t => t === u.title).length, 2, `${u.slug}: the headline opens the film and sits over the lockup`);
-    // the end card names the page's short link, never its long /use-cases URL
+    // the end card names the live page while the short link does not answer (collect checks it does)
     const card = html(film).match(/<div class="url[^>]*>([\s\S]*?)<\/div>/)[1];
-    assert.deepEqual(shown(card), [`anyrouter.dev/u/${u.slug}`], `${u.slug}: the short link`);
-    assert.ok(!html(film).includes('/use-cases/'), `${u.slug}: no long URL on screen`);
+    assert.deepEqual(shown(card), [`anyrouter.dev/use-cases/${u.slug}`], `${u.slug}: the page link`);
+    assert.ok(!html(film).includes('anyrouter.dev/u/'), `${u.slug}: no short link that does not answer`);
     assert.ok(text.includes(u.kicker), `${u.slug}: the kicker`);
   }
 });
@@ -434,17 +437,29 @@ test('the voice is placed where the story says, one line after another, inside t
   for (const [u, f] of films()) {
     const n = narration.films[u.slug], other = n.role === 'intro' ? 'problem' : 'intro';
     const ids = [n.role === 'intro' ? 'outcome' : other, n.role === 'intro' ? other : 'outcome',
-      ...n.steps.flatMap((st, i) => [`step-${i + 1}`, ...(st.more ? [`step-${i + 1}-more`] : [])]), 'result', 'close'].map(id => `${u.slug}-${id}`);
+      ...n.steps.flatMap((st, i) => [`step-${i + 1}`, ...(st.more ? [`step-${i + 1}-more`] : [])]), 'result', 'link'].map(id => `${u.slug}-${id}`);
     assert.deepEqual(f.said.map(l => l.id), ids);
     f.said.forEach((l, i) => {
       assert.ok(fs.existsSync(l.file), `${l.id} is voiced`);
       if (i) assert.ok(l.speaks >= f.said[i - 1].speaks + f.said[i - 1].dur - 0.05, `${u.slug}: ${l.id} starts over the line before it`);
     });
     // each line is said in its own beat: intro, problem, its step, the result, the link over the end card
-    const beatOf = id => (/-step-(\d+)/.exec(id) ? `step-${/-step-(\d+)/.exec(id)[1]}` : id.endsWith('-result') ? 'result' : id.endsWith('-close') ? 'close' : null);
+    const beatOf = id => (/-step-(\d+)/.exec(id) ? `step-${/-step-(\d+)/.exec(id)[1]}` : id.endsWith('-result') ? 'result' : id.endsWith('-link') ? 'close' : null);
     f.said.forEach((l, i) => {
       const key = beatOf(l.id) ?? (i === 0 ? 'intro' : 'problem'), b = f.beats.find(x => x.key === key);
       assert.ok(l.speaks >= b.start && l.speaks + l.dur <= b.start + b.dur + 0.05, `${u.slug}: ${l.id} is said inside ${key}`);
     });
+  }
+});
+
+test('every real screen a film shows names its source in the film\'s claims ledger', () => {
+  // a capture shown without its manifest row could be anything: the ledger keeps where each came from
+  for (const [slug, f] of Object.entries(NARRATION().films)) {
+    for (const st of f.steps.filter(x => x.capture)) {
+      const c = captureOf(st.capture), claim = f.claims.find(x => x.says.startsWith(`capture: ${st.capture} `));
+      assert.ok(claim, `${slug}: ${st.capture} has no claim`);
+      assert.equal(claim.from, c.url ?? c.command, `${slug}: ${st.capture} names its source`);
+    }
+    assert.ok(f.claims.some(x => x.says.startsWith(`capture: ${slug}/page/viewport-landscape.png`)), `${slug}: the end card's page has a claim`);
   }
 });

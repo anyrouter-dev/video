@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from '../../lib/paths.mjs';
-import { loadNarration, scriptOf, parseLine, hashOf, VOICE_DIR } from './narration.mjs';
+import { loadNarration, scriptOf, closeLines, parseLine, hashOf, VOICE_DIR } from './narration.mjs';
 
 const API = 'https://api.elevenlabs.io/v1';
 const { flags } = parseArgs(process.argv.slice(2));
@@ -45,7 +45,8 @@ console.log(`${lines.length} lines, ${lines.length - todo.length} already voiced
 for (const l of todo) console.log(`  ${l.id.padEnd(38)} ${String(l.spoken.length).padStart(4)}  ${l.spoken}`);
 // a recording no script speaks any more goes, when every film is in the run
 if (!flags.slug && !flags['dry-run'] && fs.existsSync(VOICE_DIR)) {
-  const ids = new Set(lines.map(l => l.id));
+  // the close a film is not ending on today keeps its recording, so switching links needs no new voice
+  const ids = new Set([...lines.map(l => l.id), ...slugs.flatMap(s => Object.values(closeLines(narration, s)).map(c => c.id))]);
   const stale = fs.readdirSync(VOICE_DIR).filter(f => /\.(mp3|json)$/.test(f) && !ids.has(f.replace(/\.(mp3|json)$/, '')));
   for (const f of stale) fs.rmSync(path.join(VOICE_DIR, f));
   if (stale.length) console.log(`removed ${stale.length} files no script speaks`);

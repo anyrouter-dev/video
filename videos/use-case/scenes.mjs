@@ -431,17 +431,16 @@ export function captionsOf(said = []) {
   });
 }
 
-// The short link on the lockup sits on one row, as large as fits the safe width once the camera
-// has leaned in; a link too long for that keeps the lockup still (`lean` 1) in that frame, and
-// one that fits neither way fails the build: a link cut across rows reads as two addresses.
-const URL_SIZES = { landscape: [48, 44, 40], portrait: [44, 40, 36, 32] }, URL_PAD = { landscape: 44, portrait: 24 }, URL_ADV = 0.57;
+// The link on the lockup sits on one row, in Geist, as large as fits the safe width; a link that
+// fits no size fails the build: a link cut across rows reads as two addresses.
+const URL_SIZES = { landscape: [48, 44, 40, 36, 32], portrait: [44, 40, 36, 32] }, URL_PAD = { landscape: 36, portrait: 20 };
+// Landscape sets the lockup beside the live page (.pagef, CLOSE.page px wide), so its link has the rest.
+const CLOSE = { page: 640, gap: 64 };
 export function urlSet(link) {
   const set = o => {
-    for (const lean of [2 * WIN[o].lean - 1, 1]) {
-      const room = ACROSS[o].width / lean - 2 * URL_PAD[o], px = URL_SIZES[o].find(x => [...link].length * URL_ADV * x <= room);
-      if (px) return { text: link, px, lean };
-    }
-    throw new Error(`the short link ${link} does not sit on one row of the ${o} lockup`);
+    const room = (o === 'landscape' ? ACROSS[o].width - CLOSE.page - CLOSE.gap : ACROSS[o].width) - 2 * URL_PAD[o] - 8, px = URL_SIZES[o].find(x => widthOf(link, { px: x, weight: 500, tracking: -0.01 }) <= room);
+    if (!px) throw new Error(`the link ${link} does not sit on one row of the ${o} lockup`);
+    return { text: link, px };
   };
   return { landscape: set('landscape'), portrait: set('portrait') };
 }
@@ -531,6 +530,21 @@ export function diagramOf(spec, kind, slug) {
   d.marks = Object.fromEntries([...d.left, ...d.right].filter(marks).map(l => [l, markFor(l)]));
   return d;
 }
+
+// ── real screens ───────────────────────────────────────────────────────────
+// A real screen is shown in a frame: a browser bar with the page's address for a page, a terminal
+// bar with the command for its output. The bar's words are set at BAR_PX in one row in the narrowest
+// frame; an address too long for it shows its host alone.
+const BAR_PX = 32, BAR_ROOM = 900 - 2 * 28 - 120;
+const fitsBar = t => widthOf(t, { px: BAR_PX, weight: 500 }) <= BAR_ROOM;
+/** The words in a real screen's bar: its address without the scheme, or the command it ran. */
+export function barOf(c) {
+  if (c.kind === 'terminal') return fitsBar(`$ ${c.command}`) ? `$ ${c.command}` : c.command.split(' ').slice(0, 2).join(' ');
+  const u = new URL(c.url), full = `${u.host}${u.pathname.replace(/\/$/, '')}`;
+  return fitsBar(full) ? full : u.host;
+}
+const frameHtml = (c, cls, img = `<img class="si" src="assets/captures/${esc(c.name)}" alt="">`) => `<div class="sf ${cls}${c.kind === 'terminal' ? ' tm' : ''}" data-layout-allow-overflow>
+      <div class="sb"><span class="dots"><i></i><i></i><i></i></span><span class="su">${esc(c.bar)}</span></div><div class="sv">${img}</div></div>`;
 
 // ── the shot ───────────────────────────────────────────────────────────────
 // How long each id holds in a roll. Each wash is shorter, so one never fades over the next.
@@ -667,12 +681,13 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
         <div class="badge kick">${esc(copy.kicker)}</div></div>
       <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1></section>
     <section class="pn p-problem">${back}<div class="blk"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}</div></section>
-    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}</div></section>
+    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) : '')).join('')}</div></section>
     <section class="pn p-result">${back}<div class="blk"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}</div></section>
-    <section class="pn p-close">${back}
-      <p class="h2" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</p>
+    <section class="pn p-close">${back}<div class="cblk">
+      ${frameHtml({ ...copy.page.landscape, bar: '' }, 'pagef', `<img class="si il" src="assets/captures/${esc(copy.page.landscape.name)}" alt=""><img class="si ip" src="assets/captures/${esc(copy.page.portrait.name)}" alt="">`)}
+      <div class="ccol"><p class="h2" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</p>
       <div class="end"><div class="lock">${LOGO}<b>AnyRouter</b></div>
-        <div class="url mono" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></section>
+        <div class="url" style="--us:${url.landscape.px}px;--us-p:${url.portrait.px}px">${esc(copy.link)}</div></div></div></div></section>
     </div></div></div></div></div></div></div>
     <div class="caps" data-outside-safe-area>${caps.map(c => `<div class="cap" data-layout-allow-overlap><span style="${fsVars(c.px, 'cf')}">${esc(c.text)}</span></div>`).join('')}</div>`;
 
@@ -861,10 +876,37 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // they are said. A step done shrinks to a row above the next.
     const hs = stp.map(e => e.offsetHeight), heads = stp.map(e => e.querySelector(".head").offsetHeight), winH = win.offsetHeight;
     const doneY = k => SY + heads.slice(0, k).reduce((y, x) => y + x * DONE + RG, 0);
+    // a step's real screen spans the safe width under its step and shows the screen zoomed in, as
+    // much of its top as the room under the step allows: the part the capture was scrolled to
+    const sk = STEPS.map((_, k) => $(".sk.s" + k));
+    const SF_W = TALL ? 900 : 1500, ZOOM = 1.45;
+    const skH = sk.map((f, k) => {
+      if (!f) return 0;
+      const bar = f.querySelector(".sb").offsetHeight, room = SY + SH - doneY(k) - hs[k] - HG - 8;
+      f.style.width = SF_W + "px";
+      f.style.left = (W - SF_W) / 2 + "px";
+      f.querySelector(".sv").style.height = Math.max(240, Math.min(room - bar - 4, SF_W * 0.5625)) + "px";
+      const img = f.querySelector(".si");
+      img.style.width = SF_W * ZOOM + "px";
+      img.style.marginLeft = -SF_W * (ZOOM - 1) * 0.35 + "px";
+      return f.offsetHeight;
+    });
     const place = k => {
-      const block = hs[k] + (STEPS[k].shows ? HG + winH : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
+      const block = hs[k] + (STEPS[k].shows ? HG + winH : sk[k] ? HG + skH[k] : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
       return { top, win: top + hs[k] + HG };
     };
+    // a step's real screen tilts in under its step, is pushed into while the step is said, and goes when the next comes
+    STEPS.forEach((st, k) => {
+      const f = sk[k];
+      if (!f) return;
+      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win;
+      tl.set(f, { autoAlpha: 0, y }, 0);
+      tl.set(f, { autoAlpha: 1 }, at);
+      tl.fromTo(f, { z: -460, rotationX: 16, rotationY: TALL ? -5 : -12, y: y + 140 }, { z: 0, rotationX: 0, rotationY: 0, y, duration: 1.0, ease: "expo.out", immediateRender: false }, at);
+      // the camera inside the frame drifts down the page and in, a reader's pace
+      tl.fromTo(f.querySelector(".si"), { scale: 1, y: 0 }, { scale: 1.08, y: -Math.min(120, f.querySelector(".sv").offsetHeight * 0.2), duration: Math.max(0.5, out - at), ease: "sine.inOut", immediateRender: false }, at);
+      if (next) { tl.to(f, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(f, { autoAlpha: 0 }, out + 0.3); }
+    });
     STEPS.forEach((st, k) => {
       const el = stp[k], at = place(k).top, next = STEPS[k + 1];
       tl.set(el, { y: at }, 0);
@@ -966,9 +1008,11 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     }
 
     // ── 5 · the lockup: the headline, small, above the AnyRouter lockup, and the short link under it.
-    const h2H = h2.offsetHeight, top5 = SY + (SH - h2H - G - end.offsetHeight) / 2;
-    h2.style.top = top5 + "px";
-    end.style.top = top5 + h2H + G + "px";
+    const cblk = $(".cblk"), pagef = $(".pagef");
+    cblk.style.top = SY + Math.max(0, (SH - cblk.offsetHeight) / 2) + "px";
+    // the live page the film ends on swings in beside the lockup and scrolls a little, as a visitor would
+    tl.fromTo(pagef, { z: -420, rotationY: TALL ? 0 : -24, rotationX: TALL ? 14 : 0, opacity: 0 }, { z: 0, rotationY: 0, rotationX: 0, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: true }, END + 0.25);
+    tl.fromTo(pagef.querySelectorAll(".si"), { yPercent: 0 }, { yPercent: -6, duration: Math.max(0.5, D - END - 1.2), ease: "sine.inOut", immediateRender: false }, END + 1.2);
     const h2w = $$(".h2 .w > span");
     tl.fromTo(h2w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.04, 0.25 / h2w.length), ease: "expo.out", immediateRender: false }, END + 0.15);
     tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0, rotationY: -40 }, { scale: 1, opacity: 1, rotationY: 0, duration: 1.0, ease: "expo.out" }, END + 0.35);
@@ -1021,7 +1065,7 @@ function cuesOf({ timing: T, cuts, land, rolls, copy }) {
 // Behind every panel a field of dots on a far plane drifts, so depth reads while the text holds still.
 const DOTS = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Ccircle cx='24' cy='24' r='2.4' fill='%23DCDCDC'/%3E%3C/svg%3E")`;
 export const CSS = `
-  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:96px;--tw:${WIN.landscape.width}px}
+  .film{--sy:${WIN.landscape.sy}px;--sh:${WIN.landscape.sh}px;--sl:96px;--sr:96px;--gap:${WIN.landscape.gap}px;--cap3:72px;--tw:${WIN.landscape.width}px}
   /* the camera: a perspective, then one wrapper per move (pull back, swing, push in, turn, travel) */
   .film .cam{position:absolute;inset:0;perspective:var(--persp);perspective-origin:50% 50%}
   .film .cpull,.film .carc,.film .cpush,.film .crotx,.film .croty,.film .cpos{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50% 0}
@@ -1117,18 +1161,47 @@ export const CSS = `
   .film .caret{display:inline-block;width:.56em;height:1.1em;margin-left:4px;vertical-align:-.2em;background:${C.ink};opacity:0}
   .film .is-ink .caret{background:${C.onInk}}
 
-  .film .end{display:flex;flex-direction:column;align-items:center;gap:56px;transform-style:preserve-3d}
+  /* a real screen in its frame: a browser bar with its address, or a terminal bar with its command */
+  .film .sf{position:absolute;top:0;left:0;border-radius:24px;overflow:hidden;border:2px solid ${C.line};background:${C.bg}}
+  .film .sb{position:relative;height:64px;display:flex;align-items:center;justify-content:center;padding:0 120px;border-bottom:2px solid ${C.line}}
+  .film .su{font-size:${BAR_PX}px;font-weight:500;color:${C.muted};white-space:pre}
+  .film .sv{position:relative;overflow:hidden;aspect-ratio:16/9;background:${C.bg}}
+  .film .sk .sv{aspect-ratio:auto}
+  .film .si{display:block;width:100%;max-width:none;transform-origin:30% 0}
+  .film .sf.tm{background:${C.ink};border-color:${C.ink}}
+  .film .sf.tm .sb{border-bottom-color:${C.ink2}}
+  .film .sf.tm .su{color:${C.onInkMuted}}
+  /* the end card: the live page beside the lockup, or over it in portrait */
+  .film .cblk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:row-reverse;align-items:center;justify-content:center;gap:${CLOSE.gap}px;transform-style:preserve-3d}
+  .film .pagef{position:relative;flex:none;width:${CLOSE.page}px}
+  .film .pagef .ip{display:none}
+  /* the page's own column, zoomed past its margins; the link is in the pill beside it */
+  .film .pagef .sv{aspect-ratio:4/3}
+  .film .pagef .il{width:140%;margin-left:-23%}
+  .film .ccol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:40px;transform-style:preserve-3d}
+  .film .ccol .h2,.film .ccol .end{position:relative;left:auto;right:auto;top:auto}
+  .film .p-close .lock svg{width:104px;height:104px}
+  .film .p-close .lock b{font-size:104px}
+  .film .end{display:flex;flex-direction:column;align-items:center;gap:48px;transform-style:preserve-3d}
   .film .lock{display:flex;align-items:center;gap:32px;transform-style:preserve-3d}
   .film .lock svg{width:144px;height:144px;display:block}
   .film .lock b{font-size:144px;font-weight:600;letter-spacing:-.055em;line-height:1}
-  .film .url{font-size:var(--us);letter-spacing:${(URL_ADV - 0.6).toFixed(2)}em;color:${C.onInk};background:${C.ink};padding:24px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
+  .film .url{font-size:var(--us);font-weight:500;letter-spacing:-.01em;color:${C.onInk};background:${C.ink};padding:22px ${URL_PAD.landscape}px;border-radius:32px;white-space:pre}
 
   .film .caps{position:absolute;left:0;right:0;top:${CAP.landscape.top}px;height:${CAP.landscape.height}px;pointer-events:none}
   .film .cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
   .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:var(--cf);font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:80px;--tw:${WIN.portrait.width}px}
+    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:64px;--tw:${WIN.portrait.width}px}
+    .film .cblk{flex-direction:column;gap:40px}
+    .film .pagef{width:900px}
+    .film .pagef .sv{aspect-ratio:2/1}
+    .film .pagef .ip{width:100%;margin-left:0}
+    .film .pagef .il{display:none}
+    .film .pagef .ip{display:block}
+    .film .p-close .lock svg{width:96px;height:96px}
+    .film .p-close .lock b{font-size:96px}
     .film .cam{perspective:var(--persp-p)}
     .film .sl{font-size:var(--ls-p);padding-top:calc((${STEP.mark}px - var(--ls-p) * ${STEP.lh}) / 2)}
     .film .sl .bl,.film .dt .bl{display:none}

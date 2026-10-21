@@ -23,8 +23,23 @@ export const VOICE_DIR = path.join(DIR, 'voice');
 
 export const loadNarration = (file = NARRATION) => JSON.parse(fs.readFileSync(file, 'utf8'));
 
-/** The short link a film ends on: the page's own, or /u/<slug> until the site publishes one. */
-export const shortLinkOf = (slug, published) => (published ?? `anyrouter.dev/u/${slug}`).replace(/^https?:\/\//, '');
+/**
+ * The two links a film can end on: the use case's live page, and the short link the site will
+ * publish. kind.mjs collect picks the short link only when use-cases.json names one and it answers
+ * 200, and fails the build when the link it picked does not.
+ */
+export const LINKS = { page: slug => `anyrouter.dev/use-cases/${slug}`, short: slug => `anyrouter.dev/u/${slug}` };
+/** The link a film ends on: the one collect verified, else the use case's page. */
+export const linkOf = (slug, verified) => (verified ?? LINKS.page(slug)).replace(/^https?:\/\//, '');
+
+/** The spoken close for each link a film can end on, each its own recording, so either is ready. */
+export function closeLines(narration, slug) {
+  const word = narration.films[slug].close;
+  return {
+    [LINKS.page(slug)]: { id: `${slug}-link`, say: `any router dot dev slash use cases slash ${word}.` },
+    [LINKS.short(slug)]: { id: `${slug}-close`, say: `any router dot dev slash u slash ${word}.` },
+  };
+}
 
 /**
  * The lines one film speaks, in order, as { id, beat, text, step?, more?, shows?, say? }:
@@ -37,8 +52,8 @@ export const shortLinkOf = (slug, published) => (published ?? `anyrouter.dev/u/$
 export function scriptOf(narration, slug, published) {
   const film = narration.films[slug];
   if (!film) throw new Error(`narration.json has no script for "${slug}": write one before this film can be built`);
-  const link = shortLinkOf(slug, published);
-  if (link !== `anyrouter.dev/u/${slug}`) throw new Error(`${slug} ends on ${link}, and its close is written for anyrouter.dev/u/${slug}: rewrite it`);
+  const link = linkOf(slug, published), close = closeLines(narration, slug)[link];
+  if (!close) throw new Error(`${slug} ends on ${link}, and its close is written for ${Object.keys(closeLines(narration, slug)).join(' or ')}: rewrite it`);
   if (!['intro', 'problem'].includes(film.role)) throw new Error(`${slug}: role must say which beat the outcome take plays, intro or problem`);
   const other = film.role === 'intro' ? 'problem' : 'intro';
   if (!film[other] || !film.result) throw new Error(`${slug}: a film says what it is, its problem and its result`);
@@ -47,11 +62,11 @@ export function scriptOf(narration, slug, published) {
     { ...opening.intro, beat: 'intro' },
     { ...opening.problem, beat: 'problem' },
     ...film.steps.flatMap((st, i) => [
-      { id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, text: `Step ${i + 1}. ${st.text}` },
+      { id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, capture: st.capture ?? null, text: `Step ${i + 1}. ${st.text}` },
       ...(st.more ? [{ id: `${slug}-step-${i + 1}-more`, beat: 'step', step: i + 1, more: true, text: st.more }] : []),
     ]),
     { id: `${slug}-result`, beat: 'result', text: film.result },
-    { id: `${slug}-close`, beat: 'close', text: link, say: { [link]: `any router dot dev slash u slash ${film.close}.` } },
+    { id: close.id, beat: 'close', text: link, say: { [link]: close.say } },
   ];
 }
 

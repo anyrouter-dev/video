@@ -9,7 +9,8 @@
  *   step-N   a numbered step card that tilts in and settles flat to read, the
  *            page's own sentence for it under the label; the step that shows
  *            the code brings in the window and types the page's command
- *   close    the headline again, the AnyRouter lockup and anyrouter.dev/u/<slug>
+ *   close    the headline again, the AnyRouter lockup and the link the film ends on: the
+ *            use case's page anyrouter.dev/use-cases/<slug>, or its short link once that answers
  *
  * Facts come from https://anyrouter.dev/use-cases.json, and the model ids a film
  * rolls through from https://anyrouter.dev/api/v1/models?all=1. Every word on screen
@@ -31,9 +32,10 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
-import { loadNarration, scriptOf, voicedLine } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, boardOf } from './scenes.mjs';
+import { loadNarration, scriptOf, voicedLine, LINKS } from './narration.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, boardOf, barOf } from './scenes.mjs';
 import { reflow, standsAlone, closed, headless } from './reflow.mjs';
+import { captureOf } from './captures.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
@@ -193,7 +195,12 @@ export function copyOf(u, pools) {
   };
   // a page sentence that opens by repeating the label shows only what follows it
   const beyond = (label, t) => (t && t.toLowerCase().startsWith(`${label.toLowerCase()}.`) ? t.slice(label.length + 1).trim() || null : t);
-  const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({ label: redact(l.label), shows: l.shows, detail: !l.shows && pageStep(l.label) ? undash(redact(beyond(l.label, pageStep(l.label)) ?? '')) || null : null }));
+  // a step that shows no code shows its real screen (captures.mjs), or else the page's own sentence for it
+  const real = ref => { const c = captureOf(ref); return { ...c, bar: barOf(c) }; };
+  const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({
+    label: redact(l.label), shows: l.shows, capture: !l.shows && l.capture ? real(l.capture) : null,
+    detail: !l.shows && !l.capture && pageStep(l.label) ? undash(redact(beyond(l.label, pageStep(l.label)) ?? '')) || null : null,
+  }));
   const shown = steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
   if (!shown.length || !steps.some(st => st.shows === 'command')) fail(u.slug, 'no step shows the command');
   const detailSizes = { landscape: TYPE.detail.landscape.sizes, portrait: TYPE.detail.portrait.sizes };
@@ -281,6 +288,8 @@ export function copyOf(u, pools) {
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
     problem, result,
+    // the end card shows the live page the film ends on, as it is
+    page: { landscape: real(`${u.slug}/page/viewport-landscape.png`), portrait: real(`${u.slug}/page/viewport-portrait.png`) },
     steps: steps.map(st => ({
       ...st,
       breaks: { landscape: labelSet(st.label, 'landscape', stepT.landscape).breaks, portrait: labelSet(st.label, 'portrait', stepT.portrait).breaks },
@@ -364,6 +373,8 @@ export function storyOf(u, pools) {
     // a step with no window holds until its page sentence is read
     // a step with no window holds while its page sentence is read, up to a couple of seconds past its voice
     let need = Math.max(STEP_MIN, said + AFTER, st.detail ? Math.min(VOICE_AT.step + 0.4 + read(st.detail.text), said + AFTER + 2.0) : 0);
+    // a real screen holds long enough to be seen and pushed into
+    if (st.capture) need = Math.max(need, VOICE_AT.step + 3.4);
     if (st.shows === 'install') { lands.preAt = TYPE_AT; need = Math.max(need, TYPE_AT + pre.dur + 0.6); }
     if (st.shows === 'command') {
       lands.cmdAt = TYPE_AT;
@@ -479,6 +490,14 @@ const releaseOf = (useCases, pools) => ({
 const one = data => data.useCases[0];
 
 const readJson = f => JSON.parse(fs.readFileSync(f, 'utf8'));
+const answers = async link => (await fetch(`https://${link.replace(/^https?:\/\//, '')}`, { method: 'HEAD', redirect: 'manual' })).status;
+/** The short link the page publishes when it answers 200, else null for the page itself; fails when the page does not answer. */
+export async function verifiedLink(u) {
+  if (u.link && (await answers(u.link)) === 200) return u.link.replace(/^https?:\/\//, '');
+  const page = LINKS.page(u.slug), status = await answers(page);
+  if (status !== 200) throw new Error(`${u.slug}: the film ends on ${page}, which answers HTTP ${status}`);
+  return null;
+}
 async function fetchJson(url) {
   const r = await fetch(url);
   if (!r.ok) throw new Error(`${url} answered HTTP ${r.status}`);
@@ -498,6 +517,9 @@ export default {
     const useCases = flags.slug ? all.filter(u => u.slug === flags.slug) : all;
     if (flags.slug && !useCases.length) throw new Error(`no use case "${flags.slug}". The use cases are: ${all.map(u => u.slug).join(', ')}`);
     const pools = rollPools(flags['models-from'] ? readJson(path.resolve(flags['models-from'])) : await fetchJson(MODELS_API));
+    // the link a film ends on must answer: its short link when the site publishes one that does, else its page
+    if (!flags['skip-link-check']) for (const u of useCases) u.link = await verifiedLink(u);
+    else for (const u of useCases) u.link = null;
     const said = narrate(useCases);
     for (const u of said) console.log(`  ${u.slug.padEnd(32)} ${u.narration ? '' : '(no script) '}${u.title}`);
     console.log(`  roll: ${pools.credit.join(', ')} · free: ${pools.free.join(', ')}`);
@@ -516,6 +538,8 @@ export default {
       // the voice, each line where the story puts it; the music steps down under its words (mix.mjs)
       said: story.said.map(l => ({ id: l.id, file: l.file, at: l.at, speaks: +(l.at + l.words[0].start).toFixed(2), dur: +(l.words.at(-1).end - l.words[0].start).toFixed(2) })),
       css: CSS,
+      // the real screens it shows, copied into the project
+      assets: [...story.copy.steps.map(st => st.capture), story.copy.page.landscape, story.copy.page.portrait].filter(Boolean).map(c => ({ from: c.disk, to: `assets/captures/${c.name}` })),
       beats: story.beats,
       scenes: [{ ...filmScene(story, board), id: 's01-film', key: 'film', start: 0, dur: story.duration }],
       summary: `${u.slug}: ${story.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,

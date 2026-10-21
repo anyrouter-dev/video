@@ -49,7 +49,8 @@
      "more": "It sets the base URL, the key and the model for you."
     },
     {
-     "text": "Pin a model when you want one."
+     "text": "Pin a model when you want one.",
+     "capture": "shared/surfaces/ar-docs-cli-claude-model.png"
     }
    ],
    "result": "Claude Code works as before, on the model you picked.",
@@ -107,8 +108,16 @@
      "from": "use-cases.json claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/claude-code",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-cli-claude-model.png (AnyRouter docs, CLI → Claude Code: pinning a model with --model. Scrolled to: \"# Pin a model for the session anyr claude)",
+     "from": "https://docs.anyrouter.dev/cli/claude-code"
+    },
+    {
+     "says": "capture: claude-code/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/claude-code"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/claude-code",
+     "from": "https://anyrouter.dev/use-cases/claude-code answers 200 (checked at collect); the short link /u/claude-code answers 404"
     }
    ]
   },
@@ -118,7 +127,8 @@
    "problem": "Your cloud agent quota can run out or be blocked. You still need a live terminal.",
    "steps": [
     {
-     "text": "Open a Herdr space on your repo."
+     "text": "Open a Herdr space on your repo.",
+     "capture": "shared/surfaces/tp-herdr.png"
     },
     {
      "text": "Launch anyr claude in that space.",
@@ -126,7 +136,8 @@
      "more": "It sets the base URL, the key and the model for you."
     },
     {
-     "text": "Paste the goal into Grok Bot."
+     "text": "Paste the goal into Grok Bot.",
+     "capture": "shared/surfaces/ar-docs-grokbot.png"
     }
    ],
    "result": "Grok Bot drives the agent. You review the pull request it opens.",
@@ -184,8 +195,20 @@
      "from": "use-cases.json grokbot.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/grokbot",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/tp-herdr.png (herdr.dev, the terminal multiplexer for coding agents.)",
+     "from": "https://herdr.dev"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-grokbot.png (AnyRouter guide: Grok Bot driving anyr claude inside a Herdr space.)",
+     "from": "https://docs.anyrouter.dev/guides/grok-bot-herdr-anyr"
+    },
+    {
+     "says": "capture: grokbot/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/grokbot"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/grokbot",
+     "from": "https://anyrouter.dev/use-cases/grokbot answers 200 (checked at collect); the short link /u/grokbot answers 404"
     }
    ]
   },
@@ -195,7 +218,8 @@
    "intro": "Run OpenCode through AnyRouter, with one key.",
    "steps": [
     {
-     "text": "Create an AnyRouter key."
+     "text": "Create an AnyRouter key.",
+     "capture": "shared/dashboard/keys.png"
     },
     {
      "text": "Launch anyr opencode.",
@@ -203,7 +227,8 @@
      "more": "It adds AnyRouter as the provider for that session."
     },
     {
-     "text": "Pick a model, and check the request logs."
+     "text": "Pick a model, and check the request logs.",
+     "capture": "shared/dashboard/logs.png"
     }
    ],
    "result": "One key, the catalog, and every call in your request logs.",
@@ -264,8 +289,20 @@
      "from": "use-cases.json opencode.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/opencode",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/keys.png (Dashboard → API Keys: the key list with status, last used, 7-day spend, limits and top models.)",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
+     "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
+     "from": "https://anyrouter.dev/dashboard/logs"
+    },
+    {
+     "says": "capture: opencode/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/opencode"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/opencode",
+     "from": "https://anyrouter.dev/use-cases/opencode answers 200 (checked at collect); the short link /u/opencode answers 404"
     }
    ]
   },
@@ -275,7 +312,8 @@
    "intro": "Run every coding agent through one URL and one key.",
    "steps": [
     {
-     "text": "Mint one AnyRouter key."
+     "text": "Mint one AnyRouter key.",
+     "capture": "shared/dashboard/keys.png"
     },
     {
      "text": "Set the Anthropic env vars.",
@@ -283,7 +321,8 @@
      "more": "Codex takes the OpenAI ones. Other tools take the same URL and key."
     },
     {
-     "text": "Start on anyrouter/auto."
+     "text": "Start on anyrouter/auto.",
+     "capture": "shared/surfaces/ar-docs-presets.png"
     }
    ],
    "result": "Every agent shares one balance and one request log.",
@@ -353,8 +392,20 @@
      "from": "use-cases.json coding-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/coding-agents",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/keys.png (Dashboard → API Keys: the key list with status, last used, 7-day spend, limits and top models.)",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
+     "from": "https://docs.anyrouter.dev/features/presets"
+    },
+    {
+     "says": "capture: coding-agents/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/coding-agents"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/coding-agents",
+     "from": "https://anyrouter.dev/use-cases/coding-agents answers 200 (checked at collect); the short link /u/coding-agents answers 404"
     }
    ]
   },
@@ -368,11 +419,13 @@
      "shows": "command"
     },
     {
-     "text": "Add your AnyRouter key."
+     "text": "Add your AnyRouter key.",
+     "capture": "shared/surfaces/ar-docs-hermes-env.png"
     },
     {
      "text": "Pick a model, such as anyrouter/hermes.",
-     "more": "It routes across the top tool-calling models, with fallback."
+     "more": "It routes across the top tool-calling models, with fallback.",
+     "capture": "shared/surfaces/ar-docs-hermes-model.png"
     }
    ],
    "result": "Hermes lists only the models that can call tools.",
@@ -429,8 +482,20 @@
      "from": "use-cases.json hermes-agent.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/hermes-agent",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-hermes-env.png (AnyRouter guide, Hermes Agent: the key in ~/.hermes/.env. Scrolled to: \"ANYROUTER_API_KEY=sk-ar-your-anyrouter-key\".)",
+     "from": "https://docs.anyrouter.dev/guides/hermes-agent"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-hermes-model.png (AnyRouter guide, Hermes Agent: picking anyrouter/hermes. Scrolled to: \"hermes model # interactive picker → anyrouter her)",
+     "from": "https://docs.anyrouter.dev/guides/hermes-agent"
+    },
+    {
+     "says": "capture: hermes-agent/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/hermes-agent"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/hermes-agent",
+     "from": "https://anyrouter.dev/use-cases/hermes-agent answers 200 (checked at collect); the short link /u/hermes-agent answers 404"
     }
    ]
   },
@@ -440,10 +505,12 @@
    "problem": "The SDK is built for Anthropic's messages API. Teams still want other models.",
    "steps": [
     {
-     "text": "Install the Agent SDK."
+     "text": "Install the Agent SDK.",
+     "capture": "shared/surfaces/tp-claude-agent-sdk.png"
     },
     {
-     "text": "Point the base URL and key at AnyRouter."
+     "text": "Point the base URL and key at AnyRouter.",
+     "capture": "shared/surfaces/ar-docs-messages.png"
     },
     {
      "text": "Pass a model, such as anyrouter/auto.",
@@ -501,8 +568,20 @@
      "from": "use-cases.json claude-agent-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/claude-agent-sdk",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/tp-claude-agent-sdk.png (Claude Agent SDK docs, overview (the install command is further down the page).)",
+     "from": "https://code.claude.com/docs/en/agent-sdk/overview"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-messages.png (AnyRouter API reference: Anthropic-compatible /messages at https://anyrouter.dev/api.)",
+     "from": "https://docs.anyrouter.dev/api-reference/messages"
+    },
+    {
+     "says": "capture: claude-agent-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/claude-agent-sdk"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/claude-agent-sdk",
+     "from": "https://anyrouter.dev/use-cases/claude-agent-sdk answers 200 (checked at collect); the short link /u/claude-agent-sdk answers 404"
     }
    ]
   },
@@ -521,7 +600,8 @@
      "more": "Requests do not deduct credits."
     },
     {
-     "text": "Switch models when a task needs more."
+     "text": "Switch models when a task needs more.",
+     "capture": "shared/surfaces/ar-docs-presets.png"
     }
    ],
    "result": "It codes on whichever free model is answering.",
@@ -582,8 +662,16 @@
      "from": "use-cases.json claude-code-free-models.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/claude-code-free-models",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
+     "from": "https://docs.anyrouter.dev/features/presets"
+    },
+    {
+     "says": "capture: claude-code-free-models/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/claude-code-free-models"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/claude-code-free-models",
+     "from": "https://anyrouter.dev/use-cases/claude-code-free-models answers 200 (checked at collect); the short link /u/claude-code-free-models answers 404"
     }
    ]
   },
@@ -654,8 +742,12 @@
      "from": "use-cases.json openrouter-free-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/openrouter-free-fallback",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: openrouter-free-fallback/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/openrouter-free-fallback"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/openrouter-free-fallback",
+     "from": "https://anyrouter.dev/use-cases/openrouter-free-fallback answers 200 (checked at collect); the short link /u/openrouter-free-fallback answers 404"
     }
    ]
   },
@@ -665,7 +757,8 @@
    "intro": "Use OpenRouter free models in OpenCode and Cline.",
    "steps": [
     {
-     "text": "Create an AnyRouter key."
+     "text": "Create an AnyRouter key.",
+     "capture": "shared/dashboard/keys.png"
     },
     {
      "text": "Add an OpenAI-compatible provider with this URL.",
@@ -673,7 +766,8 @@
     },
     {
      "text": "Set a free model id.",
-     "more": "If its route runs out, AnyRouter answers through anyrouter/free."
+     "more": "If its route runs out, AnyRouter answers through anyrouter/free.",
+     "capture": "shared/surfaces/tp-opencode-providers.png"
     }
    ],
    "result": "The tool needs no other setup.",
@@ -737,8 +831,20 @@
      "from": "use-cases.json openrouter-free-in-your-tools.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/openrouter-free-in-your-tools",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/keys.png (Dashboard → API Keys: the key list with status, last used, 7-day spend, limits and top models.)",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
+     "says": "capture: shared/surfaces/tp-opencode-providers.png (OpenCode docs, providers: adding an OpenAI-compatible provider. Scrolled to: \"Custom provider\".)",
+     "from": "https://opencode.ai/docs/providers/"
+    },
+    {
+     "says": "capture: openrouter-free-in-your-tools/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/openrouter-free-in-your-tools"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/openrouter-free-in-your-tools",
+     "from": "https://anyrouter.dev/use-cases/openrouter-free-in-your-tools answers 200 (checked at collect); the short link /u/openrouter-free-in-your-tools answers 404"
     }
    ]
   },
@@ -748,7 +854,8 @@
    "problem": "NVIDIA's endpoint is one more key, one more base URL, and one more rate limit.",
    "steps": [
     {
-     "text": "Pick an NVIDIA model in the catalog."
+     "text": "Pick an NVIDIA model in the catalog.",
+     "capture": "shared/surfaces/ar-models-nvidia.png"
     },
     {
      "text": "Call it with your AnyRouter key.",
@@ -804,8 +911,16 @@
      "from": "use-cases.json nvidia-nim-models.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/nvidia-nim-models",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-models-nvidia.png (The /models catalog filtered to NVIDIA.)",
+     "from": "https://anyrouter.dev/models?provider=nvidia"
+    },
+    {
+     "says": "capture: nvidia-nim-models/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/nvidia-nim-models"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/nvidia-nim-models",
+     "from": "https://anyrouter.dev/use-cases/nvidia-nim-models answers 200 (checked at collect); the short link /u/nvidia-nim-models answers 404"
     }
    ]
   },
@@ -815,7 +930,8 @@
    "problem": "You do not want to switch tools, or edit its config by hand.",
    "steps": [
     {
-     "text": "Save a Google key in AnyRouter."
+     "text": "Save a Google key in AnyRouter.",
+     "capture": "shared/surfaces/tp-google-api-key.png"
     },
     {
      "text": "Run anyr claude with a Gemini model.",
@@ -875,8 +991,16 @@
      "from": "use-cases.json gemini-in-claude-code.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/gemini-in-claude-code",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/tp-google-api-key.png (Gemini API docs: getting an API key in Google AI Studio.)",
+     "from": "https://ai.google.dev/gemini-api/docs/api-key"
+    },
+    {
+     "says": "capture: gemini-in-claude-code/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/gemini-in-claude-code"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/gemini-in-claude-code",
+     "from": "https://anyrouter.dev/use-cases/gemini-in-claude-code answers 200 (checked at collect); the short link /u/gemini-in-claude-code answers 404"
     }
    ]
   },
@@ -886,10 +1010,12 @@
    "intro": "Put several provider keys behind Claude Code.",
    "steps": [
     {
-     "text": "Save keys for two providers."
+     "text": "Save keys for two providers.",
+     "capture": "shared/dashboard/byok.png"
     },
     {
-     "text": "Keep the Fallback strategy."
+     "text": "Keep the Fallback strategy.",
+     "capture": "shared/surfaces/ar-docs-credential-selection.png"
     },
     {
      "text": "Run anyr claude.",
@@ -953,8 +1079,20 @@
      "from": "use-cases.json claude-code-multiple-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/claude-code-multiple-keys",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
+     "from": "https://anyrouter.dev/dashboard/byok"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-credential-selection.png (AnyRouter docs: credential selection (Fallback, Round Robin, Weighted).)",
+     "from": "https://docs.anyrouter.dev/features/credential-selection"
+    },
+    {
+     "says": "capture: claude-code-multiple-keys/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/claude-code-multiple-keys"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/claude-code-multiple-keys",
+     "from": "https://anyrouter.dev/use-cases/claude-code-multiple-keys answers 200 (checked at collect); the short link /u/claude-code-multiple-keys answers 404"
     }
    ]
   },
@@ -964,14 +1102,16 @@
    "intro": "Start on anyrouter/free, or anyrouter/auto.",
    "steps": [
     {
-     "text": "Create a key."
+     "text": "Create a key.",
+     "capture": "shared/dashboard/keys.png"
     },
     {
      "text": "Call anyrouter/free or anyrouter/auto.",
      "shows": "command"
     },
     {
-     "text": "Read which model answered."
+     "text": "Read which model answered.",
+     "capture": "shared/surfaces/ar-docs-chat-completions.png"
     }
    ],
    "result": "Free failover on every plan, and stable paid failover.",
@@ -1025,8 +1165,20 @@
      "from": "use-cases.json virtual-presets.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/virtual-presets",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/keys.png (Dashboard → API Keys: the key list with status, last used, 7-day spend, limits and top models.)",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-chat-completions.png (AnyRouter API reference: POST /api/v1/chat/completions.)",
+     "from": "https://docs.anyrouter.dev/api-reference/chat-completions"
+    },
+    {
+     "says": "capture: virtual-presets/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/virtual-presets"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/virtual-presets",
+     "from": "https://anyrouter.dev/use-cases/virtual-presets answers 200 (checked at collect); the short link /u/virtual-presets answers 404"
     }
    ]
   },
@@ -1036,10 +1188,12 @@
    "problem": "Other apps still need their own keys, and you get no failover if NIM is down.",
    "steps": [
     {
-     "text": "Create a free NVIDIA key."
+     "text": "Create a free NVIDIA key.",
+     "capture": "shared/surfaces/tp-nvidia-build.png"
     },
     {
-     "text": "Add it under BYOK."
+     "text": "Add it under BYOK.",
+     "capture": "shared/dashboard/byok.png"
     },
     {
      "text": "Call AnyRouter with your AnyRouter key.",
@@ -1102,8 +1256,20 @@
      "from": "use-cases.json nvidia-free-key.steps"
     },
     {
-     "says": "anyrouter.dev/u/nvidia-free-key",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/tp-nvidia-build.png (build.nvidia.com, where NVIDIA API keys (nvapi-…) are created.)",
+     "from": "https://build.nvidia.com/"
+    },
+    {
+     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
+     "from": "https://anyrouter.dev/dashboard/byok"
+    },
+    {
+     "says": "capture: nvidia-free-key/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/nvidia-free-key"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/nvidia-free-key",
+     "from": "https://anyrouter.dev/use-cases/nvidia-free-key answers 200 (checked at collect); the short link /u/nvidia-free-key answers 404"
     }
    ]
   },
@@ -1113,7 +1279,8 @@
    "problem": "Free models have no daily cap. Paid models need credits.",
    "steps": [
     {
-     "text": "Start Go on the pricing page."
+     "text": "Start Go on the pricing page.",
+     "capture": "shared/surfaces/ar-pricing.png"
     },
     {
      "text": "Call anyrouter/auto.",
@@ -1121,7 +1288,8 @@
      "more": "Paid models bill your credits."
     },
     {
-     "text": "Call anyrouter/free any time."
+     "text": "Call anyrouter/free any time.",
+     "capture": "shared/surfaces/ar-model-free.png"
     }
    ],
    "result": "You do not need Go to call free models.",
@@ -1180,8 +1348,20 @@
      "from": "use-cases.json go-plan.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/go-plan",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-pricing.png (anyrouter.dev/pricing with the Go plan.)",
+     "from": "https://anyrouter.dev/pricing"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-model-free.png (Model page: anyrouter/free.)",
+     "from": "https://anyrouter.dev/model/anyrouter/free"
+    },
+    {
+     "says": "capture: go-plan/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/go-plan"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/go-plan",
+     "from": "https://anyrouter.dev/use-cases/go-plan answers 200 (checked at collect); the short link /u/go-plan answers 404"
     }
    ]
   },
@@ -1191,14 +1371,16 @@
    "problem": "Most free LLM API posts list keys that have expired.",
    "steps": [
     {
-     "text": "Sign up and create a key."
+     "text": "Sign up and create a key.",
+     "capture": "shared/surfaces/ar-docs-quickstart.png"
     },
     {
      "text": "Call anyrouter/free.",
      "shows": "command"
     },
     {
-     "text": "Move to paid models when you need them."
+     "text": "Move to paid models when you need them.",
+     "capture": "shared/surfaces/ar-pricing.png"
     }
    ],
    "result": "One key, and a documented free tier.",
@@ -1251,8 +1433,20 @@
      "from": "use-cases.json free-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/free-llm-api",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-quickstart.png (AnyRouter docs: quickstart, sign up and create a key.)",
+     "from": "https://docs.anyrouter.dev/getting-started/quickstart"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-pricing.png (anyrouter.dev/pricing with the Go plan.)",
+     "from": "https://anyrouter.dev/pricing"
+    },
+    {
+     "says": "capture: free-llm-api/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/free-llm-api"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/free-llm-api",
+     "from": "https://anyrouter.dev/use-cases/free-llm-api answers 200 (checked at collect); the short link /u/free-llm-api answers 404"
     }
    ]
   },
@@ -1263,14 +1457,16 @@
    "steps": [
     {
      "text": "Keep your key on your server.",
-     "more": "Never put it in the browser."
+     "more": "Never put it in the browser.",
+     "capture": "shared/surfaces/ar-docs-api-keys.png"
     },
     {
      "text": "Stream with anyrouter/free.",
      "shows": "command"
     },
     {
-     "text": "Read which model answered."
+     "text": "Read which model answered.",
+     "capture": "shared/dashboard/logs.png"
     }
    ],
    "result": "One model id fails over between free models.",
@@ -1327,8 +1523,20 @@
      "from": "use-cases.json free-chatbot.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/free-chatbot",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-api-keys.png (AnyRouter docs: API keys (sk-ar-…), kept server-side.)",
+     "from": "https://docs.anyrouter.dev/features/api-keys"
+    },
+    {
+     "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
+     "from": "https://anyrouter.dev/dashboard/logs"
+    },
+    {
+     "says": "capture: free-chatbot/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/free-chatbot"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/free-chatbot",
+     "from": "https://anyrouter.dev/use-cases/free-chatbot answers 200 (checked at collect); the short link /u/free-chatbot answers 404"
     }
    ]
   },
@@ -1338,7 +1546,8 @@
    "intro": "Shop for the cheapest model, without lock-in.",
    "steps": [
     {
-     "text": "Compare list prices in the catalog."
+     "text": "Compare list prices in the catalog.",
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/models-landscape.png"
     },
     {
      "text": "Start on anyrouter/auto.",
@@ -1346,7 +1555,8 @@
      "more": "Health-aware failover avoids a dead cheap model."
     },
     {
-     "text": "Pin an id once you have measured it."
+     "text": "Pin an id once you have measured it.",
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/model-deepseek-v4-pro-landscape.png"
     }
    ],
    "result": "Switching models is now a string change.",
@@ -1404,8 +1614,20 @@
      "from": "use-cases.json cheapest-llm-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/cheapest-llm-api",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/models-landscape.png (The top of the /models catalog.)",
+     "from": "https://anyrouter.dev/models"
+    },
+    {
+     "says": "capture: video-usecase-v3/shared/captures/2026-10-19/screens/model-deepseek-v4-pro-landscape.png (The public detail page for deepseek/deepseek-v4-pro.)",
+     "from": "https://anyrouter.dev/model/deepseek/deepseek-v4-pro"
+    },
+    {
+     "says": "capture: cheapest-llm-api/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/cheapest-llm-api"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/cheapest-llm-api",
+     "from": "https://anyrouter.dev/use-cases/cheapest-llm-api answers 200 (checked at collect); the short link /u/cheapest-llm-api answers 404"
     }
    ]
   },
@@ -1415,7 +1637,8 @@
    "intro": "One AI SDK provider for the whole catalog.",
    "steps": [
     {
-     "text": "Install the AnyRouter provider."
+     "text": "Install the AnyRouter provider.",
+     "capture": "shared/surfaces/ar-docs-sdk.png"
     },
     {
      "text": "Pass a catalog id.",
@@ -1474,8 +1697,16 @@
      "from": "use-cases.json ai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/ai-sdk",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-sdk.png (AnyRouter docs, SDK: the @anyr/ai-sdk-provider package for the Vercel AI SDK.)",
+     "from": "https://docs.anyrouter.dev/sdk"
+    },
+    {
+     "says": "capture: ai-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/ai-sdk"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/ai-sdk",
+     "from": "https://anyrouter.dev/use-cases/ai-sdk answers 200 (checked at collect); the short link /u/ai-sdk answers 404"
     }
    ]
   },
@@ -1485,14 +1716,16 @@
    "intro": "Keep the OpenAI SDK, and change two fields.",
    "steps": [
     {
-     "text": "Keep openai installed."
+     "text": "Keep openai installed.",
+     "capture": "shared/surfaces/tp-openai-node.png"
     },
     {
      "text": "Change the base URL and API key.",
      "shows": "command"
     },
     {
-     "text": "Use anyrouter/free for the first call."
+     "text": "Use anyrouter/free for the first call.",
+     "capture": "shared/surfaces/ar-model-free.png"
     }
    ],
    "result": "Same client, same calls, across the whole catalog.",
@@ -1546,8 +1779,20 @@
      "from": "use-cases.json openai-sdk.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/openai-sdk",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/tp-openai-node.png (openai-node on GitHub: install and client setup. Scrolled to: \"Installation\".)",
+     "from": "https://github.com/openai/openai-node"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-model-free.png (Model page: anyrouter/free.)",
+     "from": "https://anyrouter.dev/model/anyrouter/free"
+    },
+    {
+     "says": "capture: openai-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/openai-sdk"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/openai-sdk",
+     "from": "https://anyrouter.dev/use-cases/openai-sdk answers 200 (checked at collect); the short link /u/openai-sdk answers 404"
     }
    ]
   },
@@ -1561,10 +1806,12 @@
      "shows": "command"
     },
     {
-     "text": "Use /api for Anthropic Messages."
+     "text": "Use /api for Anthropic Messages.",
+     "capture": "shared/surfaces/ar-unify-messages.png"
     },
     {
-     "text": "Start with anyrouter/auto."
+     "text": "Start with anyrouter/auto.",
+     "capture": "shared/surfaces/ar-docs-presets.png"
     }
    ],
    "result": "Chat completions, messages and responses. Same key, same catalog.",
@@ -1621,8 +1868,20 @@
      "from": "use-cases.json unify-api.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/unify-api",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-unify-messages.png (anyrouter.dev/unify-api/messages: the Anthropic-compatible endpoint.)",
+     "from": "https://anyrouter.dev/unify-api/messages"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
+     "from": "https://docs.anyrouter.dev/features/presets"
+    },
+    {
+     "says": "capture: unify-api/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/unify-api"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/unify-api",
+     "from": "https://anyrouter.dev/use-cases/unify-api answers 200 (checked at collect); the short link /u/unify-api answers 404"
     }
    ]
   },
@@ -1636,11 +1895,13 @@
      "shows": "command"
     },
     {
-     "text": "Send each the same prompt."
+     "text": "Send each the same prompt.",
+     "capture": "shared/surfaces/ar-docs-vercel.png"
     },
     {
      "text": "Compare answers, latency and cost.",
-     "more": "Cost per request is in the dashboard logs."
+     "more": "Cost per request is in the dashboard logs.",
+     "capture": "shared/dashboard/logs.png"
     }
    ],
    "result": "One key and one client for every model you test.",
@@ -1709,8 +1970,20 @@
      "from": "use-cases.json model-evals.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/model-evals",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-vercel.png (AnyRouter guide: Vercel AI SDK with @anyr/ai-sdk-provider.)",
+     "from": "https://docs.anyrouter.dev/guides/vercel-ai-sdk"
+    },
+    {
+     "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
+     "from": "https://anyrouter.dev/dashboard/logs"
+    },
+    {
+     "says": "capture: model-evals/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/model-evals"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/model-evals",
+     "from": "https://anyrouter.dev/use-cases/model-evals answers 200 (checked at collect); the short link /u/model-evals answers 404"
     }
    ]
   },
@@ -1720,14 +1993,16 @@
    "intro": "Keep an agent up when a provider goes down.",
    "steps": [
     {
-     "text": "Keep your primary model, here on your own key."
+     "text": "Keep your primary model, here on your own key.",
+     "capture": "shared/surfaces/ar-docs-chat-completions.png"
     },
     {
      "text": "Add backup models in order.",
      "shows": "command"
     },
     {
-     "text": "Read which one answered."
+     "text": "Read which one answered.",
+     "capture": "shared/surfaces/ar-docs-fallbacks-header.png"
     }
    ],
    "result": "If the first model fails, AnyRouter tries the next one.",
@@ -1782,8 +2057,20 @@
      "from": "use-cases.json agent-fallback.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/agent-fallback",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-chat-completions.png (AnyRouter API reference: POST /api/v1/chat/completions.)",
+     "from": "https://docs.anyrouter.dev/api-reference/chat-completions"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-fallbacks-header.png (AnyRouter guide, model fallbacks: telling which model answered. Scrolled to: \"Requests are priced using the model that a)",
+     "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
+    },
+    {
+     "says": "capture: agent-fallback/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/agent-fallback"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/agent-fallback",
+     "from": "https://anyrouter.dev/use-cases/agent-fallback answers 200 (checked at collect); the short link /u/agent-fallback answers 404"
     }
    ]
   },
@@ -1793,7 +2080,8 @@
    "intro": "Donate an idle key, and earn credits back.",
    "steps": [
     {
-     "text": "Add the key under BYOK."
+     "text": "Add the key under BYOK.",
+     "capture": "shared/dashboard/byok.png"
     },
     {
      "text": "Turn on donate.",
@@ -1801,7 +2089,8 @@
      "more": "Check that your provider's terms allow sharing it."
     },
     {
-     "text": "Credits come from pool traffic."
+     "text": "Credits come from pool traffic.",
+     "capture": "shared/surfaces/ar-docs-shared-pool-credits.png"
     }
    ],
    "result": "It serves other people's requests, and pays you back in credits.",
@@ -1859,8 +2148,20 @@
      "from": "use-cases.json donate-keys.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/donate-keys",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
+     "from": "https://anyrouter.dev/dashboard/byok"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-shared-pool-credits.png (AnyRouter docs, shared pool: credits earned from donated keys. Scrolled to: \"Features Account Settings AnyRouter Agent M)",
+     "from": "https://docs.anyrouter.dev/features/shared-pool"
+    },
+    {
+     "says": "capture: donate-keys/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/donate-keys"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/donate-keys",
+     "from": "https://anyrouter.dev/use-cases/donate-keys answers 200 (checked at collect); the short link /u/donate-keys answers 404"
     }
    ]
   },
@@ -1870,7 +2171,8 @@
    "problem": "A second gateway invoice is waste, when all you need is one URL, logs and failover.",
    "steps": [
     {
-     "text": "Add each provider key."
+     "text": "Add each provider key.",
+     "capture": "shared/surfaces/ar-byok.png"
     },
     {
      "text": "Call AnyRouter with one key.",
@@ -1930,8 +2232,16 @@
      "from": "use-cases.json byok.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/byok",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-byok.png (anyrouter.dev/byok: bring your own provider keys.)",
+     "from": "https://anyrouter.dev/byok"
+    },
+    {
+     "says": "capture: byok/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/byok"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/byok",
+     "from": "https://anyrouter.dev/use-cases/byok answers 200 (checked at collect); the short link /u/byok answers 404"
     }
    ]
   },
@@ -1941,10 +2251,12 @@
    "problem": "Your plan has its own limits. You want other models ready if Claude is busy.",
    "steps": [
     {
-     "text": "Add your Anthropic key in BYOK."
+     "text": "Add your Anthropic key in BYOK.",
+     "capture": "shared/dashboard/byok.png"
     },
     {
-     "text": "Test the key, and save it."
+     "text": "Test the key, and save it.",
+     "capture": "shared/surfaces/ar-docs-byok-anthropic.png"
     },
     {
      "text": "Run anyr claude with a Claude model.",
@@ -2003,8 +2315,20 @@
      "from": "use-cases.json byok-anthropic.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/byok-anthropic",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/dashboard/byok.png (Dashboard → BYOK & Shared Pool: shared-pool stats, Needs attention (failing / donation paused), Your keys table by provi)",
+     "from": "https://anyrouter.dev/dashboard/byok"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-byok-anthropic.png (AnyRouter docs, BYOK providers: Anthropic (sk-ant-… keys).)",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/anthropic"
+    },
+    {
+     "says": "capture: byok-anthropic/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/byok-anthropic"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/byok-anthropic",
+     "from": "https://anyrouter.dev/use-cases/byok-anthropic answers 200 (checked at collect); the short link /u/byok-anthropic answers 404"
     }
    ]
   },
@@ -2018,10 +2342,12 @@
      "shows": "command"
     },
     {
-     "text": "Exchange the code for a short-lived key."
+     "text": "Exchange the code for a short-lived key.",
+     "capture": "shared/surfaces/ar-docs-oauth-api.png"
     },
     {
-     "text": "Call models on their behalf."
+     "text": "Call models on their behalf.",
+     "capture": "shared/surfaces/ar-docs-siwa.png"
     }
    ],
    "result": "You never store a raw provider secret.",
@@ -2076,8 +2402,20 @@
      "from": "use-cases.json sign-in.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/sign-in",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-oauth-api.png (AnyRouter API reference: OAuth code exchange for a scoped sk-ar-v1 key.)",
+     "from": "https://docs.anyrouter.dev/api-reference/oauth"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-siwa.png (AnyRouter guide: Sign in with AnyRouter.)",
+     "from": "https://docs.anyrouter.dev/guides/sign-in-with-anyrouter"
+    },
+    {
+     "says": "capture: sign-in/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/sign-in"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/sign-in",
+     "from": "https://anyrouter.dev/use-cases/sign-in answers 200 (checked at collect); the short link /u/sign-in answers 404"
     }
    ]
   },
@@ -2091,7 +2429,8 @@
      "shows": "command"
     },
     {
-     "text": "Sign in when it asks."
+     "text": "Sign in when it asks.",
+     "capture": "shared/surfaces/ar-docs-mcp-oauth.png"
     }
    ],
    "result": "Claude Desktop, Claude Code, Cursor and OpenCode call it as tools.",
@@ -2144,8 +2483,16 @@
      "from": "use-cases.json mcp-gateway.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/mcp-gateway",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-mcp-oauth.png (AnyRouter docs, MCP: OAuth when the client prompts. Scrolled to: \"Bring AnyRouter into Claude Desktop, Claude Code, Curs)",
+     "from": "https://docs.anyrouter.dev/mcp"
+    },
+    {
+     "says": "capture: mcp-gateway/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/mcp-gateway"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/mcp-gateway",
+     "from": "https://anyrouter.dev/use-cases/mcp-gateway answers 200 (checked at collect); the short link /u/mcp-gateway answers 404"
     }
    ]
   },
@@ -2159,7 +2506,8 @@
      "shows": "command"
     },
     {
-     "text": "Keep model calls on anyrouter/auto."
+     "text": "Keep model calls on anyrouter/auto.",
+     "capture": "shared/surfaces/ar-docs-presets.png"
     }
    ],
    "result": "One endpoint, instead of a new config in every app.",
@@ -2221,8 +2569,16 @@
      "from": "use-cases.json mcp-for-agents.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/mcp-for-agents",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-presets.png (AnyRouter docs: virtual presets (anyrouter/auto, anyrouter/free, …).)",
+     "from": "https://docs.anyrouter.dev/features/presets"
+    },
+    {
+     "says": "capture: mcp-for-agents/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/mcp-for-agents"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/mcp-for-agents",
+     "from": "https://anyrouter.dev/use-cases/mcp-for-agents answers 200 (checked at collect); the short link /u/mcp-for-agents answers 404"
     }
    ]
   },
@@ -2292,8 +2648,12 @@
      "from": "use-cases.json free-coding-agent.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/free-coding-agent",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: free-coding-agent/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/free-coding-agent"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/free-coding-agent",
+     "from": "https://anyrouter.dev/use-cases/free-coding-agent answers 200 (checked at collect); the short link /u/free-coding-agent answers 404"
     }
    ]
   },
@@ -2362,8 +2722,12 @@
      "from": "use-cases.json codex.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/codex",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: codex/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/codex"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/codex",
+     "from": "https://anyrouter.dev/use-cases/codex answers 200 (checked at collect); the short link /u/codex answers 404"
     }
    ]
   },
@@ -2373,7 +2737,8 @@
    "intro": "Embed text for search and RAG.",
    "steps": [
     {
-     "text": "Pick an embedding model."
+     "text": "Pick an embedding model.",
+     "capture": "shared/surfaces/ar-model-nemotron-embed.png"
     },
     {
      "text": "Send your text to the endpoint.",
@@ -2381,7 +2746,8 @@
      "more": "Vectors come back in request order."
     },
     {
-     "text": "Embed queries with the same model."
+     "text": "Embed queries with the same model.",
+     "capture": "shared/surfaces/ar-docs-embeddings.png"
     }
    ],
    "result": "The same key, and the OpenAI request shape.",
@@ -2445,8 +2811,20 @@
      "from": "use-cases.json embeddings-search.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/embeddings-search",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-model-nemotron-embed.png (Model page: nvidia/nemotron-3-embed-1b.)",
+     "from": "https://anyrouter.dev/model/nvidia/nemotron-3-embed-1b"
+    },
+    {
+     "says": "capture: shared/surfaces/ar-docs-embeddings.png (AnyRouter API reference: POST /api/v1/embeddings, string or array input.)",
+     "from": "https://docs.anyrouter.dev/api-reference/embeddings"
+    },
+    {
+     "says": "capture: embeddings-search/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/embeddings-search"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/embeddings-search",
+     "from": "https://anyrouter.dev/use-cases/embeddings-search answers 200 (checked at collect); the short link /u/embeddings-search answers 404"
     }
    ]
   },
@@ -2465,7 +2843,8 @@
      "more": "It picks a healthy decision model, and falls back if one fails."
     },
     {
-     "text": "Read the answers."
+     "text": "Read the answers.",
+     "capture": "shared/surfaces/ar-docs-decisions.png"
     }
    ],
    "result": "You get probabilities back, not generated text.",
@@ -2523,8 +2902,16 @@
      "from": "use-cases.json decisions.diagram, .hook, .steps and .snippets; ids priced in /api/v1/models?all=1"
     },
     {
-     "says": "anyrouter.dev/u/decisions",
-     "from": "the short link route, duyet/anyrouter#5860 (not live yet)"
+     "says": "capture: shared/surfaces/ar-docs-decisions.png (AnyRouter API reference: typed decisions (state + questions).)",
+     "from": "https://docs.anyrouter.dev/api-reference/systemone"
+    },
+    {
+     "says": "capture: decisions/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
+     "from": "https://anyrouter.dev/use-cases/decisions"
+    },
+    {
+     "says": "anyrouter.dev/use-cases/decisions",
+     "from": "https://anyrouter.dev/use-cases/decisions answers 200 (checked at collect); the short link /u/decisions answers 404"
     }
    ]
   }

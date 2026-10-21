@@ -157,6 +157,10 @@ export function writeProject(dir, id, spec) {
   }
 
   // one soundtrack: the music, the voice and the effects, mixed and normalised (mix.mjs)
+  for (const a of film.assets ?? []) {
+    fs.mkdirSync(path.join(dir, path.dirname(a.to)), { recursive: true });
+    fs.copyFileSync(a.from, path.join(dir, a.to));
+  }
   const cues = cuesOf(film);
   const sound = writeMix(path.join(dir, 'audio', 'mix.wav'), { slug: film.slug, duration, voice: film.said ?? [], cues });
 
