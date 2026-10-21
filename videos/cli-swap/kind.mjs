@@ -17,6 +17,7 @@ export default {
   id: 'cli-swap',
   title: 'Swap the agent, keep the key, with anyr',
   scheduled: false,
+  portraitFill: true,
 
   collect: ({ dir }) => collectAuthored(dir, INPUTS),
 

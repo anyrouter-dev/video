@@ -12,7 +12,7 @@
   const tl = gsap.timeline({ paused: true });
 
   // The camera: a shot is a fit of a box of the figure; a drift scales it about the frame centre.
-  const centre = PORTRAIT ? [540, 760] : [960, 480];
+  const centre = PORTRAIT ? [510, 748] : [960, 480];
   const grown = (shot, k) => ({ s: shot.s * k, x: centre[0] - (centre[0] - shot.x) * k, y: centre[1] - (centre[1] - shot.y) * k });
   const to = (shot, at, dur, ease = 'power2.inOut') => tl.to(cam, { x: shot.x, y: shot.y, scale: shot.s, duration: dur, ease }, at);
   const drift = (shot, from, until, k) => tl.fromTo(cam, { x: shot.x, y: shot.y, scale: shot.s }, { ...(({ s, x, y }) => ({ scale: s, x, y }))(grown(shot, k)), duration: until - from, ease: 'sine.inOut', immediateRender: false }, from);

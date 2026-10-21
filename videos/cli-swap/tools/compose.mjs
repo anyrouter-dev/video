@@ -108,9 +108,12 @@ const SHOTS = {
   lamp: boxOf([[-112, FRONT, 70], [112, FRONT, 114], ...ring(0, OY, 50, 146), ...ring(0, OY, 40, 230)]),
   swap: boxOf([...ring(TURRET.x, TURRET.y, 38, 268), ...ring(TURRET.x, TURRET.y, 38, 284), [-104, FRONT - 6, 100], [104, FRONT - 6, 100], [-104, FRONT - 6, 34], [70, FRONT - 6, 30]]),
 };
+// Portrait draws the machine inside a plate clear of the Shorts UI (the bottom ~380 px, the right
+// ~120 px below the middle) and above the captions, and fits every shot inside it.
+const PLATE = { x0: 60, y0: 200, x1: 960, y1: 1296 };
 const BOXES = {
   landscape: { content: [96, 96, 1824, 866], swap: [96, 52, 1824, 872], end: [96, 120, 1130, 866], stage: [1920, 1080] },
-  portrait: { content: [60, 210, 1020, 1290], swap: [60, 230, 1020, 1180], end: [60, 170, 1020, 1000], stage: [1080, 1920] },
+  portrait: { content: [84, 228, 936, 1268], swap: [72, 228, 948, 1210], end: [84, 228, 936, 960], stage: [1080, 1920] },
 };
 const fit = (rect, [x0, y0, x1, y1], grow = 1) => {
   const s = Math.min((x1 - x0) / (rect[2] - rect[0]), (y1 - y0) / (rect[3] - rect[1])) * grow;
@@ -129,11 +132,14 @@ const glassScale = (() => {
   const [a, b, c, d] = F.glassMatrix().match(/-?[\d.]+/g).map(Number);
   return Math.min(Math.hypot(a, b), Math.hypot(c, d));
 })();
-const TYPE = { row: 14, install: 9.6, pad: 7, lh: 1.2 };
+// Portrait reads on a phone, so its screen text is set larger, on a narrower pad, and held to 40 px.
+const TYPE = { row: 14, install: 9.6, pad: 7, lh: 1.2, floor: 33 };
+const TYPES = { landscape: TYPE, portrait: { ...TYPE, row: 14.5, install: 10.2, pad: 5, floor: 40 } };
 for (const [name, cams] of Object.entries(CAMS)) {
+  const t = TYPES[name];
   const px = (shot, size) => +(size * glassScale * cams[shot].s).toFixed(1);
-  console.log(`${name}: screen text ${px('swap', TYPE.row)}px in the swap shot, ${px('lamp', TYPE.row)}px in the lamp shot, install ${px('screen', TYPE.install)}px close`);
-  if (px('swap', TYPE.row) < 33 || px('screen', TYPE.install) < 33) throw new Error(`${name}: screen text under the 32px floor`);
+  console.log(`${name}: screen text ${px('swap', t.row)}px in the swap shot, ${px('lamp', t.row)}px in the lamp shot, install ${px('screen', t.install)}px close`);
+  if (px('swap', t.row) < t.floor || px('screen', t.install) < t.floor) throw new Error(`${name}: screen text under the ${t.floor}px floor`);
 }
 
 // ── Story times ──
@@ -243,6 +249,8 @@ const html = `<template>
       position: absolute; inset: 0; overflow: hidden; background: #0d0d0d;
       font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
     }
+    [data-composition-id="machine"] .view { position: absolute; inset: 0; }
+    [data-composition-id="machine"] .plate { display: none; }
     [data-composition-id="machine"] .cam { position: absolute; left: 0; top: 0; width: 1px; height: 1px; transform-origin: 0 0; }
     [data-composition-id="machine"] .fig { position: absolute; display: block; overflow: visible; }
     [data-composition-id="machine"] .tf { display: none; }
@@ -278,15 +286,20 @@ const html = `<template>
     @media (orientation: portrait) {
       [data-composition-id="machine"] .chrome { top: 110px; font-size: 32px; }
       [data-composition-id="machine"] .fig-no { left: 60px; }
-      [data-composition-id="machine"] .readout { right: 60px; }
-      [data-composition-id="machine"] .endcard { left: 60px; right: 120px; width: auto; top: 1010px; text-align: center; }
+      [data-composition-id="machine"] .readout { right: ${1080 - PLATE.x1}px; }
+      [data-composition-id="machine"] .pane { left: ${TYPES.portrait.pad + 1}px; top: ${TYPES.portrait.pad}px; right: ${TYPES.portrait.pad + 1}px; }
+      [data-composition-id="machine"] .row { font-size: ${TYPES.portrait.row}px; }
+      [data-composition-id="machine"] .row.install { font-size: ${TYPES.portrait.install}px; }
+      [data-composition-id="machine"] .view { clip-path: inset(${PLATE.y0}px ${1080 - PLATE.x1}px ${1920 - PLATE.y1}px ${PLATE.x0}px round 10px); }
+      [data-composition-id="machine"] .plate { display: block; position: absolute; left: ${PLATE.x0}px; top: ${PLATE.y0}px; width: ${PLATE.x1 - PLATE.x0}px; height: ${PLATE.y1 - PLATE.y0}px; box-sizing: border-box; border: 1.5px solid #2a2a2a; border-radius: 10px; pointer-events: none; }
+      [data-composition-id="machine"] .endcard { left: ${PLATE.x0}px; right: ${1080 - PLATE.x1}px; width: auto; top: 990px; text-align: center; }
       [data-composition-id="machine"] .endcard img { margin: 0 auto 36px; }
       [data-composition-id="machine"] .endcard .url { font-size: 60px; }
     }
   </style>
   <div id="root" data-composition-id="machine" data-width="1920" data-height="1080" data-duration="${DURATION}">
     <div id="mc-stage" class="iso mc clip" data-on="" data-start="0" data-duration="${DURATION}" data-track-index="0">
-      <div class="cam" data-layout-allow-overflow>${figure}${screen}</div>
+      <div class="view"><div class="cam" data-layout-allow-overflow>${figure}${screen}</div></div><div class="plate" data-outside-safe-area></div>
       <div class="chrome fig-no" data-outside-safe-area>Fig. 1<b>anyr</b></div>
       <div class="chrome readout" data-outside-safe-area>${readouts.map(([id, text]) => `<span class="ro-${id}">${esc(text)}</span>`).join('')}</div>
       <div class="endcard"><img src="assets/anyrouter-logo-black.svg" alt="" /><div class="url">anyrouter.dev/cli</div><div class="sub">One key, six coding agents.</div></div>
