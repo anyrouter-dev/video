@@ -6,7 +6,8 @@
  * claims ledger carries that capture's source.
  *
  * A step's capture names its `line`: the one line a viewer needs, as the screen shows it, with its
- * box in the screen's own px. Portrait shows the screen cropped to the column that holds that line,
+ * box in the screen's own px, and `from`, where a screen's own sticky header hides the rows above
+ * it, the first row the crop may show. Portrait shows the screen cropped to the column that holds that line,
  * its edges in whitespace (crops.json), and sets the line as live text beside it.
  *
  *   node videos/use-case/captures.mjs clean     write the dashboard screens with the mouse cursor removed
@@ -104,15 +105,16 @@ function pick() {
 /** Plans the portrait crop of every step's capture around its line, and of every end card's page. */
 function planCrops() {
   const narration = read(path.join(DIR, 'narration.json')), out = {}, images = new Map();
-  const plan = (c, box) => {
+  const plan = (c, box, from = 0) => {
     if (!images.has(c.disk)) images.set(c.disk, grayOf(c.disk));
     const img = images.get(c.disk), focus = box && { x0: box[0], y0: box[1], x1: box[2], y1: box[3] };
-    out[cropKey(c.name, box)] = { ...planCrop(img, box ? { focus } : { whole: true }), w: img.w, h: img.h };
+    const crop = planCrop(img, box ? { focus } : { whole: true });
+    out[cropKey(c.name, box)] = { ...crop, gaps: from ? [from, ...crop.gaps.filter(y => y > from)] : crop.gaps, w: img.w, h: img.h };
   };
   for (const [slug, film] of Object.entries(narration.films)) {
     for (const st of film.steps.filter(x => x.capture)) {
       if (!st.line) throw new Error(`${slug}: the step "${st.text}" shows ${st.capture} but names no line on it`);
-      plan(captureOf(st.capture), st.line.box);
+      plan(captureOf(st.capture), st.line.box, st.line.from);
     }
     plan(captureOf(`${slug}/page/viewport-portrait.png`), null);
   }

@@ -473,7 +473,8 @@
      "line": {
       "text": "~/.hermes/.env",
       "box": [1713, 206, 1926, 232],
-      "mono": true
+      "mono": true,
+      "from": 172
      }
     },
     {
