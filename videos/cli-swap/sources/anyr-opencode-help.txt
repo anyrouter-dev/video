@@ -1,0 +1,29 @@
+$ anyr opencode --help
+anyr opencode — launch opencode through AnyRouter
+
+Usage:
+  anyr opencode [options] [-- <opencode-args>]
+
+Launches the coding agent through AnyRouter (signs in first if needed).
+
+Options:
+  --yes, --ok           Skip confirmation prompts (login / install)
+  --model auto|<id>     Session model. auto / anyrouter/auto; [1m] and [500k] are min-context floors on auto (not catalog SKUs).
+  --haiku <id>          Claude /model haiku and subagents
+  --sonnet <id>         Claude /model sonnet
+  --opus <id>           Claude /model opus
+  --fable <id>          Claude /model fable (also the auto-fallback target)
+  --effort <level>      Reasoning effort: minimal | low | medium | high | xhigh | max
+  --yolo                Claude only: launch with --dangerously-skip-permissions
+  --hub <slug>          Load a hub: sync ~/.anyrouter/hubs + claude --plugin-dir
+  --profile <name>      Use a named profile
+  --command-path <path> Explicit path to the agent executable
+  --install             Install a missing agent without prompting (implied on a TTY)
+  --config <path>       Override the config file path
+  --dry-run             Print the child command and env (secrets redacted)
+  --device              Force the device-code flow (headless / SSH)
+  --device-code         Alias of --device
+  --paste               Force the paste-a-key flow, skipping auto-detection
+
+First run with no config auto-detects the best way to sign in — browser first,
+falling back to the device-code flow automatically.

@@ -29,7 +29,7 @@ one part in the optical path while the light and the specimen stay put, which is
 
 ## Claims ledger
 
-Sources read 2026-10-21. `anyr` is `/Users/duet/.local/bin/anyr` 0.1.20 (built 2026-10-03), read with `--help` only.
+Sources read 2026-10-21. `anyr` is `/Users/duet/.local/bin/anyr` 0.1.20 (built 2026-10-03), read with `--help` only. The lead's terminal captures of the same build are copied into `sources/` with their rows from `captures-v3/2026-10-21/manifest.json` (`sources/manifest.json`); the `--dry-run` captures there were made by the lead, not in this session.
 
 | # | Line (spoken or shown) | Source |
 |---|---|---|
@@ -37,10 +37,10 @@ Sources read 2026-10-21. `anyr` is `/Users/duet/.local/bin/anyr` 0.1.20 (built 2
 | C2 | "With anyr, one sign-in serves them all." | `anyr --help` ("Same key, other agents"); anyrouter.dev/cli ("Launch Claude Code, opencode or Codex through AnyRouter with one key") |
 | C3 | Screen: `$ curl -fsSL https://anyrouter.dev/setup.sh \| bash` (wrapped at its spaces on three rows) and `Installed ~/.local/bin/anyr` | `anyr --help` ("Start"); the installer's own message `echo "Installed ${BIN_DIR}/${BIN_NAME}"` with `BIN_DIR=${HOME}/.local/bin` in https://anyrouter.dev/setup.sh (read, not run); `~` stands for `$HOME` |
 | C4 | "Sign in once with anyr login." Screen: `$ anyr login` | `anyr auth login --help` ("Also available as `anyr login`"); anyrouter.dev/cli ("Log in and run: anyr login") |
-| C5 | "anyr claude starts Claude Code on the model you pick." Screen: `$ anyr claude` / `--model anyrouter/free` | `anyr claude --help` ("launch Claude Code through AnyRouter", "--model auto\|<id> Session model") |
+| C5 | "anyr claude starts Claude Code on the model you pick." Screen: `$ anyr claude` / `--model anyrouter/free` | `anyr claude --help` ("launch Claude Code through AnyRouter", "--model auto\|<id> Session model"; `sources/anyr-claude-help.txt`); `sources/anyr-claude-free-dry-run.txt`: `anyr claude --model anyrouter/free` hands Claude Code `ANTHROPIC_MODEL=anyrouter/free` and `ANTHROPIC_BASE_URL=https://anyrouter.dev/api` |
 | C6 | Model shown: `anyrouter/free` | `GET https://anyrouter.dev/api/v1/models?all=1` (2026-10-21): `anyrouter/free` "AnyRouter Free", pricing 0/0, no `pricing.billing` (so not `byok`); anyrouter.dev/cli shows `anyr opencode --model anyrouter/free`. The film never says "unlimited" or "no daily cap". |
-| C7 | "Change one word. anyr pi starts Pi." Screen: `claude` replaced by `pi`, then `# launch Pi` / `# through AnyRouter` | `anyr pi --help` ("anyr pi — launch Pi through AnyRouter"; same `--model` option). The `#` lines are the help text redrawn as a shell comment, not program output. |
-| C8 | "anyr opencode starts OpenCode. Same key, same model." Screen: `# launch opencode` / `# through AnyRouter` | `anyr opencode --help` ("launch opencode through AnyRouter"); one saved key serves every launch (`anyr --help` "Same key, other agents"); the command keeps `--model anyrouter/free` |
+| C7 | "Change one word. anyr pi starts Pi." Screen: `claude` replaced by `pi`, then `# launch Pi` / `# through AnyRouter` | `anyr pi --help` ("anyr pi — launch Pi through AnyRouter"; same `--model` option). Not observed: a Pi handoff with `--model anyrouter/free` (no `--dry-run` capture for Pi exists; this session ran `--help` only). The `#` lines are the help text redrawn as a shell comment, not program output. |
+| C8 | "anyr opencode starts OpenCode. Same key, same model." Screen: `# launch opencode` / `# through AnyRouter` | `anyr opencode --help` ("launch opencode through AnyRouter"; `sources/anyr-opencode-help.txt`); `sources/anyr-opencode-dry-run.txt` shows the handoff carries the AnyRouter key and `baseURL https://anyrouter.dev/api/v1`; one saved key serves every launch (`anyr --help` "Same key, other agents"); the command keeps `--model anyrouter/free` |
 | C9 | "Three agents on one key, and more, like Codex and Grok." Readout: "and more · codex, grok"; end card "One key, six coding agents." | `anyr help commands` LAUNCH: claude, codex, grok, opencode, pi, pool (six) |
 | C10 | "Get it at anyrouter.dev/cli." | https://anyrouter.dev/cli answers 200 (2026-10-21) |
 

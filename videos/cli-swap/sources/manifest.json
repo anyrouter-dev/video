@@ -1,0 +1,126 @@
+[
+ {
+  "file": "shared/terminal/anyr-auth-login-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "claude-code",
+   "claude-code-free-models",
+   "codex",
+   "free-coding-agent"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr auth login --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr auth login --help (also `anyr login`): browser, device-code or paste-a-key sign-in.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.779Z"
+ },
+ {
+  "file": "shared/terminal/anyr-claude-free-dry-run.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "claude-code-free-models"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr claude --model anyrouter/free --dry-run",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "The handoff `anyr claude --model anyrouter/free` makes, printed by --dry-run: the child command and the AnyRouter env it would launch with. Nothing launched.",
+  "redacted": "API key tail",
+  "capturedAt": "2026-10-20T19:09:27.820Z"
+ },
+ {
+  "file": "shared/terminal/anyr-claude-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "byok-anthropic",
+   "claude-code",
+   "claude-code-free-models",
+   "claude-code-multiple-keys",
+   "free-coding-agent",
+   "gemini-in-claude-code",
+   "grokbot"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr claude --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr claude --help: --model, --yolo, --effort, --dry-run and the first-run sign-in note.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.748Z"
+ },
+ {
+  "file": "shared/terminal/anyr-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "claude-code",
+   "codex",
+   "free-coding-agent"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "The real output of anyr --help.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.724Z"
+ },
+ {
+  "file": "shared/terminal/anyr-login-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "claude-code",
+   "codex"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr login --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr login --help, the short alias of anyr auth login.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.787Z"
+ },
+ {
+  "file": "shared/terminal/anyr-opencode-dry-run.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "opencode"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr opencode --dry-run",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "The handoff `anyr opencode` makes, printed by --dry-run: the child command and the AnyRouter env it would launch with. Nothing launched.",
+  "redacted": "API key tail",
+  "capturedAt": "2026-10-20T19:09:33.144Z"
+ },
+ {
+  "file": "shared/terminal/anyr-opencode-help.txt",
+  "kind": "terminal",
+  "slug": "shared",
+  "usedBy": [
+   "opencode"
+  ],
+  "source": "local shell, anyr 0.1.20 / curl",
+  "command": "anyr opencode --help",
+  "url": null,
+  "viewport": null,
+  "scale": null,
+  "shows": "anyr opencode --help.",
+  "redacted": "none found",
+  "capturedAt": "2026-10-20T19:09:27.764Z"
+ }
+]

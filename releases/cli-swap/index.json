@@ -1,0 +1,26 @@
+{
+  "releases": [
+    {
+      "id": "001-20261020-v1-aa31d9d5b7",
+      "hash": "aa31d9d5b7",
+      "kind": "cli-swap",
+      "label": "v1",
+      "title": "Change one word: anyr claude, anyr pi and anyr opencode on one key and one model",
+      "seconds": 33.854,
+      "renderedAt": "2026-10-20T20:19:08.104Z",
+      "commit": "f304bc3",
+      "renditions": {
+        "landscape": {
+          "artifact": "films/2026-10-21/cli-swap/cli-swap-001-20261020-v1-aa31d9d5b7.mp4",
+          "cover": "films/2026-10-21/cli-swap/cli-swap-001-20261020-v1-aa31d9d5b7.png"
+        },
+        "portrait": {
+          "artifact": "films/2026-10-21/cli-swap/cli-swap-001-20261020-v1-aa31d9d5b7-portrait.mp4",
+          "cover": "films/2026-10-21/cli-swap/cli-swap-001-20261020-v1-aa31d9d5b7-portrait.png"
+        }
+      },
+      "source": null,
+      "createdAt": "2026-10-20T20:19:08.154Z"
+    }
+  ]
+}
