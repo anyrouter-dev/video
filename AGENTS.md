@@ -159,7 +159,11 @@ in the Monolith look of `videos/explainer/frame.md` (v3): white, near-black ink,
 display-size Geist, flat hairline cards, the terminal as the ink surface, and one
 accent, on what is being said or changed. A film is five full-frame panels on a board
 tilted back from the viewer: what this is, the problem, the steps, the result, and an
-end card with the page's short link `anyrouter.dev/u/<slug>`. The camera cranes from
+end card with the live page beside the link the film ends on: `anyrouter.dev/use-cases/<slug>`,
+or the page's short link once `use-cases.json` names one that answers (collect fails when the
+link it picked does not answer 200). A step that shows no code shows its real screen from
+`shared/captures/2026-10-21/` (`videos/use-case/captures.mjs`; dashboard screens with the cursor
+painted out), and each capture shown keeps its manifest source in the film's claims ledger. The camera cranes from
 panel to panel and squares up to each, so text reads flat at 1:1; each page's `group`
 lays the board out its own way (`BOARDS` in `videos/use-case/scenes.mjs`). The problem
 and the result are the voice's own words set as kinetic type over a diagram (the
