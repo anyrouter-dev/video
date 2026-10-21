@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cropCuts, frameInk, fillOf, judgeFill, FILL, SHORTS } from './portrait-fill.mjs';
+import { cropCuts, frameInk, fillOf, judgeFill, planCrop, fitRows, FILL, SHORTS } from './portrait-fill.mjs';
 
 const blank = (w, h) => ({ w, h, px: new Uint8Array(w * h).fill(255) });
 const paint = (img, x0, y0, x1, y1, v = 20) => { for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) img.px[y * img.w + x] = v; };
@@ -67,6 +67,15 @@ test('a caption under the picture does not count as content', () => {
   assert.ok(fillOf(frameInk(f, [{ x0: 190, y0: 1410, x1: 890, y1: 1530 }])) < FILL.min, 'masked, it does not');
 });
 
+test('a hairline card counts as content, and the dot field behind every panel does not', () => {
+  const f = frame();
+  for (let y = 210; y < 1910; y += 48) for (let x = 20; x < 1060; x += 48) paint(f, x, y, x + 3, y + 3, 220);
+  assert.equal(frameInk(f).top, null, 'dots alone are a blank frame');
+  paint(f, 100, 220, 900, 260);
+  paint(f, 80, 1300, 960, 1302, 231);
+  assert.equal(frameInk(f).bottom, 1301, 'the card\'s bottom edge is where the content ends');
+});
+
 const sample = (t, f, travel = false) => ({ t, travel, ink: frameInk(f) });
 
 test('a film fails when more than a fifth of its frames are short, and travels are not judged', () => {
@@ -85,4 +94,17 @@ test('ink in the Shorts UI zones fails the film once it stays two samples', () =
   assert.equal(judgeFill([sample(0, ok), sample(0.5, low), sample(1, ok)]).ok, true, 'one sample is an entrance in flight');
   assert.equal(judgeFill([sample(0, low), sample(0.5, low)]).ok, false);
   assert.equal(judgeFill([sample(0, side), sample(0.5, side)]).ok, false);
+});
+
+test('a planned crop takes the column that holds the focus line, and every height it is shown at keeps its edges clear of text', () => {
+  const img = page(), focus = { x0: 440, y0: 160, x1: 760, y1: 182 };
+  const plan = planCrop(img, { focus });
+  assert.ok(plan.x0 > 360 && plan.x0 <= 440 && plan.x1 >= 760, `the right column, not the left: ${plan.x0}..${plan.x1}`);
+  assert.equal(plan.text, 22, 'a line of text is read as its own height');
+  for (const H of [60, 100, 150, 230, 400]) {
+    const { y0, y1 } = fitRows(plan.gaps, focus, H);
+    assert.ok(y1 - y0 <= H, `fits ${H}`);
+    if (H >= 60) assert.ok(y0 <= focus.y0 && y1 >= focus.y1, `holds the focus at ${H}: ${y0}..${y1}`);
+    assert.deepEqual(cropCuts(img, region(plan.x0, y0, plan.x1, y1)), [], `edges clear at ${H}: ${plan.x0},${y0},${plan.x1},${y1}`);
+  }
 });

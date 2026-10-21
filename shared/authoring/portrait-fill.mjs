@@ -27,9 +27,10 @@ export const SHORTS = { bottom: 1540, right: 960, rightFrom: 900 };
 // The content block spans at least `min` of the height from `top` to `bottom`, outside travels,
 // in all but `maxShort` of the frames.
 export const FILL = { top: 200, bottom: 1540, min: 0.7, maxShort: 0.2 };
-// What counts as ink in a rendered frame: darker than the background dots (#DCDCDC) and hairlines
-// (#E7E7E7), in at least `row` px of a row.
-const INK = { below: 200, row: 4, zone: 24 };
+// What counts as ink in a rendered frame: darker than the background dots (#DCDCDC), in at least
+// `row` px of a row; or a hairline (a card's #E7E7E7 edge), lighter than `line` in one run at least
+// `run` px long, which the dots, apart on their grid, never make.
+const INK = { below: 200, row: 4, zone: 24, line: 236, run: 24 };
 // A crop edge runs through text when, for `run` px along it (gaps up to `bridge` px between
 // strokes bridged), there is ink within `reach` px on both sides, ignoring the `rule` px either
 // side of the edge where a hairline border may sit. A side edge reaches past a word gap, so a cut
@@ -93,14 +94,20 @@ export function frameInk(img, masks = []) {
   for (let y = 0; y < img.h; y++) {
     const off = masks.filter(m => y >= m.y0 && y < m.y1);
     const row = y * img.w, low = y > SHORTS.bottom, side = y > SHORTS.rightFrom;
-    let n = 0;
+    let n = 0, hair = 0;
+    for (let x = 0, run = 0; x <= img.w; x++) {
+      const v = x < img.w && !(off.length && off.some(m => x >= m.x0 && x < m.x1)) ? img.px[row + x] : 255;
+      if (v < INK.line) { run++; continue; }
+      if (run >= INK.run) { hair += run; if (low || (side && x > SHORTS.right)) zone += run; }
+      run = 0;
+    }
     for (let x = 0; x < img.w; x++) {
       if (img.px[row + x] >= INK.below) continue;
       if (off.length && off.some(m => x >= m.x0 && x < m.x1)) continue;
       n++;
       if (low || (side && x > SHORTS.right)) zone++;
     }
-    if (n >= INK.row) { top ??= y; bottom = y; }
+    if (n >= INK.row || hair) { top ??= y; bottom = y; }
   }
   return { top, bottom, zone };
 }
@@ -115,9 +122,12 @@ export const fillOf = ({ top, bottom }) => (top == null ? 0 : Math.max(0, Math.m
 export function judgeFill(samples) {
   const judged = samples.filter(s => !s.travel);
   const short = judged.filter(s => fillOf(s.ink) < FILL.min);
+  // spans [from, to] of two or more samples running with ink in a zone
   const zones = [];
   for (let i = 1; i < judged.length; i++) {
-    if (judged[i].ink.zone >= INK.zone && judged[i - 1].ink.zone >= INK.zone) zones.push(judged[i - 1].t);
+    if (!(judged[i].ink.zone >= INK.zone && judged[i - 1].ink.zone >= INK.zone)) continue;
+    if (zones.at(-1)?.[1] === judged[i - 1].t) zones.at(-1)[1] = judged[i].t;
+    else zones.push([judged[i - 1].t, judged[i].t]);
   }
   const fills = judged.map(s => fillOf(s.ink)).sort((a, b) => a - b);
   return {
@@ -125,9 +135,89 @@ export function judgeFill(samples) {
     shortShare: judged.length ? short.length / judged.length : 0,
     short: short.map(s => s.t),
     median: fills.length ? fills[fills.length >> 1] : 0,
-    zones: [...new Set(zones)],
+    zones,
     ok: (judged.length ? short.length / judged.length : 0) <= FILL.maxShort && !zones.length,
   };
+}
+
+// How a crop is planned on a captured page: ink is `contrast` off the page's commonest value, low
+// enough that a table's hairline rules join its columns into one, and a column of the page is in use
+// where `used` rows of it have ink, so one rule across the page (under a nav bar) joins nothing; a
+// gutter between columns is at least `gutter` px of blank columns, and the crop's side sits at most
+// `margin` px into it; a gap a top or bottom edge may sit in is `gap` rows with under `row` ink px
+// across the column, and the column is
+// read in the rows from `above` px over the focus to `below` px under it.
+export const PLAN = { contrast: 24, used: 3, gutter: 24, margin: 40, gap: 12, row: 5, above: 700, below: 1300 };
+
+/**
+ * Where to crop a captured page so its edges fall in whitespace: { x0, x1, gaps, text } in the
+ * image's own px. x0..x1 is the column that holds `focus` (a box, the line the step is about), or
+ * the inkiest column without one, its sides in the gutters around it; with `whole`, the full width. `gaps` are the rows a top or
+ * bottom edge may sit on (the middle of each blank band across the column, and the image's own
+ * top and bottom). `text` is the median height of a line of text in the column.
+ */
+export function planCrop(img, { focus = null, whole = false } = {}, p = PLAN) {
+  const hist = new Uint32Array(256);
+  for (let i = 0; i < img.px.length; i += 7) hist[img.px[i]]++;
+  const bg = hist.indexOf(Math.max(...hist));
+  const ink = (x, y) => Math.abs(img.px[y * img.w + x] - bg) > p.contrast;
+  const fy = focus ? focus.y0 : 0, ya = Math.max(0, fy - p.above), yb = Math.min(img.h, fy + p.below);
+  const used = new Uint8Array(img.w);
+  for (let x = 0; x < img.w; x++) for (let y = ya, n = 0; y < yb; y++) if (ink(x, y) && ++n >= p.used) { used[x] = 1; break; }
+  // columns of ink, split where a gutter runs the whole band
+  const segs = [];
+  for (let x = 0, blank = Infinity; x < img.w; x++) {
+    if (!used[x]) { blank++; continue; }
+    if (!segs.length || blank >= p.gutter) segs.push({ a: x, b: x + 1, ink: 0 });
+    const s = segs.at(-1);
+    s.b = x + 1; s.ink++;
+    blank = 0;
+  }
+  if (!segs.length) return { x0: 0, x1: img.w, gaps: [0, img.h], text: 0 };
+  // the columns the focus reaches into, joined; without one, the inkiest
+  const hit = focus ? segs.map((s, i) => (s.b + p.gutter > focus.x0 && s.a - p.gutter < focus.x1 ? i : -1)).filter(i => i >= 0) : [];
+  const [k, last] = hit.length ? [hit[0], hit.at(-1)] : Array(2).fill(segs.indexOf(segs.reduce((m, s) => (s.ink > m.ink ? s : m))));
+  const s = { a: segs[k].a, b: segs[last].b }, prev = segs[k - 1], next = segs[last + 1];
+  const x0 = whole ? 0 : Math.max(0, s.a - Math.min(p.margin, prev ? Math.floor((s.a - prev.b) / 2) : p.margin));
+  const x1 = whole ? img.w : Math.min(img.w, s.b + Math.min(p.margin, next ? Math.floor((next.a - s.b) / 2) : p.margin));
+  // rows: blank across the column, or a line of text; a hairline rule down the column is neither
+  const gaps = [0], runs = [];
+  let start = 0, blankRun = 0;
+  for (let y = 0; y <= img.h; y++) {
+    let n = 0;
+    if (y < img.h) for (let x = x0; x < x1 && n < p.row; x++) if (ink(x, y)) n++;
+    if (n < p.row) {
+      if (blankRun === 0 && y > start) runs.push(y - start);
+      blankRun++;
+      continue;
+    }
+    if (blankRun >= p.gap && y - blankRun > 0) gaps.push(y - Math.ceil(blankRun / 2));
+    if (blankRun) start = y;
+    blankRun = 0;
+  }
+  if (blankRun >= p.gap) gaps.push(img.h - Math.ceil(blankRun / 2));
+  gaps.push(img.h);
+  const lines = runs.filter(h => h >= 10 && h <= 90).sort((a, b) => a - b);
+  return { x0, x1, gaps: [...new Set(gaps)], text: lines.length ? lines[lines.length >> 1] : 0 };
+}
+
+/**
+ * The rows of a planned crop to show in `H` px of the image's height: { y0, y1 }, each on a gap.
+ * As much as fits, holding `focus` whole and in its upper part where it can.
+ */
+export function fitRows(gaps, focus, H) {
+  const stops = [...gaps].sort((a, b) => a - b);
+  const better = (a, b) => { const i = a.findIndex((v, k) => v !== b[k]); return i >= 0 && a[i] > b[i]; };
+  let best = null;
+  for (const y0 of stops) {
+    if (focus && y0 > focus.y0) break;
+    const y1 = stops.filter(y => y > y0 && y - y0 <= H).at(-1);
+    if (y1 == null) continue;
+    // holding the focus first, then the most shown, then the focus a quarter of the way down
+    const score = [!focus || y1 >= focus.y1 ? 1 : 0, y1 - y0, focus ? -Math.abs(focus.y0 - y0 - 0.25 * (y1 - y0)) : -y0];
+    if (!best || better(score, best.score)) best = { y0, y1, score };
+  }
+  return best ? { y0: best.y0, y1: best.y1 } : { y0: stops[0], y1: stops.find(y => y > stops[0]) };
 }
 
 /** An image file as gray pixels, scaled to `w` x `h` when given. */
@@ -225,7 +315,7 @@ export async function auditFill(target, opts = {}) {
   const problems = [
     ...crops.map(c => `crop  ${c.t.toFixed(1).padStart(5)}s  ${c.image}: its ${c.edge} edge (x/y ${c.pos} in the image) runs through text for ${c.run} px, at ${c.times.length} sample(s)`),
     ...(fill.shortShare > FILL.maxShort ? [`fill  ${Math.round(fill.shortShare * 100)}% of ${fill.judged} frames span under ${FILL.min * 100}% of y ${FILL.top}-${FILL.bottom} (limit ${FILL.maxShort * 100}%), median ${Math.round(fill.median * 100)}%, at ${fill.short.slice(0, 12).join(', ')}${fill.short.length > 12 ? ' …' : ''}s`] : []),
-    ...fill.zones.map(t => `zone  ${t.toFixed(1).padStart(5)}s  ink in the Shorts UI (y > ${SHORTS.bottom}, or x > ${SHORTS.right} below y ${SHORTS.rightFrom})`),
+    ...fill.zones.map(([a, b]) => `zone  ${a.toFixed(1).padStart(5)}s  ink in the Shorts UI (y > ${SHORTS.bottom}, or x > ${SHORTS.right} below y ${SHORTS.rightFrom}) until ${b.toFixed(1)}s`),
   ];
   return { ok: !problems.length, crops, fill, problems, samples: s.samples };
 }
