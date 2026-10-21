@@ -12,6 +12,8 @@ const POSES = {
   traverser: ["", "--pose=yc=-45,carX=-54", "--pose=yc=15,carX=100", "--pose=yc=45,carX=-6", "--pose=yc=-45,carX=168.8", "--pose=yc=0,carX=-105"],
   carousel: ["", "--angle=13 --dip=1", "--angle=-75 --dip=0.5", "--angle=37"],
   turret: ["", "--rot=20", "--rot=-150", "--rot=47"],
+  reader: ["", "--pose=slot=0.04", "--pose=slot=-0.03", "--pose=lock=0.5", "--pose=lock=1", "--pose=lock=1,dip=0", "--pose=slot=1.3,dip=0,lock=1,lit=-1", "--pose=slot=2,dip=0.5,lock=1,lit=2", "--pose=slot=2,dip=1,lock=1,lit=2", "--pose=slot=3.1,dip=0,lock=1,lit=2", "--pose=slot=4,dip=1,lock=1,lit=4", "--pose=slot=5,dip=0,lock=1,lit=-1", "--pose=slot=5,dip=1,lock=1,lit=5"],
+  flywheel: ["", "--pose=plug=0", "--pose=plug=0.5", "--pose=key=0", "--pose=plug=0,key=0,lit=-1", "--pose=sled=0.5", "--pose=sled=1,lit=1", "--pose=sled=2,lit=2", "--pose=spin=37", "--pose=spin=133", "--pose=spin=251", "--pose=plug=0.5,spin=300,sled=1.5"],
 };
 
 let failed = 0;
