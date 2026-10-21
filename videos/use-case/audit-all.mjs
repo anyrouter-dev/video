@@ -40,8 +40,10 @@ const queue = [...films];
 await Promise.all(Array.from({ length: jobs }, async () => {
   for (let f; (f = queue.shift()); ) {
     const safe = f.r.safe && [f.r.safe.left, f.r.safe.top, f.r.safe.right, f.r.safe.bottom];
-    const { problems } = flags.only === 'fill' ? { problems: [] } : await auditStage(f.dir, { safe, shots: path.join(out, `${f.slug}-${f.r.id}`) });
-    const fill = f.r.id === 'portrait' && kind.portraitFill && flags.only !== 'stage' ? await auditFill(f.dir) : null;
+    // a film whose page stops answering is a failure of that film, not of the sweep
+    const failed = e => ({ problems: [{ at: 0, kind: 'error', what: f.slug, why: e.message }] });
+    const { problems } = flags.only === 'fill' ? { problems: [] } : await auditStage(f.dir, { safe, shots: path.join(out, `${f.slug}-${f.r.id}`) }).catch(failed);
+    const fill = f.r.id === 'portrait' && kind.portraitFill && flags.only !== 'stage' ? await auditFill(f.dir).catch(e => ({ problems: [`error ${e.message}`], fill: { median: 0, shortShare: 1 } })) : null;
     const n = problems.length + (fill?.problems.length ?? 0);
     results.push({ slug: f.slug, rendition: f.r.id, seconds: f.seconds, problems, ...(fill && { fill: { problems: fill.problems, median: fill.fill.median, shortShare: fill.fill.shortShare } }) });
     const fillNote = fill ? `  fill median ${Math.round(fill.fill.median * 100)}%, ${Math.round(fill.fill.shortShare * 100)}% short` : '';

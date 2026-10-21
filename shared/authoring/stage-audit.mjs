@@ -289,6 +289,12 @@ function fitOf(live, frame, floor, { keyOf, compOf, what, box }) {
   }
 }
 
+/** `promise`, or an error naming `what` once it has taken `ms`: a page that stops answering fails, it never hangs a sweep. */
+export const within = (promise, ms, what) => {
+  let timer;
+  return Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(`${what}: no answer in ${ms / 1000}s`)), ms); })]).finally(() => clearTimeout(timer));
+};
+
 /**
  * A film's project opened in a headless browser at its own stage size, its timelines registered
  * and `window.__seekTo(t)` installed: { page, frame, duration, close }. It runs on a throwaway copy.
@@ -341,7 +347,7 @@ export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, 
 
     let prev = new Set();
     for (let t = 0; t < duration; t = +(t + step).toFixed(3)) {
-      const now = await page.evaluate(seekAndMeasure, t, frame, safe, TOLERANCE, floor);
+      const now = await within(page.evaluate(seekAndMeasure, t, frame, safe, TOLERANCE, floor), 120000, `${dir} at ${t}s`);
       const seen = new Set();
       for (const f of now) {
         seen.add(f.key);

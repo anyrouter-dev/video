@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { openFilm } from './stage-audit.mjs';
+import { openFilm, within } from './stage-audit.mjs';
 import { PORTRAIT, PORTRAIT_CAPTION_BAND } from './portrait.mjs';
 
 // YouTube Shorts draws its title, buttons and progress over the bottom ~380 px and a strip ~120 px
@@ -278,14 +278,13 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
   const crops = [], samples = [];
   try {
     for (let t = 0; t < duration; t = +(t + step).toFixed(3)) {
-      await page.evaluate(t => window.__seekTo(t), t);
-      const m = await page.evaluate(measure, captions);
+      const m = await within(page.evaluate(t => window.__seekTo(t), t).then(() => page.evaluate(measure, captions)), 120000, `${dir} at ${t}s`);
       for (const c of m.crops) {
         const img = imageOf(c.src);
         if (!img) continue;
         for (const cut of cropCuts(img, c.region, c.cropped)) crops.push({ t, image: path.basename(c.src), shown: +c.shown.toFixed(3), ...cut });
       }
-      const shot = await page.screenshot({ type: 'png' });
+      const shot = await within(page.screenshot({ type: 'png' }), 120000, `${dir} screenshot at ${t}s`);
       samples.push({ t, travel: m.travel, ink: frameInk(grayOf(null, { w: frame.w, h: frame.h, input: shot }), m.caps) });
     }
   } finally {
