@@ -195,6 +195,8 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
       await page.evaluate(t => window.__seekTo(t), t);
       const m = await page.evaluate(measure, captions);
       for (const c of m.crops) {
+        // an image no box crops has no edge to judge, and need not be decodable (an svg logo)
+        if (!Object.values(c.cropped).some(Boolean)) continue;
         const img = imageOf(c.src);
         if (!img) continue;
         for (const cut of cropCuts(img, c.region, c.cropped)) crops.push({ t, image: path.basename(c.src), shown: +c.shown.toFixed(3), ...cut });
