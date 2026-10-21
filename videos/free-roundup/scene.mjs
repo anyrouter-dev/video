@@ -78,7 +78,7 @@ export function css(cols) {
     .head h1 span{display:block}
     .head .sub{margin-top:12px;font-size:34px}
     .rods{display:none}
-    .mount{left:60px;right:120px;top:486px}
+    .mount{left:52px;right:128px;top:486px}
     .board{padding:22px 14px 18px}
     .labels span,.foot span{font-size:34px}
     .grid.l,.labels.l{display:none}
@@ -126,7 +126,8 @@ export function inner(t) {
     // the camera eases in on the board and keeps drifting, so no frame sits dead
     tl.fromTo($(".cam"), { scale: PORTRAIT ? 1.015 : 1.06, y: PORTRAIT ? 0 : -20 }, { scale: 1, y: 0, duration: 2.2, ease: "power2.out" }, 0);
     tl.to($(".cam"), { scale: PORTRAIT ? 1.01 : 1.05, duration: D - 2.2, ease: "none" }, 2.2);
-    sway($(".stage"));
+    // in portrait the board takes the safe width, so it sways less across, clear of the Shorts strip on the right
+    sway($(".stage"), PORTRAIT ? 4 : 12);
     tl.from($(".head h1"), { y: -60, opacity: 0, duration: 0.8, ease: "expo.out" }, 0.15);
     tl.from($(".head .sub"), { opacity: 0, x: 40, duration: 0.6 }, 0.5);
     // the board drops in on its rods and settles
