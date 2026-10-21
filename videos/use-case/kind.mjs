@@ -33,7 +33,8 @@ import crypto from 'node:crypto';
 import { markFor } from '../../lib/marks.mjs';
 import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine, LINKS } from './narration.mjs';
-import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, boardOf, barOf } from './scenes.mjs';
+import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, fitFigure, boardOf, barOf } from './scenes.mjs';
+import { LEAD, machineOf, scriptOf as figureScript, FIG_CSS } from './figures.mjs';
 import { reflow, standsAlone, closed, headless } from './reflow.mjs';
 import { captureOf, cropOf } from './captures.mjs';
 
@@ -273,9 +274,11 @@ export function copyOf(u, pools) {
     if (!type) fail(u.slug, `its ${beat} line does not set in either frame: shorten it`);
     return { text, type };
   };
-  const problem = { ...kinetic('problem'), diagram: diagramOf(u.narration.motif, 'problem', u.slug) };
-  const result = { ...kinetic('result'), diagram: diagramOf(u.narration.flow, 'result', u.slug) };
-  for (const panel of [problem, result]) fitPanel(panel, panel.diagram, u.slug);
+  // a film built around a figure shows its machine there instead (figures.mjs)
+  const figure = machineOf(u.slug);
+  const problem = { ...kinetic('problem'), diagram: figure ? null : diagramOf(u.narration.motif, 'problem', u.slug), figure };
+  const result = { ...kinetic('result'), diagram: figure ? null : diagramOf(u.narration.flow, 'result', u.slug), figure };
+  for (const panel of [problem, result]) (figure ? fitFigure(panel, u.slug) : fitPanel(panel, panel.diagram, u.slug));
 
   const code = { landscape: fitL.px, portrait: fitP.px };
   const code_lines = { landscape: fitL.lines, portrait: fitP.lines };
@@ -287,7 +290,7 @@ export function copyOf(u, pools) {
     kicker: redact(u.kicker),
     title,
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
-    problem, result,
+    problem, result, figure,
     // the end card shows the live page the film ends on, as it is
     page: { landscape: real(`${u.slug}/page/viewport-landscape.png`), portrait: { ...real(`${u.slug}/page/viewport-portrait.png`), crop: cropOf(captureOf(`${u.slug}/page/viewport-portrait.png`)) } },
     steps: steps.map(st => ({
@@ -365,6 +368,8 @@ export function storyOf(u, pools) {
   for (const g of sets) { pre.dur = Math.max(pre.dur, typingOf(g.pre).dur); cmd.dur = Math.max(cmd.dur, typingOf(g.cmd).dur); }
   const each = Math.max(pre.each, cmd.each) || TYPE_EACH;
   const rolling = roll ? roll.ids.length * ROLL_EVERY : 0;
+  // a figure film's machine works under each step's label before the step's proof comes in
+  const lead = copy.figure ? LEAD : 0, typeAt = TYPE_AT + lead;
 
   // each step, in seconds from its start: how long it needs, and what lands in it
   const plan = copy.steps.map((st, k) => {
@@ -374,11 +379,11 @@ export function storyOf(u, pools) {
     // a step with no window holds while its page sentence is read, up to a couple of seconds past its voice
     let need = Math.max(STEP_MIN, said + AFTER, st.detail ? Math.min(VOICE_AT.step + 0.4 + read(st.detail.text), said + AFTER + 2.0) : 0);
     // a real screen holds long enough to be seen and pushed into
-    if (st.capture) need = Math.max(need, VOICE_AT.step + 3.4);
-    if (st.shows === 'install') { lands.preAt = TYPE_AT; need = Math.max(need, TYPE_AT + pre.dur + 0.6); }
+    if (st.capture) need = Math.max(need, VOICE_AT.step + 3.4 + lead);
+    if (st.shows === 'install') { lands.preAt = typeAt; need = Math.max(need, typeAt + pre.dur + 0.6); }
     if (st.shows === 'command') {
-      lands.cmdAt = TYPE_AT;
-      const typedEnd = TYPE_AT + cmd.dur;
+      lands.cmdAt = typeAt;
+      const typedEnd = typeAt + cmd.dur;
       need = Math.max(need, typedEnd + Math.max(roll ? 0.8 : 1.2, read(groups.cmd.map(l => l.text).join(' ')) - cmd.dur));
       if (!has('result')) {
         if (roll) { lands.rollAt = typedEnd + 0.5; need = Math.max(need, lands.rollAt + rolling + 0.4); }
@@ -386,12 +391,12 @@ export function storyOf(u, pools) {
       }
     }
     if (st.shows === 'result') {
-      const at = VOICE_AT.step + 0.6;
+      const at = VOICE_AT.step + 0.6 + lead;
       if (roll) { lands.rollAt = at; need = Math.max(need, at + rolling + 0.4); }
       if (answer) { lands.answerAt = at; need = Math.max(need, at + read(answer)); }
     }
     // once all in it is said and shown, a tint points out the lines the page changes until it ends
-    if (st.shows) lands.pointAt = Math.max(said, lands.rollAt != null ? lands.rollAt + rolling : 0, lands.answerAt != null ? lands.answerAt + 0.8 : 0, lands.cmdAt != null ? TYPE_AT + cmd.dur : 0) + 0.2;
+    if (st.shows) lands.pointAt = Math.max(said, lands.rollAt != null ? lands.rollAt + rolling : 0, lands.answerAt != null ? lands.answerAt + 0.8 : 0, lands.cmdAt != null ? lands.cmdAt + cmd.dur : 0) + 0.2;
     return { need, lands };
   });
   const intro = Math.max(3.4, VOICE_AT.intro + spoken(voice.intro) + AFTER, read(copy.title) + 0.6);
@@ -436,7 +441,7 @@ export function storyOf(u, pools) {
   return {
     copy, beats, duration, said,
     timing: {
-      travel: TRAVEL,
+      travel: TRAVEL, lead,
       intro: { at: 0, voiceAt: VOICE_AT.intro },
       problem: { at: beatAt('problem'), words: word(said[1]) },
       steps: copy.steps.map((st, k) => ({ at: beats[k + S0].start, voiceAt: at(k, VOICE_AT.step), words: word(said.find(l => l.id === voice.steps[k].line.id)), shows: st.shows ?? null })),
@@ -462,6 +467,8 @@ const filmed = (u, pools) => ({
   window: u.command && windowOf(u), roll: rollOf(u, pools),
   // only a film that shows a fallback carries one, so the others keep their identity
   ...(fallbackOf(u) && { answer: fallbackOf(u) }),
+  // only a film built around a figure carries one
+  ...(machineOf(u.slug) && { figure: machineOf(u.slug) }),
   said: u.narration ? u.narration.lines.map(l => l.text) : null,
   steps: u.steps,
 });
@@ -539,11 +546,13 @@ export default {
       slug: u.slug,
       // the voice, each line where the story puts it; the music steps down under its words (mix.mjs)
       said: story.said.map(l => ({ id: l.id, file: l.file, at: l.at, speaks: +(l.at + l.words[0].start).toFixed(2), dur: +(l.words.at(-1).end - l.words[0].start).toFixed(2) })),
-      css: CSS,
+      css: CSS + (story.copy.figure ? FIG_CSS : ''),
+      // a figure's kit, live code and art, one script the scene loads
+      files: story.copy.figure ? [{ to: 'assets/uc-fig.js', text: figureScript(story.copy.figure) }] : [],
       // the real screens it shows, copied into the project
       assets: [...story.copy.steps.map(st => st.capture), story.copy.page.landscape, story.copy.page.portrait].filter(Boolean).map(c => ({ from: c.disk, to: `assets/captures/${c.name}` })),
       beats: story.beats,
-      scenes: [{ ...filmScene(story, board), id: 's01-film', key: 'film', start: 0, dur: story.duration }],
+      scenes: [{ ...filmScene(story, board), id: 's01-film', key: 'film', start: 0, dur: story.duration, scripts: story.copy.figure ? ['assets/uc-fig.js'] : [] }],
       summary: `${u.slug}: ${story.beats.map(b => `${b.key} ${b.dur}s`).join(' · ')}`,
     };
   },

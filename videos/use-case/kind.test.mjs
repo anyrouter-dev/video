@@ -5,7 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import kind, { FILM, parseDoc, redact, undash, restates, rollPools, fallbackOf, narrate } from './kind.mjs';
+import kind, { FILM, parseDoc, redact, undash, restates, rollPools, fallbackOf, narrate, storyOf } from './kind.mjs';
+import { hasFigure, choreograph, LEAD } from './figures.mjs';
 import { linesOf, TYPE, windowSpan, codeSpan, idFitsRow, barOf } from './scenes.mjs';
 import { captureOf } from './captures.mjs';
 import { fingerprint } from '../../lib/ledger.mjs';
@@ -469,5 +470,33 @@ test('every real screen a film shows names its source in the film\'s claims ledg
       assert.equal(line.from, c.url ?? c.command, `${slug}: the line on ${st.capture} names the screen's source`);
     }
     assert.ok(f.claims.some(x => x.says.startsWith(`capture: ${slug}/page/viewport-landscape.png`)), `${slug}: the end card's page has a claim`);
+  }
+});
+
+test('a figure film shows its machine where the other films draw a diagram, and ships the machine\'s script', () => {
+  const figured = films().filter(([u]) => hasFigure(u.slug));
+  assert.equal(figured.length, 6, 'the six best use cases are built around a figure');
+  for (const [u, film] of figured) {
+    const h = html(film);
+    assert.equal((h.match(/class="fgx /g) ?? []).length, 3, `${u.slug}: the problem, the steps and the result each show the machine`);
+    assert.ok(!/class="dg /.test(h), `${u.slug}: no card diagram beside the machine`);
+    assert.ok(film.files.some(f => f.to === 'assets/uc-fig.js' && f.text.includes('window.UCF')), `${u.slug}: the machine's kit and art ship with the film`);
+    assert.ok(film.scenes[0].scripts.includes('assets/uc-fig.js'), `${u.slug}: the scene loads them`);
+  }
+  for (const [u, film] of films().filter(([x]) => !hasFigure(x.slug))) assert.ok(!film.files.length && !/class="fgx /.test(html(film)), `${u.slug}: keeps its diagrams`);
+});
+
+test('a figure film\'s machine moves on each step\'s line before that step\'s proof comes in', () => {
+  // the machine carries the story: if it stood still under a step, or the code or screen came in over it at once, it would explain nothing
+  for (const u of narrate(parseDoc(doc())).filter(x => hasFigure(x.slug))) {
+    const story = storyOf(u, pools), T = story.timing;
+    const fig = choreograph(u.slug, { said: story.said, timing: T, duration: story.duration });
+    const starts = Object.values(fig.tracks).flatMap(t => t.segs.filter(sg => !sg[3]).map(sg => sg[0]));
+    T.steps.forEach((st, k) => {
+      assert.ok(starts.some(t => t >= st.at - 0.3 && t < st.at + LEAD), `${u.slug}: the machine moves under step ${k + 1} before its proof`);
+      for (const at of [T.preAt, T.cmdAt, T.rollAt, T.answerAt].filter(t => t != null && t >= st.at && (!T.steps[k + 1] || t < T.steps[k + 1].at))) assert.ok(at >= st.at + LEAD, `${u.slug}: step ${k + 1}'s code waits for its machine`);
+    });
+    assert.ok(starts.some(t => t >= T.problem.at - 0.6 && t < T.steps[0].at), `${u.slug}: the machine shows the problem`);
+    assert.ok(starts.some(t => t >= T.result.at - 0.6 && t < T.end), `${u.slug}: the machine shows the result`);
   }
 });

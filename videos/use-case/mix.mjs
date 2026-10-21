@@ -32,6 +32,9 @@ export const SFX = {
   key: { file: 'key-press.mp3', db: -25, semi: c => [0, -1, 1, -2, 0.5][(c.n ?? 0) % 5] },
   arrive: { file: 'pop.mp3', db: -20, semi: c => (c.n ?? 0) % 2 ? 1 : -1, big: true },
   end: { file: 'chime.mp3', db: -13, semi: () => 0, big: true },
+  // a figure's moving part travelling, and a part seating or a lamp lighting, pitched apart (figures.mjs)
+  move: { file: 'whoosh-short.mp3', db: -29, semi: c => [-2, 1, -4][(c.n ?? 0) % 3], lead: 0.05 },
+  seat: { file: 'click-soft.mp3', db: -23, semi: c => [0, 2, -2, 3, 1, 4][(c.n ?? 0) % 6] },
 };
 // Music under a spoken line sits this far under the voice's loudness, and comes up between lines.
 const BED = { under: -24, between: -17, attack: 0.08, release: 0.45, fadeIn: 0.8, fadeOut: 2.6 };

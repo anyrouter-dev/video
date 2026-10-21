@@ -68,7 +68,7 @@ const sceneFile = (s, css) => `<!doctype html>
   <div class="uc ${s.cls ?? ''}"${s.style ? ` style="${s.style}"` : ''}>${s.body}</div>
 </div>
 <script src="${GSAP}"></script>
-<script>
+${(s.scripts ?? []).map(src => `<script src="${src}"></script>\n`).join('')}<script>
   // Built once the fonts are in, because it places things by the boxes the
   // layout gives the text; registered only once it is whole. fonts.ready alone
   // resolves before a face is first asked for, so each face is loaded by name.
@@ -160,6 +160,10 @@ export function writeProject(dir, id, spec) {
   for (const a of film.assets ?? []) {
     fs.mkdirSync(path.join(dir, path.dirname(a.to)), { recursive: true });
     fs.copyFileSync(a.from, path.join(dir, a.to));
+  }
+  for (const f of film.files ?? []) {
+    fs.mkdirSync(path.join(dir, path.dirname(f.to)), { recursive: true });
+    fs.writeFileSync(path.join(dir, f.to), f.text);
   }
   const cues = cuesOf(film);
   const sound = writeMix(path.join(dir, 'audio', 'mix.wav'), { slug: film.slug, duration, voice: film.said ?? [], cues });

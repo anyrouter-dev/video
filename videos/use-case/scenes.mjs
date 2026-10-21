@@ -24,6 +24,7 @@ import { esc, C } from './project.mjs';
 import { markFor } from '../../lib/marks.mjs';
 import { PORTRAIT_CAPTION_BAND, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
 import { fitRows } from '../../shared/authoring/portrait-fill.mjs';
+import { choreograph, LEAD } from './figures.mjs';
 
 // ── reading pace ────────────────────────────────────────────────────────────
 export const READ_WPS = 3.5;
@@ -665,6 +666,27 @@ export function fitPanel(line, d, slug) {
   }
 }
 
+// A figure panel (figures.mjs): landscape sets its badge and kinetic line in a column beside the
+// machine, which takes the rest of the width; portrait sets them over it, the machine taking what the
+// line leaves and at least FIG_MIN of the safe height.
+const FIG_TEXT = { width: 640, lines: 7, gap: 72 }, FIG_MIN = 0.55;
+/** Fits a figure panel's kinetic line beside or over its machine in each frame: the largest that fits. Sets `line.type` in place. */
+export function fitFigure(line, slug) {
+  for (const o of ['landscape', 'portrait']) {
+    const b = BLOCK[o], room = WIN[o].sh, beside = o === 'landscape';
+    const width = beside ? FIG_TEXT.width : TYPE.say[o].width, lines = beside ? FIG_TEXT.lines : TYPE.say[o].lines;
+    const setAt = px => breakSet(line.text, { px, width, weight: TYPE.say.weight, tracking: TYPE.say.tracking, room: n => n <= lines });
+    const px = TYPE.say[o].sizes.filter(x => beside ? x <= 96 : x <= line.type[o].px).find(x => {
+      const set = setAt(x), text = BLOCK.badge + b.gap + (set ? set.lines * x * 1.08 : 0);
+      return set && (beside ? text <= room : text + b.gap + FIG_MIN * room <= room);
+    });
+    if (!px) throw new Error(`${slug}: the ${line.text.slice(0, 24)}… line leaves its figure too little room in the ${o} frame`);
+    line.type[o] = { px, ...setAt(px) };
+  }
+}
+// a machine's host: the page stamps its art in for the frame it is drawn in
+const figHtml = () => '<div class="fg"><div class="fgx iso lf-fig" data-theme="light"></div></div>';
+
 /**
  * When each piece of a diagram lands, in seconds on the film's clock: a card lands on the spoken
  * word its label ends on, so "one more key" lands on "key"; a card no word matches, in order
@@ -705,7 +727,9 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
   const T = timing, S = T.steps;
   const problemLine = said.find(l => l.beat === 'problem'), resultLine = said.find(l => l.beat === 'result');
   // a diagram's cards ride in with the camera, so it arrives at a composed frame; the rest lands on the voice
-  const land = { problem: landings(copy.problem.diagram, problemLine, T.problem.at - 0.35), result: landings(copy.result.diagram, resultLine, T.result.at - 0.35) };
+  const land = copy.figure ? { problem: null, result: null } : { problem: landings(copy.problem.diagram, problemLine, T.problem.at - 0.35), result: landings(copy.result.diagram, resultLine, T.result.at - 0.35) };
+  // a figure film's machine: one state for the whole film, posed in every panel that shows it
+  const fig = copy.figure ? choreograph(copy.slug, { said, timing: T, duration }) : null;
   const steps = copy.steps.map((st, k) => `<div class="stp" style="${fsVars(copy.type.step, 'ls')};${fsVars(copy.type.detail, 'ds')}">
       <div class="head"><span class="sm"><i class="ring"></i><b>${k + 1}</b></span><div class="sl">${masked(st.label, st.breaks)}</div></div>
       ${st.detail ? `<p class="dt">${masked(st.detail.text, st.detail.breaks)}</p>` : ''}</div>`).join('');
@@ -716,9 +740,9 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       <div class="hero"><div class="tiles">${tiles}${tiles ? PLUS : ''}<div class="tile card">${mark('anyrouter-color.svg')}</div></div>
         <div class="badge kick">${esc(copy.kicker)}</div></div>
       <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1></section>
-    <section class="pn p-problem">${back}<div class="blk"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}</div></section>
-    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) + liveHtml(st.capture, k) : '')).join('')}</div></section>
-    <section class="pn p-result">${back}<div class="blk"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}</div></section>
+    <section class="pn p-problem">${back}<div class="blk${fig ? ' fig' : ''}">${fig ? `<div class="fgt"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}</div>${figHtml()}` : `<div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}`}</div></section>
+    <section class="pn p-steps">${back}${steps}${fig ? `<div class="fgs">${figHtml()}</div>` : ''}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) + liveHtml(st.capture, k) : '')).join('')}</div></section>
+    <section class="pn p-result">${back}<div class="blk${fig ? ' fig' : ''}">${fig ? `<div class="fgt"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}</div>${figHtml()}` : `<div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}`}</div></section>
     <section class="pn p-close">${back}<div class="cblk"><div class="crow">
       ${frameHtml(copy.page.landscape, 'pagef', `<img class="si il" src="assets/captures/${esc(copy.page.landscape.name)}" alt=""><img class="si ip" src="assets/captures/${esc(copy.page.portrait.name)}" alt="">`)}
       <div class="ccol"><p class="h2" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</p>
@@ -734,6 +758,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     const STEPS = ${JSON.stringify(S)}, T1 = STEPS[0].at, END = ${T.end}, W_IN = ${T.windowIn}, W_OUT = ${T.windowOut}, RESULT = ${T.result.at};
     const PRE_AT = ${T.preAt}, CMD_AT = ${T.cmdAt}, INSTALL = ${T.preAt != null}, EACH = ${T.each}, LINE_PAUSE = ${T.linePause};
     const ROLL_AT = ${T.rollAt}, ROLL_EVERY = ${ROLL_EVERY}, ROLLS = ${rolls}, ANSWER_AT = ${T.answerAt}, POINT_AT = ${T.pointAt};
+    const LEAD = ${fig ? LEAD : 0}, FIG = ${JSON.stringify(fig && fig.tracks)};
     const LAND = ${JSON.stringify(land)}, PWORDS = ${JSON.stringify(T.problem.words)}, RWORDS = ${JSON.stringify(T.result.words)};
     const uc = $(".uc"), css = getComputedStyle(uc), v = n => parseFloat(css.getPropertyValue(n));
     const SY = v("--sy"), SH = v("--sh"), G = v("--gap"), DONE = ${STEP.done}, RG = ${STEP.rowGap}, HG = ${STEP.headGap};
@@ -879,11 +904,37 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     });
     // the panel's block (badge, line, diagram) sits in the middle of the safe area
     const centre = p => { const b = p.querySelector(".blk"); b.style.top = SY + Math.max(0, (SH - b.offsetHeight) / 2) + "px"; };
+    // a figure film's machine: its art stamped into each panel that shows it, posed from the tracks
+    // frame by frame. Its box is the ink of its first pose and a margin, so it fills what it is given
+    const VIEW = TALL ? "port" : "land";
+    const fgxs = FIG ? $$(".fgx") : [];
+    const machines = fgxs.map(h => { h.innerHTML = UCF.svg[VIEW]; return UCF.live.mount(h.querySelector("svg"), UCF.P[VIEW]); });
+    const ease01 = x => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
+    const value = (track, t) => {
+      let v = track.init;
+      for (const [t0, d, to, lin] of track.segs) {
+        if (t >= t0 + d) { v = to; continue; }
+        if (t > t0) v = v + (to - v) * (lin ? (t - t0) / d : ease01((t - t0) / d));
+        break;
+      }
+      return v;
+    };
+    const drawAt = t => { const s = {}; for (const key in FIG) s[key] = value(FIG[key], t); for (const m of machines) m.pose(s); };
+    let FAR = null;
+    if (FIG) {
+      drawAt(0);
+      const b = fgxs[0].querySelector("svg").getBBox(), m = 0.04 * Math.max(b.width, b.height);
+      const box = [b.x - m, b.y - 2.5 * m, b.width + 2 * m, b.height + 3.5 * m];
+      for (const h of fgxs) h.querySelector("svg").setAttribute("viewBox", box.map(v => v.toFixed(1)).join(" "));
+      FAR = [box[2], box[3]];
+    }
+    // a figure panel's machine takes the height its line leaves, as large as fits
+    const fitFig = (fgx, w, h) => { const s = Math.min(w / FAR[0], h / FAR[1]); fgx.style.width = FAR[0] * s + "px"; fgx.style.height = FAR[1] * s + "px"; };
+    if (FIG) for (const p of [pProblem, pResult]) { const fg = p.querySelector(".fg"); fitFig(fg.firstElementChild, fg.clientWidth, fg.clientHeight); }
     centre(pProblem); centre(pResult);
-    diagram(pProblem, LAND.problem);
-    const route = diagram(pResult, LAND.result);
+    const route = FIG ? null : (diagram(pProblem, LAND.problem), diagram(pResult, LAND.result));
     // a request runs the route while the result is said: out from your side, through AnyRouter, to what answers
-    if (route.hub && route.edges.length) {
+    if (route && route.hub && route.edges.length) {
       const dot = document.createElementNS(svgNS, "circle");
       dot.setAttribute("r", 13); dot.setAttribute("class", "pulse");
       pResult.querySelector(".edges").appendChild(dot);
@@ -954,11 +1005,25 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       const block = hs[k] + (STEPS[k].shows ? HG + winH : sk[k] ? HG + skH[k] + llH(k) : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
       return { top, win: top + hs[k] + HG };
     };
+    // a figure film's machine works under each step's label first, where the step's proof then comes in:
+    // it recedes as the proof arrives, and comes back under the next label as the proof goes
+    // the label over its machine sits just under the steps done; the machine takes the room under it
+    const figTop = k => doneY(k);
+    if (FIG) {
+      const fgs = $(".fgs"), fgx = fgs.querySelector(".fgx"), room = k => { const y = figTop(k) + hs[k] + HG; return { y, h: SY + SH - y }; };
+      fitFig(fgx, fgs.clientWidth, room(0).h);
+      const base = fgx.offsetHeight, scale = k => Math.min(1, room(k).h / base), yOf = k => room(k).y + Math.max(0, (room(k).h - base * scale(k)) / 2);
+      tl.set(fgs, { y: yOf(0), scale: 1, autoAlpha: 1, z: 0 }, 0);
+      STEPS.forEach((st, k) => {
+        if (k) tl.to(fgs, { y: yOf(k), scale: scale(k), autoAlpha: 1, z: 0, duration: 0.6, ease: "power3.inOut" }, st.at - 0.1);
+        if (st.shows || sk[k]) tl.to(fgs, { autoAlpha: 0, z: -300, duration: 0.45, ease: "power3.in" }, st.at + LEAD - 0.35);
+      });
+    }
     // a step's real screen tilts in under its step, is pushed into while the step is said, and goes when the next comes
     STEPS.forEach((st, k) => {
       const f = sk[k];
       if (!f) return;
-      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win + (TALL ? 0 : 16);
+      const next = STEPS[k + 1], at = st.at + (LEAD || (k ? 0.5 : 0.2)), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win + (TALL ? 0 : 16);
       tl.set(f, { autoAlpha: 0, y }, 0);
       tl.set(f, { autoAlpha: 1 }, at);
       // the audit reads its bar once it has landed, and not while it leaves (stage-audit.mjs, flight)
@@ -987,12 +1052,15 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       if (next) { tl.to(f, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(f, { autoAlpha: 0 }, out + 0.3); }
     });
     STEPS.forEach((st, k) => {
-      const el = stp[k], at = place(k).top, next = STEPS[k + 1];
-      tl.set(el, { y: at }, 0);
+      // with a figure the label first sits under the steps done, over its machine, and settles to its
+      // place over the proof as the proof comes in
+      const el = stp[k], at = place(k).top, next = STEPS[k + 1], first = FIG ? figTop(k) : at;
+      tl.set(el, { y: first }, 0);
       const enter = st.at + (k ? 0.45 : 0.1);
       tl.set(el, { opacity: 1 }, enter);
-      tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: at + 90 },
-        { z: 0, rotationX: 0, rotationY: 0, y: at, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
+      tl.fromTo(el, { z: -480, rotationX: -26, rotationY: k % 2 ? -9 : 9, y: first + 90 },
+        { z: 0, rotationX: 0, rotationY: 0, y: first, duration: 1.1, ease: "expo.out", immediateRender: false }, enter);
+      if (first !== at && (st.shows || sk[k])) tl.to(el, { y: at, duration: 0.6, ease: "power3.inOut" }, st.at + LEAD - 0.3);
       // the label rises with its card, word after word, and is whole before the voice reads it
       const lw = Array.from(el.querySelectorAll(".sl .w > span"));
       tl.set(lw, { yPercent: 110 }, 0);
@@ -1017,15 +1085,27 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // The window comes in with the first step that shows it, turning to face the viewer, follows its steps down, and goes.
     const firstWin = STEPS.findIndex(st => st.shows);
     tl.set(win, { autoAlpha: 0, y: place(firstWin).win }, 0);
-    tl.set(win, { autoAlpha: 1 }, W_IN + 0.15);
-    tl.fromTo(win, { z: -420, rotationX: 18, rotationY: TALL ? -6 : -14, y: place(firstWin).win + 160 }, { z: 0, rotationX: 0, rotationY: 0, y: place(firstWin).win, duration: 1.1, ease: "expo.out", immediateRender: false }, W_IN + 0.15);
-    STEPS.forEach((st, k) => { if (st.shows && k > firstWin) tl.to(win, { y: place(k).win, duration: 0.8, ease: "power4.inOut" }, st.at); });
-    if (W_OUT < RESULT) {
+    const winIn = (a, y) => {
+      tl.set(win, { autoAlpha: 1 }, a);
+      tl.fromTo(win, { z: -420, rotationX: 18, rotationY: TALL ? -6 : -14, y: y + 160 }, { z: 0, rotationX: 0, rotationY: 0, y, duration: 1.1, ease: "expo.out", immediateRender: false }, a);
+    };
+    // with a figure, the window comes in under each of its steps once the machine has worked, and leaves when the next step begins
+    if (LEAD) STEPS.forEach((st, k) => {
+      if (!st.shows) return;
+      const y = place(k).win, next = STEPS[k + 1];
+      winIn(st.at + LEAD, y);
+      if (next) { tl.to(win, { z: -500, rotationX: -14, y: y - 60, duration: 0.4, ease: "power3.in" }, next.at - 0.25); tl.set(win, { autoAlpha: 0 }, next.at + 0.15); }
+    });
+    else {
+      winIn(W_IN + 0.15, place(firstWin).win);
+      STEPS.forEach((st, k) => { if (st.shows && k > firstWin) tl.to(win, { y: place(k).win, duration: 0.8, ease: "power4.inOut" }, st.at); });
+    }
+    if (!LEAD && W_OUT < RESULT) {
       tl.to(win, { z: -500, rotationX: -14, y: "-=60", duration: 0.4, ease: "power3.in" }, W_OUT - 0.1);
       tl.set(win, { autoAlpha: 0 }, W_OUT + 0.3);
     }
 
-    if (R(".ln.ctx, .ln.keep").length) tl.fromTo(R(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, W_IN + 0.5);
+    if (R(".ln.ctx, .ln.keep").length) tl.fromTo(R(".ln.ctx, .ln.keep"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" }, W_IN + 0.5 + LEAD);
     const typed = R(".typed"), PRE = INSTALL ? Math.max(0, typed.findIndex(l => l.classList.contains("focus"))) : 0;
     let t = 0;
     typed.forEach((ln, k) => {
@@ -1112,13 +1192,22 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     tl.set(Q(".url"), { opacity: 1 }, END + 0.6);
     tl.fromTo(Q(".url"), { y: 40, z: -200, rotationX: 30 }, { y: 0, z: 0, rotationX: 0, duration: 1.0, ease: "expo.out", immediateRender: false }, END + 0.6);
 
+    // ── the machine's clock
+    if (FIG) {
+      // a setter, not onUpdate: a seek renders the tween even when it suppresses callbacks
+      let now = 0;
+      const clock = { get t() { return now; }, set t(v) { now = v; drawAt(v); } };
+      tl.fromTo(clock, { t: 0 }, { t: D, duration: D, ease: "none", immediateRender: false }, 0);
+      drawAt(0);
+    }
+
     const CAPS = ${JSON.stringify(caps.map(c => [c.at, c.end]))};
     $$(".cap").forEach((cap, i) => {
       const [at, end] = CAPS[i];
       tl.set(cap, { opacity: 1 }, at);
       tl.set(cap, { opacity: 0 }, end);
     });`;
-  const cues = cuesOf({ timing: T, cuts, land, rolls, copy });
+  const cues = cuesOf({ timing: T, cuts, land, rolls, copy, fig });
   return { cls: 'film', body, inner, cues, duration, style: `--persp:${CAM_PERSPECTIVE.landscape}px;--persp-p:${CAM_PERSPECTIVE.portrait}px` };
 }
 
@@ -1128,24 +1217,29 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
  * events): the camera's travel, a card tilting in, a step marker lighting (a step higher each
  * step), the command typed, a result arriving, the end card. mix.mjs maps each kind to its sound.
  */
-function cuesOf({ timing: T, cuts, land, rolls, copy }) {
+function cuesOf({ timing: T, cuts, land, rolls, copy, fig }) {
   const cue = (at, kind, extra = {}) => ({ at: +at.toFixed(2), kind, ...extra });
   const out = [];
   for (const c of cuts) out.push(cue(c - T.travel / 2 + 0.05, 'travel'));
   out.push(cue(0.1, 'tilt'));
-  out.push(cue(land.problem.right[0] ?? land.problem.left[0], 'land'));
-  if (land.problem.mark != null) out.push(cue(land.problem.mark, 'arrive'));
+  if (land.problem) out.push(cue(land.problem.right[0] ?? land.problem.left[0], 'land'));
+  if (land.problem?.mark != null) out.push(cue(land.problem.mark, 'arrive'));
   T.steps.forEach((st, k) => out.push(cue(st.voiceAt, 'step', { step: k })));
-  out.push(cue(T.windowIn + 0.15, 'tilt'));
+  // the proof tilting in: once with the window, or under each step once its machine has worked
+  if (fig) T.steps.forEach((st, k) => { if (st.shows || copy.steps[k].capture) out.push(cue(st.at + T.lead, 'tilt')); });
+  else out.push(cue(T.windowIn + 0.15, 'tilt'));
   // a key press every few characters typed, only while text is typed
   const typed = copy.window.lines.landscape.filter(l => copy.window.shell || l.focus).reduce((n, l) => n + [...l.text].length, 0);
   const start = T.preAt ?? T.cmdAt, every = Math.max(T.each * 3, 0.07);
   for (let t = start, n = 0; n < Math.min(typed / 3, 40) && t < start + T.typing; t += every, n++) out.push(cue(t, 'key', { n }));
   for (let i = 0; i < rolls; i++) out.push(cue(T.rollAt + i * ROLL_EVERY + 0.2, 'arrive'));
   if (T.answerAt) out.push(cue(T.answerAt + 0.25, 'arrive'));
-  out.push(cue(land.result.hub, 'land'));
-  // the first request reaching the card that answered
-  out.push(cue(Math.max(land.result.right.at(-1) + 0.4, T.result.words[0] ?? 0) + 1.5, 'arrive', { n: 1 }));
+  if (land.result) {
+    out.push(cue(land.result.hub, 'land'));
+    // the first request reaching the card that answered
+    out.push(cue(Math.max(land.result.right.at(-1) + 0.4, T.result.words[0] ?? 0) + 1.5, 'arrive', { n: 1 }));
+  }
+  if (fig) out.push(...fig.cues.map(c => cue(c.at, c.kind, c.n != null ? { n: c.n } : {})));
   out.push(cue(T.end + 0.6, 'end'));
   return out.sort((a, b) => a.at - b.at);
 }
@@ -1189,6 +1283,12 @@ export const CSS = `
   /* the problem and the result: a badge, the line as kinetic type, and the diagram */
   .film .blk{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;flex-direction:column;align-items:center;gap:${BLOCK.landscape.gap}px;transform-style:preserve-3d}
   .film .lbl{height:${BLOCK.badge}px;padding:0 32px;font-size:42px;color:${C.ink2}}
+  .film .blk.fig{height:var(--sh);flex-direction:row;gap:${FIG_TEXT.gap}px}
+  .film .blk.fig .fgt{flex:0 0 ${FIG_TEXT.width}px;align-self:center;display:flex;flex-direction:column;align-items:flex-start;gap:${BLOCK.landscape.gap}px}
+  .film .blk.fig .kt{text-align:left}
+  .film .blk .fg{flex:1 1 0;min-width:0;min-height:0;align-self:stretch;display:flex;align-items:center;justify-content:center}
+  .film .fgs{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;justify-content:center;transform-origin:50% 0;opacity:0}
+  .film .fgx .iso-svg{width:100%;height:100%}
   .film .kt{font-size:var(--ks);font-weight:600;line-height:1.08;letter-spacing:-.04em;white-space:nowrap;text-align:center}
   .film .dg{position:relative;display:flex;align-items:center;justify-content:center;gap:200px;transform-style:preserve-3d}
   .film .dg.result{gap:110px}
@@ -1316,6 +1416,9 @@ export const CSS = `
     /* the line under its badge at the top of the safe area, the picture at its foot */
     .film .blk{gap:${BLOCK.portrait.gap}px;height:var(--sh)}
     .film .blk .kt{margin-bottom:auto}
+    .film .blk.fig{flex-direction:column;gap:${BLOCK.portrait.gap}px}
+    .film .blk.fig .fgt{flex:none;align-self:stretch;align-items:center;gap:${BLOCK.portrait.gap}px}
+    .film .blk.fig .kt{text-align:center;margin-bottom:0}
     .film .dg:has(.fl){margin-bottom:${FAIL_H}px}
     .film .dg{gap:60px}
     .film .dg.stack-p{flex-direction:column;gap:${BLOCK.portrait.stackGap}px}
