@@ -1087,6 +1087,8 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     tl.set(win, { autoAlpha: 0, y: place(firstWin).win }, 0);
     const winIn = (a, y) => {
       tl.set(win, { autoAlpha: 1 }, a);
+      // the audit reads its code once it has landed (stage-audit.mjs, flight)
+      if (LEAD) { tl.set(win, { attr: { "data-in-flight": "1" } }, a); tl.set(win, { attr: { "data-in-flight": "0" } }, a + 0.9); }
       tl.fromTo(win, { z: -420, rotationX: 18, rotationY: TALL ? -6 : -14, y: y + 160 }, { z: 0, rotationX: 0, rotationY: 0, y, duration: 1.1, ease: "expo.out", immediateRender: false }, a);
     };
     // with a figure, the window comes in under each of its steps once the machine has worked, and leaves when the next step begins
@@ -1094,7 +1096,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       if (!st.shows) return;
       const y = place(k).win, next = STEPS[k + 1];
       winIn(st.at + LEAD, y);
-      if (next) { tl.to(win, { z: -500, rotationX: -14, y: y - 60, duration: 0.4, ease: "power3.in" }, next.at - 0.25); tl.set(win, { autoAlpha: 0 }, next.at + 0.15); }
+      if (next) { tl.set(win, { attr: { "data-in-flight": "1" } }, next.at - 0.25); tl.to(win, { z: -500, rotationX: -14, y: y - 60, duration: 0.4, ease: "power3.in" }, next.at - 0.25); tl.set(win, { autoAlpha: 0 }, next.at + 0.15); }
     });
     else {
       winIn(W_IN + 0.15, place(firstWin).win);
