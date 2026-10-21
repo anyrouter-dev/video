@@ -183,6 +183,8 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
   const images = new Map();
   const imageOf = src => {
     // the preview serves the project's files under its own prefix; the file is the path's tail
+    // a vector mark is drawn, not captured: it has no lines of text to cut, and ffmpeg cannot read it
+    if (/\.svg$/i.test(src)) return null;
     if (!images.has(src)) {
       const parts = src.split('/'), k = parts.findIndex((_, i) => fs.existsSync(path.join(copy, ...parts.slice(i))) && parts.slice(i).length);
       images.set(src, k < 0 ? null : grayOf(path.join(copy, ...parts.slice(k))));
