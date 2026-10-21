@@ -1,0 +1,24 @@
+{
+  "notable": true,
+  "label": "v1",
+  "parts": [
+    "assets/anyrouter-logo-black.svg:470da5aeb0e69ff983a8686970be78c5afe2f6c5e9b042acbb7a142520018a52",
+    "assets/bgm/track.mp3:d35265b4e1d2cb016e5c42c013e1c30c29227175253bc33e637ca83960e9f107",
+    "assets/fonts/geist-mono.woff2:684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc",
+    "assets/fonts/geist.woff2:19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1",
+    "assets/mix.wav:e547d7ddf510c610209c13a4e86ceb3895ff24ce835122626f2b962d85b0ca6d",
+    "assets/voice/01.wav:94235b46d2e7e364589ca5271ac4321bb0f94dfc56136d6cc8d0afacf9dcb8f5",
+    "assets/voice/02.wav:ad725d2d2fa0a879a893444811bb0062aeccaec0e7c75c8f4f1e32d44023a102",
+    "assets/voice/03.wav:9a5fb0dd61c538b053057f6988ed3a196a3d1f1e8e858a3615f650d8d9c6acb2",
+    "assets/voice/04.wav:487262cc8861498c94a5796004f98da1bfc44af29bdd9a8b8662483c341a5525",
+    "assets/voice/05.wav:34922dc0de3cd4f9029ad3389657afaa0d73f3e6dccef5fb94e2d0600e4efbcf",
+    "assets/voice/06.wav:1baf93c1b909b37e870aff1500b3ac97c7355fcbd7bcf8bb8a2909dea57834d2",
+    "assets/voice/07.wav:0bf514222bfd43bc2dfcbc8bd5611b6397fc7c10925a93686ec8aa009c037b05",
+    "assets/voice/08.wav:2c809d7481a530a4fc0f32c8677c554364466da914cf283e56a920458ac552ea",
+    "compositions/captions.html:3275a7f82da69cc128c51b657ce8b2c0555ede6c5fe1f236e50f765c4bd56719",
+    "compositions/machine.html:efc2033e607ccb28e3dc5c01c130a85968ce3a8c1188bf7acaf5f45faf65066e",
+    "index.html:4f3fa0fb9c3690cb4635066a74e5db0751764de9ebd950ff5a79ddc16caa932d"
+  ],
+  "version": 1,
+  "seconds": 33.854
+}
