@@ -575,7 +575,9 @@ export function liveOf(c) {
 }
 const liveHtml = (c, k) => {
   const l = c.line && liveOf(c);
-  return l ? `<div class="ll s${k}"><p class="lt${l.mono ? ' mono' : ''}" style="font-size:${l.px}px">${esc(l.text)}</p></div>` : '';
+  // each word held whole, so a row ends only at a space, never inside an id at its hyphen
+  const words = l && l.text.split(' ').map(w => `<span class="tk">${esc(w)}</span>`).join(' ');
+  return l ? `<div class="ll s${k}"><p class="lt${l.mono ? ' mono' : ''}" style="font-size:${l.px}px">${words}</p></div>` : '';
 };
 // What the page needs to crop a step's screen: the planned column and gaps, and the line's box.
 const cropData = c => c && { x0: c.crop.x0, x1: c.crop.x1, w: c.crop.w, gaps: c.crop.gaps, box: c.line && { x0: c.line.box[0], y0: c.line.box[1], x1: c.line.box[2], y1: c.line.box[3] } };
@@ -1261,6 +1263,7 @@ export const CSS = `
   .film .ll{position:absolute;left:${ACROSS.portrait.left}px;top:0;width:${ACROSS.portrait.width}px;display:none;transform-style:preserve-3d}
   .film .lt{padding:14px ${LIVE.padX}px 16px;border:${LIVE.border}px solid ${C.accent};border-radius:22px;background:${C.bg};color:${C.ink};font-weight:600;letter-spacing:-.02em;line-height:1.22}
   .film .lt.mono{font-weight:500;letter-spacing:-.03em}
+  .film .lt .tk{white-space:pre}
   .film .sf.tm{background:${C.ink};border-color:${C.ink}}
   .film .sf.tm .sb{border-bottom-color:${C.ink2}}
   .film .sf.tm .su{color:${C.onInkMuted}}
