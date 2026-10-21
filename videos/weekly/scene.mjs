@@ -76,33 +76,43 @@ export function css() {
     .mast h1{font-size:96px;line-height:1.05;padding:10px 0}
     .mast h1 span{display:block}
     .mast .line{flex-direction:column;align-items:center}
-    .sec,.end{left:60px;right:120px;top:600px;bottom:620px}
-    .hed{font-size:56px}
-    .cal{gap:10px;margin-top:30px}
-    .tile{height:200px;padding-top:12px}
-    .tile .dn{font-size:64px}
-    .tile .dots{bottom:14px;gap:5px;flex-wrap:wrap;padding:0 6px}
-    .tile .dots i{width:12px;height:12px}
-    .legend{flex-direction:column;gap:10px}
-    .numrow{flex-direction:column;align-items:flex-start;gap:20px}
-    .odo{height:260px}
-    .odo .col span{height:260px;font-size:260px;line-height:260px}
-    .numtext .what{font-size:48px}
-    .numtext .split div{font-size:36px}
-    .mrow{flex-wrap:wrap;gap:4px 18px;padding:8px 0}
+    .sec,.end{left:60px;right:120px;top:580px;bottom:520px}
+    .kick{font-size:34px}
+    .hed{font-size:60px}
+    .cal{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+    .tile{height:250px;padding-top:16px}
+    .tile .wd{font-size:34px}
+    .tile .dn{font-size:120px}
+    .tile .dots{bottom:20px;gap:8px;flex-wrap:wrap;padding:0 10px}
+    .tile .dots i{width:18px;height:18px}
+    .legend{flex-direction:column;gap:14px;margin-top:30px}
+    .legend span{font-size:38px}
+    .legend i{width:20px;height:20px}
+    .numrow{flex-direction:column;align-items:flex-start;gap:24px}
+    .odo{height:400px}
+    .odo .col span{height:400px;font-size:400px;line-height:400px}
+    .numtext .what{font-size:64px}
+    .numtext .split{margin-top:30px}
+    .numtext .split div{font-size:46px}
+    .rows{margin-top:26px}
+    .mrow{flex-wrap:wrap;gap:6px 18px;padding:14px 0}
     .mrow .one{display:none}
     .mrow.lo,.more.lo{display:none}
     .more.po{display:block}
-    .mrow .two{display:block;width:100%;font-size:32px;margin:0}
-    .mname{font-size:40px}
-    .tag{min-width:120px}
-    .erow{flex-wrap:wrap;gap:4px 18px;padding:8px 0}
+    .mrow .two{display:block;width:100%;font-size:36px;margin:0}
+    .mname{font-size:50px}
+    .tag{min-width:130px;font-size:34px}
+    .erow{flex-wrap:wrap;gap:6px 18px;padding:14px 0}
+    .edate{font-size:36px}
     .etitle{width:100%}
     .etitle.l{display:none}
     .etitle.p{display:block}
-    .etitle .tl{font-size:36px}
-    .end .url{font-size:52px}
-    .cap{left:60px;right:60px;top:1336px;height:170px}
+    .etitle .tl{font-size:46px}
+    .more{font-size:36px;padding-top:18px}
+    .end .logo{width:440px}
+    .end .url{font-size:66px}
+    .end .sub{font-size:36px}
+    .cap{left:60px;right:60px;top:1420px;height:120px}
   }`;
 }
 
