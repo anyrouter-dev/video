@@ -76,6 +76,16 @@ test('a hairline card counts as content, and the dot field behind every panel do
   assert.equal(frameInk(f).bottom, 1301, 'the card\'s bottom edge is where the content ends');
 });
 
+test('a dark stage is judged by what differs from it, not by how dark it is', () => {
+  const f = frame();
+  f.px.fill(11);
+  paint(f, 100, 220, 900, 900, 240);
+  assert.ok(fillOf(frameInk(f)) < FILL.min, 'the dark background itself is not content');
+  assert.equal(frameInk(f).zone, 0, 'nor is it ink under the Shorts UI');
+  paint(f, 100, 1200, 900, 1300, 240);
+  assert.ok(fillOf(frameInk(f)) >= FILL.min);
+});
+
 const sample = (t, f, travel = false) => ({ t, travel, ink: frameInk(f) });
 
 test('a film fails when more than a fifth of its frames are short, and travels are not judged', () => {
