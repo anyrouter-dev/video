@@ -32,9 +32,10 @@ export const MACHINES = {
 
 /**
  * How long a step's machine works under its label before the step's proof comes in: the line
- * "Step 2. Turn on donate." says its verb a second or so after the step starts.
+ * "Step 2. Turn on donate." says its verb a second or two after the step starts, and the move it
+ * names needs to finish and be seen before the machine gives way (scenes.mjs fades it at LEAD - 0.35).
  */
-export const LEAD = 2.0;
+export const LEAD = 3.2;
 
 // ── the act ────────────────────────────────────────────────────────────────
 const bare = s => String(s).toLowerCase().replace(/[^a-z0-9/$.:-]+/g, '').replace(/[.:]+$/, '');
@@ -204,12 +205,13 @@ const FILMS = {
       // step 2: donated, it turns to the arm and is served
       serve(a.w('step2', 'donate') - 0.55, 4);
       // step 3: pool traffic earns it credits
-      serve(a.w('step3', 'credits') - 0.55, 4, { token: true });
+      serve(serve(a.w('step3', 'credits') - 0.55, 4, { token: true }) + 0.1, 4, { token: true });
       // the result: it serves other people's requests, and pays back in credits
-      let t = serve(a.w('result', 'serves') - 0.55, 5);
-      t = serve(Math.max(t + 0.05, a.w('result', 'requests') - 0.6), 6);
-      t = serve(Math.max(t + 0.05, a.w('result', 'credits') - 0.6), 4, { token: true });
-      for (const i of [8, 9, 11, 0, 1]) { if (t + 1.4 > a.T.end - 0.6) break; t = serve(t + 0.35, i); }
+      // your key is the one served, and each time it serves a credit drops into its cup
+      let t = serve(a.w('result', 'serves') - 0.55, 4);
+      t = serve(Math.max(t + 0.1, a.w('result', 'requests') - 0.3), 4, { token: true });
+      t = serve(Math.max(t + 0.1, a.w('result', 'credits') - 0.6), 4, { token: true });
+      while (t + 1.0 < a.T.end + 0.4) t = serve(t + 0.25, 4, { token: true });
     },
   },
   // The transfer table: a request runs to its :free exit, which is rate limited; the bridge
@@ -224,9 +226,9 @@ const FILMS = {
       t = m.run(Math.max(t + 0.1, a.w('problem', 'busy') - 0.9), 2, { fail: true });
       m.home(t + 0.2);
       // step 1: the call goes in with its free model's id
-      m.light(a.w('step1', 'call') - 0.1, 'lamp:entry');
-      t = m.car(a.w('step1', 'free'), m.ONBRIDGE);
-      m.slide(Math.max(t + 0.05, a.w('step1', 'id') - 0.3), m.EXITS[2]);
+      m.light(a.w('step1', 'call') - 0.3, 'lamp:entry');
+      t = m.car(a.w('step1', 'call') - 0.1, m.ONBRIDGE);
+      m.slide(t + 0.05, m.EXITS[2]);
       // step 2: the route is limited, so another free model answers, and the header says which
       t = m.run(a.T.steps[1].at + 0.1, 2, { fail: true });
       m.run(t + 0.05, 4);
@@ -246,19 +248,22 @@ const FILMS = {
     script(a) {
       const { index } = turretMoves(a);
       // each agent, set up on its own: the head turns past each, the drive dark
-      index(a.w('problem', 'coding') - 0.3, 1);
-      index(a.w('problem', 'key') - 0.3, 3);
-      index(a.w('problem', 'url') - 0.2, 0);
+      index(a.w('problem', 'each') - 0.2, 1);
+      index(a.w('problem', 'own') - 0.3, 3);
+      index(a.w('problem', 'base') - 0.3, 2);
+      index(a.said('problem') + 0.4, 0);
       // step 1: one key, in the drive
       const key = a.w('step1', 'mint');
       a.move('lamp:drive', key - 0.1, 0.3, 1);
       a.sound(key, 'seat', { n: 4 });
+      index(a.w('step1', 'anyrouter') - 0.15, 4);
       // step 2: Claude Code takes the Anthropic env vars
-      index(a.w('step2', 'anthropic') - 0.3, 0);
+      index(a.w('step2', 'set') - 0.2, 0);
       // step 3: the same drive, on anyrouter/auto
-      a.move('lamp:drive', a.w('step3', 'start') - 0.1, 0.2, 0.35);
-      a.move('lamp:drive', a.w('step3', 'anyrouter/auto') - 0.05, 0.3, 1);
-      a.sound(a.w('step3', 'anyrouter/auto'), 'seat', { n: 2 });
+      a.move('lamp:drive', a.w('step3', 'start') - 0.3, 0.2, 0.35);
+      a.move('lamp:drive', a.w('step3', 'anyrouter/auto') - 0.1, 0.3, 1);
+      a.sound(a.w('step3', 'anyrouter/auto') - 0.1, 'seat', { n: 2 });
+      index(a.w('step3', 'anyrouter/auto') + 0.4, 1);
       // the result: every agent turns to the same drive
       let t = index(a.w('result', 'every') - 0.3, 1);
       for (const j of [3, 4, 2, 0, 1, 3]) { if (t + 0.9 > a.T.end - 0.5) break; t = index(t + 0.25, j); }
@@ -275,22 +280,25 @@ const FILMS = {
       let t = m.run(a.T.problem.at - 0.2, 0);
       t = m.run(Math.max(t + 0.3, a.w('problem', 'audit') - 0.8), 0);
       m.home(Math.max(t + 0.2, a.w('problem', 'custom') - 0.4));
-      // step 1: anyr installed, the key is turned
-      const on = a.w('step1', 'anyr');
-      a.move('key', on - 0.3, 0.5, 1);
-      a.sound(on - 0.3, 'seat');
-      m.light(on + 0.2, 'lamp:key');
-      // step 2: anyr claude sets the base URL and the key: the entry lights and the request goes in
-      m.light(a.w('step2', 'run') - 0.1, 'lamp:entry');
-      m.car(a.w('step2', 'claude') - 0.2, m.ONBRIDGE);
+      // step 1: anyr installed, the bridge it drives comes on
+      const on = a.w('step1', 'install');
+      m.light(on, 'lamp:bridge');
+      a.sound(on, 'seat');
+      // step 2: the first run of anyr claude signs in with a key and sets the base URL: the key turns,
+      // the entry lights and the request goes in
+      const run = a.w('step2', 'run');
+      a.move('key', run - 0.3, 0.5, 1);
+      a.sound(run - 0.3, 'seat', { n: 2 });
+      m.light(run + 0.2, 'lamp:entry');
+      m.car(run + 0.45, m.ONBRIDGE);
       // step 3: pin a model: the bridge slides to its exit
-      m.slide(a.w('step3', 'pin') - 0.1, m.EXITS[3]);
+      const pinned = m.slide(a.w('step3', 'pin') - 0.1, m.EXITS[3]);
+      m.run(Math.max(pinned + 0.1, a.w('step3', 'one') - 0.5), 3);
       // the result: Claude Code works as before, its requests out on the model you picked
       t = Math.max(a.w('result', 'works') - 0.4, a.T.result.at);
-      while (t + 2 < a.T.end - 0.4) {
-        t = m.run(t, 3) + 0.5;
-        if (t + 2 >= a.T.end - 0.4) break;
+      while (t + 1.2 < a.T.end) {
         t = m.car(t, m.ONBRIDGE, 320) + 0.1;
+        t = m.run(t, 3) + 0.5;
       }
     },
   },
@@ -302,17 +310,27 @@ const FILMS = {
     script(a) {
       // one vendor: the head pulls against the lock and stays on the first cartridge
       const one = a.w('problem', 'one');
+      a.move('dip', a.w('problem', 'vercel') - 0.1, 0.25, 0);
+      a.move('dip', a.w('problem', 'sdk') + 0.1, 0.25, 1);
+      a.sound(a.w('problem', 'sdk') + 0.3, 'seat');
       a.move('dip', a.w('problem', 'providers') - 0.2, 0.25, 0);
       a.move('slot', one - 0.25, 0.25, 0.04);
       a.move('slot', one + 0.05, 0.2, -0.03);
       a.move('slot', one + 0.3, 0.2, 0);
       a.move('dip', a.w('problem', 'vendor') + 0.2, 0.25, 1);
       a.sound(a.w('problem', 'vendor') + 0.45, 'seat');
+      // and pulls once more against the lock before the steps begin
+      const again = a.said('problem') + 0.5;
+      a.move('dip', again, 0.25, 0);
+      a.move('slot', again + 0.25, 0.25, 0.04);
+      a.move('slot', again + 0.55, 0.2, 0);
+      a.move('dip', again + 0.8, 0.25, 1);
+      a.sound(again + 1.05, 'seat', { n: 1 });
       // step 1: the AnyRouter provider frees the shuttle
-      const free = a.w('step1', 'provider');
-      a.move('lock', free - 0.5, 0.6, 1);
-      a.sound(free - 0.5, 'move');
-      a.sound(free + 0.1, 'seat', { n: 2 });
+      const free = a.w('step1', 'install');
+      a.move('lock', free - 0.1, 0.7, 1);
+      a.sound(free - 0.1, 'move');
+      a.sound(free + 0.6, 'seat', { n: 2 });
       // step 2: a catalog id sends the head to its cartridge
       const id = a.w('step2', 'id');
       a.move('dip', id - 0.9, 0.2, 0);
@@ -339,14 +357,15 @@ const FILMS = {
         return t + 0.7 + d;
       };
       let t = go(a.w('result', 'switching') - 0.3, 4);
-      for (const s of [1, 5, 3, 0, 2]) { if (t + 1.6 > a.T.end - 0.5) break; t = go(t + 0.5, s); }
+      for (const s of [1, 5, 3, 0, 2]) { if (t + 1.2 > a.T.end + 0.2) break; t = go(t + 0.4, s); }
     },
   },
-  // The changeover drive: the tool loop is a flywheel; one motor stops and the loop stops with
-  // it, until the plugin is seated and keyed, and a live motor is slid in each time one stops.
+  // The changeover drive: the tool loop is a flywheel on one motor; its outage stops the loop, and so
+  // does a motor that cannot call tools, until the plugin is seated and keyed and picking a model
+  // slides a live tool-calling motor into line.
   'hermes-agent': {
     machine: 'flywheel',
-    init: { spin: 0, sled: 0, plug: 0, key: 0, lit: 0, 'lamp:m0': 1, 'lamp:m1': 1, 'lamp:m2': 1, 'lamp:plug': 0 },
+    init: { spin: 0, sled: 0, plug: 0, key: 0, lit: 0, 'lamp:m0': 1, 'lamp:m1': 0, 'lamp:m2': 0, 'lamp:plug': 0 },
     script(a) {
       const RATE = 150;
       a.spin('spin', 0, RATE, 0.01);
@@ -356,6 +375,14 @@ const FILMS = {
       a.set('lit', out, -1);
       a.sound(out, 'seat', { n: 3 });
       a.spin('spin', out, 0, 1.4);
+      // a model that cannot call tools is slid in, and the loop stays stopped
+      const cannot = a.w('problem', 'cannot');
+      a.sound(cannot - 0.2, 'move');
+      a.move('sled', cannot - 0.2, 0.8, 2);
+      a.sound(a.w('problem', 'breaks'), 'seat', { n: 3 });
+      // it stays stopped: the sled settles back against its stop
+      a.move('sled', a.w('problem', 'loop'), 0.3, 1.94);
+      a.move('sled', a.w('problem', 'loop') + 0.3, 0.4, 2);
       // step 1: the plugin comes down onto its mount
       const plug = a.w('step1', 'plugin');
       a.move('plug', plug - 0.6, 0.7, 1);
@@ -366,24 +393,18 @@ const FILMS = {
       a.move('key', key - 0.4, 0.45, 1);
       a.sound(key - 0.4, 'seat', { n: 2 });
       a.move('lamp:plug', key + 0.05, 0.25, 1);
-      // step 3: a model is picked, a motor drives, and the loop runs again
+      // step 3: a model is picked: a live tool-calling motor slides into line and the loop runs again
       const pick = a.w('step3', 'pick');
-      a.move('lamp:m0', pick - 0.1, 0.3, 1);
-      a.set('lit', pick, 0);
-      a.sound(pick, 'arrive');
-      a.spin('spin', pick, RATE, 1.0);
-      // the result: the motor in line stops, the next live one slides in, and the loop never stops
-      const swap = (t, from, to) => {
-        a.move(`lamp:m${from}`, t, 0.25, 0);
-        a.set('lit', t + 0.2, -1);
-        a.sound(t + 0.2, 'move');
-        a.move('sled', t + 0.25, 0.7, to);
-        a.set('lit', t + 0.95, to);
-        a.sound(t + 0.95, 'seat', { n: to + 2 });
-        return t + 1.0;
-      };
-      let t = swap(a.w('result', 'hermes') - 0.2, 0, 1);
-      if (t + 2.4 < a.T.end) swap(t + 1.4, 1, 2);
+      a.move('lamp:m1', pick - 0.3, 0.3, 1);
+      a.sound(pick - 0.1, 'move');
+      a.move('sled', pick - 0.1, 0.7, 1);
+      a.set('lit', pick + 0.6, 1);
+      a.sound(pick + 0.6, 'arrive');
+      a.spin('spin', pick + 0.6, RATE, 0.8);
+      // the result: the loop keeps turning on a tool-calling motor; the one that cannot call tools stays out of line
+      a.move('lamp:plug', a.w('result', 'only') - 0.1, 0.15, 0.4);
+      a.move('lamp:plug', a.w('result', 'only') + 0.1, 0.3, 1);
+      a.sound(a.w('result', 'tools'), 'seat', { n: 4 });
     },
   },
 };

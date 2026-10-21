@@ -121,7 +121,7 @@
      "from": "https://anyrouter.dev/use-cases/claude-code answers 200 (checked at collect); the short link /u/claude-code answers 404"
     },
     {
-     "says": "figure: a transfer table. Claude Code's requests take one default exit; installing anyr turns the key switch, anyr claude lights the entry (base URL and key), and pinning a model slides the bridge to that model's exit, where every request then goes",
+     "says": "figure: a transfer table. Claude Code's requests take one default exit; installing anyr powers the bridge, the first run of anyr claude turns the key switch and lights the entry (sign-in or key, base URL), and pinning a model slides the bridge to that model's exit, where every request then goes",
      "from": "use-cases.json claude-code.problem, .steps and .diagram.label (Claude Code sends requests to AnyRouter, which forwards them to the model you picked)"
     }
    ]
@@ -550,7 +550,7 @@
      "from": "https://anyrouter.dev/use-cases/hermes-agent answers 200 (checked at collect); the short link /u/hermes-agent answers 404"
     },
     {
-     "says": "figure: a changeover drive. The tool loop is a flywheel; the one motor driving it stops (an outage) and the loop stops; the plugin is seated and keyed, a motor drives again, and when it stops the next live motor slides in so the loop keeps turning",
+     "says": "figure: a changeover drive. The tool loop is a flywheel driven by one motor, lit; its outage stops the loop, and a motor that cannot call tools, dark, leaves it stopped; the plugin is seated and keyed, picking a model slides a live tool-calling motor into line, and the loop runs again and keeps turning",
      "from": "use-cases.json hermes-agent.problem and .steps (anyrouter/hermes auto-routes across the top tool-calling models with fallback)"
     }
    ]
@@ -2492,7 +2492,7 @@
      "from": "https://anyrouter.dev/use-cases/donate-keys answers 200 (checked at collect); the short link /u/donate-keys answers 404"
     },
     {
-     "says": "figure: a key carousel (Fig. key carousel). Keys stand idle on the table at month end and nothing serves them; a key is added to an empty slot, donated so the service arm serves it, and a credit token drops into its cup as it serves other requests",
+     "says": "figure: a key carousel (Fig. key carousel). Keys stand idle on the table at month end and nothing serves them; a key is added to an empty slot, donated so the service arm serves it, and as it serves other people's requests a credit token drops into its cup each time",
      "from": "use-cases.json donate-keys.problem, .steps and .hook"
     }
    ]

@@ -491,9 +491,11 @@ test('a figure film\'s machine moves on each step\'s line before that step\'s pr
   for (const u of narrate(parseDoc(doc())).filter(x => hasFigure(x.slug))) {
     const story = storyOf(u, pools), T = story.timing;
     const fig = choreograph(u.slug, { said: story.said, timing: T, duration: story.duration });
-    const starts = Object.values(fig.tracks).flatMap(t => t.segs.filter(sg => !sg[3]).map(sg => sg[0]));
+    const moves = Object.values(fig.tracks).flatMap(t => t.segs.filter(sg => !sg[3] && sg[1] > 0));
+    const starts = moves.map(sg => sg[0]);
     T.steps.forEach((st, k) => {
-      assert.ok(starts.some(t => t >= st.at - 0.3 && t < st.at + LEAD), `${u.slug}: the machine moves under step ${k + 1} before its proof`);
+      // a move that is still going when the machine gives way to the proof is a move nobody sees land
+      assert.ok(moves.some(([t0, d]) => t0 >= st.at - 0.3 && t0 + d <= st.at + LEAD - 0.85), `${u.slug}: the machine finishes a move under step ${k + 1} before its proof comes in`);
       for (const at of [T.preAt, T.cmdAt, T.rollAt, T.answerAt].filter(t => t != null && t >= st.at && (!T.steps[k + 1] || t < T.steps[k + 1].at))) assert.ok(at >= st.at + LEAD, `${u.slug}: step ${k + 1}'s code waits for its machine`);
     });
     assert.ok(starts.some(t => t >= T.problem.at - 0.6 && t < T.steps[0].at), `${u.slug}: the machine shows the problem`);

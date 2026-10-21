@@ -1011,12 +1011,25 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // the label over its machine sits just under the steps done; the machine takes the room under it
     const figTop = k => doneY(k);
     if (FIG) {
-      const fgs = $(".fgs"), fgx = fgs.querySelector(".fgx"), room = k => { const y = figTop(k) + hs[k] + HG; return { y, h: SY + SH - y }; };
-      fitFig(fgx, fgs.clientWidth, room(0).h);
-      const base = fgx.offsetHeight, scale = k => Math.min(1, room(k).h / base), yOf = k => room(k).y + Math.max(0, (room(k).h - base * scale(k)) / 2);
-      tl.set(fgs, { y: yOf(0), scale: 1, autoAlpha: 1, z: 0 }, 0);
+      // at most the safe area, scaled down to the larger of two rooms: under the label, or (landscape)
+      // beside the label's words, the height under the steps done
+      const fgs = $(".fgs"), fgx = fgs.querySelector(".fgx"), SL = fgs.offsetLeft, SW = fgs.clientWidth;
+      fitFig(fgx, SW, SH);
+      const FW = fgx.offsetWidth, FH = fgx.offsetHeight;
+      const roomOf = k => {
+        const fit = (x, y, w, h) => { const s = Math.min(1, w / FW, h / FH); return { s, x: x + (w - FW * s) / 2, y: y + (h - FH * s) / 2 }; };
+        const y = figTop(k) + hs[k] + HG, under = fit(SL, y, SW, SY + SH - y);
+        if (TALL) return under;
+        const words = Array.from(stp[k].querySelectorAll(".sl .w")), right = Math.max(...words.map(w => { let x = 0, n = w; while (n && n !== stp[k]) { x += n.offsetLeft; n = n.offsetParent; } return x + w.offsetWidth; }));
+        const beside = fit(SL + right + 64, figTop(k), SW - right - 64, SY + SH - figTop(k));
+        return beside.s > under.s ? beside : under;
+      };
+      fgs.style.width = FW + "px";
+      const at0 = roomOf(0);
+      tl.set(fgs, { x: at0.x - SL, y: at0.y, scale: at0.s, autoAlpha: 1, z: 0 }, 0);
       STEPS.forEach((st, k) => {
-        if (k) tl.to(fgs, { y: yOf(k), scale: scale(k), autoAlpha: 1, z: 0, duration: 0.6, ease: "power3.inOut" }, st.at - 0.1);
+        const r = roomOf(k);
+        if (k) tl.to(fgs, { x: r.x - SL, y: r.y, scale: r.s, autoAlpha: 1, z: 0, duration: 0.6, ease: "power3.inOut" }, st.at - 0.1);
         if (st.shows || sk[k]) tl.to(fgs, { autoAlpha: 0, z: -300, duration: 0.45, ease: "power3.in" }, st.at + LEAD - 0.35);
       });
     }
@@ -1242,7 +1255,14 @@ function cuesOf({ timing: T, cuts, land, rolls, copy, fig }) {
     // the first request reaching the card that answered
     out.push(cue(Math.max(land.result.right.at(-1) + 0.4, T.result.words[0] ?? 0) + 1.5, 'arrive', { n: 1 }));
   }
-  if (fig) out.push(...fig.cues.map(c => cue(c.at, c.kind, c.n != null ? { n: c.n } : {})));
+  // a machine's sound plays only while the machine is on screen: from the problem until step 1's
+  // proof comes in, under each step until its proof does, and through the result
+  if (fig) {
+    const shown = [[T.problem.at - T.travel / 2, T.steps[0].at + T.lead - 0.35],
+      ...T.steps.map((st, k) => [st.at - 0.1, st.shows || copy.steps[k].capture ? st.at + T.lead - 0.35 : (T.steps[k + 1]?.at ?? T.result.at)]),
+      [T.result.at - T.travel / 2, T.end]];
+    out.push(...fig.cues.filter(c => shown.some(([a, b]) => c.at >= a && c.at <= b)).map(c => cue(c.at, c.kind, c.n != null ? { n: c.n } : {})));
+  }
   out.push(cue(T.end + 0.6, 'end'));
   return out.sort((a, b) => a.at - b.at);
 }
@@ -1290,7 +1310,7 @@ export const CSS = `
   .film .blk.fig .fgt{flex:0 0 ${FIG_TEXT.width}px;align-self:center;display:flex;flex-direction:column;align-items:flex-start;gap:${BLOCK.landscape.gap}px}
   .film .blk.fig .kt{text-align:left}
   .film .blk .fg{flex:1 1 0;min-width:0;min-height:0;align-self:stretch;display:flex;align-items:center;justify-content:center}
-  .film .fgs{position:absolute;left:var(--sl);right:var(--sr);top:0;display:flex;justify-content:center;transform-origin:50% 0;opacity:0}
+  .film .fgs{position:absolute;left:var(--sl);right:var(--sr);top:0;transform-origin:0 0;opacity:0}
   .film .fgx .iso-svg{width:100%;height:100%}
   .film .kt{font-size:var(--ks);font-weight:600;line-height:1.08;letter-spacing:-.04em;white-space:nowrap;text-align:center}
   .film .dg{position:relative;display:flex;align-items:center;justify-content:center;gap:200px;transform-style:preserve-3d}
