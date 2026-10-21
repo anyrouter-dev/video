@@ -70,8 +70,8 @@ export async function startPreview(dir) {
   throw new Error(`preview server did not serve ${dir}`);
 }
 
-// Runs in the page: seek, then measure every visible layer and line of text.
-async function seekAndMeasure(t, frame, safe, tol, floor) {
+/** Runs in the page: seeks every timeline to `t` and waits until each reads it. */
+export async function seekTo(t) {
   const player = window.__player, hf = window.__hf;
   // Under load the runtime can put a scene back where it last stood after this seek (a late
   // media load re-syncs it), and its text would be measured a sample late. So the seek is
@@ -90,7 +90,11 @@ async function seekAndMeasure(t, frame, safe, tol, floor) {
     if (!late()) break;
     await new Promise(r => setTimeout(r, 50));
   }
+}
 
+// Runs in the page: seek, then measure every visible layer and line of text.
+async function seekAndMeasure(t, frame, safe, tol, floor) {
+  await window.__seekTo(t);
   const ids = (window.__stageAuditIds ??= { map: new WeakMap(), next: 0 });
   const keyOf = el => { if (!ids.map.has(el)) ids.map.set(el, ids.next++); return ids.map.get(el); };
   const compOf = el => el.closest('[data-composition-id]')?.getAttribute('data-composition-id') ?? '(none)';
@@ -271,7 +275,11 @@ function fitOf(live, frame, floor, { keyOf, compOf, what, box }) {
   }
 }
 
-export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, shots = null } = {}) {
+/**
+ * A film's project opened in a headless browser at its own stage size, its timelines registered
+ * and `window.__seekTo(t)` installed: { page, frame, duration, close }. It runs on a throwaway copy.
+ */
+export async function openFilm(dir) {
   const film = fs.realpathSync(dir);
   const root = /<[^>]*data-composition-id[^>]*>/.exec(fs.readFileSync(path.join(film, 'index.html'), 'utf8'))?.[0] ?? '';
   const frame = { w: Number(/data-width="(\d+)"/.exec(root)?.[1]), h: Number(/data-height="(\d+)"/.exec(root)?.[1]) };
@@ -280,7 +288,11 @@ export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, 
   const copy = path.join(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'stage-audit-'))), path.basename(film));
   fs.cpSync(film, copy, { recursive: true, dereference: true, filter: src => !/\/(renders|snapshots)$/.test(src) });
   let preview, browser;
-  const runs = new Map();
+  const close = async () => {
+    await browser?.close();
+    preview?.child.kill();
+    fs.rmSync(path.dirname(copy), { recursive: true, force: true });
+  };
   try {
     preview = await startPreview(copy);
     browser = await puppeteer.launch({
@@ -299,6 +311,18 @@ export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, 
     const duration = await page.evaluate(() => window.__hf?.duration
       || Number(document.querySelector('[data-composition-id][data-duration]')?.getAttribute('data-duration')) || 0);
     if (!(duration > 0)) throw new Error('could not read the film duration');
+    await page.evaluate(`window.__seekTo = ${seekTo}`);
+    return { page, frame, duration, copy, close };
+  } catch (e) {
+    await close();
+    throw e;
+  }
+}
+
+export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, shots = null } = {}) {
+  const { page, frame, duration, close } = await openFilm(dir);
+  const runs = new Map();
+  try {
     await page.evaluate(`window.__fitOf = ${fitOf}`);
 
     let prev = new Set();
@@ -318,9 +342,7 @@ export async function auditStage(dir, { safe = null, step = 0.5, floor = FLOOR, 
     }
     if (shots) await shoot(page, problemsOf(runs), shots);
   } finally {
-    await browser?.close();
-    preview?.child.kill();
-    fs.rmSync(path.dirname(copy), { recursive: true, force: true });
+    await close();
   }
   return { frame, safe, floor, problems: problemsOf(runs) };
 }
