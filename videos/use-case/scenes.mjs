@@ -902,6 +902,10 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win;
       tl.set(f, { autoAlpha: 0, y }, 0);
       tl.set(f, { autoAlpha: 1 }, at);
+      // the audit reads its bar once it has landed, and not while it leaves (stage-audit.mjs, flight)
+      tl.set(f, { attr: { "data-in-flight": "1" } }, at);
+      tl.set(f, { attr: { "data-in-flight": "0" } }, at + 0.7);
+      if (next) tl.set(f, { attr: { "data-in-flight": "1" } }, out - 0.05);
       tl.fromTo(f, { z: -460, rotationX: 16, rotationY: TALL ? -5 : -12, y: y + 140 }, { z: 0, rotationX: 0, rotationY: 0, y, duration: 1.0, ease: "expo.out", immediateRender: false }, at);
       // the camera inside the frame drifts down the page and in, a reader's pace
       tl.fromTo(f.querySelector(".si"), { scale: 1, y: 0 }, { scale: 1.08, y: -Math.min(120, f.querySelector(".sv").offsetHeight * 0.2), duration: Math.max(0.5, out - at), ease: "sine.inOut", immediateRender: false }, at);
@@ -1196,12 +1200,12 @@ export const CSS = `
     .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:64px;--tw:${WIN.portrait.width}px}
     .film .cblk{flex-direction:column;gap:40px}
     .film .pagef{width:900px}
-    .film .pagef .sv{aspect-ratio:2/1}
+    .film .pagef .sv{aspect-ratio:12/5}
     .film .pagef .ip{width:100%;margin-left:0}
     .film .pagef .il{display:none}
     .film .pagef .ip{display:block}
-    .film .p-close .lock svg{width:96px;height:96px}
-    .film .p-close .lock b{font-size:96px}
+    .film .p-close .lock svg{width:88px;height:88px}
+    .film .p-close .lock b{font-size:88px}
     .film .cam{perspective:var(--persp-p)}
     .film .sl{font-size:var(--ls-p);padding-top:calc((${STEP.mark}px - var(--ls-p) * ${STEP.lh}) / 2)}
     .film .sl .bl,.film .dt .bl{display:none}
