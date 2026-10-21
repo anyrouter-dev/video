@@ -12,12 +12,13 @@ import path from 'node:path';
 
 export const PORTRAIT = { width: 1080, height: 1920 };
 
-// Reels, Shorts and TikTok draw their own buttons and text over the bottom ~22% and the
-// right edge, so captions sit just above that, and higher than in the landscape film.
-export const PORTRAIT_CAPTION_BAND = { top: 1320, height: 180 };
-// Where a frame's content sits. stage-audit.mjs holds every readable line inside it, except
-// what carries data-outside-safe-area (frame chrome, captions), which only has to stay on stage.
-export const PORTRAIT_SAFE = { left: 60, top: 200, right: 960, bottom: 1300 };
+// YouTube Shorts draws its own buttons and text over the bottom ~380 px and a strip ~120 px
+// wide on the right below y≈900, so captions sit in a band that ends at y 1540.
+export const PORTRAIT_CAPTION_BAND = { top: 1420, height: 120 };
+// Where a frame's content sits: everything above the caption band, so a frame can fill the
+// height. stage-audit.mjs holds every readable line inside it, except what carries
+// data-outside-safe-area (frame chrome, captions), which only has to stay on stage.
+export const PORTRAIT_SAFE = { left: 60, top: 200, right: 960, bottom: 1400 };
 
 const SKIP = new Set(['renders', 'snapshots', 'capture', 'capture-extra', 'tools', 'node_modules', '.git']);
 
