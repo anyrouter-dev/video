@@ -233,11 +233,14 @@ export function fitRows(gaps, focus, H) {
   return best ? { y0: best.y0, y1: best.y1 } : { y0: stops[0], y1: stops.find(y => y > stops[0]) };
 }
 
-/** An image file as gray pixels, scaled to `w` x `h` when given. */
-export function grayOf(file, { w, h, input = null } = {}) {
-  const size = w && h ? null : JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'json', file], { encoding: 'utf8' })).streams[0];
+/**
+ * An image file as gray pixels, scaled to `w` x `h` when given. ffmpeg reads a file, never stdin (a
+ * screenshot piped in left it waiting for good), and a call that stalls throws after a minute.
+ */
+export function grayOf(file, { w, h } = {}) {
+  const size = w && h ? null : JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'json', file], { encoding: 'utf8', timeout: 60000 })).streams[0];
   const W = w ?? size.width, H = h ?? size.height;
-  const buf = execFileSync('ffmpeg', ['-v', 'error', '-i', input ? 'pipe:0' : file, '-vf', `scale=${W}:${H}:flags=area`, '-frames:v', '1', '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { input: input ?? undefined, maxBuffer: W * H * 2 });
+  const buf = execFileSync('ffmpeg', ['-nostdin', '-v', 'error', '-i', file, '-vf', `scale=${W}:${H}:flags=area`, '-frames:v', '1', '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: W * H * 2, timeout: 60000 });
   return { w: W, h: H, px: buf };
 }
 
@@ -297,8 +300,9 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
         if (!img) continue;
         for (const cut of cropCuts(img, c.region, c.cropped)) crops.push({ t, image: path.basename(c.src), shown: +c.shown.toFixed(3), ...cut });
       }
-      const shot = await within(page.screenshot({ type: 'png' }), 120000, `${dir} screenshot at ${t}s`);
-      samples.push({ t, travel: m.travel, ink: frameInk(grayOf(null, { w: frame.w, h: frame.h, input: shot }), m.caps) });
+      const shot = path.join(path.dirname(copy), 'frame.png');
+      await within(page.screenshot({ type: 'png', path: shot }), 120000, `${dir} screenshot at ${t}s`);
+      samples.push({ t, travel: m.travel, ink: frameInk(grayOf(shot, { w: frame.w, h: frame.h }), m.caps) });
     }
   } finally {
     await close();
@@ -309,7 +313,7 @@ export async function sampleProject(dir, { step = 0.5, captions = '[data-caption
 /** Samples a rendered portrait mp4, scaled to 1080x1920, the caption band masked across. */
 export function sampleVideo(file, { step = 0.5, band = [PORTRAIT_CAPTION_BAND.top, PORTRAIT_CAPTION_BAND.top + PORTRAIT_CAPTION_BAND.height] } = {}) {
   const { width: w, height: h } = PORTRAIT, size = w * h;
-  const raw = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-vf', `fps=${1 / step},scale=${w}:${h}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { maxBuffer: 2 ** 31 });
+  const raw = execFileSync('ffmpeg', ['-nostdin', '-v', 'error', '-i', file, '-vf', `fps=${1 / step},scale=${w}:${h}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', 'pipe:1'], { maxBuffer: 2 ** 31 });
   const mask = [{ x0: 0, y0: band[0], x1: w, y1: band[1] }], samples = [];
   for (let i = 0; (i + 1) * size <= raw.length; i++) {
     samples.push({ t: +(i * step).toFixed(3), travel: false, ink: frameInk({ w, h, px: raw.subarray(i * size, (i + 1) * size) }, mask) });
