@@ -5,14 +5,20 @@
  * narration.json names, per step, the one capture its film shows (`capture`), and each film's
  * claims ledger carries that capture's source.
  *
+ * A step's capture names its `line`: the one line a viewer needs, as the screen shows it, with its
+ * box in the screen's own px. Portrait shows the screen cropped to the column that holds that line,
+ * its edges in whitespace (crops.json), and sets the line as live text beside it.
+ *
  *   node videos/use-case/captures.mjs clean     write the dashboard screens with the mouse cursor removed
  *   node videos/use-case/captures.mjs pick      propose a capture for every step that shows no code
+ *   node videos/use-case/captures.mjs crops     plan every portrait crop into crops.json
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { SHARED } from '../../lib/paths.mjs';
+import { planCrop, grayOf } from '../../shared/authoring/portrait-fill.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 export const DAY = '2026-10-21';
@@ -52,6 +58,20 @@ export function captureOf(ref) {
   };
 }
 
+const CROPS = path.join(DIR, 'crops.json');
+const cropKey = (name, box) => `${name}@${box ? box.join(',') : 'whole'}`;
+let crops = null;
+/**
+ * The portrait crop planned for a capture around the box of its line, or across its whole width
+ * for the live page an end card shows: { x0, x1, gaps, text, w, h } in the capture's own px.
+ */
+export function cropOf(c, box = null) {
+  crops ??= fs.existsSync(CROPS) ? read(CROPS) : {};
+  const crop = crops[cropKey(c.name, box)];
+  if (!crop) throw new Error(`captures: no portrait crop for ${cropKey(c.name, box)}: run node videos/use-case/captures.mjs crops`);
+  return crop;
+}
+
 /** Where a capture came from, as its film's claims ledger records it. */
 export const sourceOf = c => c.url ?? `the output of \`${c.command}\` (${c.ref})`;
 
@@ -81,7 +101,26 @@ function pick() {
   }
 }
 
+/** Plans the portrait crop of every step's capture around its line, and of every end card's page. */
+function planCrops() {
+  const narration = read(path.join(DIR, 'narration.json')), out = {}, images = new Map();
+  const plan = (c, box) => {
+    if (!images.has(c.disk)) images.set(c.disk, grayOf(c.disk));
+    const img = images.get(c.disk), focus = box && { x0: box[0], y0: box[1], x1: box[2], y1: box[3] };
+    out[cropKey(c.name, box)] = { ...planCrop(img, box ? { focus } : { whole: true }), w: img.w, h: img.h };
+  };
+  for (const [slug, film] of Object.entries(narration.films)) {
+    for (const st of film.steps.filter(x => x.capture)) {
+      if (!st.line) throw new Error(`${slug}: the step "${st.text}" shows ${st.capture} but names no line on it`);
+      plan(captureOf(st.capture), st.line.box);
+    }
+    plan(captureOf(`${slug}/page/viewport-portrait.png`), null);
+  }
+  fs.writeFileSync(CROPS, JSON.stringify(out, null, 1).replace(/\[\s*([\d,\s]+?)\s*\]/g, (_, xs) => `[${xs.split(/[\s,]+/).filter(Boolean).join(', ')}]`) + '\n');
+  console.log(`${Object.keys(out).length} crops → ${path.relative(process.cwd(), CROPS)}`);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { clean, pick }[process.argv[2]];
-  if (run) run(); else console.log('usage: captures.mjs clean | pick [use-cases.json]');
+  const run = { clean, pick, crops: planCrops }[process.argv[2]];
+  if (run) run(); else console.log('usage: captures.mjs clean | pick [use-cases.json] | crops');
 }

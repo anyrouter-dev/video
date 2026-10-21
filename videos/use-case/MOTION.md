@@ -95,9 +95,19 @@ the bottom third with its own UI; sources disagree on how much, so we take the s
 [Poster.ly checker](https://www.poster.ly/tools/youtube-shorts-safe-zone-checker),
 [Blitzcut captions](https://blitzcutai.com/blog/best-caption-size-youtube-shorts-2026)).
 
-- Content sits in x 60 to 960, y 200 to 1300 (`PORTRAIT_SAFE`). The full height of that box
-  is used: the headline leaves when the steps begin.
-- Captions sit in the band y 1320 to 1500, centred, one phrase on one row, 60 px.
-- Nothing is drawn under 32 px. Code is one row a line (`reflow.mjs`), never split inside a
+- Shorts covers y > 1540 and x > 960 below y 900. Content sits in x 60 to 960, y 200 to 1360
+  (`PORTRAIT_SAFE`); captions sit in the band y 1380 to 1540, centred, one phrase on one row, 60 px.
+- Each beat fills that height (`shared/authoring/portrait-fill.mjs` gates it: content spans at
+  least 70% of y 200 to 1540 in 80% of the frames, nothing in the Shorts zones). The intro is a
+  poster, marks at the top and the headline at the foot; the problem and the result set their line
+  under the badge and their picture at the foot; a code window reaches the foot of the safe area.
+- Read text is 40 px or more; labels and chrome 32 px or more. Code goes under 40 px only where a
+  whole token (a URL) needs the row. Code is one row a line (`reflow.mjs`), never split inside a
   word, an id or a URL.
+- A real screen is shown cropped to the column its line sits in, every edge in whitespace, its
+  rows cut between lines (`captures.mjs crops`), and held still while it is read: no push in
+  that would carry an edge through text. Where its text draws under 28 px, the line is marked on
+  it and set again as live text under it.
+- The camera breathes by rising 18 px, not by pushing in, so nothing that spans the safe width
+  grows into the Shorts strip.
 - Sideways rotation is halved; panels stack vertically, never side by side.

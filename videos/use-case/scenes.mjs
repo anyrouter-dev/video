@@ -22,7 +22,8 @@ import path from 'node:path';
 import { SHARED } from '../../lib/paths.mjs';
 import { esc, C } from './project.mjs';
 import { markFor } from '../../lib/marks.mjs';
-import { PORTRAIT_CAPTION_BAND } from '../../shared/authoring/portrait.mjs';
+import { PORTRAIT_CAPTION_BAND, PORTRAIT_SAFE } from '../../shared/authoring/portrait.mjs';
+import { fitRows } from '../../shared/authoring/portrait-fill.mjs';
 
 // ── reading pace ────────────────────────────────────────────────────────────
 export const READ_WPS = 3.5;
@@ -75,7 +76,7 @@ const SAFE = { landscape: 1728 * 0.99, portrait: 900 * 0.99 };
 export const TYPE = {
   title: { weight: 600, tracking: -0.055,
     landscape: { sizes: [184, 176, 168, 160, 152, 144], width: SAFE.landscape, lines: 3 },
-    portrait: { sizes: [148, 140, 132, 124, 120], width: SAFE.portrait, lines: 5 } },
+    portrait: { sizes: [168, 160, 152, 148, 140, 132, 124, 120], width: SAFE.portrait, lines: 6 } },
   // a step's label sits beside its marker (STEP.mark), so its box is the safe width less the marker and the gap
   step: { weight: 600, tracking: -0.035,
     landscape: { sizes: [120, 112, 104, 96, 88, 80, 72], width: SAFE.landscape - 96 - 36, lines: 2 },
@@ -83,13 +84,14 @@ export const TYPE = {
 };
 TYPE.detail = { weight: 400, tracking: -0.01,
   landscape: { sizes: [56, 52, 48, 44, 40, 36], width: TYPE.step.landscape.width, lines: 3 },
-  portrait: { sizes: [48, 44, 40, 36, 32], width: TYPE.step.portrait.width, lines: 7 } };
+  portrait: { sizes: [52, 48, 44, 40], width: TYPE.step.portrait.width, lines: 7 } };
 // A step: its marker and label beside it, active; a step done shrinks to a row at STEP.done of its size.
 // The page's own sentence for a step sits under its label, indented to it, until the step is done.
 export const STEP = { mark: 96, gap: 36, lh: 1.04, done: 0.5, rowGap: 18, headGap: 40, detailGap: 28 };
 
 // The marks and the kicker over the headline in beat 1, as the CSS below sets them: tile, gap, kicker.
-const HERO = { landscape: 160 + 40 + 80, portrait: 144 + 40 + 80 };
+const TILE = { landscape: 160, portrait: 192 };
+const HERO = { landscape: TILE.landscape + 40 + 80, portrait: TILE.portrait + 40 + 80 };
 
 // A word that is part of a name. Past the first word, any capitalised word; the first word only
 // with a capital past its first letter, since "Run" opens a sentence and "NVIDIA" names a company.
@@ -127,7 +129,7 @@ function breakSet(text, { px, width, weight, tracking, room }) {
     for (let k = from + 1; k <= words.length - left + 1; k++) walk(k, left - 1, [...starts, k]);
   };
   for (const n of [fewest, fewest + 1].filter(room)) walk(0, n, []);
-  return best && { lines: best.starts.length + 1, breaks: best.starts };
+  return best && { lines: best.starts.length + 1, breaks: best.starts, splits: best.cost >= 1e12 };
 }
 
 /** How the headline is set at `px` in frame `o` (see breakSet): beat 1 fits the safe area once the camera has leaned in. */
@@ -136,8 +138,8 @@ export function titleSet(text, o, px) {
   return breakSet(text, { px, width: t[o].width, weight: t.weight, tracking: t.tracking, room: n => n <= t[o].lines && HERO[o] + w.gap + n * px * TITLE_LH <= w.sh / w.lean });
 }
 
-/** The headline's size per frame: the largest that sets. */
-export const titleType = text => Object.fromEntries(['landscape', 'portrait'].map(o => [o, TYPE.title[o].sizes.find(px => titleSet(text, o, px))]));
+/** The headline's size per frame: the largest that sets without splitting a name, else the largest that sets. */
+export const titleType = text => Object.fromEntries(['landscape', 'portrait'].map(o => [o, TYPE.title[o].sizes.find(px => titleSet(text, o, px) && !titleSet(text, o, px).splits) ?? TYPE.title[o].sizes.find(px => titleSet(text, o, px))]));
 
 /** How a step's label is set at `px` in frame `o`, beside its marker, in at most two lines. */
 export function labelSet(text, o, px) {
@@ -166,10 +168,11 @@ const fsVars = (fs_, name = 'fs') => `--${name}:${fs_.landscape}px;--${name}-p:$
 // A line of code is one row, so the longest line sets how small its code may go. Portrait has the
 // least room: its window is as wide as stays inside the safe width leaned and dollied in, and sets its
 // code a hair tighter (`adv` is a glyph's advance in em), which fits the API's 45-character URL whole
-// at 32px, the floor.
+// at 32px, the floor: code goes under 40px only where a whole token needs the row. Portrait's safe
+// height runs from y 200 to the caption band (PORTRAIT_SAFE).
 const WIN = {
   landscape: { sizes: [56, 52, 48, 44, 40], width: 1728, padX: 48, padTop: 40, padBottom: 44, sy: 64, sh: 836, gap: 56, lean: 1.02, pushMax: 1.02, adv: 0.6 },
-  portrait: { sizes: [44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sh: 1100, gap: 48, lean: 1.015, pushMax: 1.01, adv: 0.57 },
+  portrait: { sizes: [56, 52, 48, 44, 40, 36, 32], width: 900, padX: 16, padTop: 44, padBottom: 52, sy: PORTRAIT_SAFE.top, sh: PORTRAIT_SAFE.bottom - PORTRAIT_SAFE.top, gap: 48, lean: 1.015, pushMax: 1.01, adv: 0.57 },
 };
 // The camera's perspective, and how far the deep layer dollies in so the window grows by `pushMax` at most.
 const PERSPECTIVE = 2000;
@@ -450,7 +453,7 @@ export function urlSet(link) {
 // as it is spoken. It is its own caption, so no caption chip runs under it.
 TYPE.say = { weight: 600, tracking: -0.04,
   landscape: { sizes: [112, 104, 96, 88, 80, 72, 64, 60, 56], width: SAFE.landscape, lines: 3 },
-  portrait: { sizes: [100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56], width: SAFE.portrait, lines: 4 } };
+  portrait: { sizes: [120, 112, 104, 100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56], width: SAFE.portrait, lines: 5 } };
 
 /** How a spoken line is set as kinetic type, per frame: { px, breaks, lines }, or null when it sets in neither. */
 export function sayType(text) {
@@ -469,7 +472,7 @@ export function sayType(text) {
 // largest first; a card is as wide as its label, up to its column.
 const NODE = { padX: 34, mark: 60, markGap: 20,
   landscape: { sizes: [64, 60, 56, 52, 48, 44, 40], mono: [52, 48, 46, 44, 40, 36, 34] },
-  portrait: { sizes: [60, 56, 52, 48, 44, 40, 36], mono: [48, 44, 42, 40, 36, 34, 32] } };
+  portrait: { sizes: [72, 66, 60, 56, 52, 48, 44, 40, 36], mono: [58, 54, 48, 44, 42, 40, 36, 34, 32] } };
 // The room a diagram has across, per frame, and the gaps its edges take: a problem is two columns
 // (what you have, what it costs you), a result three (your side, AnyRouter, what answers), across
 // in landscape. Portrait stacks them down the frame, its tall side, except rows of pairs, which
@@ -546,7 +549,36 @@ export function barOf(c) {
   return [full, `${u.host}${path}`, short].find(fitsBar) ?? u.host;
 }
 const frameHtml = (c, cls, img = `<img class="si" src="assets/captures/${esc(c.name)}" alt="">`) => `<div class="sf ${cls}${c.kind === 'terminal' ? ' tm' : ''}" data-layout-allow-overflow>
-      <div class="sb"><span class="dots"><i></i><i></i><i></i></span><span class="su">${esc(c.bar)}</span></div><div class="sv">${img}</div></div>`;
+      <div class="sb"><span class="dots"><i></i><i></i><i></i></span><span class="su">${esc(c.bar)}</span></div><div class="sv">${img}${c.line ? '<i class="hl"></i>' : ''}</div></div>`;
+
+// Portrait shows a step's real screen cropped to the column its line sits in (captures.mjs crops), at
+// the safe width less the frame's border. Text a phone draws under READ_PX does not read, so where the
+// screen's own text comes out smaller, its line is set again as live text under it: in Geist, or in
+// Geist Mono at code's advance for code, as large as sits in two rows; under 40px only as code is,
+// where a whole token needs the row.
+export const READ_PX = 28;
+const SCREEN_W = ACROSS.portrait.width - 4;
+const LIVE = { sizes: [52, 48, 44, 40], mono: [52, 48, 44, 40, 36, 32], padX: 24, border: 3, rows: 2, gap: 28 };
+/**
+ * How a step's line is set under its screen in portrait: { text, mono, px, shown } where `shown` is
+ * the px the screen draws its text at, the smaller of its column's lines and the line's own box (a
+ * dialog's borders run its rows together); null when the screen reads on its own.
+ */
+export function liveOf(c) {
+  const { crop, line } = c, shown = Math.min(crop.text || Infinity, line.box[3] - line.box[1]) * SCREEN_W / (crop.x1 - crop.x0);
+  if (shown >= READ_PX) return null;
+  const width = ACROSS.portrait.width - 2 * (LIVE.padX + LIVE.border) - 4;
+  const set = px => linesOf(line.text, line.mono ? { px, width, weight: 'mono', tracking: -0.03, breakWords: false } : { px, width, weight: 600, tracking: -0.02, breakWords: false });
+  const px = (line.mono ? LIVE.mono : LIVE.sizes).find(x => set(x) <= LIVE.rows);
+  if (!px) throw new Error(`the line "${line.text}" on ${c.name} does not sit in ${LIVE.rows} rows of the portrait frame: pick a shorter one`);
+  return { text: line.text, mono: line.mono, px, shown: +shown.toFixed(1) };
+}
+const liveHtml = (c, k) => {
+  const l = c.line && liveOf(c);
+  return l ? `<div class="ll s${k}"><p class="lt${l.mono ? ' mono' : ''}" style="font-size:${l.px}px">${esc(l.text)}</p></div>` : '';
+};
+// What the page needs to crop a step's screen: the planned column and gaps, and the line's box.
+const cropData = c => c && { x0: c.crop.x0, x1: c.crop.x1, w: c.crop.w, gaps: c.crop.gaps, box: c.line && { x0: c.line.box[0], y0: c.line.box[1], x1: c.line.box[2], y1: c.line.box[3] } };
 
 // ── the shot ───────────────────────────────────────────────────────────────
 // How long each id holds in a roll. Each wash is shorter, so one never fades over the next.
@@ -683,7 +715,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
         <div class="badge kick">${esc(copy.kicker)}</div></div>
       <h1 class="h" style="${fsVars(copy.type.title)}">${masked(copy.title, copy.type.breaks)}</h1></section>
     <section class="pn p-problem">${back}<div class="blk"><div class="badge lbl">The problem</div>${kineticHtml('kp', copy.problem)}${diagramHtml(copy.problem.diagram)}</div></section>
-    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) : '')).join('')}</div></section>
+    <section class="pn p-steps">${back}${steps}<div class="win-host">${windowHtml(copy.window)}${copy.steps.map((st, k) => (st.capture ? frameHtml(st.capture, `sk s${k}`) + liveHtml(st.capture, k) : '')).join('')}</div></section>
     <section class="pn p-result">${back}<div class="blk"><div class="badge lbl">The result</div>${kineticHtml('kr', copy.result)}${diagramHtml(copy.result.diagram)}</div></section>
     <section class="pn p-close">${back}<div class="cblk"><div class="crow">
       ${frameHtml(copy.page.landscape, 'pagef', `<img class="si il" src="assets/captures/${esc(copy.page.landscape.name)}" alt=""><img class="si ip" src="assets/captures/${esc(copy.page.portrait.name)}" alt="">`)}
@@ -725,12 +757,14 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     // the travel pulls back further on a long move, and swings a little to the side on the way
     const PULL = 420, SWING = TALL ? 4 : 8, LIFT = TALL ? 10 : 16;
     // between travels the camera pushes in at an even speed: a frame at rest reads as dead air
-    // it breathes, in on one beat and out on the next, so every step of the steps panel moves too
-    const PUSH = 48, rests = [0, ...CUTS.map(c => c + TRAVEL / 2)], restEnds = [...CUTS.map(c => c - TRAVEL / 2), D];
+    // it breathes, in on one beat and out on the next, so every step of the steps panel moves too.
+    // A push in grows what spans the safe width past its edge, into the strip Shorts draws its
+    // buttons on, so a phone's camera breathes by rising instead
+    const [AXIS, PUSH] = TALL ? ["y", -18] : ["z", 48], rests = [0, ...CUTS.map(c => c + TRAVEL / 2)], restEnds = [...CUTS.map(c => c - TRAVEL / 2), D];
     const endPush = [];
     rests.forEach((a, i) => {
       const marks = [a, ...STEPS.map(st => st.at).filter(t => t > a + 0.5 && t < restEnds[i] - 0.5), restEnds[i]];
-      for (let k = 0; k + 1 < marks.length; k++) tl.fromTo(cpush, { z: k % 2 ? PUSH : 0 }, { z: k % 2 ? 0 : PUSH, duration: Math.max(0.1, marks[k + 1] - marks[k]), ease: "none", immediateRender: false }, marks[k]);
+      for (let k = 0; k + 1 < marks.length; k++) tl.fromTo(cpush, { [AXIS]: k % 2 ? PUSH : 0 }, { [AXIS]: k % 2 ? 0 : PUSH, duration: Math.max(0.1, marks[k + 1] - marks[k]), ease: "none", immediateRender: false }, marks[k]);
       endPush.push((marks.length - 1) % 2 ? PUSH : 0);
     });
     CUTS.forEach((c, i) => {
@@ -738,7 +772,7 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       tl.fromTo(cpos, from.pos, { ...to.pos, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(crotx, from.rx, { ...to.rx, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       tl.fromTo(croty, from.ry, { ...to.ry, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
-      tl.fromTo(cpush, { z: endPush[i] }, { z: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
+      tl.fromTo(cpush, { [AXIS]: endPush[i] }, { [AXIS]: 0, duration: TRAVEL, ease: "power3.inOut", immediateRender: false }, a);
       // the audit reads no text while the camera carries it (stage-audit.mjs, flight)
       tl.set(cpull, { attr: { "data-in-flight": "1" } }, a);
       tl.set(cpull, { attr: { "data-in-flight": "0" } }, a + TRAVEL);
@@ -762,9 +796,10 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     $$(".bk").forEach((b, i) => tl.fromTo(b, { x: 0, y: 0 }, { x: i % 2 ? -60 : 60, y: -40, duration: D, ease: "none" }, 0));
 
     // ── 1 · what and why. The headline sits in the middle of the safe area; the marks close in, the words rise.
-    const heroH = hero.offsetHeight, hH = h.offsetHeight, top1 = SY + (SH - heroH - G - hH) / 2;
+    // A phone's frame is a poster: the marks at the top of the safe area, the headline at its foot.
+    const heroH = hero.offsetHeight, hH = h.offsetHeight, top1 = TALL ? SY : SY + (SH - heroH - G - hH) / 2;
     hero.style.top = top1 + "px";
-    h.style.top = top1 + heroH + G + "px";
+    h.style.top = (TALL ? SY + SH - hH : top1 + heroH + G) + "px";
     const tiles = $$(".tile, .plus"), mid = (tiles.length - 1) / 2;
     tl.fromTo(tiles, { x: i => (i - mid) * 56, z: -200, rotationY: i => (i - mid) * -14 }, { x: 0, z: 0, rotationY: 0, duration: 1.3, ease: "expo.out" }, 0);
     tl.fromTo(Q(".kick"), { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.15);
@@ -876,33 +911,52 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
 
     // ── 2 · the steps. Each tilts in from deep in the page and settles flat to read; its words rise as
     // they are said. A step done shrinks to a row above the next.
-    const hs = stp.map(e => e.offsetHeight), heads = stp.map(e => e.querySelector(".head").offsetHeight), winH = win.offsetHeight;
+    const hs = stp.map(e => e.offsetHeight), heads = stp.map(e => e.querySelector(".head").offsetHeight);
     const doneY = k => SY + heads.slice(0, k).reduce((y, x) => y + x * DONE + RG, 0);
-    // a step's real screen spans the safe width under its step and shows the screen zoomed in, as
-    // much of its top as the room under the step allows: the part the capture was scrolled to
-    const sk = STEPS.map((_, k) => $(".sk.s" + k));
-    // a phone reads the screen zoomed further in, and taller
-    const SF_W = TALL ? 900 : 1500, ZOOM = TALL ? 2.0 : 1.45, SF_H = TALL ? 760 : SF_W * 0.5625;
+    // on a phone the window reaches down to the foot of the safe area under every step that shows it
+    if (TALL) {
+      const term = win.querySelector(".term"), room = Math.min(...STEPS.map((st, k) => (st.shows ? SY + SH - doneY(k) - hs[k] - HG : Infinity)));
+      term.style.minHeight = room - (win.offsetHeight - term.offsetHeight) + "px";
+    }
+    const winH = win.offsetHeight;
+    // a step's real screen spans the safe width under its step. Landscape shows it zoomed in, as much
+    // of its top as the room under the step allows: the part the capture was scrolled to. A phone shows
+    // the column its line sits in, as many whole rows as the room holds, every edge in whitespace
+    // (captures.mjs crops), the line marked on it and, where the screen's text is too small to read,
+    // set again under it (liveOf)
+    const sk = STEPS.map((_, k) => $(".sk.s" + k)), ll = STEPS.map((_, k) => $(".ll.s" + k));
+    const CROP = ${JSON.stringify(copy.steps.map(st => cropData(st.capture)))}, LLG = ${LIVE.gap};
+    const fitRows = ${fitRows};
+    const llH = k => (TALL && ll[k] ? ll[k].offsetHeight + LLG : 0);
+    const SF_W = TALL ? ${ACROSS.portrait.width} : 1500, ZOOM = 1.45, SF_H = SF_W * 0.5625;
     const skH = sk.map((f, k) => {
       if (!f) return 0;
-      const bar = f.querySelector(".sb").offsetHeight, room = SY + SH - doneY(k) - hs[k] - HG - 24;
+      const bar = f.querySelector(".sb").offsetHeight, room = SY + SH - doneY(k) - hs[k] - HG - (TALL ? llH(k) : 24);
+      const sv = f.querySelector(".sv"), img = f.querySelector(".si");
       f.style.width = SF_W + "px";
-      f.style.left = (W - SF_W) / 2 + "px";
-      f.querySelector(".sv").style.height = Math.max(240, Math.min(room - bar - 20, SF_H)) + "px";
-      const img = f.querySelector(".si");
-      img.style.width = SF_W * ZOOM + "px";
-      img.style.marginLeft = -SF_W * ZOOM * (TALL ? 0.2 : 0.12) + "px";
+      f.style.left = (TALL ? ${ACROSS.portrait.left} : (W - SF_W) / 2) + "px";
+      if (TALL) {
+        const c = CROP[k], s = sv.clientWidth / (c.x1 - c.x0), { y0, y1 } = fitRows(c.gaps, c.box, (room - (f.offsetHeight - sv.offsetHeight)) / s);
+        sv.style.height = (y1 - y0) * s + "px";
+        Object.assign(img.style, { width: c.w * s + "px", marginLeft: -c.x0 * s + "px", marginTop: -y0 * s + "px" });
+        const b = c.box, hl = f.querySelector(".hl");
+        if (hl && b) Object.assign(hl.style, { left: (b.x0 - c.x0) * s - 12 + "px", top: (b.y0 - y0) * s - 8 + "px", width: (b.x1 - b.x0) * s + 24 + "px", height: (b.y1 - b.y0) * s + 16 + "px" });
+      } else {
+        sv.style.height = Math.max(240, Math.min(room - bar - 20, SF_H)) + "px";
+        img.style.width = SF_W * ZOOM + "px";
+        img.style.marginLeft = -SF_W * ZOOM * 0.12 + "px";
+      }
       return f.offsetHeight;
     });
     const place = k => {
-      const block = hs[k] + (STEPS[k].shows ? HG + winH : sk[k] ? HG + skH[k] : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
+      const block = hs[k] + (STEPS[k].shows ? HG + winH : sk[k] ? HG + skH[k] + llH(k) : 0), top = doneY(k) + Math.max(0, (SY + SH - doneY(k) - block) / 2);
       return { top, win: top + hs[k] + HG };
     };
     // a step's real screen tilts in under its step, is pushed into while the step is said, and goes when the next comes
     STEPS.forEach((st, k) => {
       const f = sk[k];
       if (!f) return;
-      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win + 16;
+      const next = STEPS[k + 1], at = st.at + (k ? 0.5 : 0.2), out = next ? next.at - 0.15 : RESULT - TRAVEL / 2, y = place(k).win + (TALL ? 0 : 16);
       tl.set(f, { autoAlpha: 0, y }, 0);
       tl.set(f, { autoAlpha: 1 }, at);
       // the audit reads its bar once it has landed, and not while it leaves (stage-audit.mjs, flight)
@@ -910,8 +964,22 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
       tl.set(f, { attr: { "data-in-flight": "0" } }, at + 0.7);
       if (next) tl.set(f, { attr: { "data-in-flight": "1" } }, out - 0.05);
       tl.fromTo(f, { z: -460, rotationX: 16, rotationY: TALL ? -5 : -12, y: y + 140 }, { z: 0, rotationX: 0, rotationY: 0, y, duration: 1.0, ease: "expo.out", immediateRender: false }, at);
-      // the camera inside the frame drifts down the page and in, a reader's pace
-      tl.fromTo(f.querySelector(".si"), { scale: 1, y: 0 }, { scale: 1.08, y: -Math.min(120, f.querySelector(".sv").offsetHeight * 0.2), duration: Math.max(0.5, out - at), ease: "sine.inOut", immediateRender: false }, at);
+      // the camera inside the frame drifts down the page and in, a reader's pace; on a phone the crop
+      // holds still, so its edges stay in whitespace, and the camera's own breath carries the frame
+      if (!TALL) tl.fromTo(f.querySelector(".si"), { scale: 1, y: 0 }, { scale: 1.08, y: -Math.min(120, f.querySelector(".sv").offsetHeight * 0.2), duration: Math.max(0.5, out - at), ease: "sine.inOut", immediateRender: false }, at);
+      // once the frame has landed the line is marked on the screen, and rises under it to be read
+      const hl = f.querySelector(".hl"), line = TALL && ll[k];
+      if (TALL && hl) {
+        tl.set(hl, { opacity: 0 }, 0);
+        tl.fromTo(hl, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)", immediateRender: false }, at + 0.8);
+      }
+      if (line) {
+        const ly = y + skH[k] + LLG;
+        tl.set(line, { autoAlpha: 0, y: ly }, 0);
+        tl.set(line, { autoAlpha: 1 }, at + 0.95);
+        tl.fromTo(line, { y: ly + 40, z: -160, rotationX: 24 }, { y: ly, z: 0, rotationX: 0, duration: 0.7, ease: "expo.out", immediateRender: false }, at + 0.95);
+        if (next) { tl.to(line, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(line, { autoAlpha: 0 }, out + 0.3); }
+      }
       if (next) { tl.to(f, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(f, { autoAlpha: 0 }, out + 0.3); }
     });
     STEPS.forEach((st, k) => {
@@ -1016,10 +1084,18 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
 
     // ── 5 · the lockup: the headline, small, above the AnyRouter lockup, and the short link under it.
     const cblk = $(".cblk"), pagef = $(".pagef");
+    // on a phone the page runs the safe width and takes the height the lockup leaves, cut between its rows
+    if (TALL) {
+      const sv = pagef.querySelector(".sv"), img = pagef.querySelector(".ip"), c = ${JSON.stringify(cropData({ crop: copy.page.portrait.crop }))}, s = sv.clientWidth / c.w;
+      sv.style.height = "0px";
+      const { y0, y1 } = fitRows(c.gaps, null, (SH - cblk.offsetHeight) / s);
+      sv.style.height = (y1 - y0) * s + "px";
+      img.style.marginTop = -y0 * s + "px";
+    }
     cblk.style.top = SY + Math.max(0, (SH - cblk.offsetHeight) / 2) + "px";
     // the live page the film ends on swings in beside the lockup and scrolls a little, as a visitor would
     tl.fromTo(pagef, { z: -420, rotationY: TALL ? 0 : -24, rotationX: TALL ? 14 : 0, opacity: 0 }, { z: 0, rotationY: 0, rotationX: 0, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: true }, END + 0.25);
-    tl.fromTo(pagef.querySelectorAll(".si"), { yPercent: 0 }, { yPercent: -6, duration: Math.max(0.5, D - END - 1.2), ease: "sine.inOut", immediateRender: false }, END + 1.2);
+    if (!TALL) tl.fromTo(pagef.querySelectorAll(".si"), { yPercent: 0 }, { yPercent: -6, duration: Math.max(0.5, D - END - 1.2), ease: "sine.inOut", immediateRender: false }, END + 1.2);
     const h2w = $$(".h2 .w > span");
     tl.fromTo(h2w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.04, 0.25 / h2w.length), ease: "expo.out", immediateRender: false }, END + 0.15);
     tl.fromTo(Q(".lock svg"), { scale: 0.8, opacity: 0, rotationY: -40 }, { scale: 1, opacity: 1, rotationY: 0, duration: 1.0, ease: "expo.out" }, END + 0.35);
@@ -1175,6 +1251,10 @@ export const CSS = `
   .film .sv{position:relative;overflow:hidden;aspect-ratio:16/9;background:${C.bg}}
   .film .sk .sv{aspect-ratio:auto}
   .film .si{display:block;width:100%;max-width:none;transform-origin:30% 0}
+  .film .hl{position:absolute;left:0;top:0;border:4px solid ${C.accent};border-radius:10px;background:rgba(187,77,0,.08);display:none}
+  .film .ll{position:absolute;left:${ACROSS.portrait.left}px;top:0;width:${ACROSS.portrait.width}px;display:none;transform-style:preserve-3d}
+  .film .lt{padding:14px ${LIVE.padX}px 16px;border:${LIVE.border}px solid ${C.accent};border-radius:22px;background:${C.bg};color:${C.ink};font-weight:600;letter-spacing:-.02em;line-height:1.22}
+  .film .lt.mono{font-weight:500;letter-spacing:-.03em}
   .film .sf.tm{background:${C.ink};border-color:${C.ink}}
   .film .sf.tm .sb{border-bottom-color:${C.ink2}}
   .film .sf.tm .su{color:${C.onInkMuted}}
@@ -1201,11 +1281,13 @@ export const CSS = `
   .film .cap span{padding:12px ${CAP.padX}px 14px;border-radius:14px;background:rgba(10,10,10,.84);color:${C.onInk};font-size:var(--cf);font-weight:500;line-height:1.25;letter-spacing:-.005em;white-space:pre}
 
   @media (orientation: portrait){
-    .film{--sy:200px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:64px;--tw:${WIN.portrait.width}px}
+    .film{--sy:${WIN.portrait.sy}px;--sh:${WIN.portrait.sh}px;--sl:60px;--sr:120px;--gap:${WIN.portrait.gap}px;--cap3:64px;--tw:${WIN.portrait.width}px}
     .film .cblk{gap:36px}
     .film .crow{flex-direction:column;gap:36px}
     .film .pagef{width:900px}
-    .film .pagef .sv{aspect-ratio:12/5}
+    .film .pagef .sv{aspect-ratio:auto}
+    .film .hl{display:block}
+    .film .ll{display:block}
     .film .pagef .ip{width:100%;margin-left:0}
     .film .pagef .il{display:none}
     .film .pagef .ip{display:block}
@@ -1216,13 +1298,15 @@ export const CSS = `
     .film .sl .bl,.film .dt .bl{display:none}
     .film .sl .bp,.film .dt .bp{display:inline}
     .film .dt{font-size:var(--ds-p)}
-    .film .tile{width:144px;height:144px}
-    .film .tile .mk{width:84px;height:84px}
+    .film .tile{width:${TILE.portrait}px;height:${TILE.portrait}px}
+    .film .tile .mk{width:112px;height:112px}
     .film .h{font-size:var(--fs-p)}
     .film .h .bl,.film .h2 .bl,.film .kt .bl{display:none}
     .film .h .bp,.film .h2 .bp,.film .kt .bp{display:inline}
     .film .kt{font-size:var(--ks-p)}
-    .film .blk{gap:${BLOCK.portrait.gap}px}
+    /* the line under its badge at the top of the safe area, the picture at its foot */
+    .film .blk{gap:${BLOCK.portrait.gap}px;height:var(--sh)}
+    .film .blk .kt{margin-bottom:auto}
     .film .dg{gap:60px}
     .film .dg.stack-p{flex-direction:column;gap:${BLOCK.portrait.stackGap}px}
     .film .dg.stack-p .col{align-items:center}

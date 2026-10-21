@@ -7,7 +7,8 @@
 //   node videos/use-case/audit-all.mjs [--from=FILE] [--models-from=FILE] [--data=FILE] [--slug=a,b]
 //     [--out=DIR] [--jobs=3] [--only=stage|fill]
 //
-// --data builds from a saved collect (the data.json `collect use-case` writes) instead of collecting.
+// --data builds from a saved collect (the data.json `collect use-case` writes) instead of collecting,
+// each film's script read again from narration.json.
 // Writes DIR/report.json and, for each failing film, screenshots under DIR/<slug>-<rendition>/.
 // Exits 1 when any film has a problem.
 import fs from 'node:fs';
@@ -17,14 +18,15 @@ import { parseArgs, BUILD } from '../../lib/paths.mjs';
 import { RENDITIONS } from '../../lib/renditions.mjs';
 import { auditStage } from '../../shared/authoring/stage-audit.mjs';
 import { auditFill } from '../../shared/authoring/portrait-fill.mjs';
-import kind from './kind.mjs';
+import kind, { narrate } from './kind.mjs';
 
 const { flags } = parseArgs(process.argv.slice(2));
 const out = path.resolve(flags.out ?? path.join(BUILD, 'use-case', 'audit'));
 const jobs = Number(flags.jobs ?? Math.max(1, Math.min(3, os.cpus().length >> 2)));
 const only = flags.slug ? new Set(String(flags.slug).split(',')) : null;
 
-const data = flags.data ? JSON.parse(fs.readFileSync(path.resolve(flags.data), 'utf8')) : await kind.collect({ flags: { ...flags, slug: undefined } });
+const saved = flags.data && JSON.parse(fs.readFileSync(path.resolve(flags.data), 'utf8'));
+const data = saved ? { ...saved, useCases: narrate(saved.useCases.map(({ narration, ...u }) => u)) } : await kind.collect({ flags: { ...flags, slug: undefined } });
 const releases = kind.split(data).filter(r => !only || only.has(r.label));
 const films = releases.flatMap(rel => {
   const dir = path.join(BUILD, 'use-case', 'all', rel.label);

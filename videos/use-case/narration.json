@@ -50,7 +50,12 @@
     },
     {
      "text": "Pin a model when you want one.",
-     "capture": "shared/surfaces/ar-docs-cli-claude-model.png"
+     "capture": "shared/surfaces/ar-docs-cli-claude-model.png",
+     "line": {
+      "text": "anyr claude --model \"z-ai/glm-5.2\"",
+      "box": [1279, 348, 1810, 373],
+      "mono": true
+     }
     }
    ],
    "result": "Claude Code works as before, on the model you picked.",
@@ -112,6 +117,10 @@
      "from": "https://docs.anyrouter.dev/cli/claude-code"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-cli-claude-model.png: anyr claude --model \"z-ai/glm-5.2\"",
+     "from": "https://docs.anyrouter.dev/cli/claude-code"
+    },
+    {
      "says": "capture: claude-code/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/claude-code"
     },
@@ -128,7 +137,12 @@
    "steps": [
     {
      "text": "Open a Herdr space on your repo.",
-     "capture": "shared/surfaces/ar-docs-grokbot.png"
+     "capture": "shared/surfaces/ar-docs-grokbot.png",
+     "line": {
+      "text": "Open a space on the repo checkout",
+      "box": [1509, 964, 1993, 991],
+      "mono": false
+     }
     },
     {
      "text": "Launch anyr claude in that space.",
@@ -198,6 +212,10 @@
      "from": "https://docs.anyrouter.dev/guides/grok-bot-herdr-anyr"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-grokbot.png: Open a space on the repo checkout",
+     "from": "https://docs.anyrouter.dev/guides/grok-bot-herdr-anyr"
+    },
+    {
      "says": "capture: grokbot/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/grokbot"
     },
@@ -214,7 +232,12 @@
    "steps": [
     {
      "text": "Create an AnyRouter key.",
-     "capture": "shared/dashboard/keys.png"
+     "capture": "shared/dashboard/keys.png",
+     "line": {
+      "text": "Create key",
+      "box": [2923, 152, 3030, 172],
+      "mono": false
+     }
     },
     {
      "text": "Launch anyr opencode.",
@@ -223,7 +246,12 @@
     },
     {
      "text": "Pick a model, and check the request logs.",
-     "capture": "shared/dashboard/logs.png"
+     "capture": "shared/dashboard/logs.png",
+     "line": {
+      "text": "Logs",
+      "box": [501, 157, 585, 192],
+      "mono": false
+     }
     }
    ],
    "result": "One key, the catalog, and every call in your request logs.",
@@ -288,7 +316,15 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
+     "says": "line on shared/dashboard/keys.png: Create key",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
      "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
+     "from": "https://anyrouter.dev/dashboard/logs"
+    },
+    {
+     "says": "line on shared/dashboard/logs.png: Logs",
      "from": "https://anyrouter.dev/dashboard/logs"
     },
     {
@@ -308,7 +344,12 @@
    "steps": [
     {
      "text": "Mint one AnyRouter key.",
-     "capture": "shared/dashboard/keys.png"
+     "capture": "shared/dashboard/keys.png",
+     "line": {
+      "text": "Create key",
+      "box": [2923, 152, 3030, 172],
+      "mono": false
+     }
     },
     {
      "text": "Set the Anthropic env vars.",
@@ -317,7 +358,12 @@
     },
     {
      "text": "Start on anyrouter/auto.",
-     "capture": "shared/surfaces/ar-model-auto.png"
+     "capture": "shared/surfaces/ar-model-auto.png",
+     "line": {
+      "text": "anyrouter/auto",
+      "box": [809, 344, 1008, 366],
+      "mono": true
+     }
     }
    ],
    "result": "Every agent shares one balance and one request log.",
@@ -391,7 +437,15 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
+     "says": "line on shared/dashboard/keys.png: Create key",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
      "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
+    },
+    {
+     "says": "line on shared/surfaces/ar-model-auto.png: anyrouter/auto",
      "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
@@ -415,12 +469,22 @@
     },
     {
      "text": "Add your AnyRouter key.",
-     "capture": "shared/surfaces/ar-docs-hermes-env.png"
+     "capture": "shared/surfaces/ar-docs-hermes-env.png",
+     "line": {
+      "text": "~/.hermes/.env",
+      "box": [1713, 206, 1926, 232],
+      "mono": true
+     }
     },
     {
      "text": "Pick a model, such as anyrouter/hermes.",
      "more": "It routes across the top tool-calling models, with fallback.",
-     "capture": "shared/surfaces/ar-docs-hermes-model.png"
+     "capture": "shared/surfaces/ar-docs-hermes-model.png",
+     "line": {
+      "text": "default: anyrouter/hermes",
+      "box": [1277, 886, 1667, 910],
+      "mono": true
+     }
     }
    ],
    "result": "Hermes lists only the models that can call tools.",
@@ -481,7 +545,15 @@
      "from": "https://docs.anyrouter.dev/guides/hermes-agent"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-hermes-env.png: ~/.hermes/.env",
+     "from": "https://docs.anyrouter.dev/guides/hermes-agent"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-hermes-model.png (AnyRouter guide, Hermes Agent: picking anyrouter/hermes. Scrolled to: \"hermes model # interactive picker → anyrouter her)",
+     "from": "https://docs.anyrouter.dev/guides/hermes-agent"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-hermes-model.png: default: anyrouter/hermes",
      "from": "https://docs.anyrouter.dev/guides/hermes-agent"
     },
     {
@@ -501,11 +573,21 @@
    "steps": [
     {
      "text": "Install the Agent SDK.",
-     "capture": "shared/surfaces/tp-npm-claude-agent-sdk.png"
+     "capture": "shared/surfaces/tp-npm-claude-agent-sdk.png",
+     "line": {
+      "text": "npm install @anthropic-ai/claude-agent-sdk",
+      "box": [783, 1591, 1588, 1621],
+      "mono": true
+     }
     },
     {
      "text": "Point the base URL and key at AnyRouter.",
-     "capture": "shared/surfaces/ar-unify-messages.png"
+     "capture": "shared/surfaces/ar-unify-messages.png",
+     "line": {
+      "text": "base_url=\"https://anyrouter.dev/api\",",
+      "box": [913, 880, 1482, 905],
+      "mono": true
+     }
     },
     {
      "text": "Pass a model, such as anyrouter/auto.",
@@ -567,7 +649,15 @@
      "from": "https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk"
     },
     {
+     "says": "line on shared/surfaces/tp-npm-claude-agent-sdk.png: npm install @anthropic-ai/claude-agent-sdk",
+     "from": "https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk"
+    },
+    {
      "says": "capture: shared/surfaces/ar-unify-messages.png (anyrouter.dev/unify-api/messages: the Anthropic-compatible endpoint.)",
+     "from": "https://anyrouter.dev/unify-api/messages"
+    },
+    {
+     "says": "line on shared/surfaces/ar-unify-messages.png: base_url=\"https://anyrouter.dev/api\",",
      "from": "https://anyrouter.dev/unify-api/messages"
     },
     {
@@ -596,7 +686,12 @@
     },
     {
      "text": "Switch models when a task needs more.",
-     "capture": "shared/surfaces/ar-docs-cli-claude-model.png"
+     "capture": "shared/surfaces/ar-docs-cli-claude-model.png",
+     "line": {
+      "text": "anyr models --pick",
+      "box": [1279, 1503, 1561, 1526],
+      "mono": true
+     }
     }
    ],
    "result": "It codes on whichever free model is answering.",
@@ -658,6 +753,10 @@
     },
     {
      "says": "capture: shared/surfaces/ar-docs-cli-claude-model.png (AnyRouter docs, CLI → Claude Code: pinning a model with --model. Scrolled to: \"# Pin a model for the session anyr claude)",
+     "from": "https://docs.anyrouter.dev/cli/claude-code"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-cli-claude-model.png: anyr models --pick",
      "from": "https://docs.anyrouter.dev/cli/claude-code"
     },
     {
@@ -753,7 +852,12 @@
    "steps": [
     {
      "text": "Create an AnyRouter key.",
-     "capture": "shared/dashboard/keys.png"
+     "capture": "shared/dashboard/keys.png",
+     "line": {
+      "text": "Create key",
+      "box": [2923, 152, 3030, 172],
+      "mono": false
+     }
     },
     {
      "text": "Add an OpenAI-compatible provider with this URL.",
@@ -762,7 +866,12 @@
     {
      "text": "Set a free model id.",
      "more": "If its route runs out, AnyRouter answers through anyrouter/free.",
-     "capture": "shared/surfaces/ar-docs-opencode.png"
+     "capture": "shared/surfaces/ar-docs-opencode.png",
+     "line": {
+      "text": "Set it up",
+      "box": [1218, 1405, 1365, 1438],
+      "mono": false
+     }
     }
    ],
    "result": "The tool needs no other setup.",
@@ -830,7 +939,15 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
+     "says": "line on shared/dashboard/keys.png: Create key",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-opencode.png (AnyRouter guide: OpenCode, the opencode.json provider block. Scrolled to: \"Drop-in. Zero code changes. The fastest path )",
+     "from": "https://docs.anyrouter.dev/guides/opencode"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-opencode.png: Set it up",
      "from": "https://docs.anyrouter.dev/guides/opencode"
     },
     {
@@ -850,7 +967,12 @@
    "steps": [
     {
      "text": "Pick an NVIDIA model in the catalog.",
-     "capture": "shared/surfaces/ar-models-nvidia.png"
+     "capture": "shared/surfaces/ar-models-nvidia.png",
+     "line": {
+      "text": "nvidia/nemotron-3-super-120b-a12b",
+      "box": [154, 1238, 626, 1260],
+      "mono": true
+     }
     },
     {
      "text": "Call it with your AnyRouter key.",
@@ -910,6 +1032,10 @@
      "from": "https://anyrouter.dev/models?provider=nvidia"
     },
     {
+     "says": "line on shared/surfaces/ar-models-nvidia.png: nvidia/nemotron-3-super-120b-a12b",
+     "from": "https://anyrouter.dev/models?provider=nvidia"
+    },
+    {
      "says": "capture: nvidia-nim-models/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/nvidia-nim-models"
     },
@@ -926,7 +1052,12 @@
    "steps": [
     {
      "text": "Save a Google key in AnyRouter.",
-     "capture": "shared/surfaces/ar-docs-byok-google.png"
+     "capture": "shared/surfaces/ar-docs-byok-google.png",
+     "line": {
+      "text": "Go to Dashboard → BYOK.",
+      "box": [1274, 1376, 1637, 1399],
+      "mono": false
+     }
     },
     {
      "text": "Run anyr claude with a Gemini model.",
@@ -990,6 +1121,10 @@
      "from": "https://docs.anyrouter.dev/features/byok-providers/google-ai-studio"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-byok-google.png: Go to Dashboard → BYOK.",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/google-ai-studio"
+    },
+    {
      "says": "capture: gemini-in-claude-code/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/gemini-in-claude-code"
     },
@@ -1006,11 +1141,21 @@
    "steps": [
     {
      "text": "Save keys for two providers.",
-     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png"
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png",
+     "line": {
+      "text": "Add a provider key",
+      "box": [114, 54, 398, 82],
+      "mono": false
+     }
     },
     {
      "text": "Keep the Fallback strategy.",
-     "capture": "shared/surfaces/ar-docs-credential-selection.png"
+     "capture": "shared/surfaces/ar-docs-credential-selection.png",
+     "line": {
+      "text": "How AnyRouter Chooses a Credential",
+      "box": [1220, 207, 2032, 249],
+      "mono": false
+     }
     },
     {
      "text": "Run anyr claude.",
@@ -1078,7 +1223,15 @@
      "from": "https://anyrouter.dev/dashboard/byok?add=true"
     },
     {
+     "says": "line on video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png: Add a provider key",
+     "from": "https://anyrouter.dev/dashboard/byok?add=true"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-credential-selection.png (AnyRouter docs: credential selection (Fallback, Round Robin, Weighted).)",
+     "from": "https://docs.anyrouter.dev/features/credential-selection"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-credential-selection.png: How AnyRouter Chooses a Credential",
      "from": "https://docs.anyrouter.dev/features/credential-selection"
     },
     {
@@ -1098,7 +1251,12 @@
    "steps": [
     {
      "text": "Create a key.",
-     "capture": "shared/dashboard/keys.png"
+     "capture": "shared/dashboard/keys.png",
+     "line": {
+      "text": "Create key",
+      "box": [2923, 152, 3030, 172],
+      "mono": false
+     }
     },
     {
      "text": "Call anyrouter/free or anyrouter/auto.",
@@ -1106,7 +1264,12 @@
     },
     {
      "text": "Read which model answered.",
-     "capture": "shared/surfaces/ar-docs-fallbacks-header.png"
+     "capture": "shared/surfaces/ar-docs-fallbacks-header.png",
+     "line": {
+      "text": "\"model\": \"openai/gpt-5.4-mini\",",
+      "box": [1280, 584, 1758, 609],
+      "mono": true
+     }
     }
    ],
    "result": "Free failover on every plan, and stable paid failover.",
@@ -1164,7 +1327,15 @@
      "from": "https://anyrouter.dev/dashboard/keys"
     },
     {
+     "says": "line on shared/dashboard/keys.png: Create key",
+     "from": "https://anyrouter.dev/dashboard/keys"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-fallbacks-header.png (AnyRouter guide, model fallbacks: telling which model answered. Scrolled to: \"Requests are priced using the model that a)",
+     "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-fallbacks-header.png: \"model\": \"openai/gpt-5.4-mini\",",
      "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
     },
     {
@@ -1184,11 +1355,21 @@
    "steps": [
     {
      "text": "Create a free NVIDIA key.",
-     "capture": "shared/surfaces/tp-nvidia-build.png"
+     "capture": "shared/surfaces/tp-nvidia-build.png",
+     "line": {
+      "text": "Free inference with leading models",
+      "box": [851, 1001, 1436, 1036],
+      "mono": false
+     }
     },
     {
      "text": "Add it under BYOK.",
-     "capture": "shared/surfaces/ar-docs-byok-nvidia.png"
+     "capture": "shared/surfaces/ar-docs-byok-nvidia.png",
+     "line": {
+      "text": "Go to Dashboard → BYOK.",
+      "box": [1274, 1324, 1637, 1347],
+      "mono": false
+     }
     },
     {
      "text": "Call AnyRouter with your AnyRouter key.",
@@ -1255,7 +1436,15 @@
      "from": "https://build.nvidia.com/"
     },
     {
+     "says": "line on shared/surfaces/tp-nvidia-build.png: Free inference with leading models",
+     "from": "https://build.nvidia.com/"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-byok-nvidia.png (AnyRouter docs, BYOK providers: NVIDIA NIM (nvapi- keys, Always use → Strict).)",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/nvidia"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-byok-nvidia.png: Go to Dashboard → BYOK.",
      "from": "https://docs.anyrouter.dev/features/byok-providers/nvidia"
     },
     {
@@ -1275,7 +1464,12 @@
    "steps": [
     {
      "text": "Start Go on the pricing page.",
-     "capture": "shared/surfaces/ar-pricing.png"
+     "capture": "shared/surfaces/ar-pricing.png",
+     "line": {
+      "text": "Subscribe",
+      "box": [1007, 1121, 1136, 1143],
+      "mono": false
+     }
     },
     {
      "text": "Call anyrouter/auto.",
@@ -1284,7 +1478,12 @@
     },
     {
      "text": "Call anyrouter/free any time.",
-     "capture": "shared/surfaces/ar-free.png"
+     "capture": "shared/surfaces/ar-free.png",
+     "line": {
+      "text": "No daily limit.",
+      "box": [803, 555, 996, 583],
+      "mono": false
+     }
     }
    ],
    "result": "You do not need Go to call free models.",
@@ -1347,7 +1546,15 @@
      "from": "https://anyrouter.dev/pricing"
     },
     {
+     "says": "line on shared/surfaces/ar-pricing.png: Subscribe",
+     "from": "https://anyrouter.dev/pricing"
+    },
+    {
      "says": "capture: shared/surfaces/ar-free.png (anyrouter.dev/free: free models and anyrouter/free.)",
+     "from": "https://anyrouter.dev/free"
+    },
+    {
+     "says": "line on shared/surfaces/ar-free.png: No daily limit.",
      "from": "https://anyrouter.dev/free"
     },
     {
@@ -1367,7 +1574,12 @@
    "steps": [
     {
      "text": "Sign up and create a key.",
-     "capture": "shared/surfaces/ar-docs-quickstart.png"
+     "capture": "shared/surfaces/ar-docs-quickstart.png",
+     "line": {
+      "text": "create a new key — no card required.",
+      "box": [1619, 1304, 2121, 1331],
+      "mono": false
+     }
     },
     {
      "text": "Call anyrouter/free.",
@@ -1375,7 +1587,12 @@
     },
     {
      "text": "Move to paid models when you need them.",
-     "capture": "shared/surfaces/ar-pricing.png"
+     "capture": "shared/surfaces/ar-pricing.png",
+     "line": {
+      "text": "Upgrade to Pro",
+      "box": [1540, 1226, 1735, 1251],
+      "mono": false
+     }
     }
    ],
    "result": "One key, and a documented free tier.",
@@ -1432,7 +1649,15 @@
      "from": "https://docs.anyrouter.dev/getting-started/quickstart"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-quickstart.png: create a new key — no card required.",
+     "from": "https://docs.anyrouter.dev/getting-started/quickstart"
+    },
+    {
      "says": "capture: shared/surfaces/ar-pricing.png (anyrouter.dev/pricing with the Go plan.)",
+     "from": "https://anyrouter.dev/pricing"
+    },
+    {
+     "says": "line on shared/surfaces/ar-pricing.png: Upgrade to Pro",
      "from": "https://anyrouter.dev/pricing"
     },
     {
@@ -1453,7 +1678,12 @@
     {
      "text": "Keep your key on your server.",
      "more": "Never put it in the browser.",
-     "capture": "shared/surfaces/ar-docs-api-keys.png"
+     "capture": "shared/surfaces/ar-docs-api-keys.png",
+     "line": {
+      "text": "Managing API Keys",
+      "box": [1219, 207, 1632, 250],
+      "mono": false
+     }
     },
     {
      "text": "Stream with anyrouter/free.",
@@ -1461,7 +1691,12 @@
     },
     {
      "text": "Read which model answered.",
-     "capture": "shared/dashboard/logs.png"
+     "capture": "shared/dashboard/logs.png",
+     "line": {
+      "text": "Model",
+      "box": [1042, 653, 1097, 667],
+      "mono": false
+     }
     }
    ],
    "result": "One model id fails over between free models.",
@@ -1522,7 +1757,15 @@
      "from": "https://docs.anyrouter.dev/features/api-keys"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-api-keys.png: Managing API Keys",
+     "from": "https://docs.anyrouter.dev/features/api-keys"
+    },
+    {
      "says": "capture: shared/dashboard/logs.png (Dashboard → Logs: requests today, error rate, p50 latency, and the request table with model, fallbacks ('OK · 5 fallback)",
+     "from": "https://anyrouter.dev/dashboard/logs"
+    },
+    {
+     "says": "line on shared/dashboard/logs.png: Model",
      "from": "https://anyrouter.dev/dashboard/logs"
     },
     {
@@ -1542,7 +1785,12 @@
    "steps": [
     {
      "text": "Compare list prices in the catalog.",
-     "capture": "shared/surfaces/ar-compare.png"
+     "capture": "shared/surfaces/ar-compare.png",
+     "line": {
+      "text": "Input $/1M",
+      "box": [450, 2092, 3457, 2122],
+      "mono": false
+     }
     },
     {
      "text": "Start on anyrouter/auto.",
@@ -1551,7 +1799,12 @@
     },
     {
      "text": "Pin an id once you have measured it.",
-     "capture": "shared/surfaces/ar-model-auto.png"
+     "capture": "shared/surfaces/ar-model-auto.png",
+     "line": {
+      "text": "anyrouter/auto",
+      "box": [809, 344, 1008, 366],
+      "mono": true
+     }
     }
    ],
    "result": "Switching models is now a string change.",
@@ -1613,7 +1866,15 @@
      "from": "https://anyrouter.dev/compare"
     },
     {
+     "says": "line on shared/surfaces/ar-compare.png: Input $/1M",
+     "from": "https://anyrouter.dev/compare"
+    },
+    {
      "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
+    },
+    {
+     "says": "line on shared/surfaces/ar-model-auto.png: anyrouter/auto",
      "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
@@ -1633,7 +1894,12 @@
    "steps": [
     {
      "text": "Install the AnyRouter provider.",
-     "capture": "shared/surfaces/tp-npm-ai-sdk-provider.png"
+     "capture": "shared/surfaces/tp-npm-ai-sdk-provider.png",
+     "line": {
+      "text": "npm install @anyr/ai-sdk-provider ai zod",
+      "box": [783, 1409, 1550, 1439],
+      "mono": true
+     }
     },
     {
      "text": "Pass a catalog id.",
@@ -1696,6 +1962,10 @@
      "from": "https://www.npmjs.com/package/@anyr/ai-sdk-provider"
     },
     {
+     "says": "line on shared/surfaces/tp-npm-ai-sdk-provider.png: npm install @anyr/ai-sdk-provider ai zod",
+     "from": "https://www.npmjs.com/package/@anyr/ai-sdk-provider"
+    },
+    {
      "says": "capture: ai-sdk/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/ai-sdk"
     },
@@ -1712,7 +1982,12 @@
    "steps": [
     {
      "text": "Keep openai installed.",
-     "capture": "shared/surfaces/tp-openai-node.png"
+     "capture": "shared/surfaces/tp-openai-node.png",
+     "line": {
+      "text": "npm install openai",
+      "box": [804, 427, 1096, 454],
+      "mono": true
+     }
     },
     {
      "text": "Change the base URL and API key.",
@@ -1720,7 +1995,12 @@
     },
     {
      "text": "Use anyrouter/free for the first call.",
-     "capture": "shared/surfaces/ar-free.png"
+     "capture": "shared/surfaces/ar-free.png",
+     "line": {
+      "text": "No daily limit.",
+      "box": [803, 555, 996, 583],
+      "mono": false
+     }
     }
    ],
    "result": "Same client, same calls, across the whole catalog.",
@@ -1778,7 +2058,15 @@
      "from": "https://github.com/openai/openai-node"
     },
     {
+     "says": "line on shared/surfaces/tp-openai-node.png: npm install openai",
+     "from": "https://github.com/openai/openai-node"
+    },
+    {
      "says": "capture: shared/surfaces/ar-free.png (anyrouter.dev/free: free models and anyrouter/free.)",
+     "from": "https://anyrouter.dev/free"
+    },
+    {
+     "says": "line on shared/surfaces/ar-free.png: No daily limit.",
      "from": "https://anyrouter.dev/free"
     },
     {
@@ -1802,11 +2090,21 @@
     },
     {
      "text": "Use /api for Anthropic Messages.",
-     "capture": "shared/surfaces/ar-unify-messages.png"
+     "capture": "shared/surfaces/ar-unify-messages.png",
+     "line": {
+      "text": "POST https://anyrouter.dev/api/v1/messages",
+      "box": [834, 606, 1482, 631],
+      "mono": true
+     }
     },
     {
      "text": "Start with anyrouter/auto.",
-     "capture": "shared/surfaces/ar-model-auto.png"
+     "capture": "shared/surfaces/ar-model-auto.png",
+     "line": {
+      "text": "anyrouter/auto",
+      "box": [809, 344, 1008, 366],
+      "mono": true
+     }
     }
    ],
    "result": "Chat completions, messages and responses. Same key, same catalog.",
@@ -1867,7 +2165,15 @@
      "from": "https://anyrouter.dev/unify-api/messages"
     },
     {
+     "says": "line on shared/surfaces/ar-unify-messages.png: POST https://anyrouter.dev/api/v1/messages",
+     "from": "https://anyrouter.dev/unify-api/messages"
+    },
+    {
      "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
+    },
+    {
+     "says": "line on shared/surfaces/ar-model-auto.png: anyrouter/auto",
      "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
@@ -1891,12 +2197,22 @@
     },
     {
      "text": "Send each the same prompt.",
-     "capture": "shared/surfaces/ar-compare.png"
+     "capture": "shared/surfaces/ar-compare.png",
+     "line": {
+      "text": "5 models selected",
+      "box": [222, 237, 462, 264],
+      "mono": false
+     }
     },
     {
      "text": "Compare answers, latency and cost.",
      "more": "Cost per request is in the dashboard logs.",
-     "capture": "shared/surfaces/ar-docs-request-logs.png"
+     "capture": "shared/surfaces/ar-docs-request-logs.png",
+     "line": {
+      "text": "Request Logs",
+      "box": [1219, 208, 1515, 250],
+      "mono": false
+     }
     }
    ],
    "result": "One key and one client for every model you test.",
@@ -1969,7 +2285,15 @@
      "from": "https://anyrouter.dev/compare"
     },
     {
+     "says": "line on shared/surfaces/ar-compare.png: 5 models selected",
+     "from": "https://anyrouter.dev/compare"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-request-logs.png (AnyRouter docs: request logs (Dashboard → Logs), model and cost per request.)",
+     "from": "https://docs.anyrouter.dev/features/request-logs"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-request-logs.png: Request Logs",
      "from": "https://docs.anyrouter.dev/features/request-logs"
     },
     {
@@ -1989,7 +2313,12 @@
    "steps": [
     {
      "text": "Keep your primary model, here on your own key.",
-     "capture": "shared/surfaces/ar-byok.png"
+     "capture": "shared/surfaces/ar-byok.png",
+     "line": {
+      "text": "Keep your provider deals",
+      "box": [802, 1068, 1115, 1093],
+      "mono": false
+     }
     },
     {
      "text": "Add backup models in order.",
@@ -1997,7 +2326,12 @@
     },
     {
      "text": "Read which one answered.",
-     "capture": "shared/surfaces/ar-docs-fallbacks-header.png"
+     "capture": "shared/surfaces/ar-docs-fallbacks-header.png",
+     "line": {
+      "text": "\"model\": \"openai/gpt-5.4-mini\",",
+      "box": [1280, 584, 1758, 609],
+      "mono": true
+     }
     }
    ],
    "result": "If the first model fails, AnyRouter tries the next one.",
@@ -2056,7 +2390,15 @@
      "from": "https://anyrouter.dev/byok"
     },
     {
+     "says": "line on shared/surfaces/ar-byok.png: Keep your provider deals",
+     "from": "https://anyrouter.dev/byok"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-fallbacks-header.png (AnyRouter guide, model fallbacks: telling which model answered. Scrolled to: \"Requests are priced using the model that a)",
+     "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-fallbacks-header.png: \"model\": \"openai/gpt-5.4-mini\",",
      "from": "https://docs.anyrouter.dev/guides/model-fallbacks"
     },
     {
@@ -2076,7 +2418,12 @@
    "steps": [
     {
      "text": "Add the key under BYOK.",
-     "capture": "shared/surfaces/ar-docs-byok.png"
+     "capture": "shared/surfaces/ar-docs-byok.png",
+     "line": {
+      "text": "Bring Your Own Key (BYOK)",
+      "box": [1219, 206, 1800, 250],
+      "mono": false
+     }
     },
     {
      "text": "Turn on donate.",
@@ -2085,7 +2432,12 @@
     },
     {
      "text": "Credits come from pool traffic.",
-     "capture": "shared/surfaces/ar-docs-shared-pool-credits.png"
+     "capture": "shared/surfaces/ar-docs-shared-pool-credits.png",
+     "line": {
+      "text": "You earn credits for what your key serves.",
+      "box": [1273, 934, 1869, 961],
+      "mono": false
+     }
     }
    ],
    "result": "It serves other people's requests, and pays you back in credits.",
@@ -2147,7 +2499,15 @@
      "from": "https://docs.anyrouter.dev/features/byok"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-byok.png: Bring Your Own Key (BYOK)",
+     "from": "https://docs.anyrouter.dev/features/byok"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-shared-pool-credits.png (AnyRouter docs, shared pool: credits earned from donated keys. Scrolled to: \"Features Account Settings AnyRouter Agent M)",
+     "from": "https://docs.anyrouter.dev/features/shared-pool"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-shared-pool-credits.png: You earn credits for what your key serves.",
      "from": "https://docs.anyrouter.dev/features/shared-pool"
     },
     {
@@ -2167,7 +2527,12 @@
    "steps": [
     {
      "text": "Add each provider key.",
-     "capture": "shared/surfaces/ar-byok.png"
+     "capture": "shared/surfaces/ar-byok.png",
+     "line": {
+      "text": "Add your first key",
+      "box": [834, 1290, 1065, 1315],
+      "mono": false
+     }
     },
     {
      "text": "Call AnyRouter with one key.",
@@ -2231,6 +2596,10 @@
      "from": "https://anyrouter.dev/byok"
     },
     {
+     "says": "line on shared/surfaces/ar-byok.png: Add your first key",
+     "from": "https://anyrouter.dev/byok"
+    },
+    {
      "says": "capture: byok/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/byok"
     },
@@ -2247,11 +2616,21 @@
    "steps": [
     {
      "text": "Add your Anthropic key in BYOK.",
-     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png"
+     "capture": "video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png",
+     "line": {
+      "text": "Anthropic",
+      "box": [124, 410, 246, 435],
+      "mono": false
+     }
     },
     {
      "text": "Test the key, and save it.",
-     "capture": "shared/surfaces/ar-docs-byok-anthropic.png"
+     "capture": "shared/surfaces/ar-docs-byok-anthropic.png",
+     "line": {
+      "text": "Click Save.",
+      "box": [1274, 1454, 1426, 1477],
+      "mono": false
+     }
     },
     {
      "text": "Run anyr claude with a Claude model.",
@@ -2314,7 +2693,15 @@
      "from": "https://anyrouter.dev/dashboard/byok?add=true"
     },
     {
+     "says": "line on video-usecase-v3/shared/captures/2026-10-19/screens/signed-in/byok-add-provider-list.png: Anthropic",
+     "from": "https://anyrouter.dev/dashboard/byok?add=true"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-byok-anthropic.png (AnyRouter docs, BYOK providers: Anthropic (sk-ant-… keys).)",
+     "from": "https://docs.anyrouter.dev/features/byok-providers/anthropic"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-byok-anthropic.png: Click Save.",
      "from": "https://docs.anyrouter.dev/features/byok-providers/anthropic"
     },
     {
@@ -2338,11 +2725,21 @@
     },
     {
      "text": "Exchange the code for a short-lived key.",
-     "capture": "shared/surfaces/ar-docs-siwa.png"
+     "capture": "shared/surfaces/ar-docs-siwa.png",
+     "line": {
+      "text": "OAuth 2.1 authorization code with PKCE.",
+      "box": [1372, 696, 1915, 719],
+      "mono": false
+     }
     },
     {
      "text": "Call models on their behalf.",
-     "capture": "shared/surfaces/ar-siwa.png"
+     "capture": "shared/surfaces/ar-siwa.png",
+     "line": {
+      "text": "The token can run AI requests",
+      "box": [1499, 1460, 1879, 1485],
+      "mono": false
+     }
     }
    ],
    "result": "You never store a raw provider secret.",
@@ -2401,7 +2798,15 @@
      "from": "https://docs.anyrouter.dev/guides/sign-in-with-anyrouter"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-siwa.png: OAuth 2.1 authorization code with PKCE.",
+     "from": "https://docs.anyrouter.dev/guides/sign-in-with-anyrouter"
+    },
+    {
      "says": "capture: shared/surfaces/ar-siwa.png (anyrouter.dev/sign-in-with-anyrouter landing page.)",
+     "from": "https://anyrouter.dev/sign-in-with-anyrouter"
+    },
+    {
+     "says": "line on shared/surfaces/ar-siwa.png: The token can run AI requests",
      "from": "https://anyrouter.dev/sign-in-with-anyrouter"
     },
     {
@@ -2425,7 +2830,12 @@
     },
     {
      "text": "Sign in when it asks.",
-     "capture": "shared/surfaces/ar-docs-mcp-oauth.png"
+     "capture": "shared/surfaces/ar-docs-mcp-oauth.png",
+     "line": {
+      "text": "the same OAuth consent flow",
+      "box": [1779, 1216, 2182, 1242],
+      "mono": false
+     }
     }
    ],
    "result": "Claude Desktop, Claude Code, Cursor and OpenCode call it as tools.",
@@ -2482,6 +2892,10 @@
      "from": "https://docs.anyrouter.dev/mcp"
     },
     {
+     "says": "line on shared/surfaces/ar-docs-mcp-oauth.png: the same OAuth consent flow",
+     "from": "https://docs.anyrouter.dev/mcp"
+    },
+    {
      "says": "capture: mcp-gateway/page/viewport-landscape.png and viewport-portrait.png (the live use-case page the film ends on)",
      "from": "https://anyrouter.dev/use-cases/mcp-gateway"
     },
@@ -2502,7 +2916,12 @@
     },
     {
      "text": "Keep model calls on anyrouter/auto.",
-     "capture": "shared/surfaces/ar-model-auto.png"
+     "capture": "shared/surfaces/ar-model-auto.png",
+     "line": {
+      "text": "anyrouter/auto",
+      "box": [809, 344, 1008, 366],
+      "mono": true
+     }
     }
    ],
    "result": "One endpoint, instead of a new config in every app.",
@@ -2565,6 +2984,10 @@
     },
     {
      "says": "capture: shared/surfaces/ar-model-auto.png (Model page: anyrouter/auto.)",
+     "from": "https://anyrouter.dev/model/anyrouter/auto"
+    },
+    {
+     "says": "line on shared/surfaces/ar-model-auto.png: anyrouter/auto",
      "from": "https://anyrouter.dev/model/anyrouter/auto"
     },
     {
@@ -2733,7 +3156,12 @@
    "steps": [
     {
      "text": "Pick an embedding model.",
-     "capture": "shared/surfaces/ar-model-nemotron-embed.png"
+     "capture": "shared/surfaces/ar-model-nemotron-embed.png",
+     "line": {
+      "text": "nvidia/nemotron-3-embed-1b",
+      "box": [810, 344, 1182, 365],
+      "mono": true
+     }
     },
     {
      "text": "Send your text to the endpoint.",
@@ -2742,7 +3170,12 @@
     },
     {
      "text": "Embed queries with the same model.",
-     "capture": "shared/surfaces/ar-docs-embeddings.png"
+     "capture": "shared/surfaces/ar-docs-embeddings.png",
+     "line": {
+      "text": "Model id to use for embeddings.",
+      "box": [2052, 1016, 2488, 1043],
+      "mono": false
+     }
     }
    ],
    "result": "The same key, and the OpenAI request shape.",
@@ -2810,7 +3243,15 @@
      "from": "https://anyrouter.dev/model/nvidia/nemotron-3-embed-1b"
     },
     {
+     "says": "line on shared/surfaces/ar-model-nemotron-embed.png: nvidia/nemotron-3-embed-1b",
+     "from": "https://anyrouter.dev/model/nvidia/nemotron-3-embed-1b"
+    },
+    {
      "says": "capture: shared/surfaces/ar-docs-embeddings.png (AnyRouter API reference: POST /api/v1/embeddings, string or array input.)",
+     "from": "https://docs.anyrouter.dev/api-reference/embeddings"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-embeddings.png: Model id to use for embeddings.",
      "from": "https://docs.anyrouter.dev/api-reference/embeddings"
     },
     {
@@ -2839,7 +3280,12 @@
     },
     {
      "text": "Read the answers.",
-     "capture": "shared/surfaces/ar-docs-decisions.png"
+     "capture": "shared/surfaces/ar-docs-decisions.png",
+     "line": {
+      "text": "get structured answers",
+      "box": [1985, 448, 2307, 475],
+      "mono": false
+     }
     }
    ],
    "result": "You get probabilities back, not generated text.",
@@ -2898,6 +3344,10 @@
     },
     {
      "says": "capture: shared/surfaces/ar-docs-decisions.png (AnyRouter API reference: typed decisions (state + questions).)",
+     "from": "https://docs.anyrouter.dev/api-reference/systemone"
+    },
+    {
+     "says": "line on shared/surfaces/ar-docs-decisions.png: get structured answers",
      "from": "https://docs.anyrouter.dev/api-reference/systemone"
     },
     {

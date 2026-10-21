@@ -62,7 +62,7 @@ export function scriptOf(narration, slug, published) {
     { ...opening.intro, beat: 'intro' },
     { ...opening.problem, beat: 'problem' },
     ...film.steps.flatMap((st, i) => [
-      { id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, capture: st.capture ?? null, text: `Step ${i + 1}. ${st.text}` },
+      { id: `${slug}-step-${i + 1}`, beat: 'step', step: i + 1, label: st.text.replace(/[.]$/, ''), shows: st.shows ?? null, capture: st.capture ?? null, line: st.line ?? null, text: `Step ${i + 1}. ${st.text}` },
       ...(st.more ? [{ id: `${slug}-step-${i + 1}-more`, beat: 'step', step: i + 1, more: true, text: st.more }] : []),
     ]),
     { id: `${slug}-result`, beat: 'result', text: film.result },

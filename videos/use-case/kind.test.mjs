@@ -62,7 +62,9 @@ const scriptedOf = slug => {
   const labels = { single: [m.a, m.b, m.tag, m.fail], rows: (m.rows ?? []).flat(), sprawl: [m.a, ...(m.rows ?? [])], chips: m.items }[m.kind];
   // a real screen's bar names where it came from: the address or the command its manifest row records
   const bars = [...f.steps.filter(st => st.capture).map(st => st.capture), `${slug}/page/viewport-landscape.png`].map(ref => barOf(captureOf(ref)));
-  return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note, ...bars].filter(Boolean);
+  // and the line a step's screen is about, set again under it, as the ledger sources it off that screen
+  const lines = f.steps.filter(st => st.line && f.claims.some(c => c.says === `line on ${st.capture}: ${st.line.text}`)).map(st => st.line.text);
+  return [f.role === 'intro' ? f.problem : f.outcome, f.result, ...labels, ...fl.left, ...fl.right, fl.note, ...bars, ...lines].filter(Boolean);
 };
 
 // ── one release per use case ───────────────────────────────────────────────
@@ -278,14 +280,16 @@ test('the headline fills the frame and the code reads from across the room', () 
   for (const [u, f] of films()) {
     const h = html(f);
     const [, l, p] = h.match(/--fs:(\d+)px;--fs-p:(\d+)px/);
-    // frame.md v3 display type is 184px, 148px in portrait; a long headline steps down to leave the code its room
+    // frame.md v3 display type is 184px; portrait sets it up to 168px to fill a phone's height. A long
+    // headline steps down to leave the code its room
     assert.ok(+l >= 144 && +l <= 184, `${u.slug}: landscape headline ${l}px`);
-    assert.ok(+p >= 120 && +p <= 148, `${u.slug}: portrait headline ${p}px`);
+    assert.ok(+p >= 120 && +p <= 168, `${u.slug}: portrait headline ${p}px`);
     const [, cl, cp] = h.match(/--cs:(\d+)px;--cs-p:(\d+)px/);
     // a window rewritten narrower for portrait is taller, so landscape may step down to 40px
     assert.ok(+cl >= 40 && +cl <= 56, `${u.slug}: landscape code ${cl}px`);
-    // never under the 32px a phone reads, and that small only where a whole token needs the row
-    assert.ok(+cp >= 32 && +cp <= 44, `${u.slug}: portrait code ${cp}px`);
+    // never under the 32px a phone reads, and that small only where a whole token needs the row; as
+    // large as landscape's where the code is short enough
+    assert.ok(+cp >= 32 && +cp <= 56, `${u.slug}: portrait code ${cp}px`);
     if (+cl >= 48) large++;
   }
   // the steps above the window take room from it, so half at 48px or more
@@ -459,6 +463,10 @@ test('every real screen a film shows names its source in the film\'s claims ledg
       const c = captureOf(st.capture), claim = f.claims.find(x => x.says.startsWith(`capture: ${st.capture} `));
       assert.ok(claim, `${slug}: ${st.capture} has no claim`);
       assert.equal(claim.from, c.url ?? c.command, `${slug}: ${st.capture} names its source`);
+      // its line is read off that screen, so the same source stands for it
+      const line = f.claims.find(x => x.says === `line on ${st.capture}: ${st.line?.text}`);
+      assert.ok(line, `${slug}: the line on ${st.capture} has no claim`);
+      assert.equal(line.from, c.url ?? c.command, `${slug}: the line on ${st.capture} names the screen's source`);
     }
     assert.ok(f.claims.some(x => x.says.startsWith(`capture: ${slug}/page/viewport-landscape.png`)), `${slug}: the end card's page has a claim`);
   }

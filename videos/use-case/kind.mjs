@@ -35,7 +35,7 @@ import { writeProject } from './project.mjs';
 import { loadNarration, scriptOf, voicedLine, LINKS } from './narration.mjs';
 import { CSS, read, setIn, codeSizes, codeCols, caretCols, SIZES, idFitsRow, titleSet, titleType, stepType, labelSet, detailSet, headOf, STEP, TYPE, WIN_SH, filmScene, ROLL_EVERY, sayType, diagramOf, fitPanel, boardOf, barOf } from './scenes.mjs';
 import { reflow, standsAlone, closed, headless } from './reflow.mjs';
-import { captureOf } from './captures.mjs';
+import { captureOf, cropOf } from './captures.mjs';
 
 export const API = 'https://anyrouter.dev/use-cases.json';
 // every model, with the billing field that says which ones run on the user's own key
@@ -198,7 +198,7 @@ export function copyOf(u, pools) {
   // a step that shows no code shows its real screen (captures.mjs), or else the page's own sentence for it
   const real = ref => { const c = captureOf(ref); return { ...c, bar: barOf(c) }; };
   const steps = u.narration.lines.filter(l => l.beat === 'step' && !l.more).map(l => ({
-    label: redact(l.label), shows: l.shows, capture: !l.shows && l.capture ? real(l.capture) : null,
+    label: redact(l.label), shows: l.shows, capture: !l.shows && l.capture ? { ...real(l.capture), line: l.line, crop: cropOf(captureOf(l.capture), l.line?.box) } : null,
     detail: !l.shows && !l.capture && pageStep(l.label) ? undash(redact(beyond(l.label, pageStep(l.label)) ?? '')) || null : null,
   }));
   const shown = steps.map((st, k) => (st.shows ? k : -1)).filter(k => k >= 0);
@@ -289,7 +289,7 @@ export function copyOf(u, pools) {
     marks: [...new Set(u.logos.map(markFor).filter(Boolean))],
     problem, result,
     // the end card shows the live page the film ends on, as it is
-    page: { landscape: real(`${u.slug}/page/viewport-landscape.png`), portrait: real(`${u.slug}/page/viewport-portrait.png`) },
+    page: { landscape: real(`${u.slug}/page/viewport-landscape.png`), portrait: { ...real(`${u.slug}/page/viewport-portrait.png`), crop: cropOf(captureOf(`${u.slug}/page/viewport-portrait.png`)) } },
     steps: steps.map(st => ({
       ...st,
       breaks: { landscape: labelSet(st.label, 'landscape', stepT.landscape).breaks, portrait: labelSet(st.label, 'portrait', stepT.portrait).breaks },
