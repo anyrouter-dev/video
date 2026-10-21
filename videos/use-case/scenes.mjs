@@ -978,7 +978,9 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
         tl.set(line, { autoAlpha: 0, y: ly }, 0);
         tl.set(line, { autoAlpha: 1 }, at + 0.95);
         tl.fromTo(line, { y: ly + 40, z: -160, rotationX: 24 }, { y: ly, z: 0, rotationX: 0, duration: 0.7, ease: "expo.out", immediateRender: false }, at + 0.95);
-        if (next) { tl.to(line, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(line, { autoAlpha: 0 }, out + 0.3); }
+        tl.set(line, { attr: { "data-in-flight": "1" } }, at + 0.95);
+        tl.set(line, { attr: { "data-in-flight": "0" } }, at + 1.65);
+        if (next) { tl.set(line, { attr: { "data-in-flight": "1" } }, out - 0.05); tl.to(line, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(line, { autoAlpha: 0 }, out + 0.3); }
       }
       if (next) { tl.to(f, { z: -380, rotationX: -10, y: "-=50", duration: 0.35, ease: "power3.in" }, out - 0.05); tl.set(f, { autoAlpha: 0 }, out + 0.3); }
     });
@@ -1095,6 +1097,10 @@ export function filmScene({ copy, beats, duration, timing, said }, board = 'row'
     cblk.style.top = SY + Math.max(0, (SH - cblk.offsetHeight) / 2) + "px";
     // the live page the film ends on swings in beside the lockup and scrolls a little, as a visitor would
     tl.fromTo(pagef, { z: -420, rotationY: TALL ? 0 : -24, rotationX: TALL ? 14 : 0, opacity: 0 }, { z: 0, rotationY: 0, rotationX: 0, opacity: 1, duration: 1.1, ease: "expo.out", immediateRender: true }, END + 0.25);
+    // the audit reads the page's bar and the link once they have landed (stage-audit.mjs, flight)
+    const landing = (el, a, b) => { tl.set(el, { attr: { "data-in-flight": "1" } }, a); tl.set(el, { attr: { "data-in-flight": "0" } }, b); };
+    landing(pagef, END + 0.25, END + 1.35);
+    landing(Q(".url"), END + 0.6, END + 1.6);
     if (!TALL) tl.fromTo(pagef.querySelectorAll(".si"), { yPercent: 0 }, { yPercent: -6, duration: Math.max(0.5, D - END - 1.2), ease: "sine.inOut", immediateRender: false }, END + 1.2);
     const h2w = $$(".h2 .w > span");
     tl.fromTo(h2w, { yPercent: 110 }, { yPercent: 0, duration: 0.6, stagger: Math.min(0.04, 0.25 / h2w.length), ease: "expo.out", immediateRender: false }, END + 0.15);
@@ -1307,6 +1313,7 @@ export const CSS = `
     /* the line under its badge at the top of the safe area, the picture at its foot */
     .film .blk{gap:${BLOCK.portrait.gap}px;height:var(--sh)}
     .film .blk .kt{margin-bottom:auto}
+    .film .dg:has(.fl){margin-bottom:${FAIL_H}px}
     .film .dg{gap:60px}
     .film .dg.stack-p{flex-direction:column;gap:${BLOCK.portrait.stackGap}px}
     .film .dg.stack-p .col{align-items:center}
