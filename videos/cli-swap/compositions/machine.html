@@ -401,8 +401,10 @@
   readout('more', T.codex, T.end);
 
   // The end card.
+  // In portrait the card sits under the machine, so it waits until the camera has pulled back.
   const card = $('.endcard');
-  tl.fromTo(card, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', immediateRender: false }, T.url - 0.15);
+  const cardAt = PORTRAIT ? Math.max(T.url - 0.15, T.end + 0.85) : T.url - 0.15;
+  tl.fromTo(card, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', immediateRender: false }, cardAt);
   tl.to(card, { y: -12, duration: D.DURATION - T.url - 0.8, ease: 'sine.inOut' }, T.url + 0.75);
 
   tl.set({}, {}, D.DURATION);
