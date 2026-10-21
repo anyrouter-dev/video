@@ -100,6 +100,8 @@ export default {
   title: 'This week on AnyRouter',
   scheduled: false,
   audited: true,
+  // the portrait fills the phone's height and keeps clear of the Shorts UI
+  portraitFill: true,
 
   async collect({ flags }) {
     const week = flags.week ? String(flags.week) : lastFullWeek(Date.now());

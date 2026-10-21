@@ -181,6 +181,8 @@ export default {
   title: 'Free models roundup',
   scheduled: false,
   audited: true,
+  // the portrait fills the phone's height and keeps clear of the Shorts UI
+  portraitFill: true,
 
   async collect({ flags }) {
     const doc = flags.from ? readJson(path.resolve(flags.from)) : await fetchJson(MODELS_API);
