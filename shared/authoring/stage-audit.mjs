@@ -10,8 +10,8 @@
 //   safe    with --safe, readable text stays inside that box (the part of it not clipped away). Frame chrome and captions sit
 //           outside it on purpose: they carry data-outside-safe-area and only have to stay
 //           on the stage.
-//   flight  text inside an element marked data-in-flight="1" is moving with the camera and is
-//           not judged until it lands
+//   flight  text or a layer inside an element marked data-in-flight="1" is moving with the camera
+//           and is not judged until it lands
 //   fit     every line of text is whole where it is set: not cut by a box that clips it, not
 //           running past the card around it, no row ending inside a word, an id or a name, no
 //           line marked data-one-row on two rows,
@@ -129,6 +129,8 @@ async function seekAndMeasure(t, frame, safe, tol, floor) {
 
   for (const el of document.querySelectorAll('canvas, svg, img, video')) {
     if (el.ownerSVGElement) continue;
+    // a drawing the camera is carrying between two places can pass the stage's edge on the way
+    if (el.closest('[data-in-flight="1"]')) continue;
     const r = clipped(el);
     if (!shown(el, r)) continue;
     const spans = r.width >= frame.w - 2 || r.height >= frame.h - 2;
