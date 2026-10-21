@@ -11,20 +11,25 @@ import { GRID, FLIP } from './board.mjs';
 
 export const C = { wall: '#ECE8DF', ink: '#17171A', muted: '#55524B', frame: '#141416', flap: '#26262A', glyph: '#F3EFE4', accent: '#F2C230', rod: '#9C978C' };
 
-// Board width each grid may take, in px.
-const ROOM = { landscape: 1720, portrait: 850 };
+// Board width each grid may take, and the gap between its cells, in px. Portrait takes the
+// whole safe width (60 to 960, less the board's frame), with a thinner gap, so a cell is as wide as it can be.
+const ROOM = { landscape: 1720, portrait: 872 };
+const GAP = { landscape: 3, portrait: 2 };
+// Barlow Condensed 600's widest glyphs (m, W) are 0.76 em; a portrait cell is set so they stay in it.
+const WIDEST = 0.76;
 
 /** Cell pitch and type for each grid. */
 export function metrics(cols) {
   return Object.fromEntries(['landscape', 'portrait'].map(o => {
-    const pitch = Math.floor(ROOM[o] / cols[o]);
-    return [o, { pitch, w: pitch - 3, h: o === 'portrait' ? 50 : 60, font: Math.max(32, Math.min(46, Math.floor((pitch - 3) * 1.5))) }];
+    const pitch = Math.floor(ROOM[o] / cols[o]), w = pitch - GAP[o];
+    const font = o === 'portrait' ? Math.floor((w + 4) / WIDEST) : Math.floor(w * 1.5);
+    return [o, { pitch, w, gap: GAP[o], h: o === 'portrait' ? 58 : 60, font: Math.max(32, Math.min(46, font)) }];
   }));
 }
 
 export function css(cols) {
   const m = metrics(cols);
-  const grid = o => `width:${m[o].pitch * cols[o]}px;grid-template-columns:repeat(${cols[o]},${m[o].w}px);grid-auto-rows:${m[o].h}px;column-gap:3px;row-gap:${o === 'landscape' ? 10 : 5}px`;
+  const grid = o => `width:${m[o].pitch * cols[o]}px;grid-template-columns:repeat(${cols[o]},${m[o].w}px);grid-auto-rows:${m[o].h}px;column-gap:${m[o].gap}px;row-gap:${o === 'landscape' ? 10 : 5}px`;
   const cell = o => `font-size:${m[o].font}px;line-height:${m[o].h}px`;
   return `
   .stage{position:absolute;inset:0;overflow:hidden;background:${C.wall};color:${C.ink};font-family:'Barlow Condensed',sans-serif;
@@ -73,12 +78,13 @@ export function css(cols) {
     .head h1 span{display:block}
     .head .sub{margin-top:12px;font-size:34px}
     .rods{display:none}
-    .mount{top:470px}
-    .board{padding:22px 22px 18px}
+    .mount{left:60px;right:120px;top:486px}
+    .board{padding:22px 14px 18px}
+    .labels span,.foot span{font-size:34px}
     .grid.l,.labels.l{display:none}
     .grid.p,.labels.p{display:grid}
     .logo{right:60px;top:210px;width:170px}
-    .cap{left:60px;right:60px;top:1336px;height:170px}
+    .cap{left:60px;right:60px;top:1420px;height:120px}
     .cap span{font-size:44px}
   }`;
 }
