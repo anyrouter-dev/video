@@ -1,0 +1,27 @@
+{
+  "id": "011-20261022-2026-10-22-148f6bec7b",
+  "hash": "148f6bec7b",
+  "kind": "changelog",
+  "label": "2026-10-22",
+  "title": "3 changelog updates: Recursive Flint, Elorian Glimpse +1 more",
+  "seconds": 24,
+  "renderedAt": "2026-10-22T13:02:16.143Z",
+  "commit": "9691c2c",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-011-20261022-2026-10-22-148f6bec7b.mp4",
+      "cover": "renders/changelog-011-20261022-2026-10-22-148f6bec7b.png",
+      "youtube": "https://youtu.be/ZhC8JyRgd5U"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-011-20261022-2026-10-22-148f6bec7b-portrait.mp4",
+      "cover": "renders/changelog-011-20261022-2026-10-22-148f6bec7b-portrait.png",
+      "youtube": "https://youtu.be/TUFCJZgbSOY"
+    }
+  },
+  "source": "renders/changelog-011-20261022-2026-10-22-148f6bec7b-source.tar.gz",
+  "createdAt": "2026-10-22T13:02:16.151Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-011-20261022-2026-10-22-148f6bec7b"
+  }
+}

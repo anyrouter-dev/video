@@ -296,6 +296,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-014-20261021-models-pricing-24d849e1a9"
       }
+    },
+    {
+      "id": "015-20261022-models-pricing-a12843affd",
+      "hash": "a12843affd",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "3 new models: flint-v1.0, mercury-3, glimpse",
+      "seconds": 20,
+      "renderedAt": "2026-10-22T13:03:37.726Z",
+      "commit": "9691c2c",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-015-20261022-models-pricing-a12843affd.mp4",
+          "cover": "renders/model-drop-015-20261022-models-pricing-a12843affd.png",
+          "youtube": "https://youtu.be/MhlP7VMsF0s"
+        }
+      },
+      "source": "renders/model-drop-015-20261022-models-pricing-a12843affd-source.tar.gz",
+      "createdAt": "2026-10-22T13:03:37.735Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-015-20261022-models-pricing-a12843affd"
+      }
     }
   ]
 }

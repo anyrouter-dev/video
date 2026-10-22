@@ -1,0 +1,119 @@
+{
+  "generatedAt": "2026-10-22T12:59:09.358Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 303,
+    "listed": 294,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 66,
+    "providerBackends": 66,
+    "free": 57
+  },
+  "pool": {
+    "keys": 199,
+    "donors": 105,
+    "requests": 47143
+  },
+  "added": [
+    {
+      "id": "recursive/flint-v1.0",
+      "name": "Flint",
+      "provider": "recursive",
+      "logo": null,
+      "context": 262144,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792540800,
+      "category": "text",
+      "excerpt": "Flint is Recursive's open-weight mixture-of-experts model for coding agents, with about 39.8B total and 2.5B active parameters per token."
+    },
+    {
+      "id": "inception/mercury-3",
+      "name": "Mercury 3",
+      "provider": "inception",
+      "logo": "inception.svg",
+      "context": 1000000,
+      "inPrice": 0.1,
+      "outPrice": 0.35,
+      "free": false,
+      "created": 1792368000,
+      "category": "text",
+      "excerpt": "Inception's Mercury 3 is a diffusion language model and the lab's most capable to date, built for agentic workflows and real-time applications."
+    },
+    {
+      "id": "elorian/glimpse",
+      "name": "Glimpse",
+      "provider": "elorian",
+      "logo": null,
+      "context": 262144,
+      "inPrice": 0.6,
+      "outPrice": 3,
+      "free": false,
+      "created": 1792108800,
+      "category": "text",
+      "excerpt": "Elorian's Glimpse is a visual reasoning model for image and video understanding."
+    }
+  ],
+  "changed": [
+    {
+      "id": "moonshotai/kimi-k3",
+      "from": "0/0@1050000",
+      "to": "3/15@1050000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "from": "0.0245/0.0978@256000",
+      "to": "0/0@256000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "from": "0.5/2.2@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "from": "0.025/0.12@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "moonshotai/kimi-latest",
+      "from": "0/0@1050000",
+      "to": "3/15@1050000",
+      "kind": "price-rise"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "recursive/flint-v1.0",
+    "name": "Flint",
+    "provider": "recursive",
+    "logo": null,
+    "context": 262144,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1792540800,
+    "category": "text",
+    "excerpt": "Flint is Recursive's open-weight mixture-of-experts model for coding agents, with about 39.8B total and 2.5B active parameters per token."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+recursive/flint-v1.0@0/0@262144",
+    "+inception/mercury-3@0.1/0.35@1000000",
+    "+elorian/glimpse@0.6/3@262144",
+    "~moonshotai/kimi-k3 0/0@1050000->3/15@1050000",
+    "~nvidia/nemotron-3-nano-omni-30b-a3b-reasoning 0.0245/0.0978@256000->0/0@256000",
+    "~nvidia/nemotron-3-ultra-550b-a55b 0.5/2.2@1000000->0/0@1000000",
+    "~nvidia/nemotron-3.5-lightning-30b-a3b 0.025/0.12@1000000->0/0@1000000",
+    "~moonshotai/kimi-latest 0/0@1050000->3/15@1050000"
+  ]
+}
