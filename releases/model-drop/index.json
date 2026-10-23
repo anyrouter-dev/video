@@ -318,6 +318,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-015-20261022-models-pricing-a12843affd"
       }
+    },
+    {
+      "id": "016-20261023-models-pricing-922e0e04c3",
+      "hash": "922e0e04c3",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "3 new models: pplx-decider-flash-v1.2, nemotron-3.5-embed-1b, nemotron-3.5-embed-8b",
+      "seconds": 20,
+      "renderedAt": "2026-10-23T12:44:04.820Z",
+      "commit": "f8889d4",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-016-20261023-models-pricing-922e0e04c3.mp4",
+          "cover": "renders/model-drop-016-20261023-models-pricing-922e0e04c3.png",
+          "youtube": "https://youtu.be/U8oKF2ricak"
+        }
+      },
+      "source": "renders/model-drop-016-20261023-models-pricing-922e0e04c3-source.tar.gz",
+      "createdAt": "2026-10-23T12:44:04.825Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-016-20261023-models-pricing-922e0e04c3"
+      }
     }
   ]
 }

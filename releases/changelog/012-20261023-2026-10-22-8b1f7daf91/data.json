@@ -1,0 +1,55 @@
+{
+  "notable": true,
+  "label": "2026-10-22",
+  "parts": [
+    "2026-10-22-flint",
+    "2026-10-22-glimpse",
+    "2026-10-22-mercury-3",
+    "2026-10-22-nemotron-embed",
+    "2026-10-22-disabled"
+  ],
+  "date": "2026-10-22",
+  "entries": [
+    {
+      "slug": "2026-10-22-flint",
+      "date": "2026-10-22",
+      "title": "Recursive Flint",
+      "summary": "Recursive's open-weight coding-agent MoE joins the catalog, free to call.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-22-flint",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-22-glimpse",
+      "date": "2026-10-22",
+      "title": "Elorian Glimpse",
+      "summary": "Elorian's image and video reasoning model joins the catalog, BYOK through OpenRouter and Vercel.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-22-glimpse",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-22-mercury-3",
+      "date": "2026-10-22",
+      "title": "Inception Mercury 3",
+      "summary": "Inception's diffusion language model with a 1M context joins the catalog, BYOK through OpenRouter, Vercel and Venice.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-22-mercury-3",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-22-nemotron-embed",
+      "date": "2026-10-22",
+      "title": "Nemotron 3.5 Embed 1B and 8B",
+      "summary": "NVIDIA's multimodal multilingual retrieval embedders join the catalog, free on the NIM developer tier.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-22-nemotron-embed",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-22-disabled",
+      "date": "2026-10-22",
+      "title": "2 models disabled",
+      "summary": "The cloaked model is gone from OpenCode Zen, its only upstream (live /models checked 2026-10-22). Plus 1 more.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-22-disabled",
+      "type": "disabled"
+    }
+  ],
+  "total": 5
+}

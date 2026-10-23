@@ -1,0 +1,96 @@
+{
+  "generatedAt": "2026-10-23T12:38:18.953Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 304,
+    "listed": 295,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 66,
+    "providerBackends": 66,
+    "free": 59
+  },
+  "pool": {
+    "keys": 199,
+    "donors": 106,
+    "requests": 48244
+  },
+  "added": [
+    {
+      "id": "perplexity/pplx-decider-flash-v1.2",
+      "name": "PPLX Decider Flash v1.2 (on-device)",
+      "provider": "perplexity",
+      "logo": null,
+      "context": null,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792713600,
+      "category": "text",
+      "excerpt": "PPLX Decider Flash v1.2 is Perplexity's on-device decision model, run by the Decider for Mac app on your own paired Mac and relayed to AnyRouter over the outbound relay connection."
+    },
+    {
+      "id": "nvidia/nemotron-3.5-embed-1b",
+      "name": "Nemotron 3.5 Embed 1B",
+      "provider": "nvidia",
+      "logo": "nvidia-color.svg",
+      "context": 32768,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792454400,
+      "category": "embedding",
+      "excerpt": "NVIDIA Nemotron 3.5 Embed 1B is a 1.55B-parameter multimodal and multilingual retrieval embedding model."
+    },
+    {
+      "id": "nvidia/nemotron-3.5-embed-8b",
+      "name": "Nemotron 3.5 Embed 8B",
+      "provider": "nvidia",
+      "logo": "nvidia-color.svg",
+      "context": 32768,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792454400,
+      "category": "embedding",
+      "excerpt": "NVIDIA Nemotron 3.5 Embed 8B is a 8.38B-parameter multimodal and multilingual retrieval embedding model."
+    }
+  ],
+  "changed": [
+    {
+      "id": "z-ai/glm-5.3-prime",
+      "from": "2.8/8.8@1000000",
+      "to": "2.35/8.23@1000000",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [
+    "stealth/space-bunny-alpha",
+    "xiaomi/mimo-v2-pro"
+  ],
+  "spotlight": {
+    "id": "perplexity/pplx-decider-flash-v1.2",
+    "name": "PPLX Decider Flash v1.2 (on-device)",
+    "provider": "perplexity",
+    "logo": null,
+    "context": null,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1792713600,
+    "category": "text",
+    "excerpt": "PPLX Decider Flash v1.2 is Perplexity's on-device decision model, run by the Decider for Mac app on your own paired Mac and relayed to AnyRouter over the outbound relay connection."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+perplexity/pplx-decider-flash-v1.2@0/0@x",
+    "+nvidia/nemotron-3.5-embed-1b@0/0@32768",
+    "+nvidia/nemotron-3.5-embed-8b@0/0@32768",
+    "~z-ai/glm-5.3-prime 2.8/8.8@1000000->2.35/8.23@1000000",
+    "-stealth/space-bunny-alpha",
+    "-xiaomi/mimo-v2-pro"
+  ]
+}
