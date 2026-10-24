@@ -1,0 +1,27 @@
+{
+  "id": "013-20261024-2026-10-24-42a58ce386",
+  "hash": "42a58ce386",
+  "kind": "changelog",
+  "label": "2026-10-24",
+  "title": "3 changelog updates: Atria Dawn, Kimi K3.1 Pro +1 more",
+  "seconds": 28,
+  "renderedAt": "2026-10-24T12:05:29.569Z",
+  "commit": "bf31fed",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-013-20261024-2026-10-24-42a58ce386.mp4",
+      "cover": "renders/changelog-013-20261024-2026-10-24-42a58ce386.png",
+      "youtube": "https://youtu.be/AmuWFoeaNGk"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-013-20261024-2026-10-24-42a58ce386-portrait.mp4",
+      "cover": "renders/changelog-013-20261024-2026-10-24-42a58ce386-portrait.png",
+      "youtube": "https://youtu.be/DNJ7j7dprxQ"
+    }
+  },
+  "source": "renders/changelog-013-20261024-2026-10-24-42a58ce386-source.tar.gz",
+  "createdAt": "2026-10-24T12:05:29.573Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-013-20261024-2026-10-24-42a58ce386"
+  }
+}

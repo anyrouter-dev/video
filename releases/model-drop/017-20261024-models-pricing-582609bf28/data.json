@@ -1,0 +1,98 @@
+{
+  "generatedAt": "2026-10-24T12:01:37.343Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 307,
+    "listed": 298,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 67,
+    "providerBackends": 67,
+    "free": 59
+  },
+  "pool": {
+    "keys": 206,
+    "donors": 112,
+    "requests": 50790
+  },
+  "added": [
+    {
+      "id": "atria-asi/atria-dawn",
+      "name": "Atria Dawn",
+      "provider": "atria-asi",
+      "logo": null,
+      "context": 524288,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792713600,
+      "category": "text",
+      "excerpt": "Atria Dawn is an open-weight agentic model from the Shanghai Artificial Intelligence Laboratory, built on the 744B-parameter GLM-5.2 mixture-of-experts base."
+    },
+    {
+      "id": "moonshotai/kimi-k3.1-pro-highspeed",
+      "name": "Kimi K3.1 Pro Highspeed",
+      "provider": "Moonshot AI",
+      "logo": "moonshotai-color.svg",
+      "context": 1048576,
+      "inPrice": 4,
+      "outPrice": 20,
+      "free": false,
+      "created": 1792713600,
+      "category": "multimodal",
+      "excerpt": "Kimi K3.1 Pro Highspeed is the high-speed variant of Kimi K3.1 Pro from Moonshot AI: the same model at about 2-3x the output speed, at twice the token price."
+    },
+    {
+      "id": "moonshotai/kimi-k3.1-pro",
+      "name": "Kimi K3.1 Pro",
+      "provider": "Moonshot AI",
+      "logo": "moonshotai-color.svg",
+      "context": 1048576,
+      "inPrice": 2,
+      "outPrice": 10,
+      "free": false,
+      "created": 1792713600,
+      "category": "multimodal",
+      "excerpt": "Kimi K3.1 Pro is the first model in Moonshot AI's K3.1 series, a post-trained version of Kimi K3 with a 1M-token context window and native visual understanding."
+    }
+  ],
+  "changed": [
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "from": "0/0@1000000",
+      "to": "0.15/0.6@1000000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "from": "0.02/0.5@1048575",
+      "to": "0.1/0.4@1048575",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "atria-asi/atria-dawn",
+    "name": "Atria Dawn",
+    "provider": "atria-asi",
+    "logo": null,
+    "context": 524288,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1792713600,
+    "category": "text",
+    "excerpt": "Atria Dawn is an open-weight agentic model from the Shanghai Artificial Intelligence Laboratory, built on the 744B-parameter GLM-5.2 mixture-of-experts base."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+atria-asi/atria-dawn@0/0@524288",
+    "+moonshotai/kimi-k3.1-pro-highspeed@4/20@1048576",
+    "+moonshotai/kimi-k3.1-pro@2/10@1048576",
+    "~minimax/minimax-m3.1-flash 0/0@1000000->0.15/0.6@1000000",
+    "~qwen/qwen3.8-27b 0.02/0.5@1048575->0.1/0.4@1048575"
+  ]
+}

@@ -340,6 +340,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-016-20261023-models-pricing-922e0e04c3"
       }
+    },
+    {
+      "id": "017-20261024-models-pricing-582609bf28",
+      "hash": "582609bf28",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "3 new models: atria-dawn, kimi-k3.1-pro-highspeed, kimi-k3.1-pro",
+      "seconds": 20,
+      "renderedAt": "2026-10-24T12:06:57.706Z",
+      "commit": "bf31fed",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-017-20261024-models-pricing-582609bf28.mp4",
+          "cover": "renders/model-drop-017-20261024-models-pricing-582609bf28.png",
+          "youtube": "https://youtu.be/3xyhBYjPCjs"
+        }
+      },
+      "source": "renders/model-drop-017-20261024-models-pricing-582609bf28-source.tar.gz",
+      "createdAt": "2026-10-24T12:06:57.710Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-017-20261024-models-pricing-582609bf28"
+      }
     }
   ]
 }

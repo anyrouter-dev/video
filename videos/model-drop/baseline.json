@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-23T12:38:18.954Z",
+  "acceptedAt": "2026-10-24T12:01:37.343Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -27,6 +27,7 @@
     "apodex/apodex-1.1-mini",
     "apple/foundation-model",
     "arcee-ai/trinity-large-thinking",
+    "atria-asi/atria-dawn",
     "baai/bge-base-en-v1.5",
     "baai/bge-m3",
     "baai/bge-multilingual-gemma2",
@@ -118,6 +119,8 @@
     "moonshotai/kimi-k2.5",
     "moonshotai/kimi-k2.6",
     "moonshotai/kimi-k2.7-code",
+    "moonshotai/kimi-k3.1-pro-highspeed",
+    "moonshotai/kimi-k3.1-pro",
     "moonshotai/kimi-k3",
     "nace-ai/drex-v1.5",
     "nace-ai/drex-v2.0",
@@ -453,6 +456,12 @@
       "inPrice": 0.25,
       "outPrice": 0.8,
       "context": 262144
+    },
+    {
+      "id": "atria-asi/atria-dawn",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 524288
     },
     {
       "id": "baai/bge-base-en-v1.5",
@@ -948,8 +957,8 @@
     },
     {
       "id": "minimax/minimax-m3.1-flash",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.15,
+      "outPrice": 0.6,
       "context": 1000000
     },
     {
@@ -999,6 +1008,18 @@
       "inPrice": 0.6712,
       "outPrice": 3.35,
       "context": 262144
+    },
+    {
+      "id": "moonshotai/kimi-k3.1-pro-highspeed",
+      "inPrice": 4,
+      "outPrice": 20,
+      "context": 1048576
+    },
+    {
+      "id": "moonshotai/kimi-k3.1-pro",
+      "inPrice": 2,
+      "outPrice": 10,
+      "context": 1048576
     },
     {
       "id": "moonshotai/kimi-k3",
@@ -1536,8 +1557,8 @@
     },
     {
       "id": "qwen/qwen3.8-27b",
-      "inPrice": 0.02,
-      "outPrice": 0.5,
+      "inPrice": 0.1,
+      "outPrice": 0.4,
       "context": 1048575
     },
     {
