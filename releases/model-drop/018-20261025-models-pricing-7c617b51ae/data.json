@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-10-25T12:34:48.832Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 308,
+    "listed": 299,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 67,
+    "providerBackends": 67,
+    "free": 62
+  },
+  "pool": {
+    "keys": 210,
+    "donors": 116,
+    "requests": 51604
+  },
+  "added": [
+    {
+      "id": "nvidia/nemotron-3.5-bolt-e4b",
+      "name": "Nemotron 3.5 Bolt E4B",
+      "provider": "nvidia",
+      "logo": "nvidia-color.svg",
+      "context": 65536,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792713600,
+      "category": "text",
+      "excerpt": "NVIDIA Nemotron 3.5 Bolt E4B is a small language model post-trained from Gemma 4 E4B."
+    }
+  ],
+  "changed": [
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "from": "0.15/0.6@1000000",
+      "to": "0/0@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b",
+      "from": "0.05/0.2@1048576",
+      "to": "0.05/0.2@262144",
+      "kind": "context"
+    },
+    {
+      "id": "x-ai/grok-4.1-fast-reasoning",
+      "from": "0.2/0.5@1000000",
+      "to": "0/0@131072",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "nvidia/nemotron-3.5-bolt-e4b",
+    "name": "Nemotron 3.5 Bolt E4B",
+    "provider": "nvidia",
+    "logo": "nvidia-color.svg",
+    "context": 65536,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1792713600,
+    "category": "text",
+    "excerpt": "NVIDIA Nemotron 3.5 Bolt E4B is a small language model post-trained from Gemma 4 E4B."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+nvidia/nemotron-3.5-bolt-e4b@0/0@65536",
+    "~minimax/minimax-m3.1-flash 0.15/0.6@1000000->0/0@1000000",
+    "~nvidia/nemotron-3-nano-30b-a3b 0.05/0.2@1048576->0.05/0.2@262144",
+    "~x-ai/grok-4.1-fast-reasoning 0.2/0.5@1000000->0/0@131072"
+  ]
+}

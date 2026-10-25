@@ -1,0 +1,22 @@
+{
+  "id": "018-20261025-models-pricing-7c617b51ae",
+  "hash": "7c617b51ae",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "nvidia/nemotron-3.5-bolt-e4b is now free on AnyRouter",
+  "seconds": 20,
+  "renderedAt": "2026-10-25T12:38:41.398Z",
+  "commit": "b647418",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-018-20261025-models-pricing-7c617b51ae.mp4",
+      "cover": "renders/model-drop-018-20261025-models-pricing-7c617b51ae.png",
+      "youtube": "https://youtu.be/MUd8m-agTAE"
+    }
+  },
+  "source": "renders/model-drop-018-20261025-models-pricing-7c617b51ae-source.tar.gz",
+  "createdAt": "2026-10-25T12:38:41.403Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-018-20261025-models-pricing-7c617b51ae"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "notable": true,
+  "label": "2026-10-24",
+  "parts": [
+    "2026-10-24-atria-dawn",
+    "2026-10-24-kimi-k3-1-pro",
+    "2026-10-24-kimi-k3-1-pro-highspeed",
+    "2026-10-24-nemotron-3-5-bolt-e4b"
+  ],
+  "date": "2026-10-24",
+  "entries": [
+    {
+      "slug": "2026-10-24-atria-dawn",
+      "date": "2026-10-24",
+      "title": "Atria Dawn",
+      "summary": "Shanghai AI Laboratory's Atria Dawn joins the catalog: an open-weight agentic model on a 744B GLM-5.2 base with a 512K-token context, through BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-24-atria-dawn",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-24-kimi-k3-1-pro",
+      "date": "2026-10-24",
+      "title": "Kimi K3.1 Pro",
+      "summary": "Moonshot AI's Kimi K3.1 Pro joins the catalog: a 2.8T-parameter open-weight model with a 1M-token context and native vision, through BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-24-kimi-k3-1-pro",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-24-kimi-k3-1-pro-highspeed",
+      "date": "2026-10-24",
+      "title": "Kimi K3.1 Pro Highspeed",
+      "summary": "The high-speed variant of Kimi K3.1 Pro: the same model at about 2-3x the output speed, through BYOK.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-24-kimi-k3-1-pro-highspeed",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-24-nemotron-3-5-bolt-e4b",
+      "date": "2026-10-24",
+      "title": "Nemotron 3.5 Bolt E4B",
+      "summary": "NVIDIA's Nemotron 3.5 Bolt E4B joins the catalog: a small, fast model post-trained from Gemma 4 E4B for tool use and voice assistants.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-24-nemotron-3-5-bolt-e4b",
+      "type": "added"
+    }
+  ],
+  "total": 4
+}

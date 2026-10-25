@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-24T12:01:37.343Z",
+  "acceptedAt": "2026-10-25T12:34:48.832Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -133,6 +133,7 @@
     "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
     "nvidia/nemotron-3-super-120b-a12b",
     "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-bolt-e4b",
     "nvidia/nemotron-3.5-content-safety",
     "nvidia/nemotron-3.5-embed-1b",
     "nvidia/nemotron-3.5-embed-8b",
@@ -957,8 +958,8 @@
     },
     {
       "id": "minimax/minimax-m3.1-flash",
-      "inPrice": 0.15,
-      "outPrice": 0.6,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1000000
     },
     {
@@ -1073,7 +1074,7 @@
       "id": "nvidia/nemotron-3-nano-30b-a3b",
       "inPrice": 0.05,
       "outPrice": 0.2,
-      "context": 1048576
+      "context": 262144
     },
     {
       "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
@@ -1092,6 +1093,12 @@
       "inPrice": 0,
       "outPrice": 0,
       "context": 1000000
+    },
+    {
+      "id": "nvidia/nemotron-3.5-bolt-e4b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 65536
     },
     {
       "id": "nvidia/nemotron-3.5-content-safety",
@@ -1815,9 +1822,9 @@
     },
     {
       "id": "x-ai/grok-4.1-fast-reasoning",
-      "inPrice": 0.2,
-      "outPrice": 0.5,
-      "context": 1000000
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
     },
     {
       "id": "x-ai/grok-4.20-multi-agent",
