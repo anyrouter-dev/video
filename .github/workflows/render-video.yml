@@ -130,6 +130,30 @@ jobs:
           ~/.cache/ffmpeg/ffmpeg -version | head -1
           npx hyperframes browser ensure
 
+      # Kokoro-82M speaks the voice-over of a kind cut into scene slots
+      # (model-drop; lib/voice.mjs). Optional like the agent: if this step
+      # fails, those films render without a voice and the run says so.
+      - name: Cache the voice model
+        if: steps.decide.outputs.kinds != ''
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/anyrouter-video/tts-venv
+            ~/.cache/hyperframes/tts
+          key: kokoro-v1-${{ runner.os }}
+
+      - name: Voice (Kokoro)
+        if: steps.decide.outputs.kinds != ''
+        continue-on-error: true
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          VENV="$HOME/.cache/anyrouter-video/tts-venv"
+          [ -x "$VENV/bin/python" ] || python3 -m venv "$VENV"
+          "$VENV/bin/python" -c 'import kokoro_onnx, soundfile' 2>/dev/null \
+            || "$VENV/bin/pip" install --quiet kokoro-onnx soundfile
+          echo "HYPERFRAMES_PYTHON=$VENV/bin/python" >> "$GITHUB_ENV"
+
       # ── 3. judgment — optional. A missing key, a rate limit or an agent
       #    outage cannot fail the build: the film renders with its defaults, and
       #    the CLI drops any part of a plan that breaks ci/AGENT.md.
@@ -173,6 +197,8 @@ jobs:
           LIMIT: ${{ inputs.limit }}
           SECONDS_: ${{ inputs.seconds }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: polishes a new voice-over script through AnyRouter's API (lib/voice.mjs).
+          ANYROUTER_API_KEY: ${{ secrets.ANYROUTER_API_KEY }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}

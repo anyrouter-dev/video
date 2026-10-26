@@ -11,6 +11,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const json = f => JSON.parse(fs.readFileSync(path.join(HERE, 'fixtures', f), 'utf8'));
 const release = () => buildRelease(json('catalog.json'), null, json('baseline.json')).release;
 const content = film => film.scenes.slice(1, -1);
+const news = film => film.scenes.filter(s => s.slot === 'news');
 const typed = id => id.split('').map(c => `<span class="c">${c}</span>`).join('');
 const rowsOf = s => (s.body.match(/class="lr r\d/g) || []).length;
 /** A drop of `n` distinct models cut from the fixture's, for counts the fixture does not have. */
@@ -87,7 +88,7 @@ test('the plan picks which models and in what order, lead first', () => {
   const film = kind.film(rel, { plan: { picks } });
   // Picks alone are the selection: three picks is a three-card film, in pick order.
   assert.equal(film.layout, 'cards');
-  assert.deepEqual(content(film).map(s => s.body.match(/class="idcode">(.*?)<\/div>/)[1].replace(/<[^>]+>/g, '')), picks);
+  assert.deepEqual(news(film).map(s => s.body.match(/class="idcode">(.*?)<\/div>/)[1].replace(/<[^>]+>/g, '')), picks);
   // With a limit, picks lead and the rest of the drop follows in its own order.
   const { models } = chooseModels(rel, { picks: ['baai/bge-m3'], limit: 5 });
   assert.deepEqual(models.map(m => m.id), ['baai/bge-m3', ...rel.added.filter(m => m.id !== 'baai/bge-m3').slice(0, 4).map(m => m.id)]);
@@ -184,7 +185,7 @@ test('a list film shows no more models than can be read, and says how many it le
   const film = kind.film(dropOf(release(), 60), { flags: {} });
   const rows = content(film).map(rowsOf).reduce((a, b) => a + b, 0);
   const shown = rows + 1;                                    // + the lead's spotlight
-  assert.equal(shown, listCapacity(20));
+  assert.equal(shown, listCapacity(news(film).reduce((a, s) => a + s.dur, 0)));
   assert.ok(content(film).some(s => s.body.includes(`+${60 - shown} more models in this drop`)));
   // The end card still states the true count, not the number that fit.
   assert.ok(film.scenes.at(-1).body.includes('60 new models'));
@@ -192,11 +193,15 @@ test('a list film shows no more models than can be read, and says how many it le
   assert.ok(listCapacity(40) > listCapacity(20));
 });
 
-test('the film length comes from --seconds, then the plan, then 20', () => {
-  const rel = release();
-  assert.equal(kind.film(rel, {}).duration, 20);
-  assert.equal(kind.film(rel, { plan: { seconds: 30 } }).duration, 30);
-  assert.equal(kind.film(rel, { plan: { seconds: 30 }, flags: { seconds: '12' } }).duration, 12);
+test('the film length comes from --seconds, then the plan, then 20, and never cuts a slot short', () => {
+  for (const r of [release(), { ...release(), added: [release().added[0]] }]) {
+    // Asked for less than its slots need, a film runs as long as they need.
+    const floor = kind.film(r, { flags: { seconds: '1' } }).duration;
+    assert.ok(floor > 1);
+    assert.equal(kind.film(r, {}).duration, Math.max(20, floor));
+    assert.equal(kind.film(r, { plan: { seconds: 45 } }).duration, 45);
+    assert.equal(kind.film(r, { plan: { seconds: 45 }, flags: { seconds: '50' } }).duration, 50);
+  }
 });
 
 // ── honesty: every figure from the data, every word escaped ────────────────
@@ -252,9 +257,8 @@ test('a film of five or more shows no prices anywhere — only what identifies e
   for (const r of [rel, dropOf(rel, 37)]) {
     for (const seconds of ['12', '20', '45']) {
       const film = kind.film(r, { flags: { seconds }, plan });
-      for (const s of content(film)) assert.doesNotMatch(s.body, /\$/, `${seconds}s ${s.id} has a dollar sign`);
-      // The end card's facts too (its install line's "$" prompt is a shell prompt, not a price).
-      assert.doesNotMatch(film.scenes.at(-1).body.replace(/<span class="p">\$<\/span>/, ''), /\$/);
+      // A price is a "$" and a figure. A shell prompt or $ANYROUTER_API_KEY is not one.
+      for (const s of film.scenes) assert.doesNotMatch(s.body, /\$\s?\d/, `${seconds}s ${s.id} shows a price`);
     }
   }
   // …while the ledger still carries the identity: mark, name, id, context, and FREE as a status.

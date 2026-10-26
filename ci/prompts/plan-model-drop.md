@@ -34,8 +34,9 @@ below lists the models you may pick.
   and specific: its context window, its price, what it is for — from its entry.
 - **`headline`**: what shipped, specifically. "MiMo V2.6 Pro and Flash join
   with a 1M window" beats "New models on AnyRouter".
-- **`kicker`, `share`, `seconds`** as the contract describes. A hero film does
-  not need 20 seconds.
+- **`kicker`, `share`, `seconds`** as the contract describes. The film is five
+  scene slots, each held for its voice-over line, so it runs as long as they
+  need; leave `seconds` out unless you want it longer.
 
 A price cut with no new model is still a release; a single delisted model is
 not a film — decline it with `limit: 0`.
