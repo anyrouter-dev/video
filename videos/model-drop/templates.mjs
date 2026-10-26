@@ -422,10 +422,13 @@ function figureOf(ctx) {
   return shown && { to: +shown[1], digits: (shown[1].split('.')[1] ?? '').length, suffix: shown[2], label: 'token context window' };
 }
 
-/** A shell or a code card: ink face, paper type. Lines print left to right, one after another. */
+/**
+ * A shell or a code card: ink face, paper type. Lines print left to right, one
+ * after another. The type shrinks so the longest line fits the stage (mono is 0.6em a glyph).
+ */
 const codeCard = (head, rows, { prompt = false } = {}) => `<div class="box tone code"><div class="face">
     <div class="ch label">${esc(head)}</div>
-    <div class="src">${rows.map((r, i) => `<div class="ln l${i}">${prompt && !r.startsWith(' ') ? '<span class="p">$</span> ' : ''}${esc(r)}</div>`).join('')}</div>
+    <div class="src" style="font-size:${Math.min(30, Math.floor(1530 / (0.6 * Math.max(...rows.map(r => r.length + (prompt ? 2 : 0))))))}px">${rows.map((r, i) => `<div class="ln l${i}">${prompt && !r.startsWith(' ') ? '<span class="p">$</span> ' : ''}${esc(r)}</div>`).join('')}</div>
   </div></div>`;
 const codeInner = (n, at = 0.45) => `
       slide(".kicker", 0.05, { x: -40 });
@@ -452,7 +455,7 @@ export const TEMPLATES = [
     id: 'headline', slot: 'hook', fits: always, minDur: 3,
     scene: (ctx, { start, dur }) => ({
       id: 's00-headline', start, dur, chapter: 'OPEN', cls: 'hline', cam: { from: { scale: 1.05 }, to: { scale: 1 } },
-      body: `<div class="kicker"><i>${esc(ctx.date || '··')}</i>${esc(ctx.kicker)}</div>
+      body: `<div class="kicker"><i>00</i>${esc(ctx.kicker)}</div>
         <div class="big ${fit(ctx.bigText, [[20, 'hb-l'], [34, 'hb-m']], 'hb-s')}">${words(ctx.bigText)}</div>
         <div class="band dots"></div>
         <div class="meta label">${chars(ctx.openMeta)}</div>`,
@@ -516,7 +519,7 @@ export const TEMPLATES = [
     },
     line: (f, ctx) => {
       const g = figureOf(ctx);
-      if (g.suffix === '%') return `${f.lead.name} is now ${g.to}% cheaper on AnyRouter.`;
+      if (g.suffix === '%') return g.to === 100 ? `${f.lead.name} is now free on AnyRouter: a 100% price cut.` : `${f.lead.name} is now ${g.to}% cheaper on AnyRouter.`;
       if (!ctx.one) return `${countWords(f)} on AnyRouter, from ${plural(f.makers, 'maker')}.`;
       return `${f.lead.name} reads up to ${fmtCtx(f.lead.context)} tokens of context, and it is new on AnyRouter.`;
     },
@@ -566,11 +569,13 @@ export const TEMPLATES = [
       const ms = ctx.chosen;
       const fields = [['model', m => m.name], ['id', m => m.id], ['maker', m => m.provider],
         ['category', m => m.category ?? '—'], ['context', m => fmtCtx(m.context)], ['listed', m => day(m) ?? '—']];
-      const longest = Math.max(...ms.map(m => m.id.length));
+      // A value never wraps or clips: the type shrinks to fit the longest id in its column (mono is 0.6em a glyph).
+      const col = (1620 - 200 - 34 * ms.length) / ms.length;
+      const vs = Math.min(ms.length === 1 ? 36 : 28, Math.floor(col / (0.6 * Math.max(...ms.map(m => m.id.length)))));
       return {
         id: 's01-dossier', start, dur, chapter: `on file · ${ctx.lead.name}`, cls: 'dossier',
-        body: `<div class="kicker"><i>§</i>on file · ${esc(ctx.what)}</div>
-          <div class="dos" style="--n:${ms.length};--vs:${ms.length === 1 ? 36 : longest > 30 ? 22 : 28}px">${fields.map(([k, v], r) => `<div class="row r${r}${k === 'model' ? ' name' : ''}"><span class="label">${k}</span>${ms
+        body: `<div class="kicker"><i>01</i>on file · ${esc(ctx.what)}</div>
+          <div class="dos" style="--n:${ms.length};--vs:${vs}px">${fields.map(([k, v], r) => `<div class="row r${r}${k === 'model' ? ' name' : ''}"><span class="label">${k}</span>${ms
             .map(m => `<span class="v">${chars(v(m))}</span>`).join('')}</div>`).join('')}</div>`,
         inner: `
           slide(".kicker", 0.05, { x: -40 });

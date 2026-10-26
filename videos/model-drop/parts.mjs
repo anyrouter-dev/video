@@ -82,7 +82,7 @@ export const APIS = {
   },
   rerank: {
     name: 'rerank', path: '/api/v1/rerank', cli: null, sdk: null,
-    body: id => `{"model": "${id}",\n      "query": "What is the capital of France?",\n      "documents": ["Paris is the capital of France.", "Berlin is the capital of Germany."]}`,
+    body: id => `{"model": "${id}",\n      "query": "What is the capital of France?",\n      "documents": ["Paris is the capital of France.",\n                    "Berlin is the capital of Germany."]}`,
   },
 };
 export const apiOf = m => APIS[m.category === 'embedding' ? 'embedding' : m.category === 'rerank' ? 'rerank' : 'chat'];
