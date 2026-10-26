@@ -682,9 +682,10 @@ export const TEMPLATES = [
         inner: codeInner(rows.length), cues: codeCues(rows.length),
       };
     },
-    line: (f, ctx) => (ctx.lead.category === 'embedding'
-      ? 'From a terminal: sign in with anyr, then run anyr embed with its id.'
-      : 'From a terminal: sign in with anyr, then pipe your work into anyr chat.'),
+    line: (f, ctx) => ({
+      embeddings: 'From a terminal: sign in with anyr, then run anyr embed with its id.',
+      decisions: 'From a terminal: sign in with anyr, then send it state and a question with anyr decision.',
+    }[apiOf(ctx.lead).name] ?? 'From a terminal: sign in with anyr, then pipe your work into anyr chat.'),
   },
   {
     id: 'curl', slot: 'howto', fits: always, minDur: 4.5,

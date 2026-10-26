@@ -38,6 +38,9 @@ export function normalize(m) {
     created: m.created || null,
     category: m.category || null,
     excerpt: (m.description || '').split(/(?<=\.)\s+/)[0] || null,
+    // How it is called. A decision model says category "text" but only answers
+    // POST /decisions: its capabilities say so.
+    ...((m.capabilities ?? []).includes('systemone') && { api: 'decision' }),
   };
 }
 

@@ -139,7 +139,7 @@ cta`, each filled by one of several **templates** (the table is `TEMPLATES` in
 | hook | `print` (the dithered opening), `headline`, `terminal` (`anyr models show <id>`), `count` (one sourced figure) |
 | news | `classic` (hero name, cards, or the list: the only one for 4+ models), `spotlight`, `dossier` (3 models or fewer) |
 | compare | `specsheet`, `table`, `beforeafter` (only when the lead's price or context moved), `free-stamp` (only a free lead) |
-| howto | `anyr` (chat or embed), `curl` (chat completions, embeddings or rerank), `sdk` (OpenAI SDK). Commands only, never an answer |
+| howto | `anyr` (chat, embed or decision), `curl` (chat completions, embeddings, rerank or decisions), `sdk` (OpenAI SDK: chat and embeddings). Commands only, never an answer. A decision model (catalog capability `systemone`, recorded as `api: "decision"`) is never shown a chat call: the API rejects it |
 | cta | `classic` (the closing card), `model-page`, `one-key` |
 
 The first template of each slot is the look before slots. The picker is seeded

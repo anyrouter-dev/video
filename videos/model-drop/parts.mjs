@@ -66,7 +66,8 @@ export const wasLine = axes => axes.map(a => axisText(a.axis, a.from)).join(' ·
 export const nowLine = axes => axes.map(a => axisText(a.axis, a.to)).join(' · ');
 
 // ── how a model is called: by what it is, never by a guess ─────────────────
-// `anyr` has chat and embed commands and no rerank; the OpenAI SDK has no rerank either.
+// `anyr` has chat, embed and decision commands and no rerank; the OpenAI SDK
+// has neither rerank nor decisions. A decision model is rejected on chat.
 export const APIS = {
   chat: {
     name: 'chat completions', path: '/api/v1/chat/completions',
@@ -80,12 +81,22 @@ export const APIS = {
     body: id => `{"model": "${id}",\n      "input": "hello world"}`,
     sdk: id => `client.embeddings.create({\n  model: "${id}",\n  input: "hello world",\n});`,
   },
+  decision: {
+    name: 'decisions', path: '/api/v1/decisions', sdk: null,
+    cli: id => ['anyr login', `anyr decision --model ${id} --state "My payouts keep failing." \\`,
+      `  --questions '{"is_urgent": {"type": "noul", "instructions": "Is this urgent?"}}'`],
+    body: id => `{"model": "${id}",\n      "state": "My payouts keep failing.",\n      "questions": {"is_urgent": {"type": "noul",\n                    "instructions": "Does this convey urgency?"}}}`,
+  },
   rerank: {
     name: 'rerank', path: '/api/v1/rerank', cli: null, sdk: null,
     body: id => `{"model": "${id}",\n      "query": "What is the capital of France?",\n      "documents": ["Paris is the capital of France.",\n                    "Berlin is the capital of Germany."]}`,
   },
 };
-export const apiOf = m => APIS[m.category === 'embedding' ? 'embedding' : m.category === 'rerank' ? 'rerank' : 'chat'];
+// Releases recorded before the catalog's capabilities were kept have no `api`;
+// their own description names a decision model ("decision model", "System One").
+const DECISION_WORDS = /\b(decision model|system one)\b/i;
+export const apiOf = m => APIS[m.api ?? (m.category === 'embedding' ? 'embedding' : m.category === 'rerank' ? 'rerank'
+  : DECISION_WORDS.test(m.excerpt ?? '') ? 'decision' : 'chat')];
 
 /** Largest drop across both price axes ("in/out@ctx"), or null if neither fell. */
 export function dropPct(from, to) {

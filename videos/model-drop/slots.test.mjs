@@ -65,6 +65,22 @@ test('a template is picked only when the facts can carry it', () => {
   assert.deepEqual([...ever(rerank, {}, 'howto')], ['curl']);
 });
 
+test('a decision model is shown the decisions call, never chat, which rejects it', () => {
+  // The catalog says category "text" for a decision model; its capabilities say systemone.
+  const [m] = buildRelease({ data: [{ id: 'up/decide', name: 'Decide', category: 'text', capabilities: ['systemone'], pricing: {} }] }, null, null).release.added;
+  assert.equal(m.api, 'decision');
+  // Releases recorded before that was kept: 005's lead says it is a decision model.
+  for (const rel of [{ ...record('018'), added: [{ ...record('018').added[0], api: 'decision' }] }, record('005')]) {
+    const ctx = kind.context(rel, {});
+    const fits = TEMPLATES.filter(t => t.slot === 'howto' && t.fits(rel, ctx)).map(t => t.id);
+    assert.deepEqual(fits, ['anyr', 'curl'], 'the OpenAI SDK has no decisions call');
+    const how = id => kind.film(rel, { picks: { ...kind.film(rel, {}).picks, howto: id } }).scenes.find(s => s.slot === 'howto').body;
+    assert.match(how('anyr'), /anyr decision --model/);
+    assert.match(how('curl'), /\/api\/v1\/decisions/);
+    for (const id of fits) assert.doesNotMatch(how(id), /chat/, `${id} sends a decision model to chat`);
+  }
+});
+
 test('no slot repeats the previous release\'s template when another one fits', () => {
   for (const [name, [rel, flags]] of Object.entries(SHAPES)) {
     const ctx = kind.context(rel, { flags });
