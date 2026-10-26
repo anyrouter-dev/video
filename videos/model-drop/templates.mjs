@@ -535,7 +535,7 @@ export const TEMPLATES = [
         if (f.lead.alias) return `${f.lead.name} is a new alias on AnyRouter.`;
         return [f.excerpt, `${f.lead.name} is ${aModel(f.lead.category)} from ${f.lead.provider}.`].filter(Boolean);
       }
-      if (ctx.layout === 'cards') return `Leading this drop: ${andList(f.models.map(m => m.name))}.`;
+      if (ctx.layout === 'cards') return `In this drop: ${andList(f.models.map(m => m.name))}.`;
       return f.count.models ? `${plural(f.count.models, 'new model')} from ${plural(f.makers, 'maker')}, led by ${f.lead.name}.`
         : `${countWords(f)}, led by ${f.lead.name}.`;
     },
