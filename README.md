@@ -160,6 +160,7 @@ gitignored; CI uses repository secrets.
 | `npm run publish -- <kind> [id]` | GitHub Release (+ YouTube); `--replace` swaps the assets of one that exists |
 | `npm run plan -- <kind> [id]` | the brief for a plan: facts, item ids, schema |
 | `npm run regen -- <kind> <id>\|--all` | re-render released films from their records; `--publish`, `--plan=FILE`, `--dry-run` |
+| `npm run regen -- model-drop <id> --rendition=landscape --seed=STR` | a dev run of a released film with other scene picks; records nothing |
 | `npm run accept -- model-drop` | promote the collected catalog to the baseline |
 | `npm run ledger` | every recorded release |
 | `npm test` | unit tests |
@@ -169,7 +170,9 @@ Flags after the kind go to the kind: `--limit=N`, `--seconds=N`, `--from=FILE`
 `--first=N`, `--baseline=FILE`; `release` adds `--version=X.Y.Z`; `changelog`
 adds `--date=YYYY-MM-DD`; `use-case` adds `--slug=SLUG`. `run` adds `--quality=draft|looks|delivery` and
 `--workers=N`. `run` and `regen` take `--rendition=landscape|portrait` for a dev
-run: that one film is rendered, and nothing is recorded or published.
+run: that one film is rendered, and nothing is recorded or published. For
+`model-drop`, `run`, `regen` and `gen` also take `--seed=STR` (pick its scenes
+again), `--no-voice` and `--voice-id=ID`.
 
 ## model-drop
 
@@ -187,11 +190,25 @@ model that already shipped is also a release.
 | `none` | nothing shipped since the last accept | **not filmed** |
 | `first-run` | no baseline yet — takes the newest 5 | filmed once, then `accept` |
 
+A film is five **scene slots**, `hook → news → compare → howto → cta`, each
+filled by one of several templates, picked by a seed (the release id) so the
+same release always gets the same film and the next one does not repeat it.
+The news slot's classic template keeps the count-driven layout:
+
 | N | Layout | Shape |
 |---|--------|-------|
 | 1 | `hero` | one card, full frame, deep push, long hold |
 | 2–4 | `cards` | that many cards, back-to-back, equal slots |
 | ≥5 | `list` | ranked rows, six to a page, capped at what can be read |
+
+Each slot has a **voice-over** line, written from the release's facts and
+checked like a plan (no number the facts lack, no spelled-out numbers, no hype),
+spoken by Kokoro-82M (`hyperframes tts`, local), burned in as captions, with the
+score ducked under it. With `ANYROUTER_API_KEY` set, a new script is polished
+through AnyRouter's own API first. Kokoro needs a python with
+`kokoro-onnx soundfile` in `HYPERFRAMES_PYTHON`; without one the film is silent
+and the run says so. The picks and the script are frozen in the release's
+`voice.json`, so `regen` makes the same film. See `AGENTS.md`.
 
 ## CI
 
@@ -206,7 +223,9 @@ repo, and by hand (pick a kind, optionally force). One job:
    which items lead, the copy, or `limit: 0` to decline. Skipped without
    `OPENCODE_API_KEY`, and it can never fail the build.
 4. **render → publish → accept**, one kind at a time. One kind failing does not
-   stop the others.
+   stop the others. Kokoro is installed for the voice-over first (optional),
+   and the `ANYROUTER_API_KEY` repository secret, when set, polishes a new
+   voice-over script.
 5. **record** — one commit with the ledger and the baseline.
 
 Releases and commits only happen on `main`. A run on a branch renders and keeps

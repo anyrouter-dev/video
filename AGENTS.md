@@ -29,7 +29,9 @@ leads, what the film claims, whether the copy is honest. It writes
 lib/               the engine — no kind knows about another
   cli.mjs          the only entry point
   kinds.mjs        the kind contract (read its header before adding a kind)
-  film.mjs         scenes → HyperFrames project; the shared look; the overlap guard
+  film.mjs         scenes → HyperFrames project; the shared look; the overlap guard; captions
+  scenes.mjs       scene slots: the seeded template picker and slot timing
+  voice.mjs        the voice-over: lines, the voice gate, Kokoro TTS, captions timing, the mix
   sound.mjs        the score and sound effects, synthesized per film (Node only)
   marks.mjs        provider name / model id / sentence → the provider's logo
   plan.mjs         the plan contract and its honesty gate
@@ -126,13 +128,57 @@ response instead of the network). `model-drop` also takes `--all`, `--first=N`,
 `--baseline=FILE`; `release` takes `--version=X.Y.Z`; `changelog` takes
 `--date=YYYY-MM-DD`; `use-case` takes `--slug=SLUG`.
 
-## model-drop layouts
+## model-drop: scene slots and the voice-over
+
+A model-drop film is five **slots** in order, `hook → news → compare → howto →
+cta`, each filled by one of several **templates** (the table is `TEMPLATES` in
+`videos/model-drop/templates.mjs`; the engine is `lib/scenes.mjs`):
+
+| Slot | Templates |
+|------|-----------|
+| hook | `print` (the dithered opening), `headline`, `terminal` (`anyr models show <id>`), `count` (one sourced figure) |
+| news | `classic` (hero name, cards, or the list: the only one for 4+ models), `spotlight`, `dossier` (3 models or fewer) |
+| compare | `specsheet`, `table`, `beforeafter` (only when the lead's price or context moved), `free-stamp` (only a free lead) |
+| howto | `anyr` (chat or embed), `curl` (chat completions, embeddings or rerank), `sdk` (OpenAI SDK). Commands only, never an answer |
+| cta | `classic` (the closing card), `model-page`, `one-key` |
+
+The first template of each slot is the look before slots. The picker is seeded
+by the release id (`--seed=STR` overrides), only picks a template whose `fits`
+holds, and never repeats the previous release's template for a slot when
+another fits: the ledger row records its picks as `scenes`.
+
+The **voice-over** is one line per slot, written by the template from
+`facts()` in `kind.mjs`, the only facts it may quote (no prices in a film of
+five or more, the site's provider claim, never upstream or pool counts). With
+`ANYROUTER_API_KEY` set, `run` and `gen` ask AnyRouter's API (one fixed model,
+temperature 0) to polish the lines; every line, polished or not, passes the
+voice gate in `lib/voice.mjs` (the plan gate, plus no spelled-out numbers, no
+"unlimited", no superlatives, no ids), and a failed line falls back to the
+template's own. Lines are written in digits; only `speakable()` turns them into
+words for the TTS. Kokoro-82M speaks them through `hyperframes tts`: it needs
+`HYPERFRAMES_PYTHON` pointing at a python with `kokoro-onnx soundfile` (or a venv
+at `~/.cache/anyrouter-video/tts-venv`). Without it, or with `--no-voice`, the
+film renders silent with a warning; ci.yml's check never has a voice.
+
+A slot runs for its template's minimum or its line plus 0.6s, rounded up to
+the beat; the film is their sum, so it is longer than `--seconds` or a plan's
+`seconds` when the lines need it. The lines are burned in as captions (their
+own composition, between the content and the frame chrome), and the score sits
+3 dB lower and ducks 12 dB more under each line in `audio/mix.wav`.
+
+The picks and the script are inputs of the film: they are frozen in
+`releases/model-drop/<id>/voice.json` (seed, picks, voice id, the polish model
+if one was used, the script). `regen` films exactly those and never calls the
+LLM; a release recorded before slots gets its script from the templates.
+Flags: `--seed=STR`, `--no-voice`, `--voice-id=ID` (a Kokoro voice; default `am_michael`).
+
+The **news** slot's `classic` template keeps the count-driven layouts:
 
 | N | Layout | Shape |
 |---|--------|-------|
-| 1 | `hero` | the name huge with its mark, then a spec sheet with prices |
+| 1 | `hero` | the name huge with its mark (its spec sheet is the compare slot) |
 | 2–4 | `cards` | one editorial card each, sides alternate, prices shown |
-| ≥5 | `list` | spotlight → "who shipped" wall of marks → ranked ledger → the drop in numbers. **No prices** |
+| ≥5 | `list` | spotlight → "who shipped" wall of marks → ranked ledger → the drop in numbers. **No prices**, in any slot |
 
 Force it with `--limit=N` when the count picks the wrong story.
 
@@ -214,7 +260,10 @@ them for every kind — do not work around it.
 - The score is generated at the film's length by `lib/sound.mjs`; there is no
   fixed-length score to outlast.
 - `render-video.yml` is one job: decide (Node only) → plan (optional agent, one
-  prompt per kind in `ci/prompts/`) → render → publish → one commit. On a quiet
+  prompt per kind in `ci/prompts/`) → render → publish → one commit. It installs
+  Kokoro in a cached venv for the voice-over (a failed install means silent
+  films, not a failed run) and passes the `ANYROUTER_API_KEY` secret to the
+  render step for the script polish (without it, the templates' own lines). On a quiet
   night it stops after the decide step. Its `regen` input re-renders released
   films of one kind (an id, or `all`). Its timeout is 90 minutes: a release
   renders once per rendition, and a portrait frame costs what a landscape one does.

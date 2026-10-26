@@ -36,7 +36,7 @@ ids you may pick (each with a one-line description), and this schema.
 | `headline` | the one line the film and its Release lead with | ≤ 90 chars |
 | `kicker` | the small label over the closing card | ≤ 32 chars |
 | `share` | copy for a social post and the Release notes | ≤ 400 chars |
-| `seconds` | film length | 8–60 |
+| `seconds` | film length; a film cut into scene slots (model-drop) runs at least as long as its slots and voice-over need, so a short ask can come out longer | 8–60 |
 | `rationale` | why this story; goes in the Release notes | — |
 
 Every key is optional. Leave one out and the kind's default is used — the
