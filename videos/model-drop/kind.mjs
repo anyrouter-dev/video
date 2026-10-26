@@ -24,17 +24,16 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { esc, fit, openScene, endScene, OPEN, END } from '../../lib/film.mjs';
+import { copyProblem, factNumbers } from '../../lib/plan.mjs';
+import { SLOTS, classicPicks, timeSlots, VO_LEAD } from '../../lib/scenes.mjs';
 import { API, POOL_API, buildRelease, baselineOf, fingerprintParts, report } from './catalog.mjs';
 import {
-  r3, onGrid, pad, fmtPrice, fmtCtx, day, isAlias, followsOf, tally, aliasWord, countLine, moreLine, layoutOf, markOf, CSS,
+  r3, fmtPrice, fmtCtx, isAlias, followsOf, tally, aliasWord, countLine, moreLine, layoutOf, markOf, changeAxes, wasLine, dropPct, CSS,
 } from './parts.mjs';
-import {
-  heroName, heroSpec, card, ledgerPage, wallScene, summaryScene, makersOf, listTiming, slots, CARD_MIN, NAME_MIN,
-} from './templates.mjs';
+import { makersOf, TEMPLATES, SLOT_CSS } from './templates.mjs';
 
-export { fmtCtx, fmtPrice, isAlias, followsOf, tally, countLine, layoutOf, markOf } from './parts.mjs';
-export { dropFacts, makersOf, listTiming, listCapacity } from './templates.mjs';
+export { fmtCtx, fmtPrice, isAlias, followsOf, tally, countLine, layoutOf, markOf, dropPct } from './parts.mjs';
+export { dropFacts, makersOf, listTiming, listCapacity, TEMPLATES } from './templates.mjs';
 
 const readJson = f => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
 
@@ -52,6 +51,73 @@ export function chooseModels(rel, plan = {}, flags = {}) {
   const limit = parseInt(flags.limit ?? plan.limit ?? 0, 10);
   const count = limit > 0 ? limit : picked.length || order.length;
   return { pool, models: order.slice(0, count) };
+}
+
+/**
+ * What every template sees: the models chosen and how they are laid out, the
+ * lead, what moved on it, and the copy the bookends share. Pure.
+ */
+export function context(rel, { plan = {}, flags = {} } = {}) {
+  const { pool, models: chosen } = chooseModels(rel, plan, flags);
+  if (!chosen.length) throw new Error('no models to film');
+  const layout = layoutOf(chosen.length);
+  const lead = chosen[0];
+  const one = layout === 'hero';
+  const everyone = rel.added.length ? rel.added : chosen;
+  const kinds = tally(everyone);
+  const moved = rel.changed.find(c => c.id === lead.id) ?? null;
+  // A spotlight that is a price move, not a new model, says so.
+  const what = !rel.added.length && moved ? { 'price-cut': 'price cut', 'price-rise': 'price update', context: 'context update' }[moved.kind]
+    : isAlias(lead) ? 'new alias' : 'new model';
+  const axes = moved ? changeAxes(moved) : [];
+  const date = String(rel.generatedAt ?? '').slice(0, 10);
+  // A hero film is about one model, so its bookends are too, even when the drop was bigger.
+  const bigText = plan.headline
+    ?? (one ? (moved && !rel.added.length ? `${lead.name}: ${what}` : isAlias(lead) ? `${lead.name}: a new alias` : `${lead.name} is live`)
+      : kinds.models ? `${kinds.models} new model${kinds.models === 1 ? '' : 's'} on one key`
+      : `${kinds.aliases} new ${aliasWord(everyone, kinds.aliases)} on one key`);
+  return {
+    rel, plan, pool, chosen, everyone, kinds, layout, lead, one, moved, axes, what, date, bigText,
+    change: axes.length ? wasLine(axes) : null,
+    more: one ? moreLine(everyone.filter(m => m !== lead)) : null,
+    kicker: plan.kicker ?? (one ? what : 'model drop'),
+    openMeta: [date, one ? lead.id : countLine(everyone)].filter(Boolean).join(' · '),
+    endKicker: plan.kicker ?? (one ? `${what} · ${lead.provider}` : `model drop${date ? ` · ${date}` : ''}`),
+    // The marks of the drop's makers (a hero's: its own). Only real marks — a monogram is not a logo.
+    endMarks: [...new Set((one ? [lead] : rel.added.length ? rel.added : chosen).map(markOf).filter(Boolean))].slice(0, 12),
+  };
+}
+
+/**
+ * The only facts the voice-over may quote, and the gate checks every line
+ * against: names, makers, categories, context, prices (none in a film of five
+ * or more), what moved on the lead, and the totals the site claims. Nothing
+ * else from the catalog: an upstream count or a pool figure would vouch for a
+ * number the film never shows.
+ */
+export function facts(rel, ctx) {
+  const prices = ctx.layout !== 'list';
+  const model = m => ({
+    name: m.name, provider: m.provider, category: m.category, context: m.context, free: m.free, alias: isAlias(m),
+    ...(prices && { inPrice: m.inPrice, outPrice: m.outPrice }),
+  });
+  const quotable = m => !isAlias(m) && m.excerpt && !copyProblem(m.excerpt, factNumbers({ ...m, excerpt: null }), 160);
+  return {
+    prices,
+    unit: prices ? 1e6 : null,
+    lead: model(ctx.lead),
+    models: ctx.chosen.slice(0, 4).map(model),
+    count: ctx.kinds,
+    makers: makersOf(ctx.everyone).length,
+    change: ctx.moved && prices ? {
+      kind: ctx.moved.kind, pct: dropPct(ctx.moved.from, ctx.moved.to),
+      axes: ctx.axes.map(a => ({ axis: a.axis, from: a.from, to: a.to })),
+    } : null,
+    totals: { listed: rel.totals.listed, free: rel.totals.free, providers: rel.totals.providers },
+    // What the catalog says of the lead. Never a fact itself: it may be spoken only when it passes the gate without vouching for itself.
+    excerpt: quotable(ctx.lead) ? ctx.lead.excerpt : null,
+    names: Object.fromEntries(ctx.chosen.map(m => [m.id, m.name])),
+  };
 }
 
 export default {
@@ -103,136 +169,48 @@ export default {
     }));
   },
 
-  film(rel, { plan = {}, flags = {} }) {
-    const duration = parseFloat(flags.seconds ?? plan.seconds ?? 20);
-    const { pool, models: chosen } = chooseModels(rel, plan, flags);
-    if (!chosen.length) throw new Error('no models to film');
-    const layout = layoutOf(chosen.length);
-    const content = r3(duration - OPEN - END);
-    const everyone = rel.added.length ? rel.added : chosen;
-    const hidden = shownList => everyone.filter(m => !shownList.includes(m));
-    const t = rel.totals;
+  slots: SLOTS,
+  templates: TEMPLATES,
+  context,
+  facts,
 
-    // A spotlight that is a price move, not a new model, says so.
-    const moved = !rel.added.length && rel.changed.find(c => c.id === chosen[0].id);
-    const ctx = {
-      rel, plan,
-      what: moved ? { 'price-cut': 'price cut', 'price-rise': 'price update', context: 'context update' }[moved.kind]
-        : isAlias(chosen[0]) ? 'new alias' : 'new model',
-      change: moved && (() => {
-        const [a, b] = moved.from.split('@')[0].split('/').map(Number);
-        return `${fmtPrice(a)} in · ${fmtPrice(b)} out`;
-      })(),
-    };
-
-    let content_ = [], shown = [];
-    if (layout === 'hero') {
-      const m = chosen[0];
-      shown = [m];
-      ctx.more = moreLine(hidden([m]));
-      if (content < NAME_MIN + 3.0) {
-        content_ = [heroSpec(m, ctx, OPEN, content, { solo: true })];
-      } else {
-        const a = Math.min(Math.max(NAME_MIN, onGrid(content * 0.4)), 6);
-        content_ = [heroName(m, ctx, OPEN, a), heroSpec(m, ctx, OPEN + a, r3(content - a), { solo: false })];
-      }
-    } else if (layout === 'cards') {
-      const k = Math.max(1, Math.min(chosen.length, Math.floor(content / CARD_MIN)));
-      shown = chosen.slice(0, k);
-      const lens = slots(content, k);
-      let at = OPEN;
-      content_ = shown.map((m, i) => {
-        const s = card(m, {
-          rank: i + 1, of: shown.length, side: i % 2 ? 'b' : 'a',
-          id: `s${pad(i + 1)}-${i ? 'model' : 'lead'}`, start: r3(at), dur: lens[i],
-          chapter: `${pad(i + 1)} / ${pad(shown.length)} · ${m.name}`,
-          kicker: `${isAlias(m) ? 'alias · ' : ''}${m.provider}${day(m) ? ` · ${day(m)}` : ''}`,
-          more: i === k - 1 ? moreLine(hidden(shown)) : null, ctx,
-        });
-        at += lens[i];
-        return s;
-      });
-    } else {
-      const tm = listTiming(content, chosen.length, makersOf(everyone).length);
-      const lead = tm.spot ? chosen[0] : null;
-      const rows = chosen.slice(tm.spot ? 1 : 0, (tm.spot ? 1 : 0) + tm.rows);
-      shown = [...(lead ? [lead] : []), ...rows];
-      const more = moreLine(hidden(shown));
-      // Models and aliases are numbered apart, so a rank never counts an alias as a model.
-      const rankOf = new Map();
-      let nm = 0, na = 0;
-      for (const m of chosen) rankOf.set(m, isAlias(m) ? `A${pad(++na)}` : pad(++nm));
-      const nScenes = (tm.spot ? 1 : 0) + (tm.wall ? 1 : 0) + tm.pages + (tm.sum ? 1 : 0);
-      let at = OPEN, n = 0;
-      const next = (dur) => { const s = r3(at); at += dur; n += 1; return s; };
-      const chap = label => `${pad(n + 1)} / ${pad(nScenes)} · ${label}`;
-      if (lead) {
-        const newest = !plan.picks?.length && !isAlias(lead) && lead.created
-          && pool.filter(m => !isAlias(m)).every(m => (m.created || 0) <= lead.created);
-        const kin = tally(everyone);
-        content_.push(card(lead, {
-          rank: 1, of: (isAlias(lead) ? kin.aliases : kin.models) || 1, side: 'a', id: 's01-lead', chapter: chap(lead.name),
-          kicker: `${newest ? 'newest in this drop' : isAlias(lead) ? 'alias' : 'lead'} · ${lead.provider}`,
-          start: next(tm.spotDur), dur: tm.spotDur, more: null, ctx, rise: true, prices: false,
-        }));
-      }
-      if (tm.wall) {
-        content_.push(wallScene(everyone, {
-          id: `s${pad(n + 1)}-makers`, chapter: chap('who shipped'), start: next(tm.wallDur), dur: tm.wallDur,
-        }));
-      }
-      const pageLens = slots(tm.pagesDur, tm.pages);
-      for (let p = 0; p < tm.pages; p++) {
-        const slice = rows.slice(p * tm.perPage, (p + 1) * tm.perPage);
-        content_.push(ledgerPage(slice, {
-          id: `s${pad(n + 1)}-ledger-${p + 1}`, chapter: chap(`the ledger ${p + 1}/${tm.pages}`),
-          rank: m => rankOf.get(m), heading: countLine(everyone), page: p + 1, pages: tm.pages,
-          more: p === tm.pages - 1 ? more : null, lines: plan.lines ?? {},
-          start: next(pageLens[p]), dur: pageLens[p],
-        }));
-      }
-      if (tm.sum) {
-        content_.push(summaryScene(everyone, {
-          id: `s${pad(n + 1)}-numbers`, chapter: chap('the drop in numbers'), start: next(tm.sumDur), dur: tm.sumDur, wall: tm.wall,
-        }));
-      }
-    }
-
-    const date = String(rel.generatedAt ?? '').slice(0, 10);
-    const kinds = tally(everyone);
-    const count = kinds.models || kinds.aliases;
-    // A hero film is about one model, so its bookends are too, even when the drop was bigger.
-    const one = layout === 'hero';
-    const lead = chosen[0];
-    const open = openScene({
-      kicker: plan.kicker ?? (one ? ctx.what : 'model drop'),
-      meta: [date, one ? lead.id : countLine(everyone)].filter(Boolean).join(' · '),
+  /**
+   * One scene (or a run of them) per slot, from the template `picks` names for
+   * it — the first that fits each slot when there are none. `voice` lines set
+   * how long their slots run, and become the film's captions and mix.
+   */
+  film(rel, { plan = {}, flags = {}, picks, voice = [] }) {
+    const ctx = context(rel, { plan, flags });
+    const chosen = picks ?? classicPicks({ slots: SLOTS, templates: TEMPLATES, rel, ctx });
+    const { slots, duration } = timeSlots({
+      slots: SLOTS, picks: chosen, templates: TEMPLATES, ctx, voice,
+      seconds: parseFloat(flags.seconds ?? plan.seconds ?? 20), stretch: ['news', 'compare'],
     });
-    const bigText = plan.headline
-      ?? (one ? (moved ? `${lead.name}: ${ctx.what}` : isAlias(lead) ? `${lead.name}: a new alias` : `${lead.name} is live`)
-        : kinds.models ? `${kinds.models} new model${kinds.models === 1 ? '' : 's'} on one key`
-        : `${kinds.aliases} new ${aliasWord(everyone, kinds.aliases)} on one key`);
-    const end = endScene(duration, {
-      kicker: plan.kicker ?? (one ? `${ctx.what} · ${lead.provider}` : `model drop${date ? ` · ${date}` : ''}`),
-      big: `<span class="${fit(bigText, [[28, 'e-l'], [56, 'e-m']], 'e-s')}">${esc(bigText)}</span>`,
-      sub: `<b>${t.listed}</b> models · <b>${t.providers}+</b> providers · <b>${t.free}</b> free`,
-      // The marks of the drop's makers (a hero's: its own). Only real marks — a monogram is not a logo.
-      marks: [...new Set((one ? [lead] : rel.added.length ? rel.added : chosen).map(markOf).filter(Boolean))].slice(0, 12),
-    });
-
+    const scenes = slots.flatMap(s => [s.template.scene(ctx, s)].flat().map(scene => ({ ...scene, slot: s.slot })));
+    const shown = ctx.layout === 'list'
+      ? scenes.filter(s => s.slot === 'news').reduce((a, s) => a + (s.body.match(/class="lr r\d/g) || []).length + (s.id === 's01-lead'), 0)
+      : ctx.chosen.length;
     return {
       title: 'AnyRouter — model drop',
       duration,
       tone: 'org',
       palette: 'drop',
       label: 'MODEL DROP',
-      layout,
-      css: CSS + `
+      layout: ctx.layout,
+      picks: chosen,
+      css: CSS + SLOT_CSS + `
   .e-l{font-size:88px}.e-m{font-size:68px}.e-s{font-size:54px;letter-spacing:-.035em}`,
-      scenes: [open, ...content_, end],
+      scenes,
+      voice: slots.filter(s => s.line?.wav).map(s => ({ at: r3(s.start + VO_LEAD), seconds: s.line.seconds, text: s.line.text, wav: s.line.wav })),
       // Marks need no listing: writeFilm copies every assets/providers/*.svg a scene references.
-      summary: `${layout}  (${shown.length} of ${everyone.length} shown: ${countLine(everyone)})`,
+      summary: `${ctx.layout}  (${shown} of ${ctx.everyone.length} shown: ${countLine(ctx.everyone)})  ${SLOTS.map(k => `${k}:${chosen[k]}`).join(' ')}`,
     };
+  },
+
+  /** The page a film is about: its model's, when one model leads it. */
+  link(rel) {
+    const { models } = chooseModels(rel);
+    return models.length === 1 ? `https://anyrouter.dev/model/${models[0].id}` : 'https://anyrouter.dev/models';
   },
 
   // A changelog is read as a list, so the headline is the whole job. It leads
@@ -280,16 +258,5 @@ function dropOf(rel, id) {
   const c = rel.changed?.find(x => x.id === id && x.kind === 'price-cut');
   const p = c && dropPct(c.from, c.to);
   return p ? `price down ${p}%` : null;
-}
-
-/** Largest drop across both price axes ("in/out@ctx"), or null if neither fell. */
-export function dropPct(from, to) {
-  const axes = s => String(s).split('@')[0].split('/').map(Number);
-  const [a, b] = [axes(from), axes(to)];
-  const drops = [0, 1]
-    .filter(i => Number.isFinite(a[i]) && Number.isFinite(b[i]) && a[i] > 0)
-    .map(i => Math.round(((a[i] - b[i]) / a[i]) * 100))
-    .filter(v => v > 0);
-  return drops.length ? Math.max(...drops) : null;
 }
 

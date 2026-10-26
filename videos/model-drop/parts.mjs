@@ -48,6 +48,59 @@ export const moreLine = hidden => {
 /** Which layout a model count gets. */
 export const layoutOf = n => (n === 1 ? 'hero' : n <= 4 ? 'cards' : 'list');
 
+// ── what moved: a catalog change is "in/out@context", and any of the three can move ──
+const AXES = ['in', 'out', 'context'];
+const parseKey = s => {
+  const [price, context] = String(s).split('@');
+  const [inP, outP] = price.split('/').map(Number);
+  return { in: inP, out: outP, context: context === 'x' ? null : Number(context) };
+};
+/** Only the axes that actually moved, in in / out / context order. */
+export const changeAxes = c => {
+  const [a, b] = [parseKey(c.from), parseKey(c.to)];
+  return AXES.filter(k => a[k] !== b[k]).map(axis => ({ axis, from: a[axis], to: b[axis] }));
+};
+const axisText = (axis, v) => (axis === 'context' ? `${fmtCtx(v)} context` : `${fmtPrice(v)} ${axis}`);
+/** "was $0.15 in · $0.60 out", "was 1M context": the old value of each axis that moved. */
+export const wasLine = axes => axes.map(a => axisText(a.axis, a.from)).join(' · ');
+export const nowLine = axes => axes.map(a => axisText(a.axis, a.to)).join(' · ');
+
+// ── how a model is called: by what it is, never by a guess ─────────────────
+// `anyr` has chat and embed commands and no rerank; the OpenAI SDK has no rerank either.
+export const APIS = {
+  chat: {
+    name: 'chat completions', path: '/api/v1/chat/completions',
+    cli: id => ['anyr login', `git diff | anyr chat --model ${id} "Review this" -`],
+    body: id => `{"model": "${id}",\n      "messages": [{"role": "user", "content": "Hello"}]}`,
+    sdk: id => `client.chat.completions.create({\n  model: "${id}",\n  messages: [{ role: "user", content: "Hello" }],\n});`,
+  },
+  embedding: {
+    name: 'embeddings', path: '/api/v1/embeddings',
+    cli: id => ['anyr login', `anyr embed --model ${id} "hello world"`],
+    body: id => `{"model": "${id}",\n      "input": "hello world"}`,
+    sdk: id => `client.embeddings.create({\n  model: "${id}",\n  input: "hello world",\n});`,
+  },
+  rerank: {
+    name: 'rerank', path: '/api/v1/rerank', cli: null, sdk: null,
+    body: id => `{"model": "${id}",\n      "query": "What is the capital of France?",\n      "documents": ["Paris is the capital of France.", "Berlin is the capital of Germany."]}`,
+  },
+};
+export const apiOf = m => APIS[m.category === 'embedding' ? 'embedding' : m.category === 'rerank' ? 'rerank' : 'chat'];
+
+/** Largest drop across both price axes ("in/out@ctx"), or null if neither fell. */
+export function dropPct(from, to) {
+  const axes = s => String(s).split('@')[0].split('/').map(Number);
+  const [a, b] = [axes(from), axes(to)];
+  const drops = [0, 1]
+    .filter(i => Number.isFinite(a[i]) && Number.isFinite(b[i]) && a[i] > 0)
+    .map(i => Math.round(((a[i] - b[i]) / a[i]) * 100))
+    .filter(v => v > 0);
+  return drops.length ? Math.max(...drops) : null;
+}
+
+/** "a text model", "an embedding model". */
+export const aModel = cat => `${/^[aeiou]/i.test(cat ?? '') ? 'an' : 'a'} ${cat ? `${cat} ` : ''}model`;
+
 // ── pieces ─────────────────────────────────────────────────────────────────
 /** A model's mark file: the catalog's, else whatever its provider or id resolves to. Null when none is vendored. */
 export const markOf = m => m.logo || markFor(m.provider) || markFor(m.id);
