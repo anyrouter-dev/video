@@ -108,7 +108,8 @@ export function facts(rel, ctx) {
     lead: model(ctx.lead),
     models: ctx.chosen.slice(0, 4).map(model),
     count: ctx.kinds,
-    makers: makersOf(ctx.everyone).length,
+    // Makers of the drop's models; an org that shipped only aliases is not one (the wall counts them apart too).
+    makers: makersOf(ctx.everyone).filter(k => k.models).length || makersOf(ctx.everyone).length,
     change: ctx.moved && prices ? {
       kind: ctx.moved.kind, pct: dropPct(ctx.moved.from, ctx.moved.to),
       axes: ctx.axes.map(a => ({ axis: a.axis, from: a.from, to: a.to })),
