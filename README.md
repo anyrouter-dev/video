@@ -195,8 +195,8 @@ model that already shipped is also a release.
 
 ## CI
 
-**`render-video.yml`** — nightly, on `repository_dispatch` from the AnyRouter
-repo, and by hand (pick a kind, optionally force). One job:
+**`render-video.yml`** — nightly, dispatched by posting.anyrouter.dev
+(`wf_model_video`, the only scheduler), and by hand (pick a kind, optionally force). One job:
 
 1. **decide** — asks each kind what is unreleased. Node only: no install, no
    browser. On a quiet night the run ends here, in seconds.
