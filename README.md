@@ -205,19 +205,29 @@ repo, and by hand (pick a kind, optionally force). One job:
    OpenCode reads the facts and the brief and writes `.build/<kind>/plan.json`:
    which items lead, the copy, or `limit: 0` to decline. Skipped without
    `OPENCODE_API_KEY`, and it can never fail the build.
-4. **render → publish → accept**, one kind at a time. One kind failing does not
-   stop the others.
+4. **render → draft → accept**, one kind at a time (`--publish --draft
+   --no-youtube`). Each film lands on a **draft** GitHub Release, and a
+   posting.anyrouter.dev draft folder per film goes in the `posting-drafts`
+   artifact. One kind failing does not stop the others.
 5. **record** — one commit with the ledger and the baseline.
 
-Releases and commits only happen on `main`. A run on a branch renders and keeps
+Nothing this job does is public. The owner reviews the draft Release and
+presses Publish, pushes the posting draft with the AnyRouter repo's
+`npx tsx scripts/posting-draft.ts <folder>`, and dispatches `youtube.yml`. The job
+holds no YouTube credentials; `lib/publish.mjs` refuses a YouTube upload or a
+non-draft Release on a `schedule` or `repository_dispatch` run, and
+`lib/unattended.test.mjs` fails CI if a workflow could do either.
+
+Draft Releases and commits only happen on `main`. A run on a branch renders and keeps
 the mp4 as a workflow artifact.
 
 By hand, the `regen` input (a release id, or `all`, with a kind) re-renders
 released films instead and replaces their Release assets.
 
-**`youtube.yml`** — by hand, with a kind and a release id: uploads each film of
-that release that is not on YouTube yet (an upload that failed, or a portrait
-film a regen added) and commits the links.
+**`youtube.yml`** — by the owner only, with a kind and a release id: uploads each
+film of that release that is not on YouTube yet as a **private** video, and
+commits the links. The owner makes a video public in YouTube Studio.
+`YT_PRIVACY` accepts only `private` or `unlisted`.
 
 **`ci.yml`** — on pull requests and pushes that touch the code: the unit tests,
 then the HyperFrames checker on each kind built from its committed fixture.

@@ -12,7 +12,7 @@ collect  →  .build/<kind>/data.json     (the facts, from a live public source)
 gen      →  .build/<kind>/film/          (a HyperFrames project, 1920x1080)
 check    →  lint + runtime + layout + motion + contrast, for every rendition
 render   →  renders/<kind>-<id>.mp4      (+ -portrait.mp4, a cover each, + source tarball)
-publish  →  a GitHub Release tagged <kind>-<id>, and one YouTube video per rendition
+publish  →  a GitHub Release tagged <kind>-<id> (a DRAFT on every unattended run), and, by owner dispatch only, one private YouTube video per rendition
 ```
 
 Same inputs, same mp4, every time. `npm run video -- <kind>` is the whole
