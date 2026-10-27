@@ -799,6 +799,16 @@ export default {
     return `Catalog update: ${removed.length} model(s) retired`;
   },
 
+  modelIds(rel) {
+    return rel.added.map(m => m.id);
+  },
+
+  // One new model: its page. Several, or only price moves: the catalog.
+  link(rel) {
+    const added = rel.added.filter(m => !isAlias(m));
+    return added.length === 1 ? `https://anyrouter.dev/model/${added[0].id}` : 'https://anyrouter.dev/models';
+  },
+
   notes(rel, plan = {}) {
     return [
       plan.share,

@@ -42,6 +42,11 @@ on:
         description: 'Re-render released films of this kind instead: a release id, or "all" (needs a kind)'
         required: false
         default: ''
+      requested_by:
+        description: 'Who asked: owner, or posting (posting.anyrouter.dev nightly; draft-only, never regen)'
+        type: choice
+        default: owner
+        options: [owner, posting]
   # the AnyRouter repo dispatches this after a model or a release ships
   repository_dispatch:
     types: [model-added, release-published]
@@ -71,6 +76,8 @@ jobs:
     env:
       KIND: ${{ inputs.kind || 'auto' }}
       REGEN: ${{ inputs.regen }}
+      # posting.anyrouter.dev's nightly dispatch: unattended, so draft-only (lib/publish.mjs isUnattended).
+      REQUESTED_BY: ${{ inputs.requested_by || 'owner' }}
       # Releases and ledger commits only ever come from main. A run on a branch
       # renders and uploads a workflow artifact, nothing else.
       SHIP: ${{ github.ref == 'refs/heads/main' }}
@@ -88,6 +95,9 @@ jobs:
         id: decide
         run: |
           set -euo pipefail
+          if [ "$REQUESTED_BY" = "posting" ] && { [ -n "$REGEN" ] || [ "${{ inputs.force }}" = "true" ]; }; then
+            echo '::error::a posting dispatch only renders what is new: no regen, no force'; exit 1
+          fi
           if [ -n "$REGEN" ]; then
             [ "$KIND" != "auto" ] || { echo '::error::regen needs a kind'; exit 1; }
             node lib/cli.mjs ledger "$KIND" | tee decide.log
@@ -226,8 +236,10 @@ jobs:
           done
           echo '::error::could not push the ledger'; exit 1
 
-      # The posting draft folders, for the owner to push into posting.anyrouter.dev
-      # (npx tsx scripts/posting-draft.ts <folder> in the AnyRouter repo).
+      # The posting draft folders. posting.anyrouter.dev reads each <tag>/posting.json
+      # (and, to publish, the film beside it) out of this artifact by name, so keep
+      # the name and the layout; lib/handoff.mjs documents the contract. The owner
+      # can still push a folder by hand with scripts/posting-draft.ts in the AnyRouter repo.
       - name: Keep the posting drafts
         if: always() && steps.decide.outputs.kinds != ''
         uses: actions/upload-artifact@v4
