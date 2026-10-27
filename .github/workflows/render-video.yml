@@ -3,13 +3,20 @@ name: render-video
 # One job. It asks each kind "is there anything unreleased?" using nothing but
 # Node, and stops there on a quiet night — no npm ci, no Chrome, no ffmpeg.
 # When there is something, an agent may pick the story, then it renders every
-# rendition the kind makes (landscape, portrait), publishes them to a GitHub
-# Release and YouTube, and records the ledger and baselines in ONE commit. Two
-# jobs pushing to main from one checkout is a race; keep it one job.
+# rendition the kind makes (landscape, portrait), leaves them on a DRAFT GitHub
+# Release, writes a posting.anyrouter.dev draft folder per film (the
+# `posting-drafts` artifact), and records the ledger and baselines in ONE
+# commit. Two jobs pushing to main from one checkout is a race; keep it one job.
+#
+# Nothing here goes public. The owner reviews the draft Release and presses
+# Publish, pushes the posting draft with the AnyRouter repo's
+# scripts/posting-draft.ts, and dispatches youtube.yml to upload (private).
+# This job holds no YouTube credentials at all; lib/unattended.test.mjs fails
+# CI if it ever does, or if an unattended run can publish.
 #
 # `regen` re-renders releases that are already out, from their frozen facts, and
-# replaces the assets of their GitHub Releases in place. It never uploads to
-# YouTube: dispatch youtube.yml for a rendition it added.
+# replaces the assets of their GitHub Releases in place. Only an owner dispatch
+# can run it. It never uploads to YouTube: dispatch youtube.yml for a rendition it added.
 
 on:
   workflow_dispatch:
@@ -173,11 +180,6 @@ jobs:
           LIMIT: ${{ inputs.limit }}
           SECONDS_: ${{ inputs.seconds }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YT_PRIVACY: ${{ vars.YT_PRIVACY }}
-          YT_TITLE_TEMPLATE: ${{ vars.YT_TITLE_TEMPLATE }}
         run: |
           set -uo pipefail
           ARGS=""
@@ -185,13 +187,15 @@ jobs:
           [ -n "$SECONDS_" ] && ARGS="$ARGS --seconds=$SECONDS_"
           if [ -n "$REGEN" ]; then
             [ "$REGEN" = "all" ] && ARGS="$ARGS --all" || ARGS="$REGEN $ARGS"
-            [ "$SHIP" = "true" ] && ARGS="$ARGS --publish"
+            # Replaces the assets of a published Release: an owner dispatch only.
+            [ "$SHIP" = "true" ] && [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && ARGS="$ARGS --publish"
             CMD=regen
           else
             # --reuse: film exactly the facts the decide step (and the agent) saw.
             ARGS="$ARGS --reuse"
             [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
-            [ "$SHIP" = "true" ] && ARGS="$ARGS --publish --accept"
+            # A draft Release and a posting draft folder; never YouTube, never public.
+            [ "$SHIP" = "true" ] && ARGS="$ARGS --publish --draft --no-youtube --accept"
             CMD=run
           fi
           FAILED=""
@@ -221,6 +225,17 @@ jobs:
             sleep $((i * 5))
           done
           echo '::error::could not push the ledger'; exit 1
+
+      # The posting draft folders, for the owner to push into posting.anyrouter.dev
+      # (npx tsx scripts/posting-draft.ts <folder> in the AnyRouter repo).
+      - name: Keep the posting drafts
+        if: always() && steps.decide.outputs.kinds != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: posting-drafts
+          path: handoff/
+          if-no-files-found: ignore
+          retention-days: 14
 
       # The GitHub Release is the store. This copy is for branch runs, which do
       # not publish, and for debugging a run that failed.

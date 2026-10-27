@@ -6,6 +6,9 @@
 # ship on the GitHub Release, which is the durable public copy.
 /renders/
 
+# posting.anyrouter.dev draft folders a draft run writes (lib/handoff.mjs).
+/handoff/
+
 node_modules/
 
 # scratch from an older tool

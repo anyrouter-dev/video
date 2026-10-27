@@ -1,8 +1,9 @@
 name: youtube
 
-# Uploads the films of a GitHub Release that are not on YouTube yet: after the
-# render-video upload failed (an expired token), or after a regen added a
-# rendition (regen never uploads). It renders nothing: it fetches each film the
+# Uploads the films of a GitHub Release that are not on YouTube yet, as PRIVATE
+# videos. It is the only path to YouTube, and only the owner dispatches it:
+# render-video leaves a draft Release and never uploads, and a regen never
+# uploads either. It renders nothing: it fetches each film the
 # ledger row has no YouTube link for, runs `publish`, which uploads those and
 # skips the rest, and fails unless every rendition then has its link.
 
@@ -66,7 +67,9 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YT_PRIVACY: ${{ vars.YT_PRIVACY }}
+          # Always private: the owner makes a video public in YouTube Studio.
+          # lib/publish.mjs refuses `public` anyway; the repo var is not read.
+          YT_PRIVACY: private
           YT_TITLE_TEMPLATE: ${{ vars.YT_TITLE_TEMPLATE }}
         run: |
           set -euo pipefail
