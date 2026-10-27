@@ -405,3 +405,12 @@ test('a price drop is measured on the price, not the context window', () => {
   assert.equal(dropPct('0.4/1.6@256000', '0.2/1.6@256000'), 50);
   assert.equal(dropPct('0/0@204800', '0/0@200000'), null);
 });
+
+test('a film links its one new model, else the catalog; posting.json copy uses this, never the draft Release', () => {
+  const m = (id, excerpt) => ({ id, excerpt });
+  assert.equal(kind.link({ added: [m('acme/one')] }), 'https://anyrouter.dev/model/acme/one');
+  assert.equal(kind.link({ added: [m('acme/one'), m('acme/one-latest', 'alias for acme/one')] }), 'https://anyrouter.dev/model/acme/one');
+  assert.equal(kind.link({ added: [m('acme/one'), m('acme/two')] }), 'https://anyrouter.dev/models');
+  assert.equal(kind.link({ added: [] }), 'https://anyrouter.dev/models');
+  assert.deepEqual(kind.modelIds({ added: [m('acme/one'), m('acme/two')] }), ['acme/one', 'acme/two']);
+});
