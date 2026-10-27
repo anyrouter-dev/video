@@ -218,6 +218,15 @@ holds no YouTube credentials; `lib/publish.mjs` refuses a YouTube upload or a
 non-draft Release on a `schedule` or `repository_dispatch` run, and
 `lib/unattended.test.mjs` fails CI if a workflow could do either.
 
+posting.anyrouter.dev dispatches this workflow with `requested_by: posting`.
+That run gets the same draft-only rules, and refuses `regen` and `force`. Each
+folder in `posting-drafts` holds `posting.json` (schema
+`anyrouter.posting-film/v1`, written by `lib/handoff.mjs`): the draft posting
+imports (its `AgentDraft` JSON, keyed on the Release tag), the film's file
+name, sha256, size and frame, the cover, and the model ids. posting reads it
+out of the artifact, so keep the artifact name and the `<tag>/posting.json`
+layout.
+
 Draft Releases and commits only happen on `main`. A run on a branch renders and keeps
 the mp4 as a workflow artifact.
 

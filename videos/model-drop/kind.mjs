@@ -799,6 +799,10 @@ export default {
     return `Catalog update: ${removed.length} model(s) retired`;
   },
 
+  modelIds(rel) {
+    return rel.added.map(m => m.id);
+  },
+
   notes(rel, plan = {}) {
     return [
       plan.share,
