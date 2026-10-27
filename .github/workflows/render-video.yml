@@ -8,9 +8,9 @@ name: render-video
 # `posting-drafts` artifact), and records the ledger and baselines in ONE
 # commit. Two jobs pushing to main from one checkout is a race; keep it one job.
 #
-# Nothing here goes public. The owner reviews the draft Release and presses
-# Publish, pushes the posting draft with the AnyRouter repo's
-# scripts/posting-draft.ts, and dispatches youtube.yml to upload (private).
+# posting.anyrouter.dev schedules it (workflow_dispatch, requested_by=posting)
+# and imports each film from the `posting-drafts` artifact as a draft.
+# Nothing here goes public: the owner approves each network in posting.
 # This job holds no YouTube credentials at all; lib/unattended.test.mjs fails
 # CI if it ever does, or if an unattended run can publish.
 #
@@ -47,12 +47,10 @@ on:
         type: choice
         default: owner
         options: [owner, posting]
-  # the AnyRouter repo dispatches this after a model or a release ships
-  repository_dispatch:
-    types: [model-added, release-published]
-  # catch anything new even if nobody dispatched
-  schedule:
-    - cron: '17 7 * * *'
+  # No `schedule:` and no `repository_dispatch:`. posting.anyrouter.dev's
+  # wf_model_video is the one scheduler: it dispatches this daily with
+  # requested_by=posting, polls the run and imports the posting-drafts artifact.
+  # lib/unattended.test.mjs fails CI if a second scheduler comes back.
 
 # Never cancel a run that may be halfway through publishing; queue instead.
 concurrency:
