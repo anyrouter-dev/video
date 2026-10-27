@@ -329,6 +329,31 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-014-20261025-2026-10-24-cfb3055e79"
       }
+    },
+    {
+      "id": "015-20261027-2026-10-27-80ac36fe49",
+      "hash": "80ac36fe49",
+      "kind": "changelog",
+      "label": "2026-10-27",
+      "title": "GPT-6.1 Terra",
+      "seconds": 15,
+      "renderedAt": "2026-10-27T13:15:13.903Z",
+      "commit": "8a09cb7",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-015-20261027-2026-10-27-80ac36fe49.mp4",
+          "cover": "renders/changelog-015-20261027-2026-10-27-80ac36fe49.png"
+        },
+        "portrait": {
+          "artifact": "renders/changelog-015-20261027-2026-10-27-80ac36fe49-portrait.mp4",
+          "cover": "renders/changelog-015-20261027-2026-10-27-80ac36fe49-portrait.png"
+        }
+      },
+      "source": "renders/changelog-015-20261027-2026-10-27-80ac36fe49-source.tar.gz",
+      "createdAt": "2026-10-27T13:15:13.907Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-015-20261027-2026-10-27-80ac36fe49"
+      }
     }
   ]
 }

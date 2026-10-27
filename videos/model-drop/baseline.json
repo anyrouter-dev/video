@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-25T12:34:48.832Z",
+  "acceptedAt": "2026-10-27T13:13:13.559Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -177,6 +177,7 @@
     "openai/gpt-6-sol",
     "openai/gpt-6.1-sol-pro",
     "openai/gpt-6.1-sol",
+    "openai/gpt-6.1-terra",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
     "openai/o1-mini",
@@ -348,7 +349,7 @@
       "id": "anthropic/claude-fable-5",
       "inPrice": 10,
       "outPrice": 50,
-      "context": 1048576
+      "context": 1000000
     },
     {
       "id": "anthropic/claude-haiku-5-5",
@@ -960,7 +961,7 @@
       "id": "minimax/minimax-m3.1-flash",
       "inPrice": 0,
       "outPrice": 0,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "mistralai/mistral-large-4",
@@ -1359,6 +1360,12 @@
       "context": 1050000
     },
     {
+      "id": "openai/gpt-6.1-terra",
+      "inPrice": 1,
+      "outPrice": 5,
+      "context": 1050000
+    },
+    {
       "id": "openai/gpt-oss-120b",
       "inPrice": 0.03,
       "outPrice": 0.15,
@@ -1692,7 +1699,7 @@
       "id": "stepfun-ai/step-3.5-flash",
       "inPrice": 0.1,
       "outPrice": 0.3,
-      "context": 1000000
+      "context": 262144
     },
     {
       "id": "stepfun-ai/step-3.7-flash",
@@ -1974,7 +1981,7 @@
       "id": "z-ai/glm-5.3",
       "inPrice": 0.06,
       "outPrice": 0.22,
-      "context": 1050000
+      "context": 1310720
     },
     {
       "id": "z-ai/glm-5",
@@ -2076,7 +2083,7 @@
       "id": "z-ai/glm-latest",
       "inPrice": 0.06,
       "outPrice": 0.22,
-      "context": 1050000
+      "context": 1310720
     },
     {
       "id": "z-ai/glm-flash-latest",

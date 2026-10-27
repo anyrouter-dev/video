@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-10-27T13:13:13.559Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 309,
+    "listed": 300,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 67,
+    "providerBackends": 67,
+    "free": 62
+  },
+  "pool": null,
+  "added": [
+    {
+      "id": "openai/gpt-6.1-terra",
+      "name": "GPT-6.1 Terra",
+      "provider": "OpenAI",
+      "logo": "openai-color.svg",
+      "context": 1050000,
+      "inPrice": 1,
+      "outPrice": 5,
+      "free": false,
+      "created": 1792972800,
+      "category": "multimodal",
+      "excerpt": "OpenAI's GPT-6.1 Terra is a fast, efficient model for visual reasoning, precise computer use, and clear, natural writing, with configurable reasoning, tool use, image input, and a 1.05M-token context window."
+    }
+  ],
+  "changed": [
+    {
+      "id": "anthropic/claude-fable-5",
+      "from": "10/50@1048576",
+      "to": "10/50@1000000",
+      "kind": "context"
+    },
+    {
+      "id": "minimax/minimax-m3.1-flash",
+      "from": "0/0@1000000",
+      "to": "0/0@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "stepfun-ai/step-3.5-flash",
+      "from": "0.1/0.3@1000000",
+      "to": "0.1/0.3@262144",
+      "kind": "context"
+    },
+    {
+      "id": "z-ai/glm-5.3",
+      "from": "0.06/0.22@1050000",
+      "to": "0.06/0.22@1310720",
+      "kind": "context"
+    },
+    {
+      "id": "z-ai/glm-latest",
+      "from": "0.06/0.22@1050000",
+      "to": "0.06/0.22@1310720",
+      "kind": "context"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "openai/gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI",
+    "logo": "openai-color.svg",
+    "context": 1050000,
+    "inPrice": 1,
+    "outPrice": 5,
+    "free": false,
+    "created": 1792972800,
+    "category": "multimodal",
+    "excerpt": "OpenAI's GPT-6.1 Terra is a fast, efficient model for visual reasoning, precise computer use, and clear, natural writing, with configurable reasoning, tool use, image input, and a 1.05M-token context window."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+openai/gpt-6.1-terra@1/5@1050000",
+    "~anthropic/claude-fable-5 10/50@1048576->10/50@1000000",
+    "~minimax/minimax-m3.1-flash 0/0@1000000->0/0@1048576",
+    "~stepfun-ai/step-3.5-flash 0.1/0.3@1000000->0.1/0.3@262144",
+    "~z-ai/glm-5.3 0.06/0.22@1050000->0.06/0.22@1310720",
+    "~z-ai/glm-latest 0.06/0.22@1050000->0.06/0.22@1310720"
+  ]
+}
