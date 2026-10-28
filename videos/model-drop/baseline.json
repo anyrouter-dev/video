@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-27T13:13:13.559Z",
+  "acceptedAt": "2026-10-28T14:02:08.073Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -187,6 +187,7 @@
     "openrouter/free",
     "openrouter/fusion",
     "openrouter/pareto-code",
+    "ornith/ornith-1.5-122b",
     "perplexity/pplx-decider-flash-v1.2",
     "perplexity/pplx-decider-v1-27b",
     "perplexity/pplx-decider-v1.1-27b",
@@ -244,7 +245,7 @@
     "thinkingmachines/inkling-small",
     "thinkingmachines/inkling",
     "typesafe/jev",
-    "unbiased/pareto-26.10-preview",
+    "unbiased/pareto-26.10",
     "upstage/solar-decide-flash",
     "upstage/solar-decide",
     "upstage/solar-mini4",
@@ -713,8 +714,8 @@
     },
     {
       "id": "google/gemma-4-31b",
-      "inPrice": 0.1,
-      "outPrice": 0.34,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {
@@ -1420,6 +1421,12 @@
       "context": 2000000
     },
     {
+      "id": "ornith/ornith-1.5-122b",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 262144
+    },
+    {
       "id": "perplexity/pplx-decider-flash-v1.2",
       "inPrice": 0,
       "outPrice": 0,
@@ -1745,14 +1752,14 @@
     },
     {
       "id": "thinkingmachines/inkling-small",
-      "inPrice": 0.45,
-      "outPrice": 1.2,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
       "id": "thinkingmachines/inkling",
-      "inPrice": 0.95,
-      "outPrice": 4.05,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 1048576
     },
     {
@@ -1762,7 +1769,7 @@
       "context": 64000
     },
     {
-      "id": "unbiased/pareto-26.10-preview",
+      "id": "unbiased/pareto-26.10",
       "inPrice": 0.8,
       "outPrice": 3.2,
       "context": 1048576
@@ -1961,8 +1968,8 @@
     },
     {
       "id": "z-ai/glm-5.2",
-      "inPrice": 0.476,
-      "outPrice": 1.496,
+      "inPrice": 0.75,
+      "outPrice": 2.4,
       "context": 1050000
     },
     {
@@ -2009,8 +2016,8 @@
     },
     {
       "id": "google/gemma-latest",
-      "inPrice": 0.1,
-      "outPrice": 0.34,
+      "inPrice": 0,
+      "outPrice": 0,
       "context": 262144
     },
     {

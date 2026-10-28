@@ -405,6 +405,28 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/model-drop-019-20261027-models-pricing-65c2c1b78c"
       }
+    },
+    {
+      "id": "020-20261028-models-pricing-8a74ada075",
+      "hash": "8a74ada075",
+      "kind": "model-drop",
+      "label": "models+pricing",
+      "title": "2 new models: ornith-1.5-122b, pareto-26.10",
+      "seconds": 20,
+      "renderedAt": "2026-10-28T14:05:50.812Z",
+      "commit": "de3226c",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/model-drop-020-20261028-models-pricing-8a74ada075.mp4",
+          "cover": "renders/model-drop-020-20261028-models-pricing-8a74ada075.png"
+        }
+      },
+      "source": "renders/model-drop-020-20261028-models-pricing-8a74ada075-source.tar.gz",
+      "createdAt": "2026-10-28T14:05:50.816Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-0991cf5617ba9d4833c5",
+        "draft": true
+      }
     }
   ]
 }

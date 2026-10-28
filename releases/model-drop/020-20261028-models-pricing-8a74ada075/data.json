@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-10-28T14:02:08.073Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 310,
+    "listed": 301,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 68,
+    "providerBackends": 68,
+    "free": 67
+  },
+  "pool": {
+    "keys": 248,
+    "donors": 147,
+    "requests": 58664
+  },
+  "added": [
+    {
+      "id": "ornith/ornith-1.5-122b",
+      "name": "Ornith 1.5 122B",
+      "provider": "ornith",
+      "logo": null,
+      "context": 262144,
+      "inPrice": 0,
+      "outPrice": 0,
+      "free": true,
+      "created": 1792108800,
+      "category": "text",
+      "excerpt": "Ornith 1.5 122B is Ornith's open-weight mixture-of-experts model for coding and agent work, built on the Qwen3.5 MoE architecture and trained with a self-improvement loop over generated tasks, scaffolds and rollouts."
+    },
+    {
+      "id": "unbiased/pareto-26.10",
+      "name": "Pareto 26.10",
+      "provider": "unbiased",
+      "logo": "unbiased.svg",
+      "context": 1048576,
+      "inPrice": 0.8,
+      "outPrice": 3.2,
+      "free": false,
+      "created": 1790812800,
+      "category": "text",
+      "excerpt": "Pareto 26.10 is Unbiased's newer composite model — it blends several language models into one answer, takes text and image input, and returns text over a 1,048,576-token context window (131,072 max completion)."
+    }
+  ],
+  "changed": [
+    {
+      "id": "google/gemma-4-31b",
+      "from": "0.1/0.34@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "thinkingmachines/inkling-small",
+      "from": "0.45/1.2@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "thinkingmachines/inkling",
+      "from": "0.95/4.05@1048576",
+      "to": "0/0@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "z-ai/glm-5.2",
+      "from": "0.476/1.496@1050000",
+      "to": "0.75/2.4@1050000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "google/gemma-latest",
+      "from": "0.1/0.34@262144",
+      "to": "0/0@262144",
+      "kind": "price-cut"
+    }
+  ],
+  "removed": [
+    "unbiased/pareto-26.10-preview"
+  ],
+  "spotlight": {
+    "id": "ornith/ornith-1.5-122b",
+    "name": "Ornith 1.5 122B",
+    "provider": "ornith",
+    "logo": null,
+    "context": 262144,
+    "inPrice": 0,
+    "outPrice": 0,
+    "free": true,
+    "created": 1792108800,
+    "category": "text",
+    "excerpt": "Ornith 1.5 122B is Ornith's open-weight mixture-of-experts model for coding and agent work, built on the Qwen3.5 MoE architecture and trained with a self-improvement loop over generated tasks, scaffolds and rollouts."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+ornith/ornith-1.5-122b@0/0@262144",
+    "+unbiased/pareto-26.10@0.8/3.2@1048576",
+    "~google/gemma-4-31b 0.1/0.34@262144->0/0@262144",
+    "~thinkingmachines/inkling-small 0.45/1.2@1048576->0/0@1048576",
+    "~thinkingmachines/inkling 0.95/4.05@1048576->0/0@1048576",
+    "~z-ai/glm-5.2 0.476/1.496@1050000->0.75/2.4@1050000",
+    "~google/gemma-latest 0.1/0.34@262144->0/0@262144",
+    "-unbiased/pareto-26.10-preview"
+  ]
+}

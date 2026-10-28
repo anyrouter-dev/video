@@ -354,6 +354,32 @@
       "published": {
         "github": "https://github.com/anyrouter-dev/video/releases/tag/changelog-015-20261027-2026-10-27-80ac36fe49"
       }
+    },
+    {
+      "id": "016-20261028-2026-10-28-4b1b8a912c",
+      "hash": "4b1b8a912c",
+      "kind": "changelog",
+      "label": "2026-10-28",
+      "title": "Ornith 1.5 122B",
+      "seconds": 14.5,
+      "renderedAt": "2026-10-28T14:04:27.973Z",
+      "commit": "de3226c",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-016-20261028-2026-10-28-4b1b8a912c.mp4",
+          "cover": "renders/changelog-016-20261028-2026-10-28-4b1b8a912c.png"
+        },
+        "portrait": {
+          "artifact": "renders/changelog-016-20261028-2026-10-28-4b1b8a912c-portrait.mp4",
+          "cover": "renders/changelog-016-20261028-2026-10-28-4b1b8a912c-portrait.png"
+        }
+      },
+      "source": "renders/changelog-016-20261028-2026-10-28-4b1b8a912c-source.tar.gz",
+      "createdAt": "2026-10-28T14:04:27.977Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-d75a29f962d5824ec918",
+        "draft": true
+      }
     }
   ]
 }

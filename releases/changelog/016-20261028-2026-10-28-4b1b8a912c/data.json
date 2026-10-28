@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-28",
+  "parts": [
+    "2026-10-28-ornith-1-5-122b"
+  ],
+  "date": "2026-10-28",
+  "entries": [
+    {
+      "slug": "2026-10-28-ornith-1-5-122b",
+      "date": "2026-10-28",
+      "title": "Ornith 1.5 122B",
+      "summary": "Ornith's open-weight Ornith 1.5 122B joins the catalog: a 122B mixture-of-experts model for coding and agents with a 262K-token context, free through the shared free tier.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-28-ornith-1-5-122b",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}
