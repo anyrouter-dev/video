@@ -1,0 +1,26 @@
+{
+  "id": "017-20261029-2026-10-29-679c357449",
+  "hash": "679c357449",
+  "kind": "changelog",
+  "label": "2026-10-29",
+  "title": "2 changelog updates: GPT-5.6 Terra Pro, Particle-1",
+  "seconds": 21,
+  "renderedAt": "2026-10-29T14:24:13.454Z",
+  "commit": "0649f7c",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-017-20261029-2026-10-29-679c357449.mp4",
+      "cover": "renders/changelog-017-20261029-2026-10-29-679c357449.png"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-017-20261029-2026-10-29-679c357449-portrait.mp4",
+      "cover": "renders/changelog-017-20261029-2026-10-29-679c357449-portrait.png"
+    }
+  },
+  "source": "renders/changelog-017-20261029-2026-10-29-679c357449-source.tar.gz",
+  "createdAt": "2026-10-29T14:24:13.463Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-ae6dd7816d5f5a554a16",
+    "draft": true
+  }
+}

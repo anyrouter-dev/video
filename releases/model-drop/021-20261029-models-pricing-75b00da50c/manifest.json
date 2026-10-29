@@ -1,0 +1,22 @@
+{
+  "id": "021-20261029-models-pricing-75b00da50c",
+  "hash": "75b00da50c",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "26 new models: particle-1, gpt-6.1-terra-pro, d3-ultra +23 more",
+  "seconds": 20,
+  "renderedAt": "2026-10-29T14:25:21.976Z",
+  "commit": "0649f7c",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-021-20261029-models-pricing-75b00da50c.mp4",
+      "cover": "renders/model-drop-021-20261029-models-pricing-75b00da50c.png"
+    }
+  },
+  "source": "renders/model-drop-021-20261029-models-pricing-75b00da50c-source.tar.gz",
+  "createdAt": "2026-10-29T14:25:21.985Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-2b4e57a9b868eaa692d5",
+    "draft": true
+  }
+}

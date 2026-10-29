@@ -1,12 +1,14 @@
 {
-  "acceptedAt": "2026-10-28T14:02:08.073Z",
+  "acceptedAt": "2026-10-29T14:21:57.555Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
     "agnes-ai/agnes-2.5-pro-alpha",
     "agnes-ai/agnes-2.5-pro",
     "agnes-ai/agnes-3.0-flash",
+    "aion-labs/aion-3.5-mini",
     "aiteamvn/vietnamese-embedding",
+    "antdigital/lingdt-3.0-flash",
     "anthropic/claude-fable-5-1",
     "anthropic/claude-fable-5",
     "anthropic/claude-haiku-5-5",
@@ -45,6 +47,7 @@
     "convaiinnovations/laya",
     "deepseek/deepseek-r1",
     "deepseek/deepseek-v3.1",
+    "deepseek/deepseek-v3.2-exp",
     "deepseek/deepseek-v3",
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
@@ -80,15 +83,18 @@
     "inclusionai/ling-3.0-flash-sante",
     "inclusionai/ling-3.0-flash-vl",
     "inclusionai/ling-3.0-flash",
-    "inclusionai/ling-3.0-tiny",
     "inclusionai/ling-3.1-flash",
+    "inference-net/schematron-v2-small",
+    "inference-net/schematron-v2-turbo",
     "intern/intern-s2-free",
     "intfloat/e5-base-v2",
     "intfloat/multilingual-e5-large",
     "jaredpalmer/kev-4b",
+    "liquid/d1-ultra",
     "liquid/d1",
     "liquid/lfm-2.5-2.6b",
     "liquid/lfm-2.5-24b-a2b",
+    "liquid/lfm-2.5-embedding-350m",
     "meituan/longcat-2.0",
     "meituan/longcat-2.5-preview",
     "meta/llama-3.1-70b-instruct",
@@ -127,7 +133,6 @@
     "nex-agi/nex-n2.5-mini",
     "nex-agi/nex-n2.5-pro",
     "nousresearch/hermes-3-llama-3.1-405b",
-    "nvidia/nemotron-3-120b-a12b",
     "nvidia/nemotron-3-embed-1b",
     "nvidia/nemotron-3-nano-30b-a3b",
     "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
@@ -167,16 +172,19 @@
     "openai/gpt-5.5",
     "openai/gpt-5.6-luna",
     "openai/gpt-5.6-sol",
+    "openai/gpt-5.6-terra-pro",
     "openai/gpt-5.6-terra",
     "openai/gpt-5",
     "openai/gpt-6-astra-pro",
     "openai/gpt-6-astra",
+    "openai/gpt-6-luna-decisions",
     "openai/gpt-6-luna-pro",
     "openai/gpt-6-luna",
     "openai/gpt-6-sol-pro",
     "openai/gpt-6-sol",
     "openai/gpt-6.1-sol-pro",
     "openai/gpt-6.1-sol",
+    "openai/gpt-6.1-terra-pro",
     "openai/gpt-6.1-terra",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
@@ -188,6 +196,7 @@
     "openrouter/fusion",
     "openrouter/pareto-code",
     "ornith/ornith-1.5-122b",
+    "particle-ai/particle-1",
     "perplexity/pplx-decider-flash-v1.2",
     "perplexity/pplx-decider-v1-27b",
     "perplexity/pplx-decider-v1.1-27b",
@@ -196,18 +205,26 @@
     "poolside/laguna-s-2.1",
     "poolside/laguna-xs-2.1",
     "prism-ml/ternary-bonsai-2-27b",
+    "prism-ml/ternary-bonsai-2-9b",
+    "qwen/qwen-flash",
+    "qwen/qwen-plus",
     "qwen/qwen2.5-72b-instruct",
     "qwen/qwen2.5-coder-32b-instruct",
     "qwen/qwen2.5-vl-7b-instruct",
     "qwen/qwen3-14b",
     "qwen/qwen3-235b-a22b",
     "qwen/qwen3-8b",
+    "qwen/qwen3-coder-480b-a35b-instruct",
+    "qwen/qwen3-coder-flash",
     "qwen/qwen3-embedding-4b",
     "qwen/qwen3-embedding-8b",
+    "qwen/qwen3-vl-plus",
     "qwen/qwen3.5-27b",
     "qwen/qwen3.5-397b-a17b",
     "qwen/qwen3.5-9b",
+    "qwen/qwen3.5-flash",
     "qwen/qwen3.5-plus",
+    "qwen/qwen3.6-flash",
     "qwen/qwen3.6-plus",
     "qwen/qwen3.7-flash",
     "qwen/qwen3.7-max",
@@ -256,6 +273,12 @@
     "venice/nvidia-nemotron-3-ultra-550b-a55b",
     "venice/openai-gpt-54-mini",
     "venice/venice-uncensored-role-play",
+    "vllm-sr/d3-edge",
+    "vllm-sr/d3-flash",
+    "vllm-sr/d3-lite",
+    "vllm-sr/d3-mini",
+    "vllm-sr/d3-nano",
+    "vllm-sr/d3-ultra",
     "x-ai/grok-4.1-fast-reasoning",
     "x-ai/grok-4.20-multi-agent",
     "x-ai/grok-4.20-non-reasoning",
@@ -277,6 +300,7 @@
     "z-ai/glm-4.6v",
     "z-ai/glm-4.7-flash",
     "z-ai/glm-4.7",
+    "z-ai/glm-5-turbo",
     "z-ai/glm-5.1",
     "z-ai/glm-5.2",
     "z-ai/glm-5.3-flashx",
@@ -335,10 +359,22 @@
       "context": 512000
     },
     {
+      "id": "aion-labs/aion-3.5-mini",
+      "inPrice": 0.7,
+      "outPrice": 1.4,
+      "context": 262144
+    },
+    {
       "id": "aiteamvn/vietnamese-embedding",
       "inPrice": 0.01,
       "outPrice": 0,
       "context": 8000
+    },
+    {
+      "id": "antdigital/lingdt-3.0-flash",
+      "inPrice": 0.021,
+      "outPrice": 0.063,
+      "context": 256000
     },
     {
       "id": "anthropic/claude-fable-5-1",
@@ -569,6 +605,12 @@
       "context": 163840
     },
     {
+      "id": "deepseek/deepseek-v3.2-exp",
+      "inPrice": 0.2857,
+      "outPrice": 0.4286,
+      "context": 163840
+    },
+    {
       "id": "deepseek/deepseek-v3",
       "inPrice": 0.32,
       "outPrice": 0.89,
@@ -779,16 +821,22 @@
       "context": 262144
     },
     {
-      "id": "inclusionai/ling-3.0-tiny",
-      "inPrice": 0,
-      "outPrice": 0,
-      "context": 262144
-    },
-    {
       "id": "inclusionai/ling-3.1-flash",
       "inPrice": 0.075,
       "outPrice": 0.225,
       "context": 262144
+    },
+    {
+      "id": "inference-net/schematron-v2-small",
+      "inPrice": 0.05,
+      "outPrice": 0.23,
+      "context": 128000
+    },
+    {
+      "id": "inference-net/schematron-v2-turbo",
+      "inPrice": 0.03,
+      "outPrice": 0.15,
+      "context": 128000
     },
     {
       "id": "intern/intern-s2-free",
@@ -815,6 +863,12 @@
       "context": 8192
     },
     {
+      "id": "liquid/d1-ultra",
+      "inPrice": 0.042,
+      "outPrice": 0,
+      "context": 32768
+    },
+    {
       "id": "liquid/d1",
       "inPrice": 0,
       "outPrice": 0,
@@ -830,7 +884,13 @@
       "id": "liquid/lfm-2.5-24b-a2b",
       "inPrice": 0.05,
       "outPrice": 0.7,
-      "context": 128000
+      "context": 131072
+    },
+    {
+      "id": "liquid/lfm-2.5-embedding-350m",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 512
     },
     {
       "id": "meituan/longcat-2.0",
@@ -840,8 +900,8 @@
     },
     {
       "id": "meituan/longcat-2.5-preview",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.3,
+      "outPrice": 1.2,
       "context": 1048576
     },
     {
@@ -1061,12 +1121,6 @@
       "context": 131072
     },
     {
-      "id": "nvidia/nemotron-3-120b-a12b",
-      "inPrice": 0.08,
-      "outPrice": 0.45,
-      "context": 262144
-    },
-    {
       "id": "nvidia/nemotron-3-embed-1b",
       "inPrice": 0,
       "outPrice": 0,
@@ -1130,7 +1184,7 @@
       "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
       "inPrice": 0,
       "outPrice": 0,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "nvidia/nemotron-parse-2.0",
@@ -1301,6 +1355,12 @@
       "context": 1050000
     },
     {
+      "id": "openai/gpt-5.6-terra-pro",
+      "inPrice": 2,
+      "outPrice": 12,
+      "context": 1050000
+    },
+    {
       "id": "openai/gpt-5.6-terra",
       "inPrice": 2,
       "outPrice": 12,
@@ -1322,6 +1382,12 @@
       "id": "openai/gpt-6-astra",
       "inPrice": 10,
       "outPrice": 50,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-6-luna-decisions",
+      "inPrice": 0.1,
+      "outPrice": 0,
       "context": 1050000
     },
     {
@@ -1358,6 +1424,12 @@
       "id": "openai/gpt-6.1-sol",
       "inPrice": 2,
       "outPrice": 10,
+      "context": 1050000
+    },
+    {
+      "id": "openai/gpt-6.1-terra-pro",
+      "inPrice": 1,
+      "outPrice": 5,
       "context": 1050000
     },
     {
@@ -1427,6 +1499,12 @@
       "context": 262144
     },
     {
+      "id": "particle-ai/particle-1",
+      "inPrice": 0.25,
+      "outPrice": 1,
+      "context": 1048576
+    },
+    {
       "id": "perplexity/pplx-decider-flash-v1.2",
       "inPrice": 0,
       "outPrice": 0,
@@ -1475,6 +1553,24 @@
       "context": 262144
     },
     {
+      "id": "prism-ml/ternary-bonsai-2-9b",
+      "inPrice": 0.08,
+      "outPrice": 0.13,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen-flash",
+      "inPrice": 0.0214,
+      "outPrice": 0.2143,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen-plus",
+      "inPrice": 0.1143,
+      "outPrice": 0.2857,
+      "context": 200000
+    },
+    {
       "id": "qwen/qwen2.5-72b-instruct",
       "inPrice": 0.36,
       "outPrice": 0.4,
@@ -1496,7 +1592,7 @@
       "id": "qwen/qwen3-14b",
       "inPrice": 0.1,
       "outPrice": 0.22,
-      "context": 128000
+      "context": 131072
     },
     {
       "id": "qwen/qwen3-235b-a22b",
@@ -1511,6 +1607,18 @@
       "context": 128000
     },
     {
+      "id": "qwen/qwen3-coder-480b-a35b-instruct",
+      "inPrice": 0.8,
+      "outPrice": 3,
+      "context": 262144
+    },
+    {
+      "id": "qwen/qwen3-coder-flash",
+      "inPrice": 0.1429,
+      "outPrice": 0.5714,
+      "context": 1000000
+    },
+    {
       "id": "qwen/qwen3-embedding-4b",
       "inPrice": 0.02,
       "outPrice": 0,
@@ -1521,6 +1629,12 @@
       "inPrice": 0.01,
       "outPrice": 0,
       "context": 32768
+    },
+    {
+      "id": "qwen/qwen3-vl-plus",
+      "inPrice": 0.1429,
+      "outPrice": 1.4286,
+      "context": 256000
     },
     {
       "id": "qwen/qwen3.5-27b",
@@ -1541,15 +1655,27 @@
       "context": 262144
     },
     {
-      "id": "qwen/qwen3.5-plus",
-      "inPrice": 0.4,
-      "outPrice": 2.4,
+      "id": "qwen/qwen3.5-flash",
+      "inPrice": 0.0286,
+      "outPrice": 0.2857,
       "context": 1000000
     },
     {
+      "id": "qwen/qwen3.5-plus",
+      "inPrice": 0.1143,
+      "outPrice": 0.6857,
+      "context": 1000000
+    },
+    {
+      "id": "qwen/qwen3.6-flash",
+      "inPrice": 0.1714,
+      "outPrice": 1.0286,
+      "context": null
+    },
+    {
       "id": "qwen/qwen3.6-plus",
-      "inPrice": 0.325,
-      "outPrice": 1.95,
+      "inPrice": 0.2857,
+      "outPrice": 1.7143,
       "context": 1000000
     },
     {
@@ -1566,8 +1692,8 @@
     },
     {
       "id": "qwen/qwen3.7-plus",
-      "inPrice": 0.32,
-      "outPrice": 1.28,
+      "inPrice": 0.2856,
+      "outPrice": 1.1424,
       "context": 1000000
     },
     {
@@ -1596,8 +1722,8 @@
     },
     {
       "id": "qwen/qwen3.8-max",
-      "inPrice": 1.69,
-      "outPrice": 5.07,
+      "inPrice": 1.4,
+      "outPrice": 4.2,
       "context": 1000000
     },
     {
@@ -1835,6 +1961,42 @@
       "context": 128000
     },
     {
+      "id": "vllm-sr/d3-edge",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "vllm-sr/d3-flash",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "vllm-sr/d3-lite",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "vllm-sr/d3-mini",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "vllm-sr/d3-nano",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
+      "id": "vllm-sr/d3-ultra",
+      "inPrice": 0,
+      "outPrice": 0,
+      "context": 131072
+    },
+    {
       "id": "x-ai/grok-4.1-fast-reasoning",
       "inPrice": 0,
       "outPrice": 0,
@@ -1961,6 +2123,12 @@
       "context": 204800
     },
     {
+      "id": "z-ai/glm-5-turbo",
+      "inPrice": 1.2,
+      "outPrice": 3.9996,
+      "context": 204800
+    },
+    {
       "id": "z-ai/glm-5.1",
       "inPrice": 0.966,
       "outPrice": 3.036,
@@ -2070,14 +2238,14 @@
     },
     {
       "id": "qwen/qwen-max-latest",
-      "inPrice": 1.69,
-      "outPrice": 5.07,
+      "inPrice": 1.4,
+      "outPrice": 4.2,
       "context": 1000000
     },
     {
       "id": "qwen/qwen-plus-latest",
-      "inPrice": 0.32,
-      "outPrice": 1.28,
+      "inPrice": 0.2856,
+      "outPrice": 1.1424,
       "context": 1000000
     },
     {
