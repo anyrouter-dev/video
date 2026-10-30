@@ -406,6 +406,32 @@
         "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-ae6dd7816d5f5a554a16",
         "draft": true
       }
+    },
+    {
+      "id": "018-20261030-2026-10-30-ab03f7aa45",
+      "hash": "ab03f7aa45",
+      "kind": "changelog",
+      "label": "2026-10-30",
+      "title": "2 changelog updates: Moondream 3 Preview, Ultramarine 1 Flash",
+      "seconds": 21,
+      "renderedAt": "2026-10-30T14:13:50.910Z",
+      "commit": "69e6180",
+      "renditions": {
+        "landscape": {
+          "artifact": "renders/changelog-018-20261030-2026-10-30-ab03f7aa45.mp4",
+          "cover": "renders/changelog-018-20261030-2026-10-30-ab03f7aa45.png"
+        },
+        "portrait": {
+          "artifact": "renders/changelog-018-20261030-2026-10-30-ab03f7aa45-portrait.mp4",
+          "cover": "renders/changelog-018-20261030-2026-10-30-ab03f7aa45-portrait.png"
+        }
+      },
+      "source": "renders/changelog-018-20261030-2026-10-30-ab03f7aa45-source.tar.gz",
+      "createdAt": "2026-10-30T14:13:50.919Z",
+      "published": {
+        "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-a63a9345924797f4cbe0",
+        "draft": true
+      }
     }
   ]
 }

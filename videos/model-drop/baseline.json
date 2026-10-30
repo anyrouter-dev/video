@@ -1,5 +1,5 @@
 {
-  "acceptedAt": "2026-10-29T14:21:57.555Z",
+  "acceptedAt": "2026-10-30T14:10:46.027Z",
   "ids": [
     "agents-a1/agents-a1-free",
     "agnes-ai/agnes-2.5-flash",
@@ -37,6 +37,7 @@
     "bytedance-seed/seed-2-1-turbo",
     "bytedance-seed/seed-2.0-code",
     "chinhnc/quyet-1.0-large",
+    "cloudflare/clef",
     "cohere/command-a-plus",
     "cohere/command-a",
     "cohere/north-mini-code",
@@ -57,6 +58,7 @@
     "elorian/glimpse",
     "fastino/gliner2.5-multi-v1",
     "fireworks/ember-1",
+    "fireworks/ultramarine-1-flash",
     "fpt-ai/saola-small-32b",
     "google/gemini-2.5-flash-lite",
     "google/gemini-2.5-pro",
@@ -122,6 +124,7 @@
     "mistralai/mistral-small-3.1-24b-instruct",
     "mistralai/mistral-small-3.2-24b-instruct",
     "mistralai/mistral-small-4",
+    "moondream/moondream3-preview",
     "moonshotai/kimi-k2.5",
     "moonshotai/kimi-k2.6",
     "moonshotai/kimi-k2.7-code",
@@ -545,6 +548,12 @@
       "context": 10000
     },
     {
+      "id": "cloudflare/clef",
+      "inPrice": 0.24,
+      "outPrice": 0,
+      "context": 65536
+    },
+    {
       "id": "cohere/command-a-plus",
       "inPrice": 0.3,
       "outPrice": 1.5,
@@ -632,7 +641,7 @@
       "id": "deepseek/deepseek-v4.1-flash-1017",
       "inPrice": 0.075,
       "outPrice": 0.3,
-      "context": 1048576
+      "context": 1056784
     },
     {
       "id": "deepseek/deepseek-v4.1-flash",
@@ -665,6 +674,12 @@
       "context": 1048576
     },
     {
+      "id": "fireworks/ultramarine-1-flash",
+      "inPrice": 0.225,
+      "outPrice": 0.75,
+      "context": 1048576
+    },
+    {
       "id": "fpt-ai/saola-small-32b",
       "inPrice": 0.13,
       "outPrice": 0.15,
@@ -672,8 +687,8 @@
     },
     {
       "id": "google/gemini-2.5-flash-lite",
-      "inPrice": 0.1,
-      "outPrice": 0.4,
+      "inPrice": 0.075,
+      "outPrice": 0.3,
       "context": 1048576
     },
     {
@@ -824,7 +839,7 @@
       "id": "inclusionai/ling-3.1-flash",
       "inPrice": 0.075,
       "outPrice": 0.225,
-      "context": 262144
+      "context": 1000000
     },
     {
       "id": "inference-net/schematron-v2-small",
@@ -901,7 +916,7 @@
     {
       "id": "meituan/longcat-2.5-preview",
       "inPrice": 0.3,
-      "outPrice": 1.2,
+      "outPrice": 1.18,
       "context": 1048576
     },
     {
@@ -1055,6 +1070,12 @@
       "context": 262144
     },
     {
+      "id": "moondream/moondream3-preview",
+      "inPrice": 0.3,
+      "outPrice": 2.5,
+      "context": 32000
+    },
+    {
       "id": "moonshotai/kimi-k2.5",
       "inPrice": 0.49,
       "outPrice": 2.5,
@@ -1110,8 +1131,8 @@
     },
     {
       "id": "nex-agi/nex-n2.5-pro",
-      "inPrice": 0,
-      "outPrice": 0,
+      "inPrice": 0.075,
+      "outPrice": 0.25,
       "context": 262144
     },
     {
@@ -1160,7 +1181,7 @@
       "id": "nvidia/nemotron-3.5-content-safety",
       "inPrice": 0,
       "outPrice": 0,
-      "context": 128000
+      "context": 131072
     },
     {
       "id": "nvidia/nemotron-3.5-embed-1b",
@@ -1440,8 +1461,8 @@
     },
     {
       "id": "openai/gpt-oss-120b",
-      "inPrice": 0.03,
-      "outPrice": 0.15,
+      "inPrice": 0.032,
+      "outPrice": 0.14,
       "context": 131072
     },
     {
@@ -1560,8 +1581,8 @@
     },
     {
       "id": "qwen/qwen-flash",
-      "inPrice": 0.0214,
-      "outPrice": 0.2143,
+      "inPrice": 0.025,
+      "outPrice": 0.2,
       "context": 1000000
     },
     {
@@ -1602,8 +1623,8 @@
     },
     {
       "id": "qwen/qwen3-8b",
-      "inPrice": 0.117,
-      "outPrice": 0.455,
+      "inPrice": 0.05,
+      "outPrice": 0.35,
       "context": 128000
     },
     {
@@ -1644,8 +1665,8 @@
     },
     {
       "id": "qwen/qwen3.5-397b-a17b",
-      "inPrice": 0.39,
-      "outPrice": 2.34,
+      "inPrice": 0.086,
+      "outPrice": 0.516,
       "context": 262144
     },
     {
@@ -1656,32 +1677,32 @@
     },
     {
       "id": "qwen/qwen3.5-flash",
-      "inPrice": 0.0286,
-      "outPrice": 0.2857,
+      "inPrice": 0.05,
+      "outPrice": 0.2,
       "context": 1000000
     },
     {
       "id": "qwen/qwen3.5-plus",
-      "inPrice": 0.1143,
-      "outPrice": 0.6857,
+      "inPrice": 0.0575,
+      "outPrice": 0.344,
       "context": 1000000
     },
     {
       "id": "qwen/qwen3.6-flash",
-      "inPrice": 0.1714,
-      "outPrice": 1.0286,
-      "context": null
+      "inPrice": 0.1875,
+      "outPrice": 1.125,
+      "context": 1000000
     },
     {
       "id": "qwen/qwen3.6-plus",
-      "inPrice": 0.2857,
-      "outPrice": 1.7143,
+      "inPrice": 0.138,
+      "outPrice": 0.8255,
       "context": 1000000
     },
     {
       "id": "qwen/qwen3.7-flash",
-      "inPrice": 0.03,
-      "outPrice": 0.13,
+      "inPrice": 0.014,
+      "outPrice": 0.055,
       "context": 1000000
     },
     {
@@ -1710,8 +1731,8 @@
     },
     {
       "id": "qwen/qwen3.8-flash",
-      "inPrice": 0.1126,
-      "outPrice": 0.38,
+      "inPrice": 0.0565,
+      "outPrice": 0.191,
       "context": 1000000
     },
     {
@@ -1728,8 +1749,8 @@
     },
     {
       "id": "qwen/qwen3.8-omni-flash",
-      "inPrice": 0.1126,
-      "outPrice": 0.38,
+      "inPrice": 0.0565,
+      "outPrice": 0.191,
       "context": 1000000
     },
     {
@@ -1772,7 +1793,7 @@
       "id": "sakana/fugu-ultra",
       "inPrice": 5,
       "outPrice": 30,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "sakana/fugu",
@@ -1866,8 +1887,8 @@
     },
     {
       "id": "tencent/hy4-preview",
-      "inPrice": 0.834,
-      "outPrice": 2.501,
+      "inPrice": 0.417,
+      "outPrice": 1.25,
       "context": 1048576
     },
     {
@@ -2036,7 +2057,7 @@
       "id": "x-ai/grok-4.7",
       "inPrice": 1.6,
       "outPrice": 4.8,
-      "context": 500000
+      "context": 524288
     },
     {
       "id": "x-ai/grok-build-0.1",
@@ -2064,8 +2085,8 @@
     },
     {
       "id": "xiaomi/mimo-v2.6-flash",
-      "inPrice": 0.14,
-      "outPrice": 0.28,
+      "inPrice": 0.12,
+      "outPrice": 0.25,
       "context": 1050000
     },
     {
@@ -2114,7 +2135,7 @@
       "id": "z-ai/glm-4.7-flash",
       "inPrice": 0.06,
       "outPrice": 0.4,
-      "context": 200000
+      "context": 202753
     },
     {
       "id": "z-ai/glm-4.7",
@@ -2144,7 +2165,7 @@
       "id": "z-ai/glm-5.3-flashx",
       "inPrice": 0.37,
       "outPrice": 1.25,
-      "context": 1000000
+      "context": 1048576
     },
     {
       "id": "z-ai/glm-5.3-prime",
@@ -2198,7 +2219,7 @@
       "id": "deepseek/deepseek-flash-latest",
       "inPrice": 0.075,
       "outPrice": 0.3,
-      "context": 1048576
+      "context": 1056784
     },
     {
       "id": "anthropic/claude-opus-latest",
@@ -2250,8 +2271,8 @@
     },
     {
       "id": "qwen/qwen-flash-latest",
-      "inPrice": 0.1126,
-      "outPrice": 0.38,
+      "inPrice": 0.0565,
+      "outPrice": 0.191,
       "context": 1000000
     },
     {
@@ -2264,7 +2285,7 @@
       "id": "z-ai/glm-flash-latest",
       "inPrice": 0.06,
       "outPrice": 0.4,
-      "context": 200000
+      "context": 202753
     },
     {
       "id": "moonshotai/kimi-latest",
@@ -2276,7 +2297,7 @@
       "id": "x-ai/grok-latest",
       "inPrice": 1.6,
       "outPrice": 4.8,
-      "context": 500000
+      "context": 524288
     }
   ]
 }

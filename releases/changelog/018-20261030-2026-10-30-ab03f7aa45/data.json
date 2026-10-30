@@ -1,0 +1,28 @@
+{
+  "notable": true,
+  "label": "2026-10-30",
+  "parts": [
+    "2026-10-30-moondream3-preview",
+    "2026-10-30-ultramarine-1-flash"
+  ],
+  "date": "2026-10-30",
+  "entries": [
+    {
+      "slug": "2026-10-30-moondream3-preview",
+      "date": "2026-10-30",
+      "title": "Moondream 3 Preview",
+      "summary": "Moondream 3 Preview joins the catalog through BYOK: a 9B mixture-of-experts vision-language model with 2B active parameters and a 32K-token context window.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-30-moondream3-preview",
+      "type": "added"
+    },
+    {
+      "slug": "2026-10-30-ultramarine-1-flash",
+      "date": "2026-10-30",
+      "title": "Ultramarine 1 Flash",
+      "summary": "Ultramarine 1 Flash joins the catalog through BYOK: Paper Instruments' multimodal model for finance, law and consulting work, with a 1M-token context window.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-30-ultramarine-1-flash",
+      "type": "added"
+    }
+  ],
+  "total": 2
+}

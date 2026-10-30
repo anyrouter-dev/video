@@ -1,0 +1,273 @@
+{
+  "generatedAt": "2026-10-30T14:10:46.026Z",
+  "mode": "diff",
+  "kind": "models+pricing",
+  "source": "https://anyrouter.dev/api/v1/models?all=1",
+  "totals": {
+    "catalog": 337,
+    "listed": 328,
+    "firstParty": 9,
+    "providers": 17,
+    "modelIdOrgs": 75,
+    "providerBackends": 75,
+    "free": 71
+  },
+  "pool": {
+    "keys": 279,
+    "donors": 172,
+    "requests": 73915
+  },
+  "added": [
+    {
+      "id": "fireworks/ultramarine-1-flash",
+      "name": "Ultramarine 1 Flash",
+      "provider": "fireworks",
+      "logo": "fireworks-color.svg",
+      "context": 1048576,
+      "inPrice": 0.225,
+      "outPrice": 0.75,
+      "free": false,
+      "created": 1793059200,
+      "category": "multimodal",
+      "excerpt": "Ultramarine 1 Flash is a multimodal model from Paper Instruments for knowledge work in enterprise operations, finance, law and consulting."
+    },
+    {
+      "id": "cloudflare/clef",
+      "name": "Clef",
+      "provider": "cloudflare",
+      "logo": "cloudflare-color.svg",
+      "context": 65536,
+      "inPrice": 0.24,
+      "outPrice": 0,
+      "free": false,
+      "created": 1790726400,
+      "category": "text",
+      "excerpt": "Clef is Cloudflare's 27B decision model: send application state and a schema of typed questions (noul / choice / score) and get back a probability for every allowed option — it returns probabilities, not generated chat text, so it produces no free-form output."
+    },
+    {
+      "id": "moondream/moondream3-preview",
+      "name": "Moondream 3 Preview",
+      "provider": "moondream",
+      "logo": "moondream-color.svg",
+      "context": 32000,
+      "inPrice": 0.3,
+      "outPrice": 2.5,
+      "free": false,
+      "created": 1758153600,
+      "category": "multimodal",
+      "excerpt": "Moondream 3 Preview is a vision-language model from Moondream with a mixture-of-experts architecture (9B total parameters, 2B active)."
+    }
+  ],
+  "changed": [
+    {
+      "id": "deepseek/deepseek-v4.1-flash-1017",
+      "from": "0.075/0.3@1048576",
+      "to": "0.075/0.3@1056784",
+      "kind": "context"
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite",
+      "from": "0.1/0.4@1048576",
+      "to": "0.075/0.3@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "inclusionai/ling-3.1-flash",
+      "from": "0.075/0.225@262144",
+      "to": "0.075/0.225@1000000",
+      "kind": "context"
+    },
+    {
+      "id": "meituan/longcat-2.5-preview",
+      "from": "0.3/1.2@1048576",
+      "to": "0.3/1.18@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "nex-agi/nex-n2.5-pro",
+      "from": "0/0@262144",
+      "to": "0.075/0.25@262144",
+      "kind": "price-rise"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-content-safety",
+      "from": "0/0@128000",
+      "to": "0/0@131072",
+      "kind": "context"
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "from": "0.03/0.15@131072",
+      "to": "0.032/0.14@131072",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen-flash",
+      "from": "0.0214/0.2143@1000000",
+      "to": "0.025/0.2@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3-8b",
+      "from": "0.117/0.455@128000",
+      "to": "0.05/0.35@128000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.5-397b-a17b",
+      "from": "0.39/2.34@262144",
+      "to": "0.086/0.516@262144",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.5-flash",
+      "from": "0.0286/0.2857@1000000",
+      "to": "0.05/0.2@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.5-plus",
+      "from": "0.1143/0.6857@1000000",
+      "to": "0.0575/0.344@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.6-flash",
+      "from": "0.1714/1.0286@x",
+      "to": "0.1875/1.125@1000000",
+      "kind": "price-rise"
+    },
+    {
+      "id": "qwen/qwen3.6-plus",
+      "from": "0.2857/1.7143@1000000",
+      "to": "0.138/0.8255@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.7-flash",
+      "from": "0.03/0.13@1000000",
+      "to": "0.014/0.055@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.8-flash",
+      "from": "0.1126/0.38@1000000",
+      "to": "0.0565/0.191@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "qwen/qwen3.8-omni-flash",
+      "from": "0.1126/0.38@1000000",
+      "to": "0.0565/0.191@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "sakana/fugu-ultra",
+      "from": "5/30@1000000",
+      "to": "5/30@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "tencent/hy4-preview",
+      "from": "0.834/2.501@1048576",
+      "to": "0.417/1.25@1048576",
+      "kind": "price-cut"
+    },
+    {
+      "id": "x-ai/grok-4.7",
+      "from": "1.6/4.8@500000",
+      "to": "1.6/4.8@524288",
+      "kind": "context"
+    },
+    {
+      "id": "xiaomi/mimo-v2.6-flash",
+      "from": "0.14/0.28@1050000",
+      "to": "0.12/0.25@1050000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "z-ai/glm-4.7-flash",
+      "from": "0.06/0.4@200000",
+      "to": "0.06/0.4@202753",
+      "kind": "context"
+    },
+    {
+      "id": "z-ai/glm-5.3-flashx",
+      "from": "0.37/1.25@1000000",
+      "to": "0.37/1.25@1048576",
+      "kind": "context"
+    },
+    {
+      "id": "deepseek/deepseek-flash-latest",
+      "from": "0.075/0.3@1048576",
+      "to": "0.075/0.3@1056784",
+      "kind": "context"
+    },
+    {
+      "id": "qwen/qwen-flash-latest",
+      "from": "0.1126/0.38@1000000",
+      "to": "0.0565/0.191@1000000",
+      "kind": "price-cut"
+    },
+    {
+      "id": "z-ai/glm-flash-latest",
+      "from": "0.06/0.4@200000",
+      "to": "0.06/0.4@202753",
+      "kind": "context"
+    },
+    {
+      "id": "x-ai/grok-latest",
+      "from": "1.6/4.8@500000",
+      "to": "1.6/4.8@524288",
+      "kind": "context"
+    }
+  ],
+  "removed": [],
+  "spotlight": {
+    "id": "fireworks/ultramarine-1-flash",
+    "name": "Ultramarine 1 Flash",
+    "provider": "fireworks",
+    "logo": "fireworks-color.svg",
+    "context": 1048576,
+    "inPrice": 0.225,
+    "outPrice": 0.75,
+    "free": false,
+    "created": 1793059200,
+    "category": "multimodal",
+    "excerpt": "Ultramarine 1 Flash is a multimodal model from Paper Instruments for knowledge work in enterprise operations, finance, law and consulting."
+  },
+  "notable": true,
+  "label": "models+pricing",
+  "parts": [
+    "+fireworks/ultramarine-1-flash@0.225/0.75@1048576",
+    "+cloudflare/clef@0.24/0@65536",
+    "+moondream/moondream3-preview@0.3/2.5@32000",
+    "~deepseek/deepseek-v4.1-flash-1017 0.075/0.3@1048576->0.075/0.3@1056784",
+    "~google/gemini-2.5-flash-lite 0.1/0.4@1048576->0.075/0.3@1048576",
+    "~inclusionai/ling-3.1-flash 0.075/0.225@262144->0.075/0.225@1000000",
+    "~meituan/longcat-2.5-preview 0.3/1.2@1048576->0.3/1.18@1048576",
+    "~nex-agi/nex-n2.5-pro 0/0@262144->0.075/0.25@262144",
+    "~nvidia/nemotron-3.5-content-safety 0/0@128000->0/0@131072",
+    "~openai/gpt-oss-120b 0.03/0.15@131072->0.032/0.14@131072",
+    "~qwen/qwen-flash 0.0214/0.2143@1000000->0.025/0.2@1000000",
+    "~qwen/qwen3-8b 0.117/0.455@128000->0.05/0.35@128000",
+    "~qwen/qwen3.5-397b-a17b 0.39/2.34@262144->0.086/0.516@262144",
+    "~qwen/qwen3.5-flash 0.0286/0.2857@1000000->0.05/0.2@1000000",
+    "~qwen/qwen3.5-plus 0.1143/0.6857@1000000->0.0575/0.344@1000000",
+    "~qwen/qwen3.6-flash 0.1714/1.0286@x->0.1875/1.125@1000000",
+    "~qwen/qwen3.6-plus 0.2857/1.7143@1000000->0.138/0.8255@1000000",
+    "~qwen/qwen3.7-flash 0.03/0.13@1000000->0.014/0.055@1000000",
+    "~qwen/qwen3.8-flash 0.1126/0.38@1000000->0.0565/0.191@1000000",
+    "~qwen/qwen3.8-omni-flash 0.1126/0.38@1000000->0.0565/0.191@1000000",
+    "~sakana/fugu-ultra 5/30@1000000->5/30@1048576",
+    "~tencent/hy4-preview 0.834/2.501@1048576->0.417/1.25@1048576",
+    "~x-ai/grok-4.7 1.6/4.8@500000->1.6/4.8@524288",
+    "~xiaomi/mimo-v2.6-flash 0.14/0.28@1050000->0.12/0.25@1050000",
+    "~z-ai/glm-4.7-flash 0.06/0.4@200000->0.06/0.4@202753",
+    "~z-ai/glm-5.3-flashx 0.37/1.25@1000000->0.37/1.25@1048576",
+    "~deepseek/deepseek-flash-latest 0.075/0.3@1048576->0.075/0.3@1056784",
+    "~qwen/qwen-flash-latest 0.1126/0.38@1000000->0.0565/0.191@1000000",
+    "~z-ai/glm-flash-latest 0.06/0.4@200000->0.06/0.4@202753",
+    "~x-ai/grok-latest 1.6/4.8@500000->1.6/4.8@524288"
+  ]
+}

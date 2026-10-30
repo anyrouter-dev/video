@@ -1,0 +1,22 @@
+{
+  "id": "022-20261030-models-pricing-911d17e1e6",
+  "hash": "911d17e1e6",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "3 new models: ultramarine-1-flash, clef, moondream3-preview",
+  "seconds": 20,
+  "renderedAt": "2026-10-30T14:15:19.734Z",
+  "commit": "69e6180",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-022-20261030-models-pricing-911d17e1e6.mp4",
+      "cover": "renders/model-drop-022-20261030-models-pricing-911d17e1e6.png"
+    }
+  },
+  "source": "renders/model-drop-022-20261030-models-pricing-911d17e1e6-source.tar.gz",
+  "createdAt": "2026-10-30T14:15:19.744Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-10371a37e5466e69d191",
+    "draft": true
+  }
+}
