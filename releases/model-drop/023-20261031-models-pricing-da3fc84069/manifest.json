@@ -1,0 +1,22 @@
+{
+  "id": "023-20261031-models-pricing-da3fc84069",
+  "hash": "da3fc84069",
+  "kind": "model-drop",
+  "label": "models+pricing",
+  "title": "5 new models: classify-1, extract, summarize +2 more",
+  "seconds": 20,
+  "renderedAt": "2026-10-31T13:42:39.217Z",
+  "commit": "fae8a6b",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/model-drop-023-20261031-models-pricing-da3fc84069.mp4",
+      "cover": "renders/model-drop-023-20261031-models-pricing-da3fc84069.png"
+    }
+  },
+  "source": "renders/model-drop-023-20261031-models-pricing-da3fc84069-source.tar.gz",
+  "createdAt": "2026-10-31T13:42:39.222Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-d64f4638aba8322c364f",
+    "draft": true
+  }
+}

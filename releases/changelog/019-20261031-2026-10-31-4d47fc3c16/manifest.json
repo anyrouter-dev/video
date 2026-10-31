@@ -1,0 +1,26 @@
+{
+  "id": "019-20261031-2026-10-31-4d47fc3c16",
+  "hash": "4d47fc3c16",
+  "kind": "changelog",
+  "label": "2026-10-31",
+  "title": "Mistral Large 3",
+  "seconds": 14.5,
+  "renderedAt": "2026-10-31T13:41:28.629Z",
+  "commit": "fae8a6b",
+  "renditions": {
+    "landscape": {
+      "artifact": "renders/changelog-019-20261031-2026-10-31-4d47fc3c16.mp4",
+      "cover": "renders/changelog-019-20261031-2026-10-31-4d47fc3c16.png"
+    },
+    "portrait": {
+      "artifact": "renders/changelog-019-20261031-2026-10-31-4d47fc3c16-portrait.mp4",
+      "cover": "renders/changelog-019-20261031-2026-10-31-4d47fc3c16-portrait.png"
+    }
+  },
+  "source": "renders/changelog-019-20261031-2026-10-31-4d47fc3c16-source.tar.gz",
+  "createdAt": "2026-10-31T13:41:28.633Z",
+  "published": {
+    "github": "https://github.com/anyrouter-dev/video/releases/tag/untagged-c893ba1f516f92d1471c",
+    "draft": true
+  }
+}

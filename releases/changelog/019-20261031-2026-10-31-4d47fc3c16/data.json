@@ -1,0 +1,19 @@
+{
+  "notable": true,
+  "label": "2026-10-31",
+  "parts": [
+    "2026-10-31-mistral-large-3"
+  ],
+  "date": "2026-10-31",
+  "entries": [
+    {
+      "slug": "2026-10-31-mistral-large-3",
+      "date": "2026-10-31",
+      "title": "Mistral Large 3",
+      "summary": "Mistral Large 3, Mistral's open-weight 675B mixture-of-experts model with image input and a 256K-token context, joins the catalog on four BYOK routes.",
+      "link": "https://anyrouter.dev/blog/releases/2026-10-31-mistral-large-3",
+      "type": "added"
+    }
+  ],
+  "total": 1
+}
